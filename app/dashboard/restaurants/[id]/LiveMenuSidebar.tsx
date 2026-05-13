@@ -208,8 +208,8 @@ export function LiveMenuSidebar({
   const totalItems = items.length;
 
   return (
-    <aside className="glass-card sticky top-20 flex max-h-[calc(100vh-7rem)] flex-col overflow-hidden">
-      <div className="flex items-center justify-between border-b border-line px-5 py-4">
+    <aside className="glass-card flex max-h-[min(50svh,380px)] flex-col overflow-hidden sm:sticky sm:top-20 sm:max-h-[calc(100dvh-8rem)]">
+      <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-5 sm:py-4">
         <div>
           <h2 className="text-sm font-semibold">Live menu</h2>
           <p className="mt-0.5 text-xs text-muted">

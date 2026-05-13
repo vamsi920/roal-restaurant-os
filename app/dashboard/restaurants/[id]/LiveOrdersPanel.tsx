@@ -184,7 +184,7 @@ export function LiveOrdersPanel({
 
   return (
     <section className="glass-card overflow-hidden">
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line px-5 py-4">
+      <div className="flex flex-col gap-3 border-b border-line px-4 py-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:px-5 sm:py-4">
         <div className="min-w-0">
           <h2 className="text-sm font-semibold">Phone orders</h2>
           <p className="mt-0.5 text-xs text-muted">
@@ -193,12 +193,12 @@ export function LiveOrdersPanel({
             Stored in Postgres; syncs over Realtime.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
           <button
             type="button"
             onClick={() => void onRefresh()}
             disabled={refreshing}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-elev px-2.5 py-1.5 text-[11px] font-medium text-ink transition-colors hover:bg-card disabled:opacity-50"
+            className="inline-flex min-h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-line bg-elev px-2.5 py-2 text-[11px] font-medium text-ink transition-colors hover:bg-card disabled:opacity-50 sm:w-auto sm:py-1.5"
           >
             <svg
               className={cn("h-3.5 w-3.5", refreshing && "animate-spin")}
@@ -220,12 +220,12 @@ export function LiveOrdersPanel({
         </div>
       </div>
 
-      <div className="flex border-b border-line px-3 pt-2">
+      <div className="flex border-b border-line px-2 pt-2 sm:px-3">
         <button
           type="button"
           onClick={() => setTab("live")}
           className={cn(
-            "relative flex-1 rounded-t-lg px-3 py-2.5 text-xs font-medium transition-colors",
+            "relative min-h-[44px] flex-1 rounded-t-lg px-2 py-2.5 text-xs font-medium transition-colors sm:px-3",
             tab === "live"
               ? "text-ink"
               : "text-muted hover:text-ink/80"
@@ -248,7 +248,7 @@ export function LiveOrdersPanel({
           type="button"
           onClick={() => setTab("done")}
           className={cn(
-            "relative flex-1 rounded-t-lg px-3 py-2.5 text-xs font-medium transition-colors",
+            "relative min-h-[44px] flex-1 rounded-t-lg px-2 py-2.5 text-xs font-medium transition-colors sm:px-3",
             tab === "done"
               ? "text-ink"
               : "text-muted hover:text-ink/80"
@@ -269,7 +269,7 @@ export function LiveOrdersPanel({
         </button>
       </div>
 
-      <div className="max-h-[440px] overflow-y-auto p-4">
+      <div className="max-h-[min(55svh,440px)] overflow-y-auto overscroll-contain p-3 sm:max-h-[440px] sm:p-4">
         {tab === "live" && emptyLive && (
           <p className="py-10 text-center text-sm text-muted">
             No active voice carts. When a caller is mid-order,{" "}

@@ -3,38 +3,40 @@ import type { ReactNode } from "react";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen">
-      <header className="sticky top-0 z-40 border-b border-line/90 bg-base/85 shadow-sm backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto flex h-14 max-w-[1600px] items-center justify-between px-6">
-          <div className="flex items-center gap-3">
-            <Link href="/dashboard/restaurants" className="flex items-center gap-2.5">
+    <div className="min-h-screen min-h-[100dvh]">
+      <header className="sticky top-0 z-40 border-b border-line/90 bg-base/85 pt-[env(safe-area-inset-top)] shadow-sm backdrop-blur-xl backdrop-saturate-150">
+        <div className="mx-auto flex min-h-14 max-w-[1600px] items-center justify-between gap-3 px-4 py-3 sm:h-14 sm:px-6 sm:py-0">
+          <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+            <Link href="/dashboard/restaurants" className="flex min-w-0 items-center gap-2 sm:gap-2.5">
               <LogoMark />
-              <div className="flex items-baseline gap-2">
-                <span className="text-[15px] font-semibold tracking-tight">ROAL</span>
-                <span className="hidden text-[11px] uppercase tracking-[0.18em] text-subtle md:inline">
+              <div className="flex min-w-0 items-baseline gap-1.5 sm:gap-2">
+                <span className="truncate text-[14px] font-semibold tracking-tight sm:text-[15px]">ROAL</span>
+                <span className="hidden shrink-0 text-[11px] uppercase tracking-[0.18em] text-subtle md:inline">
                   Restaurant OS
                 </span>
               </div>
             </Link>
           </div>
 
-          <nav className="flex items-center gap-1">
+          <nav className="flex shrink-0 items-center gap-0.5 sm:gap-1">
             <Link
               href="/dashboard/restaurants"
-              className="rounded-md px-3 py-1.5 text-[13px] text-muted transition-colors hover:bg-elev hover:text-ink"
+              className="rounded-md px-2.5 py-2 text-[12px] text-muted transition-colors hover:bg-elev hover:text-ink sm:px-3 sm:text-[13px]"
             >
               Restaurants
             </Link>
-            <div className="ml-2 flex items-center gap-2 rounded-md border border-line bg-elev px-2.5 py-1">
+            <div className="ml-1 flex items-center gap-1.5 rounded-md border border-line bg-elev px-2 py-1 sm:ml-2 sm:gap-2 sm:px-2.5">
               <span className="pulse-dot" />
-              <span className="text-[11px] font-medium uppercase tracking-wider text-muted">
+              <span className="hidden text-[11px] font-medium uppercase tracking-wider text-muted sm:inline">
                 Realtime
               </span>
             </div>
           </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-[1600px] px-6 py-8">{children}</main>
+      <main className="mx-auto max-w-[1600px] px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-5 sm:px-6 sm:pb-8 sm:pt-8">
+        {children}
+      </main>
     </div>
   );
 }

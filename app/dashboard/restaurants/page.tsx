@@ -89,22 +89,24 @@ export default function RestaurantsPage() {
   }, [flash, loadRestaurants]);
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-subtle">
             <span className="h-px w-6 bg-line" />
             Dashboard
           </div>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+          <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
             Your <span className="gradient-text">restaurants</span>
           </h1>
-          <p className="mt-1.5 max-w-xl text-sm text-muted">
+          <p className="mt-1.5 max-w-xl text-pretty text-sm text-muted">
             Spin up a workspace per location. Upload a menu photo and watch
             ROAL extract categories, items, and modifiers in real time.
           </p>
         </div>
-        <CreateRestaurantButton />
+        <div className="w-full shrink-0 sm:w-auto">
+          <CreateRestaurantButton className="w-full sm:w-auto" />
+        </div>
       </div>
 
       {loading ? (
@@ -182,7 +184,7 @@ function RestaurantCard({
         <span className="font-mono-tabular text-subtle">
           {restaurant.id.slice(0, 8)}
         </span>
-        <span className="flex items-center gap-1 text-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        <span className="flex items-center gap-1 text-accent opacity-100 transition-opacity duration-200 sm:opacity-0 sm:group-hover:opacity-100">
           Open KDS
           <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M13 5l7 7-7 7" />
@@ -236,7 +238,7 @@ function ErrorState({
 
 function EmptyState() {
   return (
-    <div className="glass-card relative overflow-hidden p-12 text-center">
+    <div className="glass-card relative overflow-hidden p-8 text-center sm:p-12">
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-50" />
       <div className="relative mx-auto grid h-14 w-14 place-items-center rounded-xl border border-line bg-card shadow-sm">
         <svg viewBox="0 0 24 24" className="h-7 w-7 text-accent" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

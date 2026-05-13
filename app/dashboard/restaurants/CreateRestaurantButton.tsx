@@ -3,8 +3,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/cn";
 
-export function CreateRestaurantButton() {
+export function CreateRestaurantButton({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +44,7 @@ export function CreateRestaurantButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="btn-primary"
+        className={cn("btn-primary", className)}
       >
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 5v14M5 12h14" />

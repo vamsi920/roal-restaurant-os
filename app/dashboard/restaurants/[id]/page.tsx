@@ -100,32 +100,32 @@ export default async function RestaurantKDSPage({
     : ((receiptRows as PhoneOrderReceiptRow[]) ?? []);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3 text-sm">
+    <div className="space-y-5 sm:space-y-6">
+      <div className="flex min-w-0 items-center gap-2 overflow-x-auto text-sm [-webkit-overflow-scrolling:touch]">
         <Link
           href="/dashboard/restaurants"
-          className="flex items-center gap-1.5 text-muted transition-colors hover:text-ink"
+          className="flex shrink-0 items-center gap-1.5 text-muted transition-colors hover:text-ink"
         >
-          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
           Restaurants
         </Link>
-        <span className="text-subtle">/</span>
-        <span className="font-medium text-black" style={{ color: "#000000" }}>{restaurant.name}</span>
+        <span className="shrink-0 text-subtle">/</span>
+        <span className="min-w-0 truncate font-medium text-black" style={{ color: "#000000" }}>{restaurant.name}</span>
       </div>
 
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-4">
+        <div className="min-w-0">
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-subtle">
             <span className="h-px w-6 bg-line" />
             KDS Console
           </div>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-black" style={{ color: "#000000" }}>
+          <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-black sm:text-3xl" style={{ color: "#000000" }}>
             {restaurant.name}
           </h1>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <div className="chip">
             <span className="pulse-dot" />
             Realtime synced
@@ -133,7 +133,7 @@ export default async function RestaurantKDSPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[420px_1fr]">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-[420px_1fr]">
         <LiveMenuSidebar
           restaurantId={restaurant.id}
           initialCategories={initialCategories}
@@ -143,7 +143,7 @@ export default async function RestaurantKDSPage({
         <MenuScanner restaurantId={restaurant.id} />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
         <LiveOrdersPanel
           restaurantId={restaurant.id}
           initialDraftOrders={initialDraftOrders}

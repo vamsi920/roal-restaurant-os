@@ -135,15 +135,15 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
 
   return (
     <section className="glass-card overflow-hidden">
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line px-6 py-4">
+      <div className="flex flex-col gap-3 border-b border-line px-4 py-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:px-6 sm:py-4">
         <div className="min-w-0 flex-1">
           <h2 className="text-sm font-semibold">Menu scanner</h2>
-          <p className="mt-0.5 text-xs text-muted">
+          <p className="mt-0.5 text-pretty text-xs text-muted">
             Drop a menu photo. Gemini extracts categories, items, modifiers,
             and ROAL atomically merges into your live menu.
           </p>
         </div>
-        <div className="flex shrink-0 flex-wrap items-center gap-2">
+        <div className="flex w-full shrink-0 sm:w-auto sm:justify-end">
           <button
             type="button"
             onClick={() => {
@@ -151,7 +151,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
               setClearOpen(true);
             }}
             disabled={isWorking}
-            className="rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-1.5 text-xs font-medium text-danger transition-colors hover:bg-danger/[0.08] disabled:opacity-50"
+            className="w-full rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2.5 text-xs font-medium text-danger transition-colors hover:bg-danger/[0.08] disabled:opacity-50 sm:w-auto sm:py-1.5"
           >
             Clear menu
           </button>
@@ -225,7 +225,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
         </Dialog>
       </Transition>
 
-      <div className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-[1.1fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 p-4 sm:gap-6 sm:p-6 lg:grid-cols-[1.1fr_1fr]">
         <div>
           <label
             htmlFor="menu-image"
@@ -241,7 +241,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
               if (f) onFile(f);
             }}
             className={cn(
-              "group relative flex aspect-[4/3] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed transition-all",
+              "group relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed transition-all max-sm:aspect-[3/4] sm:aspect-[4/3]",
               isDragging
                 ? "border-accent bg-accent-soft/80"
                 : "border-line-strong bg-elev hover:border-line-strong hover:bg-card",
@@ -289,19 +289,19 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
             )}
           </label>
 
-          <div className="mt-4 flex items-center justify-between gap-3">
-            <div className="min-w-0 flex-1 text-xs text-muted">
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0 text-xs text-muted sm:flex-1">
               {file ? (
-                <span className="truncate">
+                <span className="block truncate">
                   {file.name} · {(file.size / 1024).toFixed(0)} KB
                 </span>
               ) : (
                 "No file selected"
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex w-full flex-col-reverse gap-2 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
               {file && !isWorking && (
-                <button type="button" onClick={reset} className="btn-ghost">
+                <button type="button" onClick={reset} className="btn-ghost min-h-11 w-full sm:min-h-0 sm:w-auto">
                   Reset
                 </button>
               )}
@@ -309,7 +309,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
                 type="button"
                 onClick={process}
                 disabled={!file || isWorking}
-                className="btn-primary"
+                className="btn-primary min-h-11 w-full justify-center sm:min-h-0 sm:w-auto"
               >
                 {isWorking ? (
                   <>
