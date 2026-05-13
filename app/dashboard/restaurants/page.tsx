@@ -142,10 +142,12 @@ function RestaurantCard({
     <Link
       href={`/dashboard/restaurants/${restaurant.id}`}
       className={cn(
-        "group glass-card relative block overflow-hidden p-5 text-ink no-underline transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong",
+        "group glass-card relative isolate block overflow-hidden p-5 text-ink no-underline transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong",
         flashed && "flash-row"
       )}
-      style={{ animation: `slide-up 280ms cubic-bezier(0.21, 1.02, 0.73, 1) ${index * 40}ms both` }}
+      style={{
+        animation: `slide-up 280ms cubic-bezier(0.21, 1.02, 0.73, 1) ${index * 40}ms forwards`,
+      }}
     >
       <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-accent/14 blur-3xl" />
@@ -164,8 +166,11 @@ function RestaurantCard({
         </span>
       </div>
 
-      <div className="relative mt-5">
-        <h3 className="truncate text-base font-semibold tracking-tight !text-black">
+      <div className="relative z-10 mt-5">
+        <h3
+          className="truncate text-base font-semibold tracking-tight text-slate-900"
+          style={{ color: "rgb(15 23 42)" }}
+        >
           {restaurant.name}
         </h3>
         <p className="mt-1 text-xs text-subtle">
