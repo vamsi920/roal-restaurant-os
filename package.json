@@ -8,9 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "elevenlabs:setup": "npx tsx --env-file=.env.local scripts/setup-elevenlabs-roal.ts",
-    "elevenlabs:profile": "npx tsx --env-file=.env.local scripts/apply-restaurant-profile.ts",
-    "elevenlabs:tools": "npx tsx --env-file=.env.local scripts/sync-roal-el.ts"
+    "elevenlabs:setup": "npx tsx --env-file=.env scripts/setup-elevenlabs-roal.ts",
+    "elevenlabs:profile": "npx tsx --env-file=.env scripts/apply-restaurant-profile.ts",
+    "elevenlabs:tools": "npx tsx --env-file=.env scripts/sync-roal-el.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

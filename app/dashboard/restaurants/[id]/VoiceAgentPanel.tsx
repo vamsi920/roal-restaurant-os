@@ -39,7 +39,8 @@ export function VoiceAgentPanel({
           <span className="font-medium text-ink">restaurant_id</span> /{" "}
           <span className="font-medium text-ink">restaurant_name</span> as the
           agent&apos;s default dynamic variables. Needs keys in{" "}
-          <code className="rounded bg-elev px-1 text-[11px]">.env.local.example</code>.
+          <code className="rounded bg-elev px-1 text-[11px]">.env</code> (copy from{" "}
+          <code className="rounded bg-elev px-1 text-[11px]">.env.example</code>).
         </p>
       </div>
 

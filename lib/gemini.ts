@@ -120,6 +120,6 @@ export async function scanMenuImage(imageBase64: string, mimeType: string) {
 
   throw new Error(
     `No supported Gemini model alias worked. Tried: ${attemptedModels}. ` +
-      `Set GEMINI_MODEL in .env.local to an available model like gemini-2.5-flash. Last error: ${lastMessage}`
+      `Set GEMINI_MODEL in .env to an available model like gemini-2.5-flash. Last error: ${lastMessage}`
   );
 }

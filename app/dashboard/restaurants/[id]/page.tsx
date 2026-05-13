@@ -112,7 +112,7 @@ export default async function RestaurantKDSPage({
           Restaurants
         </Link>
         <span className="text-subtle">/</span>
-        <span className="font-medium text-black">{restaurant.name}</span>
+        <span className="font-medium text-black" style={{ color: "#000000" }}>{restaurant.name}</span>
       </div>
 
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -121,7 +121,7 @@ export default async function RestaurantKDSPage({
             <span className="h-px w-6 bg-line" />
             KDS Console
           </div>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-black">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-black" style={{ color: "#000000" }}>
             {restaurant.name}
           </h1>
         </div>

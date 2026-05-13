@@ -139,7 +139,7 @@ On each restaurant KDS (`/dashboard/restaurants/[id]`):
 - **Phone orders (KDS)** — `draft_orders` for live carts + `phone_order_receipts` for completed orders (written on `finalize_order`); both scoped by `restaurant_id`, Realtime + periodic refresh in the UI.
 - **ElevenLabs panel** — calls `GET /api/integrations/elevenlabs/agent` using your **server** env `ELEVENLABS_API_KEY` (and optional `ELEVENLABS_AGENT_ID` or `?agent_id=`). Shows the three Edge tool URLs for that restaurant.
 
-Set in `.env.local`:
+Set in `.env` (see repo `.env.example`; remove `.env.local` if you want `.env` values to win):
 
 ```bash
 ELEVENLABS_API_KEY=xi-...

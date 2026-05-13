@@ -1,6 +1,5 @@
 /**
- * One-off: load .env.local via dotenv-cli, then sync ROAL tools to ElevenLabs.
- *   npx dotenv-cli -e .env.local -- npx tsx scripts/sync-roal-el.ts
+ * One-off: load `.env` (e.g. via `npm run elevenlabs:tools` which passes --env-file=.env).
  */
 import { syncRoalElevenLabsTools } from "../lib/sync-elevenlabs-roal-tools";
 

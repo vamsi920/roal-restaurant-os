@@ -16,9 +16,9 @@ the live menu on a KDS-style dashboard in real time via Supabase Realtime.
 ## Quick start
 
 ```bash
-cp .env.local.example .env.local
-# Fill in GEMINI_API_KEY at minimum.
-# Supabase URL/anon key are pre-filled for the ROAL project.
+cp .env.example .env
+# Fill in GEMINI_API_KEY at minimum. If `.env.local` exists, Next.js will override
+# duplicate keys from `.env`—delete or rename `.env.local` to use only `.env`.
 npm install
 npm run dev
 ```
@@ -117,7 +117,7 @@ Conflict strategy:
 
 Google occasionally retires model aliases. The app now tries this order:
 
-- `GEMINI_MODEL` from `.env.local` if set
+- `GEMINI_MODEL` from `.env` if set
 - `gemini-2.5-flash`
 - `gemini-2.5-pro`
 - `gemini-flash-latest`
@@ -125,7 +125,7 @@ Google occasionally retires model aliases. The app now tries this order:
 - `gemini-2.0-flash-lite`
 
 If your account/API version does not support the default aliases, set
-`GEMINI_MODEL` explicitly in `.env.local`.
+`GEMINI_MODEL` explicitly in `.env`.
 
 ## Project layout
 

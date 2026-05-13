@@ -168,8 +168,8 @@ function RestaurantCard({
 
       <div className="relative z-10 mt-5">
         <h3
-          className="truncate text-base font-semibold tracking-tight text-slate-900"
-          style={{ color: "rgb(15 23 42)" }}
+          className="truncate text-base font-semibold tracking-tight !text-black"
+          style={{ color: "#000000" }}
         >
           {restaurant.name}
         </h3>
