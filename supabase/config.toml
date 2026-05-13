@@ -1,0 +1,11 @@
+# Edge Functions: allow ElevenLabs (non-Supabase-JWT) + AGENT_TOOL_SECRET in handler.
+# https://supabase.com/docs/guides/functions/function-configuration
+
+[functions.get-menu]
+verify_jwt = false
+
+[functions.sync-draft-order]
+verify_jwt = false
+
+[functions.finalize-order]
+verify_jwt = false

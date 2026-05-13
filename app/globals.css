@@ -3,25 +3,261 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base: 245 247 250;
+  --bg-elev: 248 250 252;
+  --bg-card: 255 255 255;
+  --border: 226 232 240;
+  --border-strong: 203 213 225;
+  --text-primary: 30 41 59;
+  --text-secondary: 71 85 105;
+  --text-muted: 100 116 139;
+  --accent: 8 145 178;
+  --accent-soft: 207 250 254;
+  --success: 5 122 85;
+  --warning: 180 83 9;
+  --danger: 220 38 38;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(var(--bg-base));
+  color: rgb(var(--text-primary));
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.18);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg-base));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border-strong));
+  border-radius: 8px;
+  border: 2px solid rgb(var(--bg-base));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--text-muted) / 0.45);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .font-mono-tabular {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(rgb(15 23 42 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(15 23 42 / 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .bg-radial-fade {
+    background:
+      radial-gradient(900px circle at 0% 0%, rgb(var(--accent) / 0.08), transparent 52%),
+      radial-gradient(700px circle at 100% 100%, rgb(139 92 246 / 0.06), transparent 50%);
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.92), rgb(var(--bg-card))),
+      rgb(var(--bg-card));
+    border: 1px solid rgb(var(--border));
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 0 rgb(255 255 255 / 0.8) inset;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: rgb(var(--text-secondary));
+    background: rgb(var(--bg-elev));
+    border: 1px solid rgb(var(--border));
+    border-radius: 999px;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(255 255 255);
+    background: linear-gradient(180deg, #22d3ee, #0e7490);
+    border: 1px solid rgb(var(--accent) / 0.55);
+    border-radius: 10px;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.28) inset,
+      0 4px 14px -4px rgb(var(--accent) / 0.45);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.28) inset,
+      0 8px 22px -6px rgb(var(--accent) / 0.5);
+  }
+  .btn-primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgb(var(--text-primary));
+    background: rgb(var(--bg-card));
+    border: 1px solid rgb(var(--border));
+    border-radius: 10px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: rgb(var(--bg-elev));
+    border-color: rgb(var(--border-strong));
+  }
+  .input-base {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: 14px;
+    color: rgb(var(--text-primary));
+    background: rgb(var(--bg-card));
+    border: 1px solid rgb(var(--border));
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .input-base:focus {
+    border-color: rgb(var(--accent));
+    box-shadow: 0 0 0 3px rgb(var(--accent) / 0.2);
+  }
+  .pulse-dot {
+    position: relative;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgb(var(--success));
+    box-shadow: 0 0 0 1px rgb(var(--bg-card));
+  }
+  .pulse-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 999px;
+    border: 2px solid rgb(var(--success));
+    opacity: 0.55;
+    animation: pulse-ring 1.6s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.65;
+  }
+  80%,
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes flash-highlight {
+  0% {
+    background-color: rgb(var(--accent) / 0.22);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flash-row {
+  animation: flash-highlight 1800ms ease-out;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--bg-elev)) 0%,
+    rgb(var(--border)) 45%,
+    rgb(var(--bg-elev)) 100%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 6px;
+}
+
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scan-overlay::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(var(--accent) / 0.28) 50%,
+    transparent 100%
+  );
+  filter: blur(10px);
+  animation: scan-line 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes gradient-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #0e7490, #5b21b6, #0e7490);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 6s ease infinite;
 }
