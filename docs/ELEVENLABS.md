@@ -50,7 +50,7 @@ For agents synced **without** a restaurant id (legacy), tools may still expect `
 | Variable | Example | Purpose |
 |----------|---------|---------|
 | `restaurant_id` | UUID from KDS URL | Legacy dynamic tools; **baked** tools embed this in URLs / headers instead |
-| `restaurant_name` | `Joe's Diner` | Hints + placeholders; if blank in ROAL, Connect uses **the restaurant**. First message has no `{{…}}` so Twilio inbound does not fail early. |
+| `restaurant_name` | `Joe's Diner` | Placeholders + `{{restaurant_name}}` in the agent first message (set when you **Connect agent to this restaurant**). Fallback text is `the restaurant` if unset. |
 
 On the ROAL KDS restaurant page, **Connect agent to this restaurant** runs tool sync + order-taker profile. That sync **bakes** this restaurant into webhook URLs and the `x-roal-restaurant-id` header so **Twilio phone calls do not need** those variables for tools. It still sets `dynamic_variable_placeholders` for prompts and legacy use.
 
@@ -58,10 +58,22 @@ On the ROAL KDS restaurant page, **Connect agent to this restaurant** runs tool 
 
 After changing env or Supabase URL, run **Connect agent to this restaurant** again so ElevenLabs picks up headers and schemas.
 
+## Netlify checklist (live KDS + Realtime)
+
+The hosted dashboard and the voice agent must point at the **same** Supabase project.
+
+1. **Netlify → Site → Environment variables:** set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to this project’s values (Supabase Dashboard → **Project Settings → API**).  
+2. **Redeploy** after any change to `NEXT_PUBLIC_*` — Next.js inlines them at **build** time.  
+3. **ElevenLabs tool URLs** (from **Connect agent to this restaurant**) must use the same `<project-ref>.supabase.co` host as step 1. If the dashboard reads project A while tools write to project B, live carts stay empty and Realtime will never match.  
+4. **Supabase → Database → Publications:** confirm `draft_orders` and `phone_order_receipts` are in the `supabase_realtime` publication (repo migrations add them).  
+5. **Prompt / first message / tool schema updates** ship from this repo’s server code, but ElevenLabs stores a copy on the agent — run **Connect agent to this restaurant** again after deploying ROAL so the agent receives the latest profile and tool definitions.
+
+If the Realtime websocket fails in the browser (network, extensions, or config), the KDS **Phone orders** panel falls back to **Polling every 6s** until the socket reconnects; fix env parity first if carts never match production calls.
+
 ## Tool 1 — `get_menu_items` (Server Tool)
 
 - **Name (ElevenLabs):** `get_menu_items`
-- **Description:** Fetches the current restaurant menu (categories, items, modifiers, prices, availability). Call at call start or when the guest asks what you serve.
+- **Description:** Fetches the current restaurant menu (categories, items, modifiers, prices, availability). Call after pickup/delivery and contact details (per ROAL prompt), or when the guest asks what you serve.
 - **Method:** `GET` or `POST`
 - **URL:** `https://<project-ref>.supabase.co/functions/v1/get-menu`
 - **Headers:** `Authorization: Bearer <AGENT_TOOL_SECRET>` · `apikey: <Supabase anon / publishable key>`  
@@ -105,7 +117,7 @@ After changing env or Supabase URL, run **Connect agent to this restaurant** aga
 
 `status` must be `"draft"` or `"confirmed"`. Rows upsert on `(restaurant_id, session_id)`; dashboard can subscribe to `draft_orders` via Realtime.
 
-Optional fields (stored on the same row when provided):
+Optional fields (stored on the same row when provided — only if the caller actually said them; never invent):
 
 - `customer_name` (string)
 - `customer_phone` (string)
@@ -152,10 +164,10 @@ To **change** agent settings from code, `PATCH /api/integrations/elevenlabs/agen
 
 ```
 Tool usage policy:
-1. Initial context: As soon as the call begins, call get_menu_items with this restaurant's restaurant_id so you only sell items that exist today.
-2. Real-time updates: Every time the guest mentions adding, removing, or changing an item or modifier, immediately call sync_draft_order with the full current items array and status "draft". Do not wait until the end of the call.
-3. When the guest confirms the order is complete, call finalize_order with customer_name, customer_phone, and the same session_id. If the cart is already in sync_draft_order, you may omit the items array.
-4. Validation: If the guest orders something not in the last get_menu_items response, say it is not available and suggest the closest menu option.
+1. Opening uses the restaurant name from session placeholders. After pickup/delivery, ask for the guest's real name and callback number, then call get_menu_items so you only sell items that exist today.
+2. Every time the guest adds, removes, or changes an item or modifier, immediately call sync_draft_order with the full current items array and status "draft". Do not wait until the end of the call.
+3. When the guest confirms the order is complete and you have their real name and phone from the call, call finalize_order with customer_name, customer_phone, and the same session_id. If the cart is already in sync_draft_order, you may omit the items array.
+4. Validation: If the guest orders something not in the last get_menu_items response, say it is not available and suggest the closest menu option. Never pass placeholder or invented name/phone to finalize_order.
 ```
 
 Pass **`restaurant_id`** into the session via [dynamic variables](https://elevenlabs.io/docs) or your API session payload so the model always has the correct UUID (one agent config, many restaurants).

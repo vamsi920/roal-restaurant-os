@@ -48,12 +48,14 @@ const ITEMS_PROP = {
 
 const CUSTOMER_NAME_PROP = {
   type: "string",
-  description: "Optional guest name",
+  description:
+    "Guest's real name as they said it on the call. Omit if unknown. Never fabricate, guess, or use placeholder names (e.g. John Doe).",
 } as const;
 
 const CUSTOMER_PHONE_PROP = {
   type: "string",
-  description: "Optional phone",
+  description:
+    "Guest's real callback number as they said it. Omit if unknown. Never invent, example, or placeholder numbers.",
 } as const;
 
 const FINALIZE_ITEMS_PROP = {
@@ -102,11 +104,13 @@ function finalizeBodySpec(mode: "baked" | "dynamic") {
     session_id: SESSION_ID_PROP,
     customer_name: {
       type: "string",
-      description: "Guest name",
+      description:
+        "Exact name the caller stated after you asked. Required. Never use placeholders, training examples, or assumed names.",
     },
     customer_phone: {
       type: "string",
-      description: "Guest phone",
+      description:
+        "Exact phone the caller stated after you asked. Required. Never use fake, example, or assumed numbers; if missing, ask the caller—do not call this tool.",
     },
     items: FINALIZE_ITEMS_PROP,
   };
@@ -114,7 +118,7 @@ function finalizeBodySpec(mode: "baked" | "dynamic") {
     return {
       type: "object",
       description:
-        "Confirms the order with guest name and phone. Restaurant is fixed for this agent.",
+        "Confirms the order with the caller's real name and phone only. Restaurant is fixed for this agent. Do not call until the guest has clearly provided both values.",
       required: ["session_id", "customer_name", "customer_phone"],
       properties: baseProps,
     };
@@ -122,7 +126,7 @@ function finalizeBodySpec(mode: "baked" | "dynamic") {
   return {
     type: "object",
     description:
-      "Confirm order; items optional if draft already synced",
+      "Confirm order with authentic guest identity only; items optional if draft already synced. If name or phone was not spoken by the caller, ask first—do not call.",
     required: [
       "restaurant_id",
       "session_id",

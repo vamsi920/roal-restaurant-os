@@ -45,6 +45,10 @@ export function LiveOrdersPanel({
     useState<PhoneOrderReceiptRow[]>(initialReceipts);
   const [tab, setTab] = useState<Tab>("live");
   const [refreshing, setRefreshing] = useState(false);
+  /** Browser Realtime socket: degraded = fast HTTP poll until reconnect. */
+  const [realtimeUi, setRealtimeUi] = useState<"connecting" | "live" | "degraded">(
+    "connecting"
+  );
 
   const draftsRef = useRef(initialDraftOrders);
   const receiptsRef = useRef(initialReceipts);
@@ -86,65 +90,138 @@ export function LiveOrdersPanel({
 
   useEffect(() => {
     const supabase = getBrowserSupabase();
-    const channel = supabase
-      .channel(`orders-${restaurantId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "draft_orders",
-          filter: `restaurant_id=eq.${restaurantId}`,
-        },
-        (payload) => {
-          if (payload.eventType === "INSERT") {
-            const row = payload.new as DraftOrderRow;
-            setDraftRows((prev) =>
-              prev.some((o) => o.id === row.id) ? prev : [row, ...prev]
-            );
-          } else if (payload.eventType === "UPDATE") {
-            const row = payload.new as DraftOrderRow;
-            setDraftRows((prev) =>
-              prev.map((o) => (o.id === row.id ? row : o))
-            );
-          } else if (payload.eventType === "DELETE") {
-            const row = payload.old as DraftOrderRow;
-            setDraftRows((prev) => prev.filter((o) => o.id !== row.id));
-          }
-        }
-      )
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "phone_order_receipts",
-          filter: `restaurant_id=eq.${restaurantId}`,
-        },
-        (payload) => {
-          if (payload.eventType === "INSERT") {
-            const row = payload.new as PhoneOrderReceiptRow;
-            setReceipts((prev) => {
-              const rest = prev.filter((p) => p.session_id !== row.session_id);
-              return [row, ...rest];
-            });
-          } else if (payload.eventType === "UPDATE") {
-            const row = payload.new as PhoneOrderReceiptRow;
-            setReceipts((prev) =>
-              prev.map((o) => (o.id === row.id ? row : o))
-            );
-          } else if (payload.eventType === "DELETE") {
-            const row = payload.old as PhoneOrderReceiptRow;
-            setReceipts((prev) => prev.filter((o) => o.id !== row.id));
-          }
-        }
-      )
-      .subscribe();
+    let cancelled = false;
+    let pollInterval: ReturnType<typeof setInterval> | null = null;
+    let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+    let backoffAttempt = 0;
+    let activeChannel: ReturnType<typeof supabase.channel> | null = null;
 
-    const poll = setInterval(() => void fetchAll(), 28000);
+    const stopPoll = () => {
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
+    };
+
+    const startPoll = (ms: number) => {
+      stopPoll();
+      pollInterval = setInterval(() => {
+        void fetchAll();
+      }, ms);
+    };
+
+    const clearReconnect = () => {
+      if (reconnectTimer) {
+        clearTimeout(reconnectTimer);
+        reconnectTimer = null;
+      }
+    };
+
+    const teardownChannel = () => {
+      if (activeChannel) {
+        void supabase.removeChannel(activeChannel);
+        activeChannel = null;
+      }
+    };
+
+    const attach = () => {
+      if (cancelled) return;
+      teardownChannel();
+      setRealtimeUi("connecting");
+      startPoll(6000);
+
+      const ch = supabase
+        .channel(`orders-${restaurantId}`)
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "draft_orders",
+            filter: `restaurant_id=eq.${restaurantId}`,
+          },
+          (payload) => {
+            if (payload.eventType === "INSERT") {
+              const row = payload.new as DraftOrderRow;
+              setDraftRows((prev) =>
+                prev.some((o) => o.id === row.id) ? prev : [row, ...prev]
+              );
+            } else if (payload.eventType === "UPDATE") {
+              const row = payload.new as DraftOrderRow;
+              setDraftRows((prev) =>
+                prev.map((o) => (o.id === row.id ? row : o))
+              );
+            } else if (payload.eventType === "DELETE") {
+              const row = payload.old as DraftOrderRow;
+              setDraftRows((prev) => prev.filter((o) => o.id !== row.id));
+            }
+          }
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "phone_order_receipts",
+            filter: `restaurant_id=eq.${restaurantId}`,
+          },
+          (payload) => {
+            if (payload.eventType === "INSERT") {
+              const row = payload.new as PhoneOrderReceiptRow;
+              setReceipts((prev) => {
+                const rest = prev.filter((p) => p.session_id !== row.session_id);
+                return [row, ...rest];
+              });
+            } else if (payload.eventType === "UPDATE") {
+              const row = payload.new as PhoneOrderReceiptRow;
+              setReceipts((prev) =>
+                prev.map((o) => (o.id === row.id ? row : o))
+              );
+            } else if (payload.eventType === "DELETE") {
+              const row = payload.old as PhoneOrderReceiptRow;
+              setReceipts((prev) => prev.filter((o) => o.id !== row.id));
+            }
+          }
+        )
+        .subscribe((status, err) => {
+          if (cancelled) return;
+          if (status === "SUBSCRIBED") {
+            backoffAttempt = 0;
+            setRealtimeUi("live");
+            startPoll(28000);
+            return;
+          }
+          if (
+            status === "CHANNEL_ERROR" ||
+            status === "TIMED_OUT"
+          ) {
+            if (process.env.NODE_ENV === "development") {
+              console.warn("[LiveOrdersPanel] Realtime:", status, err);
+            }
+            setRealtimeUi("degraded");
+            startPoll(6000);
+            void fetchAll();
+            teardownChannel();
+            backoffAttempt += 1;
+            const delay = Math.min(30_000, 1500 * 2 ** (backoffAttempt - 1));
+            clearReconnect();
+            reconnectTimer = setTimeout(() => {
+              reconnectTimer = null;
+              attach();
+            }, delay);
+          }
+        });
+      activeChannel = ch;
+    };
+
+    void fetchAll();
+    attach();
+
     return () => {
-      clearInterval(poll);
-      supabase.removeChannel(channel);
+      cancelled = true;
+      clearReconnect();
+      stopPoll();
+      teardownChannel();
     };
   }, [restaurantId, fetchAll]);
 
@@ -190,7 +267,14 @@ export function LiveOrdersPanel({
           <p className="mt-0.5 text-xs text-muted">
             In-progress carts and finalized receipts for{" "}
             <span className="font-medium text-ink">this restaurant only</span>.
-            Stored in Postgres; syncs over Realtime.
+            Stored in Postgres; syncs over Realtime
+            {realtimeUi === "degraded" && (
+              <>
+                {" "}
+                <span className="text-warning">(using frequent refresh until live socket reconnects)</span>
+              </>
+            )}
+            .
           </p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
@@ -213,9 +297,35 @@ export function LiveOrdersPanel({
             </svg>
             {refreshing ? "Syncing…" : "Refresh"}
           </button>
-          <span className="chip">
-            <span className="pulse-dot" />
-            Realtime
+          <span
+            className={cn(
+              "chip",
+              realtimeUi === "degraded" && "border-warning/50 bg-warning/[0.08]"
+            )}
+            title={
+              realtimeUi === "live"
+                ? "Subscribed to Postgres changes"
+                : realtimeUi === "connecting"
+                  ? "Connecting to Realtime…"
+                  : "Realtime unavailable — polling every 6s"
+            }
+          >
+            {realtimeUi === "live" ? (
+              <>
+                <span className="pulse-dot" />
+                Realtime
+              </>
+            ) : realtimeUi === "connecting" ? (
+              <>
+                <span className="h-2 w-2 animate-pulse rounded-full bg-subtle" />
+                Connecting…
+              </>
+            ) : (
+              <>
+                <span className="h-2 w-2 rounded-full bg-warning" />
+                Polling 6s
+              </>
+            )}
           </span>
         </div>
       </div>
