@@ -73,7 +73,7 @@ If the Realtime websocket fails in the browser (network, extensions, or config),
 ## Tool 1 — `get_menu_items` (Server Tool)
 
 - **Name (ElevenLabs):** `get_menu_items`
-- **Description:** Fetches the current restaurant menu (categories, items, modifiers, prices, availability). Call after pickup/delivery and contact details (per ROAL prompt), or when the guest asks what you serve.
+- **Description:** Fetches the current restaurant menu (categories, items, modifiers, prices, availability). Call **immediately** when the session starts (before or while the guest answers pickup/delivery)—**without** telling them you are loading or pulling up the menu. Call again when the guest asks what you serve if the menu may have changed.
 - **Method:** `GET` or `POST`
 - **URL:** `https://<project-ref>.supabase.co/functions/v1/get-menu`
 - **Headers:** `Authorization: Bearer <AGENT_TOOL_SECRET>` · `apikey: <Supabase anon / publishable key>`  
@@ -164,9 +164,9 @@ To **change** agent settings from code, `PATCH /api/integrations/elevenlabs/agen
 
 ```
 Tool usage policy:
-1. Opening uses the restaurant name from session placeholders. After pickup/delivery, ask for the guest's real name and callback number, then call get_menu_items so you only sell items that exist today.
+1. Call get_menu_items immediately at session start (no loading phrases to the guest). Opening already names the restaurant and asks pickup vs delivery.
 2. Every time the guest adds, removes, or changes an item or modifier, immediately call sync_draft_order with the full current items array and status "draft". Do not wait until the end of the call.
-3. When the guest confirms the order is complete and you have their real name and phone from the call, call finalize_order with customer_name, customer_phone, and the same session_id. If the cart is already in sync_draft_order, you may omit the items array.
+3. When the guest is done ordering, give a concise recap (items + quantities + one total if prices are known), then ask for real name and phone. Call finalize_order only with values they actually said.
 4. Validation: If the guest orders something not in the last get_menu_items response, say it is not available and suggest the closest menu option. Never pass placeholder or invented name/phone to finalize_order.
 ```
 

@@ -272,7 +272,7 @@ export async function syncRoalElevenLabsTools(options?: {
           type: "webhook",
           name: "get_menu_items",
           description:
-            "Fetches the live menu for this restaurant from Supabase. Call at call start. No parameters required.",
+            "Fetches the live menu for this restaurant from Supabase. Invoke immediately when the session starts (first model turn, ideally while the guest answers pickup/delivery). Do not tell the guest you are loading or pulling up the menu. No parameters required.",
           response_timeout_secs: 45,
           api_schema: {
             url: `${edgeBase}/functions/v1/get-menu?restaurant_id=${encodeURIComponent(rid)}&restaurant_name=${encodeURIComponent(resolvedName)}`,
@@ -284,7 +284,7 @@ export async function syncRoalElevenLabsTools(options?: {
           type: "webhook",
           name: "get_menu_items",
           description:
-            "Fetches the live menu from Supabase. Call immediately at call start. Requires conversation dynamic variables restaurant_id (uuid) and restaurant_name (spoken name). Response JSON includes restaurant.name for greetings.",
+            "Fetches the live menu from Supabase. Invoke immediately at session start—before filler speech—while the guest may still be answering pickup/delivery. Do not announce loading or menu fetch to the caller. Requires conversation dynamic variables restaurant_id (uuid) and restaurant_name (spoken name). Response JSON includes restaurant.name for greetings.",
           response_timeout_secs: 45,
           api_schema: {
             url: `${edgeBase}/functions/v1/get-menu`,
