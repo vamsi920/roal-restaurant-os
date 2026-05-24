@@ -1,0 +1,301 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+import {
+  aggregateMenuScans,
+  aggregatePopularItems,
+  popularItemSources,
+  applyCanceledOrdersToSeries,
+  averagePrepMinutes,
+  bucketUsageByDay,
+  buildMenuContexts,
+  countCanceledByRestaurant,
+  countReceiptsByRestaurant,
+  countUsageByRestaurant,
+  conversionPercent,
+  estimateRevenueCents,
+  prepMinutesByRestaurant,
+  type MenuImportRow,
+  type OrderRow,
+  type ReceiptRow,
+  type UsageRow,
+} from "@/lib/analytics/aggregate";
+import {
+  analyticsRangeBounds,
+  buildDaySeries,
+  parseAnalyticsRangeKey,
+} from "@/lib/analytics/range";
+import type {
+  AnalyticsRangeKey,
+  AnalyticsSnapshot,
+  RestaurantAnalyticsRow,
+} from "@/lib/analytics/types";
+import { orderPricingFromProfile } from "@/lib/orders/pricing-settings";
+import type {
+  DbItem,
+  DbModifier,
+  Restaurant,
+  RestaurantProfile,
+} from "@/lib/types";
+
+export async function loadOrganizationAnalytics(
+  supabase: SupabaseClient,
+  input: {
+    organizationId: string;
+    organizationName: string;
+    rangeKey?: AnalyticsRangeKey | string | string[];
+  }
+): Promise<AnalyticsSnapshot> {
+  const rangeKey = parseAnalyticsRangeKey(input.rangeKey);
+  const { since, until } = analyticsRangeBounds(rangeKey);
+  const sinceIso = since.toISOString();
+  const untilIso = until.toISOString();
+  const dayKeys = buildDaySeries(since, until);
+
+  const { data: restaurants, error: restError } = await supabase
+    .from("restaurants")
+    .select("id, name")
+    .eq("organization_id", input.organizationId)
+    .order("name", { ascending: true });
+
+  if (restError) throw new Error(restError.message);
+
+  const restList = (restaurants ?? []) as Pick<Restaurant, "id" | "name">[];
+  const restaurantIds = restList.map((r) => r.id);
+  const restaurantIdSet = new Set(restaurantIds);
+  if (restaurantIds.length === 0) {
+    return emptySnapshot(input, rangeKey, sinceIso, untilIso, dayKeys);
+  }
+
+  const [
+    usageResult,
+    ordersResult,
+    receiptsResult,
+    importsResult,
+    categoriesResult,
+    profilesResult,
+  ] = await Promise.all([
+    supabase
+      .from("usage_events")
+      .select("event_type, occurred_at, restaurant_id, metadata")
+      .eq("organization_id", input.organizationId)
+      .gte("occurred_at", sinceIso)
+      .lte("occurred_at", untilIso),
+    supabase
+      .from("draft_orders")
+      .select(
+        "restaurant_id, session_id, status, items, created_at, completed_at, canceled_at"
+      )
+      .in("restaurant_id", restaurantIds)
+      .gte("created_at", sinceIso)
+      .lte("created_at", untilIso),
+    supabase
+      .from("phone_order_receipts")
+      .select("restaurant_id, session_id, items, created_at")
+      .in("restaurant_id", restaurantIds)
+      .gte("created_at", sinceIso)
+      .lte("created_at", untilIso),
+    supabase
+      .from("menu_imports")
+      .select("extraction_status, created_at")
+      .eq("organization_id", input.organizationId)
+      .gte("created_at", sinceIso)
+      .lte("created_at", untilIso),
+    supabase
+      .from("categories")
+      .select("id, restaurant_id")
+      .in("restaurant_id", restaurantIds),
+    supabase
+      .from("restaurant_profiles")
+      .select("restaurant_id, tax_rate_percent, service_fee_percent")
+      .in("restaurant_id", restaurantIds),
+  ]);
+
+  for (const result of [
+    usageResult,
+    ordersResult,
+    receiptsResult,
+    importsResult,
+    categoriesResult,
+    profilesResult,
+  ]) {
+    if (result.error) throw new Error(result.error.message);
+  }
+
+  const usage = (usageResult.data ?? []) as UsageRow[];
+  const orders = (ordersResult.data ?? []) as OrderRow[];
+  const receipts = (receiptsResult.data ?? []) as ReceiptRow[];
+  const imports = (importsResult.data ?? []) as MenuImportRow[];
+
+  const categoryRestaurantMap = new Map<string, string>();
+  for (const cat of categoriesResult.data ?? []) {
+    categoryRestaurantMap.set(cat.id as string, cat.restaurant_id as string);
+  }
+
+  const categoryIds = [...categoryRestaurantMap.keys()];
+  let allItems: DbItem[] = [];
+  let modifiers: DbModifier[] = [];
+
+  if (categoryIds.length > 0) {
+    const { data: itemRows, error: itemsScopedError } = await supabase
+      .from("items")
+      .select("*")
+      .in("category_id", categoryIds);
+    if (itemsScopedError) throw new Error(itemsScopedError.message);
+    allItems = (itemRows ?? []) as DbItem[];
+
+    const itemIds = allItems.map((i) => i.id);
+    if (itemIds.length > 0) {
+      const { data: modRows, error: modError } = await supabase
+        .from("modifiers")
+        .select("*")
+        .in("item_id", itemIds);
+      if (modError) throw new Error(modError.message);
+      modifiers = (modRows as DbModifier[]) ?? [];
+    }
+  }
+
+  const menuByRestaurant = buildMenuContexts(
+    allItems,
+    modifiers,
+    restaurantIds,
+    categoryRestaurantMap
+  );
+
+  const pricingByRestaurant = new Map(
+    ((profilesResult.data ?? []) as Pick<
+      RestaurantProfile,
+      "restaurant_id" | "tax_rate_percent" | "service_fee_percent"
+    >[]).map((p) => [
+      p.restaurant_id,
+      orderPricingFromProfile(p),
+    ])
+  );
+
+  const voiceOrders = usage.filter((e) => e.event_type === "voice_order").length;
+  const ordersCompleted = usage.filter(
+    (e) => e.event_type === "order_completed"
+  ).length;
+  const ordersCanceled = orders.filter((o) => o.status === "canceled").length;
+  const ordersFinalized = receipts.length;
+
+  const completedOrders = orders.filter((o) => o.status === "completed");
+  const prep = averagePrepMinutes(completedOrders);
+  const revenue = estimateRevenueCents(
+    completedOrders,
+    menuByRestaurant,
+    pricingByRestaurant
+  );
+
+  let ordersOverTime = bucketUsageByDay(usage, dayKeys);
+  ordersOverTime = applyCanceledOrdersToSeries(ordersOverTime, orders);
+
+  const popularSources = popularItemSources(completedOrders, receipts);
+
+  const usageByRest = countUsageByRestaurant(usage, restaurantIdSet);
+  const canceledByRest = countCanceledByRestaurant(orders);
+  const receiptsByRest = countReceiptsByRestaurant(receipts);
+  const prepByRest = prepMinutesByRestaurant(completedOrders);
+
+  const byRestaurant: RestaurantAnalyticsRow[] = restList.map((r) => {
+    const usageSlice = usageByRest.get(r.id) ?? { voice: 0, completed: 0 };
+    const restCompleted = completedOrders.filter(
+      (o) => o.restaurant_id === r.id
+    );
+    const restRevenue = estimateRevenueCents(
+      restCompleted,
+      menuByRestaurant,
+      pricingByRestaurant
+    );
+    const prepSlice = prepByRest.get(r.id) ?? { avg: null, sampleSize: 0 };
+
+    return {
+      restaurantId: r.id,
+      restaurantName: r.name,
+      voiceOrders: usageSlice.voice,
+      finalized: receiptsByRest.get(r.id) ?? 0,
+      completed: usageSlice.completed,
+      canceled: canceledByRest.get(r.id) ?? 0,
+      conversionPercent: conversionPercent(
+        usageSlice.completed,
+        usageSlice.voice
+      ),
+      revenueCents: restRevenue.totalCents,
+      revenueComplete: restRevenue.complete,
+      avgPrepMinutes: prepSlice.avg,
+    };
+  });
+
+  return {
+    organizationId: input.organizationId,
+    organizationName: input.organizationName,
+    rangeKey,
+    since: sinceIso,
+    until: untilIso,
+    restaurantCount: restList.length,
+    summary: {
+      voiceOrders,
+      ordersFinalized,
+      ordersCompleted,
+      ordersCanceled,
+      conversionPercent: conversionPercent(ordersCompleted, voiceOrders),
+      avgPrepMinutes: prep.avg,
+      prepSampleSize: prep.sampleSize,
+      revenueCents: revenue.totalCents,
+      revenueComplete: revenue.complete,
+      revenueOrderCount: revenue.orderCount,
+    },
+    ordersOverTime,
+    popularItems: aggregatePopularItems(popularSources),
+    byRestaurant,
+    menuScans: aggregateMenuScans(
+      imports,
+      usage.filter((e) => e.event_type === "menu_scan")
+    ),
+  };
+}
+
+function emptySnapshot(
+  input: {
+    organizationId: string;
+    organizationName: string;
+  },
+  rangeKey: AnalyticsRangeKey,
+  since: string,
+  until: string,
+  dayKeys: string[]
+): AnalyticsSnapshot {
+  return {
+    organizationId: input.organizationId,
+    organizationName: input.organizationName,
+    rangeKey,
+    since,
+    until,
+    restaurantCount: 0,
+    summary: {
+      voiceOrders: 0,
+      ordersFinalized: 0,
+      ordersCompleted: 0,
+      ordersCanceled: 0,
+      conversionPercent: null,
+      avgPrepMinutes: null,
+      prepSampleSize: 0,
+      revenueCents: null,
+      revenueComplete: true,
+      revenueOrderCount: 0,
+    },
+    ordersOverTime: dayKeys.map((date) => ({
+      date,
+      voiceOrders: 0,
+      completed: 0,
+      canceled: 0,
+    })),
+    popularItems: [],
+    byRestaurant: [],
+    menuScans: {
+      attempts: 0,
+      extracted: 0,
+      committed: 0,
+      failed: 0,
+      successPercent: null,
+    },
+  };
+}

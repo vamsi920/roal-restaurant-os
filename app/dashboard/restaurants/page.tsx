@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { getBrowserSupabase } from "@/lib/supabase/client";
 import { cn } from "@/lib/cn";
 import type { Restaurant } from "@/lib/types";
@@ -54,7 +55,7 @@ export default function RestaurantsPage() {
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "restaurants" },
-        (payload) => {
+        (payload: RealtimePostgresChangesPayload<Restaurant>) => {
           if (payload.eventType === "INSERT") {
             const row = payload.new as Restaurant;
             setRestaurants((prev) => {
@@ -96,8 +97,8 @@ export default function RestaurantsPage() {
             <span className="h-px w-6 bg-line" />
             Dashboard
           </div>
-          <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-            Your <span className="gradient-text">restaurants</span>
+          <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+            Your restaurants
           </h1>
           <p className="mt-1.5 max-w-xl text-pretty text-sm text-muted">
             Spin up a workspace per location. Upload a menu photo and watch
@@ -110,7 +111,7 @@ export default function RestaurantsPage() {
       </div>
 
       {loading ? (
-        <LoadingState />
+        <LoadingState aria-busy="true" />
       ) : error ? (
         <ErrorState error={error} onRetry={loadRestaurants} />
       ) : restaurants.length === 0 ? (
@@ -169,10 +170,7 @@ function RestaurantCard({
       </div>
 
       <div className="relative z-10 mt-5">
-        <h3
-          className="truncate text-base font-semibold tracking-tight !text-black"
-          style={{ color: "#000000" }}
-        >
+        <h3 className="truncate text-base font-semibold tracking-tight text-ink">
           {restaurant.name}
         </h3>
         <p className="mt-1 text-xs text-subtle">
@@ -195,9 +193,15 @@ function RestaurantCard({
   );
 }
 
-function LoadingState() {
+function LoadingState({ "aria-busy": ariaBusy }: { "aria-busy"?: "true" }) {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div
+      className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      role="status"
+      aria-live="polite"
+      aria-busy={ariaBusy}
+      aria-label="Loading restaurants"
+    >
       {Array.from({ length: 4 }).map((_, idx) => (
         <div key={idx} className="glass-card p-5">
           <div className="skeleton h-10 w-10 rounded-lg" />
@@ -210,6 +214,7 @@ function LoadingState() {
           </div>
         </div>
       ))}
+      <span className="sr-only">Loading restaurants…</span>
     </div>
   );
 }
@@ -221,6 +226,8 @@ function ErrorState({
   error: string;
   onRetry: () => Promise<void>;
 }) {
+  const [retrying, setRetrying] = useState(false);
+
   return (
     <div className="glass-card p-8">
       <h3 className="text-lg font-semibold">Could not load restaurants</h3>
@@ -228,9 +235,13 @@ function ErrorState({
       <button
         type="button"
         className="btn-primary mt-4"
-        onClick={() => void onRetry()}
+        disabled={retrying}
+        onClick={() => {
+          setRetrying(true);
+          void onRetry().finally(() => setRetrying(false));
+        }}
       >
-        Retry
+        {retrying ? "Retrying…" : "Retry"}
       </button>
     </div>
   );
@@ -246,9 +257,13 @@ function EmptyState() {
         </svg>
       </div>
       <h3 className="relative mt-5 text-lg font-semibold">No restaurants yet</h3>
-      <p className="relative mx-auto mt-2 max-w-md text-sm text-muted">
-        Create your first restaurant to start scanning menus.
+      <p className="relative mx-auto mt-2 max-w-md text-pretty text-sm text-muted">
+        Add a location to scan your menu, run the kitchen display, and connect phone
+        ordering.
       </p>
+      <div className="relative mt-6 flex justify-center">
+        <CreateRestaurantButton />
+      </div>
     </div>
   );
 }

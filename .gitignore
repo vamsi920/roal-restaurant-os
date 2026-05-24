@@ -16,10 +16,15 @@
 # production
 /build
 
-# misc
-.DS_Store
+# QA browser captures (local only)
+.qa-screenshots/
+
 *.pem
 .cursor/
+
+# Stray media at repo root (canonical assets live under public/)
+/*.mp4
+/*.mov
 
 # debug
 npm-debug.log*

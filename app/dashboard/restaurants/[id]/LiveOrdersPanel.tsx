@@ -7,10 +7,52 @@ import {
   useMemo,
   useRef,
   useState,
+  type ReactNode,
 } from "react";
+import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
+import { reportRealtimeDegraded } from "@/lib/notifications/report-realtime-degraded";
 import { getBrowserSupabase } from "@/lib/supabase/client";
 import type { DraftOrderRow, PhoneOrderReceiptRow } from "@/lib/types";
+import {
+  compareKitchenQueue,
+  isQueuedKitchenStatus,
+  isTerminalOrderStatus,
+  isVoiceCartStatus,
+  normalizeOrderStatus,
+  ORDER_STATUS_LABELS,
+  STATUS_BADGE_CLASS,
+} from "@/lib/order-status";
 import { cn } from "@/lib/cn";
+import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
+import { KitchenOrderCard } from "./KitchenOrderCard";
+import {
+  OrderDetailModal,
+  type OrderDetailSelection,
+} from "./OrderDetailModal";
+import {
+  CustomerLine,
+  OrderCardHeader,
+  OrderItemsList,
+} from "./order-card-parts";
+import { useOrderStatusActions } from "./useOrderStatusActions";
+import { mergeFetchedDraftOrders } from "@/lib/orders/merge-fetched-orders";
+import type { OrderPricingSettings } from "@/lib/orders/pricing-settings";
+import { LEGACY_CONFIRMED_STATUS } from "@/lib/order-status";
+import type { DbItem, DbModifier } from "@/lib/types";
+
+function normalizeDraftRow(row: DraftOrderRow): DraftOrderRow {
+  const status =
+    row.status === LEGACY_CONFIRMED_STATUS ? "new" : row.status;
+  return {
+    ...row,
+    status,
+    accepted_at: row.accepted_at ?? null,
+    in_progress_at: row.in_progress_at ?? null,
+    ready_at: row.ready_at ?? null,
+    completed_at: row.completed_at ?? null,
+    canceled_at: row.canceled_at ?? null,
+  };
+}
 
 function bootstrapKey(
   drafts: DraftOrderRow[],
@@ -27,28 +69,92 @@ function bootstrapKey(
   return `${d}__${r}`;
 }
 
-type Tab = "live" | "done";
+type Tab = "queue" | "live" | "done";
 
 type Props = {
   restaurantId: string;
+  restaurantName: string;
+  menuItems: DbItem[];
+  menuModifiers: DbModifier[];
+  pricingSettings: OrderPricingSettings;
   initialDraftOrders: DraftOrderRow[];
   initialReceipts: PhoneOrderReceiptRow[];
+  initialLoadError?: string | null;
 };
+
+function queueCardStyle(status: string) {
+  const n = normalizeOrderStatus(status);
+  switch (n) {
+    case "new":
+      return {
+        border: "border-accent/40",
+        bg: "bg-accent/[0.06]",
+      };
+    case "accepted":
+      return {
+        border: "border-accent/30",
+        bg: "bg-card",
+      };
+    case "in_progress":
+      return {
+        border: "border-warning/40",
+        bg: "bg-warning/[0.06]",
+      };
+    case "ready":
+      return {
+        border: "border-success/40",
+        bg: "bg-success/[0.06]",
+      };
+    default:
+      return {
+        border: "border-line",
+        bg: "bg-elev",
+      };
+  }
+}
 
 export function LiveOrdersPanel({
   restaurantId,
+  restaurantName,
+  menuItems,
+  menuModifiers,
+  pricingSettings,
   initialDraftOrders,
   initialReceipts,
+  initialLoadError = null,
 }: Props) {
-  const [draftRows, setDraftRows] = useState<DraftOrderRow[]>(initialDraftOrders);
+  const [draftRows, setDraftRows] = useState<DraftOrderRow[]>(() =>
+    initialDraftOrders.map(normalizeDraftRow)
+  );
   const [receipts, setReceipts] =
     useState<PhoneOrderReceiptRow[]>(initialReceipts);
-  const [tab, setTab] = useState<Tab>("live");
+  const [syncError, setSyncError] = useState<string | null>(initialLoadError);
+  const [tab, setTab] = useState<Tab>("queue");
+  const [selection, setSelection] = useState<OrderDetailSelection | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  /** Browser Realtime socket: degraded = fast HTTP poll until reconnect. */
   const [realtimeUi, setRealtimeUi] = useState<"connecting" | "live" | "degraded">(
     "connecting"
   );
+
+  const { applyAction, pending, errors, clearError, mergeRealtimeRow } =
+    useOrderStatusActions(restaurantId, setDraftRows);
+  const pendingRef = useRef(pending);
+  pendingRef.current = pending;
+
+  const selectedDraftId =
+    selection?.kind === "draft" ? selection.order.id : null;
+
+  useEffect(() => {
+    if (!selectedDraftId) return;
+    const fresh = draftRows.find((o) => o.id === selectedDraftId);
+    if (fresh) {
+      setSelection((prev) =>
+        prev?.kind === "draft" && prev.order.id === selectedDraftId
+          ? { kind: "draft", order: fresh }
+          : prev
+      );
+    }
+  }, [draftRows, selectedDraftId]);
 
   const draftsRef = useRef(initialDraftOrders);
   const receiptsRef = useRef(initialReceipts);
@@ -61,7 +167,7 @@ export function LiveOrdersPanel({
   );
 
   useLayoutEffect(() => {
-    setDraftRows(draftsRef.current);
+    setDraftRows(draftsRef.current.map(normalizeDraftRow));
     setReceipts(receiptsRef.current);
   }, [serverKey]);
 
@@ -80,8 +186,18 @@ export function LiveOrdersPanel({
         .order("created_at", { ascending: false })
         .limit(150),
     ]);
+    const errMsg = dRes.error?.message ?? rRes.error?.message ?? null;
+    if (errMsg) {
+      setSyncError(formatSupabaseClientError(errMsg));
+    } else {
+      setSyncError(null);
+    }
     if (!dRes.error && Array.isArray(dRes.data)) {
-      setDraftRows(dRes.data as DraftOrderRow[]);
+      const fetched = (dRes.data as DraftOrderRow[]).map(normalizeDraftRow);
+      const pendingIds = new Set(Object.keys(pendingRef.current));
+      setDraftRows((prev) =>
+        mergeFetchedDraftOrders(prev, fetched, pendingIds)
+      );
     }
     if (!rRes.error && Array.isArray(rRes.data)) {
       setReceipts(rRes.data as PhoneOrderReceiptRow[]);
@@ -140,14 +256,17 @@ export function LiveOrdersPanel({
             table: "draft_orders",
             filter: `restaurant_id=eq.${restaurantId}`,
           },
-          (payload) => {
+          (payload: RealtimePostgresChangesPayload<DraftOrderRow>) => {
             if (payload.eventType === "INSERT") {
-              const row = payload.new as DraftOrderRow;
+              const row = normalizeDraftRow(payload.new as DraftOrderRow);
+              if (row.restaurant_id !== restaurantId) return;
               setDraftRows((prev) =>
                 prev.some((o) => o.id === row.id) ? prev : [row, ...prev]
               );
             } else if (payload.eventType === "UPDATE") {
-              const row = payload.new as DraftOrderRow;
+              const row = normalizeDraftRow(payload.new as DraftOrderRow);
+              if (row.restaurant_id !== restaurantId) return;
+              if (!mergeRealtimeRow(row)) return;
               setDraftRows((prev) =>
                 prev.map((o) => (o.id === row.id ? row : o))
               );
@@ -165,7 +284,7 @@ export function LiveOrdersPanel({
             table: "phone_order_receipts",
             filter: `restaurant_id=eq.${restaurantId}`,
           },
-          (payload) => {
+          (payload: RealtimePostgresChangesPayload<PhoneOrderReceiptRow>) => {
             if (payload.eventType === "INSERT") {
               const row = payload.new as PhoneOrderReceiptRow;
               setReceipts((prev) => {
@@ -183,7 +302,7 @@ export function LiveOrdersPanel({
             }
           }
         )
-        .subscribe((status, err) => {
+        .subscribe((status: string, err?: Error) => {
           if (cancelled) return;
           if (status === "SUBSCRIBED") {
             backoffAttempt = 0;
@@ -191,14 +310,12 @@ export function LiveOrdersPanel({
             startPoll(28000);
             return;
           }
-          if (
-            status === "CHANNEL_ERROR" ||
-            status === "TIMED_OUT"
-          ) {
+          if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
             if (process.env.NODE_ENV === "development") {
               console.warn("[LiveOrdersPanel] Realtime:", status, err);
             }
             setRealtimeUi("degraded");
+            reportRealtimeDegraded({ restaurantId, restaurantName });
             startPoll(6000);
             void fetchAll();
             teardownChannel();
@@ -217,18 +334,40 @@ export function LiveOrdersPanel({
     void fetchAll();
     attach();
 
+    function onVisible() {
+      if (document.visibilityState === "visible") {
+        void fetchAll();
+      }
+    }
+    document.addEventListener("visibilitychange", onVisible);
+
     return () => {
       cancelled = true;
+      document.removeEventListener("visibilitychange", onVisible);
       clearReconnect();
       stopPoll();
       teardownChannel();
     };
-  }, [restaurantId, fetchAll]);
+  }, [restaurantId, restaurantName, fetchAll, mergeRealtimeRow]);
+
+  const kitchenQueue = useMemo(
+    () =>
+      [...draftRows]
+        .filter((o) => isQueuedKitchenStatus(o.status))
+        .sort((a, b) => {
+          const byStatus = compareKitchenQueue(a.status, b.status);
+          if (byStatus !== 0) return byStatus;
+          return (
+            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+          );
+        }),
+    [draftRows]
+  );
 
   const liveCarts = useMemo(
     () =>
       [...draftRows]
-        .filter((o) => o.status === "draft")
+        .filter((o) => isVoiceCartStatus(o.status))
         .sort(
           (a, b) =>
             new Date(b.updated_at).getTime() -
@@ -237,15 +376,28 @@ export function LiveOrdersPanel({
     [draftRows]
   );
 
-  const doneSorted = useMemo(
+  const terminalOrders = useMemo(
     () =>
-      [...receipts].sort(
+      [...draftRows]
+        .filter((o) => isTerminalOrderStatus(o.status))
+        .sort(
+          (a, b) =>
+            new Date(b.updated_at).getTime() -
+            new Date(a.updated_at).getTime()
+        ),
+    [draftRows]
+  );
+
+  const receiptArchive = useMemo(() => {
+    const terminalSessions = new Set(terminalOrders.map((o) => o.session_id));
+    return [...receipts]
+      .filter((r) => !terminalSessions.has(r.session_id))
+      .sort(
         (a, b) =>
           new Date(b.created_at).getTime() -
           new Date(a.created_at).getTime()
-      ),
-    [receipts]
-  );
+      );
+  }, [receipts, terminalOrders]);
 
   async function onRefresh() {
     setRefreshing(true);
@@ -256,23 +408,41 @@ export function LiveOrdersPanel({
     }
   }
 
+  const emptyQueue = tab === "queue" && kitchenQueue.length === 0;
   const emptyLive = tab === "live" && liveCarts.length === 0;
-  const emptyDone = tab === "done" && doneSorted.length === 0;
+  const emptyDone =
+    tab === "done" &&
+    terminalOrders.length === 0 &&
+    receiptArchive.length === 0;
+
+  const modalPending =
+    selection?.kind === "draft" ? pending[selection.order.id] ?? null : null;
+  const modalError =
+    selection?.kind === "draft" ? errors[selection.order.id] ?? null : null;
 
   return (
-    <section className="glass-card overflow-hidden">
+    <>
+    <section className="kds-panel glass-card overflow-hidden">
+      {syncError ? (
+        <p
+          className="border-b border-danger/25 bg-danger/5 px-4 py-2 text-xs text-danger sm:px-5"
+          role="alert"
+        >
+          Orders could not be loaded. {syncError} Try Refresh or check your
+          connection.
+        </p>
+      ) : null}
       <div className="flex flex-col gap-3 border-b border-line px-4 py-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:px-5 sm:py-4">
         <div className="min-w-0">
           <h2 className="text-sm font-semibold">Phone orders</h2>
           <p className="mt-0.5 text-xs text-muted">
-            In-progress carts and finalized receipts for{" "}
-            <span className="font-medium text-ink">this restaurant only</span>.
-            Stored in Postgres; syncs over Realtime
+            Kitchen queue, live voice carts, and completed orders. Updates via
+            Realtime
             {realtimeUi === "degraded" && (
-              <>
+              <span className="text-warning">
                 {" "}
-                <span className="text-warning">(using frequent refresh until live socket reconnects)</span>
-              </>
+                (polling every 6s until reconnect)
+              </span>
             )}
             .
           </p>
@@ -282,7 +452,7 @@ export function LiveOrdersPanel({
             type="button"
             onClick={() => void onRefresh()}
             disabled={refreshing}
-            className="inline-flex min-h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-line bg-elev px-2.5 py-2 text-[11px] font-medium text-ink transition-colors hover:bg-card disabled:opacity-50 sm:w-auto sm:py-1.5"
+            className="inline-flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg border border-line bg-elev px-2.5 py-2 text-[11px] font-medium text-ink transition-colors hover:bg-card disabled:opacity-50 sm:w-auto"
           >
             <svg
               className={cn("h-3.5 w-3.5", refreshing && "animate-spin")}
@@ -293,7 +463,11 @@ export function LiveOrdersPanel({
               aria-hidden
             >
               <path d="M21 12a9 9 0 1 1-3-6.7" strokeLinecap="round" />
-              <path d="M21 3v6h-6" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M21 3v6h-6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             {refreshing ? "Syncing…" : "Refresh"}
           </button>
@@ -302,13 +476,6 @@ export function LiveOrdersPanel({
               "chip",
               realtimeUi === "degraded" && "border-warning/50 bg-warning/[0.08]"
             )}
-            title={
-              realtimeUi === "live"
-                ? "Subscribed to Postgres changes"
-                : realtimeUi === "connecting"
-                  ? "Connecting to Realtime…"
-                  : "Realtime unavailable — polling every 6s"
-            }
           >
             {realtimeUi === "live" ? (
               <>
@@ -330,69 +497,75 @@ export function LiveOrdersPanel({
         </div>
       </div>
 
-      <div className="flex border-b border-line px-2 pt-2 sm:px-3">
-        <button
-          type="button"
+      <div className="kds-order-tabs">
+        <TabButton
+          active={tab === "queue"}
+          onClick={() => setTab("queue")}
+          label="Kitchen queue"
+          count={kitchenQueue.length}
+          accentWhenActive
+        />
+        <TabButton
+          active={tab === "live"}
           onClick={() => setTab("live")}
-          className={cn(
-            "relative min-h-[44px] flex-1 rounded-t-lg px-2 py-2.5 text-xs font-medium transition-colors sm:px-3",
-            tab === "live"
-              ? "text-ink"
-              : "text-muted hover:text-ink/80"
-          )}
-        >
-          Live carts
-          <span
-            className={cn(
-              "ml-1.5 rounded-md px-1.5 py-0.5 text-[10px] font-semibold tabular-nums",
-              tab === "live" ? "bg-warning/20 text-amber-900" : "bg-elev text-subtle"
-            )}
-          >
-            {liveCarts.length}
-          </span>
-          {tab === "live" && (
-            <span className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-accent" />
-          )}
-        </button>
-        <button
-          type="button"
+          label="Live carts"
+          count={liveCarts.length}
+        />
+        <TabButton
+          active={tab === "done"}
           onClick={() => setTab("done")}
-          className={cn(
-            "relative min-h-[44px] flex-1 rounded-t-lg px-2 py-2.5 text-xs font-medium transition-colors sm:px-3",
-            tab === "done"
-              ? "text-ink"
-              : "text-muted hover:text-ink/80"
-          )}
-        >
-          Completed
-          <span
-            className={cn(
-              "ml-1.5 rounded-md px-1.5 py-0.5 text-[10px] font-semibold tabular-nums",
-              tab === "done" ? "bg-success/20 text-emerald-900" : "bg-elev text-subtle"
-            )}
-          >
-            {doneSorted.length}
-          </span>
-          {tab === "done" && (
-            <span className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-accent" />
-          )}
-        </button>
+          label="Done"
+          count={terminalOrders.length + receiptArchive.length}
+          successWhenActive
+        />
       </div>
 
-      <div className="max-h-[min(55svh,440px)] overflow-y-auto overscroll-contain p-3 sm:max-h-[440px] sm:p-4">
+      <div className="kds-order-body">
+        {tab === "queue" && emptyQueue && (
+          <KdsEmptyState title="Kitchen queue is empty">
+            Finalized phone orders land here as{" "}
+            <span className="font-medium text-ink">New</span> until you accept
+            them.
+          </KdsEmptyState>
+        )}
         {tab === "live" && emptyLive && (
-          <p className="py-10 text-center text-sm text-muted">
-            No active voice carts. When a caller is mid-order,{" "}
-            <code className="rounded bg-elev px-1 text-[11px]">sync_draft_order</code>{" "}
-            appears here.
-          </p>
+          <KdsEmptyState title="No live voice carts">
+            In-progress phone orders appear here while the caller is still on the
+            line. Connect the voice agent below to start taking calls.
+          </KdsEmptyState>
         )}
         {tab === "done" && emptyDone && (
-          <p className="py-10 text-center text-sm text-muted">
-            No completed orders yet. Finalized calls are saved here permanently
-            for this restaurant.
-          </p>
+          <KdsEmptyState title="No completed orders yet">
+            Completed and canceled tickets show up here for quick reference.
+          </KdsEmptyState>
         )}
+
+        {tab === "queue" && kitchenQueue.length > 0 && (
+          <ul className="space-y-3">
+            {kitchenQueue.map((o) => {
+              const style = queueCardStyle(o.status);
+              return (
+                <KitchenOrderCard
+                  key={o.id}
+                  order={o}
+                  pendingAction={pending[o.id] ?? null}
+                  error={errors[o.id] ?? null}
+                  onDismissError={() => clearError(o.id)}
+                  onAction={(action) => void applyAction(o, action)}
+                  onViewDetails={() =>
+                    setSelection({ kind: "draft", order: o })
+                  }
+                  menuItems={menuItems}
+                  menuModifiers={menuModifiers}
+                  pricingSettings={pricingSettings}
+                  borderClass={style.border}
+                  bgClass={style.bg}
+                />
+              );
+            })}
+          </ul>
+        )}
+
         {tab === "live" && liveCarts.length > 0 && (
           <ul className="space-y-3">
             {liveCarts.map((o) => (
@@ -401,12 +574,24 @@ export function LiveOrdersPanel({
                 className="rounded-xl border border-warning/40 bg-warning/[0.06] p-4 shadow-sm"
               >
                 <OrderCardHeader
-                  badge="draft"
-                  badgeClass="bg-warning/20 text-amber-900"
+                  badge={ORDER_STATUS_LABELS.draft}
+                  badgeClass={STATUS_BADGE_CLASS.draft}
                   sessionId={o.session_id}
                 />
-                <CustomerLine name={o.customer_name} phone={o.customer_phone} />
+                <CustomerLine
+                  name={o.customer_name}
+                  phone={o.customer_phone}
+                />
                 <OrderItemsList items={o.items} />
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSelection({ kind: "draft", order: o })
+                  }
+                  className="mt-3 min-h-10 w-full rounded-lg border border-line bg-elev text-xs font-semibold text-ink hover:bg-card sm:w-auto sm:px-4"
+                >
+                  Details
+                </button>
                 <p className="mt-2 text-[10px] text-subtle">
                   Updated {new Date(o.updated_at).toLocaleString()}
                 </p>
@@ -414,103 +599,165 @@ export function LiveOrdersPanel({
             ))}
           </ul>
         )}
-        {tab === "done" && doneSorted.length > 0 && (
-          <ul className="space-y-3">
-            {doneSorted.map((o) => (
-              <li
-                key={o.id}
-                className="rounded-xl border border-success/40 bg-success/[0.06] p-4 shadow-sm"
-              >
-                <OrderCardHeader
-                  badge="done"
-                  badgeClass="bg-success/20 text-emerald-900"
-                  sessionId={o.session_id}
-                />
-                <CustomerLine name={o.customer_name} phone={o.customer_phone} />
-                <OrderItemsList items={o.items} />
-                <p className="mt-2 text-[10px] text-subtle">
-                  Finalized {new Date(o.created_at).toLocaleString()}
-                </p>
-              </li>
-            ))}
-          </ul>
+
+        {tab === "done" && (terminalOrders.length > 0 || receiptArchive.length > 0) && (
+          <div className="space-y-6">
+            {terminalOrders.length > 0 ? (
+              <ul className="space-y-3">
+                {terminalOrders.map((o) => {
+                  const n = normalizeOrderStatus(o.status);
+                  const isCanceled = n === "canceled";
+                  return (
+                    <KitchenOrderCard
+                      key={o.id}
+                      order={o}
+                      pendingAction={null}
+                      error={null}
+                      onDismissError={() => {}}
+                      onAction={() => {}}
+                      onViewDetails={() =>
+                        setSelection({ kind: "draft", order: o })
+                      }
+                      menuItems={menuItems}
+                      menuModifiers={menuModifiers}
+                      pricingSettings={pricingSettings}
+                      borderClass={
+                        isCanceled
+                          ? "border-line"
+                          : "border-success/40"
+                      }
+                      bgClass={
+                        isCanceled
+                          ? "bg-elev"
+                          : "bg-success/[0.06]"
+                      }
+                    />
+                  );
+                })}
+              </ul>
+            ) : null}
+            {receiptArchive.length > 0 ? (
+              <div>
+                <h3 className="mb-2 text-[10px] font-medium uppercase tracking-wider text-subtle">
+                  Receipt archive
+                </h3>
+                <ul className="space-y-3">
+                  {receiptArchive.map((o) => (
+                    <li
+                      key={o.id}
+                      className="rounded-xl border border-line bg-elev p-4 shadow-sm"
+                    >
+                      <OrderCardHeader
+                        badge="Receipt"
+                        badgeClass="bg-elev text-muted"
+                        sessionId={o.session_id}
+                      />
+                      <CustomerLine
+                        name={o.customer_name}
+                        phone={o.customer_phone}
+                      />
+                      <OrderItemsList items={o.items} />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSelection({ kind: "receipt", receipt: o })
+                        }
+                        className="mt-3 min-h-10 rounded-lg border border-line bg-card px-4 text-xs font-semibold text-ink hover:bg-elev"
+                      >
+                        Details
+                      </button>
+                      <p className="mt-2 text-[10px] text-subtle">
+                        Finalized {new Date(o.created_at).toLocaleString()}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
         )}
       </div>
     </section>
+
+    <OrderDetailModal
+      open={!!selection}
+      selection={selection}
+      onClose={() => setSelection(null)}
+      restaurantName={restaurantName}
+      menuItems={menuItems}
+      menuModifiers={menuModifiers}
+      pricingSettings={pricingSettings}
+      pendingAction={modalPending}
+      actionError={modalError}
+      onDismissError={
+        selection?.kind === "draft"
+          ? () => clearError(selection.order.id)
+          : undefined
+      }
+      onAction={
+        selection?.kind === "draft"
+          ? (action) => void applyAction(selection.order, action)
+          : undefined
+      }
+    />
+    </>
   );
 }
 
-function OrderCardHeader({
-  badge,
-  badgeClass,
-  sessionId,
+function KdsEmptyState({
+  title,
+  children,
 }: {
-  badge: string;
-  badgeClass: string;
-  sessionId: string;
+  title: string;
+  children: ReactNode;
 }) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2">
-      <span
-        className={cn(
-          "rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
-          badgeClass
-        )}
-      >
-        {badge}
-      </span>
-      <span className="font-mono-tabular text-[11px] text-subtle">
-        {sessionId.length > 14
-          ? `${sessionId.slice(0, 12)}…`
-          : sessionId}
-      </span>
+    <div className="kds-empty-state">
+      <p className="kds-empty-state__title">{title}</p>
+      <p className="kds-empty-state__body">{children}</p>
     </div>
   );
 }
 
-function CustomerLine({
-  name,
-  phone,
+function TabButton({
+  active,
+  onClick,
+  label,
+  count,
+  accentWhenActive,
+  successWhenActive,
 }: {
-  name: string | null;
-  phone: string | null;
+  active: boolean;
+  onClick: () => void;
+  label: string;
+  count: number;
+  accentWhenActive?: boolean;
+  successWhenActive?: boolean;
 }) {
-  if (!name && !phone) return null;
   return (
-    <p className="mt-2 text-xs text-muted">
-      {[name, phone].filter(Boolean).join(" · ")}
-    </p>
-  );
-}
-
-function OrderItemsList({ items }: { items: unknown }) {
-  if (!Array.isArray(items) || items.length === 0) {
-    return <p className="mt-2 text-xs text-subtle">No line items</p>;
-  }
-  return (
-    <ul className="mt-2 space-y-1 border-t border-line/60 pt-2">
-      {items.map((raw, i) => {
-        const line = raw as Record<string, unknown>;
-        const name = typeof line.name === "string" ? line.name : "Item";
-        const qty =
-          typeof line.quantity === "number"
-            ? line.quantity
-            : typeof line.quantity === "string"
-              ? line.quantity
-              : 1;
-        const cust = line.customizations;
-        const custStr = Array.isArray(cust)
-          ? cust.filter((x) => typeof x === "string").join(", ")
-          : "";
-        return (
-          <li key={i} className="text-[13px] text-ink">
-            <span className="font-mono-tabular text-muted">{qty}×</span> {name}
-            {custStr ? (
-              <span className="text-subtle"> — {custStr}</span>
-            ) : null}
-          </li>
-        );
-      })}
-    </ul>
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "relative min-h-[44px] shrink-0 rounded-t-lg px-2 py-2.5 text-[11px] font-medium transition-colors sm:min-w-[6.5rem] sm:px-3 sm:text-xs",
+        active ? "text-ink" : "text-muted hover:text-ink/80"
+      )}
+    >
+      {label}
+      <span
+        className={cn(
+          "ml-1 rounded-md px-1 py-0.5 text-[10px] font-semibold tabular-nums",
+          active && accentWhenActive && "bg-accent-soft text-accent",
+          active && successWhenActive && "bg-success/20 text-emerald-900",
+          active && !accentWhenActive && !successWhenActive && "bg-elev text-subtle",
+          !active && "bg-elev text-subtle"
+        )}
+      >
+        {count}
+      </span>
+      {active && (
+        <span className="absolute inset-x-1 bottom-0 h-0.5 rounded-full bg-accent sm:inset-x-2" />
+      )}
+    </button>
   );
 }

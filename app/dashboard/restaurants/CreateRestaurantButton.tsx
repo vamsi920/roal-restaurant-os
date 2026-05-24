@@ -3,14 +3,39 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { PlanLimitNotice } from "@/components/billing/PlanLimitNotice";
+import type { SerializableGateVerdict } from "@/lib/billing/gates";
+import { formatApiRouteError } from "@/lib/dashboard/format-user-error";
 import { cn } from "@/lib/cn";
 
 export function CreateRestaurantButton({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [locationGate, setLocationGate] =
+    useState<SerializableGateVerdict | null>(null);
+  const [gatesLoading, setGatesLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  async function loadGates() {
+    setGatesLoading(true);
+    try {
+      const res = await fetch("/api/billing/gates");
+      const body = await res.json().catch(() => ({}));
+      if (res.ok && body.gates?.create_restaurant) {
+        setLocationGate(body.gates.create_restaurant);
+      }
+    } finally {
+      setGatesLoading(false);
+    }
+  }
+
+  function openDialog() {
+    setOpen(true);
+    setError(null);
+    void loadGates();
+  }
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -20,18 +45,32 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
       setError("Name is required");
       return;
     }
+    if (locationGate?.hardBlocked) {
+      setError(locationGate.message);
+      return;
+    }
     startTransition(async () => {
       const res = await fetch("/api/restaurants", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: trimmed }),
       });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        setError(body.error ?? "Failed to create restaurant");
+      const body = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        window.location.href = `/login?next=${encodeURIComponent("/dashboard/restaurants")}`;
         return;
       }
-      const { restaurant } = await res.json();
+      if (!res.ok) {
+        setError(
+          formatApiRouteError(body, res.status, "Could not create restaurant. Try again.")
+        );
+        return;
+      }
+      const restaurant = body.restaurant as { id?: string } | undefined;
+      if (!restaurant?.id) {
+        setError("Invalid server response");
+        return;
+      }
       setOpen(false);
       setName("");
       router.refresh();
@@ -43,7 +82,7 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openDialog}
         className={cn("btn-primary", className)}
       >
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -85,6 +124,10 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
                     Give your restaurant a name. You can change it later.
                   </p>
 
+                  {!gatesLoading ? (
+                    <PlanLimitNotice verdict={locationGate} className="mt-4" />
+                  ) : null}
+
                   <form onSubmit={onSubmit} className="mt-5 space-y-4">
                     <div>
                       <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted">
@@ -97,10 +140,12 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
                         placeholder="e.g. Lupa Trattoria"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        disabled={isPending}
+                        disabled={isPending || locationGate?.hardBlocked}
                       />
                       {error && (
-                        <p className="mt-2 text-xs text-danger">{error}</p>
+                        <p className="mt-2 text-xs text-danger" role="alert">
+                          {error}
+                        </p>
                       )}
                     </div>
 
@@ -116,7 +161,7 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
                       <button
                         type="submit"
                         className="btn-primary"
-                        disabled={isPending}
+                        disabled={isPending || locationGate?.hardBlocked}
                       >
                         {isPending ? (
                           <>

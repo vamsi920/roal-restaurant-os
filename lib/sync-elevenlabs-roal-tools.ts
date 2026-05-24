@@ -1,4 +1,8 @@
 import {
+  requireElevenLabsAgentId,
+  requireRoalToolSecrets,
+} from "@/lib/env.server";
+import {
   createConvaiTool,
   getConvaiAgent,
   getElevenLabsApiKey,
@@ -6,10 +10,14 @@ import {
   patchConvaiAgent,
   patchConvaiTool,
 } from "@/lib/elevenlabs";
+import { buildAgentToolRequestHeaders } from "@/lib/agent-tools/headers";
+import { buildRestaurantOrderFirstMessage } from "@/lib/elevenlabs/agent-prompt";
 import {
   mergeRestaurantPlaceholders,
   readAgentDynamicPlaceholders,
 } from "@/lib/elevenlabs-placeholders";
+import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+import { getServiceRoleSupabase } from "@/lib/supabase/server";
 
 /** Sent on every webhook call when tools are baked to a restaurant (Twilio cannot resolve conv dynamic vars). */
 export const ROAL_RESTAURANT_ID_HEADER = "x-roal-restaurant-id";
@@ -36,7 +44,8 @@ const SESSION_ID_PROP = {
 
 const STATUS_PROP = {
   type: "string",
-  description: 'Either "draft" or "confirmed"',
+  description:
+    'Use "draft" while the caller is building the cart. Legacy "confirmed" is accepted but stored as "new".',
   enum: ["draft", "confirmed"],
 } as const;
 
@@ -191,6 +200,8 @@ export type SyncRoalElevenLabsToolsResult = {
   tool_ids_on_agent: string[];
   /** True when KDS passed restaurant and agent placeholders were PATCHed */
   restaurant_placeholders_updated: boolean;
+  /** True when first_message was PATCHed to a literal restaurant name (no {{}}). */
+  first_message_updated: boolean;
   /** Tools omit dynamic_variable for restaurant fields (Twilio-safe). */
   restaurant_tools_baked: boolean;
 };
@@ -209,42 +220,8 @@ export async function syncRoalElevenLabsTools(options?: {
   restaurantName?: string;
 }): Promise<SyncRoalElevenLabsToolsResult> {
   getElevenLabsApiKey();
-  const agentId =
-    options?.agentId?.trim() ||
-    process.env.ELEVENLABS_AGENT_ID?.trim() ||
-    null;
-  if (!agentId) {
-    throw new Error(
-      "Missing agent id: set ELEVENLABS_AGENT_ID or pass agentId to sync"
-    );
-  }
-
-  const secret = process.env.AGENT_TOOL_SECRET?.trim();
-  if (!secret) {
-    throw new Error(
-      "Missing AGENT_TOOL_SECRET in server env (same value as Supabase Edge secret)"
-    );
-  }
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  if (!supabaseUrl) {
-    throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL");
-  }
-
-  const supabaseAnon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
-  if (!supabaseAnon) {
-    throw new Error(
-      "Missing NEXT_PUBLIC_SUPABASE_ANON_KEY (required as apikey header on Edge Function tool calls)"
-    );
-  }
-
-  const edgeBase = supabaseUrl.replace(/\/+$/, "");
-  const authHeader = `Bearer ${secret}`;
-  /** Supabase gateway expects publishable key here; do not put service role in tools. */
-  const edgeHeadersBase = {
-    Authorization: authHeader,
-    apikey: supabaseAnon,
-  };
+  const agentId = requireElevenLabsAgentId(options?.agentId);
+  const { agentToolSecret, supabaseAnonKey, edgeBase } = requireRoalToolSecrets();
 
   const rid = options?.restaurantId?.trim() ?? "";
   const rname = options?.restaurantName ?? "";
@@ -252,8 +229,16 @@ export async function syncRoalElevenLabsTools(options?: {
   const resolvedName = mergeRestaurantPlaceholders({}, rid, rname).restaurant_name;
 
   const edgeHeaders = baked
-    ? { ...edgeHeadersBase, [ROAL_RESTAURANT_ID_HEADER]: rid }
-    : edgeHeadersBase;
+    ? buildAgentToolRequestHeaders({
+        restaurantId: rid,
+        agentId,
+        supabaseAnonKey,
+        legacySecret: agentToolSecret,
+      })
+    : {
+        Authorization: `Bearer ${agentToolSecret}`,
+        apikey: supabaseAnonKey,
+      };
 
   const toolNames = [
     "get_menu_items",
@@ -375,6 +360,7 @@ export async function syncRoalElevenLabsTools(options?: {
     },
   };
 
+  let firstMessageUpdated = false;
   if (updatePlaceholders && rid) {
     const prev = readAgentDynamicPlaceholders(agent);
     agentPatch.dynamic_variables = {
@@ -384,6 +370,18 @@ export async function syncRoalElevenLabsTools(options?: {
         rname
       ),
     };
+
+    let profile = null;
+    try {
+      const supabase = getServiceRoleSupabase();
+      if (supabase) {
+        profile = await getRestaurantProfile(supabase, rid);
+      }
+    } catch {
+      // Profile load is best-effort during tool sync.
+    }
+    agentPatch.first_message = buildRestaurantOrderFirstMessage(profile, rname);
+    firstMessageUpdated = true;
   }
 
   await patchConvaiAgent(agentId, {
@@ -398,6 +396,7 @@ export async function syncRoalElevenLabsTools(options?: {
     tools: results,
     tool_ids_on_agent: merged,
     restaurant_placeholders_updated: updatePlaceholders,
+    first_message_updated: firstMessageUpdated,
     restaurant_tools_baked: baked,
   };
 }

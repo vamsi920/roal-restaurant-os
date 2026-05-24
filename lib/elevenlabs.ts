@@ -1,11 +1,9 @@
+import { requireElevenLabsApiKey } from "@/lib/env.server";
+
 const ELEVEN_BASE = "https://api.elevenlabs.io";
 
 export function getElevenLabsApiKey(): string {
-  const key = process.env.ELEVENLABS_API_KEY;
-  if (!key?.trim()) {
-    throw new Error("Missing ELEVENLABS_API_KEY");
-  }
-  return key.trim();
+  return requireElevenLabsApiKey();
 }
 
 export async function elevenlabsFetch(

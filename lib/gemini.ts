@@ -1,6 +1,25 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import { requireGeminiEnv } from "@/lib/env.server";
 
-const VISION_PROMPT = `Analyze this restaurant menu image. Extract all data into a robust, hierarchical JSON format. Identify: 1. Main Categories (e.g., 'Starters', 'Mains'). 2. Items under each category (name, description, price, base_availability). 3. Modifiers (required choices like 'Meat Temp' or optional 'Add Bacon' with extra prices). Ensure all data is clean, numbers are decimals, and you resolve common OCR typos. Do not invent items. If availability isn't explicit, assume 'true'.`;
+const CONFIDENCE_ENUM = ["high", "medium", "low"] as const;
+
+const VISION_PROMPT = `Analyze this restaurant menu image. Extract all data into a robust, hierarchical JSON format.
+
+Identify:
+1. Main Categories (e.g., 'Starters', 'Mains').
+2. Items under each category (name, description, price, base_availability).
+3. Modifiers (required choices like 'Meat Temp' or optional 'Add Bacon' with extra prices).
+
+Confidence (required on every category, item, and modifier):
+- Set confidence to "high" when text is clear and unambiguous.
+- Set confidence to "medium" when slightly blurry, partially cropped, or inferred from context.
+- Set confidence to "low" when guessed, heavily occluded, or price/name is uncertain.
+- For each item also set name_confidence, price_confidence, and description_confidence when those fields are present.
+
+Rules:
+- Numbers are decimals. Resolve obvious OCR typos only when confident.
+- Do not invent items. If availability isn't explicit, assume base_availability true.
+- If price is missing or unreadable, omit price and set price_confidence to "low".`;
 
 const MENU_RESPONSE_SCHEMA = {
   type: SchemaType.OBJECT,
@@ -12,6 +31,7 @@ const MENU_RESPONSE_SCHEMA = {
         properties: {
           name: { type: SchemaType.STRING },
           sort_order: { type: SchemaType.INTEGER },
+          confidence: { type: SchemaType.STRING, enum: [...CONFIDENCE_ENUM] },
           items: {
             type: SchemaType.ARRAY,
             items: {
@@ -21,6 +41,19 @@ const MENU_RESPONSE_SCHEMA = {
                 description: { type: SchemaType.STRING },
                 price: { type: SchemaType.NUMBER },
                 base_availability: { type: SchemaType.BOOLEAN },
+                confidence: { type: SchemaType.STRING, enum: [...CONFIDENCE_ENUM] },
+                name_confidence: {
+                  type: SchemaType.STRING,
+                  enum: [...CONFIDENCE_ENUM],
+                },
+                price_confidence: {
+                  type: SchemaType.STRING,
+                  enum: [...CONFIDENCE_ENUM],
+                },
+                description_confidence: {
+                  type: SchemaType.STRING,
+                  enum: [...CONFIDENCE_ENUM],
+                },
                 modifiers: {
                   type: SchemaType.ARRAY,
                   items: {
@@ -31,6 +64,10 @@ const MENU_RESPONSE_SCHEMA = {
                       extra_price: { type: SchemaType.NUMBER },
                       min_selection: { type: SchemaType.INTEGER },
                       max_selection: { type: SchemaType.INTEGER },
+                      confidence: {
+                        type: SchemaType.STRING,
+                        enum: [...CONFIDENCE_ENUM],
+                      },
                     },
                     required: ["modifier_name"],
                   },
@@ -59,8 +96,8 @@ function normalizeModelName(model: string): string {
   return model.trim().replace(/^models\//, "");
 }
 
-function getCandidateModels(): string[] {
-  const preferred = process.env.GEMINI_MODEL?.trim();
+function getCandidateModels(preferredModel?: string): string[] {
+  const preferred = preferredModel?.trim();
   const models = preferred
     ? [normalizeModelName(preferred), ...FALLBACK_MODELS]
     : [...FALLBACK_MODELS];
@@ -83,16 +120,22 @@ function parseJsonResponse(text: string) {
   return JSON.parse(cleaned);
 }
 
-export async function scanMenuImage(imageBase64: string, mimeType: string) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) throw new Error("Missing GEMINI_API_KEY");
+export type ScanMenuImageResult = {
+  data: unknown;
+  modelUsed: string;
+};
 
+export async function scanMenuImage(
+  imageBase64: string,
+  mimeType: string
+): Promise<ScanMenuImageResult> {
+  const { apiKey, model } = requireGeminiEnv();
   const genAI = new GoogleGenerativeAI(apiKey);
   let lastError: unknown;
 
-  for (const modelName of getCandidateModels()) {
+  for (const modelName of getCandidateModels(model)) {
     try {
-      const model = genAI.getGenerativeModel({
+      const generativeModel = genAI.getGenerativeModel({
         model: modelName,
         generationConfig: {
           responseMimeType: "application/json",
@@ -102,12 +145,15 @@ export async function scanMenuImage(imageBase64: string, mimeType: string) {
         },
       });
 
-      const result = await model.generateContent([
+      const result = await generativeModel.generateContent([
         { text: VISION_PROMPT },
         { inlineData: { data: imageBase64, mimeType } },
       ]);
 
-      return parseJsonResponse(result.response.text());
+      return {
+        data: parseJsonResponse(result.response.text()),
+        modelUsed: modelName,
+      };
     } catch (error) {
       lastError = error;
       if (!isMissingModelError(error)) throw error;

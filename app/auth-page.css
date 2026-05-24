@@ -1,0 +1,131 @@
+/**
+ * Auth pages (`/login`, `/signup`) — glass/lavender polish on `public-theme`.
+ * Form behavior unchanged; styles only.
+ */
+
+.public-theme .public-auth-panel,
+.public-theme .public-signup-aside__card {
+  position: relative;
+  overflow: hidden;
+}
+
+.public-theme .public-auth-panel::before,
+.public-theme .public-signup-aside__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--public-accent-lavender) / 0.85) 22%,
+    rgb(var(--public-accent-lavender) / 0.85) 78%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.public-theme .public-signup-aside__card {
+  padding: clamp(1.35rem, 4vw, 1.75rem);
+  border-radius: var(--public-radius-card);
+  border: 1px solid rgb(var(--public-accent-lavender) / 0.28);
+  background: rgb(var(--public-surface-glass) / 0.5);
+  backdrop-filter: blur(var(--public-blur-glass));
+  box-shadow: var(--public-shadow-card);
+}
+
+.public-theme .public-signup-aside__card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.public-theme .public-auth-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.public-theme .public-form-field__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgb(var(--public-ink));
+}
+
+.public-theme .public-form-field__required {
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+.public-theme .public-auth-trust {
+  margin: 1.25rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(var(--public-ink) / 0.08);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: rgb(var(--public-subtle));
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.public-theme .public-auth-panel--success .public-auth-trust {
+  margin-top: 1rem;
+}
+
+.public-theme .public-auth-main__inner:has(.public-signup-entry),
+.public-theme .public-auth-main__inner:has(.public-login-entry) {
+  max-width: 54rem;
+}
+
+.public-theme .public-login-entry .public-signup-entry__form {
+  order: -1;
+}
+
+@media (min-width: 960px) {
+  .public-theme .public-login-entry .public-signup-entry__form {
+    order: 0;
+  }
+}
+
+.public-theme .public-login-highlights {
+  margin: 1.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.public-theme .public-login-highlights__item {
+  padding: 0.85rem 1rem;
+  border-radius: var(--public-radius-md, 0.75rem);
+  border: 1px solid rgb(var(--public-accent-lavender) / 0.22);
+  background: rgb(var(--public-surface-glass) / 0.4);
+}
+
+.public-theme .public-login-highlights__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--public-ink));
+}
+
+.public-theme .public-login-highlights__body {
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: rgb(var(--public-muted));
+  text-wrap: pretty;
+}
+
+@media (min-width: 960px) {
+  .public-theme .public-auth-main {
+    align-items: flex-start;
+    padding-top: clamp(2.5rem, 6vw, 3.5rem);
+  }
+}
+
+.public-theme .public-signup-entry__form .public-auth-panel {
+  height: 100%;
+}

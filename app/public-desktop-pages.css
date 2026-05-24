@@ -1,0 +1,121 @@
+/**
+ * Desktop page QA (prompt 89): readable measure + section rhythm on large viewports.
+ */
+
+@media (min-width: 900px) {
+  .landing-story.public-theme {
+    --public-section-y: clamp(2.5rem, 4vw, 3.75rem);
+  }
+
+  .landing-story.public-theme .landing-section > .landing-wrap {
+    padding-block: var(--public-section-y);
+  }
+
+  .landing-story.public-theme .landing-section > .landing-wrap:has(> .launch-aeo-answer:only-child) {
+    padding-block: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .landing-story.public-theme .landing-display,
+  .landing-story.public-theme .landing-h1 {
+    max-width: var(--public-display-max);
+  }
+
+  .landing-story.public-theme .landing-h2,
+  .landing-story.public-theme .landing-h3,
+  .landing-story.public-theme .launch-aeo-answer,
+  .landing-story.public-theme .launch-aeo-answer .landing-h2,
+  .landing-story.public-theme .landing-header,
+  .landing-story.public-theme .landing-lead,
+  .landing-story.public-theme .landing-body,
+  .landing-story.public-theme .public-about-bullets,
+  .landing-story.public-theme .public-marketing-hero .landing-lead,
+  .landing-story.public-theme .blog-article-header__summary,
+  .landing-story.public-theme .pricing-production-caveat,
+  .landing-story.public-theme .public-pricing-compare__disclaimer {
+    max-width: var(--public-readable-max);
+  }
+
+  .landing-story.public-theme .launch-aeo-answer .landing-lead,
+  .landing-story.public-theme .launch-aeo-answer .text-muted,
+  .landing-story.public-theme .launch-aeo-answer p {
+    max-width: var(--public-readable-max);
+  }
+
+  .landing-story.public-theme .public-marketing-hero .landing-display {
+    max-width: var(--public-readable-wide);
+  }
+
+  .landing-story.public-theme .public-marketing-hero .landing-wrap {
+    padding-block: clamp(2.25rem, 4vw, 3.25rem);
+  }
+
+  .landing-story.public-theme .public-cta-band__panel,
+  .landing-story.public-theme .public-cta-band__ink {
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+
+  .landing-story.public-theme .public-about-steps,
+  .landing-story.public-theme .public-demo-steps,
+  .landing-story.public-theme .public-about-values,
+  .landing-story.public-theme .public-about-story__principles,
+  .landing-story.public-theme .public-about-promise,
+  .landing-story.public-theme .blog-index__grid,
+  .landing-story.public-theme .blog-related__grid,
+  .landing-story.public-theme .public-pricing-compare__grid,
+  .landing-story.public-theme .public-pricing-included__grid,
+  .landing-story.public-theme .public-pricing-primary-card,
+  .landing-story.public-theme .success-pricing-visual,
+  .landing-story.public-theme .public-contact-page__grid,
+  .landing-story.public-theme .public-demo-video__frame {
+    max-width: 100%;
+  }
+
+  .public-theme .public-auth-main__inner:has(.public-signup-entry) {
+    max-width: min(52rem, 100%);
+  }
+
+  .public-theme .public-signup-aside__lead,
+  .public-theme .public-signup-aside__note {
+    max-width: var(--public-readable-max);
+  }
+}
+
+@media (min-width: 900px) {
+  .landing-home {
+    --home-section-y: clamp(3rem, 5vw, 4.5rem);
+  }
+
+  .landing-home .home-display {
+    max-width: var(--public-display-max, 52rem);
+  }
+
+  .landing-home .home-h2 {
+    max-width: var(--public-readable-wide, 48rem);
+  }
+
+  .landing-home .home-lead,
+  .landing-home .home-body,
+  .landing-home .home-hero__qualifier {
+    max-width: var(--public-readable-max, 42rem);
+  }
+
+  .landing-home .home-hero__footer > div:first-child .home-display {
+    max-width: var(--public-display-max, 52rem);
+  }
+
+  .landing-home .home-hero__cta-col .home-lead,
+  .landing-home .home-hero__cta-col .home-hero__qualifier {
+    max-width: 22rem;
+  }
+
+  .landing-home .home-metrics__note,
+  .landing-home .home-section--tight {
+    padding-block: clamp(2.25rem, 4vw, 3.25rem);
+  }
+
+  .landing-home .home-cta-band .home-glass-panel {
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+}

@@ -24,8 +24,31 @@ const config: Config = {
         success: "rgb(var(--success) / <alpha-value>)",
         warning: "rgb(var(--warning) / <alpha-value>)",
         danger: "rgb(var(--danger) / <alpha-value>)",
+        ticket: "rgb(var(--ticket) / <alpha-value>)",
+        "ticket-ink": "rgb(var(--ticket-ink) / <alpha-value>)",
+        heat: "rgb(var(--heat) / <alpha-value>)",
+        glow: "rgb(var(--glow) / <alpha-value>)",
+      },
+      maxWidth: {
+        "landing-readable": "var(--landing-readable-max, 42rem)",
+        landing: "var(--landing-content-max, 72rem)",
+      },
+      transitionTimingFunction: {
+        "landing-out": "var(--landing-ease-out, cubic-bezier(0.22, 1, 0.36, 1))",
+        "landing-in-out": "var(--landing-ease-in-out, cubic-bezier(0.65, 0, 0.35, 1))",
+        "landing-spring": "var(--landing-ease-spring, cubic-bezier(0.34, 1.45, 0.64, 1))",
+        "landing-ticket": "var(--landing-ease-ticket, cubic-bezier(0.25, 0.9, 0.35, 1))",
+      },
+      transitionDuration: {
+        "landing-instant": "var(--landing-duration-instant, 120ms)",
+        "landing-fast": "var(--landing-duration-fast, 180ms)",
+        landing: "var(--landing-duration, 280ms)",
+        "landing-slow": "var(--landing-duration-slow, 480ms)",
+        "landing-chapter": "var(--landing-duration-chapter, 640ms)",
       },
       fontFamily: {
+        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: [
           "ui-monospace",
           "SF Mono",

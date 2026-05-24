@@ -1,118 +1,237 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
-
-const corsHeaders: Record<string, string> = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers":
-    "authorization, content-type, x-client-info, apikey, x-roal-restaurant-id",
-};
-
-function jsonResponse(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
-}
-
-function unauthorized(): Response {
-  return jsonResponse({ error: "Unauthorized" }, 401);
-}
-
-function requireAuth(req: Request): boolean {
-  const secret = Deno.env.get("AGENT_TOOL_SECRET");
-  if (!secret) return false;
-  const auth = req.headers.get("Authorization") ?? "";
-  const token = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
-  return token.length > 0 && token === secret;
-}
-
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+import { loadHoursForRestaurant } from "../_shared/restaurant-hours.ts";
+import {
+  assertRestaurantToolOwnership,
+  authenticateAgentToolRequest,
+  readIdempotencyKey,
+} from "../_shared/agent-tool-auth.ts";
+import {
+  agentToolErrorResponse,
+  agentToolJsonResponse,
+  corsHeaders,
+} from "../_shared/agent-tool-json.ts";
+import {
+  assertRestaurantIdMatches,
+  parseAgentToolRequest,
+  parseAgentToolResponse,
+  SyncDraftOrderRequestSchema,
+  SyncDraftOrderResponseSchema,
+} from "../_shared/agent-tool-zod.ts";
+import {
+  loadIdempotentResponse,
+  storeIdempotentResponse,
+} from "../_shared/idempotency.ts";
+import { loadRestaurantMenuForValidation } from "../_shared/load-restaurant-menu.ts";
+import {
+  cartLinesForStorage,
+  formatCartValidationError,
+  validateCartForSync,
+} from "../_shared/order-validate.ts";
+import { coerceSyncDraftOrderStatus } from "../_shared/order-status.ts";
+import { assertVoiceOrderBillingGate } from "../_shared/billing-gate.ts";
+import {
+  createAgentToolMeter,
+  resolveRestaurantOrganizationId,
+} from "../_shared/record-usage.ts";
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
   if (req.method !== "POST") {
-    return jsonResponse({ error: "Method not allowed" }, 405);
-  }
-  if (!requireAuth(req)) return unauthorized();
-
-  let body: Record<string, unknown>;
-  try {
-    body = (await req.json()) as Record<string, unknown>;
-  } catch {
-    return jsonResponse({ error: "Invalid JSON body" }, 400);
-  }
-
-  const fromHeader = req.headers.get("x-roal-restaurant-id")?.trim() ?? "";
-  const fromBody = body.restaurant_id;
-  const restaurantId =
-    typeof fromBody === "string" && UUID_RE.test(fromBody)
-      ? fromBody
-      : fromHeader && UUID_RE.test(fromHeader)
-        ? fromHeader
-        : null;
-  const sessionId = body.session_id;
-  const status = body.status;
-  const items = body.items;
-  const customerName = body.customer_name;
-  const customerPhone = body.customer_phone;
-
-  if (typeof restaurantId !== "string" || !UUID_RE.test(restaurantId)) {
-    return jsonResponse(
+    return agentToolErrorResponse(
       {
-        error:
-          "restaurant_id must be a uuid (JSON body or x-roal-restaurant-id header)",
+        error: "method_not_allowed",
+        code: "method_not_allowed",
+        message: "Use POST.",
+      },
+      405
+    );
+  }
+
+  let raw: unknown;
+  try {
+    raw = await req.json();
+  } catch {
+    return agentToolErrorResponse(
+      {
+        error: "invalid_json",
+        code: "invalid_json",
+        message: "Request body must be valid JSON.",
+        recovery_hint: "Send Content-Type: application/json.",
       },
       400
     );
   }
-  if (typeof sessionId !== "string" || sessionId.length < 1) {
-    return jsonResponse({ error: "session_id is required" }, 400);
+
+  const parsed = parseAgentToolRequest(SyncDraftOrderRequestSchema, raw, {
+    tool: "sync_draft_order",
+  });
+  if (!parsed.ok) {
+    return agentToolErrorResponse(parsed.body, parsed.status);
   }
-  if (sessionId.length > 512) {
-    return jsonResponse({ error: "session_id too long (max 512)" }, 400);
+
+  const auth = await authenticateAgentToolRequest(req, parsed.data.restaurant_id);
+  if (!auth.ok) {
+    return agentToolErrorResponse(auth.body, auth.status);
   }
-  if (status !== "draft" && status !== "confirmed") {
-    return jsonResponse({ error: "status must be draft or confirmed" }, 400);
-  }
-  if (!Array.isArray(items)) {
-    return jsonResponse({ error: "items must be an array" }, 400);
+
+  const scopeCheck = assertRestaurantIdMatches(
+    parsed.data.restaurant_id,
+    auth.restaurantId
+  );
+  if (!scopeCheck.ok) {
+    return agentToolErrorResponse(scopeCheck.body, scopeCheck.status);
   }
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (!supabaseUrl || !serviceKey) {
-    return jsonResponse({ error: "Server misconfigured" }, 500);
+    return agentToolErrorResponse(
+      {
+        error: "misconfigured",
+        code: "misconfigured",
+        message: "Server misconfigured.",
+      },
+      500
+    );
   }
 
   const supabase = createClient(supabaseUrl, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
-  const { data: exists, error: e0 } = await supabase
-    .from("restaurants")
-    .select("id")
-    .eq("id", restaurantId)
-    .maybeSingle();
+  const restaurantId = auth.restaurantId;
+  const organizationId = await resolveRestaurantOrganizationId(
+    supabase,
+    restaurantId
+  );
 
-  if (e0) return jsonResponse({ error: e0.message }, 500);
-  if (!exists) return jsonResponse({ error: "Restaurant not found" }, 404);
+  const ownership = await assertRestaurantToolOwnership(
+    supabase,
+    auth.restaurantId,
+    auth
+  );
+  if (!ownership.ok) {
+    createAgentToolMeter(supabase, {
+      organizationId,
+      restaurantId,
+      sessionId: parsed.data.session_id,
+      tool: "sync_draft_order",
+    })(ownership.status);
+    return agentToolErrorResponse(ownership.body, ownership.status);
+  }
 
+  let meter = createAgentToolMeter(supabase, {
+    organizationId,
+    restaurantId,
+    sessionId: parsed.data.session_id,
+    tool: "sync_draft_order",
+  });
+
+  if (organizationId) {
+    const billingGate = await assertVoiceOrderBillingGate(
+      supabase,
+      organizationId
+    );
+    if (!billingGate.ok) {
+      meter(billingGate.status);
+      return agentToolErrorResponse(billingGate.body, billingGate.status);
+    }
+  }
+  const idempotencyParsed = readIdempotencyKey(req, raw as Record<string, unknown>);
+  if (!idempotencyParsed.ok) {
+    return agentToolErrorResponse(idempotencyParsed.body, idempotencyParsed.status);
+  }
+  const idempotencyKey =
+    parsed.data.idempotency_key ?? idempotencyParsed.key;
+
+  let skippedMeteringForReplay = false;
+  if (idempotencyKey) {
+    const cached = await loadIdempotentResponse(
+      supabase,
+      restaurantId,
+      idempotencyKey,
+      "sync_draft_order"
+    );
+    if (cached) {
+      skippedMeteringForReplay = true;
+      return agentToolJsonResponse(cached.body, cached.httpStatus, {
+        "x-roal-idempotent-replay": "true",
+      });
+    }
+  }
+
+  meter = createAgentToolMeter(supabase, {
+    organizationId,
+    restaurantId,
+    sessionId: parsed.data.session_id,
+    tool: "sync_draft_order",
+    skipMetering: skippedMeteringForReplay,
+  });
+
+  try {
+    const hours = await loadHoursForRestaurant(supabase, restaurantId);
+    if (!hours.evaluation.ordering_allowed) {
+      meter(403);
+      return agentToolErrorResponse(
+        {
+          error: "restaurant_closed",
+          code: "restaurant_closed",
+          message: hours.evaluation.message,
+          recovery_hint:
+            "Do not call sync_draft_order or finalize_order while closed. Offer to call back during open hours.",
+          operations: {
+            ordering_allowed: false,
+            status: hours.evaluation.status,
+            message: hours.evaluation.message,
+          },
+        },
+        403
+      );
+    }
+  } catch {
+    // Allow orders if hours data is unavailable.
+  }
+
+  let menu;
+  try {
+    menu = await loadRestaurantMenuForValidation(supabase, restaurantId);
+  } catch (e) {
+    meter(500);
+    return agentToolErrorResponse(
+      {
+        error: "database_error",
+        code: "database_error",
+        message: e instanceof Error ? e.message : "Failed to load menu",
+      },
+      500
+    );
+  }
+
+  const cartValidation = validateCartForSync(
+    parsed.data.items,
+    menu.items,
+    menu.modifiers
+  );
+  if (!cartValidation.ok) {
+    meter(422, { lineCount: 0 });
+    return agentToolErrorResponse(
+      formatCartValidationError(cartValidation, "sync_draft_order"),
+      422
+    );
+  }
+
+  const storedStatus = coerceSyncDraftOrderStatus(parsed.data.status);
   const row: Record<string, unknown> = {
     restaurant_id: restaurantId,
-    session_id: sessionId,
-    status,
-    items,
+    session_id: parsed.data.session_id,
+    status: storedStatus,
+    items: cartLinesForStorage(cartValidation.normalizedItems),
     updated_at: new Date().toISOString(),
   };
-  if (typeof customerName === "string" && customerName.trim().length > 0) {
-    row.customer_name = customerName.trim();
-  }
-  if (typeof customerPhone === "string" && customerPhone.trim().length > 0) {
-    row.customer_phone = customerPhone.trim();
-  }
+  if (parsed.data.customer_name) row.customer_name = parsed.data.customer_name;
+  if (parsed.data.customer_phone) row.customer_phone = parsed.data.customer_phone;
 
   const { data, error } = await supabase
     .from("draft_orders")
@@ -120,7 +239,38 @@ Deno.serve(async (req: Request) => {
     .select()
     .single();
 
-  if (error) return jsonResponse({ error: error.message }, 500);
+  if (error) {
+    meter(500);
+    return agentToolErrorResponse(
+      { error: "database_error", code: "database_error", message: error.message },
+      500
+    );
+  }
 
-  return jsonResponse({ ok: true, draft_order: data });
+  const responseBody = { ok: true as const, draft_order: data };
+  const validated = parseAgentToolResponse(SyncDraftOrderResponseSchema, responseBody, {
+    tool: "sync_draft_order",
+  });
+  if (!validated.ok) {
+    meter(validated.status);
+    return agentToolErrorResponse(validated.body, validated.status);
+  }
+
+  if (idempotencyKey) {
+    await storeIdempotentResponse(supabase, {
+      restaurantId,
+      idempotencyKey,
+      toolName: "sync_draft_order",
+      httpStatus: 200,
+      body: validated.data,
+    });
+  }
+
+  meter(200, {
+    lineCount: cartValidation.normalizedItems.length,
+    recordVoiceOrder: cartValidation.normalizedItems.length > 0,
+    orderStatus: storedStatus,
+  });
+
+  return agentToolJsonResponse(validated.data);
 });

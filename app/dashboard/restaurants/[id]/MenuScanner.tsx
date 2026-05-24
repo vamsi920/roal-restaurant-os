@@ -4,9 +4,26 @@ import { Dialog, Transition } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { MenuImportReview } from "@/components/menu-import/MenuImportReview";
+import type { ReviewHint, ScannedMenu } from "@/lib/menu-import/types";
+import {
+  MENU_IMAGE_MAX_BYTES,
+  validateMenuImageFile,
+} from "@/lib/scanner/extract-menu";
+import { formatScannerApiError } from "@/lib/scanner/scanner-user-messages";
+import { PlanLimitNotice } from "@/components/billing/PlanLimitNotice";
+import { notifyMenuChanged } from "@/lib/menu-editor/notify-menu-changed";
+import type { SerializableGateVerdict } from "@/lib/billing/gates";
 import { cn } from "@/lib/cn";
 
-type Status = "idle" | "uploading" | "scanning" | "merging" | "done" | "error";
+type Status =
+  | "idle"
+  | "uploading"
+  | "scanning"
+  | "review"
+  | "committing"
+  | "done"
+  | "error";
 
 type Stats = {
   categories: number;
@@ -14,24 +31,45 @@ type Stats = {
   modifiers: number;
 };
 
-const STEP_ORDER: Status[] = ["uploading", "scanning", "merging", "done"];
+const STEP_ORDER: Status[] = [
+  "uploading",
+  "scanning",
+  "review",
+  "committing",
+  "done",
+];
 
 const STEP_LABELS: Record<Status, string> = {
   idle: "Idle",
   uploading: "Uploading image",
   scanning: "Scanning with Gemini Vision",
-  merging: "Merging into database",
+  review: "Review & correct",
+  committing: "Saving to database",
   done: "Synced",
   error: "Error",
 };
 
-export function MenuScanner({ restaurantId }: { restaurantId: string }) {
+export function MenuScanner({
+  restaurantId,
+  onScanComplete,
+  compact,
+  menuScanGate,
+}: {
+  restaurantId: string;
+  onScanComplete?: () => void;
+  /** Hide clear-menu and extra chrome for onboarding embed. */
+  compact?: boolean;
+  menuScanGate?: SerializableGateVerdict | null;
+}) {
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const [stats, setStats] = useState<Stats | null>(null);
+  const [importId, setImportId] = useState<string | null>(null);
+  const [reviewMenu, setReviewMenu] = useState<ScannedMenu | null>(null);
+  const [, setReviewHints] = useState<ReviewHint[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [clearOpen, setClearOpen] = useState(false);
   const [clearPending, setClearPending] = useState(false);
@@ -48,19 +86,59 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
     return () => URL.revokeObjectURL(url);
   }, [file]);
 
-  const isWorking = status === "uploading" || status === "scanning" || status === "merging";
+  const isWorking =
+    status === "uploading" ||
+    status === "scanning" ||
+    status === "committing";
 
-  const onFile = useCallback((f: File | null) => {
-    if (!f) return;
-    if (!f.type.startsWith("image/")) {
-      setError("Please upload an image file");
-      return;
+  const onFile = useCallback(
+    (f: File | null) => {
+      if (!f) return;
+      try {
+        validateMenuImageFile(f);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Invalid image file");
+        setStatus("error");
+        return;
+      }
+      setImportId((prev) => {
+        if (prev) void abandonImport(prev);
+        return null;
+      });
+      setFile(f);
+      setError(null);
+      setStatus("idle");
+      setStats(null);
+      setReviewMenu(null);
+      setReviewHints([]);
+    },
+    [restaurantId]
+  );
+
+  function notifyImportsChanged() {
+    if (typeof window === "undefined") return;
+    window.dispatchEvent(
+      new CustomEvent("roal:menu-imports-changed", {
+        detail: { restaurantId },
+      })
+    );
+  }
+
+  async function abandonImport(id: string) {
+    try {
+      await fetch("/api/scanner/discard", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          restaurant_id: restaurantId,
+          import_id: id,
+        }),
+      });
+    } catch {
+      // non-blocking
     }
-    setFile(f);
-    setError(null);
-    setStatus("idle");
-    setStats(null);
-  }, []);
+    notifyImportsChanged();
+  }
 
   async function process() {
     if (!file) return;
@@ -74,34 +152,98 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
 
       setStatus("scanning");
 
-      const res = await fetch("/api/scanner/process", {
+      const res = await fetch("/api/scanner/extract", {
         method: "POST",
         body: fd,
       });
 
       const body = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(body.error ?? "Scan failed");
+        if (typeof body.import_id === "string") {
+          setImportId(body.import_id);
+        }
+        throw new Error(formatScannerApiError(body, res.status));
       }
 
-      setStatus("merging");
-      await new Promise((r) => setTimeout(r, 350));
-      setStats(body.stats ?? null);
-      setStatus("done");
+      setImportId(typeof body.import_id === "string" ? body.import_id : null);
+      setReviewMenu(body.menu as ScannedMenu);
+      setReviewHints((body.hints as ReviewHint[]) ?? []);
+      setStatus("review");
+      notifyImportsChanged();
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Unknown error";
       setError(msg);
       setStatus("error");
+      notifyImportsChanged();
     }
   }
 
+  async function commitReview() {
+    if (!reviewMenu) return;
+    setError(null);
+    setStatus("committing");
+    try {
+      const res = await fetch("/api/scanner/commit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          restaurant_id: restaurantId,
+          menu: reviewMenu,
+          import_id: importId ?? undefined,
+        }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const hintList = Array.isArray(body.hints)
+          ? (body.hints as { message?: string }[])
+              .map((h) => h.message)
+              .filter(Boolean)
+              .join("; ")
+          : "";
+        throw new Error(
+          hintList ||
+            formatScannerApiError(body, res.status) ||
+            "Could not save menu"
+        );
+      }
+      setStats(body.stats ?? null);
+      setImportId(null);
+      setReviewMenu(null);
+      setReviewHints([]);
+      setStatus("done");
+      notifyMenuChanged(restaurantId);
+      notifyImportsChanged();
+      onScanComplete?.();
+      router.refresh();
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Unknown error";
+      setError(msg);
+      setStatus("review");
+    }
+  }
+
+  async function discardReview() {
+    const id = importId;
+    setReviewMenu(null);
+    setReviewHints([]);
+    setImportId(null);
+    setStatus("idle");
+    setError(null);
+    if (id) await abandonImport(id);
+  }
+
   function reset() {
+    const id = importId;
     setFile(null);
     setPreview(null);
     setStatus("idle");
     setStats(null);
+    setImportId(null);
+    setReviewMenu(null);
+    setReviewHints([]);
     setError(null);
     if (inputRef.current) inputRef.current.value = "";
+    if (id) void abandonImport(id);
   }
 
   async function clearMenu() {
@@ -134,29 +276,33 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
   }
 
   return (
-    <section className="glass-card overflow-hidden">
-      <div className="flex flex-col gap-3 border-b border-line px-4 py-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:px-6 sm:py-4">
+    <section className="kds-panel glass-card overflow-hidden">
+      <div className="kds-panel__header">
         <div className="min-w-0 flex-1">
-          <h2 className="text-sm font-semibold">Menu scanner</h2>
-          <p className="mt-0.5 text-pretty text-xs text-muted">
-            Drop a menu photo. Gemini extracts categories, items, modifiers,
-            and ROAL atomically merges into your live menu.
+          <h2 className="kds-panel__title">Menu scanner</h2>
+          <p className="kds-panel__lead">
+            Drop a menu photo. Gemini extracts the menu for review before it
+            is merged into your live menu.
           </p>
         </div>
-        <div className="flex w-full shrink-0 sm:w-auto sm:justify-end">
-          <button
-            type="button"
-            onClick={() => {
-              setClearError(null);
-              setClearOpen(true);
-            }}
-            disabled={isWorking}
-            className="w-full rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2.5 text-xs font-medium text-danger transition-colors hover:bg-danger/[0.08] disabled:opacity-50 sm:w-auto sm:py-1.5"
-          >
-            Clear menu
-          </button>
-        </div>
+        {!compact ? (
+          <div className="flex w-full shrink-0 sm:w-auto sm:justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                setClearError(null);
+                setClearOpen(true);
+              }}
+              disabled={isWorking}
+              className="w-full rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2.5 text-xs font-medium text-danger transition-colors hover:bg-danger/[0.08] disabled:opacity-50 sm:w-auto sm:py-1.5"
+            >
+              Clear menu
+            </button>
+          </div>
+        ) : null}
       </div>
+
+      <PlanLimitNotice verdict={menuScanGate} className="mx-4 sm:mx-6" />
 
       <Transition appear show={clearOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={() => !clearPending && setClearOpen(false)}>
@@ -225,7 +371,12 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
         </Dialog>
       </Transition>
 
-      <div className="grid grid-cols-1 gap-5 p-4 sm:gap-6 sm:p-6 lg:grid-cols-[1.1fr_1fr]">
+      <div
+        className={cn(
+          "grid grid-cols-1 gap-5 p-4 sm:gap-6 sm:p-6",
+          !reviewMenu && "lg:grid-cols-[1.1fr_1fr]"
+        )}
+      >
         <div>
           <label
             htmlFor="menu-image"
@@ -255,7 +406,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
               accept="image/*"
               className="sr-only"
               onChange={(e) => onFile(e.target.files?.[0] ?? null)}
-              disabled={isWorking}
+              disabled={isWorking || menuScanGate?.hardBlocked}
             />
 
             {preview ? (
@@ -283,7 +434,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
                   Drop image, or click to browse
                 </p>
                 <p className="relative mt-1 text-xs text-muted">
-                  PNG, JPG, WebP — clear photos work best
+                  PNG, JPG, WebP — max {(MENU_IMAGE_MAX_BYTES / (1024 * 1024)).toFixed(0)} MB
                 </p>
               </>
             )}
@@ -300,7 +451,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
               )}
             </div>
             <div className="flex w-full flex-col-reverse gap-2 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
-              {file && !isWorking && (
+              {file && !isWorking && status !== "review" && (
                 <button type="button" onClick={reset} className="btn-ghost min-h-11 w-full sm:min-h-0 sm:w-auto">
                   Reset
                 </button>
@@ -308,16 +459,23 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
               <button
                 type="button"
                 onClick={process}
-                disabled={!file || isWorking}
+                disabled={
+                  !file ||
+                  isWorking ||
+                  status === "review" ||
+                  menuScanGate?.hardBlocked
+                }
                 className="btn-primary min-h-11 w-full justify-center sm:min-h-0 sm:w-auto"
               >
                 {isWorking ? (
                   <>
                     <Spinner /> Processing
                   </>
+                ) : status === "review" ? (
+                  "Extracted — review below"
                 ) : (
                   <>
-                    Process menu
+                    Scan menu
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M13 5l7 7-7 7" />
                     </svg>
@@ -328,7 +486,7 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className={cn("flex flex-col", reviewMenu && "lg:max-w-sm")}>
           <div className="rounded-xl border border-line bg-elev p-5 shadow-sm">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
@@ -349,10 +507,14 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
 
             <ol className="mt-4 space-y-2.5">
               {STEP_ORDER.map((step, idx) => {
-                const currentIdx = STEP_ORDER.indexOf(status);
-                const isActive = step === status && status !== "done";
+                const currentIdx =
+                  status === "error"
+                    ? STEP_ORDER.indexOf("scanning")
+                    : STEP_ORDER.indexOf(status);
+                const isActive =
+                  step === status && status !== "done" && status !== "error";
                 const isComplete =
-                  (status === "done" && true) ||
+                  status === "done" ||
                   (currentIdx > -1 && idx < currentIdx);
                 return (
                   <li key={step} className="flex items-center gap-3">
@@ -401,31 +563,60 @@ export function MenuScanner({ restaurantId }: { restaurantId: string }) {
             </AnimatePresence>
 
             {error && (
-              <div className="mt-4 rounded-lg border border-danger/30 bg-danger/[0.06] p-3 text-xs text-danger">
-                {error}
+              <div
+                role="alert"
+                className="mt-4 rounded-lg border border-danger/30 bg-danger/[0.06] p-3 text-xs text-danger"
+              >
+                <p>{error}</p>
+                {importId && status === "error" ? (
+                  <button
+                    type="button"
+                    className="btn-ghost mt-2 min-h-9 text-[11px]"
+                    disabled={isWorking}
+                    onClick={() => void discardReview()}
+                  >
+                    Discard failed import
+                  </button>
+                ) : null}
+                {status === "error" && !reviewMenu ? (
+                  <p className="mt-2 text-[11px] text-danger/80">
+                    Try a sharper photo with the full menu visible, or use Reset to
+                    choose another file.
+                  </p>
+                ) : null}
               </div>
             )}
           </div>
 
           <div className="mt-4 rounded-xl border border-line bg-elev p-5 shadow-sm">
             <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
-              How merge works
+              Import flow
             </h3>
             <ul className="mt-3 space-y-2 text-[13px] text-muted">
               <li className="flex gap-2">
-                <BulletDot /> Existing items update in place (description,
-                price, modifiers).
+                <BulletDot /> Gemini extracts structure with confidence hints.
               </li>
               <li className="flex gap-2">
-                <BulletDot /> New categories &amp; items are created.
+                <BulletDot /> You review and fix flagged fields before save.
               </li>
               <li className="flex gap-2">
-                <BulletDot /> Whole sync runs as one Postgres transaction — no
-                orphaned rows.
+                <BulletDot /> Commit merges in one Postgres transaction.
               </li>
             </ul>
           </div>
         </div>
+
+        {reviewMenu ? (
+          <div className="lg:col-span-2">
+            <MenuImportReview
+              menu={reviewMenu}
+              pending={status === "committing"}
+              onChange={setReviewMenu}
+              onDiscard={discardReview}
+              onCommit={() => void commitReview()}
+            />
+          </div>
+        ) : null}
       </div>
     </section>
   );

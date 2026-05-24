@@ -1,39 +1,16 @@
 "use server";
 
-import { applyRestaurantOrderAgentProfile } from "@/lib/elevenlabs-restaurant-agent-profile";
-import { syncRoalElevenLabsTools } from "@/lib/sync-elevenlabs-roal-tools";
+import {
+  connectVoiceAgentAction,
+  type ConnectVoiceAgentInput,
+} from "./voice-agent-actions";
 
-export type ConnectElevenLabsAgentInput = {
-  agentId: string;
-  restaurantId: string;
-  restaurantName: string;
-};
+export type ConnectElevenLabsAgentInput = ConnectVoiceAgentInput;
 
-/** Sync ROAL tools + apply order-taker profile; ties agent defaults to this restaurant. */
+/** @deprecated Use connectVoiceAgentAction */
 export async function connectElevenLabsAgentToRestaurantAction(
   input: ConnectElevenLabsAgentInput
 ) {
-  const agentId = input?.agentId?.trim() ?? "";
-  const restaurantId = input?.restaurantId?.trim() ?? "";
-  const restaurantName = (input?.restaurantName ?? "").trim();
-
-  if (!agentId) {
-    throw new Error("Enter an ElevenLabs agent id.");
-  }
-  if (!restaurantId) {
-    throw new Error("Missing restaurant on this page. Reload and try again.");
-  }
-
-  const sync = await syncRoalElevenLabsTools({
-    agentId,
-    restaurantId,
-    restaurantName,
-  });
-  const profile = await applyRestaurantOrderAgentProfile({
-    agentId,
-    restaurantId,
-    restaurantName,
-  });
-
+  const { sync, profile } = await connectVoiceAgentAction(input);
   return { sync, profile };
 }

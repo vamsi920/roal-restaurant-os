@@ -1,3 +1,19 @@
+export function readAgentFirstMessage(agentRoot: unknown): string | null {
+  if (!agentRoot || typeof agentRoot !== "object") return null;
+  const conv = (agentRoot as Record<string, unknown>).conversation_config;
+  if (!conv || typeof conv !== "object") return null;
+  const ag = (conv as Record<string, unknown>).agent;
+  if (!ag || typeof ag !== "object") return null;
+  const fm = (ag as Record<string, unknown>).first_message;
+  return typeof fm === "string" && fm.trim() ? fm : null;
+}
+
+/** True when first_message still uses mustache templates (breaks Twilio until re-sync). */
+export function firstMessageHasUnresolvedTemplates(firstMessage: string | null): boolean {
+  if (!firstMessage) return false;
+  return /\{\{[^}]+\}\}/.test(firstMessage);
+}
+
 /** Read ElevenLabs agent GET payload → dynamic_variable_placeholders map. */
 export function readAgentDynamicPlaceholders(agentRoot: unknown): Record<
   string,
@@ -20,7 +36,7 @@ export function readAgentDynamicPlaceholders(agentRoot: unknown): Record<
   return out;
 }
 
-const DEFAULT_RESTAURANT_NAME = "the restaurant";
+export const DEFAULT_RESTAURANT_NAME = "the restaurant";
 
 /** Never leave restaurant_name empty — phone/Twilio sessions can omit client-passed vars until stream is up. */
 export function mergeRestaurantPlaceholders(

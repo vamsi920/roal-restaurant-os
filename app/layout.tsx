@@ -1,10 +1,31 @@
 import type { Metadata, Viewport } from "next";
+import { DM_Sans, Fraunces } from "next/font/google";
+import { buildSiteMetadataDefaults } from "@/lib/seo/public-open-graph";
+import { getMetadataBase } from "@/lib/site-url";
 import "./globals.css";
 
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "ROAL — Restaurant Operational Abstraction Layer",
+  metadataBase: getMetadataBase(),
+  title: "ROAL — Pickup calls to your kitchen screen",
   description:
-    "Scan menus with AI vision, sync to a real-time KDS dashboard.",
+    "ROAL answers pickup calls from your live menu, sends kitchen tickets, and charges only for successful orders—not per-minute phone fees.",
+  icons: {
+    icon: [{ url: "/icons/roal-app-icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/icons/roal-app-icon.svg", type: "image/svg+xml" }],
+  },
+  ...buildSiteMetadataDefaults(),
 };
 
 export const viewport: Viewport = {
@@ -17,9 +38,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="[color-scheme:light]">
-      <body className="min-h-screen bg-base text-ink antialiased">
-        <div className="min-h-screen bg-radial-fade">{children}</div>
+    <html lang="en" className={`[color-scheme:light] ${dmSans.variable} ${fraunces.variable}`}>
+      <body className="min-h-[100dvh] bg-base font-sans text-ink antialiased">
+        {children}
       </body>
     </html>
   );

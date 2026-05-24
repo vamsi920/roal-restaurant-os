@@ -16,15 +16,25 @@
   --success: 5 122 85;
   --warning: 180 83 9;
   --danger: 220 38 38;
+  /* Landing-only accents (overridden under .landing-story in app/landing.css) */
+  --ticket: 255 250 240;
+  --ticket-ink: 30 41 59;
+  --heat: 220 90 50;
+  --glow: 8 145 178;
+}
+
+html {
+  overflow-x: clip;
 }
 
 html,
 body {
   background: rgb(var(--bg-base));
   color: rgb(var(--text-primary));
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "cv11", "ss01", "ss03";
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -62,9 +72,7 @@ body {
     background-size: 40px 40px;
   }
   .bg-radial-fade {
-    background:
-      radial-gradient(900px circle at 0% 0%, rgb(var(--accent) / 0.08), transparent 52%),
-      radial-gradient(700px circle at 100% 100%, rgb(139 92 246 / 0.06), transparent 50%);
+    background: rgb(var(--bg-base));
   }
 }
 
@@ -99,23 +107,26 @@ body {
     font-size: 14px;
     font-weight: 600;
     color: rgb(255 255 255);
-    background: linear-gradient(180deg, #22d3ee, #0e7490);
-    border: 1px solid rgb(var(--accent) / 0.55);
+    background: rgb(var(--accent));
+    border: 1px solid rgb(8 116 140);
     border-radius: 10px;
-    box-shadow:
-      0 1px 0 rgb(255 255 255 / 0.28) inset,
-      0 4px 14px -4px rgb(var(--accent) / 0.45);
-    transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease,
+      opacity 0.2s ease;
   }
   .btn-primary:hover:not(:disabled) {
+    background: rgb(14 116 144);
     transform: translateY(-1px);
-    box-shadow:
-      0 1px 0 rgb(255 255 255 / 0.28) inset,
-      0 8px 22px -6px rgb(var(--accent) / 0.5);
+    box-shadow: 0 4px 12px -4px rgb(var(--accent) / 0.45);
   }
   .btn-primary:disabled {
     opacity: 0.55;
     cursor: not-allowed;
+  }
+  .btn-primary:focus-visible,
+  .btn-ghost:focus-visible {
+    outline: 2px solid rgb(var(--accent) / 0.45);
+    outline-offset: 2px;
   }
   .btn-ghost {
     display: inline-flex;
@@ -243,21 +254,3 @@ body {
   pointer-events: none;
 }
 
-@keyframes gradient-pan {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.gradient-text {
-  background: linear-gradient(90deg, #0e7490, #5b21b6, #0e7490);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradient-pan 6s ease infinite;
-}

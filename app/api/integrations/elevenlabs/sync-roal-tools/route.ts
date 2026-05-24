@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
+import { EnvValidationError } from "@/lib/env.shared";
+import { getElevenLabsAgentId, getElevenLabsSyncToken } from "@/lib/env.server";
 import { syncRoalElevenLabsTools } from "@/lib/sync-elevenlabs-roal-tools";
 
 export const runtime = "nodejs";
 
 function authorize(req: Request): boolean {
-  const token = process.env.ELEVENLABS_SYNC_TOKEN?.trim();
+  const token = getElevenLabsSyncToken();
   if (!token) return true;
   const auth = req.headers.get("Authorization") ?? "";
   const bearer = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
@@ -26,11 +28,7 @@ export async function POST(req: Request) {
       typeof (body as { agent_id?: unknown }).agent_id === "string"
         ? (body as { agent_id: string }).agent_id.trim()
         : "";
-    const agentId =
-      fromBody ||
-      q ||
-      process.env.ELEVENLABS_AGENT_ID?.trim() ||
-      null;
+    const agentId = getElevenLabsAgentId(fromBody || q || null);
     const bodyObj =
       typeof body === "object" && body !== null
         ? (body as Record<string, unknown>)
@@ -60,6 +58,9 @@ export async function POST(req: Request) {
     });
     return NextResponse.json(result);
   } catch (e) {
+    if (e instanceof EnvValidationError) {
+      return NextResponse.json({ error: e.message }, { status: 503 });
+    }
     const msg = e instanceof Error ? e.message : "Sync failed";
     return NextResponse.json({ error: msg }, { status: 502 });
   }

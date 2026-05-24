@@ -1,18 +1,23 @@
 "use client";
 
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { getPublicEnv } from "@/lib/env.public";
 
 let browserClient: SupabaseClient | null = null;
 
-export function getBrowserSupabase(): SupabaseClient {
+export function createBrowserSupabase(): SupabaseClient {
   if (browserClient) return browserClient;
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) {
-    throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
-  }
-  browserClient = createClient(url, key, {
-    realtime: { params: { eventsPerSecond: 20 } },
-  });
+  const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } =
+    getPublicEnv();
+  browserClient = createBrowserClient(
+    NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+      realtime: { params: { eventsPerSecond: 20 } },
+    }
+  );
   return browserClient;
 }
+
+export const getBrowserSupabase = createBrowserSupabase;

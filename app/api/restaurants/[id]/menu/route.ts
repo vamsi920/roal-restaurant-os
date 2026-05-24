@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import {
-  getServerSupabase,
+  createServerSupabase,
   getServiceRoleSupabase,
 } from "@/lib/supabase/server";
 
@@ -25,6 +26,9 @@ export async function DELETE(
       return NextResponse.json({ error: "missing restaurant id" }, { status: 400 });
     }
 
+    const access = await requireRestaurantAccess(restaurantId);
+    if (access.errorResponse) return access.errorResponse;
+
     const admin = getServiceRoleSupabase();
     if (admin) {
       const { data: deletedRows, error } = await admin
@@ -44,7 +48,7 @@ export async function DELETE(
       });
     }
 
-    const supabase = getServerSupabase();
+    const supabase = await createServerSupabase();
     const { data: deletedCount, error } = await supabase.rpc(
       "clear_restaurant_menu",
       { p_restaurant_id: restaurantId }

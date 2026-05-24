@@ -1,7 +1,12 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
-import { getServerSupabase, getServiceRoleSupabase } from "@/lib/supabase/server";
+import {
+  getAuthContext,
+  getRestaurantAccessForPage,
+} from "@/lib/auth/context-server";
+import { getPublicEnv } from "@/lib/env.public";
+import { createServerSupabase, getServiceRoleSupabase } from "@/lib/supabase/server";
 import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import type {
   DbCategory,
@@ -9,12 +14,22 @@ import type {
   DbModifier,
   DraftOrderRow,
   PhoneOrderReceiptRow,
-  Restaurant,
 } from "@/lib/types";
 import { LiveMenuSidebar } from "./LiveMenuSidebar";
 import { LiveOrdersPanel } from "./LiveOrdersPanel";
 import { MenuScanner } from "./MenuScanner";
+import { MenuImportHistory } from "@/components/menu-import/MenuImportHistory";
+import { RestaurantProfileSettings } from "./RestaurantProfileSettings";
+import { RestaurantHoursSettings } from "./RestaurantHoursSettings";
+import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
 import { VoiceAgentPanel } from "./VoiceAgentPanel";
+import { VoiceAgentTestHarness } from "./VoiceAgentTestHarness";
+import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
+import { ensureRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+import { orderPricingFromProfile } from "@/lib/orders/pricing-settings";
+import { loadOrganizationGateVerdicts } from "@/lib/billing/assert-gate";
+import { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
+import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
 
 export const dynamic = "force-dynamic";
 
@@ -24,17 +39,36 @@ export default async function RestaurantKDSPage({
   params: { id: string };
 }) {
   noStore();
-  const supabase = getServerSupabase();
-
-  const { data: restaurant } = await supabase
-    .from("restaurants")
-    .select("*")
-    .eq("id", params.id)
-    .single<Restaurant>();
-
-  if (!restaurant) {
+  const access = await getRestaurantAccessForPage(params.id);
+  if (!access) {
+    const ctx = await getAuthContext();
+    if (!ctx) redirect(`/login?next=/dashboard/restaurants/${params.id}`);
     notFound();
   }
+  const { restaurant, role } = access;
+  const supabase = await createServerSupabase();
+  const billingGates = await loadOrganizationGateVerdicts(supabase, {
+    organizationId: restaurant.organization_id,
+    membershipRole: role,
+  });
+
+  const { data: orgRestaurants } = await supabase
+    .from("restaurants")
+    .select("id, name")
+    .eq("organization_id", restaurant.organization_id);
+  void notifyStuckOrdersForOrganization(supabase, {
+    organizationId: restaurant.organization_id,
+    restaurantNames: new Map(
+      (orgRestaurants ?? []).map((r) => [r.id as string, r.name as string])
+    ),
+  });
+  const profile = await ensureRestaurantProfile(
+    supabase,
+    restaurant.id,
+    restaurant.organization_id
+  );
+
+  const hoursBundle = await loadRestaurantHoursBundle(supabase, restaurant.id);
 
   const { data: categories } = await supabase
     .from("categories")
@@ -51,6 +85,7 @@ export default async function RestaurantKDSPage({
           .from("items")
           .select("*")
           .in("category_id", categoryIds)
+          .order("sort_order", { ascending: true })
           .order("name", { ascending: true })
       : { data: [] as DbItem[] };
 
@@ -67,10 +102,10 @@ export default async function RestaurantKDSPage({
 
   const initialModifiers: DbModifier[] = (modifiers as DbModifier[]) ?? [];
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+  const supabaseUrl = getPublicEnv().NEXT_PUBLIC_SUPABASE_URL;
   const supabaseRef = supabaseProjectRefFromUrl(supabaseUrl);
 
-  const db = getServiceRoleSupabase() ?? getServerSupabase();
+  const db = getServiceRoleSupabase() ?? (await createServerSupabase());
 
   const { data: draftOrders, error: draftErr } = await db
     .from("draft_orders")
@@ -98,9 +133,21 @@ export default async function RestaurantKDSPage({
   const initialReceipts: PhoneOrderReceiptRow[] = receiptErr
     ? []
     : ((receiptRows as PhoneOrderReceiptRow[]) ?? []);
+  const ordersLoadError =
+    draftErr?.message ?? receiptErr?.message ?? null;
+
+  const pricingSettings = orderPricingFromProfile(profile);
+
+  const voiceAgentCenter = await loadVoiceAgentControlCenter({
+    restaurantId: restaurant.id,
+    restaurantName: restaurant.name,
+    edgeBase: supabaseUrl.replace(/\/$/, ""),
+    supabaseRef,
+    profile,
+  });
 
   return (
-    <div className="space-y-5 sm:space-y-6">
+    <div className="kds-workspace space-y-5 sm:space-y-6">
       <div className="flex min-w-0 items-center gap-2 overflow-x-auto text-sm [-webkit-overflow-scrolling:touch]">
         <Link
           href="/dashboard/restaurants"
@@ -112,7 +159,7 @@ export default async function RestaurantKDSPage({
           Restaurants
         </Link>
         <span className="shrink-0 text-subtle">/</span>
-        <span className="min-w-0 truncate font-medium text-black" style={{ color: "#000000" }}>{restaurant.name}</span>
+        <span className="min-w-0 truncate font-medium text-ink">{restaurant.name}</span>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-4">
@@ -121,11 +168,17 @@ export default async function RestaurantKDSPage({
             <span className="h-px w-6 bg-line" />
             KDS Console
           </div>
-          <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-black sm:text-3xl" style={{ color: "#000000" }}>
+          <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
             {restaurant.name}
           </h1>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <Link
+            href={`/dashboard/restaurants/${restaurant.id}/menu`}
+            className="btn-ghost text-sm"
+          >
+            Edit menu
+          </Link>
           <div className="chip">
             <span className="pulse-dot" />
             Realtime synced
@@ -133,29 +186,50 @@ export default async function RestaurantKDSPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-[420px_1fr]">
+      <RestaurantProfileSettings restaurant={restaurant} profile={profile} />
+
+      {hoursBundle ? (
+        <RestaurantHoursSettings
+          restaurantId={restaurant.id}
+          bundle={hoursBundle}
+        />
+      ) : null}
+
+      <div className="grid min-w-0 grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
+        <LiveOrdersPanel
+          restaurantId={restaurant.id}
+          restaurantName={restaurant.name}
+          menuItems={initialItems}
+          menuModifiers={initialModifiers}
+          pricingSettings={pricingSettings}
+          initialDraftOrders={initialDraftOrders}
+          initialReceipts={initialReceipts}
+          initialLoadError={ordersLoadError}
+        />
+        <VoiceAgentPanel
+          initialCenter={voiceAgentCenter}
+          restaurantId={restaurant.id}
+          restaurantName={restaurant.name}
+          voiceOrderGate={billingGates?.voice_order ?? null}
+        />
+      </div>
+
+      <div className="grid min-w-0 grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]">
         <LiveMenuSidebar
           restaurantId={restaurant.id}
           initialCategories={initialCategories}
           initialItems={initialItems}
           initialModifiers={initialModifiers}
         />
-        <MenuScanner restaurantId={restaurant.id} />
+        <MenuScanner
+          restaurantId={restaurant.id}
+          menuScanGate={billingGates?.menu_scan ?? null}
+        />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
-        <LiveOrdersPanel
-          restaurantId={restaurant.id}
-          initialDraftOrders={initialDraftOrders}
-          initialReceipts={initialReceipts}
-        />
-        <VoiceAgentPanel
-          supabaseRef={supabaseRef}
-          edgeBase={supabaseUrl.replace(/\/$/, "")}
-          restaurantId={restaurant.id}
-          restaurantName={restaurant.name}
-        />
-      </div>
+      <MenuImportHistory restaurantId={restaurant.id} />
+
+      <VoiceAgentTestHarness restaurantId={restaurant.id} />
     </div>
   );
 }

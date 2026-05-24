@@ -14,32 +14,39 @@ Replace `<project-ref>` with your Supabase project ref (e.g. `mnkabwcbdxruefzuvu
 
 ## Secrets (Supabase Dashboard → Edge Functions → Secrets, or CLI)
 
-Required for both functions:
+**Preferred (production):** `AGENT_TOOL_SIGNING_SECRET` — same value as Next.js. Minted as `Authorization: Bearer roal1.*` on KDS **Connect**.
 
-```bash
-supabase secrets set AGENT_TOOL_SECRET='your-long-random-secret'
-```
+**Optional:** `AGENT_TOOL_SECRET` — legacy global bearer for unmigrated dynamic tools only.
 
-Already injected by Supabase for Edge Functions (do **not** paste the service role into ElevenLabs):
+Auto-injected by Supabase (do **not** paste service role into ElevenLabs):
 
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 
-If local: link project and run `supabase secrets set ...` from the repo root.
+One-shot parity (local or new env — never commit secret values):
+
+```bash
+npm run ensure:signing-parity   # writes .env.local if missing, mirrors to Edge, re-syncs agents
+npm run qa:lb03-signing-parity    # verify signed token → get-menu 200
+```
+
+If local: link project and run `supabase secrets set …` from repo root.
 
 ## Deploy functions
 
-From `/Users/vamsi/Desktop/restaurant-agent` (with [Supabase CLI](https://supabase.com/docs/guides/cli) logged in and project linked):
+From the repo root (with [Supabase CLI](https://supabase.com/docs/guides/cli) logged in and project linked):
 
 ```bash
 supabase link --project-ref <project-ref>
-supabase secrets set AGENT_TOOL_SECRET='<same-secret-you-use-in-elevenlabs>'
+supabase secrets set AGENT_TOOL_SIGNING_SECRET='<same-as-nextjs>'
+# optional legacy fallback:
+supabase secrets set AGENT_TOOL_SECRET='<legacy-global-bearer>'
 supabase functions deploy get-menu --no-verify-jwt
 supabase functions deploy sync-draft-order --no-verify-jwt
 supabase functions deploy finalize-order --no-verify-jwt
 ```
 
-`--no-verify-jwt`: the Supabase **gateway** still expects your **publishable anon key** in the `apikey` header on every request. ROAL’s synced ElevenLabs tools send **`apikey: <NEXT_PUBLIC_SUPABASE_ANON_KEY>`** (from your Next server env when you use **Connect agent to this restaurant** on the KDS page) plus **`Authorization: Bearer <AGENT_TOOL_SECRET>`** for the Edge handler’s own check.
+`--no-verify-jwt`: the Supabase **gateway** still expects your **publishable anon key** in the `apikey` header on every request. ROAL’s synced ElevenLabs tools send **`apikey: <NEXT_PUBLIC_SUPABASE_ANON_KEY>`** plus **`Authorization: Bearer <roal1 signed token>`** (minted on Connect) for the Edge handler’s own check.
 
 Repo `supabase/config.toml` sets `verify_jwt = false` for `get-menu`, `sync-draft-order`, and `finalize-order` so deploys match CLI `--no-verify-jwt`.
 
@@ -50,9 +57,45 @@ For agents synced **without** a restaurant id (legacy), tools may still expect `
 | Variable | Example | Purpose |
 |----------|---------|---------|
 | `restaurant_id` | UUID from KDS URL | Legacy dynamic tools; **baked** tools embed this in URLs / headers instead |
-| `restaurant_name` | `Joe's Diner` | Placeholders + `{{restaurant_name}}` in the agent first message (set when you **Connect agent to this restaurant**). Fallback text is `the restaurant` if unset. |
+| `restaurant_name` | `Joe's Diner` | Placeholders + spoken name in **first_message** (literal text after Connect — no `{{restaurant_name}}` templates). Fallback is `the restaurant`. |
 
-On the ROAL KDS restaurant page, **Connect agent to this restaurant** runs tool sync + order-taker profile. That sync **bakes** this restaurant into webhook URLs and the `x-roal-restaurant-id` header so **Twilio phone calls do not need** those variables for tools. It still sets `dynamic_variable_placeholders` for prompts and legacy use.
+On the ROAL KDS restaurant page, **Connect agent to this restaurant** runs tool sync + order-taker profile. That sync **bakes** this restaurant into webhook URLs and the `x-roal-restaurant-id` header so **Twilio phone calls do not need** those variables for tools. It PATCHes `dynamic_variable_placeholders`, a **literal** `first_message`, and the order-taker prompt.
+
+### Twilio / phone calls (required)
+
+Inbound Twilio calls fail with `Missing required dynamic variables in first message: {'restaurant_name'}` when the agent still has `{{restaurant_name}}` in **first_message** and ElevenLabs cannot resolve variables at call start.
+
+1. Run **Connect agent to this restaurant** on the KDS (re-sync after deploy).
+2. In ElevenLabs → your agent → **Phone** → **Personalization**, set the webhook URL to:
+   - `{NEXT_PUBLIC_APP_URL}/api/integrations/elevenlabs/conversation-init` (no trailing slash on the origin)
+   - Example: `https://your-domain.com/api/integrations/elevenlabs/conversation-init`
+   - **Connect agent to this restaurant** PATCHes this URL automatically when `NEXT_PUBLIC_APP_URL` (or `VERCEL_URL`) is set.
+3. Optional: set `ELEVENLABS_CONVERSATION_INIT_SECRET` in ROAL `.env` and append `?secret=<same>` to the ElevenLabs URL (or send header `x-roal-conversation-init-secret`).
+
+The webhook looks up `restaurant_profiles.elevenlabs_agent_id` and returns:
+
+```json
+{
+  "type": "conversation_initiation_client_data",
+  "dynamic_variables": {
+    "restaurant_id": "<uuid>",
+    "restaurant_name": "Joe's Diner"
+  }
+}
+```
+
+Requires `SUPABASE_SERVICE_ROLE_KEY` on the Next.js server so the lookup can run.
+
+**CLI (same as KDS Connect):** from repo root with `.env` + `.env.local`:
+
+```bash
+export ROAL_SYNC_RESTAURANT_ID=<uuid>
+export ROAL_SYNC_RESTAURANT_NAME="Your Restaurant"
+export NEXT_PUBLIC_APP_URL=https://your-production-domain.com
+npm run elevenlabs:connect
+```
+
+Writes `ELEVENLABS_CONVERSATION_INIT_SECRET` to `.env.local` if missing and PATCHes the agent (tools, literal `first_message`, placeholders, Twilio personalization webhook).
 
 **Deploy:** after pulling this behavior, redeploy `get-menu`, `sync-draft-order`, and `finalize-order` so the header fallback is live.
 
@@ -76,7 +119,7 @@ If the Realtime websocket fails in the browser (network, extensions, or config),
 - **Description:** Fetches the current restaurant menu (categories, items, modifiers, prices, availability). Call **immediately** when the session starts (before or while the guest answers pickup/delivery)—**without** telling them you are loading or pulling up the menu. Call again when the guest asks what you serve if the menu may have changed.
 - **Method:** `GET` or `POST`
 - **URL:** `https://<project-ref>.supabase.co/functions/v1/get-menu`
-- **Headers:** `Authorization: Bearer <AGENT_TOOL_SECRET>` · `apikey: <Supabase anon / publishable key>`  
+- **Headers:** `Authorization: Bearer <roal1 signed token or AGENT_TOOL_SECRET>` · `apikey: <Supabase anon / publishable key>` · `x-roal-restaurant-id: <uuid>` (baked)  
   `Content-Type: application/json` (for POST)
 
 **GET:** append query `?restaurant_id=<uuid>&restaurant_name=<optional+encoded>`
@@ -95,7 +138,7 @@ If the Realtime websocket fails in the browser (network, extensions, or config),
 - **Description:** Updates the live order row for this call. Call whenever the guest adds/changes items or modifiers; use `draft` while ordering, `confirmed` when they finalize.
 - **Method:** `POST`
 - **URL:** `https://<project-ref>.supabase.co/functions/v1/sync-draft-order`
-- **Headers:** `Authorization: Bearer <AGENT_TOOL_SECRET>`  
+- **Headers:** `Authorization: Bearer <roal1 token or AGENT_TOOL_SECRET>` · `x-roal-restaurant-id` (baked) · optional `x-roal-idempotency-key`  
   `Content-Type: application/json`
 
 **Body:**
@@ -128,7 +171,7 @@ Optional fields (stored on the same row when provided — only if the caller act
 - **Description:** Marks the order confirmed and records guest name and phone. Call after `sync_draft_order` has built the cart (or pass `items` here).
 - **Method:** `POST`
 - **URL:** `https://<project-ref>.supabase.co/functions/v1/finalize-order`
-- **Headers:** `Authorization: Bearer <AGENT_TOOL_SECRET>` · `Content-Type: application/json`
+- **Headers:** `Authorization: Bearer <roal1 token or AGENT_TOOL_SECRET>` · `x-roal-restaurant-id` (baked) · optional `x-roal-idempotency-key` · `Content-Type: application/json`
 
 **Body:**
 
@@ -151,14 +194,34 @@ On each restaurant KDS (`/dashboard/restaurants/[id]`):
 - **Phone orders (KDS)** — `draft_orders` for live carts + `phone_order_receipts` for completed orders (written on `finalize_order`); both scoped by `restaurant_id`, Realtime + periodic refresh in the UI.
 - **ElevenLabs panel** — calls `GET /api/integrations/elevenlabs/agent` using your **server** env `ELEVENLABS_API_KEY` (and optional `ELEVENLABS_AGENT_ID` or `?agent_id=`). Shows the three Edge tool URLs for that restaurant.
 
-Set in `.env` (see repo `.env.example`; remove `.env.local` if you want `.env` values to win):
+Set in `.env` / `.env.local` (see [.env.example](../.env.example)):
 
 ```bash
-ELEVENLABS_API_KEY=xi-...
+ELEVENLABS_API_KEY=your-key
 ELEVENLABS_AGENT_ID=...   # optional default agent
 ```
 
 To **change** agent settings from code, `PATCH /api/integrations/elevenlabs/agent?agent_id=…` with a JSON body per [ElevenLabs PATCH agent](https://elevenlabs.io/docs/api-reference/agents/update) (advanced: prompts, tools, LLM, etc.).
+
+### Tool sync API (operator / CI)
+
+`POST /api/integrations/elevenlabs/sync-roal-tools` runs the same logic as **Connect agent to this restaurant** (`lib/sync-elevenlabs-roal-tools.ts`): create or update the three webhook tools (`get_menu_items`, `sync_draft_order`, `finalize_order`) and attach their ids to the agent `prompt.tool_ids`.
+
+**Body (JSON):**
+
+```json
+{
+  "agent_id": "agent_…",
+  "restaurant_id": "<uuid>",
+  "restaurant_name": "Spoken name"
+}
+```
+
+`agent_id` may also be omitted when `ELEVENLABS_AGENT_ID` is set, or passed as `?agent_id=`. When `restaurant_id` is present, tools are **baked** (`x-roal-restaurant-id`, menu URL query, no `restaurant_id` in POST bodies). When omitted, tools use ElevenLabs dynamic variables (legacy).
+
+**Auth:** optional `ELEVENLABS_SYNC_TOKEN` — if set, require `Authorization: Bearer <token>`. No dashboard session on this route (use KDS **Connect** / `connectVoiceAgentAction` to persist `elevenlabs_last_sync_summary` on `restaurant_profiles`).
+
+**CLI:** `npm run elevenlabs:tools` (dynamic, env default agent) · `npm run elevenlabs:connect` (baked + profile + Twilio webhook) · `npm run resync:elevenlabs-all` (all linked restaurants) · `npm run list:elevenlabs-restaurants`.
 
 ## System prompt — tool usage policy (paste into agent)
 
@@ -172,18 +235,28 @@ Tool usage policy:
 
 Pass **`restaurant_id`** into the session via [dynamic variables](https://elevenlabs.io/docs) or your API session payload so the model always has the correct UUID (one agent config, many restaurants).
 
-## API / signed URL (optional hardening)
+## Tool authentication (production)
 
-- **Today:** ElevenLabs calls the Edge Function URL with `Authorization: Bearer AGENT_TOOL_SECRET`. Rotate the secret if leaked.
-- **Better:** Your Next.js backend issues short-lived signed tokens; Edge verifies that instead of a static secret. ElevenLabs would then call your backend URL, which proxies to Supabase with the secret server-side.
+ROAL uses **per-restaurant signed tokens** (`Authorization: Bearer roal1.*`) minted when you **Connect agent to this restaurant**. Edge also accepts the legacy global `AGENT_TOOL_SECRET` for dynamic (non-baked) tool configs.
+
+Full design, idempotency, ownership checks, and **secret rotation**: [docs/AGENT_TOOL_SECURITY.md](./AGENT_TOOL_SECURITY.md).
+
+Set in Next.js and Supabase Edge secrets:
+
+```bash
+AGENT_TOOL_SIGNING_SECRET='long-random-string'   # preferred
+AGENT_TOOL_SECRET='legacy-fallback'              # optional during migration
+```
+
+After rotation or first deploy, **Re-sync** each restaurant so ElevenLabs tool headers pick up the new bearer token.
 
 ## Verify in ElevenLabs
 
-1. Deploy all three Edge functions and set `AGENT_TOOL_SECRET`.
-2. In **Tools → Server tool**, create `get_menu_items`, `sync_draft_order`, and `finalize_order` with URLs and headers above.
-3. Start a test conversation with a valid `restaurant_id` in the tool request (or static query for smoke test).
-4. Open **Logs** in ElevenLabs and confirm HTTP 200 and JSON body from `get-menu`.
+1. Deploy all three Edge functions; run `npm run ensure:signing-parity` (or set `AGENT_TOOL_SIGNING_SECRET` on Next.js + Edge).
+2. KDS → **Connect agent to this restaurant** (or `npm run elevenlabs:connect` with `ROAL_SYNC_RESTAURANT_ID`).
+3. Run `npm run qa:lb01-phone-stack` and `npm run qa:get-menu-elevenlabs` against QA restaurant.
+4. Start a test conversation; confirm **Logs** show HTTP **200** on `get_menu_items`.
 
 ## Database
 
-Migration `003_draft_orders.sql` creates `public.draft_orders` with Realtime enabled for dashboard subscriptions.
+Migrations `003_draft_orders.sql` onward create `public.draft_orders` and related order tables with Realtime for KDS. Full list: [DEPLOYMENT.md](./DEPLOYMENT.md) §1.
