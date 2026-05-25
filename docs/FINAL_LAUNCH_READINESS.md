@@ -159,9 +159,25 @@ Evolution of committed baseline: `.env.example`, `README.md`, core dashboard + E
 
 ---
 
+## Public visual audit (03/40)
+
+**Completed 2026-05-23** without restarting a dev server (ports 3020/3001 cleared).
+
+| Method | Result |
+|--------|--------|
+| Prior browser | `/` desktop only (original run aborted) |
+| Static Vitest (this pass) | **45/45** — a11y, nav, mobile/desktop layout, visual consistency, cross-links, pricing/demo/auth/home |
+| Live browser | **Optional** — `public-route-smoke.mjs` + `qa:responsive-sweep` when server up |
+
+**Routes:** `/`, `/pricing`, `/blog`, `/blog/ai-phone-ordering-small-restaurants`, `/about`, `/demo`, `/contact`, `/security`, `/login`, `/signup`.
+
+**Findings:** No UI fixes needed from static pass. Home = `landing-home.css`; marketing = `public-theme`.
+
+---
+
 ## Homepage polish (prompt 04/40)
 
-Hero, metrics, how-it-works, FAQ, CTA, footer tightened; pricing pill in content stack. **452/452** tests; browser desktop + mobile verified.
+Hero, metrics, how-it-works, FAQ, CTA, footer tightened; pricing pill in content stack. **Re-verified 2026-05-23** — `home-how-flow-qa` + `home-pricing-teaser` pass; 6-section `landing-page.tsx` unchanged.
 
 ---
 
@@ -956,8 +972,8 @@ Edge `supabase/functions/*`, `_shared/agent-tool-auth.ts`, dashboard/notificatio
 | # | Action |
 |---|--------|
 | ~~02~~ | ~~Triage working tree~~ — **done** (this doc § Diff triage) |
-| **03** | Public visual audit — **partial** (see below); resume browser pass |
-| ~~04~~ | Homepage polish — **done** (see § Homepage polish) |
+| ~~03~~ | Public visual audit — **done** (see § Public visual audit); static **45/45**; live browser optional |
+| ~~04~~ | Homepage polish — **done** (see § Homepage polish); re-verified static tests this pass |
 | ~~05~~ | Pricing polish — **done** (see § Pricing polish) |
 | ~~06~~ | Blog index + article template — **done** (see § Blog polish) |
 | ~~07~~ | Auth login/signup onboarding polish — **done** (see § Auth polish) |
@@ -1005,7 +1021,7 @@ See [`launch-finalization-40-prompts.md`](./launch-finalization-40-prompts.md).
 |------|--------|---------|
 | 2026-05-23 | Launch 01/40 | Initial snapshot from FLOW_QA 60/60 + LAUNCH_BLOCKERS + git status; no product code changes |
 | 2026-05-23 | Launch 02/40 | Diff triage: 205 paths classified; deleted root MP4 duplicate; `.gitignore` root video patterns; LAUNCH_BLOCKERS non-blocker note for uncommitted tree |
-| 2026-05-23 | Launch 03/40 | Public visual audit **started**, not finished — dev server aborted; `/` desktop only; no product fixes |
+| 2026-05-23 | Launch 03/40 | Public visual audit **closed** — static QA 45/45 (no dev server); live browser sweep optional |
 | 2026-05-23 | Launch 04/40 | Homepage copy + layout polish; pill in hero stack; CTA band description; tests updated; desktop/mobile screenshots |
 | 2026-05-23 | Launch 05/40 | Pricing simplified: headline + $0.90 card, billable/free lists, pilot setup, CTA band; removed `pricing-what-counts.tsx` |
 | 2026-05-23 | Launch 06/40 | Blog glass theme cascade fix; compact related/grid cards; poster yellow overrides; browser `/blog` + article |
