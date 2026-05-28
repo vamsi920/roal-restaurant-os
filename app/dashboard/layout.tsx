@@ -4,10 +4,8 @@ import type { ReactNode } from "react";
 import "@/app/dashboard-theme.css";
 import { PRIVATE_PAGE_ROBOTS } from "@/lib/seo/robots-metadata";
 import { AppShell } from "@/components/dashboard/app-shell";
-import {
-  getAuthContext,
-  hasOrgAdminAccess,
-} from "@/lib/auth/context-server";
+import { getAuthContext } from "@/lib/auth/context-server";
+import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
 import { formatMembershipRole } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
@@ -31,8 +29,14 @@ export default async function DashboardLayout({
     <AppShell
       userEmail={context.user.email ?? context.user.id}
       organizationName={primary?.organization.name ?? null}
-      roleLabel={primary ? formatMembershipRole(primary.role) : null}
-      showAdminNav={hasOrgAdminAccess(context)}
+      roleLabel={
+        isPlatformAdminEmail(context.user.email)
+          ? "ROAL support"
+          : primary
+            ? formatMembershipRole(primary.role)
+            : null
+      }
+      showAdminNav={isPlatformAdminEmail(context.user.email)}
     >
       {children}
     </AppShell>

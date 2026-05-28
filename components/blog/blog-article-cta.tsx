@@ -34,7 +34,7 @@ export function BlogArticleCta({ cta = BLOG_CTA_DEMO, categorySlug }: Props) {
 
   return (
     <aside
-      className="blog-article-cta public-blog-article-cta"
+      className="blog-article-cta blog-article-cta--closing public-blog-article-cta"
       aria-label="Try ROAL"
     >
       <p className="blog-article-cta__eyebrow">Try ROAL</p>

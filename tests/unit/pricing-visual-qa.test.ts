@@ -5,13 +5,19 @@ import { describe, expect, it } from "vitest";
 const REPO = join(import.meta.dirname, "../..");
 
 describe("pricing visual QA", () => {
-  it("uses pilot setup block instead of duplicate what-counts prose", () => {
-    const pilot = readFileSync(
-      join(REPO, "components/landing/pricing/pricing-pilot-setup.tsx"),
+  it("renders order explainer before pilot setup", () => {
+    const content = readFileSync(
+      join(REPO, "components/landing/pricing/pricing-page-content.tsx"),
       "utf8"
     );
-    expect(pilot).toContain("public-pricing-pilot__steps");
-    expect(pilot).not.toContain("what-counts");
+    const explainer = readFileSync(
+      join(REPO, "components/landing/pricing/pricing-order-explainer.tsx"),
+      "utf8"
+    );
+    expect(content).toContain("PricingOrderExplainer");
+    expect(explainer).toContain("public-pricing-orders");
+    expect(explainer).not.toContain("Counts as one");
+    expect(explainer).not.toContain("Never billed");
   });
 
   it("uses narrow editorial layout wrapper", () => {

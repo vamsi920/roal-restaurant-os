@@ -25,41 +25,39 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl min-w-0">
-      <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
-        Settings
-      </p>
-      <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-        Organization settings
-      </h1>
-      <p className="mt-3 text-sm text-muted">
-        Location profile, taxes, ordering modes, and escalation contacts are managed
-        per restaurant in the kitchen workspace.
-      </p>
-      {firstRestaurantId ? (
+    <div className="settings-page dashboard-page dashboard-page--narrow min-w-0 max-w-full space-y-6 overflow-x-hidden sm:space-y-8">
+      <header className="dashboard-page__header min-w-0">
+        <p className="dashboard-page__eyebrow">Settings</p>
+        <h1 className="dashboard-page__title">Organization</h1>
+        <p className="dashboard-page__lead">
+          Store profile, taxes, and ordering options live per location in Live orders
+          and Menu &amp; agent.
+        </p>
+      </header>
+
+      <div className="dashboard-page__actions dashboard-page__actions--row">
+        {firstRestaurantId ? (
+          <Link
+            href={`/dashboard/restaurants/${firstRestaurantId}`}
+            className="btn-primary inline-flex"
+          >
+            Open location
+          </Link>
+        ) : (
+          <Link href="/dashboard/onboarding" className="btn-primary inline-flex">
+            Start setup
+          </Link>
+        )}
         <Link
-          href={`/dashboard/restaurants/${firstRestaurantId}`}
-          className="btn-primary mt-6 inline-flex"
+          href="/dashboard/settings/notifications"
+          className="btn-ghost inline-flex"
         >
-          Open location settings
+          Notifications
         </Link>
-      ) : (
-        <Link href="/dashboard/onboarding" className="btn-primary mt-6 inline-flex">
-          Start onboarding
+        <Link href="/dashboard/restaurants" className="btn-ghost inline-flex">
+          All locations
         </Link>
-      )}
-      <Link
-        href="/dashboard/settings/notifications"
-        className="btn-ghost mt-3 inline-flex"
-      >
-        Notification settings
-      </Link>
-      <Link
-        href="/dashboard/restaurants"
-        className="btn-ghost ml-0 mt-3 inline-flex sm:ml-3 sm:mt-3"
-      >
-        All restaurants
-      </Link>
+      </div>
     </div>
   );
 }

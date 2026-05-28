@@ -1,16 +1,24 @@
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 import {
   getAuthContext,
   getRestaurantAccessForPage,
 } from "@/lib/auth/context-server";
-import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
+import { loadRestaurantMenuSetupPageData } from "@/lib/restaurant-menu-setup/load-page-data";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { MenuEditor } from "./MenuEditor";
+import { RESTAURANT_MENU_SETUP_TITLE } from "@/lib/dashboard-restaurant-labels";
+import { MenuSetupWorkspace } from "./MenuSetupWorkspace";
+import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
+import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
+
+export const metadata: Metadata = {
+  title: `${RESTAURANT_MENU_SETUP_TITLE} — ROAL`,
+};
 
 export const dynamic = "force-dynamic";
 
-export default async function RestaurantMenuEditorPage({
+export default async function RestaurantMenuSetupPage({
   params,
 }: {
   params: { id: string };
@@ -23,15 +31,20 @@ export default async function RestaurantMenuEditorPage({
     notFound();
   }
 
-  const { restaurant } = access;
+  const { restaurant, role } = access;
   const supabase = await createServerSupabase();
-  const menu = await loadRestaurantMenu(supabase, restaurant.id);
+  const setup = await loadRestaurantMenuSetupPageData(supabase, {
+    restaurant,
+    organizationId: restaurant.organization_id,
+    membershipRole: role,
+  });
 
   return (
-    <MenuEditor
+    <RestaurantWorkspaceRail
       restaurantId={restaurant.id}
       restaurantName={restaurant.name}
-      initial={menu}
-    />
+    >
+      <MenuSetupWorkspace {...setup} />
+    </RestaurantWorkspaceRail>
   );
 }

@@ -28,6 +28,9 @@ function snapshot(overrides: Partial<BillingSnapshot> = {}): BillingSnapshot {
     ...(overrides.effectiveLimits ?? {}),
   };
   return {
+    scope: "organization",
+    restaurantId: null,
+    restaurantName: null,
     providerMode: "stripe",
     providerConfigured: true,
     checkoutEnabled: true,

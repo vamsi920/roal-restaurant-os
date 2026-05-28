@@ -1,9 +1,16 @@
-import { HOME_PRICING_PILL } from "@/lib/landing/home-theme";
+import {
+  PRICING_NO_ORDER_LINE,
+  PRICING_ORDER_EXPLAINER,
+  PRICING_PILL_PRICE,
+  PRICING_RATE_AMOUNT,
+  PRICING_RATE_LINE,
+  PRICING_SUCCESS_HEADLINE,
+} from "@/lib/landing/pricing-core";
 import { PUBLIC_CTA } from "@/lib/landing/public-cta";
 
 /** Restaurant-owner copy for `/pricing`. */
 
-export const PRICING_HEADLINE = "Only pay for successful orders" as const;
+export const PRICING_HEADLINE = PRICING_RATE_LINE;
 
 export const PRICING_CTA = {
   primary: PUBLIC_CTA.hearDemo,
@@ -14,47 +21,39 @@ export const PRICING_CTA = {
 export const PRICING_PAGE_COPY = {
   seo: {
     title: "Pricing — $0.90 per successful order | ROAL",
-    description:
-      "Only pay for successful orders. $0.90 per pickup when the ticket hits your kitchen—not per minute, not per ring.",
+    description: `${PRICING_RATE_LINE}. ${PRICING_NO_ORDER_LINE}`,
   },
   aeo: {
     titleId: "pricing-cost-heading",
     question: "How much does ROAL cost per pickup order?",
-    answer: `${HOME_PRICING_PILL.price} per successful pickup when the guest confirms on the call and the ticket hits your kitchen screen.`,
-    detail: "Hang-ups, wrong numbers, and test calls are free. No per-minute phone bill.",
+    answer: `${PRICING_SUCCESS_HEADLINE}. ${PRICING_RATE_LINE}.`,
+    detail: PRICING_NO_ORDER_LINE,
   },
   primaryCard: {
     titleId: "pricing-heading",
-    eyebrow: "Pricing",
-    headline: PRICING_HEADLINE,
-    rate: "$0.90",
-    rateUnit: "per successful order",
-    rateNote:
-      "Guest confirms pickup on the call and the ticket hits your kitchen screen—that is one billable order.",
-    billableHeading: "Counts as one order",
-    billableItems: [
-      "Guest name and phone captured on the call",
-      "Ticket on your kitchen screen (your kitchen pass)",
-    ] as const,
-    freeHeading: "Never billed",
-    freeItems: [
-      "Hang-ups and wrong numbers",
-      "Small talk with no order",
-      "Abandoned carts and test calls",
-      "Per-minute phone fees",
-    ] as const,
+    eyebrow: "Success-based pricing",
+    headline: PRICING_SUCCESS_HEADLINE,
+    rate: PRICING_RATE_AMOUNT,
+    rateUnit: "/order",
+    tagline: PRICING_NO_ORDER_LINE,
+    rateNote: undefined,
+    billableHeading: "",
+    billableItems: [] as const,
+    freeHeading: "",
+    freeItems: [] as const,
     ctas: PRICING_CTA,
   },
+  whatCounts: PRICING_ORDER_EXPLAINER,
   pilot: {
     titleId: "pricing-pilot-heading",
     title: "Pilot setup",
-    lead: "Most shops are live in about twenty minutes.",
+    lead: "Live in about twenty minutes.",
     steps: [
-      "Scan your printed menu into the dashboard",
+      "Scan your menu",
       "Connect your pickup line",
-      "Run a test call, then forward rush-hour traffic",
+      "Test call, then forward rush-hour calls",
     ] as const,
-    note: "Optional one-time setup fee. We confirm your rate before live calls. Pilot is month-to-month.",
+    note: "Rate confirmed before live calls.",
   },
   faq: {
     titleId: "pricing-faq-heading",
@@ -62,9 +61,11 @@ export const PRICING_PAGE_COPY = {
   },
   close: {
     titleId: "pricing-close-heading",
-    title: "Stop paying for rings that never become orders.",
-    description: "Hear a sample call on your menu, or book a short walkthrough with our team.",
+    title: PRICING_SUCCESS_HEADLINE,
+    description: "Hear a demo call or book a short walkthrough.",
   },
+  signupNote: "Scan your menu and run a test call.",
 } as const;
 
 export { PRICING_FAQ } from "@/lib/landing/launch-faq";
+export { PRICING_PILL_PRICE };

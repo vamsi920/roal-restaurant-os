@@ -8,6 +8,7 @@ Supabase Auth with cookie sessions (`@supabase/ssr`).
 |------|--------|
 | `/`, `/pricing`, `/demo`, `/security`, `/contact` | Public marketing |
 | `/login`, `/signup` | Guests only (signed-in users redirect to `next` or `/dashboard`) |
+| `/reset-password` | Set new password after email reset link (requires active recovery session) |
 | `/dashboard/*` | Requires session (middleware + server layout) |
 | `/auth/callback` | OAuth / email-confirm code exchange |
 | `/auth/signout` | `POST` — clears session, redirects to `/login` |
@@ -28,7 +29,8 @@ In **Authentication → URL configuration**:
 - **Site URL:** `http://localhost:3000` (dev) or production domain
 - **Redirect URLs:** add  
   `http://localhost:3000/auth/callback`  
-  `https://<your-domain>/auth/callback`
+  `https://<your-domain>/auth/callback`  
+  (password reset emails use the same callback → `/reset-password`)
 
 For email signup, confirm links use `emailRedirectTo` → `/auth/callback?next=...`.
 
@@ -53,13 +55,15 @@ See **`lib/auth/`** — helpers for org membership, role checks, and restaurant 
 | `admin` | Update org, manage members, delete restaurants |
 | `member` | Operate menus, orders, voice tools (no member management) |
 
+**Platform admin** (`PLATFORM_ADMIN_EMAIL`, default `vammu920@gmail.com`): internal **Admin / Ops** console and nav item. Not the same as org `admin` role — other users never see `/dashboard/admin` even if their membership role is `admin`.
+
 | Helper | Use |
 |--------|-----|
 | `getAuthContext()` / `requireAuthContext()` | User + all memberships |
 | `requireRestaurantAccess(id)` | API / server actions |
 | `getRestaurantAccessForPage(id)` | Server pages → `notFound()` |
 | `resolveOrganizationId(ctx, orgId?)` | Create restaurant in member org |
-| `hasOrgAdminAccess(ctx)` | Admin nav + `/dashboard/admin` |
+| `hasOrgAdminAccess(ctx)` | Platform staff only (`vammu920@gmail.com` by default; override `PLATFORM_ADMIN_EMAIL`) — Admin nav + `/dashboard/admin` |
 | `useAuthContext()` / `GET /api/auth/context` | Client components |
 
 ## Code map

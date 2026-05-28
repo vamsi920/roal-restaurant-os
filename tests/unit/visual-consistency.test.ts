@@ -46,6 +46,18 @@ function walkTs(dir: string): string[] {
 }
 
 describe("visual consistency (public marketing)", () => {
+  it("dashboard globals use ROAL ink and lavender accent", () => {
+    const globals = readFileSync(join(REPO, "app/globals.css"), "utf8");
+    expect(globals).toContain("--accent: 100 85 175");
+    expect(globals).not.toContain("--accent: 8 145 178");
+    expect(globals).toContain("--text-primary: 22 22 24");
+  });
+
+  it("public washes avoid amber gradient token", () => {
+    const theme = readFileSync(join(REPO, "app/public-theme.css"), "utf8");
+    expect(theme).not.toContain("--public-accent-amber");
+    expect(theme).toContain("--public-accent-violet");
+  });
   it("marketing TSX avoids legacy cream/yellow/blue class names", () => {
     const violations: { file: string; hit: string }[] = [];
     const files = [...new Set(MARKETING_DIRS.flatMap((d) => walkTs(d)))];

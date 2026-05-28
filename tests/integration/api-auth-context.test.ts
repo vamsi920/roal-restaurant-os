@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GET } from "@/app/api/auth/context/route";
+import { DEFAULT_PLATFORM_ADMIN_EMAIL } from "@/lib/auth/platform-admin";
 import type { AuthContext } from "@/lib/auth/types";
 
 const ORG_A = "11111111-1111-4111-8111-111111111111";
@@ -94,6 +95,22 @@ describe("GET /api/auth/context", () => {
     });
     expect(body.memberships[1].role).toBe("member");
     expect(body.primaryOrganizationId).toBe(ORG_A);
+    expect(body.hasOrgAdminAccess).toBe(false);
+  });
+
+  it("sets hasOrgAdminAccess true for platform admin email", async () => {
+    const platform = buildContext({
+      user: {
+        id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        email: DEFAULT_PLATFORM_ADMIN_EMAIL,
+      } as AuthContext["user"],
+    });
+    platform.primaryMembership = platform.memberships[0] ?? null;
+    vi.mocked(getAuthContext).mockResolvedValue(platform);
+
+    const res = await GET();
+    const body = await res.json();
+
     expect(body.hasOrgAdminAccess).toBe(true);
   });
 

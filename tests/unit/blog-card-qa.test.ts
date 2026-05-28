@@ -10,6 +10,7 @@ describe("blog card design", () => {
     expect(card).toContain("blog-card__surface");
     expect(card).not.toContain("glass-card");
     expect(card).toContain("blog-card__link");
+    expect(card).toContain("blogIndexExcerpt");
     expect(card).not.toContain("public-blog-card");
     expect(card).not.toContain("landing-panel");
     expect(card).not.toContain("ticket");

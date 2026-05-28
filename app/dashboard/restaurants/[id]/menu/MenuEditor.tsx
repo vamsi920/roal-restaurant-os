@@ -44,11 +44,19 @@ import {
 import type { DbCategory, DbItem } from "@/lib/types";
 import { notifyMenuChanged } from "@/lib/menu-editor/notify-menu-changed";
 import { cn } from "@/lib/cn";
+import {
+  RESTAURANT_KDS_LABEL,
+  RESTAURANT_MENU_AGENT_LABEL,
+} from "@/lib/dashboard-restaurant-labels";
 
 type Props = {
   restaurantId: string;
   restaurantName: string;
   initial: RestaurantMenuSnapshot;
+  /** When true, page shell (breadcrumb/header) is provided by the parent route. */
+  embedded?: boolean;
+  /** Menu setup flow: parent supplies the section title. */
+  hideSectionHeader?: boolean;
 };
 
 type EditKind = "category" | "item" | "modifier-group" | null;
@@ -73,7 +81,13 @@ function parseSortOrderInput(raw: string, fallback: number): number {
   return Number.isFinite(n) ? n : fallback;
 }
 
-export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
+export function MenuEditor({
+  restaurantId,
+  restaurantName,
+  initial,
+  embedded = false,
+  hideSectionHeader = false,
+}: Props) {
   const router = useRouter();
   const [categories, setCategories] = useState(initial.categories);
   const [items, setItems] = useState(initial.items);
@@ -328,44 +342,67 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
   }
 
   return (
-    <div className="space-y-5 sm:space-y-6">
-      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div
+      className={cn(
+        "menu-editor min-w-0 max-w-full space-y-5 overflow-x-hidden sm:space-y-6",
+        embedded && !hideSectionHeader && "border-t border-line pt-6"
+      )}
+    >
+      {embedded && !hideSectionHeader ? (
         <div className="min-w-0">
-          <div className="flex min-w-0 items-center gap-2 overflow-x-auto text-sm">
-            <Link
-              href="/dashboard/restaurants"
-              className="shrink-0 text-muted hover:text-ink"
-            >
-              Restaurants
-            </Link>
-            <span className="shrink-0 text-subtle">/</span>
-            <Link
-              href={`/dashboard/restaurants/${restaurantId}`}
-              className="shrink-0 truncate text-muted hover:text-ink"
-            >
-              {restaurantName}
-            </Link>
-            <span className="shrink-0 text-subtle">/</span>
-            <span className="truncate font-medium text-ink">Menu editor</span>
-          </div>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Menu editor
-          </h1>
+          <h2
+            id="menu-setup-manual-editor-heading"
+            className="text-lg font-semibold tracking-tight text-ink"
+          >
+            Manual menu editor
+          </h2>
           <p className="mt-1 text-sm text-muted">
-            Edit categories, items, and modifiers. Changes sync to the live KDS sidebar.
+            Edit categories, items, and modifiers. Changes sync to the live menu and
+            phone agent.
           </p>
         </div>
-        <Link
-          href={`/dashboard/restaurants/${restaurantId}`}
-          className="btn-ghost shrink-0 text-sm"
-        >
-          Back to KDS console
-        </Link>
-      </div>
+      ) : embedded ? null : (
+        <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="min-w-0">
+            <div className="menu-editor__crumb hidden min-w-0 items-center gap-2 overflow-x-auto text-sm sm:flex">
+              <Link
+                href="/dashboard/restaurants"
+                className="shrink-0 text-muted hover:text-ink"
+              >
+                Locations
+              </Link>
+              <span className="shrink-0 text-subtle">/</span>
+              <Link
+                href={`/dashboard/restaurants/${restaurantId}`}
+                className="shrink-0 truncate text-muted hover:text-ink"
+              >
+                {restaurantName}
+              </Link>
+              <span className="shrink-0 text-subtle">/</span>
+              <span className="truncate font-medium text-ink">
+                {RESTAURANT_MENU_AGENT_LABEL}
+              </span>
+            </div>
+            <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              {RESTAURANT_MENU_AGENT_LABEL}
+            </h1>
+            <p className="mt-1 text-sm text-muted">
+              Edit categories, items, and modifiers. Changes sync to the live menu and
+              phone agent.
+            </p>
+          </div>
+          <Link
+            href={`/dashboard/restaurants/${restaurantId}`}
+            className="btn-ghost shrink-0 text-sm"
+          >
+            Back to {RESTAURANT_KDS_LABEL}
+          </Link>
+        </div>
+      )}
 
       {error ? (
         <p
-          className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger"
+          className="menu-editor__banner rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {error}
@@ -385,8 +422,8 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
         </p>
       ) : null}
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-5">
-        <section className="glass-card flex flex-col overflow-hidden lg:col-span-3">
+      <div className="menu-editor__layout grid min-w-0 grid-cols-1 gap-4 md:grid-cols-12 md:items-start md:gap-4 lg:gap-5">
+        <section className="menu-editor__pane menu-editor__pane--categories glass-card flex min-w-0 flex-col overflow-hidden md:col-span-4 md:row-span-2 lg:col-span-3 lg:row-span-1">
           <PanelHeader
             title="Categories"
             count={sortedCategories.length}
@@ -394,7 +431,7 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
             onAction={() => startEditCategory()}
             actionDisabled={pending || editKind === "category"}
           />
-          <div className="max-h-[min(40vh,320px)] flex-1 overflow-y-auto p-2 lg:max-h-[calc(100dvh-14rem)]">
+          <div className="menu-editor__scroll max-h-[min(40vh,320px)] flex-1 overflow-y-auto overscroll-contain p-2 md:max-h-[min(52svh,420px)] lg:max-h-[calc(100dvh-14rem)]">
             {sortedCategories.length === 0 ? (
               <p className="px-3 py-6 text-center text-xs text-muted">
                 No categories yet. Add one or scan a menu on the KDS page.
@@ -437,7 +474,7 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
                       )}
                     >
                       <span className="truncate font-medium">{cat.name}</span>
-                      <span className="ml-2 shrink-0 font-mono-tabular text-[11px] text-subtle">
+                      <span className="ml-2 shrink-0 font-mono-tabular text-caption text-subtle">
                         {items.filter((i) => i.category_id === cat.id).length}
                       </span>
                     </button>
@@ -544,7 +581,7 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
           ) : null}
         </section>
 
-        <section className="glass-card flex flex-col overflow-hidden lg:col-span-4">
+        <section className="menu-editor__pane menu-editor__pane--items glass-card flex min-w-0 flex-col overflow-hidden md:col-span-8 lg:col-span-4">
           <PanelHeader
             title="Items"
             count={itemsInCategory.length}
@@ -554,7 +591,7 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
               pending || !selectedCategoryId || editKind === "item"
             }
           />
-          <div className="max-h-[min(40vh,320px)] flex-1 overflow-y-auto p-2 lg:max-h-[calc(100dvh-14rem)]">
+          <div className="menu-editor__scroll max-h-[min(40vh,320px)] flex-1 overflow-y-auto overscroll-contain p-2 md:max-h-[min(44svh,380px)] lg:max-h-[calc(100dvh-14rem)]">
             {!selectedCategoryId ? (
               <p className="px-3 py-6 text-center text-xs text-muted">
                 Select a category.
@@ -611,7 +648,7 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
                           <span className="truncate font-medium">{item.name}</span>
                         </span>
                         {item.description ? (
-                          <span className="mt-0.5 line-clamp-1 block pl-3.5 text-[11px] text-subtle">
+                          <span className="mt-0.5 line-clamp-1 block pl-3.5 text-caption text-subtle">
                             {item.description}
                           </span>
                         ) : null}
@@ -627,7 +664,7 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
           </div>
         </section>
 
-        <section className="glass-card flex flex-col overflow-hidden lg:col-span-5">
+        <section className="menu-editor__pane menu-editor__pane--detail glass-card flex min-w-0 flex-col overflow-hidden md:col-span-8 lg:col-span-5">
           <PanelHeader
             title={selectedItem ? selectedItem.name : "Item details"}
             count={modifierGroupsForItem.length}
@@ -637,7 +674,7 @@ export function MenuEditor({ restaurantId, restaurantName, initial }: Props) {
               pending || !selectedItemId || editKind === "modifier-group"
             }
           />
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="menu-editor__scroll min-h-0 flex-1 overflow-y-auto overscroll-contain p-4">
             {!selectedItem && editKind !== "item" ? (
               <p className="text-sm text-muted">
                 Select an item to edit details and modifiers.
@@ -861,14 +898,14 @@ function PanelHeader({
   actionDisabled?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-2 border-b border-line px-4 py-3">
-      <div>
-        <h2 className="text-sm font-semibold text-ink">{title}</h2>
-        <p className="text-[11px] text-muted">{count} total</p>
+    <div className="menu-editor__panel-head flex min-w-0 flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
+      <div className="min-w-0">
+        <h2 className="truncate text-sm font-semibold text-ink">{title}</h2>
+        <p className="text-caption text-muted">{count} total</p>
       </div>
       <button
         type="button"
-        className="btn-ghost min-h-10 px-3 text-xs"
+        className="btn-ghost kds-thumb-btn min-h-11 shrink-0 px-3 text-xs sm:min-h-10"
         disabled={actionDisabled}
         onClick={onAction}
       >
@@ -1096,10 +1133,10 @@ function FieldHint({
   warning?: string | null;
 }) {
   if (error) {
-    return <p className="mt-1 text-[11px] text-danger">{error}</p>;
+    return <p className="mt-1 text-caption text-danger">{error}</p>;
   }
   if (warning) {
-    return <p className="mt-1 text-[11px] text-warning">{warning}</p>;
+    return <p className="mt-1 text-caption text-warning">{warning}</p>;
   }
   return null;
 }
@@ -1116,13 +1153,17 @@ function FormActions({
   onDelete?: () => void;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-2 border-t border-line pt-3">
-      <button type="submit" className="btn-primary text-sm" disabled={pending}>
+    <div className="menu-editor__form-actions flex flex-col gap-2 border-t border-line pt-3 sm:flex-row sm:flex-wrap sm:items-center">
+      <button
+        type="submit"
+        className="btn-primary kds-thumb-btn min-h-11 w-full text-sm sm:min-h-0 sm:w-auto"
+        disabled={pending}
+      >
         {pending ? "Saving…" : isNew ? "Create" : "Save"}
       </button>
       <button
         type="button"
-        className="btn-ghost text-sm"
+        className="btn-ghost kds-thumb-btn min-h-11 w-full text-sm sm:min-h-0 sm:w-auto"
         disabled={pending}
         onClick={onCancel}
       >
@@ -1131,7 +1172,7 @@ function FormActions({
       {onDelete ? (
         <button
           type="button"
-          className="btn-ghost ml-auto text-sm text-danger"
+          className="btn-ghost kds-thumb-btn min-h-11 w-full text-sm text-danger sm:ml-auto sm:min-h-0 sm:w-auto"
           disabled={pending}
           onClick={onDelete}
         >

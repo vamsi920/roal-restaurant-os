@@ -20,17 +20,19 @@ function read(path: string): string {
 }
 
 describe("public accessibility QA", () => {
-  it("marketing and home shells expose skip link, main landmark, and header", () => {
-    for (const { shell, main } of PUBLIC_ROUTE_FILES) {
+  it("marketing and home shells expose main landmark and header", () => {
+    for (const { shell } of PUBLIC_ROUTE_FILES) {
       const src = read(shell);
-      expect(src).toMatch(/skip/i);
-      expect(src).toContain(`href="${main}"`);
+      expect(src).not.toMatch(/skip to content/i);
       expect(src).toMatch(/<main[\s>]/);
     }
 
     const nav = read("components/landing/public/public-marketing-nav.tsx");
-    expect(nav).toContain('<header className={shellClassName}');
+    const drawer = read("components/landing/public/public-nav-drawer-panel.tsx");
+    expect(nav).toContain("<header");
+    expect(nav).toContain("shellClassName");
     expect(nav).toContain('aria-label="Primary"');
+    expect(drawer).toContain('role="dialog"');
   });
 
   it("public theme defines focus-visible and reduced-motion fallbacks", () => {
@@ -38,6 +40,9 @@ describe("public accessibility QA", () => {
     const home = read("app/landing-home.css");
 
     expect(theme).toContain(":focus-visible");
+    expect(theme).toContain("--public-focus-ring");
+    expect(theme).toContain(".public-btn-ghost:focus-visible");
+    expect(theme).toContain(".public-faq__accordion-q:focus-visible");
     expect(theme).toContain("prefers-reduced-motion: reduce");
     expect(home).toContain("prefers-reduced-motion: reduce");
     expect(theme).toContain("animation: none !important");
@@ -45,11 +50,14 @@ describe("public accessibility QA", () => {
 
   it("mobile nav drawer has dialog semantics and keyboard trap", () => {
     const nav = read("components/landing/public/public-marketing-nav.tsx");
+    const drawer = read("components/landing/public/public-nav-drawer-panel.tsx");
     const hook = read("lib/landing/use-public-nav-menu.ts");
 
     expect(nav).toContain('aria-expanded={menuOpen}');
-    expect(nav).toContain('role="dialog"');
-    expect(nav).toContain('aria-modal="true"');
+    expect(nav).toContain("PublicNavDrawerPanel");
+    expect(drawer).toContain('role="dialog"');
+    expect(drawer).toContain('aria-modal="true"');
+    expect(drawer).toContain("public-nav-drawer__close");
     expect(nav).toContain("sr-only");
     expect(hook).toContain("Escape");
     expect(hook).toContain("Tab");
@@ -134,6 +142,16 @@ describe("public accessibility QA", () => {
     expect(demo).not.toMatch(/created_at:\s*new Date\(/);
     expect(demo).toContain("2026-05-23T19:39:00.000Z");
     expect(preview).toContain('timeZone: "America/Chicago"');
+  });
+
+  it("dashboard theme styles keyboard focus for shell and main content", () => {
+    const dash = read("app/dashboard-theme.css");
+    const globals = read("app/globals.css");
+    expect(globals).toContain("--focus-ring");
+    expect(globals).toContain(":focus-visible");
+    expect(dash).toContain(".app-shell-nav-link:focus-visible");
+    expect(dash).toContain("#app-main-content a:focus-visible");
+    expect(dash).toContain(".app-shell-menu-btn:focus-visible");
   });
 
   it("dashboard routes stay behind auth (not public a11y surface)", () => {

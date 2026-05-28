@@ -10,6 +10,8 @@ import { HowFlowStage } from "./how-flow-stage";
 
 const BEAT_IDS = HOW_FLOW_BEAT_ORDER;
 const DESKTOP_STAGE_MQ = "(min-width: 900px)";
+const MOBILE_STORY_MQ = "(max-width: 767px)";
+const TABLET_FLOW_MQ = "(min-width: 768px) and (max-width: 899px)";
 
 function useMediaQuery(query: string) {
   const [matches, setMatches] = useState(false);
@@ -67,7 +69,10 @@ export function HomeHowFlow() {
   const visuals = getHowFlowVisualData();
   const motionOk = usePrefersMotion();
   const desktopStage = useMediaQuery(DESKTOP_STAGE_MQ);
-  const [activeBeat, setActiveBeat] = useState<HowFlowBeatId>("scan-menu");
+  const mobileStory = useMediaQuery(MOBILE_STORY_MQ);
+  const tabletFlow = useMediaQuery(TABLET_FLOW_MQ);
+  const showStoryChrome = motionOk && !mobileStory && !desktopStage;
+  const [activeBeat, setActiveBeat] = useState<HowFlowBeatId>("share-menu");
   const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
   const visibleRatios = useRef(new Map<Element, number>());
 
@@ -78,7 +83,7 @@ export function HomeHowFlow() {
     if (!nodes.length) return;
 
     let frame = 0;
-    const rootMargin = desktopStage ? "-32% 0px -32% 0px" : "-24% 0px -30% 0px";
+    const rootMargin = desktopStage ? "-28% 0px -28% 0px" : "-22% 0px -26% 0px";
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -92,7 +97,7 @@ export function HomeHowFlow() {
           if (next) setActiveBeat(next);
         });
       },
-      { root: null, rootMargin, threshold: [0, 0.15, 0.35, 0.55, 0.75, 1] }
+      { root: null, rootMargin, threshold: [0, 0.35, 0.65, 1] }
     );
 
     nodes.forEach((node) => observer.observe(node));
@@ -117,7 +122,9 @@ export function HomeHowFlow() {
       className={cn(
         "home-how-flow",
         motionOk && "home-how-flow--motion",
-        !motionOk && "home-how-flow--static"
+        !motionOk && "home-how-flow--static",
+        mobileStory && "home-how-flow--compact",
+        tabletFlow && "home-how-flow--tablet"
       )}
       data-active-beat={activeBeat}
       style={
@@ -126,28 +133,44 @@ export function HomeHowFlow() {
           : undefined
       }
     >
-      <div className="home-wrap">
+      <div className="home-wrap public-reveal">
         <p className="home-eyebrow">{eyebrow}</p>
         <h2 id="how-heading" className="home-h2 mt-2">
           {title}
         </h2>
         <p className="home-lead mt-3 max-w-xl">{lead}</p>
 
-        {motionOk ? (
-          <>
-            <div className="home-how-flow__progress" aria-hidden>
-              <span className="home-how-flow__progress-track" />
-              <span className="home-how-flow__progress-fill" />
-            </div>
-            <div className="home-how-flow__dots" aria-hidden>
-              {beats.map((beat) => (
+        {showStoryChrome ? (
+          <div className="home-how-flow__progress" aria-hidden>
+            <span className="home-how-flow__progress-track" />
+            <span className="home-how-flow__progress-fill" />
+          </div>
+        ) : null}
+        {showStoryChrome ? (
+          <div className="home-how-flow__dots" aria-hidden>
+            {beats.map((beat) => (
+              <span
+                key={beat.id}
+                className={`home-how-flow__dot${activeBeat === beat.id ? " is-active" : ""}`}
+              />
+            ))}
+          </div>
+        ) : null}
+        {showStoryChrome ? (
+          <ol className="home-how-flow__story" aria-label="Story beats">
+            {beats.map((beat) => (
+              <li key={beat.id}>
                 <span
-                  key={beat.id}
-                  className={`home-how-flow__dot${activeBeat === beat.id ? " is-active" : ""}`}
-                />
-              ))}
-            </div>
-          </>
+                  className={cn(
+                    "home-how-flow__story-label",
+                    activeBeat === beat.id && "is-active"
+                  )}
+                >
+                  {beat.title}
+                </span>
+              </li>
+            ))}
+          </ol>
         ) : null}
       </div>
 

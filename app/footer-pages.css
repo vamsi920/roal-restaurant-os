@@ -1,0 +1,147 @@
+/**
+ * Shared `PublicFooter` — essential links, stacked columns, phone CTAs.
+ */
+
+.landing-home .public-footer,
+.landing-story.public-theme .public-footer {
+  overflow-x: clip;
+}
+
+.landing-home .public-footer__inner,
+.landing-story.public-theme .public-footer__inner {
+  overflow-x: clip;
+}
+
+.landing-home .public-footer__tagline,
+.landing-story.public-theme .public-footer__tagline {
+  overflow-wrap: anywhere;
+}
+
+.landing-home .public-footer__links a,
+.landing-story.public-theme .public-footer__links a {
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+/* — Footer responsive (prompt 15) — */
+
+@media (max-width: 767px) {
+  .landing-home .public-footer__inner,
+  .landing-story.public-theme .public-footer__inner {
+    gap: 1.15rem;
+  }
+
+  .landing-home .public-footer__ctas,
+  .landing-story.public-theme .public-footer__ctas {
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .landing-home .public-footer__cta,
+  .landing-story.public-theme .public-footer__cta {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .landing-home .public-footer__links,
+  .landing-story.public-theme .public-footer__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 0.35rem;
+    width: 100%;
+    max-width: 20rem;
+  }
+
+  .landing-home .public-footer__links a,
+  .landing-story.public-theme .public-footer__links a {
+    justify-content: center;
+    width: 100%;
+    padding-inline: 0.35rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .landing-home .public-footer__inner,
+  .landing-story.public-theme .public-footer__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "brand ctas"
+      "nav nav"
+      "copy copy";
+    align-items: start;
+    gap: 1.15rem 1.5rem;
+    text-align: left;
+  }
+
+  .landing-home .public-footer__brand,
+  .landing-story.public-theme .public-footer__brand {
+    grid-area: brand;
+    align-items: flex-start;
+    max-width: none;
+  }
+
+  .landing-home .public-footer__ctas,
+  .landing-story.public-theme .public-footer__ctas {
+    grid-area: ctas;
+    justify-self: end;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: auto;
+    max-width: none;
+  }
+
+  .landing-home .public-footer__nav,
+  .landing-story.public-theme .public-footer__nav {
+    grid-area: nav;
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .landing-home .public-footer__links,
+  .landing-story.public-theme .public-footer__links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.35rem 1rem;
+  }
+
+  .landing-home .public-footer__links a,
+  .landing-story.public-theme .public-footer__links a {
+    width: auto;
+    justify-content: flex-start;
+    padding-inline: 0;
+  }
+
+  .landing-home .public-footer__copy,
+  .landing-story.public-theme .public-footer__copy {
+    grid-area: copy;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-home .public-footer__inner,
+  .landing-story.public-theme .public-footer__inner {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand nav ctas"
+      "copy copy copy";
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+
+  .landing-home .public-footer__nav,
+  .landing-story.public-theme .public-footer__nav {
+    justify-self: center;
+  }
+
+  .landing-home .public-footer__links,
+  .landing-story.public-theme .public-footer__links {
+    justify-content: center;
+  }
+}

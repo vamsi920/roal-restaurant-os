@@ -12,14 +12,9 @@ import {
   runHealthChecks,
   sanitizeHealthReportForPublic,
 } from "@/lib/observability/health";
-import type { MembershipRole } from "@/lib/types";
 import { getUsageSummary } from "@/lib/usage/query";
 
-type AdminOrgInput = {
-  organizationId: string;
-  organizationName: string;
-  role: MembershipRole;
-};
+import type { AdminOrgInput } from "@/lib/admin/resolve-admin-org-inputs";
 
 function truncate(text: string | null | undefined, max = 280): string {
   return sanitizeOpsErrorDetail(text, max);

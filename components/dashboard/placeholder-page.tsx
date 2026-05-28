@@ -23,7 +23,7 @@ export function DashboardPlaceholderPage({
 }: Props) {
   return (
     <div className="mx-auto max-w-2xl min-w-0">
-      <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
+      <p className="type-eyebrow text-accent">
         {eyebrow}
       </p>
       <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
@@ -60,7 +60,7 @@ export function DashboardPlaceholderPage({
       </div>
 
       <p className="mt-6 text-pretty text-xs text-subtle">
-        More controls ship in upcoming releases—use Restaurants or Support if you need
+        More controls ship in upcoming releases—use Locations or Support if you need
         help today.
       </p>
     </div>

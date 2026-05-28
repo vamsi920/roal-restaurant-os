@@ -67,16 +67,16 @@ export function MenuImportReview({
   );
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="rounded-xl border border-line bg-elev p-4">
+    <div className="menu-import-review flex flex-col gap-4">
+      <div className="menu-import-review__header rounded-xl border border-line bg-elev p-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <h3 className="text-sm font-semibold text-ink">Review extracted menu</h3>
-            <p className="mt-1 text-xs text-muted">
+            <p className="mt-1 text-sm text-muted">
               Correct names, prices, and modifiers before saving to your live menu.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2 text-[11px]">
+          <div className="menu-import-review__stats flex max-w-full flex-wrap gap-2 text-caption">
             <span className="rounded-full border border-line bg-card px-2.5 py-1 font-medium text-muted">
               {totals.categories} categories
             </span>
@@ -100,11 +100,15 @@ export function MenuImportReview({
         </div>
 
         {hints.length > 0 ? (
-          <ul className="mt-3 max-h-28 space-y-1 overflow-y-auto border-t border-line pt-3 text-[11px]">
+          <ul
+            className="menu-import-review__hints mt-3 max-h-32 space-y-1.5 overflow-y-auto overscroll-contain border-t border-line pt-3 text-sm"
+            aria-label="Review issues"
+          >
             {hints.slice(0, 12).map((h) => (
               <li
                 key={`${h.path}-${h.message}`}
                 className={cn(
+                  "[overflow-wrap:anywhere]",
                   h.severity === "error" ? "text-danger" : "text-warning"
                 )}
               >
@@ -122,7 +126,7 @@ export function MenuImportReview({
         )}
       </div>
 
-      <div className="max-h-[min(52vh,520px)] space-y-2 overflow-y-auto pr-1">
+      <div className="menu-import-review__scroll max-h-[min(52vh,520px)] space-y-2 overflow-y-auto overscroll-contain pr-1 max-sm:max-h-[min(48svh,440px)]">
         {menu.categories.map((cat, ci) => {
           const catPath = `categories.${ci}`;
           const catHints = hintsForPath(hints, catPath);
@@ -133,19 +137,23 @@ export function MenuImportReview({
               key={`${cat.name}-${ci}`}
               className="rounded-xl border border-line/80 bg-card"
             >
-              <div className="flex items-center gap-2 border-b border-line/60 px-3 py-2">
+              <div className="menu-import-review__cat-head flex flex-wrap items-center gap-2 border-b border-line/60 px-3 py-2">
                 <button
                   type="button"
-                  className="shrink-0 text-subtle hover:text-ink"
+                  className="kds-thumb-btn grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-line bg-elev text-subtle hover:text-ink sm:h-8 sm:w-8"
                   onClick={() => toggleCat(ci)}
                   aria-expanded={catOpen}
+                  aria-label={catOpen ? `Collapse ${cat.name}` : `Expand ${cat.name}`}
                 >
-                  {catOpen ? "▼" : "▶"}
+                  <span aria-hidden>{catOpen ? "▼" : "▶"}</span>
                 </button>
                 <input
-                  className={fieldClass(
-                    catHints.some((h) => h.path.endsWith(".name") || h.path === catPath),
-                    catHints.some((h) => h.severity === "error")
+                  className={cn(
+                    fieldClass(
+                      catHints.some((h) => h.path.endsWith(".name") || h.path === catPath),
+                      catHints.some((h) => h.severity === "error")
+                    ),
+                    "min-w-0 flex-1 basis-[calc(100%-3.25rem)] sm:basis-auto"
                   )}
                   value={cat.name}
                   disabled={pending}
@@ -153,13 +161,13 @@ export function MenuImportReview({
                     onChange(updateCategoryName(menu, ci, e.target.value))
                   }
                 />
-                <span className="ml-auto shrink-0 text-[10px] text-subtle">
+                <span className="w-full shrink-0 text-micro text-subtle sm:ml-auto sm:w-auto">
                   {cat.items.length} items
                   {cat.confidence === "low" ? " · low conf." : ""}
                 </span>
                 <button
                   type="button"
-                  className="text-[10px] text-danger hover:underline"
+                  className="kds-thumb-btn min-h-11 shrink-0 px-2 text-micro text-danger hover:underline sm:min-h-0"
                   disabled={pending || menu.categories.length <= 1}
                   onClick={() => onChange(removeCategory(menu, ci))}
                 >
@@ -176,7 +184,7 @@ export function MenuImportReview({
                     return (
                       <li key={`${item.name}-${ii}`} className="space-y-2 px-3 py-3">
                         <div className="grid gap-2 sm:grid-cols-2">
-                          <label className="block text-[10px] font-medium uppercase tracking-wider text-subtle">
+                          <label className="block text-micro font-medium uppercase tracking-wider text-subtle">
                             Item
                             <input
                               className={fieldClass(
@@ -202,7 +210,7 @@ export function MenuImportReview({
                               }
                             />
                           </label>
-                          <label className="block text-[10px] font-medium uppercase tracking-wider text-subtle">
+                          <label className="block text-micro font-medium uppercase tracking-wider text-subtle">
                             Price
                             <input
                               type="number"
@@ -231,7 +239,7 @@ export function MenuImportReview({
                             />
                           </label>
                         </div>
-                        <label className="block text-[10px] font-medium uppercase tracking-wider text-subtle">
+                        <label className="block text-micro font-medium uppercase tracking-wider text-subtle">
                           Description
                           <input
                             className={fieldClass(
@@ -275,7 +283,7 @@ export function MenuImportReview({
                           Available
                           <button
                             type="button"
-                            className="ml-auto text-[10px] text-danger hover:underline"
+                            className="ml-auto text-micro text-danger hover:underline"
                             disabled={pending}
                             onClick={() => onChange(removeItem(menu, ci, ii))}
                           >
@@ -285,7 +293,7 @@ export function MenuImportReview({
 
                         {(item.modifiers?.length ?? 0) > 0 ? (
                           <div className="rounded-lg border border-line/60 bg-elev/50 p-2">
-                            <p className="text-[10px] font-medium uppercase tracking-wider text-subtle">
+                            <p className="text-micro font-medium uppercase tracking-wider text-subtle">
                               Modifiers
                             </p>
                             <ul className="mt-2 space-y-2">
@@ -295,7 +303,7 @@ export function MenuImportReview({
                                 return (
                                   <li
                                     key={`${mod.modifier_name}-${mi}`}
-                                    className="grid gap-2 sm:grid-cols-3"
+                                    className="grid grid-cols-1 gap-2 sm:grid-cols-3"
                                   >
                                     <input
                                       className={fieldClass(
@@ -379,10 +387,10 @@ export function MenuImportReview({
         })}
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 border-t border-line pt-4">
+      <div className="menu-import-review__actions flex flex-col gap-2 border-t border-line bg-card pt-4 sm:flex-row sm:flex-wrap sm:items-center">
         <button
           type="button"
-          className="btn-primary"
+          className="btn-primary kds-thumb-btn min-h-11 w-full justify-center sm:min-h-0 sm:w-auto"
           disabled={pending || counts.errors > 0 || menu.categories.length === 0}
           onClick={onCommit}
         >
@@ -390,14 +398,14 @@ export function MenuImportReview({
         </button>
         <button
           type="button"
-          className="btn-ghost"
+          className="btn-ghost kds-thumb-btn min-h-11 w-full sm:min-h-0 sm:w-auto"
           disabled={pending}
           onClick={onDiscard}
         >
           Discard import
         </button>
         {counts.errors > 0 ? (
-          <p className="text-xs text-danger">
+          <p className="text-center text-xs text-danger sm:text-left">
             Fix blocking issues before commit.
           </p>
         ) : null}

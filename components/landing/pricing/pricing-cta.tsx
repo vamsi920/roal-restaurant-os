@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PublicCtaActions } from "@/components/landing/public";
-import { PRICING_CTA } from "@/lib/landing/pricing-page-copy";
+import { PRICING_CTA, PRICING_PAGE_COPY } from "@/lib/landing/pricing-page-copy";
 import { cn } from "@/lib/cn";
 
 type Props = {
@@ -29,7 +29,12 @@ export function PricingCta({
         ]}
       />
       {showSignupLink ? (
-        <p className={cn("mt-6 text-sm", centered && "text-center")}>
+        <p
+          className={cn(
+            "public-pricing-cta__signup mt-6 text-sm",
+            centered && "text-center"
+          )}
+        >
           <Link
             href={signup.href}
             className={cn(
@@ -41,7 +46,7 @@ export function PricingCta({
           </Link>
           <span className={cn("text-muted", tone === "ink" && "text-white/70")}>
             {" "}
-            — scan your menu and run a test call tonight
+            — {PRICING_PAGE_COPY.signupNote}
           </span>
         </p>
       ) : null}

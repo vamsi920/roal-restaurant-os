@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BlogPostMeta } from "@/components/blog/blog-post-meta";
+import { blogIndexExcerpt } from "@/lib/blog/index-excerpt";
 import { getBlogPostHref } from "@/lib/blog/href";
 import type { BlogPost } from "@/lib/blog/types";
 import { cn } from "@/lib/cn";
@@ -16,6 +17,7 @@ type Props = {
 export function BlogCard({ post, tone = "default", compact = false }: Props) {
   const href = getBlogPostHref(post.slug);
   const featured = tone === "featured";
+  const excerpt = blogIndexExcerpt(post.excerpt, featured ? 96 : 72);
 
   return (
     <article
@@ -39,7 +41,7 @@ export function BlogCard({ post, tone = "default", compact = false }: Props) {
             publishedAt={post.publishedAt}
           />
           <h2 className="blog-card__title">{post.title}</h2>
-          <p className="blog-card__excerpt">{post.excerpt}</p>
+          <p className="blog-card__excerpt">{excerpt}</p>
           <span className="blog-card__cta">
             {featured ? "Read article" : "Read"}
             <span className="blog-card__cta-icon" aria-hidden>

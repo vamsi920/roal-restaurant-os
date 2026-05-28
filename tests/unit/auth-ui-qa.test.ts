@@ -24,7 +24,7 @@ describe("auth UI polish", () => {
     expect(LOGIN_PAGE_COPY.form.trustLine.length).toBeGreaterThan(10);
     expect(SIGNUP_PAGE_COPY.form.lead.length).toBeLessThan(90);
     expect(SIGNUP_PAGE_COPY.form.trustLine.length).toBeGreaterThan(10);
-    expect(SIGNUP_PAGE_COPY.steps[0]?.body).not.toContain("preview form");
+    expect(SIGNUP_PAGE_COPY.steps[0]?.tag.length).toBeGreaterThan(3);
   });
 
   it("signup aside uses glass card shell", () => {
@@ -33,6 +33,7 @@ describe("auth UI polish", () => {
       "utf8"
     );
     expect(aside).toContain("public-signup-aside__card");
+    expect(aside).toContain("public-auth-beats");
   });
 
   it("login uses split entry with value aside", () => {
@@ -43,12 +44,22 @@ describe("auth UI polish", () => {
     );
     expect(login).toContain("LoginPageEntry");
     expect(entry).toContain("LoginValueAside");
+    expect(
+      readFileSync(join(REPO, "components/auth/login-value-aside.tsx"), "utf8")
+    ).toContain("public-auth-beats");
     expect(entry).toContain('mode="sign_in"');
+  });
+
+  it("auth layout uses marketing wash behind main", () => {
+    const layout = readFileSync(join(REPO, "app/(auth)/layout.tsx"), "utf8");
+    const css = readFileSync(join(REPO, "app/auth-page.css"), "utf8");
+    expect(layout).toContain("public-auth-main__wash");
+    expect(css).toContain("public-auth-panel__eyebrow");
   });
 
   it("auth form avoids invalid fields on server errors", () => {
     const form = readFileSync(join(REPO, "components/auth/auth-form.tsx"), "utf8");
     expect(form).not.toMatch(/invalid=\{hasError\}/);
-    expect(form).toContain("role=\"alert\"");
+    expect(form).toContain("AuthFormStatus");
   });
 });

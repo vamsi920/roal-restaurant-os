@@ -6,7 +6,7 @@ type Props = {
   className?: string;
 };
 
-/** Lavender/pink/amber gradient — same tokens as marketing shell (no video). */
+/** Lavender / ink wash — same tokens as marketing shell (no video). */
 export function PublicBackgroundWash({ variant = "canvas", className }: Props) {
   return (
     <div

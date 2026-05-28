@@ -20,7 +20,7 @@ type Props = {
 
 export function PublicMetricsStrip({
   eyebrow,
-  title = "Pilot metrics",
+  title = "Product capabilities",
   titleVisuallyHidden = false,
   note,
   items,
@@ -39,19 +39,21 @@ export function PublicMetricsStrip({
       aria-labelledby="public-metrics-heading"
     >
       <div className={home ? "home-wrap" : "landing-wrap landing-wrap-tight"}>
-        {eyebrow ? (
-          <p className={home ? "home-eyebrow" : "landing-eyebrow"}>{eyebrow}</p>
-        ) : null}
-        <h2
-          id="public-metrics-heading"
-          className={titleVisuallyHidden ? "sr-only" : home ? "home-h2 mt-2" : "landing-h2 mt-2"}
-        >
-          {title}
-        </h2>
+        <div className="public-reveal">
+          {eyebrow ? (
+            <p className={home ? "home-eyebrow" : "landing-eyebrow"}>{eyebrow}</p>
+          ) : null}
+          <h2
+            id="public-metrics-heading"
+            className={titleVisuallyHidden ? "sr-only" : home ? "home-h2 mt-2" : "landing-h2 mt-2"}
+          >
+            {title}
+          </h2>
+        </div>
         <ul
           className={cn(
             home ? "home-metrics__strip" : "public-metrics__grid",
-            "public-reveal-stagger"
+            "public-reveal-stagger min-w-0 max-w-full"
           )}
         >
           {items.map((item) => (

@@ -18,7 +18,10 @@ describe("visual consistency public pages (prompt 37)", () => {
     expect(about).not.toContain("AboutAeoAnswer");
     expect(about).not.toContain("AboutValues");
     expect(about).not.toContain("glass-card");
-    expect(countLandingSections(about)).toBeLessThanOrEqual(3);
+    expect(about).not.toContain("AboutCompanyStory");
+    expect(about).toContain("public-about-pillars");
+    expect(about).not.toContain("public-about-promise");
+    expect(countLandingSections(about)).toBeLessThanOrEqual(1);
   });
 
   it("security page drops roadmap section and pillar glass-card grid", () => {
@@ -26,7 +29,9 @@ describe("visual consistency public pages (prompt 37)", () => {
     expect(security).not.toContain("SECURITY_ROADMAP");
     expect(security).not.toContain("public-security-pillar");
     expect(security).not.toContain("glass-card");
-    expect(countLandingSections(security)).toBeLessThanOrEqual(3);
+    expect(countLandingSections(security)).toBeLessThanOrEqual(1);
+    expect(security).not.toContain("security-golive-heading");
+    expect(security).not.toContain("security-technical-heading");
   });
 
   it("contact page inlines fit list and drops fit section", () => {

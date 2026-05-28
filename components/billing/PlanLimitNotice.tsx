@@ -19,7 +19,7 @@ export function PlanLimitNotice({ verdict, className }: Props) {
       className={cn(
         "rounded-xl border px-4 py-3 text-sm",
         blocked
-          ? "border-amber-500/30 bg-amber-500/5 text-ink"
+          ? "border-warning/30 bg-warning/5 text-ink"
           : "border-line bg-elev text-muted",
         className
       )}

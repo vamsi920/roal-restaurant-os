@@ -1,0 +1,160 @@
+/**
+ * `/privacy`, `/terms`, `/security` — readable measure, jump links, phone layout.
+ */
+
+.landing-story.public-theme .public-legal-page,
+.landing-story.public-theme .public-security-page {
+  overflow-x: clip;
+}
+
+.landing-story.public-theme .public-legal-panel__body {
+  max-width: min(var(--public-readable-max, 42rem), 100%);
+}
+
+.landing-story.public-theme .public-legal-panel__paragraph,
+.landing-story.public-theme .public-legal-panel__contact,
+.landing-story.public-theme .public-legal-draft-notice {
+  overflow-wrap: anywhere;
+}
+
+.landing-story.public-theme .public-page-jump-nav {
+  margin: 0;
+  padding: 0.65rem 0 0;
+  border: 0;
+}
+
+.landing-story.public-theme .public-page-jump-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.landing-story.public-theme .public-page-jump-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--public-ink) / 0.1);
+  background: rgb(var(--public-surface-glass) / 0.55);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: rgb(var(--public-ink));
+  text-decoration: none;
+  text-wrap: pretty;
+}
+
+.landing-story.public-theme .public-page-jump-nav__link:hover {
+  border-color: rgb(var(--public-accent-lavender) / 0.45);
+  background: rgb(var(--public-accent-lavender) / 0.12);
+}
+
+.landing-story.public-theme .public-page-jump-nav__link:focus-visible {
+  outline: 2px solid var(--public-focus-ring);
+  outline-offset: var(--public-focus-offset);
+}
+
+.landing-story.public-theme #security-hero-heading,
+.landing-story.public-theme .public-legal-hero__title,
+.landing-story.public-theme #security-pillars-heading,
+.landing-story.public-theme #security-faq-heading,
+.landing-story.public-theme #security-cta,
+.landing-story.public-theme #legal-policy-body,
+.landing-story.public-theme #legal-contact {
+  scroll-margin-top: max(5.5rem, calc(env(safe-area-inset-top, 0px) + 4.5rem));
+}
+
+.landing-story.public-theme .public-security-jump-wrap {
+  padding-block: 0.75rem 0;
+  border-bottom: 1px solid rgb(var(--public-ink) / 0.06);
+}
+
+/* — Legal pages responsive (prompt 14) — */
+
+@media (max-width: 767px) {
+  .landing-story.public-theme .public-legal-hero__title {
+    font-size: clamp(1.45rem, 6vw, 1.85rem);
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .public-legal-hero__deck {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .landing-story.public-theme .public-legal-panel {
+    padding: clamp(1.1rem, 3.5vw, 1.35rem);
+  }
+
+  .landing-story.public-theme .public-legal-panel__body {
+    margin-top: 1.15rem;
+    gap: 1.25rem;
+  }
+
+  .landing-story.public-theme .public-legal-panel__paragraph {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .landing-story.public-theme .public-legal-panel__contact {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .landing-story.public-theme .public-security-hero .public-marketing-hero .landing-display {
+    font-size: clamp(1.5rem, 6.5vw, 2rem);
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .public-security-hero .landing-lead {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .landing-story.public-theme .public-security-hero .public-cta-band__actions {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .landing-story.public-theme .public-security-hero .landing-cta-hit {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .public-security-tech {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .landing-story.public-theme .public-security-tech__item {
+    padding: 1rem 1.1rem;
+  }
+
+  .landing-story.public-theme .public-faq__card {
+    padding: 1rem 1.1rem;
+  }
+
+  .landing-story.public-theme .public-security-page .public-cta-band .public-cta-band__actions {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .landing-story.public-theme .public-security-page .public-cta-band .landing-cta-hit {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .landing-story.public-theme .public-legal-panel__body {
+    max-width: min(36rem, 100%);
+  }
+}

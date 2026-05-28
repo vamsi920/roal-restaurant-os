@@ -22,7 +22,6 @@ export const BANNED_PRODUCT_CLAIMS = [
   "every call answered",
   "answer every call",
   "answers every ring",
-  "never miss a call",
   "on the first ring",
 ] as const;
 

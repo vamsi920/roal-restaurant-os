@@ -6,7 +6,7 @@
 
 export const HOME_HERO_VIDEO = {
   src: "/landing/hero-bg.mp4",
-  /** Shown when video is skipped (reduced motion / save-data). */
+  /** Optional still; gradient uses --public-bg-wash-hero when video is skipped. */
   poster: undefined as string | undefined,
   /** QA budget — keep hero mp4 under this (currently ~700 KiB on disk). */
   maxBytes: 1_500_000,

@@ -5,6 +5,7 @@ import { DASHBOARD_NAV } from "@/lib/dashboard-nav";
 import { sanitizeOpsErrorDetail } from "@/lib/admin/sanitize-ops-detail";
 import { isOrgAdmin } from "@/lib/auth/roles";
 import { hasOrgAdminAccess } from "@/lib/auth/context-server";
+import { DEFAULT_PLATFORM_ADMIN_EMAIL } from "@/lib/auth/platform-admin";
 import type { AuthContext } from "@/lib/auth/types";
 
 const REPO = join(import.meta.dirname, "../..");
@@ -16,47 +17,38 @@ describe("admin access gate", () => {
     expect(isOrgAdmin("member")).toBe(false);
   });
 
-  it("hasOrgAdminAccess requires an admin membership", () => {
-    const adminContext = {
-      user: { id: "u1" },
-      memberships: [
-        {
-          organization_id: "o1",
-          role: "member",
-          organization: { id: "o1", name: "A" },
-        },
-        {
-          organization_id: "o2",
-          role: "admin",
-          organization: { id: "o2", name: "B" },
-        },
-      ],
+  it("hasOrgAdminAccess requires platform admin email", () => {
+    const platformContext = {
+      user: { id: "u1", email: DEFAULT_PLATFORM_ADMIN_EMAIL },
+      memberships: [],
       primaryMembership: null,
     } as unknown as AuthContext;
 
-    const memberContext = {
-      user: { id: "u2" },
+    const ownerContext = {
+      user: { id: "u2", email: "owner@restaurant.com" },
       memberships: [
         {
           organization_id: "o1",
-          role: "member",
+          role: "owner",
           organization: { id: "o1", name: "A" },
         },
       ],
       primaryMembership: null,
     } as unknown as AuthContext;
 
-    expect(hasOrgAdminAccess(adminContext)).toBe(true);
-    expect(hasOrgAdminAccess(memberContext)).toBe(false);
+    expect(hasOrgAdminAccess(platformContext)).toBe(true);
+    expect(hasOrgAdminAccess(ownerContext)).toBe(false);
   });
 });
 
-describe("dashboard nav adminOnly", () => {
-  it("marks admin ops link as staff-only", () => {
-    const adminItem = DASHBOARD_NAV.flatMap((g) => g.items).find(
+describe("dashboard nav platform support", () => {
+  it("hides platform support link from restaurant owners", () => {
+    const item = DASHBOARD_NAV.flatMap((g) => g.items).find(
       (i) => i.href === "/dashboard/admin"
     );
-    expect(adminItem?.adminOnly).toBe(true);
+    expect(item?.platformOnly).toBe(true);
+    expect(item?.label).toBe("Platform");
+    expect(item?.badge).toBeUndefined();
   });
 });
 
@@ -80,7 +72,7 @@ describe("admin page access gates", () => {
     expect(page).toContain('redirect("/login?next=/dashboard/admin")');
     expect(page).toContain("hasOrgAdminAccess");
     expect(page).toContain('redirect("/dashboard")');
-    expect(page).toContain("isOrgAdmin");
+    expect(page).toContain("resolveAdminOrgInputs");
   });
 });
 

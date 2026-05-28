@@ -91,8 +91,23 @@ describe("public CTA canon", () => {
     expect(HOME_CTA.secondary.href).toContain("hello@getroal.com");
   });
 
+  it("public buttons use shared height tokens and calm motion (prompt 55)", () => {
+    const theme = readFileSync(join(REPO, "app/public-theme.css"), "utf8");
+    const btn = readFileSync(
+      join(REPO, "components/landing/public/public-cta-button.tsx"),
+      "utf8"
+    );
+
+    expect(theme).toContain("--public-btn-height: 3rem");
+    expect(theme).toContain(".public-btn-primary:active");
+    expect(theme).toContain("0 1px 2px rgb(var(--public-ink) / 0.08)");
+    expect(theme).not.toContain("0 8px 24px rgb(var(--public-ink) / 0.2)");
+    expect(btn).toContain("public-btn-label");
+    expect(btn).toContain("showArrow ?? true");
+  });
+
   it("home final CTA includes supporting line and demo buttons", () => {
-    expect(HOME_CTA_BAND.title).toBe("Turn the next missed call into an order.");
+    expect(HOME_CTA_BAND.title).toBe("Ready to try it on your line?");
     expect(HOME_CTA_BAND.description.length).toBeGreaterThan(20);
     expect(HOME_CTA_BAND.primary).toEqual(PUBLIC_CTA.hearDemo);
     expect(HOME_CTA_BAND.secondary.label).toBe(PUBLIC_CTA_LABELS.bookDemo);

@@ -37,7 +37,9 @@ describe("demo page layout", () => {
       "utf8"
     );
     expect(sim).toContain("callSimulation.steps");
+    expect(sim).toContain("public-demo-flow");
     expect(sim).toContain("step.time");
+    expect(sim).toContain("step.tagline");
   });
 
   it("proof section pairs transcript and ticket", () => {

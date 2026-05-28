@@ -30,18 +30,18 @@ import { HOME_TRUST_POINTS } from "@/lib/landing/home-trust-copy";
 
 const CARDS = [
   {
-    title: "Answers the phone",
-    body: "Sounds like your team, not a phone tree.",
+    title: "Answers the line",
+    body: "Sounds human—not a phone tree.",
     icon: PhoneIcon,
   },
   {
-    title: "Knows your menu",
-    body: "Your items, modifiers, and prices—live.",
+    title: "Live menu",
+    body: "Items, modifiers, prices—current.",
     icon: MenuIcon,
   },
   {
-    title: "Sends the ticket",
-    body: "Orders land on your kitchen screen.",
+    title: "Kitchen ticket",
+    body: "Order hits your pass.",
     icon: TicketIcon,
   },
 ] as const;

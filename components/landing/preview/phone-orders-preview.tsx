@@ -54,7 +54,7 @@ export function PhoneOrdersPreview({
           Live carts
           <span
             className={cn(
-              "ml-1.5 rounded-md px-1.5 py-0.5 text-[11px] font-semibold tabular-nums",
+              "ml-1.5 rounded-md px-1.5 py-0.5 text-caption font-semibold tabular-nums",
               glass
                 ? "bg-[rgb(var(--public-accent-lavender)/0.18)] text-[rgb(var(--public-ink))]"
                 : "bg-warning/20 text-amber-900"
@@ -66,7 +66,7 @@ export function PhoneOrdersPreview({
         </div>
         <div className="relative min-h-[40px] flex-1 rounded-t-lg px-2 py-2 text-xs font-medium text-muted">
           Completed
-          <span className="ml-1.5 rounded-md bg-elev px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-subtle">
+          <span className="ml-1.5 rounded-md bg-elev px-1.5 py-0.5 text-caption font-semibold tabular-nums text-subtle">
             {doneCount}
           </span>
         </div>
@@ -85,7 +85,7 @@ export function PhoneOrdersPreview({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span
                 className={cn(
-                  "rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider",
+                  "rounded-md px-2 py-0.5 text-caption font-semibold uppercase tracking-wider",
                   glass
                     ? "bg-[rgb(var(--public-accent-lavender)/0.2)] text-[rgb(var(--public-ink))]"
                     : "bg-warning/20 text-amber-900"
@@ -93,7 +93,7 @@ export function PhoneOrdersPreview({
               >
                 draft
               </span>
-              <span className="max-w-[50%] truncate font-mono text-[11px] tabular-nums text-subtle">
+              <span className="max-w-[50%] truncate font-mono text-caption tabular-nums text-subtle">
                 {live.session_id.length > 14
                   ? `${live.session_id.slice(0, 12)}…`
                   : live.session_id}
@@ -114,14 +114,14 @@ export function PhoneOrdersPreview({
               live && "mt-3"
             )}
           >
-            <span className="rounded-md bg-success/20 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-emerald-900">
+            <span className="rounded-md bg-success/20 px-2 py-0.5 text-caption font-semibold uppercase tracking-wider text-emerald-900">
               done
             </span>
             {done.customer_name && (
               <p className="mt-2 break-words text-xs text-muted">{done.customer_name}</p>
             )}
             <OrderLines items={done.items} />
-            <p className="mt-2 text-[11px] text-subtle">
+            <p className="mt-2 text-caption text-subtle">
               Finalized{" "}
               {new Date(done.created_at).toLocaleString("en-US", {
                 hour: "numeric",

@@ -7,15 +7,13 @@ export const SECURITY_PAGE_COPY = {
   hero: {
     eyebrow: "Security",
     title: "Guest info stays yours. Your team stays in charge.",
-    description:
-      "ROAL collects names and phone numbers to run pickup orders—not to build a marketing list. Each restaurant’s menu and tickets stay in that account, and your staff can still step in anytime.",
+    description: "Guest name and phone for pickup only. Your menu and tickets stay in your account.",
   },
   pillars: {
     titleId: "security-pillars-heading",
     eyebrow: "How we protect you",
     title: "Five things owners ask about",
-    description:
-      "Who can see your data, what we store about guests, how orders are tracked, when staff take over, and how phone orders are verified.",
+    description: "Access, guest data, handoffs, and verified phone orders.",
   },
   goLive: {
     titleId: "security-golive-heading",
@@ -38,8 +36,7 @@ export const SECURITY_PAGE_COPY = {
   faq: {
     titleId: "security-faq-heading",
     title: "Security questions owners ask",
-    description:
-      "Short answers on guest data, access, handoffs, and phone-order safety. Technical depth is in the section above.",
+    description: "Guest data, access, handoffs, and phone-order safety.",
   },
   roadmap: {
     titleId: "security-roadmap-heading",
@@ -51,8 +48,7 @@ export const SECURITY_PAGE_COPY = {
     titleId: "security-cta",
     eyebrow: "Pilot review",
     title: "Questions before go-live?",
-    description:
-      "On a pilot call we review your menu, phone setup, and staff logins together—so the first real guest call feels routine.",
+    description: "Pilot call covers menu, phone line, and staff logins.",
     demoNote: "Want to hear a sample call first?",
     demoHref: "/demo",
     demoLabel: "Open the demo",
@@ -70,53 +66,38 @@ export const SECURITY_PILLARS = [
   {
     id: "scoped-access",
     title: "Scoped access",
-    body: "Your menu, orders, and settings belong to your restaurant account—not a shared folder. Staff sign in with their own login; they only see locations they are invited to.",
+    body: "Your menu and orders stay in your account. Staff use their own login per location.",
   },
   {
     id: "guest-data",
     title: "Guest data",
-    body: "We ask for the name and phone number needed to run the pickup—nothing extra for ads or resale. That info stays tied to your tickets, not mixed with other shops.",
-  },
-  {
-    id: "audit-trail",
-    title: "Audit trail",
-    body: "Draft carts, status changes, and completed pickups are logged so you can replay a busy night: what was ordered, when it finalized, and what changed on the ticket.",
+    body: "Name and phone for pickup only—not sold or mixed across shops.",
   },
   {
     id: "human-handoff",
     title: "Human handoff",
-    body: "Catering, complaints, and “I need a manager” go to your team. ROAL does not make up guest details to force an order through—you still run the pass.",
+    body: "Complaints and manager requests go to your team—no forced fake orders.",
   },
   {
     id: "signed-tools",
     title: "Signed tools",
-    body: "When ROAL reads your menu or updates a cart, each request is tied to your restaurant with a key you can rotate. Random internet callers cannot trigger those actions with a guessed link.",
+    body: "Phone orders are verified per restaurant—random web callers cannot post tickets.",
   },
 ] as const;
 
 export const SECURITY_GO_LIVE = [
-  "Give each staff member their own login—no shared password on the kitchen tablet",
-  "Scan your menu and run one test call before you forward the public line",
-  "If someone with dashboard access leaves, ask us to refresh phone-order access for your shop",
-  "Train on a separate test restaurant—do not practice on real guest names and numbers",
+  "Own logins for staff—no shared kitchen password",
+  "Scan menu and test one call before forwarding the public line",
 ] as const;
 
 export const SECURITY_TECHNICAL = [
   {
-    title: "Organization-scoped RLS",
-    body: "Supabase Auth plus row-level policies on menus, orders, and settings. Dashboard users need a profile and membership row; service role is limited to Edge Functions.",
+    title: "Scoped database access",
+    body: "Row-level policies per organization; service role limited to Edge Functions.",
   },
   {
-    title: "roal1 signed voice tools",
-    body: "ElevenLabs tools call Edge Functions with a per-restaurant bearer token (roal1) or legacy AGENT_TOOL_SECRET during migration. The anon key alone cannot finalize orders.",
-  },
-  {
-    title: "Guest identity on finalize",
-    body: "finalize_order rejects orders without customer_name and customer_phone collected on the call—no placeholder identity in production paths.",
-  },
-  {
-    title: "Secrets and audit storage",
-    body: "Signing keys and database credentials live in server configuration—not in the browser or the script guests hear. Menu scans, tool calls, and sensitive dashboard actions write to usage and audit tables.",
+    title: "Signed voice tools",
+    body: "Per-restaurant tokens for ElevenLabs tools; anon key cannot finalize orders.",
   },
 ] as const;
 

@@ -23,7 +23,7 @@ export default function BlogIndexPage() {
   return (
     <MarketingShell>
       <BlogIndexAeoJsonLd />
-      <div className="blog-shell min-w-0">
+      <div className="blog-shell min-w-0 overflow-x-clip">
         <BlogIndexHero />
         <Suspense fallback={<BlogIndexFallback />}>
           <BlogIndexContent posts={posts} />

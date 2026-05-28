@@ -11,7 +11,7 @@ type Props = {
 /** One-page demo: video → 3 steps → transcript + ticket → CTA. */
 export function DemoPageContent({ preview }: Props) {
   return (
-    <div className="public-demo-page landing-wrap landing-wrap-tight min-w-0">
+    <div className="public-demo-page landing-wrap landing-wrap-tight min-w-0 overflow-x-clip">
       <DemoVideoPlaceholder />
       <DemoCallFlowSection />
       <DemoProofSection preview={preview} />

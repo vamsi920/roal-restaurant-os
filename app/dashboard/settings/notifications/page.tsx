@@ -58,23 +58,16 @@ export default async function NotificationSettingsPage() {
   );
 
   return (
-    <div className="mx-auto max-w-3xl min-w-0 space-y-8">
-      <header>
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
-          Settings
-        </p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Notifications
-        </h1>
-        <p className="mt-2 text-sm text-muted">
+    <div className="notification-settings-page dashboard-page dashboard-page--medium dashboard-page__stack min-w-0 max-w-full space-y-6 overflow-x-hidden sm:space-y-8">
+      <header className="dashboard-page__header min-w-0">
+        <p className="dashboard-page__eyebrow">Settings</p>
+        <h1 className="dashboard-page__title">Notifications</h1>
+        <p className="dashboard-page__lead">
           Alerts for completed orders, sync and scan failures, stuck tickets, and
           Realtime outages. {NOTIFICATION_PROVIDER_POSTURE.devDefault}
         </p>
-        <Link
-          href="/dashboard/settings"
-          className="mt-3 inline-block text-sm text-accent hover:underline"
-        >
-          ← Organization settings
+        <Link href="/dashboard/settings" className="dashboard-page__back">
+          ← Organization
         </Link>
       </header>
 

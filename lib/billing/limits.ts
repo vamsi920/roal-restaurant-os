@@ -6,6 +6,7 @@ import {
 import type {
   BillingPlanId,
   BillingProviderMode,
+  BillingScope,
   BillingUsageSnapshot,
   EffectiveSubscriptionStatus,
   FeatureEntitlement,
@@ -33,22 +34,29 @@ function percent(used: number, limit: number): number {
 
 export function buildLimitChecks(
   usage: BillingUsageSnapshot,
-  limits: ReturnType<typeof effectivePlanLimits>
+  limits: ReturnType<typeof effectivePlanLimits>,
+  options?: { scope?: BillingScope }
 ): LimitCheck[] {
+  const scope = options?.scope ?? "organization";
   const rows: Array<{
     key: UsageLimitKey;
     label: string;
     used: number;
     limit: number;
     unitLabel: string;
-  }> = [
-    {
+  }> = [];
+
+  if (scope === "organization") {
+    rows.push({
       key: "active_locations",
       label: "Active locations",
       used: Math.max(usage.activeLocations, usage.restaurantCount),
       limit: limits.max_active_locations,
       unitLabel: "locations",
-    },
+    });
+  }
+
+  rows.push(
     {
       key: "menu_scans",
       label: "Menu scans",
@@ -76,8 +84,8 @@ export function buildLimitChecks(
       used: usage.toolCalls,
       limit: limits.max_tool_calls_per_period,
       unitLabel: "calls",
-    },
-  ];
+    }
+  );
 
   return rows.map((row) => ({
     ...row,

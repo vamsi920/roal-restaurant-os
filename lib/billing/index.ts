@@ -15,7 +15,10 @@ export {
 } from "@/lib/billing/limits";
 export { BILLING_LAUNCH_POSTURE, isSelfServeCheckoutAvailable } from "@/lib/billing/launch-posture";
 export { getBillingProviderConfig, billingProvider, STRIPE_CHECKOUT_ENABLED } from "@/lib/billing/provider";
-export { loadOrganizationBilling } from "@/lib/billing/load-billing";
+export {
+  loadOrganizationBilling,
+  loadRestaurantBilling,
+} from "@/lib/billing/load-billing";
 export {
   hasPlanFeature,
   isBillingOperational,

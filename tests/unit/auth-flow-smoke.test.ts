@@ -61,8 +61,8 @@ describe("auth flow smoke (static)", () => {
   it("copy drives titles and submit labels", () => {
     expect(form).toContain("copy.form.title");
     expect(form).toContain("copy.form.submitLabel");
-    expect(LOGIN_PAGE_COPY.form.title).toBe("Sign in");
-    expect(SIGNUP_PAGE_COPY.form.title).toBe("Create your account");
+    expect(LOGIN_PAGE_COPY.form.title).toBe("Welcome back");
+    expect(SIGNUP_PAGE_COPY.form.title).toBe("Start free");
     expect(LOGIN_PAGE_COPY.form.submitLabel).toBe("Sign in");
     expect(SIGNUP_PAGE_COPY.form.submitLabel).toBe("Create account");
   });

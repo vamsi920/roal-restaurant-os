@@ -41,8 +41,8 @@ export const DIFFERENTIATOR_BENTO = {
     },
     {
       id: "success-pricing",
-      title: "Successful-order pricing",
-      body: "Bill around completed pickups—not every ring or abandoned cart.",
+      title: "$0.90 per successful order",
+      body: "If it does not become an order, you do not pay.",
       gridClass: "lg:col-span-4",
     },
     {

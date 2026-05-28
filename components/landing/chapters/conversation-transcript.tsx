@@ -82,10 +82,10 @@ function CallHeader({ live, turn }: { live: boolean; turn: TurnSpeaker | null })
           <p className="truncate text-sm font-semibold text-ink">
             {AGENT_CONVERSATION_DEMO.restaurant}
           </p>
-          <p className="text-[11px] text-muted">{AGENT_CONVERSATION_DEMO.scenario}</p>
+          <p className="text-caption text-muted">{AGENT_CONVERSATION_DEMO.scenario}</p>
           <p
             className={cn(
-              "mt-0.5 text-[11px] font-medium text-accent transition-opacity",
+              "mt-0.5 text-caption font-medium text-accent transition-opacity",
               live ? "opacity-100" : "opacity-70"
             )}
             aria-live="polite"
@@ -95,7 +95,7 @@ function CallHeader({ live, turn }: { live: boolean; turn: TurnSpeaker | null })
           </p>
         </div>
       </div>
-      <span className="public-demo-transcript-chip shrink-0 text-[11px] normal-case">
+      <span className="public-demo-transcript-chip shrink-0 text-caption normal-case">
         AI voice · disclosed
       </span>
     </div>
@@ -127,7 +127,7 @@ function TranscriptBubble({
       >
         <p
           className={cn(
-            "max-w-[95%] rounded-full px-3 py-1.5 text-center text-[11px] font-medium leading-snug sm:text-xs",
+            "max-w-[95%] rounded-full px-3 py-1.5 text-center text-caption font-medium leading-snug sm:text-xs",
             line.beat === "disclosure"
               ? "border border-[rgb(var(--public-accent-lavender)/0.35)] bg-[rgb(var(--public-accent-lavender)/0.12)] text-ink"
               : "border border-line bg-elev text-subtle"
@@ -179,7 +179,7 @@ function TranscriptBubble({
         }
         transition={{ duration: 0.5, ease: LANDING_EASE_OUT }}
       >
-        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-subtle">
+        <span className="text-caption font-semibold uppercase tracking-[0.12em] text-subtle">
           {isAgent ? "ROAL agent" : "Caller"}
           {beatLabel ? (
             <span className="ml-1.5 font-normal normal-case tracking-normal text-accent">

@@ -12,10 +12,9 @@ describe("admin ops live posture (launch 24)", () => {
     );
     expect(page).toContain("hasOrgAdminAccess");
     expect(page).toContain('redirect("/dashboard")');
-    expect(page).toContain("isOrgAdmin");
   });
 
-  it("dashboard layout hides admin nav for members", () => {
+  it("dashboard layout hides platform support nav for restaurant owners", () => {
     const layout = readFileSync(
       join(REPO, "app/dashboard/layout.tsx"),
       "utf8"
@@ -25,8 +24,18 @@ describe("admin ops live posture (launch 24)", () => {
       join(REPO, "components/dashboard/app-shell.tsx"),
       "utf8"
     );
-    expect(shell).toContain("adminOnly");
+    expect(shell).toContain("platformOnly");
     expect(shell).toContain("showAdminNav");
+  });
+
+  it("admin dashboard uses platform support copy", () => {
+    const dash = readFileSync(
+      join(REPO, "components/admin/AdminOpsDashboard.tsx"),
+      "utf8"
+    );
+    expect(dash).toContain("Platform support");
+    expect(dash).not.toContain("Admin / Ops");
+    expect(dash).not.toMatch(/Staff/);
   });
 
   it("admin dashboard states no secrets shown", () => {

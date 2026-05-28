@@ -12,8 +12,8 @@ export function OrdersTrendChart({ points }: Props) {
   );
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap gap-4 text-xs text-muted">
+    <div className="orders-trend-chart min-w-0 space-y-4">
+      <div className="orders-trend-chart__legend flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted">
         <span className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
           Voice orders
@@ -33,11 +33,16 @@ export function OrdersTrendChart({ points }: Props) {
           No daily data in this range yet.
         </p>
       ) : (
-      <div className="flex items-end gap-1 overflow-x-auto pb-1 sm:gap-1.5">
+      <div
+        className="orders-trend-chart__scroll flex min-w-0 items-end gap-1 overflow-x-auto overscroll-x-contain pb-1 sm:gap-1.5"
+        role="list"
+        aria-label="Daily orders chart"
+      >
         {points.map((point) => (
           <div
             key={point.date}
-            className="flex min-w-[28px] flex-1 flex-col items-center gap-1"
+            role="listitem"
+            className="orders-trend-chart__day flex min-w-[2.25rem] shrink-0 flex-col items-center gap-1 sm:min-w-[28px] sm:flex-1"
             title={`${formatShortDate(point.date)}: ${point.voiceOrders} voice, ${point.completed} completed, ${point.canceled} canceled`}
           >
             <div className="flex h-24 w-full items-end justify-center gap-0.5">
@@ -57,7 +62,7 @@ export function OrdersTrendChart({ points }: Props) {
                 className="bg-subtle/60"
               />
             </div>
-            <span className="text-[10px] text-subtle">
+            <span className="text-micro text-subtle">
               {formatShortDate(point.date)}
             </span>
           </div>

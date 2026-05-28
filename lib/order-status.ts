@@ -116,7 +116,7 @@ export const ORDER_ACTION_TARGET: Record<OrderAction, PhoneOrderStatus> = {
 export const ORDER_ACTION_LABELS: Record<OrderAction, string> = {
   accept: "Accept",
   start: "Start",
-  mark_ready: "Mark ready",
+  mark_ready: "Ready",
   complete: "Complete",
   cancel: "Cancel",
 };

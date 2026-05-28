@@ -16,6 +16,11 @@ import {
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { cn } from "@/lib/cn";
 import {
+  RESTAURANT_LIVE_ORDERS_LABEL,
+  RESTAURANT_MENU_AGENT_LABEL,
+} from "@/lib/dashboard-restaurant-labels";
+import {
+  ONBOARDING_LAUNCH_STEPS,
   ONBOARDING_STEP_DESCRIPTIONS,
   ONBOARDING_STEP_LABELS,
   type OnboardingStepKey,
@@ -122,30 +127,37 @@ export function OnboardingWizard({ initialState }: Props) {
   const profileDefaults = state.activeRestaurantProfile;
 
   return (
-    <div className="mx-auto max-w-5xl min-w-0">
-      <div className="mb-6 sm:mb-8">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
-          Onboarding
-        </p>
+    <div className="onboarding-page mx-auto max-w-5xl min-w-0 overflow-x-hidden">
+      <header className="onboarding-page__header mb-6 sm:mb-8">
+        <p className="text-xs font-medium text-subtle">Setup</p>
         <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Launch in about 20 minutes
+          First store setup
         </h1>
-        <p className="mt-2 max-w-2xl text-pretty text-sm text-muted sm:text-base">
-          Resumable setup for your organization and first location. Pick up where
-          you left off anytime.
+        <p className="mt-2 max-w-xl text-pretty text-sm leading-relaxed text-muted">
+          {ONBOARDING_LAUNCH_STEPS.join(" → ")}. Resume anytime.
         </p>
+        <ol className="onboarding-roadmap mt-4 grid list-none grid-cols-1 gap-2 p-0 min-[380px]:grid-cols-2 sm:grid-cols-4">
+          {ONBOARDING_LAUNCH_STEPS.map((label, i) => (
+            <li
+              key={label}
+              className="rounded-lg border border-line bg-card px-2.5 py-2 text-center text-xs font-medium text-ink sm:px-3 sm:py-2.5 sm:text-[0.8125rem]"
+            >
+              <span className="text-subtle tabular-nums">{i + 1}.</span> {label}
+            </li>
+          ))}
+        </ol>
         <div className="mt-4 h-2 overflow-hidden rounded-full bg-elev">
           <div
             className="h-full rounded-full bg-accent transition-all duration-500"
             style={{ width: `${overallPercent}%` }}
           />
         </div>
-        <p className="mt-1.5 text-xs text-subtle">{overallPercent}% complete</p>
-      </div>
+        <p className="mt-1.5 text-xs text-subtle tabular-nums">{overallPercent}% complete</p>
+      </header>
 
       {error ? (
         <p
-          className="mb-4 rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger"
+          className="onboarding-page__error mb-4 rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {error}
@@ -158,9 +170,9 @@ export function OnboardingWizard({ initialState }: Props) {
         </p>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
-        <nav className="glass-card p-3" aria-label="Onboarding steps">
-          <ul className="space-y-1">
+      <div className="onboarding-page__body grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,13.5rem)_1fr]">
+        <nav className="onboarding-page__nav glass-card p-2.5 sm:p-3" aria-label="Onboarding steps">
+          <ul className="space-y-0.5">
             {WIZARD_STEP_ORDER.map((key) => {
               const status = stepStatus(state, key);
               const disabled = isOnboardingStepNavDisabled(key, {
@@ -176,7 +188,7 @@ export function OnboardingWizard({ initialState }: Props) {
                     disabled={disabled || pending}
                     onClick={() => setActiveStep(key)}
                     className={cn(
-                      "flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors",
+                      "flex min-h-11 w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors",
                       activeStep === key
                         ? "bg-accent-soft ring-1 ring-accent/20"
                         : "hover:bg-elev",
@@ -185,10 +197,10 @@ export function OnboardingWizard({ initialState }: Props) {
                   >
                     <StepIcon status={status} />
                     <span className="min-w-0">
-                      <span className="block text-[13px] font-medium text-ink">
+                      <span className="block text-sm font-medium leading-snug text-ink">
                         {ONBOARDING_STEP_LABELS[key]}
                       </span>
-                      <span className="block text-[10px] text-subtle capitalize">
+                      <span className="block text-xs capitalize text-subtle">
                         {status.replace("_", " ")}
                       </span>
                     </span>
@@ -199,11 +211,11 @@ export function OnboardingWizard({ initialState }: Props) {
           </ul>
         </nav>
 
-        <div className="glass-card min-w-0 p-5 sm:p-6">
-          <h2 className="text-lg font-semibold text-ink">
+        <div className="onboarding-page__panel glass-card min-w-0 p-4 sm:p-6">
+          <h2 className="text-base font-semibold text-ink sm:text-lg">
             {ONBOARDING_STEP_LABELS[activeStep]}
           </h2>
-          <p className="mt-1 text-sm text-muted">
+          <p className="mt-1 text-sm leading-relaxed text-muted">
             {ONBOARDING_STEP_DESCRIPTIONS[activeStep]}
           </p>
 
@@ -366,7 +378,7 @@ export function OnboardingWizard({ initialState }: Props) {
               stepRequiresRestaurant(activeStep) &&
               !restaurantId && (
                 <p className="text-sm text-muted">
-                  Create a location in Restaurant profile before this step.
+                  Add a restaurant before this step.
                 </p>
               )}
           </div>
@@ -378,7 +390,7 @@ export function OnboardingWizard({ initialState }: Props) {
           Setting up: <span className="font-medium text-ink">{restaurant?.name}</span>
           {" · "}
           <Link href="/dashboard/restaurants" className="text-accent hover:underline">
-            All restaurants
+            All locations
           </Link>
         </p>
       ) : null}
@@ -435,7 +447,7 @@ function AccountStep({
               disabled={pending}
               onClick={onGoToRestaurant}
             >
-              Continue to restaurant setup
+              Continue to add restaurant
             </button>
           </div>
         )}
@@ -451,9 +463,7 @@ function AccountStep({
         onCreateOrg(orgName);
       }}
     >
-      <p className="text-sm text-muted">
-        Create your restaurant group (organization). You will be the owner.
-      </p>
+      <p className="text-sm text-muted">Name your organization. You will be the owner.</p>
       <label className="block">
         <span className="text-xs font-medium uppercase tracking-wide text-subtle">
           Organization name
@@ -595,7 +605,7 @@ function ProfileStep({
         />
       </label>
       <p className="text-xs text-muted">
-        Weekly hours and closures are set on your kitchen workspace after onboarding.
+        Hours and closures are set in {RESTAURANT_LIVE_ORDERS_LABEL} after setup.
       </p>
       <button type="submit" className="btn-primary" disabled={pending || !name.trim()}>
         Save & continue
@@ -625,13 +635,13 @@ function MenuStep({
     <div className="space-y-4">
       {hasMenu ? (
         <p className="text-sm text-success">
-          Menu detected ({categoryCount} categor{categoryCount === 1 ? "y" : "ies"}).
-          Continue when you are ready for voice setup.
+          Menu ready ({categoryCount} categor{categoryCount === 1 ? "y" : "ies"}). Continue
+          to connect agent.
         </p>
       ) : (
         <p className="text-sm text-muted">
-          Upload a menu photo to extract items with AI, or skip and add items later
-          from your kitchen workspace.
+          Upload a menu photo for AI import, or skip and add items in{" "}
+          {RESTAURANT_MENU_AGENT_LABEL} later.
         </p>
       )}
       <MenuScanner
@@ -680,10 +690,10 @@ function VoiceStep({
   return (
     <div className="space-y-4 max-w-lg">
       <p className="text-sm text-muted">
-        Paste your ElevenLabs agent id. ROAL syncs menu tools and the order-taker
-        profile for{" "}
-        <span className="font-medium text-ink">{restaurantName}</span>. You can
-        connect later from the kitchen workspace if you are not ready yet.
+        Paste your ElevenLabs agent id for{" "}
+        <span className="font-medium text-ink">{restaurantName}</span>. ROAL syncs
+        menu tools and the order profile. Skip if you will connect in{" "}
+        {RESTAURANT_MENU_AGENT_LABEL} later.
       </p>
       <input
         className="input-base"
@@ -753,22 +763,20 @@ function TestCallStep({
   return (
     <div className="space-y-4 max-w-lg">
       <p className="text-sm text-muted">
-        When your voice agent is connected, place a quick test order and confirm
-        it shows on your kitchen screen.
+        Place one test call and confirm the ticket shows in {RESTAURANT_LIVE_ORDERS_LABEL}.
       </p>
-      <ul className="space-y-2 text-sm text-muted">
-        <li>Call your ElevenLabs agent or use the web test UI.</li>
-        <li>Ask for a menu item and confirm the ticket appears on the KDS.</li>
-        <li>Complete the order with a test name and phone number.</li>
+      <ul className="list-inside list-disc space-y-1 text-sm text-muted">
+        <li>Call your agent or use the web test UI.</li>
+        <li>Order a menu item and watch the ticket appear.</li>
       </ul>
       <p className="text-xs text-subtle">
         <Link
           href={`/dashboard/restaurants/${restaurantId}`}
           className="text-accent hover:underline"
         >
-          Open kitchen workspace
+          Open {RESTAURANT_LIVE_ORDERS_LABEL}
         </Link>{" "}
-        to watch live orders while you test.
+        while you test.
       </p>
       <label className="flex items-start gap-2 text-sm">
         <input
@@ -778,7 +786,7 @@ function TestCallStep({
           onChange={(e) => setConfirmed(e.target.checked)}
           disabled={pending}
         />
-        <span>I completed a test call and saw the order on the kitchen screen.</span>
+        <span>I completed a test call and saw the order in Live orders.</span>
       </label>
       <div className="flex flex-wrap gap-2">
         <button
@@ -819,13 +827,13 @@ function GoLiveStep({
     return (
       <div className="space-y-4">
         <p className="text-sm text-success">
-          {restaurantName} is set up. Monitor live orders on the KDS.
+          {restaurantName} is ready. Open {RESTAURANT_LIVE_ORDERS_LABEL} for phone pickup.
         </p>
         <Link href={`/dashboard/restaurants/${restaurantId}`} className="btn-primary inline-flex">
-          Open kitchen display
+          {RESTAURANT_LIVE_ORDERS_LABEL}
         </Link>
         <Link href="/dashboard/restaurants" className="btn-ghost ml-2 inline-flex">
-          All restaurants
+          All locations
         </Link>
       </div>
     );
@@ -834,10 +842,10 @@ function GoLiveStep({
   return (
     <div className="space-y-4 max-w-lg">
       <p className="text-sm text-muted">
-        You are ready to take guest calls. Mark this location live to finish onboarding.
+        Finish setup, then open {RESTAURANT_LIVE_ORDERS_LABEL} for guest calls.
       </p>
       <button type="button" className="btn-primary" disabled={pending} onClick={onLaunch}>
-        Mark live & finish
+        Finish & open live orders
       </button>
     </div>
   );

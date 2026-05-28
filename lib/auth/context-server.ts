@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { tryClaimLegacyPocMembership } from "@/lib/auth/claim-legacy-org";
 import { ensureUserProfile } from "@/lib/auth/ensure-profile";
 import { getSessionUser } from "@/lib/auth/session";
+import { ensurePlatformAdminMembership } from "@/lib/auth/ensure-platform-admin";
+import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
 import {
   canOperateRestaurant,
   isOrgAdmin,
@@ -71,6 +73,7 @@ export async function getAuthContext(): Promise<AuthContext | null> {
   const supabase = await createServerSupabase();
   await ensureUserProfile(supabase, user);
   await tryClaimLegacyPocMembership(supabase, user.id);
+  await ensurePlatformAdminMembership(user);
   const memberships = await loadUserMemberships(supabase, user.id);
 
   return {
@@ -80,8 +83,9 @@ export async function getAuthContext(): Promise<AuthContext | null> {
   };
 }
 
+/** Admin / Ops console — platform staff email only (see `lib/auth/platform-admin.ts`). */
 export function hasOrgAdminAccess(context: AuthContext): boolean {
-  return context.memberships.some((m) => isOrgAdmin(m.role));
+  return isPlatformAdminEmail(context.user.email);
 }
 
 export function findMembershipForOrg(
@@ -141,7 +145,7 @@ export async function requireOrgAdminAccess(): Promise<
     return {
       context: null,
       errorResponse: NextResponse.json(
-        { error: "Admin or owner role required" },
+        { error: "Platform admin access required" },
         { status: 403 }
       ),
     };
@@ -208,7 +212,7 @@ export async function requireRestaurantAccess(
       access: null,
       context: auth.context,
       errorResponse: NextResponse.json(
-        { error: "Admin or owner role required" },
+        { error: "Admin or owner access required" },
         { status: 403 }
       ),
     };

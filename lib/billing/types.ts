@@ -47,6 +47,8 @@ export type FeatureEntitlement = {
   enabled: boolean;
 };
 
+export type BillingScope = "organization" | "restaurant";
+
 export type BillingUsageSnapshot = {
   menuScans: number;
   voiceOrders: number;
@@ -58,6 +60,9 @@ export type BillingUsageSnapshot = {
 };
 
 export type BillingSnapshot = {
+  scope: BillingScope;
+  restaurantId: string | null;
+  restaurantName: string | null;
   providerMode: BillingProviderMode;
   providerConfigured: boolean;
   checkoutEnabled: boolean;

@@ -67,11 +67,15 @@
 .landing-story.landing-story-canvas {
   position: relative;
   isolation: isolate;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
   background: rgb(var(--bg-base));
   color: rgb(var(--text-primary));
-  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--type-body);
   font-size: var(--landing-text-body);
   line-height: var(--landing-line-body);
+  scroll-padding-top: max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.5rem));
 }
 
 /* — Layout — */
@@ -185,7 +189,7 @@
   color: rgb(var(--landing-yellow));
 }
 
-/* — Typography (display = Fraunces, body = DM Sans via layout) — */
+/* — Typography (Plus Jakarta Sans via layout + typography.css) — */
 
 .landing-story .landing-eyebrow {
   display: inline-block;
@@ -205,7 +209,7 @@
 
 .landing-story .landing-display,
 .landing-story .landing-h1 {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: var(--landing-text-display);
   font-weight: 800;
   line-height: var(--landing-line-heading);
@@ -220,7 +224,7 @@
 }
 
 .landing-story .landing-h2 {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: var(--landing-text-chapter);
   font-weight: 800;
   line-height: var(--landing-line-heading);
@@ -231,7 +235,7 @@
 }
 
 .landing-story .landing-h3 {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: var(--landing-text-feature);
   font-weight: 800;
   line-height: 1.2;
@@ -586,7 +590,7 @@
   border-radius: 0.5rem;
   background: rgb(var(--landing-neon));
   padding: 0.25rem 0.6rem;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: 0.8125rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -695,7 +699,7 @@
 
 .landing-story .landing-beat-visual__ghost {
   fill: rgb(var(--landing-ink));
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: 22px;
   font-weight: 800;
 }
@@ -807,7 +811,7 @@
   border: 2px solid rgb(var(--landing-ink));
   border-radius: 999px;
   background: rgb(var(--landing-neon));
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: 0.875rem;
   font-weight: 800;
   line-height: 1;
@@ -817,7 +821,7 @@
 
 .landing-story .landing-beat-card__title {
   margin: 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.125rem, 3.4vw, 1.35rem);
   font-weight: 800;
   line-height: 1.15;
@@ -972,7 +976,7 @@
 
 .landing-story .landing-demo-strip__title {
   margin: 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.125rem, 3.5vw, 1.3rem);
   font-weight: 700;
   line-height: 1.2;
@@ -1137,7 +1141,7 @@
 
 .landing-story .hero-illustration__label {
   fill: rgb(var(--landing-ink));
-  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--type-body);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -1845,7 +1849,7 @@
 
 .landing-story .blog-featured-card__title {
   margin: 0.85rem 0 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.5rem, 4vw, 2.125rem);
   font-weight: 650;
   line-height: 1.12;
@@ -1898,7 +1902,7 @@
 
 .landing-story .blog-post-card__title {
   margin: 0.65rem 0 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.0625rem, 2.8vw, 1.25rem);
   font-weight: 650;
   line-height: 1.2;
@@ -1949,7 +1953,7 @@
 
 .landing-story .blog-article-header__title {
   margin: 0.85rem 0 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 650;
   line-height: 1.1;
@@ -2056,7 +2060,7 @@
 
 .landing-story .blog-article-section__title {
   margin: 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 650;
   line-height: 1.2;
@@ -2079,7 +2083,7 @@
 
 .landing-story .blog-article-faq__title {
   margin: 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 650;
   color: rgb(var(--landing-ink));
@@ -2137,7 +2141,7 @@
 
 .landing-story .blog-article-cta__title {
   margin: 0.5rem 0 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 650;
   line-height: 1.2;
@@ -2163,7 +2167,7 @@
 
 .landing-story .blog-related__title {
   margin: 0;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--type-display);
   font-size: clamp(1.125rem, 3vw, 1.375rem);
   font-weight: 650;
   color: rgb(var(--landing-ink));

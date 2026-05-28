@@ -1,3 +1,4 @@
+import "@/app/contact-page.css";
 import { ContactHeroCta } from "@/components/landing/contact/contact-hero-cta";
 import { ContactPageContent } from "@/components/landing/contact/contact-page-content";
 import { MarketingPageHero } from "@/components/landing/marketing-page-hero";

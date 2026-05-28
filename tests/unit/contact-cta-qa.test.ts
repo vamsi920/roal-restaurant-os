@@ -3,9 +3,10 @@ import { CONTACT_CTA, CONTACT_PAGE_COPY } from "@/lib/landing/contact-page-copy"
 import { CONTACT_PILOT_EMAIL, mailtoUsesPilotInbox } from "@/lib/landing/contact-mailto";
 
 describe("contact CTA QA", () => {
-  it("all contact mailto hrefs use hello@getroal.com", () => {
-    expect(CONTACT_CTA.mailto.href).toContain(CONTACT_PILOT_EMAIL);
-    expect(mailtoUsesPilotInbox(CONTACT_CTA.mailto.href)).toBe(true);
+  it("book demo mailto uses hello@getroal.com", () => {
+    expect(CONTACT_CTA.bookDemo.href).toContain(CONTACT_PILOT_EMAIL);
+    expect(mailtoUsesPilotInbox(CONTACT_CTA.bookDemo.href)).toBe(true);
+    expect(CONTACT_PAGE_COPY.form.submitLabel).toBe("Book a demo");
     expect(CONTACT_PAGE_COPY.close.description).toContain(CONTACT_PILOT_EMAIL);
   });
 

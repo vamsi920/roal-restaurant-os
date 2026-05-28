@@ -16,9 +16,9 @@ import type { BlogPost } from "./types";
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "why-restaurants-miss-calls-dinner-rush",
-    title: "Why restaurants miss calls during the dinner rush",
+    title: "Why pickup calls go unanswered at rush",
     excerpt:
-      "At 7 p.m. your team is seating and expoing—not watching the phone. Here is why rings go unanswered and how to cover the line without another full-time hire.",
+      "At 7 p.m. your team is on the pass—not the phone. Why rings go unanswered and how to cover pickup calls.",
     primaryCategorySlug: "missed-calls",
     categorySlugs: ["missed-calls"],
     readTimeMinutes: 7,
@@ -28,9 +28,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ai-phone-ordering-small-restaurants",
-    title: "How AI phone ordering helps small restaurants take more pickup orders",
+    title: "AI phone orders from your live menu",
     excerpt:
-      "Locals still call for pickup. See how AI answers from your live menu, handles modifiers, and tickets the kitchen while your team runs the room.",
+      "Guests still call for pickup. AI answers from your live menu and tickets the kitchen while staff run the room.",
     primaryCategorySlug: "phone-orders",
     categorySlugs: ["phone-orders"],
     readTimeMinutes: 8,
@@ -39,9 +39,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "cost-unanswered-restaurant-phone-calls",
-    title: "The real cost of unanswered restaurant phone calls",
+    title: "What missed pickup phone calls cost",
     excerpt:
-      "Missed rings are pickup you never ticketed. Use a simple worksheet with your rush-hour numbers—examples are illustrations, not promises.",
+      "Every unanswered ring is pickup you never ticketed. A simple rush-hour worksheet—illustrative, not a promise.",
     primaryCategorySlug: "missed-calls",
     categorySlugs: ["missed-calls", "pricing"],
     readTimeMinutes: 9,
@@ -50,9 +50,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "restaurant-ai-voice-agent-sounds-human",
-    title: "What makes a restaurant AI voice agent sound human?",
+    title: "Restaurant phone AI that sounds human",
     excerpt:
-      "Natural language, live-menu answers, honest AI disclosure, and warm handoff—what to listen for before you forward pickup calls.",
+      "Live-menu answers, honest disclosure, warm handoff—what to listen for before you forward pickup calls.",
     primaryCategorySlug: "ai-basics",
     categorySlugs: ["ai-basics"],
     readTimeMinutes: 7,
@@ -61,9 +61,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "phone-agent-must-know-live-menu",
-    title: "Why your phone agent must know your live menu",
+    title: "Your pickup line needs your live menu",
     excerpt:
-      "86s, modifiers, and prices on the phone must match the KDS—or expo stops trusting pickup tickets. One live menu fixes that.",
+      "86s and prices on the phone must match the kitchen screen—or expo stops trusting pickup tickets.",
     primaryCategorySlug: "ai-basics",
     categorySlugs: ["ai-basics", "phone-orders"],
     readTimeMinutes: 8,
@@ -72,9 +72,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "pay-only-successful-orders",
-    title: "Paying only for successful orders: why it matters",
+    title: "Pay only when pickup hits your pass",
     excerpt:
-      "$0.90 per pickup on your KDS—not per ring or per minute. What counts as a successful order and why fees track tickets on the pass.",
+      "$0.90 per ticket on your kitchen screen—not per ring or per minute. What counts as a billable pickup order.",
     primaryCategorySlug: "pricing",
     categorySlugs: ["pricing"],
     readTimeMinutes: 7,
@@ -83,9 +83,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "setup-roal-20-minutes",
-    title: "How to go live with AI phone orders in about 20 minutes",
+    title: "Go live with AI phone orders in ~20 minutes",
     excerpt:
-      "Scan your menu, place a test call, and watch a ticket hit the pass—about twenty minutes for most single locations.",
+      "Scan your menu, test a pickup call, and watch a ticket hit the pass—about twenty minutes for most shops.",
     primaryCategorySlug: "operations",
     categorySlugs: ["operations"],
     readTimeMinutes: 4,
@@ -94,9 +94,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "rush-hour-staffing-phone-line",
-    title: "Rush-hour staffing: when the phone line needs its own coverage",
+    title: "Who covers the pickup line at rush?",
     excerpt:
-      "At rush the host is not free because the door looks calm. Split phone coverage—human, AI, or hybrid—so pickup still lands on the pass.",
+      "The host is not free when the door looks calm. Split phone coverage so pickup orders still hit the kitchen screen.",
     primaryCategorySlug: "operations",
     categorySlugs: ["operations"],
     readTimeMinutes: 5,
@@ -105,9 +105,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "phone-orders-vs-delivery-apps",
-    title: "Phone orders vs delivery apps: margin, control, and guest loyalty",
+    title: "Phone pickup vs delivery apps",
     excerpt:
-      "Pickup by phone keeps the relationship—and more of the check—in your restaurant.",
+      "Pickup by phone keeps the guest relationship—and more of the check—in your restaurant.",
     primaryCategorySlug: "phone-orders",
     categorySlugs: ["phone-orders"],
     readTimeMinutes: 6,
@@ -116,9 +116,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "when-ai-should-hand-off-to-staff",
-    title: "When your AI should hand off to staff (and how to make it smooth)",
+    title: "When phone AI should hand off to staff",
     excerpt:
-      "Allergies, complaints, and odd requests deserve a person. The handoff should feel warm, not cold.",
+      "Allergies, complaints, and odd pickup requests deserve a person—a warm handoff, not a dead line.",
     primaryCategorySlug: "ai-basics",
     categorySlugs: ["ai-basics", "operations"],
     readTimeMinutes: 5,

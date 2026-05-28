@@ -54,12 +54,15 @@ export function MenuScanner({
   onScanComplete,
   compact,
   menuScanGate,
+  hidePanelHeader,
 }: {
   restaurantId: string;
   onScanComplete?: () => void;
   /** Hide clear-menu and extra chrome for onboarding embed. */
   compact?: boolean;
   menuScanGate?: SerializableGateVerdict | null;
+  /** Parent section supplies the visible title (menu setup page). */
+  hidePanelHeader?: boolean;
 }) {
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
@@ -91,6 +94,31 @@ export function MenuScanner({
     status === "scanning" ||
     status === "committing";
 
+  const notifyImportsChanged = useCallback(() => {
+    if (typeof window === "undefined") return;
+    window.dispatchEvent(
+      new CustomEvent("roal:menu-imports-changed", {
+        detail: { restaurantId },
+      })
+    );
+  }, [restaurantId]);
+
+  const abandonImport = useCallback(async (id: string) => {
+    try {
+      await fetch("/api/scanner/discard", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          restaurant_id: restaurantId,
+          import_id: id,
+        }),
+      });
+    } catch {
+      // non-blocking
+    }
+    notifyImportsChanged();
+  }, [restaurantId, notifyImportsChanged]);
+
   const onFile = useCallback(
     (f: File | null) => {
       if (!f) return;
@@ -112,33 +140,8 @@ export function MenuScanner({
       setReviewMenu(null);
       setReviewHints([]);
     },
-    [restaurantId]
+    [abandonImport]
   );
-
-  function notifyImportsChanged() {
-    if (typeof window === "undefined") return;
-    window.dispatchEvent(
-      new CustomEvent("roal:menu-imports-changed", {
-        detail: { restaurantId },
-      })
-    );
-  }
-
-  async function abandonImport(id: string) {
-    try {
-      await fetch("/api/scanner/discard", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          restaurant_id: restaurantId,
-          import_id: id,
-        }),
-      });
-    } catch {
-      // non-blocking
-    }
-    notifyImportsChanged();
-  }
 
   async function process() {
     if (!file) return;
@@ -276,36 +279,55 @@ export function MenuScanner({
   }
 
   return (
-    <section className="kds-panel glass-card overflow-hidden">
-      <div className="kds-panel__header">
-        <div className="min-w-0 flex-1">
-          <h2 className="kds-panel__title">Menu scanner</h2>
-          <p className="kds-panel__lead">
-            Drop a menu photo. Gemini extracts the menu for review before it
-            is merged into your live menu.
-          </p>
-        </div>
-        {!compact ? (
-          <div className="flex w-full shrink-0 sm:w-auto sm:justify-end">
-            <button
-              type="button"
-              onClick={() => {
-                setClearError(null);
-                setClearOpen(true);
-              }}
-              disabled={isWorking}
-              className="w-full rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2.5 text-xs font-medium text-danger transition-colors hover:bg-danger/[0.08] disabled:opacity-50 sm:w-auto sm:py-1.5"
-            >
-              Clear menu
-            </button>
+    <section className="menu-scanner kds-panel glass-card overflow-hidden">
+      {!hidePanelHeader ? (
+        <div className="kds-panel__header">
+          <div className="min-w-0 flex-1">
+            <h2 className="kds-panel__title">Scan menu photo</h2>
+            <p className="kds-panel__lead">
+              Drop a photo of your printed menu. Gemini reads items and prices—you
+              review, then save to merge into your live menu (update existing,
+              add new). Use Clear menu to start over.
+            </p>
           </div>
-        ) : null}
-      </div>
+          {!compact ? (
+            <div className="flex w-full shrink-0 sm:w-auto sm:justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setClearError(null);
+                  setClearOpen(true);
+                }}
+                disabled={isWorking}
+                className="kds-thumb-btn min-h-11 w-full rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2.5 text-xs font-medium text-danger transition-colors hover:bg-danger/[0.08] disabled:opacity-50 sm:min-h-0 sm:w-auto sm:py-1.5"
+              >
+                Clear menu
+              </button>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+
+      {hidePanelHeader && !compact ? (
+        <div className="flex justify-end border-b border-line px-4 py-2 sm:px-5">
+          <button
+            type="button"
+            onClick={() => {
+              setClearError(null);
+              setClearOpen(true);
+            }}
+            disabled={isWorking}
+            className="kds-thumb-btn min-h-11 rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2 text-xs font-medium text-danger hover:bg-danger/[0.08] disabled:opacity-50 sm:min-h-0"
+          >
+            Clear menu
+          </button>
+        </div>
+      ) : null}
 
       <PlanLimitNotice verdict={menuScanGate} className="mx-4 sm:mx-6" />
 
       <Transition appear show={clearOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={() => !clearPending && setClearOpen(false)}>
+        <Dialog as="div" className="kds-modal-layer" onClose={() => !clearPending && setClearOpen(false)}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-200"
@@ -329,7 +351,7 @@ export function MenuScanner({
                 leaveFrom="opacity-100 translate-y-0 scale-100"
                 leaveTo="opacity-0 translate-y-2 scale-[0.98]"
               >
-                <Dialog.Panel className="glass-card w-full max-w-md p-6 shadow-lg">
+                <Dialog.Panel className="menu-scanner__clear-dialog glass-card w-full max-w-md p-5 shadow-lg sm:p-6">
                   <Dialog.Title className="text-base font-semibold tracking-tight">
                     Clear entire menu?
                   </Dialog.Title>
@@ -340,10 +362,10 @@ export function MenuScanner({
                   {clearError && (
                     <p className="mt-3 text-xs text-danger">{clearError}</p>
                   )}
-                  <div className="mt-6 flex justify-end gap-2">
+                  <div className="menu-scanner__clear-dialog-actions mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                     <button
                       type="button"
-                      className="btn-ghost"
+                      className="btn-ghost min-h-11 w-full sm:min-h-0 sm:w-auto"
                       disabled={clearPending}
                       onClick={() => setClearOpen(false)}
                     >
@@ -351,7 +373,7 @@ export function MenuScanner({
                     </button>
                     <button
                       type="button"
-                      className="rounded-lg border border-danger/40 bg-danger/10 px-4 py-2 text-sm font-semibold text-danger transition-colors hover:bg-danger/15 disabled:opacity-60"
+                      className="min-h-11 w-full rounded-lg border border-danger/40 bg-danger/10 px-4 py-2 text-sm font-semibold text-danger transition-colors hover:bg-danger/15 disabled:opacity-60 sm:min-h-0 sm:w-auto"
                       disabled={clearPending}
                       onClick={() => void clearMenu()}
                     >
@@ -373,11 +395,11 @@ export function MenuScanner({
 
       <div
         className={cn(
-          "grid grid-cols-1 gap-5 p-4 sm:gap-6 sm:p-6",
+          "menu-scanner__layout grid grid-cols-1 gap-5 p-4 sm:gap-6 sm:p-6",
           !reviewMenu && "lg:grid-cols-[1.1fr_1fr]"
         )}
       >
-        <div>
+        <div className="menu-scanner__upload-col min-w-0">
           <label
             htmlFor="menu-image"
             onDragOver={(e) => {
@@ -392,7 +414,7 @@ export function MenuScanner({
               if (f) onFile(f);
             }}
             className={cn(
-              "group relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed transition-all max-sm:aspect-[3/4] sm:aspect-[4/3]",
+              "menu-scanner__upload group relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed transition-all max-sm:min-h-[220px] max-sm:aspect-[3/4] sm:aspect-[4/3]",
               isDragging
                 ? "border-accent bg-accent-soft/80"
                 : "border-line-strong bg-elev hover:border-line-strong hover:bg-card",
@@ -440,17 +462,17 @@ export function MenuScanner({
             )}
           </label>
 
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="menu-scanner__actions mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0 text-xs text-muted sm:flex-1">
               {file ? (
-                <span className="block truncate">
+                <span className="block [overflow-wrap:anywhere] sm:truncate">
                   {file.name} · {(file.size / 1024).toFixed(0)} KB
                 </span>
               ) : (
                 "No file selected"
               )}
             </div>
-            <div className="flex w-full flex-col-reverse gap-2 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
               {file && !isWorking && status !== "review" && (
                 <button type="button" onClick={reset} className="btn-ghost min-h-11 w-full sm:min-h-0 sm:w-auto">
                   Reset
@@ -486,15 +508,20 @@ export function MenuScanner({
           </div>
         </div>
 
-        <div className={cn("flex flex-col", reviewMenu && "lg:max-w-sm")}>
-          <div className="rounded-xl border border-line bg-elev p-5 shadow-sm">
+        <div
+          className={cn(
+            "menu-scanner__status-col flex min-w-0 flex-col",
+            reviewMenu && "lg:max-w-sm"
+          )}
+        >
+          <div className="menu-scanner__pipeline rounded-xl border border-line bg-elev p-4 shadow-sm sm:p-5">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
                 Pipeline
               </h3>
               <span
                 className={cn(
-                  "text-[11px] font-medium uppercase tracking-wider",
+                  "text-caption font-medium uppercase tracking-wider",
                   status === "done" && "text-success",
                   status === "error" && "text-danger",
                   isWorking && "text-accent",
@@ -565,13 +592,13 @@ export function MenuScanner({
             {error && (
               <div
                 role="alert"
-                className="mt-4 rounded-lg border border-danger/30 bg-danger/[0.06] p-3 text-xs text-danger"
+                className="menu-scanner__error mt-4 rounded-lg border border-danger/30 bg-danger/[0.06] p-3 text-sm text-danger"
               >
-                <p>{error}</p>
+                <p className="[overflow-wrap:anywhere]">{error}</p>
                 {importId && status === "error" ? (
                   <button
                     type="button"
-                    className="btn-ghost mt-2 min-h-9 text-[11px]"
+                    className="btn-ghost kds-thumb-btn mt-3 min-h-11 w-full text-sm sm:mt-2 sm:min-h-9 sm:w-auto"
                     disabled={isWorking}
                     onClick={() => void discardReview()}
                   >
@@ -579,7 +606,7 @@ export function MenuScanner({
                   </button>
                 ) : null}
                 {status === "error" && !reviewMenu ? (
-                  <p className="mt-2 text-[11px] text-danger/80">
+                  <p className="mt-2 text-caption text-danger/80">
                     Try a sharper photo with the full menu visible, or use Reset to
                     choose another file.
                   </p>
@@ -588,11 +615,28 @@ export function MenuScanner({
             )}
           </div>
 
-          <div className="mt-4 rounded-xl border border-line bg-elev p-5 shadow-sm">
+          <details className="menu-scanner__import-flow mt-4 rounded-xl border border-line bg-elev shadow-sm sm:hidden">
+            <summary className="cursor-pointer px-4 py-3 text-xs font-semibold uppercase tracking-wider text-muted">
+              How import works
+            </summary>
+            <ul className="space-y-2 px-4 pb-4 text-sm text-muted">
+              <li className="flex gap-2">
+                <BulletDot /> Gemini extracts structure with confidence hints.
+              </li>
+              <li className="flex gap-2">
+                <BulletDot /> You review and fix flagged fields before save.
+              </li>
+              <li className="flex gap-2">
+                <BulletDot /> Commit merges in one Postgres transaction.
+              </li>
+            </ul>
+          </details>
+
+          <div className="menu-scanner__import-flow-desktop mt-4 hidden rounded-xl border border-line bg-elev p-5 shadow-sm sm:block">
             <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
               Import flow
             </h3>
-            <ul className="mt-3 space-y-2 text-[13px] text-muted">
+            <ul className="mt-3 space-y-2 text-sm text-muted">
               <li className="flex gap-2">
                 <BulletDot /> Gemini extracts structure with confidence hints.
               </li>
@@ -607,7 +651,7 @@ export function MenuScanner({
         </div>
 
         {reviewMenu ? (
-          <div className="lg:col-span-2">
+          <div className="menu-scanner__review min-w-0 lg:col-span-2">
             <MenuImportReview
               menu={reviewMenu}
               pending={status === "committing"}
@@ -666,10 +710,10 @@ function StepDot({
 function StatCell({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-lg border border-line bg-card p-3 shadow-sm">
-      <div className="text-[10px] font-medium uppercase tracking-wider text-subtle">
+      <div className="text-micro font-medium uppercase tracking-wider text-subtle">
         {label}
       </div>
-      <div className="mt-1 font-mono-tabular text-xl font-semibold text-ink">
+      <div className="type-numeric mt-1 text-ink">
         {value}
       </div>
     </div>

@@ -9,7 +9,7 @@ export function SignupOnboardingAside({ onboardingPath }: Props) {
 
   return (
     <aside
-      className="public-signup-aside public-signup-aside__card min-w-0"
+      className="public-signup-aside public-signup-entry__aside public-signup-aside__card min-w-0"
       aria-labelledby="signup-entry-heading"
     >
       <p className="public-eyebrow">{entry.eyebrow}</p>
@@ -18,15 +18,15 @@ export function SignupOnboardingAside({ onboardingPath }: Props) {
       </h2>
       <p className="public-signup-aside__lead">{entry.description}</p>
 
-      <ol className="public-signup-steps">
+      <ol className="public-auth-beats" role="list">
         {steps.map((step, index) => (
-          <li key={step.title} className="public-signup-steps__item">
-            <span className="public-signup-steps__num" aria-hidden>
+          <li key={step.title} className="public-auth-beats__item" role="listitem">
+            <span className="public-auth-beats__num" aria-hidden>
               {index + 1}
             </span>
             <div className="min-w-0">
-              <h3 className="public-signup-steps__title">{step.title}</h3>
-              <p className="public-signup-steps__body">{step.body}</p>
+              <h3 className="public-auth-beats__title">{step.title}</h3>
+              <p className="public-auth-beats__tag">{step.tag}</p>
             </div>
           </li>
         ))}

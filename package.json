@@ -26,6 +26,8 @@
     "qa:auth-security": "npx tsx --env-file=.env --env-file=.env.local scripts/qa-auth-security-live.ts",
     "qa:deploy-smoke": "npx tsx --env-file=.env --env-file=.env.local scripts/qa-deploy-smoke-live.ts",
     "qa:responsive-sweep": "node scripts/qa-responsive-sweep.mjs",
+    "qa:public-responsive-sweep": "node scripts/qa-public-responsive-sweep.mjs",
+    "qa:dashboard-responsive-sweep": "node --env-file=.env --env-file=.env.local scripts/qa-dashboard-responsive-sweep.mjs",
     "qa:a11y-perf": "node scripts/qa-a11y-perf-live.mjs",
     "qa:error-states": "node scripts/qa-error-states-live.mjs",
     "qa:owner-journey": "node --env-file=.env --env-file=.env.local scripts/qa-owner-journey-live.mjs",

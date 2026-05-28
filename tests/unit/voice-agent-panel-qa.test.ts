@@ -22,9 +22,9 @@ describe("voice agent panel (launch 15)", () => {
     );
     expect(panel).toContain("Connect is disabled until required server secrets");
     expect(panel).toContain('role="alert"');
-    expect(panel).toContain("voice test harness");
+    expect(panel).toContain("Advanced diagnostics");
     expect(panel).toContain("Connect & sync");
-    expect(panel).toContain("Re-sync");
+    expect(panel).toContain("Sync now");
   });
 
   it("sanitizes API key patterns for UI display", () => {

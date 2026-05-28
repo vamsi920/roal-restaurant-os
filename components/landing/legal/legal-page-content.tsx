@@ -18,13 +18,13 @@ type Props = {
 
 export function LegalPageContent({ copy, titleId }: Props) {
   return (
-    <div className="public-legal-page min-w-0">
+    <div className="public-legal-page min-w-0 overflow-x-clip">
       <div className="public-legal-hero">
         <div className="public-legal-hero__wash" aria-hidden />
         <section className="py-0" aria-labelledby={titleId}>
           <div className="landing-wrap landing-wrap-tight relative z-[1] min-w-0 py-10 sm:py-12">
             <p className="public-legal-hero__eyebrow">{copy.hero.eyebrow}</p>
-            <h1 id={titleId} className="public-legal-hero__title">
+            <h1 id={titleId} className="public-legal-hero__title scroll-mt-28">
               {copy.hero.title}
             </h1>
             <p className="public-legal-hero__deck">{copy.hero.description}</p>
@@ -42,14 +42,28 @@ export function LegalPageContent({ copy, titleId }: Props) {
           <p className={cn("text-pretty text-xs text-muted", copy.draftNotice && "mt-4")}>
             {copy.updated}
           </p>
-          <div className="public-legal-panel__body">
+          <nav className="public-page-jump-nav" aria-label="On this page">
+            <ul className="public-page-jump-nav__list">
+              <li>
+                <a href="#legal-policy-body" className="public-page-jump-nav__link">
+                  Policy text
+                </a>
+              </li>
+              <li>
+                <a href="#legal-contact" className="public-page-jump-nav__link">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div id="legal-policy-body" className="public-legal-panel__body">
             {copy.paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 40)} className="public-legal-panel__paragraph">
                 {paragraph}
               </p>
             ))}
           </div>
-          <p className="public-legal-panel__contact">
+          <p id="legal-contact" className="public-legal-panel__contact">
             {copy.contactLead}{" "}
             <a
               href={`mailto:${LEGAL_CONTACT_EMAIL}`}

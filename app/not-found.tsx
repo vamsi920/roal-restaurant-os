@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <MarketingShell>
       <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-4 py-16 text-center">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
+        <p className="type-eyebrow text-accent">
           404
         </p>
         <h1 className="mt-3 font-display text-3xl font-semibold text-ink">

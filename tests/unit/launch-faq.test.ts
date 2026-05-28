@@ -9,30 +9,30 @@ import {
 describe("launch FAQ", () => {
   it("exports ordered slices per page", () => {
     expect(HOME_FAQ.items).toHaveLength(5);
-    expect(PRICING_FAQ).toHaveLength(5);
-    expect(SECURITY_FAQ).toHaveLength(6);
+    expect(PRICING_FAQ).toHaveLength(4);
+    expect(SECURITY_FAQ).toHaveLength(4);
   });
 
-  it("covers homepage topics in order", () => {
+  it("covers homepage buyer topics in order (prompt 33)", () => {
     expect(HOME_FAQ.items.map((i) => i.id)).toEqual([
-      "home-pricing-rate",
-      "setup-time",
-      "menu-accuracy",
-      "human-handoff",
-      "demo-onboarding",
+      "home-what-calls",
+      "home-menu-setup",
+      "home-natural-voice",
+      "home-completed-order",
+      "home-how-to-start",
     ]);
     expect(launchFaqItemsFor("pricing").map((i) => i.id)).toEqual([
       "pricing-cost",
       "successful-order",
       "rings-not-billed",
       "per-minute",
-      "setup-cost",
     ]);
   });
 
-  it("keeps home answers short", () => {
+  it("keeps home questions and answers short", () => {
     for (const item of HOME_FAQ.items) {
-      expect(item.answer.length).toBeLessThanOrEqual(160);
+      expect(item.question.length).toBeLessThanOrEqual(48);
+      expect(item.answer.length).toBeLessThanOrEqual(120);
     }
   });
 
@@ -47,20 +47,26 @@ describe("launch FAQ", () => {
   });
 
   it("aligns successful-order wording with pricing FAQ", () => {
-    const successful = PRICING_FAQ.find((i) => i.q.startsWith("What counts"));
-    expect(successful?.a).toMatch(/kitchen screen|KDS/i);
-    expect(successful?.a.toLowerCase()).toContain("name and phone");
+    const homeOrder = HOME_FAQ.items.find((i) => i.id === "home-completed-order");
+    const pricing = PRICING_FAQ.find((i) => i.q.includes("counts as an order"));
+    expect(homeOrder?.answer.toLowerCase()).toContain("kitchen screen");
+    expect(pricing?.a).toMatch(/kitchen screen|KDS/i);
   });
 
-  it("keeps pricing FAQ answers short and plain", () => {
+  it("keeps pricing FAQ questions and answers short and plain", () => {
     for (const item of PRICING_FAQ) {
-      expect(item.a.length).toBeLessThanOrEqual(100);
+      expect(item.q.length).toBeLessThanOrEqual(40);
+      expect(item.a.length).toBeLessThanOrEqual(90);
       expect(item.a).not.toMatch(/enterprise|integration/i);
     }
   });
 
-  it("links demo onboarding to demo page", () => {
-    const demo = HOME_FAQ.items.find((i) => i.id === "demo-onboarding");
-    expect(demo?.link?.href).toBe("/demo");
+  it("links voice and start entries to demo and signup", () => {
+    expect(HOME_FAQ.items.find((i) => i.id === "home-natural-voice")?.link?.href).toBe(
+      "/demo"
+    );
+    expect(HOME_FAQ.items.find((i) => i.id === "home-how-to-start")?.link?.href).toBe(
+      "/signup?next=/dashboard/restaurants"
+    );
   });
 });

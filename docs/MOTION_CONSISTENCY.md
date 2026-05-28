@@ -1,4 +1,4 @@
-# Motion consistency (prompt 83)
+# Motion consistency (prompt 36 / 83)
 
 Public surfaces use **light CSS motion** only—no scroll-choreography or GSAP on launch routes.
 
@@ -8,7 +8,8 @@ Public surfaces use **light CSS motion** only—no scroll-choreography or GSAP o
 |---------|--------|----------------|
 | **View reveal** | `.public-reveal`, `.public-reveal-item` in hero, AEO, CTA band, FAQ, metrics | `animation: none` |
 | **Glass hover** | `.glass-card`, `.home-glass-panel`, blog cards, trust tiles | `transform: none`; color/border only |
-| **Button lift** | `.public-btn-primary`, nav CTA, home buttons | `transform: none` (existing + consolidated) |
+| **Button lift** | `.public-btn-primary`, nav CTA, home buttons | `transform: none`; hover lift only `@media (hover: hover)` |
+| **Story headers** | `#how`, `#proof`, `#pay`, FAQ | `.public-reveal` / stagger via view timeline |
 
 ## Implementation
 

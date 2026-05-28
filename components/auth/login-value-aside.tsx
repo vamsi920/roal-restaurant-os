@@ -5,7 +5,7 @@ export function LoginValueAside() {
 
   return (
     <aside
-      className="public-signup-aside public-signup-aside__card min-w-0"
+      className="public-signup-aside public-signup-entry__aside public-login-entry__aside public-signup-aside__card min-w-0"
       aria-labelledby="login-entry-heading"
     >
       <p className="public-eyebrow">{entry.eyebrow}</p>
@@ -14,11 +14,16 @@ export function LoginValueAside() {
       </h2>
       <p className="public-signup-aside__lead">{entry.description}</p>
 
-      <ul className="public-login-highlights">
-        {highlights.map((item) => (
-          <li key={item.title} className="public-login-highlights__item">
-            <h3 className="public-login-highlights__title">{item.title}</h3>
-            <p className="public-login-highlights__body">{item.body}</p>
+      <ul className="public-auth-beats" role="list">
+        {highlights.map((item, index) => (
+          <li key={item.title} className="public-auth-beats__item" role="listitem">
+            <span className="public-auth-beats__num" aria-hidden>
+              {index + 1}
+            </span>
+            <div className="min-w-0">
+              <h3 className="public-auth-beats__title">{item.title}</h3>
+              <p className="public-auth-beats__tag">{item.tag}</p>
+            </div>
           </li>
         ))}
       </ul>

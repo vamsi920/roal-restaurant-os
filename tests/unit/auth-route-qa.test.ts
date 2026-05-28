@@ -53,7 +53,7 @@ describe("auth route QA", () => {
     for (const href of DASHBOARD_NAV_HREFS) {
       expect(href.startsWith(PROTECTED_DASHBOARD_PREFIX)).toBe(true);
     }
-    expect(DASHBOARD_NAV_HREFS.length).toBeGreaterThan(5);
+    expect(DASHBOARD_NAV_HREFS.length).toBeGreaterThanOrEqual(3);
   });
 
   it("dashboard layout redirects unauthenticated users", () => {

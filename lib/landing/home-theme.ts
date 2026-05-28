@@ -1,3 +1,4 @@
+import { PRICING_HERO_SIGNAL, PRICING_PILL_PRICE } from "@/lib/landing/pricing-core";
 import { PUBLIC_CTA } from "@/lib/landing/public-cta";
 import {
   PUBLIC_NAV_LINKS,
@@ -13,17 +14,29 @@ export const HOME_NAV_SIGNUP = PUBLIC_NAV_SIGNUP;
 export const HOME_NAV_LOGIN = PUBLIC_NAV_LOGIN;
 
 export const HOME_HERO = {
-  title: "Never miss a rush-hour call again.",
-  lead: "We answer pickup calls from your live menu—with natural voice—and ticket your kitchen.",
+  title: "ROAL answers phone calls and takes pickup orders.",
+  lead: "In the customer's language, straight to your kitchen.",
 } as const;
 
+/** FAQ / teasers: compact pricing shorthand (full rate on /pricing). */
 export const HOME_PRICING_PILL = {
   href: "/pricing",
-  line: "Pay only when an order lands",
-  price: "$0.90/order",
+  label: PRICING_PILL_PRICE,
 } as const;
 
-/** Hero + home CTA band: demo call primary, book demo mailto secondary. */
+/** Hero only: high-visibility completed-order pricing line. */
+export const HOME_HERO_PRICING_PILL = {
+  href: "/pricing",
+  label: PRICING_HERO_SIGNAL,
+} as const;
+
+/** Hero: demo primary, sign-up secondary (two actions only). */
+export const HOME_HERO_CTA = {
+  primary: PUBLIC_CTA.hearDemo,
+  secondary: PUBLIC_CTA.signUpOnboarding,
+} as const;
+
+/** Home CTA band: demo primary, book demo mailto secondary. */
 export const HOME_CTA = {
   primary: PUBLIC_CTA.hearDemo,
   secondary: PUBLIC_CTA.bookDemoMailto,

@@ -4,8 +4,8 @@ import { METRICS_EXAMPLE_DISCLAIMER } from "@/lib/landing/metrics-safety";
 
 export const HOME_SAVINGS = {
   eyebrow: "Example math",
-  title: "What a slow night on the phone can cost",
-  lead: "A simple illustration—swap in your rush-hour numbers.",
+  title: "What missed rings can cost",
+  lead: "Plug in your rush-hour numbers.",
   rows: [
     { label: "Calls that ring out (example)", value: "8", unit: "per week" },
     { label: "Would have ordered (example)", value: "50%", unit: "of those" },

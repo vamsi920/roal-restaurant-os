@@ -1,4 +1,4 @@
-import { ORDER_STATUS_LABELS, normalizeOrderStatus } from "@/lib/order-status";
+import { normalizeOrderStatus } from "@/lib/order-status";
 import type { DraftOrderRow } from "@/lib/types";
 
 export type StatusHistoryEntry = {
@@ -42,11 +42,11 @@ export function buildOrderStatusHistory(
     >;
     label: string;
   }[] = [
-    { key: "accepted_at", label: ORDER_STATUS_LABELS.accepted },
-    { key: "in_progress_at", label: ORDER_STATUS_LABELS.in_progress },
-    { key: "ready_at", label: ORDER_STATUS_LABELS.ready },
-    { key: "completed_at", label: ORDER_STATUS_LABELS.completed },
-    { key: "canceled_at", label: ORDER_STATUS_LABELS.canceled },
+    { key: "accepted_at", label: "Accepted" },
+    { key: "in_progress_at", label: "Cooking" },
+    { key: "ready_at", label: "Ready for pickup" },
+    { key: "completed_at", label: "Picked up" },
+    { key: "canceled_at", label: "Canceled" },
   ];
 
   for (const step of steps) {
@@ -68,7 +68,7 @@ export function buildOrderStatusHistory(
     order.updated_at !== order.created_at
   ) {
     entries.push({
-      label: ORDER_STATUS_LABELS.new,
+      label: "New order",
       iso: order.updated_at,
       at: formatHistoryTime(order.updated_at),
     });
@@ -84,7 +84,7 @@ export function buildReceiptStatusHistory(
 ): StatusHistoryEntry[] {
   return [
     {
-      label: "Finalized",
+      label: "Order completed",
       iso: createdAt,
       at: formatHistoryTime(createdAt),
     },

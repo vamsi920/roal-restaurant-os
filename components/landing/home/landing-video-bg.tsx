@@ -18,9 +18,14 @@ function preferGradientOnlyBackground(): boolean {
 export function LandingVideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [gradientOnly, setGradientOnly] = useState(true);
+  const [videoFailed, setVideoFailed] = useState(false);
 
   useLayoutEffect(() => {
-    const update = () => setGradientOnly(preferGradientOnlyBackground());
+    const update = () => {
+      const only = preferGradientOnlyBackground();
+      setGradientOnly(only);
+      if (only) setVideoFailed(false);
+    };
     update();
 
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -35,21 +40,40 @@ export function LandingVideoBackground() {
     };
   }, []);
 
-  const hasVideo = !gradientOnly;
+  const hasVideo = !gradientOnly && !videoFailed;
 
   useLayoutEffect(() => {
     if (!hasVideo) return;
     const el = videoRef.current;
     if (!el) return;
+
+    const onError = () => setVideoFailed(true);
+    el.addEventListener("error", onError);
+
     void el.play().catch(() => {
-      /* Autoplay may be blocked; muted inline video is still shown on first frame */
+      /* Autoplay may be blocked; muted inline video still shows first frame */
     });
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        el.pause();
+        return;
+      }
+      void el.play().catch(() => {});
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      el.removeEventListener("error", onError);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, [hasVideo]);
 
   return (
     <div
       className={cn("home-video-layer", hasVideo && "home-video-layer--has-video")}
       aria-hidden
+      data-public-hero-bg={hasVideo ? "video" : "gradient"}
     >
       {hasVideo ? (
         <video

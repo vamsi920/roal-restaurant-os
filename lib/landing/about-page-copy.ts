@@ -1,4 +1,8 @@
 import { CONTACT_PILOT_EMAIL } from "@/lib/landing/contact-mailto";
+import {
+  PRICING_NO_ORDER_LINE,
+  PRICING_RATE_LINE,
+} from "@/lib/landing/pricing-core";
 import { PUBLIC_CTA, PUBLIC_CTA_PAIR } from "@/lib/landing/public-cta";
 
 export const ABOUT_CTA = {
@@ -8,102 +12,60 @@ export const ABOUT_CTA = {
 
 export const ABOUT_PAGE_COPY = {
   seo: {
-    title: "About ROAL — AI Phone Orders for Independent Restaurants",
-    description:
-      "ROAL helps restaurants answer rush-hour pickup calls from a live menu, send kitchen tickets, and pay $0.90 per successful order—built for independents, not call centers.",
+    title: "About ROAL — Pickup calls when rush hits",
+    description: "Missed rush-hour calls, live menu on the line, tickets on your pass.",
   },
   aeo: {
     titleId: "about-what-is-roal",
     question: "What is ROAL?",
     answer:
-      "ROAL is a restaurant phone ordering product that answers pickup calls using your live menu, sends tickets to your kitchen display, and charges around successful orders—not per minute or per ring.",
+      "Pickup phone orders for independents—live menu, kitchen tickets, success-based billing.",
     detail:
-      "We built it for independent restaurants that lose pickup demand when the dining room peaks—not for generic call centers or scripted phone trees.",
+      "Built so you do not miss orders when the rush hits. Your team stays on the floor.",
   },
   hero: {
     eyebrow: "About",
-    title: "We built ROAL so the phone line stops losing pickup orders.",
+    title: "When the rush hits, pickup calls still get answered.",
     description:
-      "Phone ordering for independent restaurants: answer rush-hour rings from your live menu, ticket the kitchen while the guest is still on the line, and pay only when the order hits your pass—not per minute or per ring.",
+      "Busy restaurants miss rings on the floor. ROAL answers your line with your live menu and takes pickup orders to your kitchen screen.",
   },
-  problem: {
-    titleId: "about-problem-heading",
-    eyebrow: "The problem",
-    title: "Missed calls are a timing problem—not a people problem",
-    description:
-      "Between seating, expo, and the pass, the phone becomes second-class exactly when pickup callers are ready to buy.",
-    bullets: [
-      "Call volume spikes when hosts and managers are already underwater.",
-      "Voicemail and “call back after rush” rarely place tonight’s order.",
-      "Pickup guests move on—margin and loyalty go to whoever answered.",
-    ],
+  pillars: {
+    titleId: "about-pillars-heading",
+    eyebrow: "Problem & fix",
+    title: "Missed calls, then ROAL on the line",
+    lead: "Four beats—pain, answer, ticket, and price.",
+    items: [
+      {
+        id: "missed-calls",
+        title: "Missed calls",
+        body: "Team on the floor—voicemail picks up and guests order elsewhere.",
+      },
+      {
+        id: "roal-answers",
+        title: "ROAL answers",
+        body: "Your line rings; ROAL takes pickup orders from tonight’s live menu.",
+      },
+      {
+        id: "kitchen-ticket",
+        title: "Kitchen ticket",
+        body: "Name, phone, and items confirmed while the guest is still on the call.",
+      },
+      {
+        id: "fair-billing",
+        title: "Pay per order",
+        body: `${PRICING_RATE_LINE}. No order—no charge.`,
+      },
+    ] as const,
     blogLink: {
       href: "/blog/why-restaurants-miss-calls-dinner-rush",
       label: "Why restaurants miss calls during rush",
     },
   },
-  whyRoal: {
-    titleId: "about-why-roal-heading",
-    eyebrow: "Why we exist",
-    title: "Coverage, menu truth, kitchen tickets, and fair billing—together",
-    description: "The line answered with the same menu your pass runs—not a phone tree or last season’s PDF.",
-    steps: [
-      {
-        id: "answer",
-        title: "Answer the line",
-        body: "Natural conversation on forwarded calls—not press 1 for pickup.",
-      },
-      {
-        id: "menu",
-        title: "Live menu",
-        body: "Items, modifiers, and 86s your kitchen actually uses tonight.",
-      },
-      {
-        id: "ticket",
-        title: "Ticket the pass",
-        body: "Name, phone, and cart on your kitchen screen before the guest hangs up.",
-      },
-      {
-        id: "bill",
-        title: "Bill for success",
-        body: "$0.90 per successful pickup for many pilots—not per minute of talk.",
-      },
-    ],
-  },
-  companyStory: {
-    titleId: "about-company-story-heading",
-    eyebrow: "Our story",
-    title: "Built for independent restaurants—not a generic call center",
-    lead: "Pickup loyalty still lives on the phone—but the dining room wins attention at rush. We build for that gap, not generic call centers.",
-    paragraphs: [
-      "We work with one- and two-location operators who know their modifiers cold. Our job is to cover the line when your team is seating and expoing—not replace your hosts or your voice. Judge us on demo calls and test tickets, not stock photos.",
-    ],
-    principles: [
-      {
-        id: "accuracy",
-        title: "Accuracy on the pass",
-        body: "Calls, menu, and kitchen tickets must describe the same dish. If expo cannot trust the ticket, the phone channel dies.",
-      },
-      {
-        id: "automation",
-        title: "Honest automation",
-        body: "Callers hear that the line is automated. ROAL is efficient and clear—not pretending to be a specific person on your roster.",
-      },
-      {
-        id: "handoff",
-        title: "Staff handoff when it matters",
-        body: "AI takes the routine cart; your team takes judgment—allergies, complaints, catering scale, and policy calls.",
-      },
-    ],
-    footnote:
-      "If you are deciding whether ROAL fits your restaurant, judge us on demo calls and test tickets—not on a fabricated origin story.",
-  },
   values: {
     titleId: "about-values-heading",
     eyebrow: "Values",
     title: "Three values we build around",
-    description:
-      "Every product decision on ROAL should trace back to one of these—especially during rush hour.",
+    description: "Every product decision on ROAL should trace back to one of these—especially during rush hour.",
     items: [
       {
         id: "answer-guest",
@@ -126,27 +88,12 @@ export const ABOUT_PAGE_COPY = {
       {
         id: "charge-success",
         title: "Charge only for successful orders",
-        body: "You pay when a real guest confirms on the line and the pickup finalizes on your pass—hang-ups, wrong numbers, and menu tests are not the unit on the bill.",
+        body: "$0.90 per successful order. If it does not become an order, you do not pay.",
         link: {
           href: "/blog/pay-only-successful-orders",
           label: "Paying only for successful orders",
         },
       },
-    ],
-  },
-  promise: {
-    titleId: "about-promise-heading",
-    eyebrow: "Our promise",
-    title: "What we stand behind—and what we do not",
-    doItems: [
-      "Answers grounded in your live menu and tickets your line can cook.",
-      "Clear disclosure that the line is automated, with warm handoff to staff.",
-      "Success-based pilot terms in writing before live guest traffic.",
-    ],
-    dontItems: [
-      "Replacing in-person hospitality or every catering negotiation.",
-      "Implying the agent never errs without menu upkeep and test calls.",
-      "Fabricated ROI or national “average loss” statistics.",
     ],
   },
   resources: {
@@ -163,10 +110,9 @@ export const ABOUT_PAGE_COPY = {
   close: {
     titleId: "about-cta-heading",
     eyebrow: "Next step",
-    title: "Hear the agent, then book a walkthrough",
-    description:
-      "Start with a sample pickup call on /demo—then email us to book a live demo with your menu and rush-hour volume.",
-    mailtoNote: `Book a demo opens your email to ${CONTACT_PILOT_EMAIL} with a short template—we respond with times, not a call center queue.`,
+    title: "Hear a demo call",
+    description: "Hear a demo call or book a short walkthrough.",
+    mailtoNote: `Email ${CONTACT_PILOT_EMAIL} to book.`,
     ctas: ABOUT_CTA,
   },
 } as const;

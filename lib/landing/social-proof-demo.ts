@@ -1,54 +1,39 @@
-import { METRICS_PILOT_DISCLAIMER } from "@/lib/landing/metrics-safety";
+import { ILLUSTRATIVE_PROCESS_NOTE } from "@/lib/landing/metrics-safety";
 
-/** Social proof placeholders — pilot metric categories only, no fake logos or invented %. */
+/** Pilot partner framing — capabilities we discuss in pilots, not published KPIs. */
 
-export type PilotMetricId =
-  | "missed-calls-recovered"
-  | "confirmed-orders"
-  | "staff-interruptions"
-  | "order-accuracy";
+export type PilotCapabilityId = "line-coverage" | "order-flow" | "kitchen-handoff";
 
-export type PilotMetric = {
-  id: PilotMetricId;
+export type PilotCapability = {
+  id: PilotCapabilityId;
   title: string;
   body: string;
-  unit: string;
 };
 
 export const SOCIAL_PROOF_DEMO = {
-  eyebrow: "Pilot partners",
-  title: "What we measure with you—not made-up logos",
-  lead: "Early independents are running guided pilots. Instead of stock testimonials, we track a short list of line-level metrics and review them with your team before and after go-live.",
-  metrics: [
+  eyebrow: "Pilot conversations",
+  title: "What we review with you—not stock logos",
+  lead: "Guided pilots focus on how your line, menu, and kitchen screen work together—we do not publish customer counts or savings percentages.",
+  capabilities: [
     {
-      id: "missed-calls-recovered",
-      title: "Missed calls recovered",
-      body: "Rings we track during pilot that used to go to voicemail but end with a confirmed cart after ROAL answers.",
-      unit: "calls / rush week",
+      id: "line-coverage",
+      title: "Line coverage plan",
+      body: "Which rings forward to ROAL and when staff still pick up.",
     },
     {
-      id: "confirmed-orders",
-      title: "Confirmed orders",
-      body: "Pickup tickets we count during pilot with real name and phone—not abandoned drafts or hang-ups.",
-      unit: "orders / week",
+      id: "order-flow",
+      title: "Order flow on calls",
+      body: "How guests confirm pickup with name, phone, and items.",
     },
     {
-      id: "staff-interruptions",
-      title: "Staff interruptions reduced",
-      body: "How often expo or counter stops plating to answer—we track the pattern during pilot, not a fixed % for every shop.",
-      unit: "interruptions / shift",
+      id: "kitchen-handoff",
+      title: "Kitchen handoff",
+      body: "How confirmed tickets land on the screen your team uses.",
     },
-    {
-      id: "order-accuracy",
-      title: "Order accuracy reviews",
-      body: "Items and modifiers compared to what the guest asked for—your team flags fixes; we do not publish a universal accuracy percentage.",
-      unit: "reviewed on pilot calls",
-    },
-  ] satisfies PilotMetric[],
-  placeholderLabel: "Your baseline → pilot target (example)",
-  honesty: METRICS_PILOT_DISCLAIMER,
+  ] satisfies PilotCapability[],
+  honesty: ILLUSTRATIVE_PROCESS_NOTE,
   quotePlaceholder: {
     label: "Operator note (optional during pilot)",
-    hint: "We will add a short quote from your team when you are ready—never a stock testimonial.",
+    hint: "We add a short quote when your team is ready—never a stock testimonial.",
   },
 } as const;

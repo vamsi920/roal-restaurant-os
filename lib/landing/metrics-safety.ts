@@ -8,7 +8,11 @@ export const METRICS_EXAMPLE_DISCLAIMER =
 
 /** Footer under homepage / social proof metric strips. */
 export const METRICS_PILOT_DISCLAIMER =
-  "We track these with you during pilot. An example month is reviewed before and after go-live—not a guarantee for every location.";
+  "Pilot metrics we track with you—not industry stats, quotes, or guarantees.";
+
+/** Homepage capability strip — no verified production proof claims. */
+export const ILLUSTRATIVE_PROCESS_NOTE =
+  "Illustrative product flows on this site—not verified customer counts, orders, revenue, or savings.";
 
 export const ILLUSTRATIVE_DEMO_LABEL = "Illustrative demo";
 

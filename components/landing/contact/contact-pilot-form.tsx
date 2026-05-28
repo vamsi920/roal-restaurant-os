@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { useId, useState, type FormEvent } from "react";
 import { PublicFormField } from "@/components/landing/public";
-import { CONTACT_PAGE_COPY } from "@/lib/landing/contact-page-copy";
+import { CONTACT_PAGE_COPY, CONTACT_PILOT_EMAIL } from "@/lib/landing/contact-page-copy";
 import {
-  CONTACT_PILOT_EMAIL,
   buildContactFormMailto,
   buildPilotMailto,
   contactFormCanSubmit,
@@ -14,13 +13,11 @@ import {
 type FormState = {
   restaurant: string;
   email: string;
-  rushNotes: string;
 };
 
 const INITIAL: FormState = {
   restaurant: "",
   email: "",
-  rushNotes: "",
 };
 
 export function ContactPilotForm() {
@@ -74,7 +71,7 @@ export function ContactPilotForm() {
 
       <p className="public-form-notice public-contact-form__notice">{form.staticNotice}</p>
 
-      <div className="public-form-fields">
+      <div className="public-form-fields public-contact-form__fields">
         <PublicFormField
           id="contact-restaurant"
           name="restaurant"
@@ -101,15 +98,6 @@ export function ContactPilotForm() {
           invalid={status === "error" && !values.email.trim()}
           describedBy={showError ? errorId : undefined}
         />
-        <PublicFormField
-          id="contact-rush"
-          name="rushNotes"
-          label={fields.rushNotes.label}
-          as="textarea"
-          value={values.rushNotes}
-          onChange={(v) => update("rushNotes", v)}
-          placeholder={fields.rushNotes.placeholder}
-        />
       </div>
 
       {showError ? (
@@ -118,7 +106,10 @@ export function ContactPilotForm() {
         </p>
       ) : null}
 
-      <button type="submit" className="public-btn-primary public-form-submit w-full sm:w-auto">
+      <button
+        type="submit"
+        className="public-btn-primary public-form-submit public-contact-form__submit w-full"
+      >
         {form.submitLabel}
       </button>
 
@@ -130,14 +121,10 @@ export function ContactPilotForm() {
       >
         {status === "mailto" ? (
           <>
-            If your email app did not open, write to{" "}
+            If email did not open, write to{" "}
             <a href={buildPilotMailto()} className="public-blog-link font-medium">
               {CONTACT_PILOT_EMAIL}
-            </a>{" "}
-            or{" "}
-            <Link href="/signup?next=/dashboard/restaurants" className="public-blog-link font-medium">
-              start setup
-            </Link>
+            </a>
             .
           </>
         ) : status === "error" ? (
@@ -145,18 +132,18 @@ export function ContactPilotForm() {
             Or email{" "}
             <a href={buildPilotMailto()} className="public-blog-link font-medium">
               {CONTACT_PILOT_EMAIL}
-            </a>{" "}
-            directly.
+            </a>
+            .
           </>
         ) : (
           <>
-            Or{" "}
+            Opens your email to {CONTACT_PILOT_EMAIL}.{" "}
             <Link href="/demo" className="public-blog-link font-medium">
-              see the sample demo
+              Sample demo
             </Link>
             {" · "}
-            <Link href="/signup?next=/dashboard/restaurants" className="public-blog-link font-medium">
-              start self-serve setup
+            <Link href="/signup?next=/dashboard/onboarding" className="public-blog-link font-medium">
+              Self-serve setup
             </Link>
             .
           </>

@@ -29,7 +29,7 @@ describe("tenant isolation posture (launch 25)", () => {
       "utf8"
     );
     expect(page).toContain("hasOrgAdminAccess");
-    expect(page).toContain("isOrgAdmin");
+    expect(page).not.toMatch(/searchParams\.restaurant/);
   });
 
   it("loadOrganizationAnalytics scopes by organizationId input", () => {

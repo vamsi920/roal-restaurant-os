@@ -1,0 +1,227 @@
+/**
+ * ROAL typography — Plus Jakarta Sans (body + headings).
+ */
+
+:root {
+  --font-display: var(--font-body);
+  --type-body: var(--font-body), "Plus Jakarta Sans", system-ui, sans-serif;
+  --type-display: var(--font-body), "Plus Jakarta Sans", system-ui, sans-serif;
+  --type-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Responsive scale — tuned for 320 / 390 / 768 / 1024 / 1440 */
+  --text-display-size: clamp(1.375rem, 4vw, 1.875rem);
+  --text-display-leading: 1.12;
+  --text-display-tracking: -0.03em;
+
+  --text-hero-size: clamp(1.75rem, 5.2vw, 2.75rem);
+  --text-hero-leading: 1.08;
+  --text-hero-tracking: -0.03em;
+
+  --text-section-size: clamp(1.0625rem, 2.6vw, 1.25rem);
+  --text-readable-max: 42rem;
+  --text-section-leading: 1.25;
+  --text-section-tracking: -0.02em;
+
+  --text-body-size: clamp(0.9375rem, 2.4vw, 1rem);
+  --text-body-leading: 1.5;
+
+  --text-label-size: clamp(0.75rem, 2.2vw, 0.8125rem);
+  --text-label-leading: 1.35;
+  --text-label-tracking: 0.06em;
+
+  --text-caption-size: clamp(0.75rem, 2.2vw, 0.8125rem);
+  --text-caption-leading: 1.35;
+
+  --text-micro-size: clamp(0.75rem, 2vw, 0.8125rem);
+  --text-micro-leading: 1.3;
+
+  --text-panel-size: 0.875rem;
+  --text-panel-leading: 1.35;
+
+  --text-numeric-size: clamp(1.125rem, 2.8vw, 1.3125rem);
+  --text-numeric-leading: 1.15;
+  --text-numeric-tracking: -0.02em;
+}
+
+html,
+body {
+  font-family: var(--type-body);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.public-theme,
+.landing-story,
+.landing-home,
+.blog-theme {
+  font-family: var(--type-body);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+
+.type-display {
+  font-family: var(--type-display);
+  font-size: var(--text-display-size);
+  font-weight: 700;
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.type-section {
+  font-family: var(--type-display);
+  font-size: var(--text-section-size);
+  font-weight: 700;
+  line-height: var(--text-section-leading);
+  letter-spacing: var(--text-section-tracking);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.type-body {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.type-label {
+  font-size: var(--text-label-size);
+  font-weight: 600;
+  line-height: var(--text-label-leading);
+  letter-spacing: var(--text-label-tracking);
+  text-transform: uppercase;
+  color: rgb(var(--text-muted));
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.type-eyebrow {
+  font-size: var(--text-label-size);
+  font-weight: 500;
+  line-height: var(--text-label-leading);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.type-caption {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.type-micro {
+  font-size: var(--text-micro-size);
+  line-height: var(--text-micro-leading);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.type-numeric {
+  font-family: var(--type-body);
+  font-size: var(--text-numeric-size);
+  font-weight: 600;
+  line-height: var(--text-numeric-leading);
+  letter-spacing: var(--text-numeric-tracking);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "cv11", "ss01";
+  text-wrap: nowrap;
+}
+
+.type-numeric-sm {
+  font-family: var(--type-body);
+  font-size: var(--text-body-size);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "cv11", "ss01";
+  text-wrap: nowrap;
+}
+
+#app-main-content {
+  font-family: var(--type-body);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+#app-main-content h1 {
+  font-family: var(--type-body);
+  font-size: var(--text-display-size);
+  font-weight: 600;
+  line-height: var(--text-display-leading);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+#app-main-content h2:not(.kds-panel__title) {
+  font-family: var(--type-body);
+  font-size: var(--text-section-size);
+  font-weight: 600;
+  line-height: var(--text-section-leading);
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+#app-main-content .menu-setup-section__title {
+  font-size: var(--text-section-size);
+  line-height: var(--text-section-leading);
+  letter-spacing: var(--text-section-tracking);
+}
+
+#app-main-content .menu-setup-section__lead,
+#app-main-content .kds-empty-state__body {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  text-wrap: pretty;
+}
+
+#app-main-content .kds-panel__title {
+  font-family: var(--type-body);
+  font-size: var(--text-panel-size);
+  font-weight: 600;
+  line-height: var(--text-panel-leading);
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+#app-main-content .kds-panel__lead {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  text-wrap: pretty;
+}
+
+#app-main-content .type-caption,
+#app-main-content .text-caption {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+}
+
+#app-main-content .type-micro,
+#app-main-content .text-micro {
+  font-size: var(--text-micro-size);
+  line-height: var(--text-micro-leading);
+}
+
+#app-main-content pre.text-micro,
+#app-main-content pre.type-micro {
+  font-family: var(--type-mono);
+  font-size: var(--text-micro-size);
+  line-height: 1.45;
+}
+
+#app-main-content .kds-order-tabs button {
+  font-family: var(--type-body);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}

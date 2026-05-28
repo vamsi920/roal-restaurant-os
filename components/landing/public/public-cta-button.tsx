@@ -25,15 +25,17 @@ export function PublicCtaButton({
   label,
   variant = "primary",
   tone = "default",
-  showArrow = true,
+  showArrow,
   className,
 }: PublicCtaAction & {
   tone?: "default" | "ink";
   showArrow?: boolean;
   className?: string;
 }) {
+  const withArrow = variant === "primary" && (showArrow ?? true);
+
   const classNames = cn(
-    "inline-flex min-h-11 w-full min-w-0 max-w-full items-center justify-center gap-2 sm:w-auto sm:min-w-[12rem]",
+    "public-cta-btn inline-flex w-full min-w-0 max-w-full items-center justify-center sm:w-auto",
     variant === "primary" ? "public-btn-primary" : "public-btn-ghost",
     tone === "ink" && variant === "ghost" && "public-btn-ghost--on-ink",
     className
@@ -41,8 +43,8 @@ export function PublicCtaButton({
 
   const inner = (
     <>
-      <span>{label}</span>
-      {variant === "primary" && showArrow ? <CtaArrow /> : null}
+      <span className="public-btn-label">{label}</span>
+      {withArrow ? <CtaArrow /> : null}
     </>
   );
 

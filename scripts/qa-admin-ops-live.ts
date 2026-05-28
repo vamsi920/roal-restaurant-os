@@ -5,6 +5,7 @@
 import { sanitizeOpsErrorDetail } from "../lib/admin/sanitize-ops-detail";
 import { loadAdminOpsSnapshot } from "../lib/admin/load-ops-snapshot";
 import { hasOrgAdminAccess } from "../lib/auth/context-server";
+import { DEFAULT_PLATFORM_ADMIN_EMAIL } from "../lib/auth/platform-admin";
 import { isOrgAdmin } from "../lib/auth/roles";
 import { getEnvStatus } from "../lib/env.server";
 import { sanitizeHealthReportForPublic, runHealthChecks } from "../lib/observability/health";
@@ -84,12 +85,15 @@ void (async () => {
     ok: !isOrgAdmin("member"),
   });
   checks.push({
-    name: "hasOrgAdminAccess owner",
-    ok: hasOrgAdminAccess(mockContext("owner")),
+    name: "hasOrgAdminAccess platform email",
+    ok: hasOrgAdminAccess({
+      ...mockContext("member"),
+      user: { id: "platform", email: DEFAULT_PLATFORM_ADMIN_EMAIL },
+    } as AuthContext),
   });
   checks.push({
-    name: "hasOrgAdminAccess admin",
-    ok: hasOrgAdminAccess(mockContext("admin")),
+    name: "hasOrgAdminAccess owner false (non-platform)",
+    ok: !hasOrgAdminAccess(mockContext("owner")),
   });
   checks.push({
     name: "hasOrgAdminAccess member false",

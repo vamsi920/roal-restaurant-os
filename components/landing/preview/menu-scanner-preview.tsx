@@ -39,7 +39,7 @@ export function MenuScannerPreview({ data }: { data: LandingPreviewData }) {
             ) : null}
 
             <footer className="grid grid-cols-3 gap-2 border-t border-line pt-4">
-              <p className="col-span-3 text-[10px] text-subtle">Example counts from demo menu</p>
+              <p className="col-span-3 text-micro text-subtle">Example counts from demo menu</p>
               <ScanStat n={model.stats.categories} label="Categories" />
               <ScanStat n={model.stats.items} label="Items" />
               <ScanStat n={model.stats.modifiers} label="Modifiers" />
@@ -69,14 +69,14 @@ function MenuScanPhotoCard({
           <CameraIcon />
         </div>
         <p className="relative mt-3 text-center text-sm font-semibold text-ink">{photo.label}</p>
-        <p className="relative mt-1 max-w-full truncate text-center font-mono text-[10px] text-muted">
+        <p className="relative mt-1 max-w-full truncate text-center font-mono text-micro text-muted">
           {photo.fileName}
         </p>
-        <p className="relative mt-1 text-center text-[10px] text-subtle">PNG · JPG · WebP · 8 MB max</p>
+        <p className="relative mt-1 text-center text-micro text-subtle">PNG · JPG · WebP · 8 MB max</p>
       </div>
 
       <div className="relative border-t border-line bg-card/90 px-3 py-2">
-        <p className="flex items-center justify-center gap-1.5 text-[10px] font-semibold text-success">
+        <p className="flex items-center justify-center gap-1.5 text-micro font-semibold text-success">
           <CheckIcon />
           Extraction complete
         </p>
@@ -91,7 +91,7 @@ function ReviewSummaryPills({
   review: { ready: number; review: number; blocking: number };
 }) {
   return (
-    <ul className="flex flex-wrap gap-1.5 text-[10px] font-medium" aria-label="Scan review summary">
+    <ul className="flex flex-wrap gap-1.5 text-micro font-medium" aria-label="Scan review summary">
       <li className="rounded-full border border-success/30 bg-success/10 px-2.5 py-1 text-success">
         {review.ready} ready
       </li>
@@ -112,17 +112,17 @@ function ReviewSummaryPills({
 function CategoryChips({ chips }: { chips: { name: string; count: number }[] }) {
   return (
     <div>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-subtle">
+      <p className="text-micro font-semibold uppercase tracking-[0.14em] text-subtle">
         Categories
       </p>
       <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="Extracted categories">
         {chips.map((chip) => (
           <li
             key={chip.name}
-            className="rounded-full border border-accent/25 bg-accent-soft/45 px-2.5 py-1 text-[11px] font-medium text-ink"
+            className="rounded-full border border-accent/25 bg-accent-soft/45 px-2.5 py-1 text-caption font-medium text-ink"
           >
             {chip.name}
-            <span className="ml-1 font-mono text-[10px] tabular-nums text-muted">
+            <span className="ml-1 font-mono text-micro tabular-nums text-muted">
               {chip.count}
             </span>
           </li>
@@ -142,10 +142,10 @@ function ExtractionPanel({
   return (
     <div className="menu-scan-extraction rounded-xl border border-line bg-card/60">
       <div className="flex items-center justify-between gap-2 border-b border-line px-3 py-2 sm:px-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-subtle">
+        <p className="text-micro font-semibold uppercase tracking-[0.14em] text-subtle">
           Extraction rows
         </p>
-        <span className="text-[10px] text-muted">Confidence from scan</span>
+        <span className="text-micro text-muted">Confidence from scan</span>
       </div>
       <ul className="divide-y divide-line" aria-label="Extracted menu items">
         {rows.map((row) => (
@@ -153,7 +153,7 @@ function ExtractionPanel({
             <div className="flex min-w-0 items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium text-ink">{row.name}</p>
-                <p className="text-[11px] text-muted">
+                <p className="text-caption text-muted">
                   {row.category} · {row.priceLabel}
                 </p>
               </div>
@@ -162,7 +162,7 @@ function ExtractionPanel({
             {row.hint ? (
               <p
                 className={cn(
-                  "mt-1.5 text-[10px] leading-snug",
+                  "mt-1.5 text-micro leading-snug",
                   row.confidence === "low" ? "text-danger" : "text-warning"
                 )}
               >
@@ -173,7 +173,7 @@ function ExtractionPanel({
         ))}
       </ul>
       {moreCount > 0 ? (
-        <p className="border-t border-line px-3 py-2 text-center text-[10px] text-muted sm:px-4">
+        <p className="border-t border-line px-3 py-2 text-center text-micro text-muted sm:px-4">
           +{moreCount} more items in full review
         </p>
       ) : null}
@@ -189,7 +189,7 @@ function ModifierGroupsPanel({
   return (
     <div className="menu-scan-modifiers rounded-xl border border-line bg-elev/50">
       <div className="border-b border-line px-3 py-2 sm:px-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-subtle">
+        <p className="text-micro font-semibold uppercase tracking-[0.14em] text-subtle">
           Modifier groups
         </p>
       </div>
@@ -199,7 +199,7 @@ function ModifierGroupsPanel({
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-ink">{group.groupName}</p>
-                <p className="text-[11px] text-muted">
+                <p className="text-caption text-muted">
                   On {group.attachedTo} · {group.rule}
                 </p>
               </div>
@@ -209,14 +209,14 @@ function ModifierGroupsPanel({
               {group.options.map((opt) => (
                 <span
                   key={opt}
-                  className="rounded-md border border-line bg-card px-2 py-0.5 text-[10px] text-ink"
+                  className="rounded-md border border-line bg-card px-2 py-0.5 text-micro text-ink"
                 >
                   {opt}
                 </span>
               ))}
             </div>
             {group.hint ? (
-              <p className="mt-1.5 text-[10px] leading-snug text-warning">{group.hint}</p>
+              <p className="mt-1.5 text-micro leading-snug text-warning">{group.hint}</p>
             ) : null}
           </li>
         ))}
@@ -246,7 +246,7 @@ function ScanStat({ n, label }: { n: number; label: string }) {
   return (
     <div className="rounded-lg border border-line bg-card px-2 py-2 text-center">
       <p className="font-mono text-base font-semibold tabular-nums text-ink">{n}</p>
-      <p className="text-[10px] text-subtle">{label}</p>
+      <p className="text-micro text-subtle">{label}</p>
     </div>
   );
 }

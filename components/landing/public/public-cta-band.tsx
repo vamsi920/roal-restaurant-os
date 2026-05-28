@@ -33,8 +33,8 @@ export function PublicCtaBand({
     return (
       <section className={cn("home-section home-cta-band", sectionClassName)} aria-labelledby={titleId}>
         <div className="home-wrap">
-          <div className="home-glass-panel public-reveal">
-            <h2 id={titleId} className="home-h2">
+          <div className="home-glass-panel public-reveal min-w-0 max-w-full">
+            <h2 id={titleId} className="home-h2 mx-auto max-w-[20rem] sm:max-w-none">
               {title}
             </h2>
             {description ? (

@@ -1,7 +1,49 @@
 /**
- * Auth pages (`/login`, `/signup`) — glass/lavender polish on `public-theme`.
+ * Auth pages (`/login`, `/signup`, `/reset-password`) — match marketing glass + lavender.
  * Form behavior unchanged; styles only.
  */
+
+.public-theme .public-auth-main {
+  position: relative;
+  overflow-x: clip;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-bottom: max(
+    5rem,
+    calc(env(safe-area-inset-bottom, 0px) + var(--auth-keyboard-inset, 0px) + 3rem)
+  );
+}
+
+.public-theme .public-auth-main__wash {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 55% at 50% -5%,
+      rgb(var(--public-accent-lavender) / 0.2),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 100% 100%,
+      rgb(var(--public-accent-violet) / 0.08),
+      transparent 55%
+    );
+}
+
+.public-theme .public-auth-main__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.public-theme .public-eyebrow {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(100 85 175);
+}
 
 .public-theme .public-auth-panel,
 .public-theme .public-signup-aside__card {
@@ -28,11 +70,21 @@
   pointer-events: none;
 }
 
+.public-theme .public-auth-panel::after,
+.public-theme .public-signup-aside__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28);
+}
+
 .public-theme .public-signup-aside__card {
-  padding: clamp(1.35rem, 4vw, 1.75rem);
+  padding: clamp(1.25rem, 3.5vw, 1.65rem);
   border-radius: var(--public-radius-card);
-  border: 1px solid rgb(var(--public-accent-lavender) / 0.28);
-  background: rgb(var(--public-surface-glass) / 0.5);
+  border: 1px solid rgb(var(--public-accent-lavender) / 0.32);
+  background: rgb(var(--public-surface-glass) / 0.52);
   backdrop-filter: blur(var(--public-blur-glass));
   box-shadow: var(--public-shadow-card);
 }
@@ -45,6 +97,64 @@
 .public-theme .public-auth-panel > * {
   position: relative;
   z-index: 1;
+}
+
+.public-theme .public-auth-panel__eyebrow {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(100 85 175);
+}
+
+.public-theme .public-auth-beats {
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.public-theme .public-auth-beats__item {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--public-radius-md, 0.75rem);
+  border: 1px solid rgb(var(--public-accent-lavender) / 0.22);
+  background: rgb(var(--public-surface-glass) / 0.38);
+}
+
+.public-theme .public-auth-beats__num {
+  flex-shrink: 0;
+  display: grid;
+  height: 1.65rem;
+  width: 1.65rem;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: rgb(var(--public-accent-lavender) / 0.2);
+  color: rgb(100 80 180);
+}
+
+.public-theme .public-auth-beats__title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: rgb(var(--public-ink));
+  text-wrap: balance;
+}
+
+.public-theme .public-auth-beats__tag {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgb(var(--public-subtle));
+  text-wrap: pretty;
 }
 
 .public-theme .public-form-field__label {
@@ -60,19 +170,24 @@
   font-size: 0.8125rem;
 }
 
+.public-theme .public-auth-forgot-row {
+  margin: -0.15rem 0 0;
+  text-align: right;
+}
+
 .public-theme .public-auth-trust {
-  margin: 1.25rem 0 0;
-  padding-top: 1rem;
+  margin: 1rem 0 0;
+  padding-top: 0.85rem;
   border-top: 1px solid rgb(var(--public-ink) / 0.08);
   font-size: 0.75rem;
-  line-height: 1.5;
+  line-height: 1.45;
   color: rgb(var(--public-subtle));
   text-align: center;
   text-wrap: pretty;
 }
 
 .public-theme .public-auth-panel--success .public-auth-trust {
-  margin-top: 1rem;
+  margin-top: 0.85rem;
 }
 
 .public-theme .public-auth-main__inner:has(.public-signup-entry),
@@ -80,52 +195,208 @@
   max-width: 54rem;
 }
 
-.public-theme .public-login-entry .public-signup-entry__form {
-  order: -1;
-}
-
-@media (min-width: 960px) {
-  .public-theme .public-login-entry .public-signup-entry__form {
-    order: 0;
-  }
-}
-
-.public-theme .public-login-highlights {
-  margin: 1.35rem 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.public-theme .public-login-highlights__item {
-  padding: 0.85rem 1rem;
-  border-radius: var(--public-radius-md, 0.75rem);
-  border: 1px solid rgb(var(--public-accent-lavender) / 0.22);
-  background: rgb(var(--public-surface-glass) / 0.4);
-}
-
-.public-theme .public-login-highlights__title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: rgb(var(--public-ink));
-}
-
-.public-theme .public-login-highlights__body {
-  margin-top: 0.2rem;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: rgb(var(--public-muted));
+.public-theme .public-form-error,
+.public-theme .public-auth-error {
+  overflow-wrap: anywhere;
   text-wrap: pretty;
 }
 
-@media (min-width: 960px) {
+.public-theme .public-auth-footer a,
+.public-theme .public-auth-footer button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  touch-action: manipulation;
+}
+
+/* — Auth responsive (prompt 16) — */
+
+@media (max-width: 767px) {
   .public-theme .public-auth-main {
     align-items: flex-start;
-    padding-top: clamp(2.5rem, 6vw, 3.5rem);
+    padding-top: clamp(1rem, 3vw, 1.5rem);
+    padding-bottom: max(
+      1.5rem,
+      env(safe-area-inset-bottom, 0px),
+      var(--auth-keyboard-inset, 0px)
+    );
+  }
+
+  .public-theme .public-auth-panel,
+  .public-theme .public-signup-aside__card {
+    padding: clamp(1.1rem, 3.5vw, 1.35rem);
+  }
+
+  .public-theme .public-form-field__input,
+  .public-theme .public-auth-field__input {
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+
+  .public-theme .public-auth-submit,
+  .public-theme .public-auth-footer a,
+  .public-theme .public-auth-footer button {
+    min-height: var(--public-btn-height, 3rem);
   }
 }
 
-.public-theme .public-signup-entry__form .public-auth-panel {
-  height: 100%;
+/* — Auth layout comfort (prompt 17) — */
+
+.public-theme .public-signup-entry__grid {
+  width: 100%;
+}
+
+.public-theme .public-signup-entry__form {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .public-theme .public-signup-entry__aside,
+  .public-theme .public-login-entry__aside {
+    display: none;
+  }
+
+  .public-theme .public-signup-entry__grid {
+    display: block;
+  }
+
+  .public-theme .public-signup-entry__form {
+    order: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .public-theme .public-auth-main__inner:has(.public-signup-entry),
+  .public-theme .public-auth-main__inner:has(.public-login-entry) {
+    max-width: min(100%, 28rem);
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .public-theme .public-signup-entry__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(1.5rem, 3.5vw, 2.5rem);
+    align-items: start;
+  }
+
+  .public-theme .public-signup-entry__form {
+    order: 0;
+    width: auto;
+  }
+
+  .public-theme .public-signup-entry__aside,
+  .public-theme .public-login-entry__aside {
+    display: block;
+  }
+
+  .public-theme .public-auth-main__inner:has(.public-signup-entry),
+  .public-theme .public-auth-main__inner:has(.public-login-entry) {
+    max-width: min(100%, 54rem);
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 479px) {
+  .public-theme .public-auth-main {
+    align-items: flex-start;
+    padding: clamp(1.25rem, 4vw, 1.75rem) var(--public-gutter);
+  }
+
+  .public-theme .public-auth-panel,
+  .public-theme .public-signup-aside__card {
+    padding: clamp(1.1rem, 3.5vw, 1.35rem);
+  }
+
+  .public-theme .public-auth-submit {
+    min-height: var(--public-btn-height, 3rem);
+    font-weight: 600;
+  }
+
+  .public-theme .public-signup-entry__grid {
+    gap: 1.15rem;
+  }
+
+  .public-theme .public-auth-beats {
+    gap: 0.45rem;
+  }
+
+  .public-theme .public-auth-forgot-row button {
+    min-height: 2.75rem;
+    padding: 0.35rem 0.15rem;
+    touch-action: manipulation;
+  }
+}
+
+/* — Auth form states (prompt 18) — */
+
+.public-theme .public-auth-status-slot {
+  margin-top: 1rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.public-theme .public-auth-status-slot[data-empty] {
+  min-height: 2.85rem;
+}
+
+.public-theme .public-auth-status-slot .public-form-error,
+.public-theme .public-auth-form-error {
+  margin-top: 0;
+  max-height: 4.35rem;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.public-theme .public-auth-panel--busy .public-form-field__input:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+  background: rgb(var(--public-bg-elev) / 0.72);
+  border-color: rgb(var(--public-ink) / 0.12);
+}
+
+.public-theme .public-auth-submit--busy,
+.public-theme .public-auth-submit[aria-busy="true"] {
+  cursor: wait;
+}
+
+.public-theme .public-auth-panel .public-form-field__input:focus-visible,
+.public-theme .public-auth-panel .public-auth-forgot-row button:focus-visible,
+.public-theme .public-auth-panel .public-auth-footer a:focus-visible,
+.public-theme .public-auth-panel .public-auth-footer button:focus-visible {
+  outline: 2px solid var(--public-focus-ring, rgb(100 85 175 / 0.78));
+  outline-offset: var(--public-focus-offset, 3px);
+  box-shadow: var(--public-focus-glow, 0 0 0 4px rgb(var(--public-accent-lavender) / 0.28));
+}
+
+.public-theme .public-auth-panel .public-auth-footer button:disabled,
+.public-theme .public-auth-panel .public-auth-forgot-row button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.public-theme .public-auth-panel--success {
+  min-height: 14rem;
+}
+
+/* — Responsive foundations — */
+
+.public-theme .public-auth-panel a:focus-visible,
+.public-theme .public-auth-submit:focus-visible,
+.public-theme .public-auth-forgot-row button:focus-visible {
+  outline: 2px solid var(--public-focus-ring, rgb(100 85 175 / 0.78));
+  outline-offset: var(--public-focus-offset, 3px);
+  box-shadow: var(--public-focus-glow, 0 0 0 4px rgb(var(--public-accent-lavender) / 0.28));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-theme .public-auth-panel,
+  .public-theme .public-signup-aside__card {
+    transition: none;
+  }
 }

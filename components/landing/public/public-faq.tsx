@@ -80,14 +80,16 @@ export function PublicFaq({
         aria-labelledby="public-faq-heading"
       >
         <div className="home-wrap">
-          <p className="home-eyebrow">{eyebrow}</p>
-          <h2 id="public-faq-heading" className="home-h2 mt-2">
-            {title}
-          </h2>
-          <p className="home-lead mt-3 max-w-xl">{lead}</p>
-          <div className="home-faq__list">
+          <div className="public-reveal">
+            <p className="home-eyebrow">{eyebrow}</p>
+            <h2 id="public-faq-heading" className="home-h2 mt-2">
+              {title}
+            </h2>
+            <p className="home-lead mt-3 max-w-xl">{lead}</p>
+          </div>
+          <div className="home-faq__list public-reveal-stagger">
             {items.map((item) => (
-              <details key={item.id} className="home-faq__item home-glass-panel">
+              <details key={item.id} className="home-faq__item public-reveal-item">
                 <summary className="home-faq__q">{item.question}</summary>
                 <div className="home-faq__body">
                   <p className="home-faq__a">{item.answer}</p>
@@ -124,7 +126,7 @@ export function PublicFaq({
         <LandingHeader titleId={titleId} title={title} description={description} />
         <div className="public-faq__accordion mt-6 min-w-0">
           {items.map((item) => (
-            <details key={item.id} className="public-faq__accordion-item glass-card">
+            <details key={item.id} className="public-faq__accordion-item">
               <summary className="public-faq__accordion-q">{item.question}</summary>
               <div className="public-faq__accordion-body">
                 <p className="public-faq__accordion-a">{item.answer}</p>

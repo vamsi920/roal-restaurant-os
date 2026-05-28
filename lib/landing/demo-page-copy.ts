@@ -27,63 +27,59 @@ export const DEMO_PAGE_COPY = {
   aeo: {
     titleId: "demo-aeo-heading",
     question: "How can I hear ROAL on a sample pickup call?",
-    answer:
-      "On the demo page you can walk through a sample rush-hour pickup flow, read an illustrative transcript, and preview the kitchen ticket—then book a live walkthrough or sign up to test on your menu.",
-    detail:
-      "Book a demo call by email or sign up to scan your menu and place a test call before your next rush.",
+    answer: "Sample call flow, transcript, and kitchen ticket—then book a walkthrough or sign up.",
+    detail: "Email for a live demo or sign up to test on your menu.",
   },
   hero: {
     eyebrow: "Demo",
     title: "See a rush-hour pickup call",
-    description:
-      "Sample video slot, three-step flow, transcript, and kitchen ticket—then book a walkthrough or sign up to test on your menu.",
+    description: "Video, three beats, then transcript and kitchen ticket.",
   },
   video: {
     titleId: "demo-video-heading",
     title: "Sample pickup call",
-    description: "Rush-hour recording placeholder—modifiers, disclosure, and the ticket that hits your pass.",
-    placeholderTitle: "Demo video coming soon",
-    placeholderDetail: "We will drop your recording in here when it is ready.",
+    placeholderTitle: "Demo recording soon",
+    placeholderDetail: "Rush-hour sample lands here.",
   },
   callSimulation: {
     titleId: "demo-call-heading",
-    title: "Ring → answer → ticket",
-    description: "Illustrative Friday rush sequence—not a live recording.",
+    title: "Ring → ROAL answers → ticket",
     steps: [
       {
         id: "ring",
         time: "6:44 PM",
         title: "Phone rings",
-        body: "Second line lights up during the rush. Counter staff are plating—not answering.",
+        tagline: "Rush hour",
+        icon: "ring",
       },
       {
         id: "answer",
         time: "6:44 PM",
         title: "ROAL answers",
-        body: "Pickup line picks up with your menu loaded—no hold music, no script drift.",
+        tagline: "Live menu",
+        icon: "answer",
       },
       {
         id: "ticket",
         time: "6:45 PM",
-        title: "Ticket on the pass",
-        body: "Cart syncs to your kitchen screen while the guest confirms modifiers on the call.",
+        title: "Ticket on pass",
+        tagline: "Kitchen screen",
+        icon: "ticket",
       },
     ],
   },
   proof: {
     titleId: "demo-proof-heading",
-    title: "From call to kitchen",
-    description: "Same order: what the guest said on the phone and what expo cooks from on the pass.",
-    transcriptLabel: "Sample transcript",
-    ticketLabel: "Kitchen ticket",
-    ticketNote: "Sample ticket—sign up to run a test call on your menu.",
+    title: "Same call, same ticket",
+    transcriptLabel: "On the call",
+    ticketLabel: "On the pass",
+    ticketNote: "Sample—sign up to test on your menu.",
   },
   close: {
     titleId: "demo-close-heading",
     eyebrow: "Next step",
     title: "Try it on your menu",
-    description:
-      "Email us for a live walkthrough, or sign up to scan your menu and place a test call before your next rush.",
+    description: "Book a walkthrough or sign up to test on your menu.",
     pricingHref: "/pricing",
   },
 } as const;

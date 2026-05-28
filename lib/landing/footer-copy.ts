@@ -1,50 +1,26 @@
-import { CONTACT_PILOT_EMAIL } from "./contact-page-copy";
-import { PUBLIC_NAV_LOGIN, PUBLIC_NAV_SIGNUP } from "./public-nav";
+import { PUBLIC_CTA } from "@/lib/landing/public-cta";
 
-/** Launch footer IA (homepage + marketing shell). */
+/** Minimal launch footer — brand, demo/contact, essential + legal links. */
 
 export const LANDING_FOOTER = {
-  tagline: "Phone orders for restaurants—live menu, kitchen tickets, pay per pickup.",
-  trustLine:
-    "Your data in your account · Real guest details on every ticket · Staff handoff when it matters.",
+  brandName: "ROAL",
+  brandHref: "/",
+  tagline: "Pickup calls answered with your live menu.",
+  demoCta: PUBLIC_CTA.hearDemo,
+  contactCta: { href: "/contact", label: "Contact" },
+  essentialLinks: [
+    { href: "/pricing", label: "Pricing" },
+    { href: "/demo", label: "Demo" },
+    { href: "/privacy", label: "Privacy" },
+    { href: "/terms", label: "Terms" },
+  ] as const,
   copyrightName: "ROAL",
-  email: CONTACT_PILOT_EMAIL,
-  login: PUBLIC_NAV_LOGIN,
-  signup: PUBLIC_NAV_SIGNUP,
-  columns: [
-    {
-      title: "Product",
-      links: [
-        { href: "/demo", label: "Demo" },
-        { href: "/pricing", label: "Pricing" },
-        { href: "/security", label: "Security" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { href: "/about", label: "About" },
-        { href: "/contact", label: "Contact" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [{ href: "/blog", label: "Blog" }],
-    },
-    {
-      title: "Legal",
-      links: [
-        { href: "/privacy", label: "Privacy" },
-        { href: "/terms", label: "Terms" },
-      ],
-    },
-  ],
 } as const;
 
 /** @deprecated Story footer */
 export const FOOTER_COPY = {
   headline: "The next call does not have to go unanswered.",
-  lead: "ROAL answers with your real menu, streams the cart to your kitchen screen, and bills around successful pickups—not every ring.",
+  lead: "$0.90 per successful order. If it does not become an order, you do not pay.",
   trust:
     "Your data stays in your account · Real guest name and phone on finalize · Staff handoff when it matters",
   pilot: {
@@ -69,7 +45,7 @@ export const FOOTER_PRODUCT_LINKS = [
 export const FOOTER_COMPANY_LINKS = [
   { href: "/contact", label: "Contact & pilots" },
   { href: "/demo", label: "Hear the agent" },
-  { href: "/#proof", label: "Pilot metrics" },
+  { href: "/#proof", label: "Product capabilities" },
 ] as const;
 
 /** @deprecated */

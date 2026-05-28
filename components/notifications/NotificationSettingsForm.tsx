@@ -26,58 +26,60 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
   const production = settings.providerMode === "production";
 
   return (
-    <form action={action} className="space-y-8">
-      <section className="rounded-xl border border-line bg-card p-5 shadow-sm">
-        <h2 className="text-sm font-semibold text-ink">Delivery mode</h2>
+    <form action={action} className="notification-settings min-w-0 space-y-6 sm:space-y-8">
+      <section className="notification-settings__mode dashboard-panel min-w-0">
+        <h2 className="dashboard-page__section-title">Delivery mode</h2>
         <p className="mt-1 text-xs text-muted">
           Dev console logs to the server and delivery history below. Production
           enables webhook delivery; email and SMS stay human-setup until
           providers are wired.
         </p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <label className="flex cursor-pointer items-center gap-2 text-sm">
+        <div className="notification-settings__mode-options mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
+          <label className="notification-settings__radio flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-line bg-elev px-3 text-sm sm:min-h-10 sm:border-transparent sm:bg-transparent sm:px-0">
             <input
               type="radio"
               name="provider_mode"
               value="dev_console"
               defaultChecked={settings.providerMode === "dev_console"}
               disabled={!canEdit}
+              className="h-4 w-4 shrink-0"
             />
             Development console
           </label>
-          <label className="flex cursor-pointer items-center gap-2 text-sm">
+          <label className="notification-settings__radio flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-line bg-elev px-3 text-sm sm:min-h-10 sm:border-transparent sm:bg-transparent sm:px-0">
             <input
               type="radio"
               name="provider_mode"
               value="production"
               defaultChecked={settings.providerMode === "production"}
               disabled={!canEdit}
+              className="h-4 w-4 shrink-0"
             />
             Production channels
           </label>
         </div>
       </section>
 
-      <section className="rounded-xl border border-line bg-card p-5 shadow-sm">
-        <h2 className="text-sm font-semibold text-ink">Events</h2>
+      <section className="notification-settings__events dashboard-panel min-w-0">
+        <h2 className="dashboard-page__section-title">Events</h2>
         <ul className="mt-4 space-y-3">
           {NOTIFICATION_EVENT_TYPES.map((event) => (
             <li
               key={event}
-              className="flex gap-3 rounded-lg border border-line bg-elev px-3 py-2.5"
+              className="notification-settings__event flex gap-3 rounded-lg border border-line bg-elev px-3 py-2.5"
             >
               <input
                 type="checkbox"
                 name={`event_${event}`}
                 defaultChecked={settings.enabledEvents.includes(event)}
                 disabled={!canEdit}
-                className="mt-0.5"
+                className="mt-1 h-4 w-4 shrink-0"
               />
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-ink">
                   {NOTIFICATION_EVENT_LABELS[event]}
                 </p>
-                <p className="text-xs text-muted">
+                <p className="text-xs text-muted [overflow-wrap:anywhere]">
                   {NOTIFICATION_EVENT_DESCRIPTIONS[event]}
                 </p>
               </div>
@@ -85,7 +87,7 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
           ))}
         </ul>
         <div className="mt-4">
-          <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted">
+          <label className="dashboard-page__kicker mb-1.5 block">
             Stuck order threshold (minutes)
           </label>
           <input
@@ -95,7 +97,7 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
             max={240}
             defaultValue={settings.orderStuckMinutes}
             disabled={!canEdit}
-            className="input-base max-w-[8rem]"
+            className="input-base min-h-11 w-full max-w-[8rem] sm:min-h-10"
           />
           <p className="mt-1 text-xs text-muted">
             Applies when &ldquo;Order stuck in kitchen&rdquo; is enabled above.
@@ -105,11 +107,11 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
 
       <section
         className={cn(
-          "rounded-xl border border-line bg-card p-5 shadow-sm",
+          "notification-settings__channels dashboard-panel min-w-0",
           !production && "opacity-60"
         )}
       >
-        <h2 className="text-sm font-semibold text-ink">Channels</h2>
+        <h2 className="dashboard-page__section-title">Channels</h2>
         <p className="mt-1 text-xs text-muted">
           {NOTIFICATION_PROVIDER_POSTURE.emailSmsHumanOnly}
         </p>
@@ -147,7 +149,7 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
 
         <div className="mt-4 space-y-4">
           <div>
-            <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted">
+            <label className="dashboard-page__kicker mb-1.5 block">
               Email recipients
             </label>
             <textarea
@@ -156,11 +158,11 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
               defaultValue={settings.emailRecipients.join(", ")}
               disabled={!canEdit || !production}
               placeholder="ops@example.com, owner@example.com"
-              className="input-base min-h-[4rem] resize-y"
+              className="input-base min-h-[4rem] w-full min-w-0 resize-y"
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted">
+            <label className="dashboard-page__kicker mb-1.5 block">
               SMS numbers
             </label>
             <textarea
@@ -169,11 +171,11 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
               defaultValue={settings.smsRecipients.join(", ")}
               disabled={!canEdit || !production}
               placeholder="+15551234567"
-              className="input-base min-h-[4rem] resize-y"
+              className="input-base min-h-[4rem] w-full min-w-0 resize-y"
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted">
+            <label className="dashboard-page__kicker mb-1.5 block">
               Webhook URL
             </label>
             <input
@@ -182,14 +184,17 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
               defaultValue={settings.webhookUrl ?? ""}
               disabled={!canEdit || !production}
               placeholder="https://hooks.example.com/roal"
-              className="input-base"
+              className="input-base min-h-11 w-full min-w-0 sm:min-h-10"
             />
           </div>
         </div>
       </section>
 
       {state.error ? (
-        <p className="text-sm text-danger" role="alert">
+        <p
+          className="notification-settings__error text-sm text-danger [overflow-wrap:anywhere]"
+          role="alert"
+        >
           {state.error}
         </p>
       ) : null}
@@ -200,7 +205,10 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
       ) : null}
 
       {canEdit ? (
-        <button type="submit" className="btn-primary">
+        <button
+          type="submit"
+          className="notification-settings__submit btn-primary kds-thumb-btn min-h-11 w-full sm:w-auto"
+        >
           Save notification settings
         </button>
       ) : (
@@ -224,12 +232,13 @@ function ChannelToggle({
   disabled?: boolean;
 }) {
   return (
-    <label className="flex items-center gap-2">
+    <label className="notification-settings__channel flex min-h-11 items-center gap-2 rounded-lg border border-line bg-elev px-3 sm:min-h-10 sm:border-transparent sm:bg-transparent sm:px-0">
       <input
         type="checkbox"
         name={name}
         defaultChecked={checked}
         disabled={disabled}
+        className="h-4 w-4 shrink-0"
       />
       {label}
     </label>

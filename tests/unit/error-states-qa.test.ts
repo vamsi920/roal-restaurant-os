@@ -43,7 +43,10 @@ describe("error-state wiring (launch 30)", () => {
   it("auth form uses formatAuthError", () => {
     const src = readFileSync(join(REPO, "components/auth/auth-form.tsx"), "utf8");
     expect(src).toContain("formatAuthError");
-    expect(src).toContain('role="alert"');
+    expect(src).toContain("AuthFormStatus");
+    expect(readFileSync(join(REPO, "components/auth/auth-form-status.tsx"), "utf8")).toContain(
+      'role="alert"'
+    );
   });
 
   it("KDS panel formats sync errors", () => {
@@ -52,7 +55,7 @@ describe("error-state wiring (launch 30)", () => {
       "utf8"
     );
     expect(panel).toContain("formatSupabaseClientError");
-    expect(panel).toContain("kds-empty-state");
+    expect(panel).toContain("KdsEmptyStatePanel");
   });
 
   it("menu import history avoids Unknown error", () => {
@@ -62,6 +65,8 @@ describe("error-state wiring (launch 30)", () => {
     );
     expect(hist).toContain("formatApiRouteError");
     expect(hist).not.toContain('"Unknown error"');
+    expect(hist).toContain("KdsEmptyStatePanel");
+    expect(hist).toContain("Import history unavailable");
   });
 
   it("restaurants API does not leak raw DB message", () => {

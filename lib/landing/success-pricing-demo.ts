@@ -1,31 +1,22 @@
 import { ILLUSTRATIVE_WEEK_LABEL, METRICS_EXAMPLE_DISCLAIMER } from "@/lib/landing/metrics-safety";
+import { PRICING_ORDER_EXPLAINER } from "@/lib/landing/pricing-core";
 import { PRICING_CTA } from "@/lib/landing/pricing-page-copy";
 
 /** Illustrative success-pricing story copy — not a live rate card. */
 
 export const SUCCESS_PRICING_DEMO = {
-  headline: "Only pay for successful orders",
-  subhead:
-    "ROAL is built so your bill tracks completed pickup orders on your kitchen screen—not every ring, wrong number, or menu experiment.",
+  headline: "$0.90 per successful order",
+  subhead: `${PRICING_ORDER_EXPLAINER.payLine} ${PRICING_ORDER_EXPLAINER.noPayLine}`,
 
   funnel: [
     { id: "rings", label: "Calls & rings", count: "42", billable: false, note: "Overflow, tests, hang-ups" },
     { id: "carts", label: "Live carts", count: "18", billable: false, note: "Chatter & abandoned drafts" },
-    { id: "done", label: "Completed pickups", count: "11", billable: true, note: "Name, phone, ticket on kitchen screen" },
+    { id: "done", label: "Completed pickups", count: "11", billable: true, note: "Ticket on your kitchen screen" },
   ] as const,
 
-  notCharged: [
-    "Wrong numbers and “are you open?” calls",
-    "Test calls while you wire voice and menu",
-    "Guests who hang up before confirming",
-    "Abandoned carts that never finalize",
-  ],
+  notCharged: [...PRICING_ORDER_EXPLAINER.noPayExamples],
 
-  countsAsSuccess: [
-    "Guest confirms name and phone on the call",
-    "Cart finalizes to a receipt on your kitchen screen",
-    "Pickup order your team can actually fulfill",
-  ],
+  countsAsSuccess: [...PRICING_ORDER_EXPLAINER.payExamples],
 
   pilotNote:
     "Self-serve checkout is still rolling out. Pilots agree on simple success-based terms up front—no surprise per-minute phone bills.",

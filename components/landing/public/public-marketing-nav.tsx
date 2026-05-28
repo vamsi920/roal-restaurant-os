@@ -3,32 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { cn } from "@/lib/cn";
 import { usePublicNavMenu } from "@/lib/landing/use-public-nav-menu";
 import { isPublicNavActive } from "@/lib/landing/nav-active";
 import type { PublicNavLink } from "@/lib/landing/public-nav";
 import { PUBLIC_NAV_LOGIN, PUBLIC_NAV_SIGNUP } from "@/lib/landing/public-nav";
 import { RoalMark } from "../roal-mark";
-
-function MenuIcon({ open }: { open: boolean }) {
-  return (
-    <svg
-      className="h-5 w-5 shrink-0"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden
-    >
-      {open ? (
-        <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-      ) : (
-        <>
-          <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-        </>
-      )}
-    </svg>
-  );
-}
+import { PublicNavDrawerPanel } from "./public-nav-drawer-panel";
+import { PublicNavMenuIcon } from "./public-nav-menu-icon";
 
 type Props = {
   links: readonly PublicNavLink[];
@@ -55,7 +37,9 @@ export function PublicMarketingNav({ links, shellClassName }: Props) {
     shellClassName === "home-nav" ? "home-nav__chrome" : "marketing-nav__chrome";
 
   return (
-    <header className={shellClassName}>
+    <header
+      className={cn(shellClassName, menuOpen && "public-nav--open")}
+    >
       <div className={chromeClass}>
         <Link href="/" className="public-nav-logo" aria-label="ROAL home">
           <RoalMark className="h-8 w-8 shrink-0" />
@@ -94,61 +78,19 @@ export function PublicMarketingNav({ links, shellClassName }: Props) {
           onClick={toggleMenu}
         >
           <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
-          <MenuIcon open={menuOpen} />
+          <PublicNavMenuIcon open={menuOpen} />
         </button>
       </div>
 
       {menuOpen ? (
-        <>
-          <button
-            type="button"
-            className="public-nav-backdrop"
-            aria-label="Close menu"
-            tabIndex={-1}
-            onClick={onBackdropClose}
-          />
-          <div
-            ref={drawerRef}
-            id={menuId}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation menu"
-            className="public-nav-drawer"
-          >
-            <nav aria-label="Mobile">
-              <ul className="public-nav-drawer__links">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`public-nav-drawer__link${isPublicNavActive(link.href, pathname) ? " is-active" : ""}`}
-                      aria-current={isPublicNavActive(link.href, pathname) ? "page" : undefined}
-                      onClick={closeMenu}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <div className="public-nav-drawer__actions">
-              <Link
-                href={PUBLIC_NAV_LOGIN.href}
-                className="public-nav-drawer__ghost"
-                onClick={closeMenu}
-              >
-                {PUBLIC_NAV_LOGIN.label}
-              </Link>
-              <Link
-                href={PUBLIC_NAV_SIGNUP.href}
-                className="public-nav-drawer__cta"
-                onClick={closeMenu}
-              >
-                {PUBLIC_NAV_SIGNUP.label}
-              </Link>
-            </div>
-          </div>
-        </>
+        <PublicNavDrawerPanel
+          menuId={menuId}
+          drawerRef={drawerRef}
+          links={links}
+          pathname={pathname}
+          closeMenu={closeMenu}
+          onBackdropClose={onBackdropClose}
+        />
       ) : null}
     </header>
   );

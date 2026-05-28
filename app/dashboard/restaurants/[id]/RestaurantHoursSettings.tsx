@@ -142,7 +142,7 @@ export function RestaurantHoursSettings({ restaurantId, bundle }: Props) {
         <div className="flex shrink-0 items-center gap-2">
           <span
             className={cn(
-              "rounded-full border px-2.5 py-0.5 text-[11px] font-medium",
+              "rounded-full border px-2.5 py-0.5 text-caption font-medium",
               statusTone(
                 temporarilyClosed ? "temporarily_closed" : liveStatus.status
               )

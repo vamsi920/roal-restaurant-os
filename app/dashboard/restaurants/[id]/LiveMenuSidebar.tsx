@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { getBrowserSupabase } from "@/lib/supabase/client";
@@ -12,12 +19,15 @@ import {
 } from "@/lib/menu-editor/live-menu-scope";
 import type { DbCategory, DbItem, DbModifier } from "@/lib/types";
 import { cn } from "@/lib/cn";
+import { KdsEmptyStatePanel } from "@/components/dashboard/kds-workspace-states";
 
 type Props = {
   restaurantId: string;
   initialCategories: DbCategory[];
   initialItems: DbItem[];
   initialModifiers: DbModifier[];
+  /** Parent section supplies the visible title (menu setup page). */
+  hidePanelHeader?: boolean;
 };
 
 /** Stable fingerprint of server-passed menu rows (not reference identity). */
@@ -38,13 +48,18 @@ export function LiveMenuSidebar({
   initialCategories,
   initialItems,
   initialModifiers,
+  hidePanelHeader = false,
 }: Props) {
   const [categories, setCategories] = useState<DbCategory[]>(initialCategories);
   const [items, setItems] = useState<DbItem[]>(initialItems);
   const [modifiers, setModifiers] = useState<DbModifier[]>(initialModifiers);
   const [flashedIds, setFlashedIds] = useState<Set<string>>(new Set());
-  const [realtimeDegraded, setRealtimeDegraded] = useState(false);
+  const [menuUpdatedVisible, setMenuUpdatedVisible] = useState(false);
+  const [menuRealtime, setMenuRealtime] = useState<
+    "connecting" | "live" | "degraded"
+  >("connecting");
   const flashTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const menuUpdatedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scopeRef = useRef({
     categoryIds: new Set(initialCategories.map((c) => c.id)),
     itemIds: new Set(initialItems.map((i) => i.id)),
@@ -82,24 +97,37 @@ export function LiveMenuSidebar({
     scopeRef.current.itemIds = new Set(items.map((i) => i.id));
   }, [categories, items]);
 
-  function flash(id: string) {
-    setFlashedIds((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      return next;
-    });
-    const existing = flashTimers.current.get(id);
-    if (existing) clearTimeout(existing);
-    const t = setTimeout(() => {
+  const showMenuUpdated = useCallback(() => {
+    setMenuUpdatedVisible(true);
+    if (menuUpdatedTimer.current) clearTimeout(menuUpdatedTimer.current);
+    menuUpdatedTimer.current = setTimeout(() => {
+      setMenuUpdatedVisible(false);
+      menuUpdatedTimer.current = null;
+    }, 4000);
+  }, []);
+
+  const flash = useCallback(
+    (id: string) => {
+      showMenuUpdated();
       setFlashedIds((prev) => {
         const next = new Set(prev);
-        next.delete(id);
+        next.add(id);
         return next;
       });
-      flashTimers.current.delete(id);
-    }, 1800);
-    flashTimers.current.set(id, t);
-  }
+      const existing = flashTimers.current.get(id);
+      if (existing) clearTimeout(existing);
+      const t = setTimeout(() => {
+        setFlashedIds((prev) => {
+          const next = new Set(prev);
+          next.delete(id);
+          return next;
+        });
+        flashTimers.current.delete(id);
+      }, 1800);
+      flashTimers.current.set(id, t);
+    },
+    [showMenuUpdated]
+  );
 
   useEffect(() => {
     function onMenuCleared(e: Event) {
@@ -262,13 +290,13 @@ export function LiveMenuSidebar({
       .subscribe((status) => {
         if (cancelled) return;
         if (status === "SUBSCRIBED") {
-          setRealtimeDegraded(false);
+          setMenuRealtime("live");
           stopPoll();
           startPoll(30_000);
           return;
         }
         if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
-          setRealtimeDegraded(true);
+          setMenuRealtime("degraded");
           stopPoll();
           void syncMenuFromServer();
           startPoll(8_000);
@@ -291,9 +319,10 @@ export function LiveMenuSidebar({
       stopPoll();
       timers.forEach((t) => clearTimeout(t));
       timers.clear();
+      if (menuUpdatedTimer.current) clearTimeout(menuUpdatedTimer.current);
       supabase.removeChannel(channel);
     };
-  }, [restaurantId]);
+  }, [restaurantId, flash]);
 
   const scopedItems = useMemo(
     () => filterItemsToCategories(items, categories),
@@ -331,30 +360,31 @@ export function LiveMenuSidebar({
   const totalItems = scopedItems.length;
 
   return (
-    <aside className="kds-live-menu glass-card kds-panel">
-      <div className="kds-panel__header">
-        <div className="min-w-0">
-          <h2 className="kds-panel__title">Live menu</h2>
-          <p className="kds-panel__lead">
-            {grouped.categories.length} categories · {totalItems} items
-            {realtimeDegraded ? (
-              <span className="text-warning"> · syncing periodically</span>
-            ) : null}
-          </p>
+    <aside className="kds-live-menu min-w-0 max-w-full glass-card kds-panel overflow-hidden">
+      {!hidePanelHeader ? (
+        <div className="kds-panel__header">
+          <div className="min-w-0">
+            <h2 className="kds-panel__title">Live menu</h2>
+            <p className="kds-panel__lead">
+              {grouped.categories.length} categories · {totalItems} items
+              {menuRealtime === "degraded" ? (
+                <span className="text-warning"> · syncing periodically</span>
+              ) : null}
+            </p>
+          </div>
+          <MenuRealtimeBadge state={menuRealtime} />
         </div>
-        <div className="flex items-center gap-1.5 rounded-md border border-line bg-elev px-2 py-1">
-          <span
-            className={cn(
-              realtimeDegraded
-                ? "inline-block h-2 w-2 shrink-0 rounded-full bg-warning"
-                : "pulse-dot"
-            )}
-          />
-          <span className="text-[10px] font-medium uppercase tracking-wider text-muted">
-            {realtimeDegraded ? "Sync" : "Live"}
-          </span>
+      ) : (
+        <div className="flex items-center justify-end gap-2 border-b border-line px-3 py-2 sm:px-4">
+          <MenuRealtimeBadge state={menuRealtime} />
         </div>
-      </div>
+      )}
+
+      {menuUpdatedVisible ? (
+        <p className="menu-setup-menu-changed" role="status">
+          Menu updated — the phone agent uses your latest items.
+        </p>
+      ) : null}
 
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-3">
         {grouped.categories.length === 0 ? (
@@ -376,19 +406,19 @@ export function LiveMenuSidebar({
                   >
                     <div
                       className={cn(
-                        "flex items-center justify-between rounded-md px-3 py-2 transition-colors",
+                        "kds-live-menu__category flex min-w-0 items-center justify-between gap-2 rounded-md px-3 py-2 transition-colors",
                         flashedIds.has(cat.id) && "flash-row"
                       )}
                     >
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono-tabular text-subtle">
+                      <div className="flex min-w-0 flex-1 items-center gap-2">
+                        <span className="shrink-0 text-micro font-mono-tabular text-subtle">
                           {String(cat.sort_order).padStart(2, "0")}
                         </span>
-                        <h3 className="text-[13px] font-semibold uppercase tracking-wider text-ink">
+                        <h3 className="kds-live-menu__cat-name min-w-0 text-[13px] font-semibold uppercase tracking-wider text-ink">
                           {cat.name}
                         </h3>
                       </div>
-                      <span className="text-[11px] font-mono-tabular text-subtle">
+                      <span className="text-caption font-mono-tabular text-subtle">
                         {catItems.length}
                       </span>
                     </div>
@@ -411,18 +441,18 @@ export function LiveMenuSidebar({
                                 flashedIds.has(item.id) && "flash-row"
                               )}
                             >
-                              <div className="flex items-baseline justify-between gap-3">
+                              <div className="kds-live-menu__item-row flex min-w-0 items-baseline justify-between gap-2">
                                 <div className="min-w-0 flex-1">
-                                  <div className="flex items-center gap-2">
+                                  <div className="flex min-w-0 items-center gap-2">
                                     <span
                                       className={cn(
-                                        "block h-1.5 w-1.5 rounded-full",
+                                        "block h-1.5 w-1.5 shrink-0 rounded-full",
                                         item.is_available ? "bg-success" : "bg-subtle"
                                       )}
                                     />
                                     <span
                                       className={cn(
-                                        "truncate text-[13px]",
+                                        "kds-live-menu__item-name min-w-0 text-[13px] max-sm:[overflow-wrap:anywhere] sm:truncate",
                                         item.is_available ? "text-ink" : "text-subtle"
                                       )}
                                     >
@@ -430,12 +460,12 @@ export function LiveMenuSidebar({
                                     </span>
                                   </div>
                                   {item.description && (
-                                    <p className="mt-0.5 line-clamp-1 pl-3.5 text-[11px] text-subtle">
+                                    <p className="mt-0.5 line-clamp-1 pl-3.5 text-caption text-subtle">
                                       {item.description}
                                     </p>
                                   )}
                                   {modGroups.length > 0 && (
-                                    <p className="mt-1 pl-3.5 text-[10px] font-medium uppercase tracking-wider text-subtle">
+                                    <p className="mt-1 pl-3.5 text-micro font-medium uppercase tracking-wider text-subtle">
                                       {modGroups.length} group
                                       {modGroups.length === 1 ? "" : "s"}
                                       {modGroups.length === 1
@@ -444,7 +474,7 @@ export function LiveMenuSidebar({
                                     </p>
                                   )}
                                 </div>
-                                <span className="font-mono-tabular text-[13px] text-muted">
+                                <span className="kds-live-menu__item-price shrink-0 font-mono-tabular text-[13px] text-muted">
                                   {formatPrice(item.price)}
                                 </span>
                               </div>
@@ -464,19 +494,40 @@ export function LiveMenuSidebar({
   );
 }
 
+function MenuRealtimeBadge({
+  state,
+}: {
+  state: "connecting" | "live" | "degraded";
+}) {
+  const label =
+    state === "live" ? "Live" : state === "degraded" ? "Sync" : "Connecting…";
+  return (
+    <div
+      className="flex items-center gap-1.5 rounded-md border border-line bg-elev px-2 py-1"
+      role="status"
+      aria-live="polite"
+    >
+      <span
+        className={cn(
+          "inline-block h-2 w-2 shrink-0 rounded-full",
+          state === "live" && "pulse-dot",
+          state === "degraded" && "bg-warning",
+          state === "connecting" && "bg-subtle"
+        )}
+        aria-hidden
+      />
+      <span className="text-micro font-medium uppercase tracking-wider text-muted">
+        {label}
+      </span>
+    </div>
+  );
+}
+
 function EmptyMenu() {
   return (
-    <div className="flex h-full min-h-[280px] flex-col items-center justify-center px-6 text-center">
-      <div className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-card shadow-sm">
-        <svg viewBox="0 0 24 24" className="h-5 w-5 text-subtle" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M4 6h16M4 12h10M4 18h16" />
-        </svg>
-      </div>
-      <p className="mt-3 text-sm font-medium">Menu is empty</p>
-      <p className="mt-1 text-xs text-muted">
-        Upload a menu image to populate this view in real time.
-      </p>
-    </div>
+    <KdsEmptyStatePanel tone="calm" icon="menu" title="Menu is empty">
+      Scan a menu photo in step 1. Items and categories appear here as you save.
+    </KdsEmptyStatePanel>
   );
 }
 

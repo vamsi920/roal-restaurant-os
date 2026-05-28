@@ -13,9 +13,8 @@ export const PRIVACY_PAGE_COPY = {
   },
   updated: "Last updated: May 2026",
   paragraphs: [
-    "ROAL collects guest names and phone numbers to run pickup orders for your restaurant—not to build unrelated marketing lists. Data stays scoped to your account and the tickets your team manages.",
-    "Staff sign in with individual logins. We do not sell your menu, orders, or guest contact details to third parties.",
-    "This draft will be replaced with a full policy covering retention, subprocessors, and data requests before wider launch. Pilot customers receive updates when that version ships.",
+    "ROAL uses guest name and phone to run pickup orders for your restaurant—not for unrelated marketing. Data stays in your account.",
+    "Full policy (retention, subprocessors, requests) ships before general launch. Pilots get updates when it is ready.",
   ],
   contactLead: "Privacy questions for your pilot?",
 } as const;
@@ -31,9 +30,8 @@ export const TERMS_PAGE_COPY = {
   },
   updated: "Last updated: May 2026",
   paragraphs: [
-    "ROAL is offered as a pilot for independent restaurants. Pricing, success fees, void/refund handling, and support windows are agreed in writing before you forward live guest calls—not inferred from this page.",
-    "You keep control of your menu, phone forwarding, and staff handoffs. ROAL assists pickup orders; your team remains responsible for fulfillment and guest service on the pass.",
-    "A signed or written pilot agreement supersedes this draft when terms conflict. We will publish complete terms of service before general availability.",
+    "Pilot pricing, success fees, and support are agreed in writing before live calls—not inferred from this page.",
+    "Written pilot terms supersede this draft. Full terms publish before general availability.",
   ],
   contactLead: "Questions about pilot terms?",
 } as const;

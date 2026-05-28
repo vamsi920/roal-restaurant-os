@@ -1,9 +1,8 @@
 import { HOME_HOW_FLOW, type HowFlowBeatId } from "@/lib/landing/home-how-flow-copy";
 import type { getHowFlowVisualData } from "@/lib/landing/home-how-flow-data";
+import { HowFlowConnectVisual } from "./how-flow-connect-visual";
 import { HowFlowOrderVisual } from "./how-flow-order-visual";
-import { HowFlowRoalVisual } from "./how-flow-roal-visual";
 import { HowFlowScanVisual } from "./how-flow-scan-visual";
-import { HowFlowTicketVisual } from "./how-flow-ticket-visual";
 
 type VisualData = ReturnType<typeof getHowFlowVisualData>;
 
@@ -16,10 +15,9 @@ type Props = {
 };
 
 export const HOW_FLOW_BEAT_ORDER: HowFlowBeatId[] = [
-  "scan-menu",
-  "roal-answers",
-  "guest-orders",
-  "ticket-lands",
+  "share-menu",
+  "connect-line",
+  "kitchen-orders",
 ];
 
 function StagePane({
@@ -39,12 +37,11 @@ function StagePane({
       data-beat={beatId}
       aria-hidden={!isActive}
     >
-      {beatId === "scan-menu" ? <HowFlowScanVisual model={visuals.scan} /> : null}
-      {beatId === "roal-answers" ? <HowFlowRoalVisual greeting={visuals.roalGreeting} /> : null}
-      {beatId === "guest-orders" ? (
+      {beatId === "share-menu" ? <HowFlowScanVisual model={visuals.scan} /> : null}
+      {beatId === "connect-line" ? <HowFlowConnectVisual /> : null}
+      {beatId === "kitchen-orders" ? (
         <HowFlowOrderVisual lines={visuals.orderLines} ticket={visuals.ticket} />
       ) : null}
-      {beatId === "ticket-lands" ? <HowFlowTicketVisual model={visuals.ticket} /> : null}
     </div>
   );
 }

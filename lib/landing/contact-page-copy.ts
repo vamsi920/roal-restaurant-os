@@ -7,88 +7,59 @@ export { CONTACT_PILOT_EMAIL } from "@/lib/landing/contact-mailto";
 
 export const CONTACT_PAGE_COPY = {
   seo: {
-    title: "Contact ROAL — Send Your Menu, See Phone Orders",
+    title: "Book a ROAL Demo — Contact",
     description:
-      "Send your menu and rush-hour context—we'll show where calls become orders on your kitchen display. Email or short form; sample demo on /demo.",
+      "Book a short demo: email hello@getroal.com or use the two-field form to open a prefilled message. Pickup calls, live menu, kitchen tickets.",
   },
   hero: {
-    eyebrow: "Contact",
-    title: "Send your menu. We'll show where calls become orders.",
-    description:
-      "Share your restaurant and email—we reply with how pickup calls could land on your pass, not a generic script.",
+    eyebrow: "Book a demo",
+    title: "Book a short ROAL walkthrough",
+    description: "Email opens with your restaurant and reply address.",
   },
   form: {
-    title: "Send your menu",
-    description: "Three fields. Opens your email app with answers filled in—nothing stored on our servers yet.",
-    staticNotice:
-      "Preview form: submissions are not saved. Tap the button to mail us, or start self-serve setup tonight.",
-    submitLabel: "Email ROAL with these details",
+    title: "Book a demo",
+    description: "Two fields. Opens your email app—nothing stored on our servers yet.",
+    staticNotice: "Preview: tap Book a demo to mail us, or use the button below.",
+    submitLabel: "Book a demo",
     fields: {
       restaurant: {
         label: "Restaurant",
         placeholder: "Harbor Poke · Austin, TX",
       },
       email: { label: "Your email", placeholder: "you@restaurant.com" },
-      rushNotes: {
-        label: "Rush-hour phone line (optional)",
-        placeholder: "e.g. 15–25 pickup calls 6–8 PM · printed menu ready to photograph",
-      },
     },
   },
   whatToExpect: {
-    title: "What happens next",
+    title: "After you email",
     steps: [
       {
-        title: "You send your menu context",
-        body: "Name, email, and optional rush notes—enough to see if ROAL fits your pickup line.",
+        title: "We reply",
+        body: "How pickup calls become kitchen tickets and pilot pricing.",
       },
       {
-        title: "We map calls → orders",
-        body: "A short email on how answered rings could become tickets on your kitchen screen, with success-based pricing in writing.",
-      },
-      {
-        title: "Live walkthrough if helpful",
-        body: "Optional call on your items—or explore the static sample on the demo page first.",
+        title: "Optional walkthrough",
+        body: "Short call on your menu—or /demo first.",
       },
     ],
-  },
-  demoAside: {
-    title: "Want the sample call first?",
-    description:
-      "Transcript, call flow, and kitchen ticket preview on the demo page—no form required.",
-    cta: PUBLIC_CTA.hearDemo,
-  },
-  selfServe: {
-    title: "Prefer to start tonight?",
-    description:
-      "Scan your menu, connect voice, and run a test call—no ticket required.",
-    cta: PUBLIC_CTA.signUpOnboarding,
   },
   fit: {
     titleId: "contact-fit-heading",
-    title: "Good fit for ROAL today",
-    description: "Pickup orders from the phone—not website chat or delivery-app tablets.",
-    items: [
-      "Busy pickup line during rush",
-      "Printed menu you can photograph",
-      "Staff who can glance at a kitchen tablet",
-      "Overflow or after-hours calls you want answered",
-    ],
+    title: "Good fit today",
+    items: ["Busy pickup line", "Menu you can photograph"],
   },
   close: {
     titleId: "contact-close-heading",
-    eyebrow: "Next step",
-    title: "Send your menu—we'll take it from there",
-    description: `Use the form above or email ${CONTACT_PILOT_EMAIL} with your restaurant name and rush-hour context.`,
-    demoNote: "Sample call preview:",
+    eyebrow: "Book a demo",
+    title: "Email us to book your walkthrough",
+    description: `Opens ${CONTACT_PILOT_EMAIL} with a prefilled subject—or use the form above.`,
     demoHref: "/demo",
-    demoLabel: "demo page",
+    demoLabel: "Hear a sample call",
   },
 } as const;
 
 export const CONTACT_CTA = {
-  form: PUBLIC_CTA.contactForm,
-  mailto: PUBLIC_CTA.bookDemoMailto,
+  bookDemo: PUBLIC_CTA.bookDemoMailto,
+  form: { href: "#contact-form", label: "Use the email form" },
   demo: PUBLIC_CTA.hearDemo,
   signup: PUBLIC_CTA.signUpOnboarding,
 } as const;

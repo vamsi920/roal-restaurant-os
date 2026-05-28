@@ -36,14 +36,38 @@ import type {
   RestaurantProfile,
 } from "@/lib/types";
 
+export async function loadRestaurantAnalytics(
+  supabase: SupabaseClient,
+  input: {
+    organizationId: string;
+    organizationName: string;
+    restaurantId: string;
+    restaurantName: string;
+    rangeKey?: AnalyticsRangeKey | string | string[];
+  }
+): Promise<AnalyticsSnapshot> {
+  return loadOrganizationAnalytics(supabase, {
+    organizationId: input.organizationId,
+    organizationName: input.organizationName,
+    restaurantId: input.restaurantId,
+    restaurantName: input.restaurantName,
+    rangeKey: input.rangeKey,
+  });
+}
+
 export async function loadOrganizationAnalytics(
   supabase: SupabaseClient,
   input: {
     organizationId: string;
     organizationName: string;
+    restaurantId?: string;
+    restaurantName?: string;
     rangeKey?: AnalyticsRangeKey | string | string[];
   }
 ): Promise<AnalyticsSnapshot> {
+  const scope: AnalyticsSnapshot["scope"] = input.restaurantId
+    ? "restaurant"
+    : "organization";
   const rangeKey = parseAnalyticsRangeKey(input.rangeKey);
   const { since, until } = analyticsRangeBounds(rangeKey);
   const sinceIso = since.toISOString();
@@ -59,10 +83,32 @@ export async function loadOrganizationAnalytics(
   if (restError) throw new Error(restError.message);
 
   const restList = (restaurants ?? []) as Pick<Restaurant, "id" | "name">[];
-  const restaurantIds = restList.map((r) => r.id);
+  const scopedRestList = input.restaurantId
+    ? restList.filter((r) => r.id === input.restaurantId)
+    : restList;
+  const restaurantIds = scopedRestList.map((r) => r.id);
   const restaurantIdSet = new Set(restaurantIds);
   if (restaurantIds.length === 0) {
-    return emptySnapshot(input, rangeKey, sinceIso, untilIso, dayKeys);
+    return emptySnapshot(input, rangeKey, sinceIso, untilIso, dayKeys, scope);
+  }
+
+  const usageQuery = supabase
+    .from("usage_events")
+    .select("event_type, occurred_at, restaurant_id, metadata")
+    .eq("organization_id", input.organizationId)
+    .gte("occurred_at", sinceIso)
+    .lte("occurred_at", untilIso);
+
+  const importsQuery = supabase
+    .from("menu_imports")
+    .select("extraction_status, created_at")
+    .eq("organization_id", input.organizationId)
+    .gte("created_at", sinceIso)
+    .lte("created_at", untilIso);
+
+  if (input.restaurantId) {
+    usageQuery.eq("restaurant_id", input.restaurantId);
+    importsQuery.eq("restaurant_id", input.restaurantId);
   }
 
   const [
@@ -73,12 +119,7 @@ export async function loadOrganizationAnalytics(
     categoriesResult,
     profilesResult,
   ] = await Promise.all([
-    supabase
-      .from("usage_events")
-      .select("event_type, occurred_at, restaurant_id, metadata")
-      .eq("organization_id", input.organizationId)
-      .gte("occurred_at", sinceIso)
-      .lte("occurred_at", untilIso),
+    usageQuery,
     supabase
       .from("draft_orders")
       .select(
@@ -93,12 +134,7 @@ export async function loadOrganizationAnalytics(
       .in("restaurant_id", restaurantIds)
       .gte("created_at", sinceIso)
       .lte("created_at", untilIso),
-    supabase
-      .from("menu_imports")
-      .select("extraction_status, created_at")
-      .eq("organization_id", input.organizationId)
-      .gte("created_at", sinceIso)
-      .lte("created_at", untilIso),
+    importsQuery,
     supabase
       .from("categories")
       .select("id, restaurant_id")
@@ -195,7 +231,7 @@ export async function loadOrganizationAnalytics(
   const receiptsByRest = countReceiptsByRestaurant(receipts);
   const prepByRest = prepMinutesByRestaurant(completedOrders);
 
-  const byRestaurant: RestaurantAnalyticsRow[] = restList.map((r) => {
+  const byRestaurant: RestaurantAnalyticsRow[] = scopedRestList.map((r) => {
     const usageSlice = usageByRest.get(r.id) ?? { voice: 0, completed: 0 };
     const restCompleted = completedOrders.filter(
       (o) => o.restaurant_id === r.id
@@ -227,10 +263,13 @@ export async function loadOrganizationAnalytics(
   return {
     organizationId: input.organizationId,
     organizationName: input.organizationName,
+    scope,
+    restaurantId: input.restaurantId ?? null,
+    restaurantName: input.restaurantName ?? scopedRestList[0]?.name ?? null,
     rangeKey,
     since: sinceIso,
     until: untilIso,
-    restaurantCount: restList.length,
+    restaurantCount: scopedRestList.length,
     summary: {
       voiceOrders,
       ordersFinalized,
@@ -257,15 +296,23 @@ function emptySnapshot(
   input: {
     organizationId: string;
     organizationName: string;
+    restaurantId?: string;
+    restaurantName?: string;
   },
   rangeKey: AnalyticsRangeKey,
   since: string,
   until: string,
-  dayKeys: string[]
+  dayKeys: string[],
+  scope: AnalyticsSnapshot["scope"] = input.restaurantId
+    ? "restaurant"
+    : "organization"
 ): AnalyticsSnapshot {
   return {
     organizationId: input.organizationId,
     organizationName: input.organizationName,
+    scope,
+    restaurantId: input.restaurantId ?? null,
+    restaurantName: input.restaurantName ?? null,
     rangeKey,
     since,
     until,

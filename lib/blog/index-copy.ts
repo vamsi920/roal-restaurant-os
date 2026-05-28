@@ -2,14 +2,14 @@
 
 export const BLOG_INDEX_COPY = {
   hero: {
-    eyebrow: "Journal",
+    eyebrow: "Missed calls & phone orders",
     title: "The ROAL Journal",
     description:
-      "Short guides for owners on pickup phones, live-menu phone ordering, and kitchen tickets.",
+      "Short guides on missed pickup calls, phone ordering, and tickets on your kitchen screen.",
   },
   featured: {
     titleId: "blog-featured-heading",
-    label: "Featured reads",
+    label: "Start here",
   },
   allPosts: {
     titleId: "blog-all-heading",
@@ -28,7 +28,7 @@ export const BLOG_INDEX_COPY = {
 export const BLOG_INDEX_METADATA = {
   title: "The ROAL Journal — ROAL",
   description:
-    "Practical guides for restaurant owners: missed phone calls, pickup phone ordering, live menus, and kitchen tickets.",
+    "Guides for restaurant owners: missed pickup calls, phone orders, live menus, and kitchen tickets.",
 } as const;
 
 export const BLOG_FEATURED_COUNT = 3;

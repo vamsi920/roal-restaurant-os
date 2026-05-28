@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { buildPublicPageMetadata } from "@/lib/seo/public-open-graph";
 
 const HOME_SEO = {
-  title: "ROAL — More pickup calls answered during rush",
+  title: "ROAL — Never miss a rush-hour call",
   description:
-    "Answer more rush-hour pickup calls from your live menu and send tickets to your kitchen while you run the floor.",
+    "ROAL answers pickup calls, takes the order, and sends it to your kitchen. $0.90 per successful order.",
 } as const;
 
 export function buildHomePageMetadata(): Metadata {

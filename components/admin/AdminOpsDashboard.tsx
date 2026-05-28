@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { AdminOpsSnapshot, OpsErrorRow } from "@/lib/admin/types";
+import { formatMembershipRole } from "@/lib/auth/roles";
+import type { MembershipRole } from "@/lib/types";
 import type { HealthCheckResult } from "@/lib/observability/health";
 import { cn } from "@/lib/cn";
 
@@ -9,17 +11,17 @@ type Props = {
 
 export function AdminOpsDashboard({ snapshot }: Props) {
   return (
-    <div className="space-y-8 sm:space-y-10">
-      <header className="min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
-          Admin / Ops
+    <div className="admin-ops-dashboard min-w-0 max-w-full space-y-8 overflow-x-hidden sm:space-y-10">
+      <header className="admin-ops-dashboard__header min-w-0">
+        <p className="type-eyebrow text-accent">
+          Platform support
         </p>
         <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Support console
+          Tenant health
         </h1>
         <p className="mt-2 max-w-2xl text-pretty text-sm text-muted">
-          Tenant health for organizations you administer. No API keys or secrets
-          are shown here.
+          Internal ROAL view of customer orgs, integrations, and recent failures.
+          No API keys or secrets are shown here.
         </p>
         <p className="mt-1 text-xs text-subtle">
           Snapshot {formatWhen(snapshot.generatedAt)} ·{" "}
@@ -36,7 +38,7 @@ export function AdminOpsDashboard({ snapshot }: Props) {
       ))}
 
       {snapshot.organizations.length === 0 ? (
-        <p className="text-sm text-muted">No admin organizations found.</p>
+        <p className="text-sm text-muted">No organizations in this snapshot.</p>
       ) : null}
     </div>
   );
@@ -50,7 +52,7 @@ function HealthSection({
   envFlags: AdminOpsSnapshot["envFlags"];
 }) {
   return (
-    <section className="rounded-xl border border-line bg-card p-5 shadow-sm">
+    <section className="admin-ops-dashboard__health min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-sm font-semibold text-ink">Platform health</h2>
         <StatusPill
@@ -64,12 +66,12 @@ function HealthSection({
           }
         />
       </div>
-      <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="admin-ops-dashboard__health-grid mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(health.checks).map(([key, check]) => (
           <HealthCheckCard key={key} name={key} check={check} />
         ))}
       </div>
-      <p className="mt-4 text-xs text-muted">
+      <p className="mt-4 text-xs text-muted [overflow-wrap:anywhere]">
         Env flags: Supabase {flag(envFlags.supabase)} · Service role{" "}
         {flag(envFlags.serviceRole)} · Gemini {flag(envFlags.gemini)} ·
         ElevenLabs {flag(envFlags.elevenlabs)} · Agent tools{" "}
@@ -89,12 +91,12 @@ function OrganizationSection({
   );
 
   return (
-    <section className="space-y-4">
-      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-line pb-3">
+    <section className="admin-ops-dashboard__org min-w-0 space-y-4">
+      <div className="flex flex-col gap-2 border-b border-line pb-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-3">
         <div>
           <h2 className="text-lg font-semibold text-ink">{org.name}</h2>
           <p className="mt-0.5 text-xs text-muted">
-            Your role: {org.role}
+            Membership: {formatMembershipRole(org.role as MembershipRole)}
             {org.billingPlan ? ` · Plan ${org.billingPlan}` : ""}
             {org.subscriptionStatus
               ? ` · ${org.subscriptionStatus}`
@@ -109,7 +111,7 @@ function OrganizationSection({
         </Link>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="admin-ops-dashboard__stats grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <MiniStat label="Locations" value={String(org.restaurants.length)} />
         <MiniStat
           label="Voice orders (30d)"
@@ -129,14 +131,14 @@ function OrganizationSection({
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-line bg-card p-4 shadow-sm">
+      <div className="admin-ops-dashboard__panels grid min-w-0 gap-4 lg:grid-cols-2">
+        <div className="admin-ops-dashboard__restaurants min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm">
           <h3 className="text-sm font-semibold text-ink">Restaurants & sync</h3>
           {org.restaurants.length === 0 ? (
             <p className="mt-4 text-sm text-muted">No restaurants.</p>
           ) : (
-            <div className="mt-3 overflow-x-auto">
-              <table className="w-full min-w-[520px] text-left text-sm">
+            <div className="admin-ops-dashboard__restaurant-table dashboard-table mt-3 min-w-0">
+              <table className="w-full min-w-0 text-left text-sm xl:min-w-[520px]">
                 <thead className="text-xs uppercase tracking-wider text-subtle">
                   <tr className="border-b border-line">
                     <th className="py-2 pr-2 font-medium">Location</th>
@@ -148,7 +150,7 @@ function OrganizationSection({
                 <tbody>
                   {org.restaurants.map((r) => (
                     <tr key={r.id} className="border-b border-line/60">
-                      <td className="py-2 pr-2">
+                      <td data-label="Location" className="py-2 pr-2">
                         <Link
                           href={`/dashboard/restaurants/${r.id}`}
                           className="font-medium text-ink hover:text-accent"
@@ -156,20 +158,20 @@ function OrganizationSection({
                           {r.name}
                         </Link>
                       </td>
-                      <td className="py-2 pr-2 text-muted">
+                      <td data-label="Agent" className="py-2 pr-2 text-muted">
                         {r.sync.agentConfigured
                           ? r.sync.agentIdSuffix ?? "Set"
                           : "—"}
                       </td>
-                      <td className="py-2 pr-2">
+                      <td data-label="Sync" className="py-2 pr-2">
                         <SyncPill status={r.sync.status} />
                       </td>
-                      <td className="py-2 text-xs text-muted">
+                      <td data-label="Last sync" className="py-2 text-xs text-muted">
                         {r.sync.lastSyncAt
                           ? formatWhen(r.sync.lastSyncAt)
                           : "—"}
                         {r.sync.lastSyncError ? (
-                          <p className="mt-0.5 text-danger">
+                          <p className="mt-0.5 text-danger [overflow-wrap:anywhere]">
                             {r.sync.lastSyncError}
                           </p>
                         ) : null}
@@ -182,12 +184,12 @@ function OrganizationSection({
           )}
         </div>
 
-        <div className="rounded-xl border border-line bg-card p-4 shadow-sm">
+        <div className="admin-ops-dashboard__errors min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm">
           <h3 className="text-sm font-semibold text-ink">Recent errors (14d)</h3>
           {org.recentErrors.length === 0 ? (
             <p className="mt-4 text-sm text-muted">No recent failures logged.</p>
           ) : (
-            <ul className="mt-3 max-h-80 space-y-2 overflow-y-auto">
+            <ul className="admin-ops-dashboard__error-list mt-3 max-h-80 space-y-2 overflow-y-auto overscroll-y-contain">
               {org.recentErrors.map((row) => (
                 <ErrorRowItem key={row.id} row={row} />
               ))}
@@ -201,15 +203,15 @@ function OrganizationSection({
 
 function ErrorRowItem({ row }: { row: OpsErrorRow }) {
   return (
-    <li className="rounded-lg border border-line bg-elev px-3 py-2 text-sm">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="font-medium text-ink">{row.title}</span>
-        <span className="text-[10px] uppercase tracking-wider text-subtle">
+    <li className="admin-ops-dashboard__error-row min-w-0 rounded-lg border border-line bg-elev px-3 py-2 text-sm">
+      <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
+        <span className="font-medium text-ink [overflow-wrap:anywhere]">{row.title}</span>
+        <span className="text-micro uppercase tracking-wider text-subtle">
           {row.source.replace("_", " ")}
         </span>
       </div>
-      <p className="mt-1 text-xs text-muted">{row.detail}</p>
-      <p className="mt-1 text-[10px] text-subtle">
+      <p className="mt-1 text-xs text-muted [overflow-wrap:anywhere]">{row.detail}</p>
+      <p className="mt-1 text-micro text-subtle">
         {formatWhen(row.occurredAt)}
         {row.restaurantName ? ` · ${row.restaurantName}` : ""}
       </p>
@@ -225,8 +227,8 @@ function HealthCheckCard({
   check: HealthCheckResult;
 }) {
   return (
-    <div className="rounded-lg border border-line bg-elev px-3 py-2">
-      <p className="text-[10px] uppercase tracking-wider text-subtle">
+    <div className="admin-ops-dashboard__health-check min-w-0 rounded-lg border border-line bg-elev px-3 py-2">
+      <p className="text-micro uppercase tracking-wider text-subtle">
         {name.replace(/_/g, " ")}
       </p>
       <div className="mt-1 flex items-center gap-2">
@@ -245,7 +247,7 @@ function HealthCheckCard({
         ) : null}
       </div>
       {check.message ? (
-        <p className="mt-1 text-xs text-muted">{check.message}</p>
+        <p className="mt-1 text-xs text-muted [overflow-wrap:anywhere]">{check.message}</p>
       ) : null}
     </div>
   );
@@ -272,7 +274,7 @@ function StatusPill({
   return (
     <span
       className={cn(
-        "inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+        "inline-flex rounded-full px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
         tone === "ok" && "bg-success/15 text-success",
         tone === "warn" && "bg-warning/15 text-amber-900",
         tone === "bad" && "bg-danger/10 text-danger",
@@ -286,8 +288,8 @@ function StatusPill({
 
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-line bg-card px-3 py-2 shadow-sm">
-      <p className="text-[10px] uppercase tracking-wider text-subtle">{label}</p>
+    <div className="admin-ops-dashboard__mini-stat min-w-0 rounded-xl border border-line bg-card px-3 py-2 shadow-sm">
+      <p className="text-micro uppercase tracking-wider text-subtle">{label}</p>
       <p className="mt-0.5 text-lg font-semibold text-ink">{value}</p>
     </div>
   );

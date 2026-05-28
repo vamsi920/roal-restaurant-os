@@ -5,7 +5,6 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   getOrderActionsForStatus,
   normalizeOrderStatus,
-  ORDER_ACTION_LABELS,
   ORDER_STATUS_LABELS,
   STATUS_BADGE_CLASS,
   type OrderAction,
@@ -30,6 +29,7 @@ import type {
   PhoneOrderReceiptRow,
 } from "@/lib/types";
 import { cn } from "@/lib/cn";
+import { OrderActionButton } from "./order-card-parts";
 
 export type OrderDetailSelection =
   | { kind: "draft"; order: DraftOrderRow }
@@ -63,6 +63,7 @@ export function OrderDetailModal({
   onDismissError,
 }: Props) {
   const printRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
   const [printError, setPrintError] = useState<string | null>(null);
 
   const menuCtx = useMemo(
@@ -103,7 +104,7 @@ export function OrderDetailModal({
       lineItems,
       totals,
       status: null,
-      statusLabel: "Receipt",
+      statusLabel: "Done",
       badgeClass: "bg-elev text-muted",
       history: buildReceiptStatusHistory(receipt.created_at),
       customerName: receipt.customer_name,
@@ -125,6 +126,12 @@ export function OrderDetailModal({
       document.body.style.overflow = prev;
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!open || !detail) return;
+    const frame = requestAnimationFrame(() => closeRef.current?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [open, detail]);
 
   function handlePrint() {
     if (!printRef.current || !detail) return;
@@ -162,7 +169,12 @@ export function OrderDetailModal({
 
   return (
     <Transition appear show={open && !!detail} as={Fragment}>
-      <Dialog as="div" className="relative z-[60]" onClose={onClose}>
+      <Dialog
+        as="div"
+        className="kds-order-detail-dialog kds-modal-layer"
+        onClose={onClose}
+        aria-labelledby="kds-order-detail-title"
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-200"
@@ -175,8 +187,8 @@ export function OrderDetailModal({
           <div className="fixed inset-0 bg-ink/30 backdrop-blur-sm" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto overscroll-contain">
-          <div className="flex min-h-full items-end justify-center sm:items-center sm:p-4">
+        <div className="kds-order-detail-dialog__viewport fixed inset-0 overflow-y-auto overscroll-contain">
+          <div className="kds-order-detail-dialog__position flex min-h-full items-end justify-center sm:items-center sm:p-4">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-200"
@@ -186,32 +198,40 @@ export function OrderDetailModal({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-2 sm:scale-[0.98]"
             >
-              <Dialog.Panel className="glass-card flex max-h-[min(92dvh,720px)] w-full flex-col overflow-hidden shadow-xl sm:max-h-[min(88dvh,680px)] sm:max-w-lg sm:rounded-2xl">
+              <Dialog.Panel className="kds-order-detail-dialog__panel glass-card flex max-h-[min(92dvh,720px)] w-full max-w-full flex-col overflow-hidden rounded-t-2xl shadow-xl sm:max-h-[min(88dvh,680px)] sm:max-w-lg sm:rounded-2xl">
                 {detail ? (
                   <>
-                    <div className="flex shrink-0 items-start justify-between gap-3 border-b border-line px-4 py-4 sm:px-5">
+                    <div
+                      className="kds-order-detail-dialog__grabber sm:hidden"
+                      aria-hidden
+                    />
+                    <div className="kds-order-detail-dialog__header flex shrink-0 items-start justify-between gap-3 border-b border-line px-4 pb-4 pt-3 sm:px-5 sm:py-4">
                       <div className="min-w-0">
-                        <Dialog.Title className="text-base font-semibold tracking-tight">
-                          Order details
+                        <Dialog.Title
+                          id="kds-order-detail-title"
+                          className="text-lg font-semibold tracking-tight"
+                        >
+                          Order summary
                         </Dialog.Title>
-                        <p className="mt-0.5 truncate text-xs text-muted">
-                          {restaurantName}
+                        <p className="mt-0.5 truncate text-sm text-muted">
+                          {restaurantName} · Pickup
                         </p>
                       </div>
                       <div className="flex shrink-0 items-center gap-2">
                         <span
                           className={cn(
-                            "rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+                            "rounded-md px-2.5 py-1 text-xs font-semibold",
                             detail.badgeClass
                           )}
                         >
                           {detail.statusLabel}
                         </span>
                         <button
+                          ref={closeRef}
                           type="button"
                           onClick={onClose}
-                          className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-elev text-muted hover:text-ink"
-                          aria-label="Close"
+                          className="kds-order-detail-dialog__close kds-thumb-btn grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-line bg-elev text-muted hover:text-ink"
+                          aria-label="Close order summary"
                         >
                           <svg
                             viewBox="0 0 24 24"
@@ -227,86 +247,58 @@ export function OrderDetailModal({
                       </div>
                     </div>
 
-                    <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5">
-                      <section className="space-y-3">
-                        <h3 className="text-[10px] font-medium uppercase tracking-wider text-subtle">
-                          Customer
-                        </h3>
-                        <dl className="grid gap-2 text-sm">
-                          <div>
-                            <dt className="text-[11px] text-muted">Name</dt>
-                            <dd className="font-medium text-ink">
-                              {detail.customerName ?? "—"}
-                            </dd>
-                          </div>
-                          <div>
-                            <dt className="text-[11px] text-muted">Phone</dt>
-                            <dd className="font-mono-tabular text-ink">
-                              {detail.customerPhone ? (
-                                <a
-                                  href={`tel:${detail.customerPhone.replace(/[^\d+]/g, "")}`}
-                                  className="text-accent hover:underline"
-                                >
-                                  {detail.customerPhone}
-                                </a>
-                              ) : (
-                                "—"
-                              )}
-                            </dd>
-                          </div>
-                          <div>
-                            <dt className="text-[11px] text-muted">Session</dt>
-                            <dd className="break-all font-mono text-[11px] text-subtle">
-                              {detail.sessionId}
-                            </dd>
-                          </div>
-                        </dl>
+                    <div className="kds-order-detail-dialog__body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5">
+                      <section>
+                        <h3 className="text-sm font-semibold text-ink">Customer</h3>
+                        <p className="mt-2 text-base font-semibold text-ink">
+                          {detail.customerName?.trim() || "Guest"}
+                        </p>
+                        {detail.customerPhone ? (
+                          <a
+                            href={`tel:${detail.customerPhone.replace(/[^\d+]/g, "")}`}
+                            className="mt-1 inline-block text-base text-accent hover:underline"
+                          >
+                            {detail.customerPhone}
+                          </a>
+                        ) : (
+                          <p className="mt-1 text-sm text-muted">No phone on file</p>
+                        )}
                       </section>
 
                       <section className="mt-6">
-                        <h3 className="text-[10px] font-medium uppercase tracking-wider text-subtle">
-                          Items
-                        </h3>
+                        <h3 className="text-sm font-semibold text-ink">Items</h3>
                         {detail.lineItems.length === 0 ? (
-                          <p className="mt-2 text-sm text-muted">No line items</p>
+                          <p className="mt-2 text-sm text-muted">No items yet</p>
                         ) : (
-                          <ul className="mt-2 divide-y divide-line">
+                          <ul className="mt-3 divide-y divide-line">
                             {detail.lineItems.map((line, i) => {
                               const est = detail.totals.lines[i];
                               return (
-                                <li key={i} className="py-3">
+                                <li key={i} className="py-3 first:pt-0">
                                   <div className="flex items-start justify-between gap-3">
-                                    <div className="min-w-0">
-                                      <p className="text-sm font-medium text-ink">
-                                        <span className="font-mono-tabular text-muted">
-                                          {line.quantity}×
-                                        </span>{" "}
-                                        {line.name}
-                                        {!est?.matchedMenu && est?.unitPrice == null ? (
-                                          <span className="ml-1 text-[10px] font-normal text-warning">
-                                            (price unknown)
-                                          </span>
-                                        ) : null}
+                                    <div className="kds-order-detail-dialog__line min-w-0">
+                                      <p className="text-sm font-medium text-ink [overflow-wrap:anywhere]">
+                                        {line.quantity}× {line.name}
                                       </p>
                                       {line.customizations.length > 0 ? (
-                                        <ul className="mt-1 space-y-0.5 pl-4">
+                                        <ul className="mt-1.5 space-y-0.5">
                                           {line.customizations.map((c) => (
                                             <li
                                               key={c}
-                                              className="text-xs text-muted"
+                                              className="text-sm text-muted"
                                             >
-                                              + {c}
+                                              {c}
                                             </li>
                                           ))}
                                         </ul>
                                       ) : null}
                                       {line.notes ? (
-                                        <p className="mt-1 text-xs italic text-muted">
-                                          Note: {line.notes}
+                                        <p className="mt-1 text-sm text-muted">
+                                          {line.notes}
                                         </p>
                                       ) : null}
                                     </div>
-                                    <p className="shrink-0 font-mono-tabular text-sm text-ink">
+                                    <p className="type-numeric-sm shrink-0 text-ink">
                                       {formatMoney(est?.lineTotal ?? null)}
                                     </p>
                                   </div>
@@ -317,76 +309,93 @@ export function OrderDetailModal({
                         )}
                       </section>
 
-                      <section className="mt-6">
-                        <h3 className="text-[10px] font-medium uppercase tracking-wider text-subtle">
-                          Status history
-                        </h3>
-                        <ol className="mt-3 space-y-0 border-l border-line pl-4">
-                          {detail.history.map((h, idx) => (
-                            <li key={`${h.iso}-${idx}`} className="relative pb-4 last:pb-0">
-                              <span className="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-card bg-accent" />
-                              <p className="text-sm font-medium text-ink">
-                                {h.label}
-                              </p>
-                              <p className="text-[11px] text-muted">{h.at}</p>
-                            </li>
-                          ))}
-                        </ol>
-                      </section>
-
                       <section className="mt-6 rounded-xl border border-line bg-elev p-4">
-                        <h3 className="text-[10px] font-medium uppercase tracking-wider text-subtle">
-                          Order total
-                        </h3>
-                        <OrderTotalsBreakdown totals={detail.totals} />
+                        <h3 className="text-sm font-semibold text-ink">Total</h3>
+                        <OrderTotalsBreakdown totals={detail.totals} className="mt-2" />
                       </section>
 
+                      {detail.history.length > 0 ? (
+                        <section className="mt-6">
+                          <h3 className="text-sm font-semibold text-ink">Timeline</h3>
+                          <ol className="mt-3 space-y-0 border-l border-line pl-4">
+                            {detail.history.map((h, idx) => (
+                              <li
+                                key={`${h.iso}-${idx}`}
+                                className="relative pb-4 last:pb-0"
+                              >
+                                <span className="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-card bg-accent" />
+                                <p className="text-sm font-medium text-ink">
+                                  {h.label}
+                                </p>
+                                <p className="text-sm text-muted">{h.at}</p>
+                              </li>
+                            ))}
+                          </ol>
+                        </section>
+                      ) : null}
+
+                      <details className="mt-6 rounded-lg border border-line/80 bg-elev/50 px-3 py-2">
+                        <summary className="cursor-pointer text-xs font-medium text-muted">
+                          Call reference
+                        </summary>
+                        <p className="mt-2 break-all text-xs text-subtle">
+                          {detail.sessionId}
+                        </p>
+                      </details>
+                    </div>
+
+                    <div className="kds-order-detail-dialog__footer flex shrink-0 flex-col gap-2 border-t border-line bg-card p-4 sm:px-5">
                       {actionError ? (
-                        <p className="mt-4 rounded-lg border border-danger/30 bg-danger/[0.06] px-3 py-2 text-xs text-danger">
-                          {actionError}
+                        <div
+                          className="kds-order-detail-dialog__error flex items-start justify-between gap-2 rounded-lg border border-danger/30 bg-danger/[0.06] px-3 py-2 text-sm text-danger"
+                          role="alert"
+                        >
+                          <span className="min-w-0 [overflow-wrap:anywhere]">
+                            {actionError}
+                          </span>
                           {onDismissError ? (
                             <button
                               type="button"
-                              className="ml-2 underline"
+                              className="shrink-0 font-medium underline"
                               onClick={onDismissError}
                             >
                               Dismiss
                             </button>
                           ) : null}
-                        </p>
+                        </div>
                       ) : null}
 
                       {detail.actions.length > 0 && onAction ? (
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          {detail.actions.map((action) => (
-                            <button
-                              key={action}
-                              type="button"
+                        <div className="kds-order-detail-dialog__actions flex flex-col gap-2">
+                          {detail.actions
+                            .filter((a) => a !== "cancel")
+                            .map((action) => (
+                              <OrderActionButton
+                                key={action}
+                                action={action}
+                                pending={pendingAction === action}
+                                disabled={!!pendingAction}
+                                onClick={() => onAction(action)}
+                              />
+                            ))}
+                          {detail.actions.includes("cancel") ? (
+                            <OrderActionButton
+                              action="cancel"
+                              variant="cancel"
+                              pending={pendingAction === "cancel"}
                               disabled={!!pendingAction}
-                              onClick={() => onAction(action)}
-                              className={cn(
-                                "min-h-11 flex-1 rounded-lg px-3 py-2.5 text-xs font-semibold sm:flex-none sm:min-w-[7rem]",
-                                action === "cancel"
-                                  ? "border border-line bg-card text-muted"
-                                  : "btn-primary"
-                              )}
-                            >
-                              {pendingAction === action
-                                ? `${ORDER_ACTION_LABELS[action]}…`
-                                : ORDER_ACTION_LABELS[action]}
-                            </button>
-                          ))}
+                              onClick={() => onAction("cancel")}
+                            />
+                          ) : null}
                         </div>
                       ) : null}
-                    </div>
 
-                    <div className="flex shrink-0 flex-col gap-2 border-t border-line p-4 sm:px-5">
                       {printError ? (
                         <p className="text-xs text-warning" role="status">
                           {printError}
                         </p>
                       ) : null}
-                      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                      <div className="kds-order-detail-dialog__footer-tools flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                         <button
                           type="button"
                           onClick={onClose}

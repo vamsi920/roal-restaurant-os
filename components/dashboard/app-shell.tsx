@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { RoalMark } from "@/components/landing/roal-mark";
 import { cn } from "@/lib/cn";
 import {
@@ -11,6 +11,11 @@ import {
   isDashboardNavActive,
   type DashboardNavItem,
 } from "@/lib/dashboard-nav";
+import {
+  restaurantWorkspaceMobileSubtitle,
+  restaurantWorkspaceMobileTitle,
+} from "@/lib/dashboard-restaurant-labels";
+import { useAppShellNav } from "@/lib/dashboard/use-app-shell-nav";
 import { NavIcon } from "./nav-icon";
 
 export function AppShell({
@@ -27,22 +32,34 @@ export function AppShell({
   showAdminNav: boolean;
 }) {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const {
+    mobileOpen,
+    closeMenu,
+    toggleMenu,
+    menuButtonRef,
+    sidebarRef,
+    onBackdropClose,
+  } = useAppShellNav();
 
   const navGroups = DASHBOARD_NAV.map((group) => ({
     ...group,
-    items: group.items.filter((item) => !item.adminOnly || showAdminNav),
+    items: group.items.filter((item) => !item.platformOnly || showAdminNav),
   })).filter((group) => group.items.length > 0);
 
-  const showLiveBadge = pathname.startsWith("/dashboard/restaurants/");
+  useEffect(() => {
+    closeMenu();
+  }, [pathname, closeMenu]);
 
   return (
-    <div className="flex min-h-[100dvh] min-w-0 bg-base">
+    <div className="app-shell-root flex min-h-[100dvh] min-w-0 overflow-x-clip bg-base">
       <a href="#app-main-content" className="app-shell-skip">
         Skip to content
       </a>
       <aside
         id="app-sidebar"
+        ref={sidebarRef}
+        role={mobileOpen ? "dialog" : undefined}
+        aria-modal={mobileOpen ? true : undefined}
         className={cn(
           "app-shell-sidebar fixed inset-y-0 left-0 z-50 flex w-[min(100vw-3rem,16rem)] flex-col border-r border-line bg-card pt-[env(safe-area-inset-top)] transition-transform duration-200 lg:static lg:z-auto lg:w-56 lg:translate-x-0 lg:shrink-0 lg:shadow-none",
           mobileOpen ? "app-shell-sidebar--open translate-x-0" : "-translate-x-full"
@@ -51,18 +68,16 @@ export function AppShell({
       >
         <div className="flex h-14 items-center gap-2.5 border-b border-line px-4">
           <Link
-            href="/dashboard"
-            className="flex min-w-0 items-center gap-2"
-            onClick={() => setMobileOpen(false)}
+            href="/dashboard/restaurants"
+            className="flex min-h-11 min-w-0 items-center gap-2"
+            onClick={closeMenu}
           >
             <span className="grid h-8 w-8 place-items-center rounded-lg border border-line bg-elev">
               <RoalMark />
             </span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-ink">ROAL</p>
-              <p className="truncate text-[10px] uppercase tracking-[0.14em] text-subtle">
-                Restaurant OS
-              </p>
+              <p className="truncate text-sm font-semibold tracking-tight text-ink">ROAL</p>
+              <p className="truncate text-xs text-subtle">Pickup ops</p>
             </div>
           </Link>
         </div>
@@ -70,16 +85,14 @@ export function AppShell({
         <nav className="flex-1 overflow-y-auto overscroll-contain px-2 py-3">
           {navGroups.map((group) => (
             <div key={group.label} className="mb-4 last:mb-0">
-              <p className="px-2 pb-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-subtle">
-                {group.label}
-              </p>
+              <p className="app-shell-nav-group-label px-2.5 pb-1.5">{group.label}</p>
               <ul className="space-y-0.5">
                 {group.items.map((item) => (
                   <li key={item.href}>
                     <NavLink
                       item={item}
                       active={isDashboardNavActive(item.href, pathname)}
-                      onNavigate={() => setMobileOpen(false)}
+                      onNavigate={closeMenu}
                     />
                   </li>
                 ))}
@@ -88,7 +101,7 @@ export function AppShell({
           ))}
         </nav>
 
-        <div className="border-t border-line p-3">
+        <div className="app-shell-sidebar__footer border-t border-line p-3">
           <div className="flex min-w-0 items-center gap-2 rounded-lg border border-line bg-elev px-2.5 py-2">
             <Image
               src="/icons/roal-user-icon.svg"
@@ -99,10 +112,10 @@ export function AppShell({
               className="h-8 w-8 shrink-0 rounded-lg"
             />
             <div className="min-w-0">
-              <p className="truncate text-[11px] font-medium text-ink">
+              <p className="truncate text-sm font-medium text-ink">
                 {organizationName ?? "No organization"}
               </p>
-              <p className="truncate text-[10px] text-subtle" title={userEmail}>
+              <p className="truncate text-xs text-subtle" title={userEmail}>
                 {userEmail}
                 {roleLabel ? ` · ${roleLabel}` : ""}
               </p>
@@ -111,15 +124,15 @@ export function AppShell({
           <form action="/auth/signout" method="post" className="mt-2">
             <button
               type="submit"
-              className="min-h-9 w-full rounded-md px-2 py-1.5 text-left text-[11px] font-medium text-muted hover:bg-elev hover:text-ink"
+              className="app-shell-signout min-h-11 w-full rounded-md px-2.5 py-2 text-left text-sm font-medium text-muted hover:bg-elev hover:text-ink"
             >
               Sign out
             </button>
           </form>
           <Link
             href="/"
-            className="mt-1 block truncate rounded-md px-2 py-1.5 text-[11px] text-muted hover:bg-elev hover:text-ink"
-            onClick={() => setMobileOpen(false)}
+            className="app-shell-marketing-link mt-1 block min-w-0 truncate rounded-md px-2.5 py-2 text-sm text-muted hover:bg-elev hover:text-ink"
+            onClick={closeMenu}
           >
             Back to marketing site
           </Link>
@@ -129,24 +142,25 @@ export function AppShell({
       {mobileOpen ? (
         <button
           type="button"
-          className="fixed inset-0 z-40 bg-ink/20 backdrop-blur-[2px] lg:hidden"
+          className="app-shell-backdrop fixed inset-0 z-40 bg-ink/20 backdrop-blur-[2px] lg:hidden"
           aria-label="Close navigation"
-          onClick={() => setMobileOpen(false)}
+          onClick={onBackdropClose}
         />
       ) : null}
 
       <div
-        className="flex min-w-0 flex-1 flex-col"
+        className="app-shell-content flex min-w-0 flex-1 flex-col"
         {...(mobileOpen ? { inert: true as const } : {})}
       >
-        <header className="sticky top-0 z-30 flex min-h-14 items-center gap-3 border-b border-line/90 bg-base/90 px-4 pt-[env(safe-area-inset-top)] backdrop-blur-xl sm:px-6">
+        <header className="app-shell-header sticky top-0 z-30 flex min-h-14 items-center gap-3 border-b border-line/90 bg-base/90 px-4 pt-[env(safe-area-inset-top)] backdrop-blur-xl sm:px-6">
           <button
+            ref={menuButtonRef}
             type="button"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-card text-ink lg:hidden"
+            className="app-shell-menu-btn inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-card text-ink lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="app-sidebar"
             aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
-            onClick={() => setMobileOpen((o) => !o)}
+            onClick={toggleMenu}
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
               {mobileOpen ? (
@@ -157,23 +171,17 @@ export function AppShell({
             </svg>
           </button>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-ink">
+            <p className="truncate text-sm font-semibold tracking-tight text-ink">
               {pageTitle(pathname)}
             </p>
-            <p className="truncate text-xs text-subtle">{pageSubtitle(pathname)}</p>
+            <p className="truncate text-sm text-subtle">{pageSubtitle(pathname)}</p>
           </div>
-          {showLiveBadge ? (
-            <div className="app-shell-header-badge hidden sm:inline-flex" title="Kitchen display and phone orders update in real time">
-              <span className="pulse-dot" />
-              Realtime
-            </div>
-          ) : null}
         </header>
 
         <main
           id="app-main-content"
           tabIndex={-1}
-          className="mx-auto w-full max-w-[1600px] min-w-0 flex-1 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-5 sm:px-6 sm:pb-8 sm:pt-8"
+          className="app-shell-main mx-auto w-full max-w-[1600px] min-w-0 flex-1 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:pb-8 sm:pt-8"
         >
           {children}
         </main>
@@ -198,7 +206,7 @@ function NavLink({
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "flex min-w-0 items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors",
+        "app-shell-nav-link flex min-h-11 min-w-0 items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors",
         active
           ? "app-shell-nav-link--active"
           : "text-muted hover:bg-elev hover:text-ink"
@@ -216,8 +224,8 @@ function NavLink({
 }
 
 function pageTitle(pathname: string): string {
-  if (pathname === "/dashboard") return "Overview";
-  if (pathname.startsWith("/dashboard/restaurants/")) return "Restaurant workspace";
+  const workspaceTitle = restaurantWorkspaceMobileTitle(pathname);
+  if (workspaceTitle) return workspaceTitle;
   for (const group of DASHBOARD_NAV) {
     for (const item of group.items) {
       if (isDashboardNavActive(item.href, pathname) && item.href !== "/dashboard/restaurants") {
@@ -225,14 +233,14 @@ function pageTitle(pathname: string): string {
       }
     }
   }
-  if (pathname.startsWith("/dashboard/restaurants")) return "Restaurants";
+  if (pathname.startsWith("/dashboard/restaurants")) return "Locations";
+  if (pathname === "/dashboard") return "Locations";
   return "Dashboard";
 }
 
 function pageSubtitle(pathname: string): string {
-  if (pathname.startsWith("/dashboard/restaurants/")) {
-    return "KDS · menu · phone orders";
-  }
+  const workspaceSubtitle = restaurantWorkspaceMobileSubtitle(pathname);
+  if (workspaceSubtitle) return workspaceSubtitle;
   for (const group of DASHBOARD_NAV) {
     for (const item of group.items) {
       if (isDashboardNavActive(item.href, pathname)) {
@@ -240,5 +248,5 @@ function pageSubtitle(pathname: string): string {
       }
     }
   }
-  return "Restaurant operating system";
+  return "Pickup phone orders and kitchen display";
 }

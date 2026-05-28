@@ -32,7 +32,7 @@ export function buildContactFormMailto(input: ContactFormMailtoInput): string {
   lines.push("", "(Sent from ROAL contact preview form — backend not connected yet.)");
 
   return buildPilotMailto({
-    subject: `ROAL — ${restaurant}`,
+    subject: `Book a ROAL demo — ${restaurant}`,
     body: lines.join("\n"),
   });
 }

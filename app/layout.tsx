@@ -1,18 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Fraunces } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { buildSiteMetadataDefaults } from "@/lib/seo/public-open-graph";
 import { getMetadataBase } from "@/lib/site-url";
+import "./typography.css";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-body",
-  display: "swap",
-});
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -38,7 +34,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`[color-scheme:light] ${dmSans.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`[color-scheme:light] ${plusJakarta.variable}`}>
       <body className="min-h-[100dvh] bg-base font-sans text-ink antialiased">
         {children}
       </body>

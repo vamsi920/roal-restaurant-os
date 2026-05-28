@@ -1,3 +1,4 @@
+import "@/app/legal-pages.css";
 import { SecurityFaqJsonLd } from "@/components/landing/security/security-faq-json-ld";
 import { SecurityHeroCta } from "@/components/landing/security/security-hero-cta";
 import { SecurityPageContent } from "@/components/landing/security/security-page-content";

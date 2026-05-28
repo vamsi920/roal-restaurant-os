@@ -1,3 +1,4 @@
+import "@/app/legal-pages.css";
 import { LegalPageContent } from "@/components/landing/legal/legal-page-content";
 import { MarketingShell } from "@/components/landing/marketing-shell";
 import { buildTermsPageMetadata } from "@/lib/landing/legal-metadata";

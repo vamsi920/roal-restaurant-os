@@ -12,16 +12,18 @@ export default function AboutPage() {
 
   return (
     <MarketingShell>
-      <MarketingPageHero
-        eyebrow={hero.eyebrow}
-        title={hero.title}
-        description={hero.description}
-        titleId="about-hero-heading"
-      >
-        <AboutCta centered />
-      </MarketingPageHero>
+      <div className="public-about-page min-w-0 overflow-x-clip">
+        <MarketingPageHero
+          eyebrow={hero.eyebrow}
+          title={hero.title}
+          description={hero.description}
+          titleId="about-hero-heading"
+        >
+          <AboutCta centered />
+        </MarketingPageHero>
 
-      <AboutPageContent />
+        <AboutPageContent />
+      </div>
     </MarketingShell>
   );
 }

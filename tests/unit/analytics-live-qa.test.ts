@@ -61,5 +61,7 @@ describe("analytics live posture (launch 23)", () => {
     expect(load).toContain('.eq("organization_id", input.organizationId)');
     expect(load).toContain(".in(\"restaurant_id\", restaurantIds)");
     expect(load).toContain("emptySnapshot");
+    expect(load).toContain('? "restaurant"\n    : "organization"');
+    expect(load).toContain("restaurantId: input.restaurantId");
   });
 });

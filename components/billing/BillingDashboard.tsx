@@ -7,6 +7,7 @@ import { BillingCheckoutButtons } from "@/components/billing/BillingCheckoutButt
 
 type Props = {
   snapshot: BillingSnapshot;
+  orgBillingHref?: string;
 };
 
 function formatDate(iso: string | null): string {
@@ -29,11 +30,11 @@ function statusTone(
   switch (status) {
     case "active":
     case "dev":
-      return "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400";
+      return "bg-success/10 text-success";
     case "trialing":
-      return "bg-accent/10 text-accent";
+      return "bg-accent/12 text-accent";
     case "past_due":
-      return "bg-amber-500/10 text-amber-800 dark:text-amber-300";
+      return "bg-warning/12 text-warning";
     case "canceled":
     case "paused":
       return "bg-muted/20 text-muted";
@@ -43,33 +44,63 @@ function statusTone(
 }
 
 function meterTone(level: "ok" | "warning" | "exceeded"): string {
-  if (level === "exceeded") return "bg-red-500";
-  if (level === "warning") return "bg-amber-500";
+  if (level === "exceeded") return "bg-danger";
+  if (level === "warning") return "bg-warning";
   return "bg-accent";
 }
 
-export function BillingDashboard({ snapshot }: Props) {
+export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
   const { plan, effectiveLimits } = snapshot;
+  const isRestaurantScope = snapshot.scope === "restaurant";
+  const usageTotal =
+    snapshot.usage.menuScans +
+    snapshot.usage.voiceOrders +
+    snapshot.usage.completedOrders +
+    snapshot.usage.toolCalls;
+  const organizationBillingHref = orgBillingHref ?? "/dashboard/billing";
 
   return (
-    <div className="space-y-8 sm:space-y-10">
-      <header className="min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
+    <div className="billing-dashboard dashboard-page dashboard-page--wide min-w-0 max-w-full space-y-6 overflow-x-hidden sm:space-y-8">
+      <header className="billing-dashboard__header dashboard-page__header min-w-0">
+        <p className="dashboard-page__eyebrow">
           Billing
+          {isRestaurantScope && snapshot.restaurantName
+            ? ` · ${snapshot.restaurantName}`
+            : null}
         </p>
-        <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Plan & usage
+        <h1 className="dashboard-page__title">
+          {isRestaurantScope ? "Plan & location usage" : "Plan & usage"}
         </h1>
-        <p className="mt-2 max-w-2xl text-pretty text-sm text-muted sm:text-base">
-          {snapshot.organizationName} — current period{" "}
-          {formatDate(snapshot.periodStart)} through{" "}
-          {formatDate(snapshot.periodEnd)}.
+        <p className="dashboard-page__lead">
+          {isRestaurantScope ? (
+            <>
+              Organization plan for {snapshot.organizationName}. Usage below is
+              for this location only — {formatDate(snapshot.periodStart)} through{" "}
+              {formatDate(snapshot.periodEnd)}.
+            </>
+          ) : (
+            <>
+              {snapshot.organizationName} — {formatDate(snapshot.periodStart)}{" "}
+              through {formatDate(snapshot.periodEnd)}.
+            </>
+          )}
         </p>
+        {isRestaurantScope ? (
+          <p className="mt-2 text-sm text-muted">
+            Subscription and invoices are managed at the organization level.{" "}
+            <Link
+              href={organizationBillingHref}
+              className="font-medium text-accent underline-offset-2 hover:underline"
+            >
+              View organization billing
+            </Link>
+          </p>
+        ) : null}
       </header>
 
       {snapshot.providerMode === "dev" ? (
         <div
-          className="rounded-xl border border-dashed border-accent/40 bg-accent/5 px-4 py-3 text-sm text-muted"
+          className="billing-dashboard__notice billing-dashboard__notice--pilot dashboard-panel border-dashed border-accent/40 bg-accent/5 text-sm text-muted"
           role="status"
         >
           <p className="font-medium text-ink">Pilot billing mode</p>
@@ -79,14 +110,13 @@ export function BillingDashboard({ snapshot }: Props) {
             {BILLING_LAUNCH_POSTURE.selfServeCheckout}{" "}
             {BILLING_LAUNCH_POSTURE.pilotBilling}
           </p>
-          <p className="mt-2">
+          <p className="billing-dashboard__notice-links mt-2 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-3">
             <Link
               href={BILLING_LAUNCH_POSTURE.publicPricingPath}
               className="font-medium text-accent underline-offset-2 hover:underline"
             >
               Public pricing
             </Link>
-            {" · "}
             <Link
               href={BILLING_LAUNCH_POSTURE.contactPath}
               className="font-medium text-accent underline-offset-2 hover:underline"
@@ -97,7 +127,7 @@ export function BillingDashboard({ snapshot }: Props) {
         </div>
       ) : !snapshot.checkoutEnabled ? (
         <div
-          className="rounded-xl border border-dashed border-amber-500/40 bg-amber-500/5 px-4 py-3 text-sm text-muted"
+          className="billing-dashboard__notice billing-dashboard__notice--stripe dashboard-panel border-dashed border-warning/35 bg-warning/5 text-sm text-muted"
           role="status"
         >
           <p className="font-medium text-ink">Stripe keys detected — checkout not live</p>
@@ -108,12 +138,12 @@ export function BillingDashboard({ snapshot }: Props) {
         </div>
       ) : null}
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <section className="rounded-xl border border-line bg-card p-5 shadow-sm">
+      <div className="billing-dashboard__plan-grid grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <section className="billing-dashboard__plan dashboard-panel min-w-0">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.14em] text-subtle">
-                Current plan
+              <p className="dashboard-page__kicker">
+                {isRestaurantScope ? "Organization plan" : "Current plan"}
               </p>
               <h2 className="mt-1 text-xl font-semibold text-ink">{plan.name}</h2>
               <p className="mt-2 max-w-md text-sm text-muted">{plan.description}</p>
@@ -166,7 +196,7 @@ export function BillingDashboard({ snapshot }: Props) {
               ) : null}
             </p>
           ) : snapshot.subscriptionStatus === "trialing" ? (
-            <p className="mt-3 text-sm text-amber-700 dark:text-amber-300">
+            <p className="mt-3 text-sm text-warning">
               Trial ended.{" "}
               <Link href={BILLING_LAUNCH_POSTURE.contactPath} className="underline">
                 Contact sales
@@ -203,18 +233,18 @@ export function BillingDashboard({ snapshot }: Props) {
           )}
         </section>
 
-        <section className="rounded-xl border border-line bg-card p-5 shadow-sm">
-          <h2 className="text-sm font-semibold text-ink">Subscription</h2>
-          <dl className="mt-4 space-y-3 text-sm">
-            <div className="flex justify-between gap-4">
+        <section className="billing-dashboard__subscription dashboard-panel min-w-0">
+          <h2 className="dashboard-page__section-title">Subscription</h2>
+          <dl className="billing-dashboard__meta mt-4 space-y-3 text-sm">
+            <div className="billing-dashboard__meta-row flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4">
               <dt className="text-muted">Status</dt>
-              <dd className="font-medium text-ink">
+              <dd className="font-medium text-ink sm:text-right">
                 {statusLabel(snapshot.effectiveStatus)}
               </dd>
             </div>
-            <div className="flex justify-between gap-4">
+            <div className="billing-dashboard__meta-row flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4">
               <dt className="text-muted">Provider</dt>
-              <dd className="font-medium text-ink">
+              <dd className="font-medium text-ink sm:text-right">
                 {snapshot.providerMode === "stripe"
                   ? snapshot.checkoutEnabled
                     ? "Stripe"
@@ -222,14 +252,14 @@ export function BillingDashboard({ snapshot }: Props) {
                   : "Development"}
               </dd>
             </div>
-            <div className="flex justify-between gap-4">
+            <div className="billing-dashboard__meta-row flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4">
               <dt className="text-muted">Stripe customer</dt>
-              <dd className="truncate font-mono text-xs text-muted">
+              <dd className="font-mono text-xs text-muted sm:text-right [overflow-wrap:anywhere]">
                 {snapshot.stripeCustomerLinked ? "Linked" : "—"}
               </dd>
             </div>
           </dl>
-          <p className="mt-4 text-xs text-subtle">
+          <p className="mt-4 text-xs text-subtle [overflow-wrap:anywhere]">
             {snapshot.checkoutEnabled
               ? "Invoices and payment methods appear here once billing is active."
               : "Invoices and payment methods appear here after Stripe Checkout and Customer Portal are enabled."}
@@ -237,27 +267,43 @@ export function BillingDashboard({ snapshot }: Props) {
         </section>
       </div>
 
-      <section>
-        <h2 className="text-sm font-semibold text-ink">Usage this period</h2>
+      <section className="billing-dashboard__usage min-w-0">
+        <h2 className="dashboard-page__section-title">
+          {isRestaurantScope ? "This location — usage this period" : "Usage this period"}
+        </h2>
         <p className="mt-1 text-sm text-muted">
-          Metered from usage events. Soft warnings at 80%, hard limits at 100%.
+          {isRestaurantScope
+            ? "Metered usage events for this location. Plan limits apply to your organization."
+            : "Metered from usage events. Soft warnings at 80%, hard limits at 100%."}
         </p>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+        {isRestaurantScope && usageTotal === 0 ? (
+          <p
+            className="mt-3 rounded-lg border border-dashed border-line bg-elev px-4 py-3 text-sm text-muted"
+            role="status"
+          >
+            No metered activity for this location in the current billing period.
+          </p>
+        ) : null}
+        <ul className="billing-dashboard__meters mt-4 grid gap-3 sm:grid-cols-2">
           {snapshot.limitChecks.map((check) => (
             <li
               key={check.key}
-              className="rounded-xl border border-line bg-elev px-4 py-3"
+              className="billing-dashboard__meter min-w-0 rounded-xl border border-line bg-elev px-4 py-3"
             >
-              <div className="flex items-center justify-between gap-2 text-sm">
+              <div className="billing-dashboard__meter-head flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                 <span className="font-medium text-ink">{check.label}</span>
-                <span className="text-muted">
+                <span className="text-muted sm:text-right">
                   {check.used.toLocaleString()} / {formatLimit(check.limit)}{" "}
                   {check.unitLabel}
                 </span>
               </div>
               <div
-                className="mt-2 h-2 overflow-hidden rounded-full bg-line"
-                aria-hidden
+                className="billing-dashboard__meter-track mt-2 h-2 overflow-hidden rounded-full bg-line"
+                role="meter"
+                aria-valuenow={check.percent}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label={`${check.label} usage`}
               >
                 <div
                   className={cn(
@@ -271,9 +317,7 @@ export function BillingDashboard({ snapshot }: Props) {
                 <p
                   className={cn(
                     "mt-2 text-xs",
-                    check.level === "exceeded"
-                      ? "text-red-600 dark:text-red-400"
-                      : "text-amber-700 dark:text-amber-300"
+                    check.level === "exceeded" ? "text-danger" : "text-warning"
                   )}
                 >
                   {check.level === "exceeded"
@@ -292,9 +336,9 @@ export function BillingDashboard({ snapshot }: Props) {
         ) : null}
       </section>
 
-      <section>
-        <h2 className="text-sm font-semibold text-ink">Plan features</h2>
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+      <section className="billing-dashboard__features min-w-0">
+        <h2 className="dashboard-page__section-title">Plan features</h2>
+        <ul className="billing-dashboard__feature-list mt-3 grid gap-2 sm:grid-cols-2">
           {snapshot.features.map((feature) => (
             <li
               key={feature.key}
@@ -319,8 +363,8 @@ export function BillingDashboard({ snapshot }: Props) {
       </section>
 
       {snapshot.upgradePlanIds.length > 0 ? (
-        <section>
-          <h2 className="text-sm font-semibold text-ink">
+        <section className="billing-dashboard__compare min-w-0">
+          <h2 className="dashboard-page__section-title">
             {snapshot.providerMode === "dev" || !snapshot.checkoutEnabled
               ? "Future self-serve tiers (not active)"
               : "Compare plans"}
@@ -331,7 +375,7 @@ export function BillingDashboard({ snapshot }: Props) {
               checkout release. Pilots use {BILLING_LAUNCH_POSTURE.pilotRate}.
             </p>
           ) : null}
-          <ul className="mt-4 grid gap-4 lg:grid-cols-3">
+          <ul className="billing-dashboard__tier-grid mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {(["starter", "growth", "enterprise"] as const).map((id) => {
               const p = BILLING_PLANS[id];
               const current = id === plan.id;
@@ -339,13 +383,13 @@ export function BillingDashboard({ snapshot }: Props) {
                 <li
                   key={id}
                   className={cn(
-                    "flex flex-col rounded-xl border p-4",
+                    "billing-dashboard__tier flex min-w-0 flex-col rounded-xl border p-4",
                     current
                       ? "border-accent bg-accent/5"
                       : "border-line bg-card"
                   )}
                 >
-                  <p className="text-xs uppercase tracking-wider text-subtle">
+                  <p className="dashboard-page__kicker">
                     {p.name}
                     {current ? " · Current" : null}
                   </p>
@@ -367,18 +411,20 @@ export function BillingDashboard({ snapshot }: Props) {
         </section>
       ) : null}
 
-      <section className="rounded-xl border border-dashed border-line bg-surface/30 p-5">
-        <h2 className="text-sm font-semibold text-ink">Invoices</h2>
-        <p className="mt-2 text-sm text-muted">
+      <section className="billing-dashboard__invoices dashboard-panel min-w-0 border-dashed">
+        <h2 className="dashboard-page__section-title">
+          {isRestaurantScope ? "Organization invoices" : "Invoices"}
+        </h2>
+        <p className="mt-2 text-sm text-muted [overflow-wrap:anywhere]">
           {snapshot.checkoutEnabled
             ? "Invoice history and PDF downloads will list here once billing is active."
             : snapshot.providerMode === "dev"
               ? "Pilot invoices are handled manually—no Stripe invoices in this mode."
               : "Invoice history appears here after Stripe Checkout ships. Until then, contact sales for pilot billing."}
         </p>
-        <div className="mt-4 overflow-hidden rounded-lg border border-line">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-elev text-xs uppercase tracking-wider text-subtle">
+        <div className="billing-dashboard__invoice-table dashboard-table mt-4 min-w-0 overflow-hidden rounded-lg border border-line">
+          <table className="w-full min-w-0 text-left text-sm">
+            <thead className="bg-elev text-xs font-medium text-subtle">
               <tr>
                 <th className="px-4 py-2 font-medium">Date</th>
                 <th className="px-4 py-2 font-medium">Amount</th>
@@ -396,7 +442,7 @@ export function BillingDashboard({ snapshot }: Props) {
         </div>
       </section>
 
-      <p className="text-sm text-muted">
+      <p className="billing-dashboard__footer text-sm text-muted [overflow-wrap:anywhere]">
         <Link href="/pricing" className="text-accent underline-offset-2 hover:underline">
           Public pricing
         </Link>{" "}

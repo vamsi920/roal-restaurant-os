@@ -15,11 +15,12 @@ describe("dashboard shell UX", () => {
     expect(shell).toContain('aria-current={active ? "page" : undefined}');
   });
 
-  it("shows realtime badge only on restaurant workspace routes", () => {
+  it("does not show org-level fake live badge in header", () => {
     const shell = readFileSync(join(REPO, "components/dashboard/app-shell.tsx"), "utf8");
-    expect(shell).toContain('pathname.startsWith("/dashboard/restaurants/")');
-    expect(shell).toContain("Realtime");
-    expect(shell).not.toContain(">Live<");
+    expect(shell).toContain("restaurantWorkspaceMobileTitle");
+    expect(shell).not.toContain("showLiveBadge");
+    expect(shell).not.toContain("app-shell-header-badge");
+    expect(shell).not.toContain("pulse-dot");
   });
 
   it("has route-level loading skeleton", () => {

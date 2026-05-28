@@ -42,10 +42,8 @@ function collectMarketingHrefs(): string[] {
   for (const link of PUBLIC_NAV_LINKS) out.push(link.href);
   out.push(PUBLIC_NAV_LOGIN.href, PUBLIC_NAV_SIGNUP.href);
 
-  for (const col of LANDING_FOOTER.columns) {
-    for (const link of col.links) out.push(link.href);
-  }
-  out.push(LANDING_FOOTER.login.href, LANDING_FOOTER.signup.href);
+  for (const link of LANDING_FOOTER.essentialLinks) out.push(link.href);
+  out.push(LANDING_FOOTER.brandHref, LANDING_FOOTER.demoCta.href, LANDING_FOOTER.contactCta.href);
 
   for (const cta of Object.values(PUBLIC_CTA)) out.push(cta.href);
   for (const cta of Object.values(SECURITY_CTA)) out.push(cta.href);
@@ -89,9 +87,7 @@ describe("cross-link QA", () => {
 
   it("mailto CTAs use the pilot inbox", () => {
     expect(mailtoUsesPilotInbox(PUBLIC_CTA.bookDemoMailto.href)).toBe(true);
-    expect(mailtoUsesPilotInbox(CONTACT_CTA.mailto.href)).toBe(true);
-    expect(CONTACT_CTA.mailto.href).toContain(CONTACT_PILOT_EMAIL);
-    expect(`mailto:${LANDING_FOOTER.email}`).toContain(CONTACT_PILOT_EMAIL);
+    expect(mailtoUsesPilotInbox(CONTACT_CTA.bookDemo.href)).toBe(true);
   });
 
   it("homepage hash anchors used in copy have matching ids", () => {

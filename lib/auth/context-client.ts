@@ -2,10 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { createBrowserSupabase } from "@/lib/supabase/client";
-import {
-  canOperateRestaurant,
-  isOrgAdmin,
-} from "@/lib/auth/roles";
+import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
+import { canOperateRestaurant } from "@/lib/auth/roles";
 import type { MembershipWithOrg } from "@/lib/auth/types";
 import type { SerializedAuthContext } from "@/lib/auth/context-server";
 import type { Membership, Organization, MembershipRole } from "@/lib/types";
@@ -93,8 +91,12 @@ export function canAccessRestaurantClient(
   return canOperateRestaurant(role ?? m.role);
 }
 
-export function hasOrgAdminAccessClient(memberships: MembershipWithOrg[]): boolean {
-  return memberships.some((m) => isOrgAdmin(m.role));
+export function hasOrgAdminAccessClient(
+  memberships: MembershipWithOrg[],
+  userEmail?: string | null
+): boolean {
+  void memberships;
+  return isPlatformAdminEmail(userEmail);
 }
 
 export function useAuthContext() {

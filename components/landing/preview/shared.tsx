@@ -17,7 +17,7 @@ export function PreviewFrame({
     return (
       <div className={cn("min-w-0 overflow-hidden", className)} aria-hidden>
         {label ? (
-          <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.14em] text-subtle">
+          <p className="mb-3 text-micro font-medium uppercase tracking-[0.14em] text-subtle">
             {label}
           </p>
         ) : null}
@@ -35,7 +35,7 @@ export function PreviewFrame({
       aria-hidden
     >
       {label ? (
-        <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.14em] text-subtle">
+        <p className="mb-3 text-micro font-medium uppercase tracking-[0.14em] text-subtle">
           {label}
         </p>
       ) : null}

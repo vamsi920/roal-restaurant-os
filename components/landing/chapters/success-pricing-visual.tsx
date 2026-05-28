@@ -16,7 +16,7 @@ export function SuccessPricingVisual() {
     >
       <div className="border-b border-line bg-elev/50 px-4 py-3 sm:px-6">
         <p className="text-sm font-semibold text-ink">Success-based billing preview</p>
-        <p className="text-[11px] text-muted">{v.periodLabel} · not a live invoice</p>
+        <p className="text-caption text-muted">{v.periodLabel} · not a live invoice</p>
       </div>
 
       <div className="grid min-w-0 gap-4 p-4 sm:gap-5 sm:p-6 lg:grid-cols-12">
@@ -35,8 +35,8 @@ export function SuccessPricingVisual() {
 
       <div className="success-pricing-visual__footer flex flex-col gap-3 border-t border-line px-4 py-4 sm:px-6">
         <p className="max-w-md text-pretty text-xs leading-relaxed text-muted">
-          Pilots define per-order terms before go-live. No homepage rate card—just alignment on
-          what counts as a successful pickup.
+          Pilots confirm your rate before go-live. You pay when an order hits your kitchen
+          screen—not when a call rings out.
         </p>
         <PublicCtaActions
           actions={[
@@ -70,7 +70,7 @@ function AttemptsVsOrdersPanel({
       )}
       aria-label="Call attempts compared to confirmed orders"
     >
-      <h3 className="text-[10px] font-semibold uppercase tracking-[0.14em] text-subtle">
+      <h3 className="text-micro font-semibold uppercase tracking-[0.14em] text-subtle">
         Volume vs billable
       </h3>
       <p className="mt-1 text-pretty text-xs text-muted">
@@ -93,7 +93,7 @@ function AttemptsVsOrdersPanel({
               style={{ width: `${callPct}%` }}
             />
           </div>
-          <p className="mt-1 text-[10px] text-subtle">Not metered on your success bill</p>
+          <p className="mt-1 text-micro text-subtle">Not metered on your success bill</p>
         </li>
         <li>
           <div className="mb-1.5 flex min-w-0 items-baseline justify-between gap-2">
@@ -110,7 +110,7 @@ function AttemptsVsOrdersPanel({
               style={{ width: `${orderPct}%` }}
             />
           </div>
-          <p className="mt-1 text-[10px] font-medium text-success">What success pricing tracks</p>
+          <p className="mt-1 text-micro font-medium text-success">What success pricing tracks</p>
         </li>
       </ul>
     </section>
@@ -135,7 +135,7 @@ function InvoicePanel({
       <div className="flex items-start justify-between gap-2">
         <div>
           <h3 className="text-sm font-semibold text-ink">{invoice.title}</h3>
-          <p className="text-[10px] text-muted">{invoice.period}</p>
+          <p className="text-micro text-muted">{invoice.period}</p>
         </div>
         <span className="rounded-md border border-line bg-card px-2 py-0.5 font-mono text-[9px] text-subtle">
           SAMPLE
@@ -154,14 +154,14 @@ function InvoicePanel({
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-xs font-semibold text-ink">{line.label}</p>
-                <p className="text-[10px] text-muted">{line.detail}</p>
+                <p className="text-micro text-muted">{line.detail}</p>
                 {"quantity" in line && line.quantity != null ? (
-                  <p className="mt-0.5 font-mono text-[10px] tabular-nums text-subtle">
+                  <p className="mt-0.5 font-mono text-micro tabular-nums text-subtle">
                     Qty {line.quantity}
                   </p>
                 ) : null}
               </div>
-              <span className="shrink-0 text-right text-[10px] font-medium text-ink">
+              <span className="shrink-0 text-right text-micro font-medium text-ink">
                 {line.amount}
               </span>
             </div>
@@ -169,7 +169,7 @@ function InvoicePanel({
         ))}
       </ul>
 
-      <p className="mt-3 border-t border-dashed border-line pt-3 text-[10px] leading-relaxed text-muted">
+      <p className="mt-3 border-t border-dashed border-line pt-3 text-micro leading-relaxed text-muted">
         {invoice.excludedNote}
       </p>
     </section>
@@ -190,7 +190,7 @@ function StaffComparePanel({
     >
       <CompareCard title={compare.traditional.title} points={compare.traditional.points} tone="muted" />
       <CompareCard title={compare.roal.title} points={compare.roal.points} tone="accent" />
-      <p className="text-[10px] leading-relaxed text-subtle">{compare.disclaimer}</p>
+      <p className="text-micro leading-relaxed text-subtle">{compare.disclaimer}</p>
     </section>
   );
 }
@@ -216,7 +216,7 @@ function CompareCard({
       <h4 className="text-xs font-semibold text-ink">{title}</h4>
       <ul className="mt-2 space-y-1.5">
         {points.map((p) => (
-          <li key={p} className="text-[11px] leading-snug text-muted">
+          <li key={p} className="text-caption leading-snug text-muted">
             {p}
           </li>
         ))}

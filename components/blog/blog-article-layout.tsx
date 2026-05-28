@@ -26,7 +26,9 @@ function ArticleShell({
   return (
     <MarketingShell>
       {jsonLd}
-      <article className="blog-article blog-article--glass">{children}</article>
+      <article className="blog-article blog-article--glass min-w-0 overflow-x-clip">
+        {children}
+      </article>
     </MarketingShell>
   );
 }
@@ -69,10 +71,12 @@ export function BlogArticleLayout({ post, related }: Props) {
       </div>
 
       <div className="landing-wrap landing-wrap-tight blog-article__stack">
-        <div className="blog-article__content">
-          <BlogArticleSections sections={content.sections} />
+        <div className="blog-article__reading">
+          <div className="blog-article__content">
+            <BlogArticleSections sections={content.sections} />
+          </div>
+          <BlogArticleFaq items={content.faq} />
         </div>
-        <BlogArticleFaq items={content.faq} />
         <BlogArticleCta cta={content.cta} categorySlug={post.primaryCategorySlug} />
         <BlogRelatedPosts posts={related} currentSlug={post.slug} />
       </div>

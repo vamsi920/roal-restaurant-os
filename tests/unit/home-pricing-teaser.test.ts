@@ -2,19 +2,22 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { HOME_PAY } from "@/lib/landing/home-pay-copy";
-import { HOME_PRICING_PILL } from "@/lib/landing/home-theme";
+import {
+  PRICING_RATE_AMOUNT,
+  PRICING_VALUE_HEADLINE,
+} from "@/lib/landing/pricing-core";
 
 const REPO = join(import.meta.dirname, "../..");
 
 describe("home pricing teaser", () => {
-  it("uses success-only headline and published order rate", () => {
-    expect(HOME_PAY.title).toBe("No ticket on your pass? You do not pay.");
-    expect(HOME_PAY.price).toBe("$0.90/order");
-    expect(HOME_PAY.price).toBe(HOME_PRICING_PILL.price);
+  it("centers on completed-order pricing from pricing-core", () => {
+    expect(HOME_PAY.headline).toBe(PRICING_VALUE_HEADLINE);
+    expect(HOME_PAY.amount).toBe(PRICING_RATE_AMOUNT);
+    expect(HOME_PAY.unit).toBe("each completed order");
     expect(HOME_PAY.pricingHref).toBe("/pricing");
   });
 
-  it("renders compact teaser section with price emphasis", () => {
+  it("renders compact teaser with primary pricing CTA", () => {
     const section = readFileSync(
       join(REPO, "components/landing/home/sections/home-pay.tsx"),
       "utf8"
@@ -22,8 +25,11 @@ describe("home pricing teaser", () => {
     const css = readFileSync(join(REPO, "app/landing-home.css"), "utf8");
 
     expect(section).toContain('id="pay"');
-    expect(section).toContain("home-pricing-teaser__price");
+    expect(section).toContain("home-pricing-teaser__amount");
+    expect(section).toContain('variant="primary"');
+    expect(section).not.toContain("PricingOrderExplainer");
     expect(section).not.toContain("home-pay-layout");
-    expect(css).toContain(".home-pricing-teaser__price");
+    expect(css).toContain(".home-pricing-teaser__amount");
+    expect(css).toContain(".home-pricing-teaser__cta .public-btn-primary");
   });
 });

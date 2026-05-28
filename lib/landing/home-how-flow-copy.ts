@@ -1,4 +1,4 @@
-export type HowFlowBeatId = "scan-menu" | "roal-answers" | "guest-orders" | "ticket-lands";
+export type HowFlowBeatId = "share-menu" | "connect-line" | "kitchen-orders";
 
 export type HowFlowBeat = {
   id: HowFlowBeatId;
@@ -8,34 +8,30 @@ export type HowFlowBeat = {
 };
 
 export const HOME_HOW_FLOW = {
-  eyebrow: "How it works",
-  title: "Menu scan to kitchen ticket",
-  lead: "Four steps in your first pilot week.",
-  visualLabel: "Illustrative preview",
+  eyebrow: "Three steps",
+  title: "How it works",
+  lead: "Menu, phone line, ROAL answers. Orders reach the kitchen.",
+  visualLabel: "Preview",
   beats: [
     {
-      id: "scan-menu",
+      id: "share-menu",
       step: 1,
-      title: "Scan your menu",
-      body: "Photo your printed menu—we turn it into items you can edit.",
+      title: "Your menu",
+      body: "Items and prices ROAL uses on every pickup call.",
     },
     {
-      id: "roal-answers",
+      id: "connect-line",
       step: 2,
-      title: "ROAL answers",
-      body: "Your line rings; ROAL picks up with a natural voice and your live menu.",
+      title: "Your phone line",
+      body: "Forward your restaurant number so ROAL answers rings.",
     },
     {
-      id: "guest-orders",
+      id: "kitchen-orders",
       step: 3,
-      title: "Guest orders",
-      body: "They add items and confirm pickup—modifiers and prices from your menu.",
-    },
-    {
-      id: "ticket-lands",
-      step: 4,
-      title: "Ticket on your pass",
-      body: "Name, phone, and items on your kitchen screen—the same ticket your team plates from.",
+      title: "ROAL answers",
+      body: "Pickup confirmed on the call; orders reach your kitchen screen.",
     },
   ] satisfies HowFlowBeat[],
 } as const;
+
+export const HOME_HOW_FLOW_LABELS = HOME_HOW_FLOW.beats.map((b) => b.title);

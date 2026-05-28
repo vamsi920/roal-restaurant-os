@@ -3,6 +3,11 @@
  * Edit answers here to keep cross-page copy aligned.
  */
 
+import {
+  PRICING_NO_ORDER_LINE,
+  PRICING_PILL_PRICE,
+  PRICING_RATE_LINE,
+} from "@/lib/landing/pricing-core";
 import { HOME_PRICING_PILL } from "@/lib/landing/home-theme";
 
 export type LaunchFaqPage = "home" | "pricing" | "security";
@@ -16,52 +21,82 @@ export type LaunchFaqItem = {
 };
 
 const HUMAN_HANDOFF_ANSWER =
-  "Catering, complaints, manager requests, and anything outside normal pickup should go to your staff. ROAL escalates—it does not invent guest details to force an order through.";
+  "Catering, complaints, and manager requests go to your team. ROAL escalates—no fake orders.";
 
 const LAUNCH_FAQ_ENTRIES = [
   {
-    id: "home-pricing-rate",
+    id: "home-what-calls",
     pages: ["home"],
-    question: `What does ${HOME_PRICING_PILL.price} mean?`,
+    question: "What calls does ROAL answer?",
     answer:
-      "You pay when a guest confirms pickup and the ticket hits your kitchen screen—not for hang-ups, wrong numbers, or test calls.",
-    link: { href: HOME_PRICING_PILL.href, label: "Full pricing" },
+      "Pickup calls to your restaurant line—items, modifiers, and prices from your live menu.",
+  },
+  {
+    id: "home-menu-setup",
+    pages: ["home"],
+    question: "How does menu setup work?",
+    answer:
+      "Add your menu in the dashboard, fix top sellers, then run test calls before you forward live rings.",
+    link: { href: "/signup?next=/dashboard/onboarding", label: "Start setup" },
+  },
+  {
+    id: "home-natural-voice",
+    pages: ["home"],
+    question: "Do customers talk to a natural voice?",
+    answer:
+      "Yes—guests speak normally. ROAL asks short follow-ups when something is unclear.",
+    link: { href: "/demo", label: "Hear a demo call" },
+  },
+  {
+    id: "home-completed-order",
+    pages: ["home"],
+    question: "What counts as a completed order?",
+    answer: `Name, phone, and items confirmed on the call; ticket on your kitchen screen. ${PRICING_RATE_LINE}.`,
+    link: { href: HOME_PRICING_PILL.href, label: "Pricing" },
+  },
+  {
+    id: "home-how-to-start",
+    pages: ["home"],
+    question: "How do I start?",
+    answer: "Hear the demo, sign up, set up your menu, test a call, then forward your line when ready.",
+    link: { href: "/signup?next=/dashboard/restaurants", label: "Sign up" },
   },
   {
     id: "pricing-cost",
     pages: ["pricing"],
-    question: "How much does ROAL cost per pickup order?",
-    answer: `${HOME_PRICING_PILL.price} when the guest confirms pickup and the ticket hits your kitchen screen.`,
+    question: "Cost per pickup order?",
+    answer: PRICING_RATE_LINE,
   },
   {
     id: "successful-order",
     pages: ["pricing"],
-    question: "What counts as a successful order?",
-    answer: "Name and phone on the call, ticket on your kitchen screen—that is when we bill.",
+    question: "What counts as an order?",
+    answer:
+      "Guest confirms pickup; ticket hits your kitchen screen. We track it in pilot.",
   },
   {
     id: "setup-cost",
     pages: ["pricing"],
-    question: "Is there a setup fee?",
-    answer: `Sometimes a one-time setup fee. Your ${HOME_PRICING_PILL.price} rate is confirmed before live calls.`,
+    question: "Setup fee?",
+    answer: `Optional. ${PRICING_PILL_PRICE} per order once live.`,
   },
   {
     id: "high-volume",
     pages: ["pricing"],
-    question: "What if we run high pickup volume?",
-    answer: `Busy shops may negotiate a different per-order rate. ${HOME_PRICING_PILL.price} is what we publish for most pilots.`,
+    question: "High pickup volume?",
+    answer: `Volume may negotiate rate. Published ${PRICING_PILL_PRICE} for most pilots.`,
   },
   {
     id: "per-minute",
     pages: ["pricing"],
-    question: "Are there per-minute phone fees?",
-    answer: "No. You pay for completed pickup orders—not minutes on the phone.",
+    question: "Per-minute phone fees?",
+    answer: `No. ${PRICING_NO_ORDER_LINE}`,
   },
   {
     id: "rings-not-billed",
     pages: ["pricing"],
-    question: "Do I pay for hang-ups, wrong numbers, or test calls?",
-    answer: "No. No ticket on your pass means no charge.",
+    question: "Hang-ups and wrong numbers?",
+    answer: PRICING_NO_ORDER_LINE,
   },
   {
     id: "voids",
@@ -91,103 +126,69 @@ const LAUNCH_FAQ_ENTRIES = [
     answer: "Yes. No long-term lock-in before you see orders on your pass.",
   },
   {
-    id: "setup-time",
-    pages: ["home"],
-    question: "How long does setup take?",
-    answer:
-      "Most pilots scan a menu, connect a line, and run a test call in about twenty minutes. Larger menus may need one short review call.",
-    link: { href: "/signup?next=/dashboard/onboarding", label: "Start setup" },
-  },
-  {
-    id: "menu-accuracy",
-    pages: ["home"],
-    question: "How does ROAL stay accurate when my menu changes?",
-    answer:
-      "It reads your live dashboard menu—86 an item or change a price and the next call quotes it correctly.",
-  },
-  {
-    id: "human-handoff",
-    pages: ["home", "security"],
-    question: "When does a call go to my staff?",
-    answer:
-      "Catering, complaints, and manager requests go to your team. ROAL escalates—it does not fake an order to stay on the line.",
-    link: { href: "/demo", label: "Hear a demo call" },
-  },
-  {
-    id: "demo-onboarding",
-    pages: ["home"],
-    question: "How do I hear a demo or start onboarding?",
-    answer:
-      "Listen on the demo page, then book a walkthrough or sign up to scan your menu and place a test order.",
-    link: { href: "/demo", label: "Hear a demo call" },
-  },
-  {
     id: "human-handoff-security",
     pages: ["security"],
-    question: "Can my team take over when ROAL should stop?",
+    question: "Staff take over?",
     answer: HUMAN_HANDOFF_ANSWER,
     link: { href: "/contact", label: "Talk through handoff rules" },
   },
   {
     id: "guest-data",
     pages: ["security"],
-    question: "What guest information does ROAL collect?",
+    question: "What guest data is collected?",
     answer:
-      "The name and phone number needed to run the pickup—collected on the call, stored with your tickets, and not sold or used for unrelated marketing. We do not ask guests for payment cards on the phone line.",
+      "Name and phone for pickup—stored with tickets, not sold. No card numbers on the phone line.",
   },
   {
     id: "scoped-access",
     pages: ["security"],
-    question: "Can another restaurant see my menu or orders?",
+    question: "Can other restaurants see my data?",
     answer:
-      "No. Each shop’s menu, drafts, and completed tickets live inside that restaurant’s account. Your staff only see locations they are invited to, with their own login—not a shared password on one tablet.",
+      "No. Each shop’s menu and tickets stay in that account. Staff log in per location—no shared tablet password.",
   },
   {
     id: "signed-tools",
     pages: ["security"],
-    question: "How do you stop random people from placing fake phone orders?",
+    question: "Fake phone orders?",
     answer:
-      "Orders only come from your connected pickup line and your restaurant account—not from random web forms or guessed links.",
+      "Orders only from your pickup line and account—not random web forms or guessed links.",
   },
   {
     id: "audit-trail",
     pages: ["security"],
-    question: "Can I see what happened on a busy night?",
+    question: "Busy night audit trail?",
     answer:
-      "Draft carts, status changes, and finalized pickups are recorded so you can reconstruct tickets: what was ordered, when it finalized, and what changed before it hit the pass.",
+      "Draft carts, status changes, and finalized pickups are logged so you can reconstruct each ticket.",
   },
   {
     id: "technical-detail",
     pages: ["security"],
-    question: "Where is the technical security detail?",
+    question: "Technical security details?",
     answer:
-      "Access rules, secure phone-order verification, and audit logs are in the implementation section below for your IT contact or POS partner.",
+      "Access rules, signed phone-order checks, and audit logs are below for IT or your POS partner.",
     link: { href: "#security-technical-heading", label: "Jump to implementation details" },
   },
 ] as const satisfies readonly LaunchFaqItem[];
 
 const ENTRY_ORDER: Record<LaunchFaqPage, readonly string[]> = {
   home: [
-    "home-pricing-rate",
-    "setup-time",
-    "menu-accuracy",
-    "human-handoff",
-    "demo-onboarding",
+    "home-what-calls",
+    "home-menu-setup",
+    "home-natural-voice",
+    "home-completed-order",
+    "home-how-to-start",
   ],
   pricing: [
     "pricing-cost",
     "successful-order",
     "rings-not-billed",
     "per-minute",
-    "setup-cost",
   ],
   security: [
     "guest-data",
     "scoped-access",
     "human-handoff-security",
     "signed-tools",
-    "audit-trail",
-    "technical-detail",
   ],
 };
 
@@ -203,8 +204,8 @@ export function launchFaqItemsFor(page: LaunchFaqPage): LaunchFaqItem[] {
 
 export const HOME_FAQ = {
   eyebrow: "FAQ",
-  title: "Quick answers",
-  lead: "Pricing, setup, live menu, and staff handoffs.",
+  title: "Questions owners ask",
+  lead: "Calls, menu, pricing, and getting started.",
   items: launchFaqItemsFor("home"),
 } as const;
 

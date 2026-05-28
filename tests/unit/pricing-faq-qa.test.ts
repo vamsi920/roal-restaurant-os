@@ -8,8 +8,8 @@ const REPO = join(import.meta.dirname, "../..");
 const PRICING_FAQ_ANSWER_MAX = 100;
 
 describe("pricing FAQ QA", () => {
-  it("shows exactly five compact questions on the page", () => {
-    expect(PRICING_FAQ).toHaveLength(5);
+  it("shows exactly four compact questions on the page", () => {
+    expect(PRICING_FAQ).toHaveLength(4);
     for (const item of PRICING_FAQ) {
       expect(item.a.length).toBeLessThanOrEqual(PRICING_FAQ_ANSWER_MAX);
     }
@@ -17,15 +17,14 @@ describe("pricing FAQ QA", () => {
 
   it("covers AEO cost and billing intent in question text", () => {
     const questions = PRICING_FAQ.map((i) => i.q.toLowerCase()).join(" ");
-    expect(questions).toContain("how much");
-    expect(questions).toContain("successful order");
-    expect(questions).toContain("hang-up");
+    expect(questions).toMatch(/cost per|how much/);
+    expect(questions).toMatch(/successful order|counts as an order/);
+    expect(questions).toMatch(/hang-up|hang-ups/);
     expect(questions).toContain("per-minute");
-    expect(questions).toContain("setup");
   });
 
   it("aligns visible cost FAQ with JSON-LD AEO answer", () => {
-    const cost = PRICING_FAQ.find((i) => i.q.includes("How much"));
+    const cost = PRICING_FAQ.find((i) => /cost per|how much/i.test(i.q));
     const graph = buildPricingPageJsonLd();
     const aeo = graph.mainEntity[0];
 
@@ -38,7 +37,7 @@ describe("pricing FAQ QA", () => {
   it("emits FAQPage schema for cost question plus visible FAQ", () => {
     const graph = buildPricingPageJsonLd();
     expect(graph["@type"]).toBe("FAQPage");
-    expect(graph.mainEntity).toHaveLength(6);
+    expect(graph.mainEntity).toHaveLength(5);
   });
 
   it("uses collapsed accordion on pricing (not long divided list)", () => {

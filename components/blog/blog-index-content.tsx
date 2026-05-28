@@ -71,8 +71,8 @@ export function BlogIndexContent({ posts }: Props) {
   const { allPosts } = BLOG_INDEX_COPY;
 
   return (
-    <section className="blog-index" aria-labelledby="blog-index-list-heading">
-      <div className="landing-wrap landing-wrap-tight">
+    <section className="blog-index min-w-0" aria-labelledby="blog-index-list-heading">
+      <div className="landing-wrap landing-wrap-tight min-w-0">
         <h2 id="blog-index-list-heading" className="sr-only">
           Articles
         </h2>

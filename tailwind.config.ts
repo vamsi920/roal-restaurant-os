@@ -47,14 +47,22 @@ const config: Config = {
         "landing-chapter": "var(--landing-duration-chapter, 640ms)",
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
-        sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: [
-          "ui-monospace",
-          "SF Mono",
-          "Menlo",
-          "Consolas",
-          "monospace",
+        display: ["var(--type-display)"],
+        sans: ["var(--type-body)"],
+        mono: ["var(--type-mono)"],
+      },
+      fontSize: {
+        caption: [
+          "var(--text-caption-size)",
+          { lineHeight: "var(--text-caption-leading)" },
+        ],
+        micro: ["var(--text-micro-size)", { lineHeight: "var(--text-micro-leading)" }],
+        label: [
+          "var(--text-label-size)",
+          {
+            lineHeight: "var(--text-label-leading)",
+            letterSpacing: "var(--text-label-tracking)",
+          },
         ],
       },
       animation: {

@@ -34,9 +34,14 @@ export type MenuScanStats = {
   successPercent: number | null;
 };
 
+export type AnalyticsScope = "organization" | "restaurant";
+
 export type AnalyticsSnapshot = {
   organizationId: string;
   organizationName: string;
+  scope: AnalyticsScope;
+  restaurantId: string | null;
+  restaurantName: string | null;
   rangeKey: AnalyticsRangeKey;
   since: string;
   until: string;

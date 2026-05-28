@@ -34,13 +34,35 @@ function upgradePlanIds(current: BillingPlanId): BillingPlanId[] {
   return PLAN_ORDER.slice(idx + 1);
 }
 
+export async function loadRestaurantBilling(
+  supabase: SupabaseClient,
+  input: {
+    organizationId: string;
+    membershipRole: MembershipRole;
+    restaurantId: string;
+    restaurantName: string;
+  }
+): Promise<BillingSnapshot | null> {
+  return loadOrganizationBilling(supabase, {
+    organizationId: input.organizationId,
+    membershipRole: input.membershipRole,
+    restaurantId: input.restaurantId,
+    restaurantName: input.restaurantName,
+  });
+}
+
 export async function loadOrganizationBilling(
   supabase: SupabaseClient,
   input: {
     organizationId: string;
     membershipRole: MembershipRole;
+    restaurantId?: string;
+    restaurantName?: string;
   }
 ): Promise<BillingSnapshot | null> {
+  const scope: BillingSnapshot["scope"] = input.restaurantId
+    ? "restaurant"
+    : "organization";
   const { data: org, error } = await supabase
     .from("organizations")
     .select(
@@ -78,13 +100,16 @@ export async function loadOrganizationBilling(
   const [usageSummary, restaurantCountResult] = await Promise.all([
     getUsageSummary(supabase, {
       organizationId: input.organizationId,
+      restaurantId: input.restaurantId,
       since: periodStart,
       until: periodEnd,
     }),
-    supabase
-      .from("restaurants")
-      .select("id", { count: "exact", head: true })
-      .eq("organization_id", input.organizationId),
+    input.restaurantId
+      ? Promise.resolve({ count: 1, error: null })
+      : supabase
+          .from("restaurants")
+          .select("id", { count: "exact", head: true })
+          .eq("organization_id", input.organizationId),
   ]);
 
   if (restaurantCountResult.error) {
@@ -98,13 +123,18 @@ export async function loadOrganizationBilling(
     toolCalls: countUsage(usageSummary, "tool_call"),
     importAttempts: countUsage(usageSummary, "import_attempt"),
     activeLocations: usageSummary.activeLocations,
-    restaurantCount: restaurantCountResult.count ?? 0,
+    restaurantCount: input.restaurantId
+      ? 1
+      : (restaurantCountResult.count ?? 0),
   };
 
   const subscriptionStatus = row.subscription_status ?? "trialing";
   const trialEndsAt = row.trial_ends_at;
 
   return {
+    scope,
+    restaurantId: input.restaurantId ?? null,
+    restaurantName: input.restaurantName ?? null,
     providerMode: provider.mode,
     providerConfigured: provider.isConfigured,
     checkoutEnabled: provider.checkoutEnabled,
@@ -121,7 +151,7 @@ export async function loadOrganizationBilling(
     periodStart: periodStart.toISOString(),
     periodEnd: periodEnd.toISOString(),
     usage,
-    limitChecks: buildLimitChecks(usage, effectiveLimits),
+    limitChecks: buildLimitChecks(usage, effectiveLimits, { scope }),
     features: buildFeatureEntitlements(planId),
     canManageBilling: isOrgAdmin(input.membershipRole),
     upgradePlanIds: upgradePlanIds(planId),

@@ -40,10 +40,10 @@ function FieldHint({
   warning?: string | null;
 }) {
   if (error) {
-    return <p className="mt-1 text-[11px] text-danger">{error}</p>;
+    return <p className="mt-1 text-caption text-danger">{error}</p>;
   }
   if (warning) {
-    return <p className="mt-1 text-[11px] text-warning">{warning}</p>;
+    return <p className="mt-1 text-caption text-warning">{warning}</p>;
   }
   return null;
 }
@@ -86,7 +86,7 @@ export function ModifierGroupList({
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-ink">{group.group_name}</p>
-                  <p className="mt-0.5 text-[11px] text-subtle">
+                  <p className="mt-0.5 text-caption text-subtle">
                     {group.is_required ? "Required" : "Optional"} · pick{" "}
                     {group.min_selection}–{group.max_selection} · {group.options.length}{" "}
                     option{group.options.length === 1 ? "" : "s"}
@@ -95,7 +95,7 @@ export function ModifierGroupList({
                     {group.options.map((opt) => (
                       <li
                         key={opt.id}
-                        className="text-[11px] text-muted"
+                        className="text-caption text-muted"
                       >
                         {opt.modifier_name}
                         {opt.extra_price > 0
@@ -216,7 +216,7 @@ export function ModifierGroupEditor({
         <FieldHint error={fieldErrors.is_required} />
       </label>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <label className="block text-xs font-medium text-muted">
           Max selections
           <input
@@ -239,7 +239,7 @@ export function ModifierGroupEditor({
             }
           />
           <FieldHint error={fieldErrors.max_selection} />
-          <p className="mt-1 text-[10px] text-subtle">
+          <p className="mt-1 text-micro text-subtle">
             Up to {maxCap} (number of options)
           </p>
         </label>
@@ -284,7 +284,7 @@ export function ModifierGroupEditor({
                 "grid gap-2 rounded-lg border border-line/80 p-2 sm:grid-cols-[1fr_100px_auto]"
               )}
             >
-              <label className="block text-[11px] text-muted">
+              <label className="block text-caption text-muted">
                 Name
                 <input
                   className="input-base mt-0.5 py-1.5 text-sm"
@@ -297,7 +297,7 @@ export function ModifierGroupEditor({
                 />
                 <FieldHint error={fieldErrors[`options.${idx}.modifier_name`]} />
               </label>
-              <label className="block text-[11px] text-muted">
+              <label className="block text-caption text-muted">
                 Extra price
                 <input
                   type="number"

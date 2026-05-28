@@ -16,7 +16,7 @@ export function AnalyticsRangePicker({ active }: { active: AnalyticsRangeKey }) 
 
   return (
     <div
-      className="inline-flex rounded-lg border border-line bg-elev p-0.5"
+      className="analytics-range-picker flex w-full rounded-lg border border-line bg-elev p-0.5 sm:inline-flex sm:w-auto"
       role="group"
       aria-label="Date range"
     >
@@ -25,7 +25,7 @@ export function AnalyticsRangePicker({ active }: { active: AnalyticsRangeKey }) 
           key={opt.key}
           href={`${pathname}?range=${opt.key}`}
           className={cn(
-            "inline-flex min-h-11 items-center rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
+            "inline-flex min-h-11 flex-1 items-center justify-center rounded-md px-3 py-1.5 text-xs font-medium transition-colors sm:flex-initial",
             active === opt.key
               ? "bg-card text-ink shadow-sm"
               : "text-muted hover:text-ink"

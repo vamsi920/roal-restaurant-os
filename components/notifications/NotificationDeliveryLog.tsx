@@ -9,28 +9,32 @@ type Props = {
 
 export function NotificationDeliveryLog({ deliveries }: Props) {
   return (
-    <section className="rounded-xl border border-line bg-card p-5 shadow-sm">
-      <h2 className="text-sm font-semibold text-ink">Recent deliveries</h2>
+    <section className="notification-delivery-log dashboard-panel min-w-0">
+      <h2 className="dashboard-page__section-title">Recent deliveries</h2>
       <p className="mt-1 text-xs text-muted">
         Dev console and production channel attempts (newest first).
       </p>
       {deliveries.length === 0 ? (
         <p className="mt-6 text-sm text-muted">No notifications yet.</p>
       ) : (
-        <ul className="mt-4 max-h-[28rem] space-y-2 overflow-y-auto">
+        <ul className="notification-delivery-log__list mt-4 max-h-[28rem] space-y-2 overflow-y-auto overscroll-y-contain">
           {deliveries.map((row) => (
             <li
               key={row.id}
-              className="rounded-lg border border-line bg-elev px-3 py-2.5 text-sm"
+              className="notification-delivery-log__row min-w-0 rounded-lg border border-line bg-elev px-3 py-2.5 text-sm"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="font-medium text-ink">{row.title}</span>
-                <span className="text-[10px] uppercase tracking-wider text-subtle">
+              <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
+                <span className="font-medium text-ink [overflow-wrap:anywhere]">
+                  {row.title}
+                </span>
+                <span className="text-xs text-subtle tabular-nums">
                   {formatWhen(row.created_at)}
                 </span>
               </div>
-              <p className="mt-1 text-pretty text-xs text-muted">{row.body}</p>
-              <div className="mt-2 flex flex-wrap gap-2 text-[10px] uppercase tracking-wider">
+              <p className="mt-1 text-pretty text-xs text-muted [overflow-wrap:anywhere]">
+                {row.body}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2 text-xs font-medium text-subtle">
                 <Badge>
                   {NOTIFICATION_EVENT_LABELS[row.event_type] ?? row.event_type}
                 </Badge>
@@ -46,7 +50,9 @@ export function NotificationDeliveryLog({ deliveries }: Props) {
                 </Badge>
               </div>
               {row.error_message ? (
-                <p className="mt-1 text-xs text-subtle">{row.error_message}</p>
+                <p className="mt-1 text-xs text-subtle [overflow-wrap:anywhere]">
+                  {row.error_message}
+                </p>
               ) : null}
             </li>
           ))}

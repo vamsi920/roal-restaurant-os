@@ -16,6 +16,10 @@ import {
 
 type Props = {
   restaurantId: string;
+  /** Menu setup: native collapsed "Test call" section. Default: legacy panel toggle. */
+  variant?: "panel" | "test-call";
+  /** Guided setup step 3: no nested details wrapper. */
+  flowStep?: boolean;
 };
 
 const TOOLS: HarnessToolName[] = [
@@ -36,7 +40,11 @@ const DEFAULT_FINALIZE_BODY = `{
   "customer_phone": "555-010-2233"
 }`;
 
-export function VoiceAgentTestHarness({ restaurantId }: Props) {
+export function VoiceAgentTestHarness({
+  restaurantId,
+  variant = "panel",
+  flowStep = false,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [scenarioId, setScenarioId] = useState(HARNESS_SCENARIOS[0]?.id ?? "");
   const [sessionId, setSessionId] = useState("");
@@ -129,44 +137,44 @@ export function VoiceAgentTestHarness({ restaurantId }: Props) {
     else setManualBody(DEFAULT_FINALIZE_BODY);
   }
 
-  return (
-    <section className="kds-panel glass-card overflow-hidden">
-      <div className="kds-panel__header">
-        <div className="min-w-0 flex-1">
-          <h2
-            id="voice-harness-heading"
-            className="kds-panel__title"
-          >
-            Voice agent test harness
-          </h2>
-          <p className="kds-panel__lead">
-            Simulate menu and order tools without a live call — for QA and
-            debugging.
-          </p>
-        </div>
-        <button
-          type="button"
-          className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-line bg-elev px-3 text-xs font-medium text-ink hover:bg-card"
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-controls="voice-harness-panel"
-          aria-labelledby="voice-harness-heading"
-        >
-          {open ? "Hide" : "Show"} harness
-        </button>
-      </div>
+  const panelBody = (
+      <div
+        id="voice-harness-panel"
+        className="voice-agent-harness min-w-0 space-y-4 overflow-x-hidden p-3 sm:space-y-5 sm:p-5"
+      >
+        <p className="voice-agent-harness__notice text-xs leading-relaxed text-muted [overflow-wrap:anywhere]">
+          Runs tool scenarios for this restaurant using harness session IDs (
+          <span className="font-mono text-caption">roal-harness-…</span>), not
+          live phone calls.
+        </p>
 
-      {open ? (
-      <div id="voice-harness-panel" className="space-y-5 p-4 sm:p-5">
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="flex min-w-[200px] flex-1 flex-col gap-1">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-subtle">
+        {!dryRun ? (
+          <p
+            className="voice-agent-harness__live-write-warning rounded-lg border border-warning/35 bg-warning/[0.08] px-3 py-2 text-xs text-amber-950 [overflow-wrap:anywhere]"
+            role="alert"
+          >
+            Dry run is off — harness tools may write test draft orders to your
+            database.
+          </p>
+        ) : (
+          <p
+            className="voice-agent-harness__dry-run-notice rounded-lg border border-line/80 bg-elev/50 px-3 py-2 text-xs text-muted"
+            role="status"
+          >
+            Dry run is on — no database writes from harness tools.
+          </p>
+        )}
+
+        <div className="voice-agent-harness__scenarios voice-agent-harness__run-row flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+          <label className="flex min-w-0 w-full flex-1 flex-col gap-1">
+            <span className="text-micro font-semibold uppercase tracking-wider text-subtle">
               Scenario
             </span>
             <select
               value={scenarioId}
               onChange={(e) => setScenarioId(e.target.value)}
-              className="input-base text-sm"
+              className="voice-agent-harness__scenario-select input-base min-h-11 text-sm sm:min-h-10"
+              aria-label="Harness scenario"
             >
               {HARNESS_SCENARIOS.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -179,79 +187,87 @@ export function VoiceAgentTestHarness({ restaurantId }: Props) {
             type="button"
             disabled={busy || !scenarioId}
             onClick={() => void runScenario()}
-            className="btn-primary min-h-10 text-xs"
+            className="btn-primary kds-thumb-btn min-h-11 w-full text-sm sm:min-h-10 sm:w-auto"
           >
             {busy ? "Running…" : "Run scenario"}
           </button>
         </div>
 
         {scenario ? (
-          <p className="text-xs text-muted">{scenario.description}</p>
+          <p className="voice-agent-harness__scenario-desc text-xs text-muted [overflow-wrap:anywhere]">
+            {scenario.description}
+          </p>
         ) : null}
 
-        <div className="flex flex-wrap items-end gap-3 rounded-lg border border-line bg-elev/40 p-3">
-          <label className="flex min-w-[220px] flex-1 flex-col gap-1">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-subtle">
-              Session id
+        <div className="voice-agent-harness__session flex min-w-0 flex-col gap-3 rounded-lg border border-line bg-elev/40 p-3 sm:flex-row sm:flex-wrap sm:items-end">
+          <label className="flex min-w-0 w-full flex-1 flex-col gap-1">
+            <span className="text-micro font-semibold uppercase tracking-wider text-subtle">
+              Test session
             </span>
             <input
               value={sessionId}
               onChange={(e) => setSessionId(e.target.value)}
               placeholder="Auto-generated roal-harness-…"
-              className="input-base font-mono text-xs"
+              className="input-base min-h-11 font-mono text-sm sm:min-h-10 sm:text-xs"
             />
           </label>
-          <label className="flex items-center gap-2 pb-2 text-xs text-muted">
+          <label className="voice-agent-harness__dry-run-toggle flex min-h-11 w-full items-center gap-2 text-sm text-muted sm:w-auto sm:pb-2">
             <input
               type="checkbox"
               checked={dryRun}
               onChange={(e) => setDryRun(e.target.checked)}
-              className="rounded border-line"
+              className="h-4 w-4 shrink-0 rounded border-line"
             />
-            Dry run (no DB writes)
+            <span className="[overflow-wrap:anywhere]">Dry run (no DB writes)</span>
           </label>
           {sessionId.startsWith("roal-harness-") ? (
             <button
               type="button"
               disabled={busy}
               onClick={() => void clearSession()}
-              className="btn-ghost min-h-10 text-xs"
+              className="btn-ghost kds-thumb-btn min-h-11 w-full text-sm sm:min-h-10 sm:w-auto"
             >
-              Clear harness session
+              Clear test session
             </button>
           ) : null}
         </div>
 
         {error ? (
-          <p className="rounded-md bg-danger/10 px-3 py-2 text-xs text-danger">
+          <p
+            className="voice-agent-harness__error rounded-md bg-danger/10 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
+            role="alert"
+          >
             {error}
           </p>
         ) : null}
 
         {runResult ? (
-          <div className="space-y-3">
+          <div className="voice-agent-harness__results min-w-0 space-y-3">
             <div
               className={cn(
-                "rounded-md px-3 py-2 text-xs font-medium",
+                "voice-agent-harness__results-summary rounded-md px-3 py-2 text-xs font-medium [overflow-wrap:anywhere]",
                 runResult.passed
                   ? "bg-success/15 text-success"
                   : "bg-danger/10 text-danger"
               )}
             >
-              {runResult.summary}
-              <span className="ml-2 font-normal text-muted">
-                · {runResult.scenarioName} · {runResult.sessionId}
-              </span>
+              <p>{runResult.summary}</p>
+              <p className="voice-agent-harness__results-meta mt-1 font-normal text-muted">
+                {runResult.scenarioName} ·{" "}
+                <span className="font-mono text-caption break-all">
+                  {runResult.sessionId}
+                </span>
+              </p>
             </div>
-            <ol className="space-y-2">
+            <ol className="voice-agent-harness__step-list min-w-0 space-y-2">
               {runResult.steps.map((step) => (
                 <li
                   key={step.stepIndex}
-                  className="rounded-lg border border-line bg-surface/50"
+                  className="voice-agent-harness__step-item min-w-0 rounded-lg border border-line bg-surface/50"
                 >
                   <button
                     type="button"
-                    className="flex w-full flex-wrap items-center gap-2 px-3 py-2 text-left text-xs"
+                    className="voice-agent-harness__step-toggle kds-thumb-btn flex min-h-11 w-full flex-col items-start gap-1 px-3 py-2 text-left text-xs sm:min-h-0 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2"
                     aria-expanded={expandedStep === step.stepIndex}
                     onClick={() =>
                       setExpandedStep(
@@ -260,7 +276,9 @@ export function VoiceAgentTestHarness({ restaurantId }: Props) {
                     }
                   >
                     <StepBadge step={step} />
-                    <span className="font-mono text-subtle">{step.tool}</span>
+                    <span className="font-mono text-subtle [overflow-wrap:anywhere]">
+                      {step.tool}
+                    </span>
                     <span className="text-muted">HTTP {step.httpStatus}</span>
                     <span className="text-subtle">{step.durationMs}ms</span>
                   </button>
@@ -273,60 +291,122 @@ export function VoiceAgentTestHarness({ restaurantId }: Props) {
           </div>
         ) : null}
 
-        <div className="border-t border-line pt-5">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-subtle">
-            Manual tool step
-          </h3>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {TOOLS.map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => loadManualTemplate(t)}
-                className={cn(
-                  "min-h-10 rounded-md px-3 py-2 font-mono text-xs",
-                  manualTool === t
-                    ? "bg-accent/15 text-accent"
-                    : "bg-elev text-muted hover:text-ink"
-                )}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-          <textarea
-            value={manualBody}
-            onChange={(e) => setManualBody(e.target.value)}
-            rows={8}
-            spellCheck={false}
-            className="input-base mt-2 w-full font-mono text-xs"
-          />
-          <button
-            type="button"
-            disabled={busy}
-            onClick={() => void runManualStep()}
-            className="btn-ghost mt-2 min-h-10 text-xs"
-          >
-            Run tool step
-          </button>
-          {manualResult ? (
-            <div className="mt-3 rounded-lg border border-line bg-elev/30 p-3">
-              <p className="text-xs text-muted">
-                HTTP {manualResult.httpStatus}
-                {manualResult.wroteDatabase ? " · wrote DB" : ""}
-              </p>
-              <pre className="mt-2 max-h-64 overflow-auto text-[10px] leading-relaxed text-ink">
-                {JSON.stringify(manualResult.response, null, 2)}
-              </pre>
-              {manualResult.cartValidation &&
-              manualResult.cartValidation.issues.length > 0 ? (
-                <ValidationList validation={manualResult.cartValidation} />
-              ) : null}
+        <details className="voice-agent-harness__advanced border-t border-line pt-5">
+          <summary className="voice-agent-harness__advanced-summary cursor-pointer text-sm font-semibold uppercase tracking-wider text-subtle">
+            Advanced tool diagnostics
+          </summary>
+          <div className="voice-agent-harness__advanced-body mt-3 min-w-0">
+            <div className="voice-agent-harness__tool-pills mt-3 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
+              {TOOLS.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => loadManualTemplate(t)}
+                  className={cn(
+                    "kds-thumb-btn min-h-11 rounded-md px-3 py-2 font-mono text-xs sm:min-h-10",
+                    manualTool === t
+                      ? "bg-accent/15 text-accent"
+                      : "bg-elev text-muted hover:text-ink"
+                  )}
+                >
+                  {t}
+                </button>
+              ))}
             </div>
-          ) : null}
-        </div>
+            <textarea
+              value={manualBody}
+              onChange={(e) => setManualBody(e.target.value)}
+              rows={6}
+              spellCheck={false}
+              className="voice-agent-harness__manual-body input-base mt-2 w-full min-w-0 font-mono text-xs"
+            />
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => void runManualStep()}
+              className="btn-ghost kds-thumb-btn mt-2 min-h-11 w-full text-xs sm:min-h-10 sm:w-auto"
+            >
+              Run tool step
+            </button>
+            {manualResult ? (
+              <div className="voice-agent-harness__manual-result mt-3 min-w-0 rounded-lg border border-line bg-elev/30 p-3">
+                <p className="text-xs text-muted [overflow-wrap:anywhere]">
+                  HTTP {manualResult.httpStatus}
+                  {manualResult.wroteDatabase ? " · wrote DB" : ""}
+                </p>
+                <pre className="voice-agent-harness__step-log mt-2 max-h-48 overflow-auto overscroll-contain text-micro leading-relaxed text-ink sm:max-h-64">
+                  {JSON.stringify(manualResult.response, null, 2)}
+                </pre>
+                {manualResult.cartValidation &&
+                manualResult.cartValidation.issues.length > 0 ? (
+                  <ValidationList validation={manualResult.cartValidation} />
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        </details>
       </div>
-      ) : null}
+  );
+
+  if (variant === "test-call" && flowStep) {
+    return (
+      <div className="menu-setup-agent-panel kds-panel min-w-0 overflow-hidden">
+        {panelBody}
+      </div>
+    );
+  }
+
+  if (variant === "test-call") {
+    return (
+      <details
+        className="voice-agent-harness-shell voice-agent-harness-shell--optional menu-setup-test-call kds-panel min-w-0 max-w-full overflow-hidden glass-card"
+        aria-labelledby="menu-setup-test-call-heading"
+      >
+        <summary
+          id="menu-setup-test-call-heading"
+          className="menu-setup-test-call__summary"
+        >
+          Optional testing
+          <span className="menu-setup-test-call__summary-hint font-normal text-muted sm:hidden">
+            (collapsed)
+          </span>
+        </summary>
+        <p className="menu-setup-test-call__lead px-3 pb-0 pt-1 text-xs text-muted sm:px-5">
+          Harness tool scenarios only — not a live caller. Dry run stays on by
+          default.
+        </p>
+        {panelBody}
+      </details>
+    );
+  }
+
+  return (
+    <section className="kds-panel glass-card overflow-hidden voice-harness-panel">
+      <div className="kds-panel__header">
+        <div className="min-w-0 flex-1">
+          <h2
+            id="voice-harness-heading"
+            className="kds-panel__title"
+          >
+            Optional testing
+          </h2>
+          <p className="kds-panel__lead">
+            Run a quick test to confirm menu and order updates.
+          </p>
+        </div>
+        <button
+          type="button"
+          className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-line bg-elev px-3 text-xs font-medium text-ink hover:bg-card"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-controls="voice-harness-panel"
+          aria-labelledby="voice-harness-heading"
+        >
+          {open ? "Hide" : "Show"} testing
+        </button>
+      </div>
+
+      {open ? panelBody : null}
     </section>
   );
 }
@@ -341,29 +421,29 @@ function StepBadge({
     <>
       <span
         className={cn(
-          "rounded px-1.5 py-0.5 text-[10px] font-bold uppercase",
+          "rounded px-1.5 py-0.5 text-micro font-bold uppercase",
           pass ? "bg-success/15 text-success" : "bg-danger/10 text-danger"
         )}
       >
         {pass ? "pass" : "fail"}
       </span>
-      <span className="text-muted">&ldquo;{step.guestLine}&rdquo;</span>
+      <span className="text-muted">Step {step.stepIndex + 1}</span>
     </>
   );
 }
 
 function StepDetails({ step }: { step: HarnessRunResult["steps"][0] }) {
   return (
-    <div className="space-y-2 border-t border-line px-3 py-2">
-      <div>
-        <p className="text-[10px] font-semibold uppercase text-subtle">Request</p>
-        <pre className="mt-1 max-h-40 overflow-auto rounded bg-elev/50 p-2 text-[10px]">
+    <div className="voice-agent-harness__step-details min-w-0 space-y-2 border-t border-line px-3 py-2">
+      <div className="min-w-0">
+        <p className="text-micro font-semibold uppercase text-subtle">Request</p>
+        <pre className="voice-agent-harness__step-log mt-1 max-h-36 overflow-auto overscroll-contain rounded bg-elev/50 p-2 text-micro sm:max-h-40">
           {JSON.stringify(step.request, null, 2)}
         </pre>
       </div>
-      <div>
-        <p className="text-[10px] font-semibold uppercase text-subtle">Response</p>
-        <pre className="mt-1 max-h-48 overflow-auto rounded bg-elev/50 p-2 text-[10px]">
+      <div className="min-w-0">
+        <p className="text-micro font-semibold uppercase text-subtle">Response</p>
+        <pre className="voice-agent-harness__step-log mt-1 max-h-40 overflow-auto overscroll-contain rounded bg-elev/50 p-2 text-micro sm:max-h-48">
           {JSON.stringify(step.response, null, 2)}
         </pre>
       </div>
@@ -380,7 +460,7 @@ function ValidationList({
   validation: NonNullable<HarnessRunResult["steps"][0]["cartValidation"]>;
 }) {
   return (
-    <ul className="mt-2 space-y-1 text-[10px] text-amber-900">
+    <ul className="mt-2 space-y-1 text-micro text-amber-900">
       {validation.issues.map((issue, i) => (
         <li key={i} className="rounded bg-warning/10 px-2 py-1">
           <span className="font-semibold">{issue.code}</span>: {issue.message}

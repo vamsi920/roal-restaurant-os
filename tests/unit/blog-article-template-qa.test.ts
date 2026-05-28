@@ -18,6 +18,20 @@ describe("blog article template", () => {
     expect(layout).not.toContain("BlogArticleToc");
     expect(layout).not.toContain("BlogMotifLayer");
     expect(layout).toContain("blog-article__stack");
+    expect(layout).toContain("blog-article__reading");
+  });
+
+  it("uses editorial article CSS without sticky TOC", () => {
+    const theme = readFileSync(join(REPO, "app/blog-theme.css"), "utf8");
+    const mobile = readFileSync(join(REPO, "app/public-mobile-pages.css"), "utf8");
+    const cta = readFileSync(join(REPO, "components/blog/blog-article-cta.tsx"), "utf8");
+
+    expect(theme).toContain("blog-article__reading");
+    expect(theme).toContain("max-width: 38rem");
+    expect(theme).toMatch(/\.blog-article-toc[\s\S]*position:\s*static/);
+    expect(cta).toContain("blog-article-cta--closing");
+    expect(mobile).toContain("blog-article-cta__actions");
+    expect(mobile).toContain("blog-article-section__title");
   });
 
   it("renders a dedicated short-answer box", () => {

@@ -5,6 +5,7 @@ import {
   resolveOrganizationId,
   serializeAuthContext,
 } from "@/lib/auth/context-server";
+import { DEFAULT_PLATFORM_ADMIN_EMAIL } from "@/lib/auth/platform-admin";
 import type { AuthContext, MembershipWithOrg } from "@/lib/auth/types";
 
 const ORG_A = "11111111-1111-4111-8111-111111111111";
@@ -76,22 +77,26 @@ describe("resolveOrganizationId", () => {
 });
 
 describe("hasOrgAdminAccess / serializeAuthContext", () => {
-  it("flags admin access when any membership is owner or admin", () => {
-    expect(hasOrgAdminAccess(context())).toBe(true);
-    const serialized = serializeAuthContext(context());
-    expect(serialized.hasOrgAdminAccess).toBe(true);
-    expect(serialized.primaryOrganizationId).toBe(ORG_A);
-    expect(serialized.memberships).toHaveLength(2);
-    expect(serialized.user.email).toBe("op@example.invalid");
+  it("flags admin access for platform admin email only", () => {
+    const platform = context({
+      user: {
+        id: USER_ID,
+        email: DEFAULT_PLATFORM_ADMIN_EMAIL,
+      } as AuthContext["user"],
+    });
+    expect(hasOrgAdminAccess(platform)).toBe(true);
+    expect(serializeAuthContext(platform).hasOrgAdminAccess).toBe(true);
   });
 
-  it("omits admin flag for member-only orgs", () => {
+  it("omits admin flag for non-platform users even when owner", () => {
+    expect(hasOrgAdminAccess(context())).toBe(false);
+    expect(serializeAuthContext(context()).hasOrgAdminAccess).toBe(false);
+
     const memberOnly = context({
       memberships: [membership(ORG_B, "member")],
       primaryMembership: membership(ORG_B, "member"),
     });
     expect(hasOrgAdminAccess(memberOnly)).toBe(false);
-    expect(serializeAuthContext(memberOnly).hasOrgAdminAccess).toBe(false);
   });
 });
 

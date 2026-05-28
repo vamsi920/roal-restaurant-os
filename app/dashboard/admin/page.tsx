@@ -1,9 +1,17 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AdminOpsDashboard } from "@/components/admin/AdminOpsDashboard";
-import { getAuthContext, hasOrgAdminAccess } from "@/lib/auth/context-server";
-import { isOrgAdmin } from "@/lib/auth/roles";
+import {
+  adminSnapshotSupabase,
+  resolveAdminOrgInputs,
+} from "@/lib/admin/resolve-admin-org-inputs";
 import { loadAdminOpsSnapshot } from "@/lib/admin/load-ops-snapshot";
+import { getAuthContext, hasOrgAdminAccess } from "@/lib/auth/context-server";
 import { createServerSupabase } from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "Platform support — ROAL",
+};
 
 export const dynamic = "force-dynamic";
 
@@ -16,15 +24,9 @@ export default async function AdminOpsPage() {
     redirect("/dashboard");
   }
 
-  const adminOrgs = context.memberships
-    .filter((m) => isOrgAdmin(m.role))
-    .map((m) => ({
-      organizationId: m.organization_id,
-      organizationName: m.organization.name,
-      role: m.role,
-    }));
-
-  const supabase = await createServerSupabase();
+  const adminOrgs = await resolveAdminOrgInputs(context);
+  const sessionClient = await createServerSupabase();
+  const supabase = adminSnapshotSupabase(context, sessionClient);
   const snapshot = await loadAdminOpsSnapshot(supabase, adminOrgs);
 
   return <AdminOpsDashboard snapshot={snapshot} />;

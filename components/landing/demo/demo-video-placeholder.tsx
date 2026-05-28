@@ -33,10 +33,9 @@ export function DemoVideoPlaceholder() {
       className="public-demo-block public-demo-video scroll-mt-28"
       aria-labelledby={video.titleId}
     >
-      <h2 id={video.titleId} className="public-demo-block__title">
+      <h2 id={video.titleId} className="sr-only">
         {video.title}
       </h2>
-      <p className="public-demo-block__deck">{video.description}</p>
 
       <div className="public-demo-video__frame glass-card">
         <div className="public-demo-video__aspect">

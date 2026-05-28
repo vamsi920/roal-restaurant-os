@@ -10,27 +10,18 @@ export const SIGNUP_PAGE_COPY = {
   },
   entry: {
     eyebrow: "Get started",
-    title: "Your restaurant workspace",
-    description:
-      "Confirm your email, add your menu, and run a test call—most teams try one order before forwarding rush-hour traffic.",
+    title: "Open your workspace",
+    description: "Confirm email, scan your menu, test a pickup call—then forward rush-hour rings.",
   },
   steps: [
-    {
-      title: "Create account",
-      body: "Work email and password. We send a confirm link—you sign in after you verify.",
-    },
-    {
-      title: "Add your menu",
-      body: "Scan or import your menu so phone orders match what you actually sell.",
-    },
-    {
-      title: "Run a test order",
-      body: "Place a test call and watch the ticket hit your kitchen screen.",
-    },
+    { title: "Create account", tag: "Confirm your email" },
+    { title: "Add your menu", tag: "Scan or import" },
+    { title: "Test on the pass", tag: "About 20 minutes" },
   ],
   form: {
-    title: "Create your account",
-    lead: "Work email. After you confirm, you open your restaurant workspace.",
+    eyebrow: "Create account",
+    title: "Start free",
+    lead: "Work email—we send a confirm link.",
     submitLabel: "Create account",
     loadingLabel: "One moment…",
     passwordPlaceholder: "8+ characters",

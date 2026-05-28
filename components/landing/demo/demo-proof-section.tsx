@@ -19,7 +19,6 @@ export function DemoProofSection({ preview }: Props) {
       <h2 id={proof.titleId} className="public-demo-block__title">
         {proof.title}
       </h2>
-      <p className="public-demo-block__deck">{proof.description}</p>
 
       <div className="public-demo-proof__grid">
         <div className="public-demo-proof__col min-w-0">

@@ -63,7 +63,7 @@ export function OrderTotalsBreakdown({
           {!totals.complete ? "+" : null}
         </dd>
       </div>
-      <p className="text-[11px] text-muted">{totals.disclaimer}</p>
+      <p className="text-caption text-muted">{totals.disclaimer}</p>
     </dl>
   );
 }

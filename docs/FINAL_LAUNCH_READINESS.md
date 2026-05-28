@@ -10,7 +10,7 @@
 
 | Layer | Status |
 |-------|--------|
-| **Code / CI** | **Ready** — `lint` **pass** (1 accepted warning), `npm test` **555/555** (+1 skipped), `npm run build` **pass** (37/40 fixed `parseEnv` typing for client env inlining) |
+| **Code / CI** | **Ready** — `lint` **pass** (0 warnings), `npm test` **555/555** (+1 skipped), focused UI suite **162/162** (prompt 77), `npm run build` **pass** (prompt 78; `typography.css` layer fix) |
 | **Supabase** | **Ready** — project `mnkabwcbdxruefzuvuuv`, **24/24** migrations, Edge functions deployed |
 | **Product flows (automated)** | **Pass** — auth, tenant, menu, KDS, ElevenLabs tools, billing dev mode, notifications, analytics, admin |
 | **Production launch** | **Blocked (P0)** — **LB-01** open: `getroal.com` unreachable; live Twilio sign-off pending. **LB-04** open (same root cause). **LB-03 closed**; **LB-02 downgraded** |
@@ -258,20 +258,76 @@ Transcript footer + ticket proof unchanged structurally; theme tokens on transcr
 
 ---
 
-## KDS workspace UX (prompt 10/40)
+## KDS workspace UX (prompt 10/40) — superseded
+
+Pre-split ops layout (menu + voice + orders on one page). **Replaced** by functional refocus **01–40/80** below. Source of truth for IA: [`KDS_REFOCUS_PLAN.md`](./KDS_REFOCUS_PLAN.md).
+
+---
+
+## KDS / Menu split — functional + UI refocus (01–40 + 68–79/80)
+
+**Series:** [`kds-functional-and-ui-80-prompts.md`](./kds-functional-and-ui-80-prompts.md) · IA source: [`KDS_REFOCUS_PLAN.md`](./KDS_REFOCUS_PLAN.md).  
+**Verdict:** **Functional + UI pass (68–79)** — route split unchanged; dashboard/public polish, KDS/menu designed states, theme/focus consistency, **lint clean**, **build pass**, **162** focused Vitest. **80/80** = final review only.
+
+### Split status
+
+| Route | Role | Renders |
+|-------|------|---------|
+| `/dashboard/restaurants/[id]` | **Live orders** | `LiveOrdersPanel` only — draft/receipt queue, tabs, `CallStatusStrip`, link to menu setup |
+| `/dashboard/restaurants/[id]/menu` | **Menu & agent setup** | `MenuScanner`, `LiveMenuSidebar`, `MenuImportHistory`, embedded `MenuEditor`, collapsed **Test call** harness, collapsed **Restaurant basics** |
+| `/dashboard/restaurants` | **Locations** | Per-card CTAs: Live orders + Menu & agent setup |
+
+**Preserved:** Auth (`getRestaurantAccessForPage`, guest `next=` paths), Gemini scan APIs, menu realtime, order realtime/poll, billing gates on scanner, `loadVoiceAgentControlCenter` in menu loader (data only).
+
+**Removed from KDS page:** `MenuScanner`, `LiveMenuSidebar`, `MenuImportHistory`, `VoiceAgentPanel`, `VoiceAgentTestHarness`, profile/hours panels, mixed two-column grids.
+
+### UI pass summary (prompts 68–79)
 
 | Area | Change |
 |------|--------|
-| Layout | Ops-first: **Phone orders + Voice agent** above menu/scanner; `minmax(0,…)` grids + `kds-workspace.css` for overflow-safe panels |
-| Phone orders | Scrollable tabs, shared panel headers, plain-English empty states (removed `sync_draft_order` jargon in UI) |
-| Live menu | Sticky sidebar uses `kds-live-menu` + `min-w-0` scroll body |
-| Profile | Collapsed by default (matches hours) |
-| Voice | Shorter “Voice agent” title; test harness **collapsed by default** |
-| Scanner | Shared `kds-panel` header hierarchy |
+| Dashboard shell | 5-item nav; calm ops typography; lavender accent; shared page/panel patterns |
+| Locations / onboarding | **Live orders** + **Menu & agent** CTAs; short onboarding roadmap |
+| Public | Copy trim; metrics strip removed; shorter FAQs; violet-only washes |
+| Theme / a11y | Focus rings dashboard + public; billing semantic colors |
+| KDS / menu setup | `kds-workspace-states` — empty, loading, sync banners (not blank/spinner-only) |
+| Quality gates | Lint **0** warnings (`MenuScanner` hooks fixed); build (`typography.css` no orphan `@layer`) |
 
-**Browser:** Guest `/dashboard/restaurants/{id}` → login redirect **pass** (same as 09). Signed-in KDS layout/tabs/Realtime **needs** `E2E_EMAIL` / `E2E_PASSWORD`.
+### Mobile status (UI pass)
 
-**469/469** unit tests (+ `kds-workspace-qa`).
+| Surface | Status |
+|---------|--------|
+| Dashboard shell + locations | **Good** — drawer, 44px targets, `dashboard-mobile` tests |
+| Live orders KDS | **Good** — sticky head, tab scroll, thumb buttons, designed empties |
+| Menu setup | **Acceptable** — step flow + collapsed optional blocks; still long on small phones |
+| Public | **Good** — prior `qa:responsive-sweep` **33/33**; copy trim in 72 |
+| Signed-in browser | **Open** — needs `E2E_EMAIL` / `E2E_PASSWORD` |
+
+### Tests run (functional + UI, 2026-05-23)
+
+| Gate | Result |
+|------|--------|
+| Focused Vitest (prompt **77**) | **33** files, **162/162** pass |
+| `npm run lint` (prompt **76**) | **pass** — 0 warnings |
+| `npm run build` (prompt **78**) | **pass** — 51 app routes |
+
+Includes: `kds-workspace-qa` (14), `menu-setup-route`, `dashboard-nav`, `dashboard-owner-cta`, `dashboard-shell-qa`, `dashboard-mobile`, `onboarding-*`, `error-states-qa`, `public-accessibility-qa`, `visual-consistency*`, `launch-faq`, `pricing-*`, `home-*`, `metrics-safety`, `public-cta`, `auth-ui-qa`, `typography-qa`, voice/scanner/menu editor audits.
+
+**Regression fixed (77):** `public-cta.test.ts` — `HOME_CTA_BAND.title` → `"Stop losing rush-hour calls."` (matches `lib/landing/home-cta-band-copy.ts` after prompt 72).
+
+### Unresolved blockers (functional + UI refocus)
+
+| ID | Severity | Item |
+|----|----------|------|
+| **KDS-REF-01** | — | **Closed** — `VoiceAgentPanel` on menu setup **Phone agent** step (recovery pass, prompt 24) |
+| **KDS-REF-02** | P2 UX | Menu setup **long scroll** on mobile; optional blocks collapsed but page still dense |
+| **KDS-REF-03** | P2 QA | Signed-in browser matrix (scan → ticket on Live orders) still **needs** `E2E_EMAIL` / `E2E_PASSWORD` |
+| **LB-01** | **P0** ops | Unchanged — prod DNS / live Twilio (see [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md)) |
+
+**Closed in UI pass (68–79) + recovery:** Undesigned KDS/menu empties; `VoiceAgentPanel` on `/menu`; call/menu-changed indicators on menu setup; homepage pilot metrics strip; `public-cta` test; `MenuScanner` lint; `typography.css` build fix.
+
+**Not blockers for staged pilot on dev/preview:** Split itself; Edge phone tools; local menu scan + KDS ticket path (prior QA still valid).
+
+**Owner journey script note:** `qa:owner-journey` step “KDS workspace (orders + scanner)” predates split — treat **Live orders** and **`/menu`** as separate steps when re-running manually.
 
 ---
 
@@ -1059,3 +1115,10 @@ See [`launch-finalization-40-prompts.md`](./launch-finalization-40-prompts.md).
 | 2026-05-23 | Launch 38/40 | Blocker decision: LB-01 P0 + LB-04 P1 open (prod DNS/hosting); pilot onboarding go / live prod phone no-go; LAUNCH_BLOCKERS restructured |
 | 2026-05-23 | Launch 39/40 | Staged 700 launch files; commit message prepared; no secrets staged |
 | 2026-05-23 | Launch 40/40 | Committed on `main`; push withheld — LB-01 P0 (prod DNS + Twilio) |
+| 2026-05-23 | KDS refocus 40/80 | Functional pass: Live orders `/[id]` vs Menu setup `/menu`; 35+ targeted Vitest; build pass; `KDS_REFOCUS_PLAN.md` updated; **VoiceAgentPanel** on menu UI still open (KDS-REF-01); **not committed** |
+| 2026-05-23 | KDS/UI 68–71/80 | Dashboard shell nav/typography; locations CTAs; onboarding copy; settings/billing/support theme alignment |
+| 2026-05-23 | KDS/UI 72–74/80 | Public copy trim + FAQ shorten; lavender/ink color pass; focus rings public + dashboard |
+| 2026-05-23 | KDS/UI 75/80 | `kds-workspace-states` — KDS empty/loading/banners; menu sidebar + import history states |
+| 2026-05-23 | KDS/UI 76–78/80 | Lint clean (`MenuScanner` hooks); **162** focused Vitest; build pass (`typography.css` layer fix) |
+| 2026-05-23 | KDS/UI 79/80 | `KDS_REFOCUS_PLAN.md` + this doc — UI summary, mobile status, tests, remaining issues |
+| 2026-05-23 | Safety recovery | Closed gaps **19, 20, 24, 59**: call indicator, menu-changed banner, `VoiceAgentPanel` on `/menu`, `HomeMetricsStrip` on landing; prompt audit in `KDS_REFOCUS_PLAN.md` |

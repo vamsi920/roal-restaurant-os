@@ -1,5 +1,6 @@
 import { PRICING_PAGE_COPY } from "@/lib/landing/pricing-page-copy";
 import { PricingCta } from "./pricing-cta";
+import { PricingOrderExplainer } from "./pricing-order-explainer";
 import { PricingPilotSetup } from "./pricing-pilot-setup";
 import { PricingPrimaryCard } from "./pricing-primary-card";
 import { PublicCtaBand, PublicFaq } from "@/components/landing/public";
@@ -9,9 +10,16 @@ export function PricingPageContent() {
   const copy = PRICING_PAGE_COPY;
 
   return (
-    <div className="public-pricing-page">
+    <div className="public-pricing-page min-w-0 overflow-x-clip">
       <LandingSection className="public-pricing-page__hero border-b-0 pt-6 sm:pt-10">
         <PricingPrimaryCard />
+      </LandingSection>
+
+      <LandingSection
+        labelledBy={copy.whatCounts.titleId}
+        className="public-pricing-page__orders border-b-0"
+      >
+        <PricingOrderExplainer />
       </LandingSection>
 
       <LandingSection labelledBy={copy.pilot.titleId} className="public-pricing-page__pilot border-b-0">

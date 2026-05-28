@@ -1,14 +1,60 @@
 /**
- * Mobile page QA (prompt 88): home, pricing, blog, article, about, demo, login, signup.
- * Scoped ≤479px unless noted. Imported via public-theme.css.
+ * Mobile page QA: launch routes on phones.
+ * Prompt 54: hero, pricing, about, blog, article, demo, contact.
+ * Imported via public-theme.css.
  */
 
+@media (max-width: 767px) {
+  .landing-story.public-theme .blog-shell,
+  .landing-story.public-theme .public-demo-shell,
+  .landing-story.public-theme .public-contact-page,
+  .landing-story.public-theme .public-pricing-page {
+    min-width: 0;
+    overflow-x: clip;
+  }
+
+  .landing-story.public-theme .public-pricing-primary-card__ctas .public-cta-band__actions {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .landing-story.public-theme .public-pricing-primary-card__ctas .landing-cta-hit,
+  .landing-story.public-theme .public-pricing-primary-card__ctas .public-btn-primary,
+  .landing-story.public-theme .public-pricing-primary-card__ctas .public-btn-ghost {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .public-marketing-hero .landing-lead,
+  .landing-story.public-theme .public-contact-hero .landing-lead {
+    font-size: 1.0625rem;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .blog-index-hero__inner {
+    padding-block: clamp(1.65rem, 5vw, 2.5rem);
+  }
+
+  .landing-story.public-theme .public-demo-hero__inner {
+    padding-block: clamp(1.65rem, 5vw, 2.5rem);
+  }
+
+  .landing-story.public-theme .blog-article__hero-band .blog-article__wrap {
+    padding-block: clamp(1.5rem, 4.5vw, 2.25rem) clamp(1.25rem, 3.5vw, 1.75rem);
+  }
+}
+
 @media (max-width: 479px) {
-  .landing-story.public-theme {
+  .landing-story.public-theme,
+  .landing-home.landing-home-canvas {
     --public-section-y: clamp(2.5rem, 8vw, 3.5rem);
     --public-gutter: max(1rem, 4vw);
-    --public-text-display: clamp(1.875rem, 8.5vw, 2.5rem);
-    --public-text-h2: clamp(1.5rem, 6.5vw, 2rem);
+    --public-text-display: var(--text-hero-size);
+    --public-text-h2: var(--text-section-size);
+    --public-text-lead: var(--text-body-size);
+    --public-text-eyebrow: var(--text-label-size);
+    --public-text-body: var(--text-body-size);
   }
 
   .landing-story.public-theme .landing-wrap,
@@ -30,6 +76,322 @@
 
   .landing-story.public-theme .public-marketing-hero .landing-wrap {
     padding-block: clamp(1.65rem, 5vw, 2.35rem);
+  }
+
+  .landing-story.public-theme .landing-eyebrow {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .landing-story.public-theme .landing-lead,
+  .landing-story.public-theme .landing-body {
+    font-size: 1.0625rem;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .blog-index-hero__eyebrow,
+  .landing-story.public-theme .public-demo-hero__eyebrow,
+  .landing-story.public-theme .public-pricing-primary-card__eyebrow {
+    font-size: 0.75rem;
+  }
+
+  .landing-story.public-theme .blog-index-hero__title,
+  .landing-story.public-theme .public-demo-hero__title {
+    overflow-wrap: anywhere;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .blog-index-hero__deck,
+  .landing-story.public-theme .public-demo-hero__deck {
+    font-size: 1.0625rem;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .blog-post-meta {
+    row-gap: 0.35rem;
+  }
+
+  .landing-story.public-theme .blog-post-meta__detail {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  .landing-story.public-theme .blog-index {
+    padding-block: clamp(1.1rem, 3.5vw, 1.65rem);
+  }
+
+  .landing-story.public-theme .blog-index-featured__grid,
+  .landing-story.public-theme .blog-index__grid--compact {
+    gap: 0.85rem;
+    margin-top: 0.65rem;
+  }
+
+  .landing-story.public-theme .blog-index__section-label--spaced {
+    margin-top: 1.35rem;
+  }
+
+  .landing-story.public-theme .blog-category-filter {
+    gap: 0.45rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .landing-story.public-theme .blog-card--compact .blog-card__surface,
+  .landing-story.public-theme .blog-card--featured .blog-card__surface {
+    padding: 0.95rem 1rem;
+    min-height: 0;
+  }
+
+  .landing-story.public-theme .blog-card__title {
+    margin-top: 0.6rem;
+    font-size: clamp(1.0625rem, 4.5vw, 1.2rem);
+    line-height: 1.22;
+  }
+
+  .landing-story.public-theme .blog-card--featured .blog-card__title {
+    font-size: clamp(1.125rem, 5vw, 1.35rem);
+  }
+
+  .landing-story.public-theme .blog-card__excerpt,
+  .landing-story.public-theme .blog-card:not(.blog-card--featured) .blog-card__excerpt {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-top: 0.4rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .landing-story.public-theme .blog-card__cta {
+    padding-top: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .landing-story.public-theme .blog-card__eyebrow {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .landing-story.public-theme .blog-article-header__back {
+    font-size: 0.875rem;
+  }
+
+  .landing-story.public-theme .blog-article-header__byline {
+    font-size: 0.875rem;
+  }
+
+  .landing-story.public-theme .blog-article-header__title {
+    overflow-wrap: anywhere;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .blog-article__stack {
+    min-width: 0;
+    max-width: 100%;
+    padding-inline: 0;
+    padding-block: clamp(1.25rem, 4vw, 1.75rem) clamp(2rem, 5vw, 2.75rem);
+    gap: 1.65rem;
+  }
+
+  .landing-story.public-theme .blog-article__reading {
+    max-width: 100%;
+    gap: 1.5rem;
+  }
+
+  .landing-story.public-theme .blog-article__hero-band .blog-article__wrap {
+    padding-block: clamp(1.35rem, 4vw, 1.85rem) clamp(1.15rem, 3.5vw, 1.5rem);
+  }
+
+  .landing-story.public-theme .blog-article-header__title {
+    font-size: clamp(1.625rem, 7vw, 2rem);
+    line-height: 1.14;
+  }
+
+  .landing-story.public-theme .blog-article-header__summary {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+
+  .landing-story.public-theme .blog-article-answer {
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .landing-story.public-theme .blog-article-answer__question {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .landing-story.public-theme .blog-article-answer__text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .landing-story.public-theme .blog-article-answer__label {
+    font-size: 0.75rem;
+  }
+
+  .landing-story.public-theme .blog-article-section__title {
+    font-size: clamp(1.1875rem, 5vw, 1.3125rem);
+    line-height: 1.22;
+  }
+
+  .landing-story.public-theme .blog-article-section + .blog-article-section {
+    margin-top: 1.35rem;
+    padding-top: 1.35rem;
+  }
+
+  .landing-story.public-theme .blog-article-faq__title {
+    font-size: clamp(1.125rem, 4.5vw, 1.25rem);
+  }
+
+  .landing-story.public-theme .blog-article-faq__q {
+    font-size: 0.9375rem;
+  }
+
+  .landing-story.public-theme .public-blog-article-cta,
+  .landing-story.public-theme .blog-article-cta--closing {
+    max-width: 100%;
+    padding: 1.15rem 1rem;
+  }
+
+  .landing-story.public-theme .blog-article-cta__title {
+    font-size: clamp(1.125rem, 4.5vw, 1.3rem);
+  }
+
+  .landing-story.public-theme .blog-article-cta__desc {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .landing-story.public-theme .blog-article-cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 1rem;
+    gap: 0.55rem;
+  }
+
+  .landing-story.public-theme .blog-article-cta__actions .public-btn-primary,
+  .landing-story.public-theme .blog-article-cta__actions .public-btn-ghost {
+    width: 100%;
+    max-width: 100%;
+    min-height: var(--public-btn-height, 3rem);
+  }
+
+  .landing-story.public-theme .blog-related {
+    padding-top: 1.15rem;
+    max-width: 100%;
+  }
+
+  .landing-story.public-theme .public-about-pillars {
+    gap: 0.65rem;
+  }
+
+  .landing-story.public-theme .public-about-pillars__item {
+    padding: 0.95rem 1rem;
+  }
+
+  .landing-story.public-theme .public-about-pillars__title {
+    font-size: 1rem;
+    overflow-wrap: anywhere;
+  }
+
+  .landing-story.public-theme .public-about-pillars__body {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .landing-story.public-theme .public-demo-flow__title {
+    font-size: 1.0625rem;
+  }
+
+  .landing-story.public-theme .public-demo-flow__step {
+    padding: 0.95rem 0.85rem;
+  }
+
+  .landing-story.public-theme .public-demo-flow__icon {
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+
+  .landing-story.public-theme .public-demo-proof__note,
+  .landing-story.public-theme .public-demo-close-band__footer {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .landing-story.public-theme .public-contact-page__grid {
+    gap: 1.25rem;
+  }
+
+  .landing-story.public-theme .public-contact-cta-actions {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .landing-story.public-theme .public-contact-form__submit {
+    min-height: var(--public-btn-height, 3rem);
+    font-weight: 600;
+  }
+
+  .landing-story.public-theme .public-contact-field__input {
+    font-size: 1rem;
+  }
+
+  .landing-story.public-theme .public-contact-expect__body {
+    font-size: 0.9375rem;
+  }
+
+  .landing-story.public-theme .public-contact-fit .text-sm {
+    font-size: 0.9375rem;
+  }
+
+  .landing-story.public-theme .public-pricing-orders__examples {
+    font-size: 0.9375rem;
+    padding-left: 1rem;
+  }
+
+  .landing-story.public-theme .public-pricing-primary-card__list-title {
+    font-size: 0.8125rem;
+  }
+
+  .landing-story.public-theme .public-pricing-primary-card__list li {
+    font-size: 0.9375rem;
+  }
+
+  .landing-story.public-theme .public-pricing-primary-card__note,
+  .landing-story.public-theme .public-pricing-pilot__note {
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .landing-story.public-theme .public-pricing-page .landing-section {
+    padding-block: clamp(1.35rem, 4vw, 1.75rem);
+  }
+
+  .landing-story.public-theme .public-pricing-page__hero.landing-section {
+    padding-block: clamp(1.15rem, 3.5vw, 1.5rem);
+  }
+
+  .landing-story.public-theme .public-pricing-faq.landing-section {
+    padding-top: 0.35rem;
+  }
+
+  .landing-story.public-theme .public-pricing-primary-card .public-pricing-cta__signup {
+    display: none;
+  }
+
+  .landing-story.public-theme .public-pricing-primary-card__ctas .public-cta-band__actions {
+    gap: 0.55rem;
+  }
+
+  .landing-story.public-theme
+    .public-pricing-primary-card__ctas
+    .landing-cta-hit:first-child
+    .public-btn-primary {
+    min-height: var(--public-btn-height, 3rem);
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   .landing-story.public-theme .pricing-hero-rate {
@@ -137,12 +499,9 @@
   }
 
   .landing-story.public-theme .blog-article-section__p {
-    font-size: 1rem;
-    line-height: 1.65;
-  }
-
-  .landing-story.public-theme .blog-article-header__summary {
-    font-size: 1rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    max-width: 100%;
   }
 
   .landing-story.public-theme .blog-category-filter {
@@ -189,5 +548,25 @@
   .landing-home .home-metrics__note,
   .landing-home .home-product-proof__caption {
     font-size: 0.75rem;
+  }
+
+  .landing-story.public-theme .public-faq__accordion {
+    gap: 0.4rem;
+  }
+
+  .landing-story.public-theme .public-faq__accordion-q {
+    font-size: 0.8125rem;
+    padding: 0.65rem 0.85rem;
+    line-height: 1.3;
+  }
+
+  .landing-story.public-theme .public-faq__accordion-body {
+    padding-inline: 0.85rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .landing-story.public-theme .public-faq__accordion-a {
+    font-size: 0.8125rem;
+    line-height: 1.4;
   }
 }

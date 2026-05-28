@@ -37,7 +37,7 @@ export function canDeleteRestaurant(role: MembershipRole): boolean {
 export function formatMembershipRole(role: MembershipRole): string {
   const labels: Record<MembershipRole, string> = {
     owner: "Owner",
-    admin: "Admin",
+    admin: "Manager",
     member: "Member",
   };
   return labels[role];

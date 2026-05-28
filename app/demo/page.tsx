@@ -12,7 +12,7 @@ export default async function DemoPage() {
 
   return (
     <MarketingShell>
-      <div className="public-demo-shell min-w-0">
+      <div className="public-demo-shell min-w-0 overflow-x-clip">
         <DemoPageHero />
         <DemoPageContent preview={preview} />
       </div>
