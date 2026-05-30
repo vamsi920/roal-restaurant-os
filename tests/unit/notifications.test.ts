@@ -117,6 +117,10 @@ vi.mock("@/lib/notifications/dispatch", () => ({
   dispatchNotification: vi.fn(),
 }));
 
+vi.mock("@/lib/observability/audit", () => ({
+  writeAuditLog: vi.fn(),
+}));
+
 vi.mock("@/lib/notifications/settings", async (importOriginal) => {
   const actual =
     await importOriginal<typeof import("@/lib/notifications/settings")>();
@@ -142,7 +146,7 @@ describe("notifyStuckOrdersForOrganization", () => {
     vi.mocked(loadNotificationSettings).mockResolvedValue(
       defaultNotificationSettings(orgId)
     );
-    vi.mocked(dispatchNotification).mockResolvedValue(undefined);
+    vi.mocked(dispatchNotification).mockResolvedValue(true);
   });
 
   it("returns 0 when order_stuck is disabled", async () => {

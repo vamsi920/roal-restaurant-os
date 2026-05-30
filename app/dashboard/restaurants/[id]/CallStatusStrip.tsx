@@ -4,6 +4,8 @@ type Props = {
   liveCount: number;
   lastUpdatedAt: string | null;
   compact?: boolean;
+  /** Active calls without a linked draft cart yet. */
+  supplementalCalls?: number;
 };
 
 function formatStripTime(iso: string | null): string {
@@ -22,6 +24,7 @@ export function CallStatusStrip({
   liveCount,
   lastUpdatedAt,
   compact = false,
+  supplementalCalls = 0,
 }: Props) {
   const live = liveCount > 0;
 
@@ -49,6 +52,11 @@ export function CallStatusStrip({
         {live ? (
           <span className="rounded-md bg-card px-1.5 py-0.5 text-caption font-semibold tabular-nums text-muted">
             {liveCount}
+          </span>
+        ) : null}
+        {supplementalCalls > 0 ? (
+          <span className="text-caption text-muted">
+            {supplementalCalls} without cart
           </span>
         ) : null}
       </div>

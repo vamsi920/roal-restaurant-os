@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { dispatchNotification } from "@/lib/notifications/dispatch";
+import { emitOrderStuckIfTransition } from "@/lib/notifications/operational-events";
 import { loadNotificationSettings } from "@/lib/notifications/settings";
 
 const STUCK_STATUSES = ["new", "accepted", "in_progress", "ready"] as const;
@@ -46,23 +46,17 @@ export async function notifyStuckOrdersForOrganization(
       input.restaurantNames.get(row.restaurant_id) ?? "Restaurant";
     const label = row.customer_name?.trim() || row.session_id.slice(0, 8);
 
-    await dispatchNotification(supabase, {
+    const notified = await emitOrderStuckIfTransition(supabase, {
       organizationId: input.organizationId,
       restaurantId: row.restaurant_id,
       restaurantName,
-      eventType: "order_stuck",
-      title: `Order stuck · ${restaurantName}`,
-      body: `${label} has been in "${row.status}" for over ${settings.orderStuckMinutes} minutes.`,
-      payload: {
-        order_id: row.id,
-        session_id: row.session_id,
-        status: row.status,
-        updated_at: row.updated_at,
-        threshold_minutes: settings.orderStuckMinutes,
-      },
-      idempotencyKey: `order_stuck:${row.id}:${settings.orderStuckMinutes}`,
+      orderId: row.id,
+      sessionId: row.session_id,
+      status: row.status,
+      thresholdMinutes: settings.orderStuckMinutes,
+      customerLabel: label,
     });
-    sent += 1;
+    if (notified) sent += 1;
   }
 
   return sent;

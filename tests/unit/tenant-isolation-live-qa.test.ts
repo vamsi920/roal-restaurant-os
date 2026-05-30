@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 const REPO = join(import.meta.dirname, "../..");
 
-describe("tenant isolation posture (launch 25)", () => {
+describe("tenant isolation posture (launch 25 / pass 30)", () => {
   it("analytics uses session org only", () => {
     const page = readFileSync(
       join(REPO, "app/dashboard/analytics/page.tsx"),
@@ -79,8 +79,66 @@ describe("tenant isolation posture (launch 25)", () => {
       "notification_settings",
       "notification_deliveries",
       "usage_events",
+      "agent_call_events",
+      "restaurant_profiles",
+      "restaurant_onboarding",
+      "restaurant_weekly_hours",
+      "audit_logs",
     ]) {
       expect(sql).toContain(table);
     }
+  });
+
+  it("call-session loader scopes by restaurant_id", () => {
+    const load = readFileSync(
+      join(REPO, "lib/agent-calls/load-call-sessions.ts"),
+      "utf8"
+    );
+    expect(load).toContain('.eq("restaurant_id", restaurantId)');
+    expect(load).toContain("agent_call_events");
+    expect(load).toContain("restaurant_profiles");
+  });
+
+  it("org overview and launch loaders scope by org restaurants", () => {
+    const overview = readFileSync(
+      join(REPO, "lib/org-overview/load-org-overview.ts"),
+      "utf8"
+    );
+    expect(overview).toContain('.eq("organization_id", input.organizationId)');
+    expect(overview).toContain('.in("restaurant_id", restaurantIds)');
+    expect(overview).toContain("elevenlabs_menu_auto_sync_status");
+
+    const launch = readFileSync(
+      join(REPO, "lib/restaurant-launch/load-checklist.ts"),
+      "utf8"
+    );
+    expect(launch).toContain("getRestaurantProfile(supabase, input.restaurantId)");
+    expect(launch).toContain('.eq("restaurant_id", restaurantId)');
+  });
+
+  it("dashboard restaurant pages gate with getRestaurantAccessForPage", () => {
+    for (const page of [
+      "app/dashboard/restaurants/[id]/agent/page.tsx",
+      "app/dashboard/restaurants/[id]/analytics/page.tsx",
+      "app/dashboard/restaurants/[id]/calls/page.tsx",
+    ]) {
+      const src = readFileSync(join(REPO, page), "utf8");
+      expect(src).toContain("getRestaurantAccessForPage");
+    }
+  });
+
+  it("voice and onboarding server actions require restaurant access", () => {
+    const voice = readFileSync(
+      join(REPO, "app/dashboard/restaurants/[id]/voice-agent-actions.ts"),
+      "utf8"
+    );
+    expect(voice).toContain("requireRestaurantAccess");
+
+    const onboarding = readFileSync(
+      join(REPO, "app/dashboard/onboarding/actions.ts"),
+      "utf8"
+    );
+    expect(onboarding).toContain("does not belong to this organization");
+    expect(onboarding).toContain("requireOrgMembership");
   });
 });

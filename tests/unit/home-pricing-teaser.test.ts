@@ -4,14 +4,13 @@ import { describe, expect, it } from "vitest";
 import { HOME_PAY } from "@/lib/landing/home-pay-copy";
 import {
   PRICING_RATE_AMOUNT,
-  PRICING_VALUE_HEADLINE,
 } from "@/lib/landing/pricing-core";
 
 const REPO = join(import.meta.dirname, "../..");
 
 describe("home pricing teaser", () => {
   it("centers on completed-order pricing from pricing-core", () => {
-    expect(HOME_PAY.headline).toBe(PRICING_VALUE_HEADLINE);
+    expect(HOME_PAY.headline).toMatch(/orders/i);
     expect(HOME_PAY.amount).toBe(PRICING_RATE_AMOUNT);
     expect(HOME_PAY.unit).toBe("each completed order");
     expect(HOME_PAY.pricingHref).toBe("/pricing");

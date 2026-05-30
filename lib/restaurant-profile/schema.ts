@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { parseUnavailableItemBehavior } from "@/lib/restaurant-profile/handoff-rules";
 
 /** Accepts `null` from server actions and empty strings from forms. */
 const optionalText = z.preprocess(
@@ -15,6 +16,40 @@ const optionalEmail = z.preprocess(
     .refine((v) => v === null || z.email().safeParse(v).success, {
       message: "Invalid escalation email",
     })
+);
+
+const optionalPhone = z.preprocess(
+  (val) => (val === null || val === undefined ? "" : val),
+  z
+    .string()
+    .trim()
+    .transform((v) => (v === "" ? null : v))
+    .refine(
+      (v) => v === null || /^[\d\s+().-]{7,24}$/.test(v),
+      { message: "Invalid phone number" }
+    )
+);
+
+const optionalLongText = (max: number) =>
+  z.preprocess(
+    (val) => (val === null || val === undefined ? "" : val),
+    z
+      .string()
+      .trim()
+      .max(max, `Must be ${max} characters or fewer`)
+      .transform((v) => (v === "" ? null : v))
+  );
+
+const optionalUnavailableBehavior = z.preprocess(
+  (val) => (val === null || val === undefined ? "" : val),
+  z
+    .string()
+    .trim()
+    .transform((v) => (v === "" ? null : v))
+    .refine(
+      (v) => v === null || parseUnavailableItemBehavior(v) != null,
+      { message: "Choose how unavailable items are handled" }
+    )
 );
 
 const optionalUrl = z.preprocess(
@@ -57,8 +92,13 @@ export const RestaurantProfileInputSchema = z
       .min(0)
       .max(100),
     escalation_name: optionalText,
-    escalation_phone: optionalText,
+    escalation_phone: optionalPhone,
     escalation_email: optionalEmail,
+    handoff_catering_route: optionalLongText(800),
+    handoff_complaint_route: optionalLongText(800),
+    handoff_unavailable_item_behavior: optionalUnavailableBehavior,
+    handoff_unavailable_item_notes: optionalLongText(400),
+    closed_hours_message: optionalLongText(500),
   })
   .refine((d) => d.allows_pickup || d.allows_delivery, {
     message: "Enable at least pickup or delivery",

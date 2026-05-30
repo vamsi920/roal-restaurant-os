@@ -104,13 +104,13 @@ async function resyncRestaurant(row: RestaurantRow) {
   });
 
   let phoneWebhook: string | null = null;
-  const webhookUrl = buildConversationInitWebhookUrl(
-    getElevenLabsConversationInitSecret()
-  );
+  const initSecret = getElevenLabsConversationInitSecret();
+  const webhookUrl = buildConversationInitWebhookUrl(initSecret);
   if (webhookUrl) {
     const phone = await applyElevenLabsPhonePersonalizationWebhook({
       agentId,
       webhookUrl,
+      initSecret,
     });
     phoneWebhook = phone.webhook_url;
   }

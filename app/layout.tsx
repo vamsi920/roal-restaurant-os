@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Sora } from "next/font/google";
 import { buildSiteMetadataDefaults } from "@/lib/seo/public-open-graph";
 import { getMetadataBase } from "@/lib/site-url";
 import "./typography.css";
@@ -9,6 +9,13 @@ const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -34,7 +41,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`[color-scheme:light] ${plusJakarta.variable}`}>
+    <html lang="en" className={`[color-scheme:light] ${plusJakarta.variable} ${sora.variable}`}>
       <body className="min-h-[100dvh] bg-base font-sans text-ink antialiased">
         {children}
       </body>

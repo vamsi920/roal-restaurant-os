@@ -6,6 +6,13 @@ export {
 export { dispatchNotification } from "@/lib/notifications/dispatch";
 export { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
 export {
+  emitGoLiveIfTransition,
+  emitMenuAutoSyncFailureIfTransition,
+  emitOrderStuckIfTransition,
+  emitProvisionFailureIfTransition,
+  stateTransitioned,
+} from "@/lib/notifications/operational-events";
+export {
   channelSecretsForSave,
   ensureNotificationSettings,
   loadNotificationSettings,

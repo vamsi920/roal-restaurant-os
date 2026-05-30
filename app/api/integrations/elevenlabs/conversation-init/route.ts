@@ -3,10 +3,12 @@ import {
   buildElevenLabsConversationInitPayload,
   ELEVENLABS_CONVERSATION_INIT_SECRET_HEADER,
   isElevenLabsConversationInitAuthorized,
-  lookupRestaurantForElevenLabsAgent,
+  parseElevenLabsConversationInitRequestBody,
+  readAgentPlaceholdersForInit,
   readElevenLabsConversationInitAgentId,
+  readElevenLabsConversationInitCalledNumber,
+  resolveRestaurantForElevenLabsConversationInit,
 } from "@/lib/elevenlabs/conversation-init";
-import { DEFAULT_RESTAURANT_NAME } from "@/lib/elevenlabs-placeholders";
 import { getElevenLabsConversationInitSecret } from "@/lib/env.server";
 
 export const runtime = "nodejs";
@@ -23,27 +25,63 @@ async function handleInit(req: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body =
-    req.method === "POST"
-      ? await req.json().catch(() => ({}))
-      : {};
+  const body = await parseElevenLabsConversationInitRequestBody(req);
   const agentId = readElevenLabsConversationInitAgentId(url, body);
-  if (!agentId) {
+  const calledNumber = readElevenLabsConversationInitCalledNumber(url, body);
+
+  if (!agentId && !calledNumber) {
     return NextResponse.json(
-      { error: "Missing agent_id (query or JSON body)" },
+      {
+        error:
+          "Missing agent_id or called_number (query, JSON body, or form field — ElevenLabs Twilio POST)",
+      },
       { status: 400 }
     );
   }
 
-  const ctx = await lookupRestaurantForElevenLabsAgent(agentId);
-  return NextResponse.json(
-    buildElevenLabsConversationInitPayload(
-      ctx ?? {
-        restaurantId: "",
-        restaurantName: DEFAULT_RESTAURANT_NAME,
-      }
-    )
-  );
+  try {
+    const resolved = await resolveRestaurantForElevenLabsConversationInit({
+      agentId,
+      calledNumber,
+    });
+
+    if (!resolved) {
+      return NextResponse.json(
+        {
+          error:
+            "No restaurant linked to this ElevenLabs agent or phone line. Connect a dedicated agent on Live Agent first.",
+          code: "restaurant_not_linked",
+        },
+        { status: 404 }
+      );
+    }
+
+    const effectiveAgentId = agentId || resolved.linkedAgentId;
+    if (!effectiveAgentId) {
+      return NextResponse.json(
+        {
+          error:
+            "Could not resolve ElevenLabs agent (provide agent_id or a called_number linked to a provisioned location)",
+        },
+        { status: 400 }
+      );
+    }
+
+    const agentPlaceholders = await readAgentPlaceholdersForInit(effectiveAgentId);
+
+    return NextResponse.json(
+      buildElevenLabsConversationInitPayload({
+        restaurantId: resolved.restaurantId,
+        restaurantName: resolved.restaurantName,
+        agentPlaceholders,
+      })
+    );
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to build conversation initiation data" },
+      { status: 500 }
+    );
+  }
 }
 
 /** ElevenLabs Twilio personalization webhook — supplies required dynamic variables. */

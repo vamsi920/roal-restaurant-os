@@ -1,6 +1,41 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { RestaurantProfile } from "@/lib/types";
+import type {
+  ElevenLabsMenuAutoSyncStatus,
+  ElevenLabsProvisionStatus,
+  RestaurantProfile,
+} from "@/lib/types";
+import { parseUnavailableItemBehavior } from "@/lib/restaurant-profile/handoff-rules";
 import type { RestaurantProfileInput } from "@/lib/restaurant-profile/schema";
+
+const PROVISION_STATUSES: readonly ElevenLabsProvisionStatus[] = [
+  "pending",
+  "provisioning",
+  "ready",
+  "failed",
+];
+
+const MENU_AUTO_SYNC_STATUSES: readonly ElevenLabsMenuAutoSyncStatus[] = [
+  "pending",
+  "syncing",
+  "succeeded",
+  "failed",
+];
+
+function parseProvisionStatus(value: unknown): ElevenLabsProvisionStatus | null {
+  if (typeof value !== "string") return null;
+  return PROVISION_STATUSES.includes(value as ElevenLabsProvisionStatus)
+    ? (value as ElevenLabsProvisionStatus)
+    : null;
+}
+
+function parseMenuAutoSyncStatus(
+  value: unknown
+): ElevenLabsMenuAutoSyncStatus | null {
+  if (typeof value !== "string") return null;
+  return MENU_AUTO_SYNC_STATUSES.includes(value as ElevenLabsMenuAutoSyncStatus)
+    ? (value as ElevenLabsMenuAutoSyncStatus)
+    : null;
+}
 
 export function defaultRestaurantProfile(
   restaurantId: string,
@@ -28,9 +63,19 @@ export function defaultRestaurantProfile(
     escalation_name: null,
     escalation_phone: null,
     escalation_email: null,
+    handoff_catering_route: null,
+    handoff_complaint_route: null,
+    handoff_unavailable_item_behavior: null,
+    handoff_unavailable_item_notes: null,
+    closed_hours_message: null,
     temporarily_closed: false,
     temporarily_closed_reason: null,
     elevenlabs_agent_id: null,
+    elevenlabs_provision_status: null,
+    elevenlabs_provision_error: null,
+    elevenlabs_provisioned_at: null,
+    elevenlabs_menu_auto_sync_status: null,
+    elevenlabs_menu_auto_sync_error: null,
     elevenlabs_last_sync_at: null,
     elevenlabs_last_sync_error: null,
     elevenlabs_last_sync_summary: null,
@@ -64,6 +109,25 @@ function mapRow(row: Record<string, unknown>): RestaurantProfile {
       row.escalation_phone != null ? String(row.escalation_phone) : null,
     escalation_email:
       row.escalation_email != null ? String(row.escalation_email) : null,
+    handoff_catering_route:
+      row.handoff_catering_route != null
+        ? String(row.handoff_catering_route)
+        : null,
+    handoff_complaint_route:
+      row.handoff_complaint_route != null
+        ? String(row.handoff_complaint_route)
+        : null,
+    handoff_unavailable_item_behavior: parseUnavailableItemBehavior(
+      row.handoff_unavailable_item_behavior
+    ),
+    handoff_unavailable_item_notes:
+      row.handoff_unavailable_item_notes != null
+        ? String(row.handoff_unavailable_item_notes)
+        : null,
+    closed_hours_message:
+      row.closed_hours_message != null
+        ? String(row.closed_hours_message)
+        : null,
     temporarily_closed: Boolean(row.temporarily_closed),
     temporarily_closed_reason:
       row.temporarily_closed_reason != null
@@ -71,6 +135,24 @@ function mapRow(row: Record<string, unknown>): RestaurantProfile {
         : null,
     elevenlabs_agent_id:
       row.elevenlabs_agent_id != null ? String(row.elevenlabs_agent_id) : null,
+    elevenlabs_provision_status: parseProvisionStatus(
+      row.elevenlabs_provision_status
+    ),
+    elevenlabs_provision_error:
+      row.elevenlabs_provision_error != null
+        ? String(row.elevenlabs_provision_error)
+        : null,
+    elevenlabs_provisioned_at:
+      row.elevenlabs_provisioned_at != null
+        ? String(row.elevenlabs_provisioned_at)
+        : null,
+    elevenlabs_menu_auto_sync_status: parseMenuAutoSyncStatus(
+      row.elevenlabs_menu_auto_sync_status
+    ),
+    elevenlabs_menu_auto_sync_error:
+      row.elevenlabs_menu_auto_sync_error != null
+        ? String(row.elevenlabs_menu_auto_sync_error)
+        : null,
     elevenlabs_last_sync_at:
       row.elevenlabs_last_sync_at != null
         ? String(row.elevenlabs_last_sync_at)
@@ -161,6 +243,11 @@ export async function upsertRestaurantProfile(
     escalation_name: input.escalation_name,
     escalation_phone: input.escalation_phone,
     escalation_email: input.escalation_email,
+    handoff_catering_route: input.handoff_catering_route,
+    handoff_complaint_route: input.handoff_complaint_route,
+    handoff_unavailable_item_behavior: input.handoff_unavailable_item_behavior,
+    handoff_unavailable_item_notes: input.handoff_unavailable_item_notes,
+    closed_hours_message: input.closed_hours_message,
     updated_at: new Date().toISOString(),
   };
 

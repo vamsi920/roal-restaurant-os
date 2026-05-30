@@ -2,9 +2,28 @@ export type AnalyticsRangeKey = "7d" | "30d" | "90d";
 
 export type DailyOrderPoint = {
   date: string;
-  voiceOrders: number;
+  /** Unique order sessions with activity that day (drafts, receipts, usage). */
+  orderSessions: number;
+  /** Receipts finalized or order_completed usage that day. */
   completed: number;
   canceled: number;
+};
+
+export type PeakHourRow = {
+  hourUtc: number;
+  label: string;
+  orderCount: number;
+};
+
+export type ConversionTrend = {
+  label: string;
+  priorPercent: number | null;
+  recentPercent: number | null;
+  deltaPoints: number | null;
+  priorSessions: number;
+  recentSessions: number;
+  priorCompleted: number;
+  recentCompleted: number;
 };
 
 export type PopularItemRow = {
@@ -16,14 +35,16 @@ export type PopularItemRow = {
 export type RestaurantAnalyticsRow = {
   restaurantId: string;
   restaurantName: string;
-  voiceOrders: number;
+  orderSessions: number;
+  sessionsCompleted: number;
   finalized: number;
-  completed: number;
+  completedKitchen: number;
   canceled: number;
   conversionPercent: number | null;
   revenueCents: number | null;
   revenueComplete: boolean;
   avgPrepMinutes: number | null;
+  stuckOrders: number;
 };
 
 export type MenuScanStats = {
@@ -47,18 +68,25 @@ export type AnalyticsSnapshot = {
   until: string;
   restaurantCount: number;
   summary: {
-    voiceOrders: number;
+    orderSessions: number;
+    sessionsWithCompletedOrder: number;
+    sessionConversionPercent: number | null;
     ordersFinalized: number;
-    ordersCompleted: number;
+    completedKitchenOrders: number;
     ordersCanceled: number;
-    conversionPercent: number | null;
     avgPrepMinutes: number | null;
     prepSampleSize: number;
     revenueCents: number | null;
     revenueComplete: boolean;
     revenueOrderCount: number;
+    averageOrderCents: number | null;
+    averageOrderComplete: boolean;
+    averageOrderSampleSize: number;
+    stuckOrderCount: number;
   };
   ordersOverTime: DailyOrderPoint[];
+  peakHours: PeakHourRow[];
+  conversionTrend: ConversionTrend;
   popularItems: PopularItemRow[];
   byRestaurant: RestaurantAnalyticsRow[];
   menuScans: MenuScanStats;

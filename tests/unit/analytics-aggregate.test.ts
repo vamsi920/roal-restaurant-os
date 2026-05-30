@@ -32,13 +32,14 @@ describe("bucketUsageByDay", () => {
         event_type: "voice_order",
         occurred_at: "2026-05-17T12:00:00.000Z",
         restaurant_id: "r1",
+        session_id: null,
         metadata: null,
       },
     ];
     const series = bucketUsageByDay(events, dayKeys);
     expect(series).toEqual([
-      { date: "2026-05-17", voiceOrders: 1, completed: 0, canceled: 0 },
-      { date: "2026-05-18", voiceOrders: 0, completed: 0, canceled: 0 },
+      { date: "2026-05-17", orderSessions: 1, completed: 0, canceled: 0 },
+      { date: "2026-05-18", orderSessions: 0, completed: 0, canceled: 0 },
     ]);
   });
 });
@@ -52,12 +53,14 @@ describe("aggregateMenuScans", () => {
           event_type: "menu_scan",
           occurred_at: "2026-05-01",
           restaurant_id: null,
+          session_id: null,
           metadata: { import_id: "imp-1", outcome: "extracted" },
         },
         {
           event_type: "menu_scan",
           occurred_at: "2026-05-01",
           restaurant_id: null,
+          session_id: null,
           metadata: { outcome: "extraction_failed" },
         },
       ]
@@ -80,6 +83,7 @@ describe("popularItemSources", () => {
       status: "completed",
       items: [{ name: "Burger", quantity: 2 }],
       created_at: "",
+      updated_at: "",
       completed_at: null,
       canceled_at: null,
     },

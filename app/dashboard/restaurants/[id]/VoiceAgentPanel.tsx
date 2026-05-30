@@ -61,7 +61,7 @@ export function VoiceAgentPanel({
   const [center, setCenter] =
     useState<VoiceAgentControlCenterSnapshot>(initialCenter);
   const [agentIdInput, setAgentIdInput] = useState(
-    initialCenter.agentId ?? ""
+    initialCenter.agentIdSource === "profile" ? (initialCenter.agentId ?? "") : ""
   );
   const [busy, setBusy] = useState<"connect" | "resync" | "refresh" | null>(
     null
@@ -80,7 +80,9 @@ export function VoiceAgentPanel({
     try {
       const next = await getVoiceAgentControlCenterAction(restaurantId);
       setCenter(next);
-      setAgentIdInput(next.agentId ?? "");
+      setAgentIdInput(
+        next.agentIdSource === "profile" ? (next.agentId ?? "") : ""
+      );
     } catch (e) {
       const raw = e instanceof Error ? e.message : "Refresh failed";
       setError(sanitizeVoiceAgentDisplayError(raw) ?? "Refresh failed");
@@ -219,11 +221,36 @@ export function VoiceAgentPanel({
                 onChange={(e) => setAgentIdInput(e.target.value)}
                 disabled={busy !== null || voiceBlocked}
                 aria-describedby={
-                  connectDisabled && !voiceBlocked && !center.envReady
-                    ? `voice-agent-connect-hint-${restaurantId}`
-                    : undefined
+                  [
+                    connectDisabled && !voiceBlocked && !center.envReady
+                      ? `voice-agent-connect-hint-${restaurantId}`
+                      : null,
+                    center.agentIdSource === "env_default"
+                      ? `voice-agent-env-default-hint-${restaurantId}`
+                      : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" ") || undefined
                 }
               />
+              {center.agentIdSource === "env_default" && center.agentId ? (
+                <p
+                  id={`voice-agent-env-default-hint-${restaurantId}`}
+                  className="mt-2 text-xs text-muted [overflow-wrap:anywhere]"
+                >
+                  Server default agent is available but not linked to this
+                  location. Paste an ID or{" "}
+                  <button
+                    type="button"
+                    className="font-medium text-accent underline-offset-2 hover:underline"
+                    onClick={() => setAgentIdInput(center.agentId ?? "")}
+                    disabled={busy !== null || voiceBlocked}
+                  >
+                    use server default
+                  </button>
+                  , then Connect &amp; sync.
+                </p>
+              ) : null}
             </div>
             <div className="voice-agent-panel__actions">
             <button

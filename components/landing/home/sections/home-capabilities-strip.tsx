@@ -9,7 +9,6 @@ export function HomeCapabilitiesStrip() {
       shell="home"
       eyebrow={eyebrow}
       title={title}
-      titleVisuallyHidden
       note={note}
       items={items}
     />

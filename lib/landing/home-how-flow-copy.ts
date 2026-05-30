@@ -8,28 +8,28 @@ export type HowFlowBeat = {
 };
 
 export const HOME_HOW_FLOW = {
-  eyebrow: "Three steps",
-  title: "How it works",
-  lead: "Menu, phone line, ROAL answers. Orders reach the kitchen.",
+  eyebrow: "How it works",
+  title: "From menu to live calls in one simple flow.",
+  lead: "Add the menu. Test the agent. Forward rush-hour calls when ready.",
   visualLabel: "Preview",
   beats: [
     {
       id: "share-menu",
       step: 1,
-      title: "Your menu",
-      body: "Items and prices ROAL uses on every pickup call.",
+      title: "Add your menu",
+      body: "Items, prices, modifiers, hours, pickup timing, and sold-out notes.",
     },
     {
       id: "connect-line",
       step: 2,
-      title: "Your phone line",
-      body: "Forward your restaurant number so ROAL answers rings.",
+      title: "Test the phone agent",
+      body: "Try questions, substitutions, language changes, and noisy-call edge cases.",
     },
     {
       id: "kitchen-orders",
       step: 3,
-      title: "ROAL answers",
-      body: "Pickup confirmed on the call; orders reach your kitchen screen.",
+      title: "Go live for rush",
+      body: "Confirmed pickup orders land on the kitchen screen for your team.",
     },
   ] satisfies HowFlowBeat[],
 } as const;

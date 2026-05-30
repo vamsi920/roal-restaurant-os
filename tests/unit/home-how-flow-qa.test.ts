@@ -13,7 +13,7 @@ describe("home how-flow scroll QA", () => {
   it("uses three plain beats (prompt 30)", () => {
     expect(HOME_HOW_FLOW.beats).toHaveLength(3);
     const titles = HOME_HOW_FLOW.beats.map((b) => b.title);
-    expect(titles).toEqual(["Your menu", "Your phone line", "ROAL answers"]);
+    expect(titles).toEqual(["Add your menu", "Test the phone agent", "Go live for rush"]);
 
     const copy = read("lib/landing/home-how-flow-copy.ts");
     expect(copy).toContain('"share-menu"');
@@ -81,9 +81,7 @@ describe("home how-flow scroll QA", () => {
       /\.home-how-flow--tablet \.home-how-flow__step[\s\S]*grid-template-columns:\s*minmax\(0,\s*1fr\) minmax\(0,\s*1fr\)/
     );
 
-    expect(HOME_HOW_FLOW.lead).toMatch(/menu/i);
-    expect(HOME_HOW_FLOW.lead).toMatch(/phone line/i);
-    expect(HOME_HOW_FLOW.lead).toMatch(/kitchen/i);
+    expect(HOME_HOW_FLOW.lead).toMatch(/owners/i);
     expect(HOME_HOW_FLOW.beats[2].body).toMatch(/kitchen screen/i);
   });
 });

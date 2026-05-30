@@ -6,7 +6,7 @@ import { PRIVATE_PAGE_ROBOTS } from "@/lib/seo/robots-metadata";
 import { AppShell } from "@/components/dashboard/app-shell";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
-import { formatMembershipRole } from "@/lib/auth/roles";
+import { formatMembershipRole, isOrgAdmin } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "Dashboard — ROAL",
@@ -37,6 +37,7 @@ export default async function DashboardLayout({
             : null
       }
       showAdminNav={isPlatformAdminEmail(context.user.email)}
+      showOrgAdminNav={Boolean(primary && isOrgAdmin(primary.role))}
     >
       {children}
     </AppShell>

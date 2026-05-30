@@ -3,6 +3,11 @@
 import { useState, useTransition } from "react";
 import { saveRestaurantProfileSettingsAction } from "./profile-actions";
 import { cn } from "@/lib/cn";
+import {
+  UNAVAILABLE_ITEM_BEHAVIOR_LABEL,
+  UNAVAILABLE_ITEM_BEHAVIORS,
+} from "@/lib/restaurant-profile/handoff-rules";
+import { RestaurantProfileInputSchema } from "@/lib/restaurant-profile/schema";
 import type { Restaurant, RestaurantProfile } from "@/lib/types";
 
 type Props = {
@@ -31,11 +36,17 @@ function toFormState(restaurant: Restaurant, profile: RestaurantProfile) {
     escalation_name: profile.escalation_name ?? "",
     escalation_phone: profile.escalation_phone ?? "",
     escalation_email: profile.escalation_email ?? "",
+    handoff_catering_route: profile.handoff_catering_route ?? "",
+    handoff_complaint_route: profile.handoff_complaint_route ?? "",
+    handoff_unavailable_item_behavior:
+      profile.handoff_unavailable_item_behavior ?? "",
+    handoff_unavailable_item_notes: profile.handoff_unavailable_item_notes ?? "",
+    closed_hours_message: profile.closed_hours_message ?? "",
   };
 }
 
 export function RestaurantProfileSettings({ restaurant, profile }: Props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [form, setForm] = useState(() => toFormState(restaurant, profile));
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
@@ -50,34 +61,42 @@ export function RestaurantProfileSettings({ restaurant, profile }: Props) {
     e.preventDefault();
     setError(null);
 
-    if (!form.allows_pickup && !form.allows_delivery) {
-      setError("Enable at least pickup or delivery.");
+    const payload = {
+      name: form.name.trim(),
+      phone: form.phone,
+      address_line1: form.address_line1,
+      address_line2: form.address_line2,
+      city: form.city,
+      region: form.region,
+      postal_code: form.postal_code,
+      country: form.country,
+      timezone: form.timezone,
+      cuisine: form.cuisine,
+      website: form.website,
+      allows_pickup: form.allows_pickup,
+      allows_delivery: form.allows_delivery,
+      prep_time_minutes: Number(form.prep_time_minutes),
+      tax_rate_percent: Number(form.tax_rate_percent),
+      service_fee_percent: Number(form.service_fee_percent),
+      escalation_name: form.escalation_name,
+      escalation_phone: form.escalation_phone,
+      escalation_email: form.escalation_email,
+      handoff_catering_route: form.handoff_catering_route,
+      handoff_complaint_route: form.handoff_complaint_route,
+      handoff_unavailable_item_behavior: form.handoff_unavailable_item_behavior,
+      handoff_unavailable_item_notes: form.handoff_unavailable_item_notes,
+      closed_hours_message: form.closed_hours_message,
+    };
+
+    const parsed = RestaurantProfileInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      setError(parsed.error.issues[0]?.message ?? "Invalid profile data");
       return;
     }
 
     startTransition(async () => {
       try {
-        await saveRestaurantProfileSettingsAction(restaurant.id, {
-          name: form.name.trim(),
-          phone: form.phone,
-          address_line1: form.address_line1,
-          address_line2: form.address_line2,
-          city: form.city,
-          region: form.region,
-          postal_code: form.postal_code,
-          country: form.country,
-          timezone: form.timezone,
-          cuisine: form.cuisine,
-          website: form.website,
-          allows_pickup: form.allows_pickup,
-          allows_delivery: form.allows_delivery,
-          prep_time_minutes: Number(form.prep_time_minutes),
-          tax_rate_percent: Number(form.tax_rate_percent),
-          service_fee_percent: Number(form.service_fee_percent),
-          escalation_name: form.escalation_name,
-          escalation_phone: form.escalation_phone,
-          escalation_email: form.escalation_email,
-        });
+        await saveRestaurantProfileSettingsAction(restaurant.id, parsed.data);
         setSaved(true);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Save failed");
@@ -93,7 +112,7 @@ export function RestaurantProfileSettings({ restaurant, profile }: Props) {
             Location settings
           </h2>
           <p className="mt-0.5 text-xs text-muted">
-            Profile, ordering modes, taxes, and escalation contact for the voice agent.
+            Profile, ordering, taxes, and handoff rules synced to the voice agent.
           </p>
         </div>
         <button
@@ -308,42 +327,142 @@ export function RestaurantProfileSettings({ restaurant, profile }: Props) {
             </div>
           </FieldGroup>
 
-          <FieldGroup title="Escalation (human handoff)">
+          <FieldGroup title="Handoff &amp; escalation">
             <p className="-mt-2 text-xs text-muted">
-              Used when the voice agent must transfer to staff.
+              Routes catering, complaints, sold-out items, and after-hours calls.
+              Synced to the voice agent on save.
             </p>
-            <Field label="Contact name">
-              <input
-                className="input-base"
-                value={form.escalation_name}
-                onChange={(e) => setField("escalation_name", e.target.value)}
+
+            <div className="rounded-xl border border-line bg-elev/40 p-3 sm:p-4">
+              <p className="text-xs font-medium text-ink">Manager contact</p>
+              <p className="mt-0.5 text-xs text-muted">
+                Phone or email for staff callback when the agent escalates.
+              </p>
+              <div className="mt-3 space-y-3">
+                <Field label="Manager name">
+                  <input
+                    className="input-base min-h-11"
+                    value={form.escalation_name}
+                    onChange={(e) =>
+                      setField("escalation_name", e.target.value)
+                    }
+                    autoComplete="name"
+                    disabled={pending}
+                  />
+                </Field>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field label="Manager phone">
+                    <input
+                      className="input-base min-h-11"
+                      type="tel"
+                      inputMode="tel"
+                      value={form.escalation_phone}
+                      onChange={(e) =>
+                        setField("escalation_phone", e.target.value)
+                      }
+                      placeholder="+1 555 0100"
+                      autoComplete="tel"
+                      disabled={pending}
+                    />
+                  </Field>
+                  <Field label="Manager email">
+                    <input
+                      className="input-base min-h-11"
+                      type="email"
+                      inputMode="email"
+                      value={form.escalation_email}
+                      onChange={(e) =>
+                        setField("escalation_email", e.target.value)
+                      }
+                      placeholder="manager@restaurant.com"
+                      autoComplete="email"
+                      disabled={pending}
+                    />
+                  </Field>
+                </div>
+              </div>
+            </div>
+
+            <Field label="Catering route">
+              <textarea
+                className="input-base min-h-[5.5rem] resize-y"
+                rows={3}
+                value={form.handoff_catering_route}
+                onChange={(e) =>
+                  setField("handoff_catering_route", e.target.value)
+                }
+                placeholder="e.g. Take party size and date, offer manager callback within one business day. Do not quote catering pricing."
                 disabled={pending}
               />
             </Field>
+
+            <Field label="Complaint route">
+              <textarea
+                className="input-base min-h-[5.5rem] resize-y"
+                rows={3}
+                value={form.handoff_complaint_route}
+                onChange={(e) =>
+                  setField("handoff_complaint_route", e.target.value)
+                }
+                placeholder="e.g. Apologize, capture order number if any, offer manager callback—do not offer refunds on the call."
+                disabled={pending}
+              />
+            </Field>
+
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Phone">
-                <input
-                  className="input-base"
-                  type="tel"
-                  value={form.escalation_phone}
-                  onChange={(e) => setField("escalation_phone", e.target.value)}
+              <Field label="Unavailable item behavior">
+                <select
+                  className="input-base min-h-11"
+                  value={form.handoff_unavailable_item_behavior}
+                  onChange={(e) =>
+                    setField(
+                      "handoff_unavailable_item_behavior",
+                      e.target.value
+                    )
+                  }
                   disabled={pending}
-                />
+                >
+                  <option value="">Default (suggest alternative)</option>
+                  {UNAVAILABLE_ITEM_BEHAVIORS.map((value) => (
+                    <option key={value} value={value}>
+                      {UNAVAILABLE_ITEM_BEHAVIOR_LABEL[value]}
+                    </option>
+                  ))}
+                </select>
               </Field>
-              <Field label="Email">
+              <Field label="Extra note (optional)">
                 <input
-                  className="input-base"
-                  type="email"
-                  value={form.escalation_email}
-                  onChange={(e) => setField("escalation_email", e.target.value)}
+                  className="input-base min-h-11"
+                  value={form.handoff_unavailable_item_notes}
+                  onChange={(e) =>
+                    setField("handoff_unavailable_item_notes", e.target.value)
+                  }
+                  placeholder="Short script for sold-out items"
                   disabled={pending}
                 />
               </Field>
             </div>
+
+            <Field label="Closed-hours message">
+              <textarea
+                className="input-base min-h-[5.5rem] resize-y"
+                rows={3}
+                value={form.closed_hours_message}
+                onChange={(e) =>
+                  setField("closed_hours_message", e.target.value)
+                }
+                placeholder="What to say when the guest calls outside your regular open hours (see Hours below)."
+                disabled={pending}
+              />
+            </Field>
           </FieldGroup>
 
           <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
-            <button type="submit" className="btn-primary" disabled={pending}>
+            <button
+              type="submit"
+              className="btn-primary kds-thumb-btn min-h-11 w-full sm:w-auto"
+              disabled={pending}
+            >
               {pending ? "Saving…" : "Save settings"}
             </button>
           </div>

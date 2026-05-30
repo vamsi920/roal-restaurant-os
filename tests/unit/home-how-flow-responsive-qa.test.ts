@@ -13,8 +13,8 @@ describe("home how-flow responsive (prompt 09)", () => {
     expect(line.id).toBe("connect-line");
     expect(answers.id).toBe("kitchen-orders");
     expect(menu.title).toMatch(/menu/i);
-    expect(line.title).toMatch(/phone line/i);
-    expect(answers.title).toMatch(/ROAL answers/i);
+    expect(line.title).toMatch(/phone agent/i);
+    expect(answers.title).toMatch(/live/i);
     expect(answers.body).toMatch(/kitchen/i);
   });
 

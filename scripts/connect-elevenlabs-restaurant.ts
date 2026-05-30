@@ -75,6 +75,7 @@ void (async () => {
     phoneWebhook = await applyElevenLabsPhonePersonalizationWebhook({
       agentId,
       webhookUrl,
+      initSecret,
     });
   }
 

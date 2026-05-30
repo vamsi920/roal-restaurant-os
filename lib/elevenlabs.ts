@@ -23,21 +23,7 @@ export async function getConvaiAgent(agentId: string): Promise<unknown> {
     `/v1/convai/agents/${encodeURIComponent(agentId)}`,
     { method: "GET" }
   );
-  const text = await res.text();
-  let data: unknown;
-  try {
-    data = text ? JSON.parse(text) : null;
-  } catch {
-    data = { raw: text };
-  }
-  if (!res.ok) {
-    const msg =
-      typeof data === "object" && data !== null
-        ? JSON.stringify(data)
-        : `${res.status} ${res.statusText}`;
-    throw new Error(`ElevenLabs GET agent failed: ${msg}`);
-  }
-  return data;
+  return parseJsonOrThrow(res, "GET agent");
 }
 
 export async function patchConvaiAgent(
@@ -51,21 +37,33 @@ export async function patchConvaiAgent(
       body: JSON.stringify(body),
     }
   );
-  const text = await res.text();
-  let data: unknown;
-  try {
-    data = text ? JSON.parse(text) : null;
-  } catch {
-    data = { raw: text };
-  }
-  if (!res.ok) {
-    const msg =
-      typeof data === "object" && data !== null
-        ? JSON.stringify(data)
-        : `${res.status} ${res.statusText}`;
-    throw new Error(`ElevenLabs PATCH agent failed: ${msg}`);
-  }
-  return data;
+  return parseJsonOrThrow(res, "PATCH agent");
+}
+
+/** POST /v1/convai/agents/create — conservative body (name + optional conversation_config). */
+export async function createConvaiAgent(body: unknown): Promise<unknown> {
+  const res = await elevenlabsFetch("/v1/convai/agents/create", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  return parseJsonOrThrow(res, "create agent");
+}
+
+/** POST /v1/convai/agents/{id}/duplicate — preferred per-restaurant clone from template. */
+export async function duplicateConvaiAgent(
+  templateAgentId: string,
+  body?: { name?: string }
+): Promise<unknown> {
+  const payload =
+    body?.name?.trim() ? { name: body.name.trim() } : {};
+  const res = await elevenlabsFetch(
+    `/v1/convai/agents/${encodeURIComponent(templateAgentId)}/duplicate`,
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  );
+  return parseJsonOrThrow(res, "duplicate agent");
 }
 
 export type ConvaiToolListItem = {
@@ -76,12 +74,6 @@ export type ConvaiToolListItem = {
 export type KnowledgeBaseDocumentRow = {
   id: string;
   name?: string;
-};
-
-type ConvaiToolsListPage = {
-  tools?: ConvaiToolListItem[];
-  has_more?: boolean;
-  next_cursor?: string | null;
 };
 
 async function parseJsonOrThrow(
@@ -104,6 +96,12 @@ async function parseJsonOrThrow(
   }
   return data;
 }
+
+type ConvaiToolsListPage = {
+  tools?: ConvaiToolListItem[];
+  has_more?: boolean;
+  next_cursor?: string | null;
+};
 
 /** Paginates GET /v1/convai/tools (optional `search` = name prefix). */
 export async function listAllConvaiTools(options?: {

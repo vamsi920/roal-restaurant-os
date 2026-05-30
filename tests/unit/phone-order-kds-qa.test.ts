@@ -75,6 +75,7 @@ describe("KDS orders panel UX (launch 14)", () => {
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
+    expect(panel).toContain("classifyKdsQueueLane");
     expect(panel).toContain("visibilitychange");
     expect(panel).toContain("mergeFetchedDraftOrders");
     expect(panel).toContain("startPoll(6000)");

@@ -1,14 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { updateRestaurantOnboardingStep } from "@/lib/onboarding/helpers";
 import {
   RestaurantProfileInputSchema,
   type RestaurantProfileInput,
 } from "@/lib/restaurant-profile/schema";
-import { applyRestaurantOrderAgentProfile } from "@/lib/elevenlabs-restaurant-agent-profile";
 import { upsertRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+import { afterProfileSettingsMutation } from "@/lib/voice-agent/after-restaurant-settings-mutation";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export async function saveRestaurantProfileSettingsAction(
@@ -45,20 +44,10 @@ export async function saveRestaurantProfileSettingsAction(
     "completed"
   );
 
-  revalidatePath(`/dashboard/restaurants/${restaurantId}`);
-  revalidatePath("/dashboard/onboarding");
-
-  if (profile.elevenlabs_agent_id) {
-    try {
-      await applyRestaurantOrderAgentProfile({
-        restaurantId,
-        restaurantName: parsed.data.name,
-        agentId: profile.elevenlabs_agent_id,
-      });
-    } catch {
-      // Agent sync is best-effort; profile is saved regardless.
-    }
-  }
+  afterProfileSettingsMutation(restaurantId, {
+    userId: access.context.user.id,
+    restaurantName: parsed.data.name,
+  });
 
   return { ok: true as const, profile };
 }

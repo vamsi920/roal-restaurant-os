@@ -10,6 +10,7 @@ import {
   normalizeOrganizationSteps,
   organizationOnboardingProgress,
   restaurantOnboardingProgress,
+  updateRestaurantOnboardingStep,
 } from "@/lib/onboarding/helpers";
 import type {
   OnboardingProgressSummary,
@@ -20,6 +21,9 @@ import type { OnboardingStepKey } from "@/lib/onboarding/steps";
 import type { OnboardingWizardState } from "@/lib/onboarding/wizard-types";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { getPublicEnv } from "@/lib/env.public";
+import { onboardingVoiceProvisionFromProfileRow } from "@/lib/onboarding/restaurant-voice-provision";
+import { loadRestaurantLaunchChecklist } from "@/lib/restaurant-launch/load-checklist";
+import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
@@ -110,7 +114,10 @@ export async function loadOnboardingWizardState(
     isComplete: false,
   };
   let menuCategoryCount = 0;
+  let menuItemCount = 0;
   let activeRestaurantProfile: OnboardingWizardState["activeRestaurantProfile"] = null;
+  let activeRestaurantVoice: OnboardingWizardState["activeRestaurantVoice"] = null;
+  let launchChecklist: OnboardingWizardState["launchChecklist"] = null;
 
   if (activeRestaurant && organization) {
     restaurantOnboarding =
@@ -128,14 +135,44 @@ export async function loadOnboardingWizardState(
       .eq("restaurant_id", activeRestaurant.id);
     menuCategoryCount = count ?? 0;
 
-    const profile = await getRestaurantProfile(supabase, activeRestaurant.id);
+    const [profile, cardStats, checklist] = await Promise.all([
+      getRestaurantProfile(supabase, activeRestaurant.id),
+      loadRestaurantCardStats(supabase, [activeRestaurant.id], {}),
+      loadRestaurantLaunchChecklist(supabase, {
+        restaurantId: activeRestaurant.id,
+        restaurantName: activeRestaurant.name,
+      }),
+    ]);
+
+    menuItemCount = cardStats[activeRestaurant.id]?.menuItemCount ?? 0;
+
     if (profile) {
       activeRestaurantProfile = {
         phone: profile.phone,
         timezone: profile.timezone,
         address_line1: profile.address_line1,
       };
+      activeRestaurantVoice = onboardingVoiceProvisionFromProfileRow(profile);
+
+      const voiceStatus = restaurantOnboarding?.steps.voice_agent?.status;
+      if (
+        activeRestaurantVoice.uiState === "ready" &&
+        voiceStatus !== "completed" &&
+        voiceStatus !== "skipped"
+      ) {
+        restaurantOnboarding = await updateRestaurantOnboardingStep(
+          supabase,
+          activeRestaurant.id,
+          organization.id,
+          "voice_agent",
+          "completed",
+          { agent_id: activeRestaurantVoice.agentId }
+        );
+        restaurantProgress = restaurantOnboardingProgress(restaurantOnboarding);
+      }
     }
+
+    launchChecklist = checklist;
   }
 
   const orgSteps = organizationOnboarding?.steps ?? normalizeOrganizationSteps({});
@@ -174,8 +211,11 @@ export async function loadOnboardingWizardState(
     restaurantOnboarding,
     restaurantProgress,
     menuCategoryCount,
+    menuItemCount,
     activeRestaurantProfile,
+    activeRestaurantVoice,
     activeStep,
+    launchChecklist,
     supabaseRef,
     edgeBase,
   };

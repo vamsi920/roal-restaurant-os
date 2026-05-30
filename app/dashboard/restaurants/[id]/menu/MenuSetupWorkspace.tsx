@@ -11,6 +11,7 @@ import { MenuScanner } from "../MenuScanner";
 import { RestaurantHoursSettings } from "../RestaurantHoursSettings";
 import { RestaurantProfileSettings } from "../RestaurantProfileSettings";
 import { MenuEditor } from "./MenuEditor";
+import { MenuAutoSyncStatusPanel } from "@/components/voice-agent/MenuAutoSyncStatusPanel";
 import { MenuSetupCallIndicator } from "./MenuSetupCallIndicator";
 
 type Props = RestaurantMenuSetupPageData;
@@ -21,6 +22,7 @@ export function MenuSetupWorkspace({
   billingGates,
   profile,
   hoursBundle,
+  voiceAgentCenter,
 }: Props) {
   const categoryCount = menu.categories.length;
   const itemCount = menu.items.length;
@@ -71,6 +73,13 @@ export function MenuSetupWorkspace({
           </Link>
         </div>
       </header>
+
+      <MenuAutoSyncStatusPanel
+        restaurantId={restaurant.id}
+        restaurantName={restaurant.name}
+        initial={voiceAgentCenter.menuAutoSync}
+        voiceOrderGate={billingGates?.voice_order ?? null}
+      />
 
       <div className="menu-setup-primary min-w-0">
         <nav aria-label="Setup progress" className="menu-setup-progress">

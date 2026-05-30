@@ -20,9 +20,10 @@ export function AuthViewportAssist() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const onFocusIn = (event: FocusEvent) => {
-      if (!isFieldLike(event.target)) return;
+      const target = event.target;
+      if (!isFieldLike(target)) return;
       requestAnimationFrame(() => {
-        event.target.scrollIntoView({
+        target.scrollIntoView({
           block: "center",
           behavior: reducedMotion ? "auto" : "smooth",
         });

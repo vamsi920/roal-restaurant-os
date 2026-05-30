@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   ITEM_BURGER_ID,
-  ITEM_SOLD_OUT_ID,
   menuItems,
   menuModifiers,
   RESTAURANT_ID,
@@ -9,9 +8,18 @@ import {
 import { menuContextFromGetMenuResponse } from "@/lib/voice-agent/test-harness/menu-context";
 import { runHarnessScenario } from "@/lib/voice-agent/test-harness/run-scenario";
 import {
+  getHarnessScenario,
+  HARNESS_SCENARIOS,
+} from "@/lib/voice-agent/test-harness/scenarios";
+import {
   clearHarnessDryRunDraft,
   simulateHarnessTool,
 } from "@/lib/voice-agent/test-harness/simulate-tool";
+import { HARNESS_ROAL_SCENARIO_IDS } from "@/lib/voice-agent/test-harness/types";
+import {
+  validateCartForSync,
+  validateCustomerForFinalize,
+} from "@/lib/orders/validate-cart";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 const burgerWithRequiredSize = [
@@ -50,7 +58,11 @@ const supabaseStub = {} as SupabaseClient;
 function menuResponse(operations: Record<string, unknown> = {}) {
   const categoryId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
   return {
-    restaurant: { id: RESTAURANT_ID, name: "Test Bistro", created_at: new Date().toISOString() },
+    restaurant: {
+      id: RESTAURANT_ID,
+      name: "Test Bistro",
+      created_at: new Date().toISOString(),
+    },
     categories: [
       {
         id: categoryId,
@@ -83,6 +95,34 @@ function menuResponse(operations: Record<string, unknown> = {}) {
   };
 }
 
+function mockClosedHours() {
+  vi.mocked(buildGetMenuHarnessResponse).mockResolvedValue({
+    httpStatus: 200,
+    body: menuResponse({
+      ordering_allowed: false,
+      message: "Closed for the night.",
+    }),
+  });
+  vi.mocked(loadRestaurantHoursBundle).mockResolvedValue({
+    profile: {
+      timezone: "America/Chicago",
+      temporarily_closed: false,
+      temporarily_closed_reason: null,
+    },
+    weekly: [],
+    exceptions: [],
+    evaluation: {
+      ordering_allowed: false,
+      is_open_now: false,
+      status: "closed",
+      message: "Closed for the night.",
+      local_date: "2026-05-19",
+      local_time: "22:00",
+      local_day_of_week: 1,
+    },
+  } as never);
+}
+
 beforeEach(() => {
   vi.mocked(loadRestaurantMenu).mockResolvedValue({
     categories: [],
@@ -96,6 +136,12 @@ beforeEach(() => {
   });
 });
 
+describe("HARNESS_ROAL_SCENARIO_IDS", () => {
+  it.each(HARNESS_ROAL_SCENARIO_IDS)("registers scenario %s", (id) => {
+    expect(getHarnessScenario(id)).toBeDefined();
+  });
+});
+
 describe("menuContextFromGetMenuResponse", () => {
   it("finds available, unavailable, and required-modifier hints", () => {
     const ctx = menuContextFromGetMenuResponse(menuResponse());
@@ -106,6 +152,34 @@ describe("menuContextFromGetMenuResponse", () => {
       groupName: "Size",
       exampleModifierName: "Large",
     });
+  });
+});
+
+describe("real validators (shared with simulateHarnessTool)", () => {
+  it("rejects sold-out lines on sync", () => {
+    const result = validateCartForSync(
+      [{ name: "Daily Special", quantity: 1 }],
+      menuItems,
+      burgerWithRequiredSize
+    );
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((i) => i.code === "item_unavailable")).toBe(true);
+  });
+
+  it("rejects finalize guest phone with too few digits", () => {
+    const result = validateCustomerForFinalize("Jordan Lee", "123");
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((i) => i.code === "customer_phone_invalid")).toBe(
+      true
+    );
+  });
+
+  it("rejects finalize guest name that is too short", () => {
+    const result = validateCustomerForFinalize("J", "5550109988");
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((i) => i.code === "customer_name_too_short")).toBe(
+      true
+    );
   });
 });
 
@@ -145,34 +219,174 @@ describe("simulateHarnessTool dry-run cart carryover", () => {
   });
 });
 
-describe("runHarnessScenario", () => {
-  it("happy pickup dry-run passes sync then finalize", async () => {
+describe("runHarnessScenario — ROAL flows", () => {
+  it("pickup_order: menu → sync → finalize", async () => {
     const result = await runHarnessScenario({
       supabase: supabaseStub,
       restaurantId: RESTAURANT_ID,
       restaurantName: "Test Bistro",
-      scenarioId: "happy_pickup_order",
+      scenarioId: "pickup_order",
       dryRun: true,
     });
     expect(result.passed).toBe(true);
-    expect(result.steps).toHaveLength(3);
-    expect(result.steps[2]?.tool).toBe("finalize_order");
-    expect(result.steps[2]?.ok).toBe(true);
+    expect(result.steps.map((s) => s.tool)).toEqual([
+      "get_menu_items",
+      "sync_draft_order",
+      "finalize_order",
+    ]);
+    expect(result.steps[2]?.response).toMatchObject({ ok: true, dry_run: true });
   });
 
-  it("rejects unavailable item on sync", async () => {
+  it("menu_question: get_menu_items only", async () => {
     const result = await runHarnessScenario({
       supabase: supabaseStub,
       restaurantId: RESTAURANT_ID,
       restaurantName: "Test Bistro",
-      scenarioId: "unavailable_item_sync",
+      scenarioId: "menu_question",
       dryRun: true,
     });
     expect(result.passed).toBe(true);
-    expect(result.steps[1]?.ok).toBe(false);
-    expect(result.steps[1]?.expectedFailure).toBe(true);
+    expect(result.steps).toHaveLength(1);
+    expect(result.steps[0]?.tool).toBe("get_menu_items");
+    expect(result.steps[0]?.ok).toBe(true);
   });
 
+  it("closed_hours_call: requires ordering_allowed false on menu", async () => {
+    mockClosedHours();
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "closed_hours_call",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(true);
+    expect(result.steps).toHaveLength(1);
+    const ops = (result.steps[0]?.response as { operations?: { ordering_allowed?: boolean } })
+      ?.operations;
+    expect(ops?.ordering_allowed).toBe(false);
+  });
+
+  it("closed_hours_call fails when restaurant is open", async () => {
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "closed_hours_call",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(false);
+    expect(result.summary).toMatch(/open/i);
+  });
+
+  it("unavailable_item: sync fails item_unavailable", async () => {
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "unavailable_item",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(true);
+    expect(result.steps[1]?.cartValidation?.issues.some(
+      (i) => i.code === "item_unavailable"
+    )).toBe(true);
+  });
+
+  it("finalize_missing_guest: schema rejects missing contact fields", async () => {
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "finalize_missing_guest",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(true);
+    expect(result.steps[2]?.httpStatus).toBe(400);
+    expect(result.steps[2]?.response).toMatchObject({
+      error: "validation_failed",
+    });
+  });
+
+  it("finalize_missing_phone: customer_phone_invalid", async () => {
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "finalize_missing_phone",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(true);
+    expect(result.steps[2]?.response).toMatchObject({
+      error: "customer_validation_failed",
+    });
+    const issues = (
+      result.steps[2]?.response as { issues?: { code: string }[] }
+    )?.issues;
+    expect(issues?.some((i) => i.code === "customer_phone_invalid")).toBe(true);
+  });
+
+  it("finalize_missing_name: customer_name_too_short", async () => {
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "finalize_missing_name",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(true);
+    expect(result.steps[2]?.response).toMatchObject({
+      error: "customer_validation_failed",
+    });
+    const issues = (
+      result.steps[2]?.response as { issues?: { code: string }[] }
+    )?.issues;
+    expect(issues?.some((i) => i.code === "customer_name_too_short")).toBe(true);
+  });
+
+  it("catering_handoff and complaint_handoff: menu load only", async () => {
+    for (const scenarioId of ["catering_handoff", "complaint_handoff"] as const) {
+      const result = await runHarnessScenario({
+        supabase: supabaseStub,
+        restaurantId: RESTAURANT_ID,
+        restaurantName: "Test Bistro",
+        scenarioId,
+        dryRun: true,
+      });
+      expect(result.passed).toBe(true);
+      expect(result.steps.every((s) => s.tool === "get_menu_items")).toBe(true);
+    }
+  });
+
+  it("closed_restaurant_sync: restaurant_closed on sync and finalize", async () => {
+    mockClosedHours();
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "closed_restaurant_sync",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(true);
+    expect(result.steps[1]?.response).toMatchObject({ error: "restaurant_closed" });
+    expect(result.steps[2]?.response).toMatchObject({ error: "restaurant_closed" });
+  });
+
+  it("pickup_order fails when requireOrderingOpen and hours are closed", async () => {
+    mockClosedHours();
+    const result = await runHarnessScenario({
+      supabase: supabaseStub,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      scenarioId: "pickup_order",
+      dryRun: true,
+    });
+    expect(result.passed).toBe(false);
+    expect(result.summary).toMatch(/closed/i);
+  });
+});
+
+describe("runHarnessScenario — modifier and cart edge cases", () => {
   it("accepts valid required modifier on sync", async () => {
     const result = await runHarnessScenario({
       supabase: supabaseStub,
@@ -182,7 +396,6 @@ describe("runHarnessScenario", () => {
       dryRun: true,
     });
     expect(result.passed).toBe(true);
-    expect(result.steps[1]?.ok).toBe(true);
     expect(result.steps[1]?.cartValidation?.normalizedItems).toHaveLength(1);
   });
 
@@ -195,21 +408,9 @@ describe("runHarnessScenario", () => {
       dryRun: true,
     });
     expect(result.passed).toBe(true);
-    expect(result.steps[1]?.cartValidation?.issues.some((i) => i.code === "unknown_modifier")).toBe(
-      true
-    );
-  });
-
-  it("rejects finalize without customer info", async () => {
-    const result = await runHarnessScenario({
-      supabase: supabaseStub,
-      restaurantId: RESTAURANT_ID,
-      restaurantName: "Test Bistro",
-      scenarioId: "finalize_without_customer",
-      dryRun: true,
-    });
-    expect(result.passed).toBe(true);
-    expect(result.steps[2]?.httpStatus).toBe(400);
+    expect(
+      result.steps[1]?.cartValidation?.issues.some((i) => i.code === "unknown_modifier")
+    ).toBe(true);
   });
 
   it("rejects empty cart finalize", async () => {
@@ -241,43 +442,11 @@ describe("runHarnessScenario", () => {
       )
     ).toBe(true);
   });
+});
 
-  it("blocks sync and finalize when hours are closed", async () => {
-    vi.mocked(buildGetMenuHarnessResponse).mockResolvedValue({
-      httpStatus: 200,
-      body: menuResponse({
-        ordering_allowed: false,
-        message: "Closed for the night.",
-      }),
-    });
-    vi.mocked(loadRestaurantHoursBundle).mockResolvedValue({
-      profile: {
-        timezone: "America/Chicago",
-        temporarily_closed: false,
-        temporarily_closed_reason: null,
-      },
-      weekly: [],
-      exceptions: [],
-      evaluation: {
-        ordering_allowed: false,
-        is_open_now: false,
-        status: "closed",
-        message: "Closed for the night.",
-        local_date: "2026-05-19",
-        local_time: "22:00",
-        local_day_of_week: 1,
-      },
-    } as never);
-
-    const result = await runHarnessScenario({
-      supabase: supabaseStub,
-      restaurantId: RESTAURANT_ID,
-      restaurantName: "Test Bistro",
-      scenarioId: "closed_restaurant_sync",
-      dryRun: true,
-    });
-    expect(result.passed).toBe(true);
-    expect(result.steps[1]?.response).toMatchObject({ error: "restaurant_closed" });
-    expect(result.steps[2]?.response).toMatchObject({ error: "restaurant_closed" });
+describe("HARNESS_SCENARIOS registry", () => {
+  it("has unique scenario ids", () => {
+    const ids = HARNESS_SCENARIOS.map((s) => s.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 });

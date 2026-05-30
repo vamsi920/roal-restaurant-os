@@ -64,6 +64,20 @@ export type Restaurant = {
   created_at: string;
 };
 
+/** `restaurant_profiles.elevenlabs_provision_status` */
+export type ElevenLabsProvisionStatus =
+  | "pending"
+  | "provisioning"
+  | "ready"
+  | "failed";
+
+/** `restaurant_profiles.elevenlabs_menu_auto_sync_status` */
+export type ElevenLabsMenuAutoSyncStatus =
+  | "pending"
+  | "syncing"
+  | "succeeded"
+  | "failed";
+
 export type RestaurantProfile = {
   restaurant_id: string;
   organization_id: string;
@@ -85,9 +99,19 @@ export type RestaurantProfile = {
   escalation_name: string | null;
   escalation_phone: string | null;
   escalation_email: string | null;
+  handoff_catering_route: string | null;
+  handoff_complaint_route: string | null;
+  handoff_unavailable_item_behavior: string | null;
+  handoff_unavailable_item_notes: string | null;
+  closed_hours_message: string | null;
   temporarily_closed: boolean;
   temporarily_closed_reason: string | null;
   elevenlabs_agent_id: string | null;
+  elevenlabs_provision_status: ElevenLabsProvisionStatus | null;
+  elevenlabs_provision_error: string | null;
+  elevenlabs_provisioned_at: string | null;
+  elevenlabs_menu_auto_sync_status: ElevenLabsMenuAutoSyncStatus | null;
+  elevenlabs_menu_auto_sync_error: string | null;
   elevenlabs_last_sync_at: string | null;
   elevenlabs_last_sync_error: string | null;
   elevenlabs_last_sync_summary: unknown;

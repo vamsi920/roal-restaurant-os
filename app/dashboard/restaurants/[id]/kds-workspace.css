@@ -1398,6 +1398,112 @@
   gap: 0.5rem;
 }
 
+/* Phone operations command center (live orders page) */
+.kds-workspace--orders .kds-ops-page-head {
+  border-radius: 1.25rem;
+  border: 1px solid rgb(var(--border));
+  background: rgb(var(--bg-card));
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.85) inset;
+}
+
+.kds-workspace--orders .kds-readiness-strip {
+  padding-top: 0.25rem;
+}
+
+.kds-workspace--orders .kds-ops-layout {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .kds-workspace--orders .kds-ops-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+    align-items: start;
+  }
+}
+
+.kds-workspace--orders .kds-ops-main {
+  min-width: 0;
+}
+
+.kds-workspace--orders .kds-outcomes-panel {
+  border-radius: 1.25rem;
+  border: 1px solid rgb(var(--border));
+  background: rgb(var(--bg-card));
+  box-shadow: 0 12px 40px rgb(15 23 42 / 0.06);
+}
+
+.kds-workspace--orders .kds-live-call-indicator {
+  border-bottom: 1px solid rgb(var(--border) / 0.45);
+}
+
+.kds-workspace:not(.menu-setup) .kds-queue-summary {
+  border-bottom: 1px solid rgb(var(--border) / 0.35);
+}
+
+.kds-workspace:not(.menu-setup) .kds-queue-section {
+  min-width: 0;
+}
+
+.kds-workspace:not(.menu-setup) .kds-queue-section__head {
+  margin-bottom: 0.625rem;
+}
+
+.kds-workspace:not(.menu-setup) .kds-queue-section__title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgb(var(--text-ink));
+}
+
+.kds-workspace:not(.menu-setup) .kds-queue-section__desc {
+  margin-top: 0.125rem;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: rgb(var(--text-muted));
+}
+
+.kds-workspace:not(.menu-setup) .kds-queue-section--live .kds-queue-section__title {
+  color: rgb(146 64 14);
+}
+
+.kds-workspace:not(.menu-setup) .kds-queue-section--stuck .kds-queue-section__title {
+  color: rgb(var(--danger));
+}
+
+.kds-workspace:not(.menu-setup) .kds-order-card--live-call {
+  border-color: rgb(245 158 11 / 0.45);
+  box-shadow: 0 0 0 1px rgb(245 158 11 / 0.12);
+}
+
+.kds-workspace:not(.menu-setup) .kds-order-card--building {
+  border-color: rgb(245 158 11 / 0.35);
+  border-style: dashed;
+}
+
+.kds-workspace:not(.menu-setup) .kds-order-card--ticket {
+  border-color: rgb(var(--accent) / 0.35);
+}
+
+.kds-workspace:not(.menu-setup) .kds-order-card--stuck {
+  border-color: rgb(var(--danger) / 0.45);
+  box-shadow: 0 0 0 1px rgb(var(--danger) / 0.1);
+}
+
+.kds-workspace:not(.menu-setup) .kds-order-card__badges {
+  margin-bottom: 0.25rem;
+}
+
+.kds-workspace:not(.menu-setup) .kds-done-receipts summary {
+  list-style: none;
+}
+
+.kds-workspace:not(.menu-setup) .kds-done-receipts summary::-webkit-details-marker {
+  display: none;
+}
+
 .kds-workspace:not(.menu-setup) .kds-sync-indicator {
   display: inline-flex;
   align-items: center;

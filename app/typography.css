@@ -3,9 +3,8 @@
  */
 
 :root {
-  --font-display: var(--font-body);
   --type-body: var(--font-body), "Plus Jakarta Sans", system-ui, sans-serif;
-  --type-display: var(--font-body), "Plus Jakarta Sans", system-ui, sans-serif;
+  --type-display: var(--font-display), "Sora", var(--font-body), system-ui, sans-serif;
   --type-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Responsive scale — tuned for 320 / 390 / 768 / 1024 / 1440 */

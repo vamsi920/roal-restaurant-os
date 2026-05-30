@@ -34,6 +34,15 @@ export type VoiceAgentConnectionStatus =
   | "misconfigured"
   | "unreachable";
 
+import type { ElevenLabsMenuAutoSyncStatus } from "@/lib/types";
+
+export type MenuAutoSyncSnapshot = {
+  agentLinked: boolean;
+  status: ElevenLabsMenuAutoSyncStatus | null;
+  error: string | null;
+  lastSyncedAt: string | null;
+};
+
 export type VoiceAgentControlCenterSnapshot = {
   restaurantId: string;
   restaurantName: string;
@@ -57,4 +66,5 @@ export type VoiceAgentControlCenterSnapshot = {
   lastSyncPhoneWebhook: string | null;
   checklist: { id: string; label: string; status: ChecklistStatus; detail?: string }[];
   agentFetchError: string | null;
+  menuAutoSync: MenuAutoSyncSnapshot;
 };

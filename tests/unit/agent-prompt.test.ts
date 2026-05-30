@@ -29,6 +29,11 @@ const baseProfile = {
   escalation_name: "Manager",
   escalation_phone: "+15559876543",
   escalation_email: null,
+  handoff_catering_route: null,
+  handoff_complaint_route: null,
+  handoff_unavailable_item_behavior: null,
+  handoff_unavailable_item_notes: null,
+  closed_hours_message: null,
   created_at: "",
   updated_at: "",
 };
@@ -71,9 +76,18 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(prompt).toContain("QA Bistro");
     expect(prompt).toContain("Never invent menu items");
     expect(prompt).toContain("Pickup only");
+    expect(prompt).toContain("about 25 minutes");
+    expect(prompt).toContain("tax 8.25%");
     expect(prompt).toContain("get_menu_items");
     expect(prompt).toContain("customer_name and customer_phone");
-    expect(prompt).toContain("Staff escalation");
+    expect(prompt).toContain("Call purpose");
+    expect(prompt).toContain("Guest questions (hours, directions, menu)");
+    expect(prompt).toContain("Closed hours behavior");
+    expect(prompt).toContain("Unsupported requests");
+    expect(prompt).toContain("Handoff and escalation");
+    expect(prompt).toContain("Routing: manager or human");
+    expect(prompt).toContain("Manager / staff escalation");
+    expect(prompt).toContain("Manager");
     expect(prompt).toContain("Hours and ordering availability");
     expect(prompt).toContain("Live gate");
     expect(prompt).not.toMatch(/online if available/i);
@@ -122,6 +136,43 @@ describe("buildRestaurantOrderAgentPrompt", () => {
 
     expect(hours).toContain("get_menu_items operations.ordering_allowed");
     expect(hours.toLowerCase()).toContain("do not guess holiday hours");
+  });
+
+  it("prioritizes phone ordering and routes non-order topics via handoff", () => {
+    const prompt = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: baseProfile,
+      hoursPromptSection: null,
+      menu: null,
+    });
+
+    expect(prompt).toMatch(/Primary goal: complete accurate pickup or delivery phone orders/i);
+    expect(prompt).toContain("Catering / large party → Catering route");
+    expect(prompt).toContain("Refunds, chargebacks");
+    expect(prompt).toContain("do not call sync_draft_order or finalize_order");
+  });
+
+  it("includes catering, complaint, closed-hours, and unavailable-item rules when set", () => {
+    const prompt = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: {
+        ...baseProfile,
+        handoff_catering_route: "Take headcount and date; manager calls back.",
+        handoff_complaint_route: "Apologize; capture order #; manager callback.",
+        closed_hours_message: "We're closed—hours are on the website.",
+        handoff_unavailable_item_behavior: "decline_skip",
+        handoff_unavailable_item_notes: "Offer a side instead.",
+      },
+      hoursPromptSection: null,
+      menu: null,
+    });
+
+    expect(prompt).toContain("Catering & large-party requests: Take headcount");
+    expect(prompt).toContain("Complaints & service issues: Apologize");
+    expect(prompt).toContain("When closed per hours");
+    expect(prompt).toContain("We're closed—hours are on the website");
+    expect(prompt).toMatch(/move on without adding/i);
+    expect(prompt).toContain("Offer a side instead");
   });
 });
 

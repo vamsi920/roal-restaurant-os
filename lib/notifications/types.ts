@@ -3,6 +3,9 @@ export const NOTIFICATION_EVENT_TYPES = [
   "sync_failure",
   "scan_failure",
   "order_stuck",
+  "provision_failure",
+  "menu_auto_sync_failure",
+  "go_live",
   "realtime_degraded",
 ] as const;
 
@@ -64,6 +67,9 @@ export const NOTIFICATION_EVENT_LABELS: Record<NotificationEventType, string> = 
   sync_failure: "Voice agent sync failure",
   scan_failure: "Menu scan failure",
   order_stuck: "Order stuck in kitchen",
+  provision_failure: "Voice agent provisioning failure",
+  menu_auto_sync_failure: "Menu auto-sync failure",
+  go_live: "Location went live",
   realtime_degraded: "Realtime connection degraded",
 };
 
@@ -75,6 +81,11 @@ export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
   sync_failure: "When ElevenLabs tool or profile sync fails for a location.",
   scan_failure: "When menu photo extraction fails.",
   order_stuck: "When an order stays in the kitchen queue past your threshold.",
+  provision_failure:
+    "When dedicated voice agent auto-setup fails for a location (once per failure).",
+  menu_auto_sync_failure:
+    "When menu or profile changes fail to sync to the voice agent (once per failure).",
+  go_live: "When a location completes onboarding and goes live.",
   realtime_degraded:
     "When the live orders panel falls back to polling (Realtime offline).",
 };

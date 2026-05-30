@@ -52,3 +52,33 @@ export function mergeRestaurantPlaceholders(
     restaurant_name: name,
   };
 }
+
+const UNRESOLVED_TEMPLATE_RE = /\{\{[^}]+\}\}/;
+
+/** True when a value still contains ElevenLabs-style mustache placeholders. */
+export function valueHasUnresolvedTemplate(value: string): boolean {
+  return UNRESOLVED_TEMPLATE_RE.test(value);
+}
+
+/** Strip mustache placeholders so Twilio sessions never receive `{{restaurant_name}}` literals. */
+export function stripUnresolvedTemplateMarkers(value: string): string {
+  if (!valueHasUnresolvedTemplate(value)) return value;
+  return value.replace(UNRESOLVED_TEMPLATE_RE, "").trim();
+}
+
+export function finalizeConversationInitDynamicVariables(
+  vars: Record<string, string>
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [key, raw] of Object.entries(vars)) {
+    let v = stripUnresolvedTemplateMarkers(String(raw ?? ""));
+    if (key === "restaurant_name" && !v) {
+      v = DEFAULT_RESTAURANT_NAME;
+    }
+    out[key] = v;
+  }
+  if (!out.restaurant_name?.trim()) {
+    out.restaurant_name = DEFAULT_RESTAURANT_NAME;
+  }
+  return out;
+}

@@ -8,7 +8,7 @@ type Props = {
 export function OrdersTrendChart({ points }: Props) {
   const max = Math.max(
     1,
-    ...points.map((p) => Math.max(p.voiceOrders, p.completed, p.canceled))
+    ...points.map((p) => Math.max(p.orderSessions, p.completed, p.canceled))
   );
 
   return (
@@ -16,7 +16,7 @@ export function OrdersTrendChart({ points }: Props) {
       <div className="orders-trend-chart__legend flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted">
         <span className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
-          Voice orders
+          Order sessions
         </span>
         <span className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-success" aria-hidden />
@@ -36,18 +36,18 @@ export function OrdersTrendChart({ points }: Props) {
       <div
         className="orders-trend-chart__scroll flex min-w-0 items-end gap-1 overflow-x-auto overscroll-x-contain pb-1 sm:gap-1.5"
         role="list"
-        aria-label="Daily orders chart"
+        aria-label="Daily order sessions chart"
       >
         {points.map((point) => (
           <div
             key={point.date}
             role="listitem"
             className="orders-trend-chart__day flex min-w-[2.25rem] shrink-0 flex-col items-center gap-1 sm:min-w-[28px] sm:flex-1"
-            title={`${formatShortDate(point.date)}: ${point.voiceOrders} voice, ${point.completed} completed, ${point.canceled} canceled`}
+            title={`${formatShortDate(point.date)}: ${point.orderSessions} sessions, ${point.completed} completed, ${point.canceled} canceled`}
           >
             <div className="flex h-24 w-full items-end justify-center gap-0.5">
               <Bar
-                value={point.voiceOrders}
+                value={point.orderSessions}
                 max={max}
                 className="bg-accent/80"
               />

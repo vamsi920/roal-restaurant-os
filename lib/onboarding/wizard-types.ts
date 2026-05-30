@@ -4,6 +4,8 @@ import type {
   OrganizationOnboarding,
   RestaurantOnboarding,
 } from "@/lib/onboarding/types";
+import type { OnboardingRestaurantVoiceProvision } from "@/lib/onboarding/restaurant-voice-provision";
+import type { RestaurantLaunchChecklistSnapshot } from "@/lib/restaurant-launch/types";
 import type { Restaurant } from "@/lib/types";
 
 export const WIZARD_STEP_ORDER: OnboardingStepKey[] = [
@@ -29,12 +31,15 @@ export type OnboardingWizardState = {
   restaurantOnboarding: RestaurantOnboarding | null;
   restaurantProgress: OnboardingProgressSummary;
   menuCategoryCount: number;
+  menuItemCount: number;
+  activeRestaurantVoice: OnboardingRestaurantVoiceProvision | null;
   activeRestaurantProfile: {
     phone: string | null;
     timezone: string;
     address_line1: string | null;
   } | null;
   activeStep: OnboardingStepKey;
+  launchChecklist: RestaurantLaunchChecklistSnapshot | null;
   supabaseRef: string | null;
   edgeBase: string | null;
 };

@@ -7,9 +7,14 @@ import { buildMenuPriceContext } from "@/lib/orders/menu-price-context";
 import { formatMoney } from "@/lib/orders/money";
 import type { OrderPricingSettings } from "@/lib/orders/pricing-settings";
 import {
+  classifyKdsQueueLane,
+  formatStuckIdleLabel,
+  kdsLaneLabel,
+  type KdsQueueLane,
+} from "@/lib/orders/kds-queue-lane";
+import {
   getOrderActionsForStatus,
   normalizeOrderStatus,
-  ORDER_STATUS_LABELS,
   STATUS_BADGE_CLASS,
   type OrderAction,
 } from "@/lib/order-status";
@@ -34,6 +39,8 @@ type Props = {
   menuModifiers: DbModifier[];
   pricingSettings: OrderPricingSettings;
   statusLabel?: string;
+  queueLane?: KdsQueueLane;
+  stuckMinutes?: number;
 };
 
 export function KitchenOrderCard({
@@ -47,6 +54,8 @@ export function KitchenOrderCard({
   menuModifiers,
   pricingSettings,
   statusLabel,
+  queueLane,
+  stuckMinutes,
 }: Props) {
   const menuCtx = useMemo(
     () => buildMenuPriceContext(menuItems, menuModifiers),
@@ -63,8 +72,11 @@ export function KitchenOrderCard({
   );
 
   const status = normalizeOrderStatus(order.status);
+  const lane = queueLane ?? classifyKdsQueueLane(order);
+  const laneLabel = statusLabel ?? kdsLaneLabel(order);
   const actions = getOrderActionsForStatus(order.status);
   const badgeClass = STATUS_BADGE_CLASS[status] ?? "bg-elev text-muted";
+  const stuck = stuckMinutes != null && stuckMinutes >= 0;
   const primaryActions = actions.filter((a) => a !== "cancel");
   const showCancel = actions.includes("cancel");
   const actionBusy = !!pendingAction;
@@ -78,15 +90,30 @@ export function KitchenOrderCard({
   return (
     <li
       data-order-status={status}
+      data-queue-lane={lane}
       className={cn(
         "kds-order-card w-full max-w-full min-w-0",
+        lane === "live_call" && "kds-order-card--live-call",
+        lane === "building" && "kds-order-card--building",
+        lane === "new_ticket" && "kds-order-card--ticket",
+        stuck && "kds-order-card--stuck",
         actionBusy && "opacity-95"
       )}
     >
-      <PickupStatusBadge
-        label={statusLabel ?? ORDER_STATUS_LABELS[status]}
-        badgeClass={cn("kds-status-badge", badgeClass)}
-      />
+      <div className="kds-order-card__badges flex flex-wrap items-center gap-2">
+        <PickupStatusBadge
+          label={laneLabel}
+          badgeClass={cn("kds-status-badge", badgeClass)}
+        />
+        {stuck ? (
+          <span
+            className="kds-status-badge bg-danger/15 text-danger"
+            role="status"
+          >
+            {formatStuckIdleLabel(stuckMinutes)}
+          </span>
+        ) : null}
+      </div>
 
       <CustomerLine name={order.customer_name} phone={order.customer_phone} />
       <OrderItemsList items={order.items} />

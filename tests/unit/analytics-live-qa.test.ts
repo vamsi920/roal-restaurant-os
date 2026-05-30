@@ -16,9 +16,9 @@ describe("analytics live posture (launch 23)", () => {
       join(REPO, "components/analytics/AnalyticsDashboard.tsx"),
       "utf8"
     );
-    expect(dash).toContain("Voice orders");
-    expect(dash).toContain("Est. revenue");
-    expect(dash).toContain("Avg prep time");
+    expect(dash).toContain("Order sessions");
+    expect(dash).toContain("Avg order estimate");
+    expect(dash).toContain("Stuck orders");
     expect(dash).toContain("Menu scan");
     expect(dash).not.toMatch(/page views|bounce rate|NPS|retention/i);
   });
@@ -48,7 +48,7 @@ describe("analytics live posture (launch 23)", () => {
       "utf8"
     );
     expect(chart).toContain("No daily data");
-    expect(chart).toContain("Voice orders");
+    expect(chart).toContain("Order sessions");
     expect(chart).toContain("Completed");
     expect(chart).toContain("Canceled");
   });
@@ -58,6 +58,7 @@ describe("analytics live posture (launch 23)", () => {
       join(REPO, "lib/analytics/load-analytics.ts"),
       "utf8"
     );
+    expect(load).toContain("collectOrderSessions");
     expect(load).toContain('.eq("organization_id", input.organizationId)');
     expect(load).toContain(".in(\"restaurant_id\", restaurantIds)");
     expect(load).toContain("emptySnapshot");

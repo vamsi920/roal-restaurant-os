@@ -10,7 +10,7 @@ describe("landing home sections (prompt 29)", () => {
 
     for (const block of [
       "HomeProductIntro",
-      "HomeCapabilitiesStrip",
+      "HomeProductProof",
       "HomeHowItWorks",
       "HomePay",
       "HomeFaq",
@@ -22,7 +22,7 @@ describe("landing home sections (prompt 29)", () => {
     for (const removed of [
       "HomeMetricsStrip",
       "HomeSolution",
-      "HomeProductProof",
+      "HomeCapabilitiesStrip",
       "HomeSavingsCard",
     ]) {
       expect(page).not.toContain(removed);

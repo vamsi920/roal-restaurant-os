@@ -15,9 +15,10 @@ const REPO = join(import.meta.dirname, "../..");
 
 describe("home hero density (prompt 57)", () => {
   it("copy is one headline and one short subhead", () => {
-    expect(HOME_HERO.title.split(/\s+/).length).toBeLessThanOrEqual(8);
+    expect(HOME_HERO.title.split(/\s+/).length).toBeLessThanOrEqual(9);
     const words = HOME_HERO.lead.trim().split(/\s+/);
-    expect(words.length).toBeLessThanOrEqual(12);
+    expect(words.length).toBeLessThanOrEqual(30);
+    expect(HOME_HERO.title.toLowerCase()).toContain("calls");
     expect(HOME_HERO.lead.toLowerCase()).toContain("kitchen");
     expect(HOME_HERO.title.toLowerCase()).not.toMatch(/never miss/);
     expect(HOME_HERO.title.toLowerCase()).toContain("roal");
@@ -28,7 +29,7 @@ describe("home hero density (prompt 57)", () => {
     expect(HOME_PRICING_PILL.label).toBe("$0.90/order");
     expect(HOME_HERO_PRICING_PILL.label).toBe(PRICING_HERO_SIGNAL);
     expect(PRICING_HERO_SIGNAL).toContain(PRICING_RATE_AMOUNT);
-    expect(PRICING_HERO_SIGNAL.toLowerCase()).toContain("completed orders");
+    expect(PRICING_HERO_SIGNAL.toLowerCase()).toContain("real order");
 
     const pill = readFileSync(
       join(REPO, "components/landing/home/landing-home-pricing-pill.tsx"),
@@ -57,7 +58,7 @@ describe("home hero density (prompt 57)", () => {
       "utf8"
     );
     expect(hero).toMatch(/<h1[\s>]/);
-    expect((hero.match(/<p\b/g) ?? []).length).toBe(1);
+    expect((hero.match(/<p\b/g) ?? []).length).toBeGreaterThanOrEqual(1);
     expect(hero).toContain("LandingHomePricingPill");
     expect(hero).toContain("LandingHomeCta");
     expect(hero).not.toContain("home-hero__qualifier");

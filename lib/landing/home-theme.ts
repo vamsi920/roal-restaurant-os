@@ -14,8 +14,8 @@ export const HOME_NAV_SIGNUP = PUBLIC_NAV_SIGNUP;
 export const HOME_NAV_LOGIN = PUBLIC_NAV_LOGIN;
 
 export const HOME_HERO = {
-  title: "ROAL answers phone calls and takes pickup orders.",
-  lead: "In the customer's language, straight to your kitchen.",
+  title: "ROAL takes calls. Your kitchen keeps moving.",
+  lead: "Guests speak naturally in their language. ROAL answers, confirms pickup, and sends a clean order to your kitchen.",
 } as const;
 
 /** FAQ / teasers: compact pricing shorthand (full rate on /pricing). */

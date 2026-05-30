@@ -1,8 +1,8 @@
 # Final launch readiness snapshot
 
-**Date:** 2026-05-23  
+**Date:** 2026-05-30 (updated pass **39/40**)  
 **Prompt:** Launch finalization **40/40** (commit; push withheld)  
-**Sources:** [`FLOW_QA_REPORT.md`](./FLOW_QA_REPORT.md) (60/60 prompts, certified 2026-05-23) · [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md) · git working tree · Cursor QA sessions (feature-flow 60 + public launch 85–99)
+**Sources:** [`FLOW_QA_REPORT.md`](./FLOW_QA_REPORT.md) · [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md) · [`FEATURE_READINESS_AUDIT.md`](./FEATURE_READINESS_AUDIT.md) · git working tree · Cursor QA sessions (feature-flow 60 + launch passes 27–39)
 
 ---
 
@@ -10,12 +10,80 @@
 
 | Layer | Status |
 |-------|--------|
-| **Code / CI** | **Ready** — `lint` **pass** (0 warnings), `npm test` **555/555** (+1 skipped), focused UI suite **162/162** (prompt 77), `npm run build` **pass** (prompt 78; `typography.css` layer fix) |
-| **Supabase** | **Ready** — project `mnkabwcbdxruefzuvuuv`, **24/24** migrations, Edge functions deployed |
-| **Product flows (automated)** | **Pass** — auth, tenant, menu, KDS, ElevenLabs tools, billing dev mode, notifications, analytics, admin |
+| **Code / CI** | **Ready** — `lint` **pass**, `npm run build` **pass** (pass 34), focused voice/tenant suites green (passes 33, 38, 39) |
+| **Supabase** | **Ready** — project `mnkabwcbdxruefzuvuuv`, **27/27** migrations (`001`–`027` via `supabase db push`; no operator SQL required) |
+| **Product flows (automated)** | **Pass** — create → dedicated agent clone → menu sync → Edge draft/finalize → KDS ticket (pass 38); conversation-init fail-closed when agent unlinked (pass 38) |
+| **Product readiness (pass 39)** | **Pass** — no fake dashboard metrics; dedicated-agent guard; mobile core pages verified (see below) |
 | **Production launch** | **Blocked (P0)** — **LB-01** open: `getroal.com` unreachable; live Twilio sign-off pending. **LB-04** open (same root cause). **LB-03 closed**; **LB-02 downgraded** |
 
-**Certification (38/40):** **Ready for staged pilot onboarding** (signup → menu → KDS → test order on a deployed host with env). **Not ready for production day-one with live forwarded guest calls** until **LB-01** closes — ops must deploy DNS, re-sync ElevenLabs, and confirm one live Twilio call.
+**Certification (39/40):** **Ready for staged pilot onboarding** (signup → menu → KDS → test order on a deployed host with env). **Not ready for production day-one with live forwarded guest calls** until **LB-01** closes — ops must deploy DNS, re-sync ElevenLabs, and confirm one live Twilio call.
+
+---
+
+## Pass 39 — Final product readiness sweep (2026-05-30)
+
+Four launch criteria verified with code review + automated evidence. See also [`FEATURE_READINESS_AUDIT.md`](./FEATURE_READINESS_AUDIT.md).
+
+### 1. No fake dashboard data
+
+| Check | Evidence |
+|-------|----------|
+| Analytics / command center source | `lib/analytics/load-analytics.ts`, `lib/command-center/load-command-center.ts` — aggregates from `draft_orders`, `phone_order_receipts`, `usage_events`, `menu_import_audits` only |
+| No hardcoded KPI arrays in dashboard UI | Grep on `app/dashboard` + `components/analytics` + `components/command-center` — no mock revenue/seed charts |
+| Static QA guards | Vitest: `analytics-responsive-qa`, `dashboard-ops-responsive-qa`, `billing-responsive-qa`, `live-agent-responsive-qa`, `command-center-loader` — **22/22** pass (pass 39) |
+| Playwright copy scan | `scripts/qa-dashboard-responsive-sweep.mjs` — `FAKE_DATA_PATTERNS` (lorem, fake metrics, demo revenue, placeholder agent) on `#app-main-content` |
+| Org overview blockers | `lib/org-overview/launch-blockers.ts` — derived from real profile/menu/hours/voice state, not demo tenants |
+
+**Note:** Marketing/landing demos (`components/landing/*`) use illustrative transcripts by design — out of scope for dashboard readiness.
+
+### 2. No shared global ElevenLabs agent for new restaurants
+
+| Check | Evidence |
+|-------|----------|
+| Auto-provision on create | `POST /api/restaurants` → `tryProvisionVoiceAgentForNewRestaurant` → `provisionRestaurantConvaiAgent` **duplicates** from `ELEVENLABS_AGENT_ID` template, persists **new** `elevenlabs_agent_id` on profile (`lib/elevenlabs/agent-provision.ts`) |
+| Unit proof | `tests/unit/restaurant-auto-provision-elevenlabs.test.ts` — `runSync` receives **cloned** id, never template id |
+| Manual connect guard (pass 39) | `connectVoiceAgentAction` rejects when pasted id equals env template (`tests/unit/voice-agent-dedicated-connect.test.ts` **2/2**) |
+| Inbound call binding | `conversation-init` returns **404** `restaurant_not_linked` if agent not on profile (pass 38) — no empty `restaurant_id` success |
+| Template env in UI | `VoiceAgentPanel` does not prefill template id unless profile-linked; env default shows explicit “use server default” hint only |
+
+Skipped when `ELEVENLABS_AGENT_ID` unset — provision returns `skipped: true` (manual connect still required); documented in API response + onboarding copy.
+
+### 3. No user-required Supabase SQL step
+
+| Check | Evidence |
+|-------|----------|
+| Operator path | `README.md` + [`DEPLOYMENT.md`](./DEPLOYMENT.md) — **`supabase db push`** only for schema; no “run this SQL in dashboard” in app/onboarding UI |
+| Migrations | **27** files in `supabase/migrations/` including **025** (voice lifecycle), **026** (`agent_call_events`), **027** (handoff rules) — applied on remote pass 31 |
+| Realtime | `alter publication supabase_realtime` in **`001`**, **`003`**, **`007`** — not a manual onboarding step |
+| Optional ops SQL | [`RLS.md`](./RLS.md) / [`DEPLOYMENT.md`](./DEPLOYMENT.md) § Realtime — **eng-only** fallback if publication drift detected on an old fork; not required for greenfield `db push` |
+
+Tenant isolation verification uses `scripts/sql/tenant-isolation-probe.sql` via **MCP/CI**, not restaurant owners.
+
+### 4. Mobile core dashboard pages
+
+| Check | Evidence |
+|-------|----------|
+| Playwright sweep (390×844 + 1440×900) | `node --env-file=.env --env-file=.env.local scripts/qa-dashboard-pass36-inspect.mjs http://localhost:3020` — **14/14** clean (pass 36): locations, create modal, workspace, menu, agent, location + org analytics |
+| Layout fix retained | `RestaurantWorkspaceRail` — bottom nav `gridTemplateColumns: repeat(nav.length)` (6 tabs); **Calls** icon added (pass 36) — fixes wrapped “Plan” row breaking mobile nav |
+| Broader responsive script | `npm run qa:dashboard-responsive-sweep` — authenticated multi-viewport + overflow/tap-target audit (`scripts/qa-dashboard-responsive-sweep.mjs`) |
+| Unit guards | `workspace-rail-responsive-qa`, `dashboard-rendered-responsive-qa` — rail + sweep script present |
+
+**Core routes covered:** `/dashboard/restaurants`, create modal, `/dashboard/restaurants/[id]` (orders), `/menu`, `/agent`, `/analytics`, `/dashboard/analytics`.
+
+---
+
+## Pass 38 — Critical phone-order chain (2026-05-30)
+
+| Fix | Detail |
+|-----|--------|
+| `conversation-init` | **404** when restaurant not linked to agent (was **200** with empty `restaurant_id`) |
+| QA hours helper | `scripts/lib/qa-ensure-ordering-open.mjs` for closed-hours Edge QA only |
+
+| Command | Result |
+|---------|--------|
+| `npm test -- tests/integration/api-elevenlabs-conversation-init.test.ts` | **11/11** |
+| `npm run qa:phone-order-kds` | **5/5** |
+| `npm run qa:draft-finalize-elevenlabs` | **11/11** |
 
 ---
 
@@ -1114,6 +1182,9 @@ See [`launch-finalization-40-prompts.md`](./launch-finalization-40-prompts.md).
 | 2026-05-23 | Launch 37/40 | Code hygiene: `parseEnv` typing fixes build; restaurants API catch log sanitized; `.qa-screenshots/` gitignored |
 | 2026-05-23 | Launch 38/40 | Blocker decision: LB-01 P0 + LB-04 P1 open (prod DNS/hosting); pilot onboarding go / live prod phone no-go; LAUNCH_BLOCKERS restructured |
 | 2026-05-23 | Launch 39/40 | Staged 700 launch files; commit message prepared; no secrets staged |
+| 2026-05-30 | Launch 27–37 | Launch checklist, onboarding provision, ops notifications, tenant isolation, migrations 025–027, Edge redeploy, live QA, dashboard mobile rail fixes, `FEATURE_READINESS_AUDIT.md` |
+| 2026-05-30 | Launch 38/40 | conversation-init fail-closed; QA ordering-open helper; phone-order KDS + ElevenLabs draft/finalize **pass** |
+| 2026-05-30 | Launch 39/40 | Readiness sweep: no fake dashboard data; dedicated-agent connect guard; no user SQL path; mobile 14/14 evidence — this section |
 | 2026-05-23 | Launch 40/40 | Committed on `main`; push withheld — LB-01 P0 (prod DNS + Twilio) |
 | 2026-05-23 | KDS refocus 40/80 | Functional pass: Live orders `/[id]` vs Menu setup `/menu`; 35+ targeted Vitest; build pass; `KDS_REFOCUS_PLAN.md` updated; **VoiceAgentPanel** on menu UI still open (KDS-REF-01); **not committed** |
 | 2026-05-23 | KDS/UI 68–71/80 | Dashboard shell nav/typography; locations CTAs; onboarding copy; settings/billing/support theme alignment |

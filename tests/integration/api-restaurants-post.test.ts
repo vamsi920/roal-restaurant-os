@@ -46,16 +46,26 @@ vi.mock("@/lib/supabase/server", () => ({
   createServerSupabase: vi.fn(),
 }));
 
+vi.mock("@/lib/voice-agent/provision-restaurant-voice-agent", () => ({
+  tryProvisionVoiceAgentForNewRestaurant: vi.fn(),
+}));
+
 import {
   requireAuthContext,
   resolveOrganizationId,
 } from "@/lib/auth/context-server";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
 import { createServerSupabase } from "@/lib/supabase/server";
+import { tryProvisionVoiceAgentForNewRestaurant } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 
 describe("POST /api/restaurants", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(tryProvisionVoiceAgentForNewRestaurant).mockResolvedValue({
+      ok: true,
+      agent_id: "agent_auto_01",
+      method: "duplicate",
+    });
   });
 
   it("returns 401 when unauthenticated", async () => {
@@ -239,9 +249,70 @@ describe("POST /api/restaurants", () => {
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.restaurant.organization_id).toBe(ORG_ID);
+    expect(body.voice_agent_provision).toEqual({
+      ok: true,
+      agent_id: "agent_auto_01",
+      method: "duplicate",
+    });
+    expect(tryProvisionVoiceAgentForNewRestaurant).toHaveBeenCalledWith({
+      restaurantId: restaurant.id,
+      restaurantName: "New Place",
+      organizationId: ORG_ID,
+      userId: USER_ID,
+    });
     expect(insert).toHaveBeenCalledWith({
       name: "New Place",
       organization_id: ORG_ID,
+    });
+  });
+
+  it("returns 200 with warning when voice agent provision fails", async () => {
+    const restaurant = {
+      id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      name: "New Place",
+      organization_id: ORG_ID,
+      created_at: new Date().toISOString(),
+    };
+
+    vi.mocked(requireAuthContext).mockResolvedValue({
+      context: ownerContext(),
+      errorResponse: null,
+    });
+    vi.mocked(resolveOrganizationId).mockReturnValue({ organizationId: ORG_ID });
+    vi.mocked(assertOrganizationBillingGate).mockResolvedValue({
+      ok: true,
+      verdict: { hardBlocked: false, message: "" },
+    } as never);
+    vi.mocked(tryProvisionVoiceAgentForNewRestaurant).mockResolvedValue({
+      ok: false,
+      warning: "ElevenLabs is temporarily unavailable.",
+      phase: "provision",
+      agent_id: null,
+    });
+
+    const single = vi.fn().mockResolvedValue({ data: restaurant, error: null });
+    const insert = vi.fn().mockReturnValue({
+      select: vi.fn().mockReturnValue({ single }),
+    });
+    vi.mocked(createServerSupabase).mockResolvedValue({
+      from: vi.fn().mockReturnValue({ insert }),
+    } as never);
+
+    const res = await POST(
+      new Request("http://localhost/api/restaurants", {
+        method: "POST",
+        body: JSON.stringify({ name: "New Place" }),
+      })
+    );
+
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.restaurant.id).toBe(restaurant.id);
+    expect(body.voice_agent_provision).toEqual({
+      ok: false,
+      warning: "ElevenLabs is temporarily unavailable.",
+      phase: "provision",
+      agent_id: null,
     });
   });
 });

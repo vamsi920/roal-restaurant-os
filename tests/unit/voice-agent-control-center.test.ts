@@ -56,6 +56,12 @@ describe("voice agent control center", () => {
       lastSyncAt: null,
       lastSyncError: "Invalid key sk-abcdefghijklmnop",
       lastSyncSummary: null,
+      menuAutoSync: {
+        agentLinked: false,
+        status: null,
+        error: null,
+        lastSyncedAt: null,
+      },
       agentRoot: null,
       agentFetchError: null,
     });

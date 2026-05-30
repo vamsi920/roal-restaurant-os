@@ -8,6 +8,7 @@ import { ensureRestaurantOnboarding } from "@/lib/onboarding/helpers";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
 import { planLimitJsonResponse } from "@/lib/billing/gate-http";
 import { createServerSupabase } from "@/lib/supabase/server";
+import { tryProvisionVoiceAgentForNewRestaurant } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 
 export const runtime = "nodejs";
 
@@ -67,7 +68,17 @@ export async function POST(req: Request) {
       resolved.organizationId
     );
 
-    return NextResponse.json({ restaurant: data });
+    const voiceAgentProvision = await tryProvisionVoiceAgentForNewRestaurant({
+      restaurantId: data.id,
+      restaurantName: name,
+      organizationId: resolved.organizationId,
+      userId: auth.context.user.id,
+    });
+
+    return NextResponse.json({
+      restaurant: data,
+      voice_agent_provision: voiceAgentProvision,
+    });
   } catch (err) {
     const msg = err instanceof Error ? err.message : "unknown";
     console.error("[restaurants POST]", msg);

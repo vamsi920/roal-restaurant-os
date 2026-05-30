@@ -4,6 +4,8 @@
  * Usage: node --env-file=.env --env-file=.env.local scripts/qa-phone-order-kds-flow.mjs
  */
 import { createHmac, randomUUID } from "node:crypto";
+import { createClient } from "@supabase/supabase-js";
+import { ensureQaOrderingOpen } from "./lib/qa-ensure-ordering-open.mjs";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
@@ -104,11 +106,27 @@ function record(name, pass, detail) {
 }
 
 async function main() {
-  const menuRes = await callEdge(
+  let menuRes = await callEdge(
     "get-menu",
     { restaurant_id: RESTAURANT_ID },
     { method: "GET" }
   );
+  if (
+    menuRes.status === 200 &&
+    menuRes.json?.operations?.ordering_allowed === false &&
+    SERVICE
+  ) {
+    const admin = createClient(BASE, SERVICE, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+    const opened = await ensureQaOrderingOpen(admin, RESTAURANT_ID);
+    console.log(`[qa] ordering closed — opened QA window: ${opened.detail}`);
+    menuRes = await callEdge(
+      "get-menu",
+      { restaurant_id: RESTAURANT_ID },
+      { method: "GET" }
+    );
+  }
   const item =
     menuRes.json?.categories?.flatMap((c) => c.items ?? [])?.find((i) => i.is_available) ??
     null;

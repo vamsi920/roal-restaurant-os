@@ -1,22 +1,22 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { getPublicEnv } from "@/lib/env.public";
 import { getElevenLabsAgentId } from "@/lib/env.server";
-import type { ApplyRestaurantProfileResult } from "@/lib/elevenlabs-restaurant-agent-profile";
-import { applyRestaurantOrderAgentProfile } from "@/lib/elevenlabs-restaurant-agent-profile";
-import {
-  applyElevenLabsPhonePersonalizationWebhook,
-  buildConversationInitWebhookUrl,
-} from "@/lib/elevenlabs/phone-personalization";
-import { getElevenLabsConversationInitSecret } from "@/lib/env.server";
-import {
-  syncRoalElevenLabsTools,
-  type SyncRoalElevenLabsToolsResult,
-} from "@/lib/sync-elevenlabs-roal-tools";
+import { getPublicEnv } from "@/lib/env.public";
 import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
+import { runRestaurantVoiceAgentSync } from "@/lib/voice-agent/run-restaurant-voice-agent-sync";
+import type { VoiceAgentSyncSummary } from "@/lib/voice-agent/voice-agent-sync-summary";
 import type { VoiceAgentControlCenterSnapshot } from "@/lib/voice-agent/control-center-types";
+import {
+  menuAutoSyncFromProfile,
+  type MenuAutoSyncSnapshot,
+} from "@/lib/voice-agent/menu-auto-sync-display";
 import { sanitizeVoiceAgentDisplayError } from "@/lib/voice-agent/sanitize-display-error";
+import {
+  syncRestaurantAgentAfterContentChange,
+  VOICE_AGENT_CONTENT_SYNC_TRIGGERS,
+} from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
 import { writeAuditLog } from "@/lib/observability/audit";
 import { notifySyncFailure } from "@/lib/notifications/helpers";
 import { createServerSupabase } from "@/lib/supabase/server";
@@ -36,30 +36,12 @@ async function loadProfile(restaurantId: string) {
   return data;
 }
 
-function persistSyncSummary(
-  sync: SyncRoalElevenLabsToolsResult,
-  profile: ApplyRestaurantProfileResult,
-  phonePersonalizationWebhook: string | null
-) {
-  return {
-    tools: sync.tools,
-    tool_ids_on_agent: sync.tool_ids_on_agent,
-    restaurant_placeholders_updated:
-      sync.restaurant_placeholders_updated ||
-      profile.restaurant_placeholders_updated,
-    first_message_updated: sync.first_message_updated,
-    restaurant_tools_baked: sync.restaurant_tools_baked,
-    knowledge_base_doc_attached: profile.knowledge_base_doc_attached,
-    phone_personalization_webhook: phonePersonalizationWebhook,
-  };
-}
-
 async function saveSyncSuccess(
   restaurantId: string,
   organizationId: string,
   userId: string,
   agentId: string,
-  summary: ReturnType<typeof persistSyncSummary>
+  summary: VoiceAgentSyncSummary
 ) {
   const supabase = await createServerSupabase();
   const { error } = await supabase
@@ -97,6 +79,9 @@ async function saveSyncFailure(
   const safeMessage =
     sanitizeVoiceAgentDisplayError(message) ?? "Sync failed";
   const supabase = await createServerSupabase();
+  const profile = await loadProfile(restaurantId);
+  const previousError = profile.elevenlabs_last_sync_error?.trim() || null;
+
   await supabase
     .from("restaurant_profiles")
     .update({
@@ -104,12 +89,15 @@ async function saveSyncFailure(
       updated_at: new Date().toISOString(),
     })
     .eq("restaurant_id", restaurantId);
-  void notifySyncFailure(supabase, {
-    organizationId,
-    restaurantId,
-    restaurantName,
-    message,
-  });
+
+  if (!previousError) {
+    void notifySyncFailure(supabase, {
+      organizationId,
+      restaurantId,
+      restaurantName,
+      message: safeMessage,
+    });
+  }
 }
 
 export async function getVoiceAgentControlCenterAction(
@@ -147,34 +135,24 @@ export async function connectVoiceAgentAction(input: ConnectVoiceAgentInput) {
   if (!agentId) throw new Error("Enter an ElevenLabs agent id.");
   if (!restaurantId) throw new Error("Missing restaurant.");
 
+  const templateAgentId = getElevenLabsAgentId();
+  if (templateAgentId && agentId === templateAgentId) {
+    throw new Error(
+      "Cannot connect the shared template agent to this location. Each restaurant needs a dedicated ElevenLabs agent — use auto-provision when creating a location or Retry on the voice agent step."
+    );
+  }
+
   const access = await requireRestaurantAccess(restaurantId);
   if (access.errorResponse) {
     throw new Error("You do not have access to this restaurant.");
   }
 
   try {
-    const sync = await syncRoalElevenLabsTools({
+    const { sync, profile, summary } = await runRestaurantVoiceAgentSync({
       agentId,
       restaurantId,
       restaurantName,
     });
-    const profile = await applyRestaurantOrderAgentProfile({
-      agentId,
-      restaurantId,
-      restaurantName,
-    });
-    let phonePersonalizationWebhook: string | null = null;
-    const webhookUrl = buildConversationInitWebhookUrl(
-      getElevenLabsConversationInitSecret()
-    );
-    if (webhookUrl) {
-      const phone = await applyElevenLabsPhonePersonalizationWebhook({
-        agentId,
-        webhookUrl,
-      });
-      phonePersonalizationWebhook = phone.webhook_url;
-    }
-    const summary = persistSyncSummary(sync, profile, phonePersonalizationWebhook);
     await saveSyncSuccess(
       restaurantId,
       access.access.restaurant.organization_id,
@@ -197,6 +175,71 @@ export async function connectVoiceAgentAction(input: ConnectVoiceAgentInput) {
     );
     throw new Error(safeMessage);
   }
+}
+
+export type ResyncRestaurantAgentMenuResult = {
+  ok: boolean;
+  skipped: boolean;
+  skipReason: string | null;
+  error: string | null;
+  menuAutoSync: MenuAutoSyncSnapshot;
+};
+
+export async function resyncRestaurantAgentMenuAction(
+  restaurantId: string,
+  restaurantName: string
+): Promise<ResyncRestaurantAgentMenuResult> {
+  const access = await requireRestaurantAccess(restaurantId);
+  if (access.errorResponse) {
+    throw new Error("You do not have access to this restaurant.");
+  }
+
+  const name = restaurantName.trim() || access.access.restaurant.name;
+  const result = await syncRestaurantAgentAfterContentChange({
+    restaurantId,
+    restaurantName: name,
+    trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.manual_resync,
+    userId: access.context.user.id,
+  });
+
+  for (const path of [
+    `/dashboard/restaurants/${restaurantId}`,
+    `/dashboard/restaurants/${restaurantId}/menu`,
+    `/dashboard/restaurants/${restaurantId}/agent`,
+  ]) {
+    revalidatePath(path);
+  }
+
+  const profile = await loadProfile(restaurantId);
+  const menuAutoSync = menuAutoSyncFromProfile(profile);
+
+  if (result.skipped && result.skipReason === "no_linked_agent") {
+    return {
+      ok: false,
+      skipped: true,
+      skipReason: result.skipReason,
+      error: "Connect an agent on Live Agent before re-syncing.",
+      menuAutoSync,
+    };
+  }
+
+  if (!result.ok && result.error) {
+    return {
+      ok: false,
+      skipped: result.skipped,
+      skipReason: result.skipReason,
+      error: sanitizeVoiceAgentDisplayError(result.error) ?? result.error,
+      menuAutoSync,
+    };
+  }
+
+  return {
+    ok: result.ok,
+    skipped: result.skipped,
+    skipReason: result.skipReason,
+    error: null,
+    menuAutoSync,
+  };
 }
 
 export async function resyncVoiceAgentAction(

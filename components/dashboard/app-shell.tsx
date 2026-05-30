@@ -24,12 +24,14 @@ export function AppShell({
   organizationName,
   roleLabel,
   showAdminNav,
+  showOrgAdminNav = false,
 }: {
   children: ReactNode;
   userEmail: string;
   organizationName: string | null;
   roleLabel: string | null;
   showAdminNav: boolean;
+  showOrgAdminNav?: boolean;
 }) {
   const pathname = usePathname();
   const {
@@ -43,7 +45,11 @@ export function AppShell({
 
   const navGroups = DASHBOARD_NAV.map((group) => ({
     ...group,
-    items: group.items.filter((item) => !item.platformOnly || showAdminNav),
+    items: group.items.filter(
+      (item) =>
+        (!item.platformOnly || showAdminNav) &&
+        (!item.orgAdminOnly || showOrgAdminNav)
+    ),
   })).filter((group) => group.items.length > 0);
 
   useEffect(() => {

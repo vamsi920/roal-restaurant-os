@@ -3,13 +3,10 @@ import {
   aggregateMenuScans,
   aggregatePopularItems,
   popularItemSources,
-  applyCanceledOrdersToSeries,
   averagePrepMinutes,
-  bucketUsageByDay,
   buildMenuContexts,
   countCanceledByRestaurant,
   countReceiptsByRestaurant,
-  countUsageByRestaurant,
   conversionPercent,
   estimateRevenueCents,
   prepMinutesByRestaurant,
@@ -18,6 +15,15 @@ import {
   type ReceiptRow,
   type UsageRow,
 } from "@/lib/analytics/aggregate";
+import {
+  averageOrderEstimateCents,
+  bucketOrderSessionsByDay,
+  collectOrderSessions,
+  computeSessionConversionTrend,
+  countStuckKitchenOrders,
+  peakOrderHoursFromReceipts,
+  sessionHasCompletedOrder,
+} from "@/lib/analytics/phone-ops-metrics";
 import {
   analyticsRangeBounds,
   buildDaySeries,
@@ -94,7 +100,7 @@ export async function loadOrganizationAnalytics(
 
   const usageQuery = supabase
     .from("usage_events")
-    .select("event_type, occurred_at, restaurant_id, metadata")
+    .select("event_type, occurred_at, restaurant_id, session_id, metadata")
     .eq("organization_id", input.organizationId)
     .gte("occurred_at", sinceIso)
     .lte("occurred_at", untilIso);
@@ -123,7 +129,7 @@ export async function loadOrganizationAnalytics(
     supabase
       .from("draft_orders")
       .select(
-        "restaurant_id, session_id, status, items, created_at, completed_at, canceled_at"
+        "restaurant_id, session_id, status, items, created_at, updated_at, completed_at, canceled_at"
       )
       .in("restaurant_id", restaurantIds)
       .gte("created_at", sinceIso)
@@ -206,12 +212,28 @@ export async function loadOrganizationAnalytics(
     ])
   );
 
-  const voiceOrders = usage.filter((e) => e.event_type === "voice_order").length;
-  const ordersCompleted = usage.filter(
-    (e) => e.event_type === "order_completed"
+  const sessionMap = collectOrderSessions(
+    orders,
+    receipts,
+    usage,
+    restaurantIdSet
+  );
+  const sessions = [...sessionMap.values()];
+  const orderSessions = sessions.length;
+  const sessionsWithCompletedOrder = sessions.filter((s) =>
+    sessionHasCompletedOrder(s)
   ).length;
+  const sessionConversionPercent = conversionPercent(
+    sessionsWithCompletedOrder,
+    orderSessions
+  );
+
   const ordersCanceled = orders.filter((o) => o.status === "canceled").length;
   const ordersFinalized = receipts.length;
+  const completedKitchenOrders = orders.filter(
+    (o) => o.status === "completed"
+  ).length;
+  const stuckOrderCount = countStuckKitchenOrders(orders);
 
   const completedOrders = orders.filter((o) => o.status === "completed");
   const prep = averagePrepMinutes(completedOrders);
@@ -220,22 +242,42 @@ export async function loadOrganizationAnalytics(
     menuByRestaurant,
     pricingByRestaurant
   );
+  const avgOrder = averageOrderEstimateCents(
+    completedOrders,
+    receipts,
+    menuByRestaurant,
+    pricingByRestaurant
+  );
 
-  let ordersOverTime = bucketUsageByDay(usage, dayKeys);
-  ordersOverTime = applyCanceledOrdersToSeries(ordersOverTime, orders);
+  const ordersOverTime = bucketOrderSessionsByDay(
+    orders,
+    receipts,
+    usage,
+    dayKeys,
+    restaurantIdSet
+  );
+  const peakHours = peakOrderHoursFromReceipts(receipts);
+  const conversionTrend = computeSessionConversionTrend(
+    sessions,
+    sinceIso,
+    untilIso
+  );
 
   const popularSources = popularItemSources(completedOrders, receipts);
 
-  const usageByRest = countUsageByRestaurant(usage, restaurantIdSet);
   const canceledByRest = countCanceledByRestaurant(orders);
   const receiptsByRest = countReceiptsByRestaurant(receipts);
   const prepByRest = prepMinutesByRestaurant(completedOrders);
 
   const byRestaurant: RestaurantAnalyticsRow[] = scopedRestList.map((r) => {
-    const usageSlice = usageByRest.get(r.id) ?? { voice: 0, completed: 0 };
+    const restSessions = sessions.filter((s) => s.restaurantId === r.id);
+    const restCompletedSessions = restSessions.filter((s) =>
+      sessionHasCompletedOrder(s)
+    ).length;
     const restCompleted = completedOrders.filter(
       (o) => o.restaurant_id === r.id
     );
+    const restOrders = orders.filter((o) => o.restaurant_id === r.id);
     const restRevenue = estimateRevenueCents(
       restCompleted,
       menuByRestaurant,
@@ -246,17 +288,19 @@ export async function loadOrganizationAnalytics(
     return {
       restaurantId: r.id,
       restaurantName: r.name,
-      voiceOrders: usageSlice.voice,
+      orderSessions: restSessions.length,
+      sessionsCompleted: restCompletedSessions,
       finalized: receiptsByRest.get(r.id) ?? 0,
-      completed: usageSlice.completed,
+      completedKitchen: restCompleted.length,
       canceled: canceledByRest.get(r.id) ?? 0,
       conversionPercent: conversionPercent(
-        usageSlice.completed,
-        usageSlice.voice
+        restCompletedSessions,
+        restSessions.length
       ),
       revenueCents: restRevenue.totalCents,
       revenueComplete: restRevenue.complete,
       avgPrepMinutes: prepSlice.avg,
+      stuckOrders: countStuckKitchenOrders(restOrders),
     };
   });
 
@@ -271,18 +315,25 @@ export async function loadOrganizationAnalytics(
     until: untilIso,
     restaurantCount: scopedRestList.length,
     summary: {
-      voiceOrders,
+      orderSessions,
+      sessionsWithCompletedOrder,
+      sessionConversionPercent,
       ordersFinalized,
-      ordersCompleted,
+      completedKitchenOrders,
       ordersCanceled,
-      conversionPercent: conversionPercent(ordersCompleted, voiceOrders),
       avgPrepMinutes: prep.avg,
       prepSampleSize: prep.sampleSize,
       revenueCents: revenue.totalCents,
       revenueComplete: revenue.complete,
       revenueOrderCount: revenue.orderCount,
+      averageOrderCents: avgOrder.avgCents,
+      averageOrderComplete: avgOrder.complete,
+      averageOrderSampleSize: avgOrder.sampleSize,
+      stuckOrderCount,
     },
     ordersOverTime,
+    peakHours,
+    conversionTrend,
     popularItems: aggregatePopularItems(popularSources),
     byRestaurant,
     menuScans: aggregateMenuScans(
@@ -318,23 +369,39 @@ function emptySnapshot(
     until,
     restaurantCount: 0,
     summary: {
-      voiceOrders: 0,
+      orderSessions: 0,
+      sessionsWithCompletedOrder: 0,
+      sessionConversionPercent: null,
       ordersFinalized: 0,
-      ordersCompleted: 0,
+      completedKitchenOrders: 0,
       ordersCanceled: 0,
-      conversionPercent: null,
       avgPrepMinutes: null,
       prepSampleSize: 0,
       revenueCents: null,
       revenueComplete: true,
       revenueOrderCount: 0,
+      averageOrderCents: null,
+      averageOrderComplete: true,
+      averageOrderSampleSize: 0,
+      stuckOrderCount: 0,
     },
     ordersOverTime: dayKeys.map((date) => ({
       date,
-      voiceOrders: 0,
+      orderSessions: 0,
       completed: 0,
       canceled: 0,
     })),
+    peakHours: [],
+    conversionTrend: {
+      label: "Later half vs earlier half of range",
+      priorPercent: null,
+      recentPercent: null,
+      deltaPoints: null,
+      priorSessions: 0,
+      recentSessions: 0,
+      priorCompleted: 0,
+      recentCompleted: 0,
+    },
     popularItems: [],
     byRestaurant: [],
     menuScans: {

@@ -26,7 +26,15 @@ import {
 import { cn } from "@/lib/cn";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { RESTAURANT_LIVE_ORDERS_LABEL } from "@/lib/dashboard-restaurant-labels";
-import { CallStatusStrip } from "./CallStatusStrip";
+import { LiveCallIndicator } from "./LiveCallIndicator";
+import type { CommandCenterCallRow } from "@/lib/command-center/types";
+import {
+  classifyKdsQueueLane,
+  isKdsStuckOrder,
+  minutesSinceUpdated,
+} from "@/lib/orders/kds-queue-lane";
+import { KdsQueueSection } from "./KdsQueueSection";
+import { KdsQueueSummary, type KdsQueueSummaryChip } from "./KdsQueueSummary";
 import { KitchenOrderCard } from "./KitchenOrderCard";
 import {
   OrderDetailModal,
@@ -80,7 +88,26 @@ function bootstrapKey(
   return `${d}__${r}`;
 }
 
-type Tab = "new" | "in_progress" | "done";
+type Tab = "incoming" | "kitchen" | "done";
+
+function sortStuckFirst(orders: DraftOrderRow[], now: Date): DraftOrderRow[] {
+  return [...orders].sort((a, b) => {
+    const aStuck = isKdsStuckOrder(a, { now });
+    const bStuck = isKdsStuckOrder(b, { now });
+    if (aStuck !== bStuck) return aStuck ? -1 : 1;
+    return (
+      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    );
+  });
+}
+
+function cardStuckProps(order: DraftOrderRow, now: Date) {
+  const stuck = isKdsStuckOrder(order, { now });
+  return {
+    queueLane: classifyKdsQueueLane(order),
+    stuckMinutes: stuck ? minutesSinceUpdated(order.updated_at, now) : undefined,
+  };
+}
 
 const DONE_DRAFT_VISIBLE = 10;
 const DONE_RECEIPT_VISIBLE = 5;
@@ -94,6 +121,7 @@ type Props = {
   initialDraftOrders: DraftOrderRow[];
   initialReceipts: PhoneOrderReceiptRow[];
   initialLoadError?: string | null;
+  initialActiveCalls?: CommandCenterCallRow[];
 };
 
 export function LiveOrdersPanel({
@@ -105,6 +133,7 @@ export function LiveOrdersPanel({
   initialDraftOrders,
   initialReceipts,
   initialLoadError = null,
+  initialActiveCalls = [],
 }: Props) {
   const [draftRows, setDraftRows] = useState<DraftOrderRow[]>(() =>
     initialDraftOrders.map(normalizeDraftRow)
@@ -112,7 +141,8 @@ export function LiveOrdersPanel({
   const [receipts, setReceipts] =
     useState<PhoneOrderReceiptRow[]>(initialReceipts);
   const [syncError, setSyncError] = useState<string | null>(initialLoadError);
-  const [tab, setTab] = useState<Tab>("new");
+  const [tab, setTab] = useState<Tab>("incoming");
+  const [nowMs, setNowMs] = useState(() => Date.now());
   const [selection, setSelection] = useState<OrderDetailSelection | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [ordersReady, setOrdersReady] = useState(
@@ -339,6 +369,13 @@ export function LiveOrdersPanel({
     };
   }, [restaurantId, restaurantName, fetchAll, mergeRealtimeRow]);
 
+  useEffect(() => {
+    const timer = setInterval(() => setNowMs(Date.now()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const now = useMemo(() => new Date(nowMs), [nowMs]);
+
   const newOrders = useMemo(
     () =>
       [...draftRows]
@@ -369,15 +406,77 @@ export function LiveOrdersPanel({
 
   const liveCarts = useMemo(
     () =>
-      [...draftRows]
-        .filter((o) => isVoiceCartStatus(o.status))
-        .sort(
-          (a, b) =>
-            new Date(b.updated_at).getTime() -
-            new Date(a.updated_at).getTime()
-        ),
-    [draftRows]
+      sortStuckFirst(
+        draftRows.filter((o) => isVoiceCartStatus(o.status)),
+        now
+      ),
+    [draftRows, now]
   );
+
+  const { liveCallCarts, buildingCarts } = useMemo(() => {
+    const liveCall: DraftOrderRow[] = [];
+    const building: DraftOrderRow[] = [];
+    for (const order of liveCarts) {
+      if (classifyKdsQueueLane(order) === "building") building.push(order);
+      else liveCall.push(order);
+    }
+    return { liveCallCarts: liveCall, buildingCarts: building };
+  }, [liveCarts]);
+
+  const incomingOrders = useMemo(
+    () => sortStuckFirst(newOrders, now),
+    [newOrders, now]
+  );
+
+  const kitchenOrders = useMemo(
+    () => sortStuckFirst(inProgressOrders, now),
+    [inProgressOrders, now]
+  );
+
+  const stuckCount = useMemo(
+    () =>
+      draftRows.filter(
+        (o) =>
+          !isTerminalOrderStatus(o.status) && isKdsStuckOrder(o, { now })
+      ).length,
+    [draftRows, now]
+  );
+
+  const summaryChips = useMemo((): KdsQueueSummaryChip[] => {
+    return [
+      {
+        id: "live",
+        label: "On phone",
+        count: liveCarts.length,
+        tone: "live",
+      },
+      {
+        id: "building",
+        label: "Building",
+        count: buildingCarts.length,
+        tone: "live",
+      },
+      {
+        id: "new",
+        label: "Confirmed",
+        count: newOrders.length,
+        tone: "ticket",
+      },
+      {
+        id: "kitchen",
+        label: "Kitchen",
+        count: inProgressOrders.length,
+        tone: "kitchen",
+      },
+      { id: "stuck", label: "Stuck", count: stuckCount, tone: "stuck" },
+    ];
+  }, [
+    liveCarts.length,
+    buildingCarts.length,
+    newOrders.length,
+    inProgressOrders.length,
+    stuckCount,
+  ]);
 
   const terminalOrders = useMemo(
     () =>
@@ -390,16 +489,6 @@ export function LiveOrdersPanel({
         ),
     [draftRows]
   );
-
-  const callStripLastUpdated = useMemo(() => {
-    if (liveCarts.length > 0) return liveCarts[0]?.updated_at ?? null;
-    let latest = 0;
-    for (const o of draftRows) {
-      const t = new Date(o.updated_at).getTime();
-      if (t > latest) latest = t;
-    }
-    return latest > 0 ? new Date(latest).toISOString() : null;
-  }, [liveCarts, draftRows]);
 
   const receiptArchive = useMemo(() => {
     const terminalSessions = new Set(terminalOrders.map((o) => o.session_id));
@@ -440,13 +529,13 @@ export function LiveOrdersPanel({
     terminalOrders.length === 0 &&
     receiptArchive.length === 0;
 
-  const emptyNew =
+  const emptyIncoming =
     !hasNoOrders &&
-    tab === "new" &&
+    tab === "incoming" &&
     newOrders.length === 0 &&
     liveCarts.length === 0;
-  const emptyInProgress =
-    !hasNoOrders && tab === "in_progress" && inProgressOrders.length === 0;
+  const emptyKitchen =
+    !hasNoOrders && tab === "kitchen" && inProgressOrders.length === 0;
   const emptyDone =
     !hasNoOrders &&
     tab === "done" &&
@@ -457,6 +546,53 @@ export function LiveOrdersPanel({
     selection?.kind === "draft" ? pending[selection.order.id] ?? null : null;
   const modalError =
     selection?.kind === "draft" ? errors[selection.order.id] ?? null : null;
+
+  const tabPanelId =
+    tab === "incoming"
+      ? "kds-tabpanel-incoming"
+      : tab === "kitchen"
+        ? "kds-tabpanel-kitchen"
+        : "kds-tabpanel-done";
+
+  function renderDraftCard(order: DraftOrderRow) {
+    const stuckProps = cardStuckProps(order, now);
+    return (
+      <KitchenOrderCard
+        key={order.id}
+        order={order}
+        pendingAction={pending[order.id] ?? null}
+        error={errors[order.id] ?? null}
+        onDismissError={() => clearError(order.id)}
+        onAction={(action) => void applyAction(order, action)}
+        onViewDetails={() => setSelection({ kind: "draft", order })}
+        menuItems={menuItems}
+        menuModifiers={menuModifiers}
+        pricingSettings={pricingSettings}
+        queueLane={stuckProps.queueLane}
+        stuckMinutes={stuckProps.stuckMinutes}
+      />
+    );
+  }
+
+  function renderPhoneCart(order: DraftOrderRow) {
+    const stuckProps = cardStuckProps(order, now);
+    return (
+      <KitchenOrderCard
+        key={order.id}
+        order={order}
+        pendingAction={null}
+        error={null}
+        onDismissError={() => {}}
+        onAction={() => {}}
+        onViewDetails={() => setSelection({ kind: "draft", order })}
+        menuItems={menuItems}
+        menuModifiers={menuModifiers}
+        pricingSettings={pricingSettings}
+        queueLane={stuckProps.queueLane}
+        stuckMinutes={stuckProps.stuckMinutes}
+      />
+    );
+  }
 
   return (
     <>
@@ -472,9 +608,9 @@ export function LiveOrdersPanel({
           <h2
             id="kds-page-heading"
             className="kds-orders-head__title min-w-0 truncate"
-            title={RESTAURANT_LIVE_ORDERS_LABEL}
+            title="Order queue"
           >
-            {RESTAURANT_LIVE_ORDERS_LABEL}
+            Queue
           </h2>
           <div className="kds-orders-head__tools">
             <KdsRealtimeIndicator state={realtimeUi} />
@@ -519,38 +655,59 @@ export function LiveOrdersPanel({
           />
         ) : null}
 
-        <CallStatusStrip
-          compact
-          liveCount={liveCarts.length}
-          lastUpdatedAt={callStripLastUpdated}
+        <LiveCallIndicator
+          initialActiveCalls={initialActiveCalls}
+          liveCarts={liveCarts}
+          draftRows={draftRows}
         />
 
-        <div className="kds-order-tabs" role="tablist" aria-label="Order queue">
+        <KdsQueueSummary chips={summaryChips} />
+
+        <div className="kds-order-tabs" role="tablist" aria-label="Order queue views">
         <TabButton
-          active={tab === "new"}
-          onClick={() => setTab("new")}
-          label="New"
+          id="kds-tab-incoming"
+          panelId="kds-tabpanel-incoming"
+          active={tab === "incoming"}
+          onClick={() => setTab("incoming")}
+          label="Incoming"
           count={newOrders.length + liveCarts.length}
           accentWhenActive
         />
         <TabButton
-          active={tab === "in_progress"}
-          onClick={() => setTab("in_progress")}
-          label="In progress"
+          id="kds-tab-kitchen"
+          panelId="kds-tabpanel-kitchen"
+          active={tab === "kitchen"}
+          onClick={() => setTab("kitchen")}
+          label="Kitchen"
           count={inProgressOrders.length}
         />
         <TabButton
+          id="kds-tab-done"
+          panelId="kds-tabpanel-done"
           active={tab === "done"}
           onClick={() => setTab("done")}
           label="Done"
           count={terminalOrders.length + receiptArchive.length}
+          successWhenActive
         />
         </div>
       </div>
 
-      <div className="kds-order-body">
+      <div
+        className="kds-order-body"
+        role="tabpanel"
+        id={tabPanelId}
+        aria-labelledby={
+          tab === "incoming"
+            ? "kds-tab-incoming"
+            : tab === "kitchen"
+              ? "kds-tab-kitchen"
+              : "kds-tab-done"
+        }
+        aria-busy={!ordersReady && hasNoOrders && !syncError}
+      >
         {!ordersReady && hasNoOrders && !syncError ? (
-          <KdsLoadingPanel label="Loading orders…" rows={0} />
+          <KdsLoadingPanel label="Loading phone orders…" rows={3} />
         ) : null}
 
         {ordersReady && hasNoOrders && syncError ? (
@@ -565,7 +722,7 @@ export function LiveOrdersPanel({
               />
             }
           >
-            Check your connection, then refresh.
+            {syncError}. Check your connection, then refresh.
           </KdsEmptyStatePanel>
         ) : null}
 
@@ -573,86 +730,99 @@ export function LiveOrdersPanel({
           <KdsEmptyStatePanel
             tone="calm"
             icon="orders"
-            title="No orders yet"
+            title="No phone orders yet"
             actions={
               <KdsRecoveryButton
                 onClick={() => void onRefresh()}
                 busy={refreshing}
               />
             }
-          />
+          >
+            {RESTAURANT_LIVE_ORDERS_LABEL} fills when a guest calls and places an
+            order.
+          </KdsEmptyStatePanel>
         ) : null}
 
-        {tab === "new" && emptyNew && (
-          <KdsEmptyStatePanel title="No new orders" tone="tab" />
+        {tab === "incoming" && emptyIncoming && (
+          <KdsEmptyStatePanel title="No incoming activity" tone="tab">
+            Live calls and confirmed tickets appear here.
+          </KdsEmptyStatePanel>
         )}
-        {tab === "in_progress" && emptyInProgress && (
-          <KdsEmptyStatePanel title="Nothing in progress" tone="tab" />
+        {tab === "kitchen" && emptyKitchen && (
+          <KdsEmptyStatePanel title="Kitchen clear" tone="tab">
+            Accepted and in-progress tickets show here.
+          </KdsEmptyStatePanel>
         )}
         {tab === "done" && emptyDone && (
-          <KdsEmptyStatePanel title="No finished orders yet" tone="done" />
+          <KdsEmptyStatePanel title="No finished orders yet" tone="done">
+            Completed and canceled tickets move here.
+          </KdsEmptyStatePanel>
         )}
 
-        {!hasNoOrders && tab === "new" && liveCarts.length > 0 && (
-          <ul className="kds-order-list kds-order-list--live mb-4">
-            {liveCarts.map((o) => (
-              <KitchenOrderCard
-                key={o.id}
-                order={o}
-                pendingAction={null}
-                error={null}
-                onDismissError={() => {}}
-                onAction={() => {}}
-                onViewDetails={() => setSelection({ kind: "draft", order: o })}
-                menuItems={menuItems}
-                menuModifiers={menuModifiers}
-                pricingSettings={pricingSettings}
-                statusLabel="On the phone"
-              />
-            ))}
-          </ul>
+        {!hasNoOrders && stuckCount > 0 && tab !== "done" ? (
+          <p
+            className="kds-stuck-banner mx-3 mt-3 rounded-lg border border-danger/25 bg-danger/[0.06] px-3 py-2 text-sm text-danger sm:mx-4"
+            role="alert"
+          >
+            {stuckCount} order{stuckCount === 1 ? "" : "s"} idle 20+ minutes — highlighted
+            below.
+          </p>
+        ) : null}
+
+        {!hasNoOrders && tab === "incoming" && (
+          <div className="kds-queue-panels space-y-5 p-3 sm:p-4">
+            {liveCallCarts.length > 0 ? (
+              <KdsQueueSection
+                id="kds-section-live-call"
+                title="Live call"
+                description="Guest is on the line; cart may still be empty."
+                variant="live"
+              >
+                <ul className="kds-order-list kds-order-list--live">
+                  {liveCallCarts.map((o) => renderPhoneCart(o))}
+                </ul>
+              </KdsQueueSection>
+            ) : null}
+
+            {buildingCarts.length > 0 ? (
+              <KdsQueueSection
+                id="kds-section-building"
+                title="Building order"
+                description="Items are being added during the call."
+                variant="live"
+              >
+                <ul className="kds-order-list kds-order-list--live">
+                  {buildingCarts.map((o) => renderPhoneCart(o))}
+                </ul>
+              </KdsQueueSection>
+            ) : null}
+
+            {incomingOrders.length > 0 ? (
+              <KdsQueueSection
+                id="kds-section-confirmed"
+                title="Confirmed tickets"
+                description="Call finished — accept to start the kitchen queue."
+                variant="ticket"
+              >
+                <ul className="kds-order-list">
+                  {incomingOrders.map((o) => renderDraftCard(o))}
+                </ul>
+              </KdsQueueSection>
+            ) : null}
+          </div>
         )}
 
-        {!hasNoOrders && tab === "new" && newOrders.length > 0 && (
-          <ul className="kds-order-list">
-            {newOrders.map((o) => (
-                <KitchenOrderCard
-                  key={o.id}
-                  order={o}
-                  pendingAction={pending[o.id] ?? null}
-                  error={errors[o.id] ?? null}
-                  onDismissError={() => clearError(o.id)}
-                  onAction={(action) => void applyAction(o, action)}
-                  onViewDetails={() =>
-                    setSelection({ kind: "draft", order: o })
-                  }
-                  menuItems={menuItems}
-                  menuModifiers={menuModifiers}
-                  pricingSettings={pricingSettings}
-                />
-            ))}
-          </ul>
-        )}
-
-        {!hasNoOrders && tab === "in_progress" && inProgressOrders.length > 0 && (
-          <ul className="kds-order-list">
-            {inProgressOrders.map((o) => (
-                <KitchenOrderCard
-                  key={o.id}
-                  order={o}
-                  pendingAction={pending[o.id] ?? null}
-                  error={errors[o.id] ?? null}
-                  onDismissError={() => clearError(o.id)}
-                  onAction={(action) => void applyAction(o, action)}
-                  onViewDetails={() =>
-                    setSelection({ kind: "draft", order: o })
-                  }
-                  menuItems={menuItems}
-                  menuModifiers={menuModifiers}
-                  pricingSettings={pricingSettings}
-                />
-            ))}
-          </ul>
+        {!hasNoOrders && tab === "kitchen" && kitchenOrders.length > 0 && (
+          <KdsQueueSection
+            id="kds-section-kitchen"
+            title="Kitchen line"
+            description="Accepted through ready for pickup."
+            variant="kitchen"
+          >
+            <ul className="kds-order-list px-3 pb-4 sm:px-4">
+              {kitchenOrders.map((o) => renderDraftCard(o))}
+            </ul>
+          </KdsQueueSection>
         )}
 
         {!hasNoOrders &&
@@ -660,14 +830,19 @@ export function LiveOrdersPanel({
           (terminalOrders.length > 0 || receiptArchive.length > 0) && (
           <div className="kds-done-history">
             {doneHiddenCount > 0 ? (
-              <p className="kds-done-history__more">
+              <p className="kds-done-history__more" role="status">
                 Showing the latest {visibleDoneDrafts.length + visibleDoneReceipts.length}{" "}
                 of {terminalOrders.length + receiptArchive.length}.
               </p>
             ) : null}
             {visibleDoneDrafts.length > 0 ? (
-              <ul className="kds-order-list kds-order-list--done">
-                {visibleDoneDrafts.map((o) => (
+              <KdsQueueSection
+                id="kds-section-done"
+                title="Finished tickets"
+                variant="done"
+              >
+                <ul className="kds-order-list kds-order-list--done">
+                  {visibleDoneDrafts.map((o) => (
                     <KitchenOrderCard
                       key={o.id}
                       order={o}
@@ -681,24 +856,27 @@ export function LiveOrdersPanel({
                       menuItems={menuItems}
                       menuModifiers={menuModifiers}
                       pricingSettings={pricingSettings}
+                      queueLane="terminal"
                     />
-                ))}
-              </ul>
+                  ))}
+                </ul>
+              </KdsQueueSection>
             ) : null}
             {visibleDoneReceipts.length > 0 ? (
-              <div className="mt-4 border-t border-line/60 pt-3">
-                <h3 className="mb-2 text-xs font-medium text-subtle">
-                  Older receipts
-                </h3>
-                <ul className="kds-order-list kds-order-list--done">
+              <details className="kds-done-receipts mx-3 mb-4 sm:mx-4">
+                <summary className="cursor-pointer text-xs font-medium text-subtle">
+                  {visibleDoneReceipts.length} receipt
+                  {visibleDoneReceipts.length === 1 ? "" : "s"} without ticket
+                </summary>
+                <ul className="kds-order-list kds-order-list--done mt-3">
                   {visibleDoneReceipts.map((o) => (
                     <li
                       key={o.id}
                       data-order-status="completed"
-                      className="kds-order-card w-full max-w-full min-w-0"
+                      className="kds-order-card kds-order-card--receipt w-full max-w-full min-w-0"
                     >
                       <PickupStatusBadge
-                        label="Done"
+                        label="Receipt"
                         badgeClass="kds-status-badge bg-success/15 text-success"
                       />
                       <CustomerLine
@@ -714,7 +892,7 @@ export function LiveOrdersPanel({
                     </li>
                   ))}
                 </ul>
-              </div>
+              </details>
             ) : null}
           </div>
         )}
@@ -747,6 +925,8 @@ export function LiveOrdersPanel({
 }
 
 function TabButton({
+  id,
+  panelId,
   active,
   onClick,
   label,
@@ -754,6 +934,8 @@ function TabButton({
   accentWhenActive,
   successWhenActive,
 }: {
+  id: string;
+  panelId: string;
   active: boolean;
   onClick: () => void;
   label: string;
@@ -764,9 +946,11 @@ function TabButton({
   return (
     <button
       type="button"
+      id={id}
       onClick={onClick}
       role="tab"
       aria-selected={active}
+      aria-controls={panelId}
       aria-label={`${label}, ${count} orders`}
       className={cn(
         "kds-order-tab kds-thumb-btn relative min-h-12 min-w-0 px-3 py-2.5 text-xs font-medium transition-colors sm:text-sm lg:min-w-[7rem]",

@@ -30,7 +30,7 @@ describe("dashboard nav owner-facing labels (prompt 33)", () => {
     const ownerHrefs = OWNER_NAV_ITEMS.map((i) => i.href);
     expect(ownerHrefs).not.toContain("/dashboard/analytics");
     expect(ownerHrefs).not.toContain("/dashboard/billing");
-    expect(ownerHrefs).not.toContain("/dashboard");
+    expect(ownerHrefs).toContain("/dashboard/overview");
   });
 
   it("owner nav avoids legacy admin and staff-management wording", () => {
@@ -99,7 +99,15 @@ describe("isDashboardNavActive", () => {
     expect(hrefs).not.toContain("/dashboard/support");
     expect(hrefs).not.toContain("/dashboard/analytics");
     expect(hrefs).not.toContain("/dashboard/billing");
-    expect(OWNER_NAV_ITEMS.length).toBe(2);
+    expect(OWNER_NAV_ITEMS.length).toBe(3);
+  });
+
+  it("overview nav is owner/manager only", () => {
+    const overview = DASHBOARD_NAV.flatMap((g) => g.items).find(
+      (i) => i.href === "/dashboard/overview"
+    );
+    expect(overview?.orgAdminOnly).toBe(true);
+    expect(overview?.label).toBe("Overview");
   });
 
   it("platform nav stays internal-only", () => {

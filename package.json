@@ -12,6 +12,8 @@
     "e2e-smoke": "node scripts/e2e-smoke.mjs",
     "qa:phone-order-kds": "node --env-file=.env --env-file=.env.local scripts/qa-phone-order-kds-flow.mjs",
     "qa:voice-agent-panel": "npx tsx --env-file=.env --env-file=.env.local scripts/qa-voice-agent-panel.ts",
+    "qa:voice-agent-provision": "npx tsx --env-file=.env --env-file=.env.local scripts/qa-voice-agent-provision.ts",
+    "qa:menu-auto-sync": "npx tsx --env-file=.env --env-file=.env.local scripts/qa-menu-auto-sync.ts",
     "qa:lb01-phone-stack": "npx tsx --env-file=.env --env-file=.env.local scripts/qa-lb01-phone-stack.ts",
     "resync:elevenlabs-all": "npx tsx --env-file=.env --env-file=.env.local scripts/resync-all-elevenlabs-restaurants.ts",
     "list:elevenlabs-restaurants": "npx tsx --env-file=.env --env-file=.env.local scripts/list-elevenlabs-restaurants.ts",
@@ -40,6 +42,7 @@
     "smoke": "bash scripts/smoke-test-production.sh",
     "elevenlabs:setup": "npx tsx --env-file=.env scripts/setup-elevenlabs-roal.ts",
     "elevenlabs:connect": "npx tsx --env-file=.env --env-file=.env.local scripts/connect-elevenlabs-restaurant.ts",
+    "provision:backfill-voice-agents": "npx tsx --env-file=.env --env-file=.env.local scripts/backfill-restaurant-voice-agents.ts",
     "elevenlabs:profile": "npx tsx --env-file=.env scripts/apply-restaurant-profile.ts",
     "elevenlabs:tools": "npx tsx --env-file=.env scripts/sync-roal-el.ts"
   },

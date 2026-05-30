@@ -1,12 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { applyRestaurantOrderAgentProfile } from "@/lib/elevenlabs-restaurant-agent-profile";
 import {
   RestaurantHoursInputSchema,
   type RestaurantHoursInput,
 } from "@/lib/restaurant-hours/schema";
+import { afterHoursSettingsMutation } from "@/lib/voice-agent/after-restaurant-settings-mutation";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export async function saveRestaurantHoursAction(
@@ -88,16 +87,10 @@ export async function saveRestaurantHoursAction(
     if (error) throw new Error(error.message);
   }
 
-  revalidatePath(`/dashboard/restaurants/${restaurantId}`);
-
-  try {
-    await applyRestaurantOrderAgentProfile({
-      restaurantId,
-      restaurantName: access.access.restaurant.name,
-    });
-  } catch {
-    // Agent sync is best-effort; hours are saved regardless.
-  }
+  afterHoursSettingsMutation(restaurantId, {
+    userId: access.context.user.id,
+    restaurantName: access.access.restaurant.name,
+  });
 
   return { ok: true as const };
 }

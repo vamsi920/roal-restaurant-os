@@ -1,24 +1,24 @@
 /** Homepage capability statements — no invented metrics or customer proof. */
 
 export const HOME_CAPABILITIES = {
-  eyebrow: "What ROAL does",
-  title: "Product capabilities",
-  note: "Illustrative product flows—not verified customer counts, orders, or savings.",
+  eyebrow: "What guests feel",
+  title: "It feels like calling the restaurant, not a robot.",
+  note: "ROAL is focused on one job: answer pickup calls, understand the guest, confirm the order, and keep your team out of the phone chaos.",
   items: [
     {
       id: "answers-line",
-      title: "Answers your line",
-      body: "Pickup calls with your live menu—not a phone tree.",
+      title: "Natural conversation",
+      body: "Guests can speak normally. ROAL asks simple follow-ups for size, spice, pickup time, name, and phone.",
     },
     {
       id: "confirms-call",
-      title: "Confirms on the call",
-      body: "Name, phone, and items before hang-up.",
+      title: "Your live menu",
+      body: "Items, modifiers, prices, hours, and pickup rules come from the menu you control.",
     },
     {
       id: "kitchen-ticket",
-      title: "Tickets the kitchen",
-      body: "Confirmed pickup on the screen your team already uses.",
+      title: "Kitchen-ready tickets",
+      body: "Your team sees the confirmed order, not a voicemail or transcript to decode during service.",
     },
   ],
 } as const;

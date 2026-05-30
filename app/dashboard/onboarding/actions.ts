@@ -10,15 +10,23 @@ import {
   completeOrganizationAccountStep,
   ensureOrganizationOnboarding,
   ensureRestaurantOnboarding,
+  getRestaurantOnboarding,
   updateOrganizationOnboardingStep,
   updateRestaurantOnboardingStep,
 } from "@/lib/onboarding/helpers";
 import type { RestaurantOnboardingStepKey } from "@/lib/onboarding/steps";
 import type { OnboardingStepStatus } from "@/lib/onboarding/types";
 import { loadOnboardingWizardState } from "@/lib/onboarding/wizard-state.server";
+import { emitGoLiveIfTransition } from "@/lib/notifications/operational-events";
+import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { upsertRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { createServerSupabase } from "@/lib/supabase/server";
+import {
+  provisionRestaurantVoiceAgent,
+  tryProvisionVoiceAgentForNewRestaurant,
+} from "@/lib/voice-agent/provision-restaurant-voice-agent";
+import { getElevenLabsAgentId } from "@/lib/env.server";
 
 function slugify(name: string): string {
   return name
@@ -94,7 +102,7 @@ export async function createRestaurantWizardAction(input: {
   name: string;
   organizationId: string;
 }) {
-  await requireOrgMembership(input.organizationId);
+  const { context } = await requireOrgMembership(input.organizationId);
   const name = input.name.trim();
   if (!name) throw new Error("Restaurant name is required.");
 
@@ -109,8 +117,105 @@ export async function createRestaurantWizardAction(input: {
 
   await ensureRestaurantOnboarding(supabase, data.id, input.organizationId);
 
+  const provision = await tryProvisionVoiceAgentForNewRestaurant({
+    restaurantId: data.id,
+    restaurantName: name,
+    organizationId: input.organizationId,
+    userId: context.user.id,
+  });
+
+  if (provision.ok) {
+    await updateRestaurantOnboardingStep(
+      supabase,
+      data.id,
+      input.organizationId,
+      "voice_agent",
+      "completed",
+      { agent_id: provision.agent_id, source: "auto_on_create" }
+    );
+  } else if (!("skipped" in provision && provision.skipped)) {
+    const phase = "phase" in provision ? provision.phase : "provision";
+    await updateRestaurantOnboardingStep(
+      supabase,
+      data.id,
+      input.organizationId,
+      "voice_agent",
+      "in_progress",
+      {
+        provision_error: provision.warning,
+        phase,
+      }
+    );
+  }
+
   revalidatePath("/dashboard/onboarding");
-  return { restaurantId: data.id };
+  return { restaurantId: data.id, voiceProvision: provision };
+}
+
+export async function retryRestaurantVoiceAgentProvisionAction(input: {
+  restaurantId: string;
+  organizationId: string;
+}) {
+  const { context } = await requireOrgMembership(input.organizationId);
+  const supabase = await createServerSupabase();
+
+  const { data: restaurant, error: restErr } = await supabase
+    .from("restaurants")
+    .select("id, name, organization_id")
+    .eq("id", input.restaurantId)
+    .maybeSingle();
+  if (restErr) throw new Error(formatSupabaseClientError(restErr.message));
+  if (!restaurant || restaurant.organization_id !== input.organizationId) {
+    throw new Error("Restaurant does not belong to this organization.");
+  }
+
+  if (!getElevenLabsAgentId()) {
+    throw new Error(
+      "Voice agent auto-setup is not configured. Connect manually from Live Agent."
+    );
+  }
+
+  await updateRestaurantOnboardingStep(
+    supabase,
+    input.restaurantId,
+    input.organizationId,
+    "voice_agent",
+    "in_progress",
+    { retry: true }
+  );
+
+  const result = await provisionRestaurantVoiceAgent(
+    input.restaurantId,
+    restaurant.name,
+    input.organizationId,
+    context.user.id
+  );
+
+  if (!result.ok) {
+    await updateRestaurantOnboardingStep(
+      supabase,
+      input.restaurantId,
+      input.organizationId,
+      "voice_agent",
+      "in_progress",
+      { provision_error: result.error, phase: result.phase, agent_id: result.agentId }
+    );
+    revalidatePath("/dashboard/onboarding");
+    throw new Error(result.error);
+  }
+
+  await updateRestaurantOnboardingStep(
+    supabase,
+    input.restaurantId,
+    input.organizationId,
+    "voice_agent",
+    "completed",
+    { agent_id: result.agentId, source: "onboarding_retry" }
+  );
+
+  revalidatePath("/dashboard/onboarding");
+  revalidatePath(`/dashboard/restaurants/${input.restaurantId}/agent`);
+  return { agentId: result.agentId };
 }
 
 export async function saveRestaurantProfileAction(input: {
@@ -149,6 +254,11 @@ export async function saveRestaurantProfileAction(input: {
     escalation_name: null,
     escalation_phone: null,
     escalation_email: null,
+    handoff_catering_route: null,
+    handoff_complaint_route: null,
+    handoff_unavailable_item_behavior: null,
+    handoff_unavailable_item_notes: null,
+    closed_hours_message: null,
   });
 
   await updateRestaurantOnboardingStep(
@@ -175,7 +285,7 @@ export async function setWizardStepStatusAction(input: {
   status: OnboardingStepStatus;
   metadata?: Record<string, unknown>;
 }) {
-  await requireOrgMembership(input.organizationId);
+  const { context } = await requireOrgMembership(input.organizationId);
   const supabase = await createServerSupabase();
 
   if (input.scope === "organization") {
@@ -190,13 +300,20 @@ export async function setWizardStepStatusAction(input: {
     if (!input.restaurantId) throw new Error("Restaurant is required.");
     const { data: restaurant, error: restErr } = await supabase
       .from("restaurants")
-      .select("organization_id")
+      .select("id, name, organization_id")
       .eq("id", input.restaurantId)
       .maybeSingle();
     if (restErr) throw new Error(formatSupabaseClientError(restErr.message));
     if (!restaurant || restaurant.organization_id !== input.organizationId) {
       throw new Error("Restaurant does not belong to this organization.");
     }
+
+    const onboardingBefore = await getRestaurantOnboarding(
+      supabase,
+      input.restaurantId
+    );
+    const previousGoLiveStatus = onboardingBefore?.steps.go_live?.status;
+
     await updateRestaurantOnboardingStep(
       supabase,
       input.restaurantId,
@@ -205,6 +322,16 @@ export async function setWizardStepStatusAction(input: {
       input.status,
       input.metadata
     );
+
+    if (input.step === "go_live" && input.status === "completed") {
+      void emitGoLiveIfTransition(supabase, {
+        restaurantId: input.restaurantId,
+        organizationId: input.organizationId,
+        restaurantName: restaurant.name as string,
+        userId: context.user.id,
+        previousGoLiveStatus,
+      });
+    }
   }
 
   revalidatePath("/dashboard/onboarding");
@@ -216,13 +343,11 @@ export async function completeMenuImportStepAction(input: {
 }) {
   await requireOrgMembership(input.organizationId);
   const supabase = await createServerSupabase();
-  const { count } = await supabase
-    .from("categories")
-    .select("id", { count: "exact", head: true })
-    .eq("restaurant_id", input.restaurantId);
+  const stats = await loadRestaurantCardStats(supabase, [input.restaurantId], {});
+  const menuItemCount = stats[input.restaurantId]?.menuItemCount ?? 0;
 
-  if (!count || count < 1) {
-    throw new Error("Upload and scan a menu before continuing.");
+  if (menuItemCount < 1) {
+    throw new Error("Add at least one menu item for this location before continuing.");
   }
 
   await updateRestaurantOnboardingStep(
@@ -231,7 +356,7 @@ export async function completeMenuImportStepAction(input: {
     input.organizationId,
     "menu_import",
     "completed",
-    { category_count: count }
+    { menu_item_count: menuItemCount }
   );
 
   revalidatePath("/dashboard/onboarding");

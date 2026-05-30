@@ -2,13 +2,17 @@
  * Prompt 19 — verify sync_draft_order + finalize_order via synced ElevenLabs tool config.
  * Usage: npx tsx --env-file=.env --env-file=.env.local scripts/qa-draft-finalize-elevenlabs.ts
  */
+import { createClient } from "@supabase/supabase-js";
 import {
   fetchSyncedRoalTool,
   invokeSyncedRoalTool,
 } from "../lib/elevenlabs/fetch-synced-tool";
+import { mintAgentToolToken } from "../lib/agent-tools/token";
 import { getElevenLabsAgentId } from "../lib/env.server";
+import { getPublicEnv } from "../lib/env.public";
 import { ROAL_IDEMPOTENCY_HEADER } from "../lib/agent-tools/headers";
 import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { ensureQaOrderingOpen } from "./lib/qa-ensure-ordering-open.mjs";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
@@ -39,6 +43,32 @@ void (async () => {
   const agentId =
     profile?.elevenlabs_agent_id?.trim() || getElevenLabsAgentId() || "";
   if (!agentId) throw new Error("No ElevenLabs agent id for active restaurant");
+
+  const pub = getPublicEnv();
+  const menuProbeUrl = `${pub.NEXT_PUBLIC_SUPABASE_URL.replace(/\/$/, "")}/functions/v1/get-menu?restaurant_id=${encodeURIComponent(RESTAURANT_ID)}&restaurant_name=qa`;
+  const probeRes = await fetch(menuProbeUrl, {
+    headers: {
+      apikey: pub.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${mintAgentToolToken({ restaurantId: RESTAURANT_ID })}`,
+    },
+    signal: AbortSignal.timeout(30000),
+  });
+  const probeJson = (await probeRes.json().catch(() => ({}))) as {
+    operations?: { ordering_allowed?: boolean };
+  };
+  if (probeJson.operations?.ordering_allowed === false) {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (url && serviceKey) {
+      const admin = createClient(url, serviceKey, {
+        auth: { autoRefreshToken: false, persistSession: false },
+      });
+      const opened = await ensureQaOrderingOpen(admin, RESTAURANT_ID);
+      console.log(
+        `[qa] ordering closed — opened QA window: ${opened.detail}`
+      );
+    }
+  }
 
   const runId = `qa-p19-${Date.now()}`;
   const sessionId = `${runId}-flow`;

@@ -10,6 +10,7 @@ import {
 import { sanitizeVoiceAgentDisplayError } from "@/lib/voice-agent/sanitize-display-error";
 import type {
   EnvSecretRow,
+  MenuAutoSyncSnapshot,
   ProfileVariableRow,
   ToolUrlRow,
   VoiceAgentControlCenterSnapshot,
@@ -334,6 +335,7 @@ export function assembleControlCenterSnapshot(input: {
     knowledge_base_doc_attached?: boolean;
     phone_personalization_webhook?: string | null;
   } | null;
+  menuAutoSync: MenuAutoSyncSnapshot;
   agentRoot: unknown | null;
   agentFetchError: string | null;
 }): VoiceAgentControlCenterSnapshot {
@@ -403,6 +405,7 @@ export function assembleControlCenterSnapshot(input: {
     lastSyncPhoneWebhook:
       input.lastSyncSummary?.phone_personalization_webhook?.trim() || null,
     agentFetchError: sanitizeVoiceAgentDisplayError(input.agentFetchError),
+    menuAutoSync: input.menuAutoSync,
   };
 
   return {

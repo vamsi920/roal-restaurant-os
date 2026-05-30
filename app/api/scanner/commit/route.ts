@@ -13,6 +13,10 @@ import {
 } from "@/lib/scanner/menu-import-audit";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { recordRestaurantUsage } from "@/lib/usage/record";
+import {
+  syncRestaurantAgentAfterContentChange,
+  VOICE_AGENT_CONTENT_SYNC_TRIGGERS,
+} from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -113,6 +117,13 @@ export async function POST(req: Request) {
 
     revalidatePath(`/dashboard/restaurants/${restaurantId}`);
     revalidatePath(`/dashboard/restaurants/${restaurantId}/menu`);
+
+    void syncRestaurantAgentAfterContentChange({
+      restaurantId,
+      trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.scanner_commit,
+      restaurantName: access.access.restaurant.name,
+      userId: access.context.user.id,
+    });
 
     return NextResponse.json({ ok: true, stats, import_id: importId });
   } catch (err) {

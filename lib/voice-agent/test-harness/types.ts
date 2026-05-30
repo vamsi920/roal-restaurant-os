@@ -39,7 +39,26 @@ export type HarnessScenario = {
   name: string;
   description: string;
   templates: HarnessStepTemplate[];
+  /** After get_menu_items, fail if operations.ordering_allowed is true. */
+  requireOrderingClosed?: boolean;
+  /** After get_menu_items, fail if operations.ordering_allowed is false. */
+  requireOrderingOpen?: boolean;
 };
+
+/** ROAL pass 23 — primary harness coverage ids. */
+export const HARNESS_ROAL_SCENARIO_IDS = [
+  "pickup_order",
+  "menu_question",
+  "closed_hours_call",
+  "finalize_missing_guest",
+  "finalize_missing_phone",
+  "finalize_missing_name",
+  "unavailable_item",
+  "catering_handoff",
+  "complaint_handoff",
+] as const;
+
+export type HarnessRoalScenarioId = (typeof HARNESS_ROAL_SCENARIO_IDS)[number];
 
 export type HarnessStepResult = {
   stepIndex: number;

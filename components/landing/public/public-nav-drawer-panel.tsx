@@ -1,6 +1,6 @@
 "use client";
 
-import type { RefObject } from "react";
+import type { Ref } from "react";
 import Link from "next/link";
 import { isPublicNavActive } from "@/lib/landing/nav-active";
 import type { PublicNavLink } from "@/lib/landing/public-nav";
@@ -23,7 +23,7 @@ function CloseIcon() {
 
 type Props = {
   menuId: string;
-  drawerRef: RefObject<HTMLDivElement | null>;
+  drawerRef: Ref<HTMLDivElement>;
   links: readonly PublicNavLink[];
   pathname: string;
   closeMenu: () => void;

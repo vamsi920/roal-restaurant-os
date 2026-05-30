@@ -12,11 +12,11 @@ function deliveryLogErrorMessage(result: ProviderSendResult): string | null {
 export async function dispatchNotification(
   supabase: SupabaseClient,
   input: DispatchNotificationInput
-): Promise<void> {
+): Promise<boolean> {
   const settings = await loadNotificationSettings(supabase, input.organizationId);
 
   if (!settings.enabledEvents.includes(input.eventType)) {
-    return;
+    return false;
   }
 
   const providers = activeProvidersForSettings(settings);
@@ -24,6 +24,8 @@ export async function dispatchNotification(
     ...input.payload,
     restaurant_name: input.restaurantName ?? undefined,
   };
+
+  let delivered = false;
 
   for (const provider of providers) {
     const result = await provider.send({
@@ -53,13 +55,20 @@ export async function dispatchNotification(
       idempotency_key: idempotencyKey,
     });
 
-    if (error && error.code !== "23505") {
+    if (error?.code === "23505") {
+      continue;
+    }
+    if (error) {
       console.error(
         "[notifications] delivery log failed",
         input.eventType,
         provider.channel,
         error.message
       );
+      continue;
     }
+    delivered = true;
   }
+
+  return delivered;
 }

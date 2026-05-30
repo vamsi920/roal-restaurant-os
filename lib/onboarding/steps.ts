@@ -20,28 +20,32 @@ export type OnboardingStepKey =
 
 export const ONBOARDING_STEP_LABELS: Record<OnboardingStepKey, string> = {
   account: "Account",
-  restaurant_profile: "Add restaurant",
-  menu_import: "Upload menu",
-  voice_agent: "Connect agent",
+  restaurant_profile: "Store profile",
+  menu_import: "Menu",
+  voice_agent: "Voice agent",
   test_call: "Test call",
-  go_live: "Open live orders",
+  go_live: "Go live",
 };
 
 /** One line per wizard step — keep short for sidebar and panel headers. */
 export const ONBOARDING_STEP_DESCRIPTIONS: Record<OnboardingStepKey, string> = {
   account: "Sign in and name your organization.",
   restaurant_profile:
-    "Store name, phone, and timezone. Hours live on the kitchen screen after setup.",
-  menu_import: "Scan a menu photo, or skip and add items in Menu & agent later.",
-  voice_agent: "Paste your ElevenLabs agent id, or skip and connect later.",
-  test_call: "Optional: one test order on your kitchen screen.",
-  go_live: "Mark setup done and open Live orders.",
+    "This location’s name, phone, timezone, and address. Hours are set in Menu setup.",
+  menu_import:
+    "Add items for this location — scan a photo here or finish in Menu setup.",
+  voice_agent:
+    "ROAL provisions a dedicated ElevenLabs agent for this location and syncs order tools.",
+  test_call:
+    "Run one test order for this location before you forward live guest calls.",
+  go_live: "When the launch checklist is green, open Live orders for this location.",
 };
 
 /** Owner-facing launch path (account is prerequisite). */
 export const ONBOARDING_LAUNCH_STEPS = [
-  "Add restaurant",
-  "Upload menu",
-  "Connect agent",
-  "Open live orders",
+  "Store profile",
+  "Menu",
+  "Voice agent",
+  "Test call",
+  "Go live",
 ] as const;

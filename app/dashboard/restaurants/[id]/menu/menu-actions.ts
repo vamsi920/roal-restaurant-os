@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import {
   assertCategoryNameAvailable,
@@ -32,19 +31,7 @@ import {
 } from "@/lib/menu-editor/validation";
 import { createServerSupabase } from "@/lib/supabase/server";
 import type { DbCategory, DbItem, DbModifier } from "@/lib/types";
-
-function menuPaths(restaurantId: string) {
-  return [
-    `/dashboard/restaurants/${restaurantId}`,
-    `/dashboard/restaurants/${restaurantId}/menu`,
-  ] as const;
-}
-
-function revalidateMenu(restaurantId: string) {
-  for (const p of menuPaths(restaurantId)) {
-    revalidatePath(p);
-  }
-}
+import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 
 async function nextItemSortOrder(
   supabase: Awaited<ReturnType<typeof createServerSupabase>>,
@@ -102,7 +89,7 @@ export async function saveCategoryAction(
       .single();
 
     if (error) throw new Error(mapMenuDbError(error, "category"));
-    revalidateMenu(restaurantId);
+    afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
     return { ok: true as const, category: data as DbCategory };
   }
 
@@ -118,7 +105,7 @@ export async function saveCategoryAction(
     .single();
 
   if (error) throw new Error(mapMenuDbError(error, "category"));
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const, category: data as DbCategory };
 }
 
@@ -150,7 +137,7 @@ export async function reorderCategoriesAction(
     if (error) throw new Error(mapMenuDbError(error, "category"));
   }
 
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const };
 }
 
@@ -173,7 +160,7 @@ export async function deleteCategoryAction(
     .eq("restaurant_id", restaurantId);
 
   if (error) throw new Error(mapMenuDbError(error, "category"));
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const };
 }
 
@@ -240,7 +227,7 @@ export async function saveItemAction(restaurantId: string, raw: ItemInput) {
       .single();
 
     if (error) throw new Error(mapMenuDbError(error, "item"));
-    revalidateMenu(restaurantId);
+    afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
     return { ok: true as const, item: data as DbItem };
   }
 
@@ -251,7 +238,7 @@ export async function saveItemAction(restaurantId: string, raw: ItemInput) {
     .single();
 
   if (error) throw new Error(mapMenuDbError(error, "item"));
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const, item: data as DbItem };
 }
 
@@ -292,7 +279,7 @@ export async function reorderItemsAction(
     if (error) throw new Error(mapMenuDbError(error, "item"));
   }
 
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const };
 }
 
@@ -308,7 +295,7 @@ export async function deleteItemAction(restaurantId: string, itemId: string) {
   const { error } = await supabase.from("items").delete().eq("id", itemId);
 
   if (error) throw new Error(mapMenuDbError(error, "item"));
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const };
 }
 
@@ -409,7 +396,7 @@ export async function saveModifierGroupAction(
 
   if (error) throw new Error(error.message);
 
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return {
     ok: true as const,
     modifiers: (data ?? []) as DbModifier[],
@@ -445,7 +432,7 @@ export async function deleteModifierGroupAction(
     const { error } = await supabase.from("modifiers").delete().in("id", idsToDelete);
     if (error) throw new Error(error.message);
   }
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const };
 }
 
@@ -492,7 +479,7 @@ export async function reorderModifierGroupsAction(
     if (error) throw new Error(error.message);
   }
 
-  revalidateMenu(restaurantId);
+  afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const };
 }
 

@@ -21,6 +21,10 @@ describe("real-data discipline (prompt 37)", () => {
       join(REPO, "app/dashboard/restaurants/[id]/page.tsx"),
       "utf8"
     );
+    const kdsLoader = readFileSync(
+      join(REPO, "lib/live-orders/load-live-orders-page.ts"),
+      "utf8"
+    );
     const panel = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
@@ -30,8 +34,9 @@ describe("real-data discipline (prompt 37)", () => {
       "utf8"
     );
 
-    expect(kdsPage).toContain('from("draft_orders")');
-    expect(kdsPage).toContain('from("phone_order_receipts")');
+    expect(kdsPage).toContain("loadLiveOrdersPageData");
+    expect(kdsLoader).toContain('from("draft_orders")');
+    expect(kdsLoader).toContain('from("phone_order_receipts")');
     expect(panel).toContain("initialDraftOrders");
     expect(panel).toContain("postgres_changes");
     expect(panel).not.toMatch(/example order|fake.*order|seed.*order|MOCK_/i);
@@ -74,7 +79,7 @@ describe("real-data discipline (prompt 37)", () => {
     );
 
     expect(agent).toContain("loadRestaurantMenuSetupPageData");
-    expect(agent).toContain("voiceAgentCenter.connectionStatus");
+    expect(agent).toMatch(/center\.connectionStatus|voiceAgentCenter\.connectionStatus/);
     expect(center).toContain('connectionStatus = "disconnected"');
     expect(agent).not.toMatch(/MOCK_|demoAgent|fakeCenter|connectionStatus:\s*"connected"/);
   });

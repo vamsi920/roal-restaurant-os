@@ -1,8 +1,5 @@
 import { CONTACT_PILOT_EMAIL } from "@/lib/landing/contact-mailto";
-import {
-  PRICING_NO_ORDER_LINE,
-  PRICING_RATE_LINE,
-} from "@/lib/landing/pricing-core";
+import { PRICING_RATE_LINE } from "@/lib/landing/pricing-core";
 import { PUBLIC_CTA, PUBLIC_CTA_PAIR } from "@/lib/landing/public-cta";
 
 export const ABOUT_CTA = {

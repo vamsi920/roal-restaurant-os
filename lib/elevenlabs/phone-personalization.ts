@@ -1,4 +1,5 @@
 import { getConvaiAgent, patchConvaiAgent } from "@/lib/elevenlabs";
+import { ELEVENLABS_CONVERSATION_INIT_SECRET_HEADER } from "@/lib/elevenlabs/conversation-init";
 import { absoluteUrl } from "@/lib/site-url";
 
 export function buildConversationInitWebhookUrl(secret?: string): string | undefined {
@@ -15,9 +16,16 @@ export function buildConversationInitWebhookUrl(secret?: string): string | undef
 export async function applyElevenLabsPhonePersonalizationWebhook(options: {
   agentId: string;
   webhookUrl: string;
+  /** When set, also sent as `x-roal-conversation-init-secret` (URL may already include `?secret=`). */
+  initSecret?: string;
 }): Promise<{ ok: true; webhook_url: string }> {
   const url = options.webhookUrl.trim();
   if (!url) throw new Error("webhookUrl is required");
+
+  const secret = options.initSecret?.trim();
+  const request_headers: Record<string, string> = secret
+    ? { [ELEVENLABS_CONVERSATION_INIT_SECRET_HEADER]: secret }
+    : {};
 
   await patchConvaiAgent(options.agentId, {
     platform_settings: {
@@ -27,7 +35,7 @@ export async function applyElevenLabsPhonePersonalizationWebhook(options: {
       workspace_overrides: {
         conversation_initiation_client_data_webhook: {
           url,
-          request_headers: {},
+          request_headers,
         },
       },
     },

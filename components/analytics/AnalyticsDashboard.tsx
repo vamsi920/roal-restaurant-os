@@ -7,18 +7,26 @@ import {
 } from "@/components/analytics/format";
 import { OrdersTrendChart } from "@/components/analytics/OrdersTrendChart";
 import type { AnalyticsSnapshot } from "@/lib/analytics/types";
+
 type Props = {
   snapshot: AnalyticsSnapshot;
   ordersHref?: string;
 };
 
+function formatTrendDelta(delta: number | null): string {
+  if (delta == null) return "—";
+  const sign = delta > 0 ? "+" : "";
+  return `${sign}${delta} pts`;
+}
+
 export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
-  const { summary, menuScans } = snapshot;
+  const { summary, menuScans, conversionTrend, peakHours } = snapshot;
   const isRestaurantScope = snapshot.scope === "restaurant";
   const hasData =
-    summary.voiceOrders > 0 ||
-    summary.ordersCompleted > 0 ||
+    summary.orderSessions > 0 ||
+    summary.sessionsWithCompletedOrder > 0 ||
     summary.ordersFinalized > 0 ||
+    summary.completedKitchenOrders > 0 ||
     summary.ordersCanceled > 0 ||
     menuScans.attempts > 0;
 
@@ -29,15 +37,18 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
       : "/dashboard/restaurants");
   const emptyCta = isRestaurantScope ? "Open live orders" : "Open restaurants";
 
+  const peakLabel =
+    peakHours.length > 0
+      ? peakHours.map((h) => `${h.label} UTC (${h.orderCount})`).join(" · ")
+      : "—";
+
   return (
     <div className="analytics-dashboard min-w-0 max-w-full space-y-8 overflow-x-hidden sm:space-y-10">
       <header className="analytics-dashboard__header flex min-w-0 flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
         <div className="min-w-0">
-          <p className="type-eyebrow text-accent">
-            Analytics
-          </p>
+          <p className="type-eyebrow text-accent">Analytics</p>
           <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            {isRestaurantScope ? "Calls & orders" : "Orders & operations"}
+            {isRestaurantScope ? "Phone order sessions" : "Orders & operations"}
           </h1>
           <p className="mt-2 max-w-2xl text-pretty text-sm text-muted">
             {isRestaurantScope && snapshot.restaurantName
@@ -53,6 +64,10 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
               </>
             ) : null}
           </p>
+          <p className="mt-1 max-w-2xl text-pretty text-xs text-subtle">
+            Counts use unique order session IDs from drafts, receipts, and usage
+            events — not inferred call volume.
+          </p>
         </div>
         <AnalyticsRangePicker active={snapshot.rangeKey} />
       </header>
@@ -62,8 +77,8 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
           <p className="text-sm font-medium text-ink">No activity in this range</p>
           <p className="mt-2 text-sm text-muted">
             {isRestaurantScope
-              ? "Phone orders and call outcomes for this location will show up here once recorded."
-              : "Voice orders and kitchen outcomes will appear here as your locations use ROAL."}
+              ? "Order sessions and outcomes for this location appear once phone orders are recorded."
+              : "Order sessions and kitchen outcomes appear as your locations use ROAL."}
           </p>
           <Link
             href={emptyHref}
@@ -75,22 +90,78 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
       ) : (
         <>
       <section className="analytics-dashboard__stats grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Voice orders" value={summary.voiceOrders.toLocaleString()} />
         <StatCard
-          label="Draft → completed"
-          value={formatPercent(summary.conversionPercent)}
-          hint={`${summary.ordersCompleted} completed / ${summary.voiceOrders} placed`}
+          label="Order sessions"
+          value={summary.orderSessions.toLocaleString()}
+          hint="Unique session IDs with draft, receipt, or usage activity"
         />
         <StatCard
-          label="Est. revenue"
+          label="Session → completed"
+          value={formatPercent(summary.sessionConversionPercent)}
+          hint={`${summary.sessionsWithCompletedOrder} with receipt, completed ticket, or order_completed event`}
+        />
+        <StatCard
+          label="Avg order estimate"
+          value={formatUsdFromCents(
+            summary.averageOrderCents,
+            summary.averageOrderComplete
+          )}
+          hint={
+            summary.averageOrderSampleSize > 0
+              ? `${summary.averageOrderSampleSize} priced orders · menu + tax/fee`
+              : "From receipts and completed kitchen tickets"
+          }
+        />
+        <StatCard
+          label="Stuck orders"
+          value={summary.stuckOrderCount.toLocaleString()}
+          hint={`Kitchen queue idle ${20}+ minutes (current snapshot)`}
+        />
+      </section>
+
+      <section className="analytics-dashboard__stats analytics-dashboard__stats--secondary grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="Orders finalized"
+          value={summary.ordersFinalized.toLocaleString()}
+          hint="Phone receipts saved (finalize_order)"
+        />
+        <StatCard
+          label="Kitchen completed"
+          value={summary.completedKitchenOrders.toLocaleString()}
+          hint="Draft orders marked completed in KDS"
+        />
+        <StatCard
+          label="Conversion trend"
+          value={formatTrendDelta(conversionTrend.deltaPoints)}
+          hint={
+            conversionTrend.recentSessions > 0 ||
+            conversionTrend.priorSessions > 0
+              ? `Recent ${formatPercent(conversionTrend.recentPercent)} vs earlier ${formatPercent(conversionTrend.priorPercent)} · ${conversionTrend.label.toLowerCase()}`
+              : conversionTrend.label
+          }
+        />
+        <StatCard
+          label="Peak order hours"
+          value={peakHours[0] ? peakHours[0].label : "—"}
+          hint={
+            peakHours.length > 0
+              ? `UTC from receipts · ${peakLabel}`
+              : "No receipts in range"
+          }
+        />
+      </section>
+
+      <section className="analytics-dashboard__stats analytics-dashboard__stats--tertiary grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="Est. revenue (total)"
           value={formatUsdFromCents(
             summary.revenueCents,
             summary.revenueComplete
           )}
           hint={
             summary.revenueOrderCount > 0
-              ? `${summary.revenueOrderCount} completed orders · menu-priced`
-              : "From completed kitchen orders"
+              ? `${summary.revenueOrderCount} completed kitchen orders`
+              : "Completed tickets with menu prices"
           }
         />
         <StatCard
@@ -106,14 +177,6 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
               : "Created → completed"
           }
         />
-      </section>
-
-      <section className="analytics-dashboard__stats analytics-dashboard__stats--secondary grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          label="Orders finalized"
-          value={summary.ordersFinalized.toLocaleString()}
-          hint="Phone receipts (finalize_order)"
-        />
         <StatCard
           label="Canceled"
           value={summary.ordersCanceled.toLocaleString()}
@@ -128,17 +191,13 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
               : "Imports + usage events"
           }
         />
-        <StatCard
-          label="Scans attempted"
-          value={menuScans.attempts.toLocaleString()}
-          hint={`${menuScans.committed} committed to menu`}
-        />
       </section>
 
       <section className="analytics-dashboard__chart min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
-        <h2 className="text-sm font-semibold text-ink">Calls & orders over time</h2>
+        <h2 className="text-sm font-semibold text-ink">Sessions over time</h2>
         <p className="mt-1 text-xs text-muted">
-          Daily voice placements (usage), kitchen completions, and cancellations.
+          Daily unique order sessions, finalized receipts / completions, and
+          cancellations.
         </p>
         <div className="analytics-dashboard__chart-scroll mt-5 min-w-0 max-w-full">
           <OrdersTrendChart points={snapshot.ordersOverTime} />
@@ -198,20 +257,21 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
         <section className="analytics-dashboard__by-location min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
           <h2 className="text-sm font-semibold text-ink">By location</h2>
           <p className="mt-1 text-xs text-muted">
-            Conversion uses completed voice orders vs placements per restaurant.
+            Session conversion = completed sessions ÷ order sessions per
+            location.
           </p>
           <div className="analytics-dashboard__location-table dashboard-table mt-4 min-w-0">
-            <table className="w-full min-w-0 text-left text-sm xl:min-w-[640px]">
+            <table className="w-full min-w-0 text-left text-sm xl:min-w-[720px]">
               <thead className="text-xs uppercase tracking-wider text-subtle">
                 <tr className="border-b border-line">
                   <th className="px-2 py-2 font-medium">Location</th>
-                  <th className="px-2 py-2 font-medium">Voice</th>
-                  <th className="px-2 py-2 font-medium">Finalized</th>
+                  <th className="px-2 py-2 font-medium">Sessions</th>
                   <th className="px-2 py-2 font-medium">Completed</th>
-                  <th className="px-2 py-2 font-medium">Canceled</th>
+                  <th className="px-2 py-2 font-medium">Finalized</th>
+                  <th className="px-2 py-2 font-medium">Kitchen done</th>
+                  <th className="px-2 py-2 font-medium">Stuck</th>
                   <th className="px-2 py-2 font-medium">Conversion</th>
                   <th className="px-2 py-2 font-medium">Revenue est.</th>
-                  <th className="px-2 py-2 font-medium">Avg prep</th>
                 </tr>
               </thead>
               <tbody>
@@ -219,23 +279,26 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
                   <tr key={row.restaurantId} className="border-b border-line/60">
                     <td data-label="Location" className="px-2 py-2.5 font-medium text-ink lg:px-2">
                       <Link
-                        href={`/dashboard/restaurants/${row.restaurantId}`}
+                        href={`/dashboard/restaurants/${row.restaurantId}/analytics`}
                         className="hover:text-accent"
                       >
                         {row.restaurantName}
                       </Link>
                     </td>
-                    <td data-label="Voice" className="px-2 py-2.5 text-muted">
-                      {row.voiceOrders}
+                    <td data-label="Sessions" className="px-2 py-2.5 text-muted">
+                      {row.orderSessions}
+                    </td>
+                    <td data-label="Completed" className="px-2 py-2.5 text-muted">
+                      {row.sessionsCompleted}
                     </td>
                     <td data-label="Finalized" className="px-2 py-2.5 text-muted">
                       {row.finalized}
                     </td>
-                    <td data-label="Completed" className="px-2 py-2.5 text-muted">
-                      {row.completed}
+                    <td data-label="Kitchen done" className="px-2 py-2.5 text-muted">
+                      {row.completedKitchen}
                     </td>
-                    <td data-label="Canceled" className="px-2 py-2.5 text-muted">
-                      {row.canceled}
+                    <td data-label="Stuck" className="px-2 py-2.5 text-muted">
+                      {row.stuckOrders}
                     </td>
                     <td data-label="Conversion" className="px-2 py-2.5 text-muted">
                       {formatPercent(row.conversionPercent)}
@@ -246,11 +309,6 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
                         row.revenueComplete
                       )}
                     </td>
-                    <td data-label="Avg prep" className="px-2 py-2.5 text-muted">
-                      {row.avgPrepMinutes != null
-                        ? `${row.avgPrepMinutes} min`
-                        : "—"}
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -260,9 +318,10 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
       ) : null}
 
       <p className="analytics-dashboard__footnote text-xs text-subtle [overflow-wrap:anywhere]">
-        Revenue estimates use menu prices, tax, and service fee from each
-        location&apos;s profile. Unmatched items are excluded; totals may be
-        incomplete when line items lack prices.
+        Order sessions are deduplicated by session ID across drafts, receipts,
+        and usage events. We do not report answered phone calls unless a session
+        is recorded. Revenue and average order use menu prices, tax, and service
+        fee from each location&apos;s profile; unmatched items are excluded.
       </p>
         </>
       )}

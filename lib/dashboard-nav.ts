@@ -7,6 +7,8 @@ export type DashboardNavItem = {
   badge?: string;
   /** Visible only to ROAL platform support (not org owner/admin role). */
   platformOnly?: boolean;
+  /** Visible only to organization owner or manager (admin role). */
+  orgAdminOnly?: boolean;
 };
 
 export type DashboardNavGroup = {
@@ -19,6 +21,12 @@ export const DASHBOARD_NAV: DashboardNavGroup[] = [
   {
     label: "Work",
     items: [
+      {
+        href: "/dashboard/overview",
+        label: "Overview",
+        description: "All locations, voice agents, and live ops",
+        orgAdminOnly: true,
+      },
       {
         href: "/dashboard/restaurants",
         label: RESTAURANT_LIST_NAV_LABEL,
@@ -53,6 +61,10 @@ export const DASHBOARD_NAV_HREFS = DASHBOARD_NAV.flatMap((g) => g.items.map((i) 
 
 /** Longest matching nav href wins (e.g. notifications under settings, not Settings). */
 export function isDashboardNavActive(href: string, pathname: string): boolean {
+  if (href === "/dashboard/overview") {
+    return pathname === "/dashboard/overview";
+  }
+
   if (href === "/dashboard/restaurants") {
     return (
       pathname === "/dashboard/restaurants" ||

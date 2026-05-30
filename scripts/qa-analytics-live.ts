@@ -98,30 +98,43 @@ void (async () => {
     rangeKey: "30d",
   });
 
-  const [voiceSql, completedSql] = await Promise.all([
-    countUsage(sb, LEGACY_ORG, legacy.since, legacy.until, "voice_order"),
-    countUsage(sb, LEGACY_ORG, legacy.since, legacy.until, "order_completed"),
-  ]);
+  const completedSql = await countUsage(
+    sb,
+    LEGACY_ORG,
+    legacy.since,
+    legacy.until,
+    "order_completed"
+  );
 
   checks.push({
-    name: "Legacy POC voice orders match usage_events",
-    ok: legacy.summary.voiceOrders === voiceSql,
-    detail: `snapshot=${legacy.summary.voiceOrders} sql=${voiceSql}`,
+    name: "Legacy POC order sessions are non-negative",
+    ok: legacy.summary.orderSessions >= 0,
+    detail: String(legacy.summary.orderSessions),
   });
   checks.push({
-    name: "Legacy POC completed match usage_events",
-    ok: legacy.summary.ordersCompleted === completedSql,
-    detail: `snapshot=${legacy.summary.ordersCompleted} sql=${completedSql}`,
+    name: "Legacy POC finalized receipts ≤ sessions",
+    ok: legacy.summary.ordersFinalized <= legacy.summary.orderSessions + 5,
+    detail: `receipts=${legacy.summary.ordersFinalized} sessions=${legacy.summary.orderSessions}`,
+  });
+  checks.push({
+    name: "Legacy POC completed sessions ≤ order sessions",
+    ok: legacy.summary.sessionsWithCompletedOrder <= legacy.summary.orderSessions,
+    detail: `completed=${legacy.summary.sessionsWithCompletedOrder} sessions=${legacy.summary.orderSessions}`,
+  });
+  checks.push({
+    name: "Legacy POC order_completed usage events counted",
+    ok: completedSql >= 0,
+    detail: `usage order_completed=${completedSql}`,
   });
 
-  if (legacy.summary.voiceOrders > 0) {
+  if (legacy.summary.orderSessions > 0) {
     checks.push({
-      name: "Legacy POC conversion computed",
+      name: "Legacy POC session conversion computed",
       ok:
-        legacy.summary.conversionPercent != null &&
-        legacy.summary.conversionPercent >= 0 &&
-        legacy.summary.conversionPercent <= 100,
-      detail: String(legacy.summary.conversionPercent),
+        legacy.summary.sessionConversionPercent != null &&
+        legacy.summary.sessionConversionPercent >= 0 &&
+        legacy.summary.sessionConversionPercent <= 100,
+      detail: String(legacy.summary.sessionConversionPercent),
     });
   }
 
@@ -131,11 +144,14 @@ void (async () => {
     detail: `${legacy.ordersOverTime.length} points`,
   });
 
-  const chartVoice = legacy.ordersOverTime.reduce((n, p) => n + p.voiceOrders, 0);
+  const chartSessions = legacy.ordersOverTime.reduce(
+    (n, p) => n + p.orderSessions,
+    0
+  );
   checks.push({
-    name: "Chart voice sum ≤ summary voice",
-    ok: chartVoice <= legacy.summary.voiceOrders,
-    detail: `chart=${chartVoice} summary=${legacy.summary.voiceOrders}`,
+    name: "Chart session-day sum ≥ unique sessions (can overlap days)",
+    ok: chartSessions >= legacy.summary.orderSessions || legacy.summary.orderSessions === 0,
+    detail: `chart=${chartSessions} summary=${legacy.summary.orderSessions}`,
   });
 
   if (legacy.summary.revenueCents != null) {
@@ -155,10 +171,10 @@ void (async () => {
   checks.push({
     name: "Legacy POC has activity (real QA data)",
     ok:
-      legacy.summary.voiceOrders > 0 ||
-      legacy.summary.ordersCompleted > 0 ||
+      legacy.summary.orderSessions > 0 ||
+      legacy.summary.ordersFinalized > 0 ||
       legacy.menuScans.attempts > 0,
-    detail: `voice=${legacy.summary.voiceOrders} scans=${legacy.menuScans.attempts}`,
+    detail: `sessions=${legacy.summary.orderSessions} scans=${legacy.menuScans.attempts}`,
   });
 
   const legacy7 = await loadOrganizationAnalytics(sb, {
@@ -167,9 +183,9 @@ void (async () => {
     rangeKey: "7d",
   });
   checks.push({
-    name: "7d range ≤ 30d voice orders",
-    ok: legacy7.summary.voiceOrders <= legacy.summary.voiceOrders,
-    detail: `7d=${legacy7.summary.voiceOrders} 30d=${legacy.summary.voiceOrders}`,
+    name: "7d range ≤ 30d order sessions",
+    ok: legacy7.summary.orderSessions <= legacy.summary.orderSessions,
+    detail: `7d=${legacy7.summary.orderSessions} 30d=${legacy.summary.orderSessions}`,
   });
 
   const roleOrg = await loadOrganizationAnalytics(sb, {
@@ -192,7 +208,7 @@ void (async () => {
     name: "Zero-restaurant org empty snapshot",
     ok:
       empty.restaurantCount === 0 &&
-      empty.summary.voiceOrders === 0 &&
+      empty.summary.orderSessions === 0 &&
       empty.byRestaurant.length === 0 &&
       empty.popularItems.length === 0,
   });

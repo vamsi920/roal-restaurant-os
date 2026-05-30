@@ -39,7 +39,12 @@ describe("menu editor UX (launch 13)", () => {
       join(REPO, "app/dashboard/restaurants/[id]/menu/menu-actions.ts"),
       "utf8"
     );
-    expect(actions).toContain("/dashboard/restaurants/${restaurantId}/menu");
-    expect(actions).toContain("revalidatePath");
+    const revalidate = readFileSync(
+      join(REPO, "lib/voice-agent/after-menu-content-mutation.ts"),
+      "utf8"
+    );
+    expect(actions).toContain("afterMenuContentMutation");
+    expect(revalidate).toContain("/dashboard/restaurants/${restaurantId}/menu");
+    expect(revalidate).toContain("revalidatePath");
   });
 });

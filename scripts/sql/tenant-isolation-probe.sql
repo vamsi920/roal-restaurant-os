@@ -54,6 +54,21 @@ BEGIN
   SELECT count(*) INTO cnt FROM usage_events WHERE organization_id = org_b;
   IF cnt > 0 THEN RAISE EXCEPTION 'LEAK usage_events SELECT %', cnt; END IF;
 
+  SELECT count(*) INTO cnt FROM restaurant_profiles WHERE restaurant_id = rest_b;
+  IF cnt > 0 THEN RAISE EXCEPTION 'LEAK restaurant_profiles SELECT %', cnt; END IF;
+
+  SELECT count(*) INTO cnt FROM agent_call_events WHERE restaurant_id = rest_b;
+  IF cnt > 0 THEN RAISE EXCEPTION 'LEAK agent_call_events SELECT %', cnt; END IF;
+
+  SELECT count(*) INTO cnt FROM restaurant_onboarding WHERE restaurant_id = rest_b;
+  IF cnt > 0 THEN RAISE EXCEPTION 'LEAK restaurant_onboarding SELECT %', cnt; END IF;
+
+  SELECT count(*) INTO cnt FROM restaurant_weekly_hours WHERE restaurant_id = rest_b;
+  IF cnt > 0 THEN RAISE EXCEPTION 'LEAK restaurant_weekly_hours SELECT %', cnt; END IF;
+
+  SELECT count(*) INTO cnt FROM audit_logs WHERE organization_id = org_b;
+  IF cnt > 0 THEN RAISE EXCEPTION 'LEAK audit_logs SELECT %', cnt; END IF;
+
   -- Legacy POC (egg mania) hidden from Org A probe user
   SELECT count(*) INTO cnt FROM restaurants WHERE organization_id = legacy_org;
   IF cnt > 0 THEN RAISE EXCEPTION 'LEAK legacy restaurants SELECT %', cnt; END IF;
@@ -77,6 +92,14 @@ BEGIN
   UPDATE notification_settings SET order_stuck_minutes = order_stuck_minutes WHERE organization_id = org_b;
   GET DIAGNOSTICS upd = ROW_COUNT;
   IF upd > 0 THEN RAISE EXCEPTION 'LEAK notification_settings UPDATE %', upd; END IF;
+
+  UPDATE restaurant_profiles SET phone = phone WHERE restaurant_id = rest_b;
+  GET DIAGNOSTICS upd = ROW_COUNT;
+  IF upd > 0 THEN RAISE EXCEPTION 'LEAK restaurant_profiles UPDATE %', upd; END IF;
+
+  UPDATE agent_call_events SET status = status WHERE restaurant_id = rest_b;
+  GET DIAGNOSTICS upd = ROW_COUNT;
+  IF upd > 0 THEN RAISE EXCEPTION 'LEAK agent_call_events UPDATE %', upd; END IF;
 
   BEGIN
     INSERT INTO restaurants (organization_id, name) VALUES (org_b, 'probe-leak');

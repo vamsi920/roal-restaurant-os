@@ -7,6 +7,11 @@ import { PlanLimitNotice } from "@/components/billing/PlanLimitNotice";
 import type { SerializableGateVerdict } from "@/lib/billing/gates";
 import { formatApiRouteError } from "@/lib/dashboard/format-user-error";
 import { cn } from "@/lib/cn";
+import {
+  parseVoiceAgentProvisionApiResult,
+  resolvePostCreateRestaurantHref,
+  voiceProvisionNoticeFromApi,
+} from "@/lib/voice-agent/provision-display";
 
 export function CreateRestaurantButton({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
@@ -16,6 +21,7 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
     useState<SerializableGateVerdict | null>(null);
   const [gatesLoading, setGatesLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [submitHint, setSubmitHint] = useState<string | null>(null);
   const router = useRouter();
 
   async function loadGates() {
@@ -34,12 +40,14 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
   function openDialog() {
     setOpen(true);
     setError(null);
+    setSubmitHint(null);
     void loadGates();
   }
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setSubmitHint(null);
     const trimmed = name.trim();
     if (!trimmed) {
       setError("Name is required");
@@ -50,6 +58,7 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
       return;
     }
     startTransition(async () => {
+      setSubmitHint("Creating location and setting up voice agent…");
       const res = await fetch("/api/restaurants", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -61,6 +70,7 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
         return;
       }
       if (!res.ok) {
+        setSubmitHint(null);
         setError(
           formatApiRouteError(body, res.status, "Could not create restaurant. Try again.")
         );
@@ -68,13 +78,29 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
       }
       const restaurant = body.restaurant as { id?: string } | undefined;
       if (!restaurant?.id) {
+        setSubmitHint(null);
         setError("Invalid server response");
         return;
       }
+
+      const provision = parseVoiceAgentProvisionApiResult(
+        body.voice_agent_provision
+      );
+      const notice = voiceProvisionNoticeFromApi(provision);
+      if (notice && provision?.ok === false && !("skipped" in provision && provision.skipped)) {
+        setSubmitHint("Location created. Opening voice agent setup…");
+      } else if (provision?.ok === true) {
+        setSubmitHint("Location created. Voice agent is ready.");
+      } else {
+        setSubmitHint("Location created.");
+      }
+
+      const href = resolvePostCreateRestaurantHref(restaurant.id, provision);
       setOpen(false);
       setName("");
+      setSubmitHint(null);
       router.refresh();
-      router.push(`/dashboard/restaurants/${restaurant.id}`);
+      router.push(href);
     });
   }
 
@@ -117,7 +143,7 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
                 leaveTo="opacity-0 translate-y-2 scale-[0.98]"
               >
                 <Dialog.Panel className="glass-card w-full max-w-md p-6">
-                  <Dialog.Title className="text-base font-semibold tracking-tight">
+                  <Dialog.Title className="text-base font-semibold tracking-tight text-ink">
                     Create restaurant
                   </Dialog.Title>
                   <p className="mt-1 text-sm text-muted">
@@ -142,6 +168,15 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
                         onChange={(e) => setName(e.target.value)}
                         disabled={isPending || locationGate?.hardBlocked}
                       />
+                      {submitHint && isPending ? (
+                        <p
+                          className="mt-2 text-xs text-muted"
+                          role="status"
+                          aria-live="polite"
+                        >
+                          {submitHint}
+                        </p>
+                      ) : null}
                       {error && (
                         <p className="mt-2 text-xs text-danger" role="alert">
                           {error}
@@ -165,7 +200,7 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
                       >
                         {isPending ? (
                           <>
-                            <Spinner /> Creating
+                            <Spinner /> Creating…
                           </>
                         ) : (
                           "Create"

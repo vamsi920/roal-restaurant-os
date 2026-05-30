@@ -4,6 +4,7 @@ export type RestaurantWorkspaceDestinationId =
   | "orders"
   | "menu"
   | "liveAgent"
+  | "callHistory"
   | "analytics"
   | "billing";
 
@@ -65,6 +66,11 @@ export function buildRestaurantWorkspaceNav(
       label: "Live Agent",
     },
     {
+      id: "callHistory",
+      href: `${base}/calls`,
+      label: "Call history",
+    },
+    {
       id: "analytics",
       href: analyticsHref,
       label: "Analytics",
@@ -90,6 +96,8 @@ export function restaurantWorkspaceMobileNavLabel(
       return "Menu";
     case "liveAgent":
       return "Agent";
+    case "callHistory":
+      return "Calls";
     case "analytics":
       return "Stats";
     case "billing":
@@ -107,6 +115,7 @@ export function isRestaurantWorkspaceNavActive(
   const base = `/dashboard/restaurants/${restaurantId}`;
   const menuPath = `${base}/menu`;
   const liveAgentPath = `${base}/agent`;
+  const callHistoryPath = `${base}/calls`;
   const analyticsPath = `${base}/analytics`;
   const billingPath = `${base}/billing`;
 
@@ -117,6 +126,8 @@ export function isRestaurantWorkspaceNavActive(
       return pathname.startsWith(menuPath);
     case "liveAgent":
       return pathname.startsWith(liveAgentPath);
+    case "callHistory":
+      return pathname.startsWith(callHistoryPath);
     case "analytics":
       return (
         pathname.startsWith(analyticsPath) || pathname.startsWith("/dashboard/analytics")

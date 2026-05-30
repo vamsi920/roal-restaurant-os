@@ -15,6 +15,7 @@ export type UsageRow = {
   event_type: string;
   occurred_at: string;
   restaurant_id: string | null;
+  session_id: string | null;
   metadata: Record<string, unknown> | null;
 };
 
@@ -24,6 +25,7 @@ export type OrderRow = {
   status: string;
   items: unknown;
   created_at: string;
+  updated_at: string;
   completed_at: string | null;
   canceled_at: string | null;
 };
@@ -40,20 +42,21 @@ export type MenuImportRow = {
   created_at: string;
 };
 
+/** @deprecated Prefer bucketOrderSessionsByDay in phone-ops-metrics. */
 export function bucketUsageByDay(
   events: UsageRow[],
   dayKeys: string[]
 ): DailyOrderPoint[] {
   const map = new Map<string, DailyOrderPoint>();
   for (const key of dayKeys) {
-    map.set(key, { date: key, voiceOrders: 0, completed: 0, canceled: 0 });
+    map.set(key, { date: key, orderSessions: 0, completed: 0, canceled: 0 });
   }
 
   for (const row of events) {
     const key = dayKeyUtc(row.occurred_at);
     const bucket = map.get(key);
     if (!bucket) continue;
-    if (row.event_type === "voice_order") bucket.voiceOrders += 1;
+    if (row.event_type === "voice_order") bucket.orderSessions += 1;
     if (row.event_type === "order_completed") bucket.completed += 1;
   }
 

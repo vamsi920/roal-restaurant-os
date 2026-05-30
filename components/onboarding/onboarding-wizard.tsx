@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { OnboardingVoiceAgentStep } from "@/components/onboarding/onboarding-voice-agent-step";
+import { RestaurantLaunchChecklist } from "@/components/restaurant-launch/RestaurantLaunchChecklist";
 import { MenuScanner } from "@/app/dashboard/restaurants/[id]/MenuScanner";
-import { connectElevenLabsAgentToRestaurantAction } from "@/app/dashboard/restaurants/[id]/elevenlabs-actions";
 import {
   completeAccountStepAction,
   completeMenuImportStepAction,
@@ -17,8 +18,12 @@ import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { cn } from "@/lib/cn";
 import {
   RESTAURANT_LIVE_ORDERS_LABEL,
-  RESTAURANT_MENU_AGENT_LABEL,
+  RESTAURANT_MENU_SETUP_TITLE,
 } from "@/lib/dashboard-restaurant-labels";
+import {
+  restaurantMenuSetupHref,
+  restaurantVoiceAgentHref,
+} from "@/lib/voice-agent/provision-display";
 import {
   ONBOARDING_LAUNCH_STEPS,
   ONBOARDING_STEP_DESCRIPTIONS,
@@ -136,7 +141,7 @@ export function OnboardingWizard({ initialState }: Props) {
         <p className="mt-2 max-w-xl text-pretty text-sm leading-relaxed text-muted">
           {ONBOARDING_LAUNCH_STEPS.join(" → ")}. Resume anytime.
         </p>
-        <ol className="onboarding-roadmap mt-4 grid list-none grid-cols-1 gap-2 p-0 min-[380px]:grid-cols-2 sm:grid-cols-4">
+        <ol className="onboarding-roadmap mt-4 grid list-none grid-cols-1 gap-2 p-0 min-[380px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
           {ONBOARDING_LAUNCH_STEPS.map((label, i) => (
             <li
               key={label}
@@ -153,6 +158,31 @@ export function OnboardingWizard({ initialState }: Props) {
           />
         </div>
         <p className="mt-1.5 text-xs text-subtle tabular-nums">{overallPercent}% complete</p>
+        {state.restaurants.length > 1 ? (
+          <label className="mt-4 block max-w-md">
+            <span className="text-xs font-medium uppercase tracking-wide text-subtle">
+              Location
+            </span>
+            <select
+              className="input-base mt-1.5 w-full"
+              value={restaurantId ?? ""}
+              disabled={pending}
+              onChange={(e) => {
+                const id = e.target.value;
+                if (id) router.push(`/dashboard/onboarding?restaurant=${id}`);
+              }}
+            >
+              <option value="" disabled>
+                Select a location
+              </option>
+              {state.restaurants.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
       </header>
 
       {error ? (
@@ -209,6 +239,14 @@ export function OnboardingWizard({ initialState }: Props) {
               );
             })}
           </ul>
+          {state.launchChecklist ? (
+            <div className="mt-4 border-t border-line pt-4">
+              <RestaurantLaunchChecklist
+                snapshot={state.launchChecklist}
+                compact
+              />
+            </div>
+          ) : null}
         </nav>
 
         <div className="onboarding-page__panel glass-card min-w-0 p-4 sm:p-6">
@@ -272,6 +310,8 @@ export function OnboardingWizard({ initialState }: Props) {
             {activeStep === "menu_import" && restaurantId && orgId && (
               <MenuStep
                 restaurantId={restaurantId}
+                restaurantName={restaurant?.name ?? "Restaurant"}
+                menuItemCount={state.menuItemCount}
                 categoryCount={state.menuCategoryCount}
                 pending={pending}
                 onContinue={() =>
@@ -299,19 +339,33 @@ export function OnboardingWizard({ initialState }: Props) {
               />
             )}
 
-            {activeStep === "voice_agent" && restaurant && orgId && (
-              <VoiceStep
+            {activeStep === "voice_agent" && restaurant && orgId && state.activeRestaurantVoice && (
+              <OnboardingVoiceAgentStep
                 restaurantId={restaurant.id}
                 restaurantName={restaurant.name}
+                organizationId={orgId}
+                voice={state.activeRestaurantVoice}
                 pending={pending}
-                onDone={(status) =>
+                onContinue={() =>
                   run(async () => {
                     await setWizardStepStatusAction({
                       scope: "restaurant",
                       organizationId: orgId,
                       restaurantId: restaurant.id,
                       step: "voice_agent",
-                      status,
+                      status: "completed",
+                    });
+                    setActiveStep("test_call");
+                  })
+                }
+                onSkipManual={() =>
+                  run(async () => {
+                    await setWizardStepStatusAction({
+                      scope: "restaurant",
+                      organizationId: orgId,
+                      restaurantId: restaurant.id,
+                      step: "voice_agent",
+                      status: "skipped",
                     });
                     setActiveStep("test_call");
                   })
@@ -319,9 +373,17 @@ export function OnboardingWizard({ initialState }: Props) {
               />
             )}
 
+            {activeStep === "voice_agent" && restaurant && orgId && !state.activeRestaurantVoice && (
+              <p className="text-sm text-muted">
+                Save the store profile first so ROAL can provision a voice agent for this
+                location.
+              </p>
+            )}
+
             {activeStep === "test_call" && restaurantId && orgId && (
               <TestCallStep
                 restaurantId={restaurantId}
+                restaurantName={restaurant?.name ?? "Restaurant"}
                 pending={pending}
                 onComplete={() =>
                   run(async () => {
@@ -354,6 +416,7 @@ export function OnboardingWizard({ initialState }: Props) {
               <GoLiveStep
                 restaurantId={restaurantId}
                 restaurantName={restaurant?.name ?? "Restaurant"}
+                launchChecklist={state.launchChecklist}
                 pending={pending}
                 isComplete={state.restaurantProgress.isComplete}
                 onLaunch={() =>
@@ -605,7 +668,8 @@ function ProfileStep({
         />
       </label>
       <p className="text-xs text-muted">
-        Hours and closures are set in {RESTAURANT_LIVE_ORDERS_LABEL} after setup.
+        After you save, continue to menu and voice setup for this location. Hours are
+        configured in {RESTAURANT_MENU_SETUP_TITLE}.
       </p>
       <button type="submit" className="btn-primary" disabled={pending || !name.trim()}>
         Save & continue
@@ -616,6 +680,8 @@ function ProfileStep({
 
 function MenuStep({
   restaurantId,
+  restaurantName,
+  menuItemCount,
   categoryCount,
   pending,
   onContinue,
@@ -623,25 +689,35 @@ function MenuStep({
   onScanned,
 }: {
   restaurantId: string;
+  restaurantName: string;
+  menuItemCount: number;
   categoryCount: number;
   pending: boolean;
   onContinue: () => void;
   onSkip: () => void;
   onScanned: () => void;
 }) {
-  const hasMenu = categoryCount > 0;
+  const hasMenu = menuItemCount > 0;
+  const menuHref = restaurantMenuSetupHref(restaurantId);
 
   return (
     <div className="space-y-4">
+      <p className="text-sm text-muted">
+        Build the menu for{" "}
+        <span className="font-medium text-ink">{restaurantName}</span> before the voice
+        agent takes orders.
+      </p>
       {hasMenu ? (
         <p className="text-sm text-success">
-          Menu ready ({categoryCount} categor{categoryCount === 1 ? "y" : "ies"}). Continue
-          to connect agent.
+          {menuItemCount} menu item{menuItemCount === 1 ? "" : "s"}
+          {categoryCount > 0
+            ? ` across ${categoryCount} categor${categoryCount === 1 ? "y" : "ies"}`
+            : ""}
+          .
         </p>
       ) : (
         <p className="text-sm text-muted">
-          Upload a menu photo for AI import, or skip and add items in{" "}
-          {RESTAURANT_MENU_AGENT_LABEL} later.
+          Scan a menu photo below or add items in {RESTAURANT_MENU_SETUP_TITLE}.
         </p>
       )}
       <MenuScanner
@@ -649,6 +725,9 @@ function MenuStep({
         compact
         onScanComplete={onScanned}
       />
+      <Link href={menuHref} className="text-sm font-medium text-accent hover:underline">
+        Open {RESTAURANT_MENU_SETUP_TITLE} for this location
+      </Link>
       <div className="flex flex-wrap gap-2">
         <button
           type="button"
@@ -656,7 +735,7 @@ function MenuStep({
           disabled={pending || !hasMenu}
           onClick={onContinue}
         >
-          Continue with menu
+          Continue to voice agent
         </button>
         <button
           type="button"
@@ -671,112 +750,42 @@ function MenuStep({
   );
 }
 
-function VoiceStep({
-  restaurantId,
-  restaurantName,
-  pending,
-  onDone,
-}: {
-  restaurantId: string;
-  restaurantName: string;
-  pending: boolean;
-  onDone: (status: "completed" | "skipped") => void;
-}) {
-  const [agentId, setAgentId] = useState("");
-  const [connecting, setConnecting] = useState(false);
-  const [localError, setLocalError] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
-
-  return (
-    <div className="space-y-4 max-w-lg">
-      <p className="text-sm text-muted">
-        Paste your ElevenLabs agent id for{" "}
-        <span className="font-medium text-ink">{restaurantName}</span>. ROAL syncs
-        menu tools and the order profile. Skip if you will connect in{" "}
-        {RESTAURANT_MENU_AGENT_LABEL} later.
-      </p>
-      <input
-        className="input-base"
-        placeholder="ElevenLabs agent id"
-        value={agentId}
-        onChange={(e) => setAgentId(e.target.value)}
-        disabled={pending || connecting}
-      />
-      {localError ? (
-        <p className="text-sm text-danger">{localError}</p>
-      ) : null}
-      {result ? <p className="text-xs text-muted break-words">{result}</p> : null}
-      <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          className="btn-primary"
-          disabled={pending || connecting || !agentId.trim()}
-          onClick={async () => {
-            setLocalError(null);
-            setResult(null);
-            setConnecting(true);
-            try {
-              const { sync, profile } = await connectElevenLabsAgentToRestaurantAction({
-                agentId,
-                restaurantId,
-                restaurantName,
-              });
-              setResult(
-                `Tools synced (${sync.tools.length}). Profile ${profile.knowledge_base_doc_attached ? "with" : "without"} KB.`
-              );
-              onDone("completed");
-            } catch (e) {
-              setLocalError(e instanceof Error ? e.message : "Connect failed");
-            } finally {
-              setConnecting(false);
-            }
-          }}
-        >
-          {connecting ? "Connecting…" : "Connect agent"}
-        </button>
-        <button
-          type="button"
-          className="btn-ghost"
-          disabled={pending}
-          onClick={() => onDone("skipped")}
-        >
-          Skip for now
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function TestCallStep({
   restaurantId,
+  restaurantName,
   pending,
   onComplete,
   onSkip,
 }: {
   restaurantId: string;
+  restaurantName: string;
   pending: boolean;
   onComplete: () => void;
   onSkip: () => void;
 }) {
   const [confirmed, setConfirmed] = useState(false);
+  const agentHref = restaurantVoiceAgentHref(restaurantId);
+  const ordersHref = `/dashboard/restaurants/${restaurantId}`;
 
   return (
     <div className="space-y-4 max-w-lg">
       <p className="text-sm text-muted">
-        Place one test call and confirm the ticket shows in {RESTAURANT_LIVE_ORDERS_LABEL}.
+        Run one test order for{" "}
+        <span className="font-medium text-ink">{restaurantName}</span> and confirm the
+        ticket appears in {RESTAURANT_LIVE_ORDERS_LABEL}.
       </p>
       <ul className="list-inside list-disc space-y-1 text-sm text-muted">
-        <li>Call your agent or use the web test UI.</li>
-        <li>Order a menu item and watch the ticket appear.</li>
+        <li>Use the test call panel on Live Agent for this location.</li>
+        <li>Place a sample order and confirm it on the kitchen screen.</li>
       </ul>
       <p className="text-xs text-subtle">
-        <Link
-          href={`/dashboard/restaurants/${restaurantId}`}
-          className="text-accent hover:underline"
-        >
+        <Link href={agentHref} className="text-accent hover:underline">
+          Open Live Agent (test call)
+        </Link>
+        {" · "}
+        <Link href={ordersHref} className="text-accent hover:underline">
           Open {RESTAURANT_LIVE_ORDERS_LABEL}
-        </Link>{" "}
-        while you test.
+        </Link>
       </p>
       <label className="flex items-start gap-2 text-sm">
         <input
@@ -813,12 +822,14 @@ function TestCallStep({
 function GoLiveStep({
   restaurantId,
   restaurantName,
+  launchChecklist,
   pending,
   isComplete,
   onLaunch,
 }: {
   restaurantId: string;
   restaurantName: string;
+  launchChecklist: OnboardingWizardState["launchChecklist"];
   pending: boolean;
   isComplete: boolean;
   onLaunch: () => void;
@@ -826,6 +837,9 @@ function GoLiveStep({
   if (isComplete) {
     return (
       <div className="space-y-4">
+        {launchChecklist ? (
+          <RestaurantLaunchChecklist snapshot={launchChecklist} />
+        ) : null}
         <p className="text-sm text-success">
           {restaurantName} is ready. Open {RESTAURANT_LIVE_ORDERS_LABEL} for phone pickup.
         </p>
@@ -841,10 +855,22 @@ function GoLiveStep({
 
   return (
     <div className="space-y-4 max-w-lg">
+      {launchChecklist ? (
+        <RestaurantLaunchChecklist snapshot={launchChecklist} />
+      ) : null}
       <p className="text-sm text-muted">
-        Finish setup, then open {RESTAURANT_LIVE_ORDERS_LABEL} for guest calls.
+        {launchChecklist && !launchChecklist.isLaunchReady
+          ? "Complete the launch checklist, then open live orders."
+          : `Finish setup, then open ${RESTAURANT_LIVE_ORDERS_LABEL} for guest calls.`}
       </p>
-      <button type="button" className="btn-primary" disabled={pending} onClick={onLaunch}>
+      <button
+        type="button"
+        className="btn-primary"
+        disabled={
+          pending || Boolean(launchChecklist && !launchChecklist.isLaunchReady)
+        }
+        onClick={onLaunch}
+      >
         Finish & open live orders
       </button>
     </div>

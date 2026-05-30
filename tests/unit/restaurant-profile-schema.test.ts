@@ -59,4 +59,43 @@ describe("RestaurantProfileInputSchema", () => {
     });
     expect(result.success).toBe(false);
   });
+
+  it("accepts handoff rules and normalizes empty strings to null", () => {
+    const result = RestaurantProfileInputSchema.safeParse({
+      ...base,
+      handoff_catering_route: "  Party of 20+ → manager callback  ",
+      handoff_complaint_route: "",
+      handoff_unavailable_item_behavior: "escalate_to_staff",
+      handoff_unavailable_item_notes: "",
+      closed_hours_message: "We reopen Tuesday at 11.",
+      escalation_phone: "(512) 555-0100",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.handoff_catering_route).toBe(
+        "Party of 20+ → manager callback"
+      );
+      expect(result.data.handoff_complaint_route).toBeNull();
+      expect(result.data.handoff_unavailable_item_behavior).toBe(
+        "escalate_to_staff"
+      );
+      expect(result.data.escalation_phone).toBe("(512) 555-0100");
+    }
+  });
+
+  it("rejects invalid unavailable-item behavior", () => {
+    const result = RestaurantProfileInputSchema.safeParse({
+      ...base,
+      handoff_unavailable_item_behavior: "substitute_magic",
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects escalation phone with too few digits", () => {
+    const result = RestaurantProfileInputSchema.safeParse({
+      ...base,
+      escalation_phone: "123",
+    });
+    expect(result.success).toBe(false);
+  });
 });

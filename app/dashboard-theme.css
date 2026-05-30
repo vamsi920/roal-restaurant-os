@@ -382,23 +382,22 @@ html.app-shell-nav-open body {
 
 .locations-card {
   min-height: 100%;
-  text-decoration: none;
-  color: inherit;
-  touch-action: manipulation;
-}
-
-.locations-card:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
-  box-shadow: 0 0 0 4px rgb(var(--accent) / 0.18);
+  min-width: 0;
 }
 
 .locations-card__title {
   max-width: 100%;
 }
 
-.locations-card__cta {
-  text-wrap: balance;
+.locations-card__stats {
+  min-width: 0;
+}
+
+.locations-card__sync-error {
+  text-wrap: pretty;
+}
+
+.locations-card__actions {
   margin-top: auto;
 }
 
@@ -409,6 +408,85 @@ html.app-shell-nav-open body {
 
 .locations-card-skeleton {
   min-width: 0;
+}
+
+.locations-card__meta {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.voice-provision-badge {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 1.5rem;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.voice-provision-badge--compact {
+  font-size: 0.625rem;
+}
+
+.voice-provision-badge__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.voice-provision-badge__dot {
+  height: 0.375rem;
+  width: 0.375rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.voice-provision-badge--ready {
+  border-color: rgb(var(--success) / 0.35);
+  background: rgb(var(--success) / 0.12);
+  color: rgb(var(--success));
+}
+
+.voice-provision-badge--progress {
+  border-color: rgb(var(--warning) / 0.35);
+  background: rgb(var(--warning) / 0.1);
+  color: rgb(var(--amber-900, 120 53 15) / 1);
+}
+
+.voice-provision-badge--attention {
+  border-color: rgb(var(--warning) / 0.45);
+  background: rgb(var(--warning) / 0.14);
+  color: rgb(var(--amber-900, 120 53 15) / 1);
+}
+
+.create-restaurant-dialog__provision-note {
+  margin-top: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(var(--warning) / 0.35);
+  background: rgb(var(--warning) / 0.08);
+  padding: 0.625rem 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: rgb(var(--amber-900, 120 53 15) / 1);
+}
+
+.create-restaurant-dialog__provision-note--ok {
+  border-color: rgb(var(--success) / 0.35);
+  background: rgb(var(--success) / 0.08);
+  color: rgb(var(--success));
 }
 
 /* — Restaurants list responsive (prompt 20) — */
@@ -424,7 +502,7 @@ html.app-shell-nav-open body {
     padding: 1rem;
   }
 
-  .locations-card__cta {
+  .locations-card__actions .btn-ghost {
     min-height: var(--public-btn-height, 2.75rem);
   }
 

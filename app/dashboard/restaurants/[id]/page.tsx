@@ -7,7 +7,6 @@ import {
 } from "@/lib/auth/context-server";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import { createServerSupabase, getServiceRoleSupabase } from "@/lib/supabase/server";
-import type { DraftOrderRow, PhoneOrderReceiptRow } from "@/lib/types";
 import { LiveOrdersPanel } from "./LiveOrdersPanel";
 import { RestaurantWorkspaceRail } from "./RestaurantWorkspaceRail";
 import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
@@ -15,6 +14,9 @@ import { ensureRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { orderPricingFromProfile } from "@/lib/orders/pricing-settings";
 import { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
 import { RESTAURANT_LIVE_ORDERS_LABEL } from "@/lib/dashboard-restaurant-labels";
+import { loadLiveOrdersPageData } from "@/lib/live-orders/load-live-orders-page";
+import { PhoneAgentReadinessStrip } from "@/components/live-orders/PhoneAgentReadinessStrip";
+import { RecentPhoneOutcomesPanel } from "@/components/live-orders/RecentPhoneOutcomesPanel";
 
 export const metadata: Metadata = {
   title: `${RESTAURANT_LIVE_ORDERS_LABEL} — ROAL`,
@@ -55,37 +57,18 @@ export default async function RestaurantKDSPage({
   );
 
   const menu = await loadRestaurantMenu(supabase, params.id);
+  const ordersDb = getServiceRoleSupabase() ?? supabase;
 
-  const db = getServiceRoleSupabase() ?? (await createServerSupabase());
+  const pageData = await loadLiveOrdersPageData(supabase, {
+    restaurantId: restaurant.id,
+    restaurantName: restaurant.name,
+    profile,
+    ordersDb,
+  });
 
-  const { data: draftOrders, error: draftErr } = await db
-    .from("draft_orders")
-    .select("*")
-    .eq("restaurant_id", params.id)
-    .order("updated_at", { ascending: false });
-
-  if (draftErr) {
-    console.error("draft_orders load", draftErr.message);
+  if (pageData.ordersLoadError) {
+    console.error("live orders load", pageData.ordersLoadError);
   }
-
-  const { data: receiptRows, error: receiptErr } = await db
-    .from("phone_order_receipts")
-    .select("*")
-    .eq("restaurant_id", params.id)
-    .order("created_at", { ascending: false })
-    .limit(150);
-
-  if (receiptErr) {
-    console.error("phone_order_receipts load", receiptErr.message);
-  }
-
-  const initialDraftOrders: DraftOrderRow[] =
-    (draftOrders as DraftOrderRow[]) ?? [];
-  const initialReceipts: PhoneOrderReceiptRow[] = receiptErr
-    ? []
-    : ((receiptRows as PhoneOrderReceiptRow[]) ?? []);
-  const ordersLoadError =
-    draftErr?.message ?? receiptErr?.message ?? null;
 
   const pricingSettings = orderPricingFromProfile(profile);
 
@@ -94,17 +77,42 @@ export default async function RestaurantKDSPage({
       restaurantId={restaurant.id}
       restaurantName={restaurant.name}
     >
-      <div className="kds-workspace kds-workspace--orders min-w-0 w-full max-w-full">
-        <LiveOrdersPanel
-          restaurantId={restaurant.id}
-          restaurantName={restaurant.name}
-          menuItems={menu.items}
-          menuModifiers={menu.modifiers}
-          pricingSettings={pricingSettings}
-          initialDraftOrders={initialDraftOrders}
-          initialReceipts={initialReceipts}
-          initialLoadError={ordersLoadError}
-        />
+      <div className="kds-workspace kds-workspace--orders min-w-0 w-full max-w-full space-y-4">
+        <header className="kds-ops-page-head min-w-0 space-y-3">
+          <div className="min-w-0">
+            <p className="text-xs font-medium text-subtle">Phone operations</p>
+            <h1 className="mt-1 truncate text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              {restaurant.name}
+            </h1>
+            <p className="mt-1 text-sm text-muted">{RESTAURANT_LIVE_ORDERS_LABEL}</p>
+          </div>
+          <PhoneAgentReadinessStrip
+            restaurantId={restaurant.id}
+            readiness={pageData.readiness}
+          />
+        </header>
+
+        <div className="kds-ops-layout min-w-0">
+          <div className="kds-ops-main min-w-0">
+            <LiveOrdersPanel
+              restaurantId={restaurant.id}
+              restaurantName={restaurant.name}
+              menuItems={menu.items}
+              menuModifiers={menu.modifiers}
+              pricingSettings={pricingSettings}
+              initialDraftOrders={pageData.initialDraftOrders}
+              initialReceipts={pageData.initialReceipts}
+              initialLoadError={pageData.ordersLoadError}
+              initialActiveCalls={pageData.activeCalls}
+            />
+          </div>
+          <RecentPhoneOutcomesPanel
+            outcomes={pageData.recentOutcomes}
+            rangeSince={pageData.rangeSince}
+            rangeUntil={pageData.rangeUntil}
+            empty={pageData.outcomesEmpty}
+          />
+        </div>
       </div>
     </RestaurantWorkspaceRail>
   );

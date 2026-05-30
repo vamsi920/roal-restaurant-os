@@ -1,9 +1,9 @@
 export const HOME_PRODUCT_PROOF = {
-  eyebrow: "Proof",
-  title: "Call → kitchen ticket",
-  lead: "Guest confirms on the line. Same order on your pass.",
-  callLabel: "On the call",
-  ticketLabel: "Kitchen screen",
-  bridge: "Live sync",
-  foot: "Demo preview · sample menu and ticket",
+  eyebrow: "What guests experience",
+  title: "It feels like calling your restaurant.",
+  lead: "The guest talks normally. ROAL handles questions, modifiers, language changes, and confirmation before your team sees the order.",
+  callLabel: "Phone call",
+  ticketLabel: "Ready for kitchen",
+  bridge: "Becomes",
+  foot: "Example pickup call",
 } as const;

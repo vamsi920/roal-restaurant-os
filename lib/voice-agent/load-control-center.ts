@@ -2,6 +2,7 @@ import { getElevenLabsAgentId } from "@/lib/env.server";
 import { getConvaiAgent } from "@/lib/elevenlabs";
 import { assembleControlCenterSnapshot } from "@/lib/voice-agent/control-center";
 import type { VoiceAgentControlCenterSnapshot } from "@/lib/voice-agent/control-center-types";
+import { menuAutoSyncFromProfile } from "@/lib/voice-agent/menu-auto-sync-display";
 import type { RestaurantProfile } from "@/lib/types";
 
 type ProfileElevenLabsFields = Pick<
@@ -45,6 +46,8 @@ export async function loadVoiceAgentControlCenter(input: {
     phone_personalization_webhook?: string | null;
   } | null;
 
+  const profile = input.profile as RestaurantProfile;
+
   return assembleControlCenterSnapshot({
     restaurantId: input.restaurantId,
     restaurantName: input.restaurantName,
@@ -52,11 +55,10 @@ export async function loadVoiceAgentControlCenter(input: {
     supabaseRef: input.supabaseRef,
     profileAgentId,
     envDefaultAgentId,
-    lastSyncAt:
-      (input.profile as RestaurantProfile).elevenlabs_last_sync_at ?? null,
-    lastSyncError:
-      (input.profile as RestaurantProfile).elevenlabs_last_sync_error ?? null,
+    lastSyncAt: profile.elevenlabs_last_sync_at ?? null,
+    lastSyncError: profile.elevenlabs_last_sync_error ?? null,
     lastSyncSummary: summary,
+    menuAutoSync: menuAutoSyncFromProfile(profile),
     agentRoot,
     agentFetchError,
   });

@@ -1,5 +1,9 @@
 import type { RestaurantProfile } from "@/lib/types";
 import { formatProfileAddress } from "@/lib/restaurant-profile/helpers";
+import {
+  parseUnavailableItemBehavior,
+  unavailableItemBehaviorPromptLine,
+} from "@/lib/restaurant-profile/handoff-rules";
 
 export type MenuPromptSnapshot = {
   categoryCount: number;
@@ -56,6 +60,68 @@ const CORE_BEHAVIOR = `You are the phone voice for one restaurant. Be warm, conc
 - Wrong number / not ordering: end politely; use end_call when appropriate.
 - Voicemail: keep messages short; use voicemail_detection when available.
 - Empty cart at finalize: sync_draft_order first, then finalize_order.`;
+
+const CALL_PURPOSE = `## Call purpose
+- Primary goal: complete accurate pickup or delivery phone orders using get_menu_items, sync_draft_order, and finalize_order.
+- Secondary: answer short guest questions (hours, directions, menu facts) only from data in this prompt or get_menu_items—then guide back to ordering when they want food.
+- Do not treat catering intake, complaints, or manager callbacks as a substitute for ordering tools unless the guest is also building a cart and ordering is allowed.`;
+
+function buildGuestQuestionsSection(
+  profile: RestaurantProfile | null,
+  displayName: string
+): string {
+  const website = profile?.website?.trim();
+  const lines = [
+    "Keep informational answers to one or two sentences unless they ask for detail on a specific menu item.",
+    "Hours / open now / holidays: use the Hours and ordering availability section and live get_menu_items operations—never guess. Quote times only from those sources.",
+    "Directions / address / parking: use Location from This restaurant; offer to repeat slowly. Do not invent landmarks or parking rules.",
+    "Menu questions (what do you have, spicy, sizes, ingredients): answer only from the latest get_menu_items—name up to three real items; invite them to order if interested.",
+    "Prices: menu data only; if missing, say you do not have the price on file.",
+    `Policies or amenities not in menu or profile (WiFi, dress code, reservations, jobs): say ${displayName} does not have that on this line—offer store phone if listed in This restaurant, or staff callback per Handoff—never invent.`,
+  ];
+  if (website) {
+    lines.push(
+      `Website (only if they ask): ${website}—do not read long URLs; suggest they visit for details you lack.`
+    );
+  }
+  lines.push(
+    "If they only want information and do not want to order: answer briefly, thank them, and end politely (end_call when appropriate)."
+  );
+  return `## Guest questions (hours, directions, menu)\n${lines.map((l) => `- ${l}`).join("\n")}`;
+}
+
+function buildClosedHoursBehaviorSection(
+  profile: RestaurantProfile | null,
+  displayName: string
+): string {
+  const closedMsg = profile?.closed_hours_message?.trim();
+  const lines = [
+    "When temporarily closed (profile flag) or ordering_allowed is no (Hours snapshot or get_menu_items operations.ordering_allowed): do not call sync_draft_order or finalize_order.",
+    "You may still answer brief hours or directions questions from authorized data.",
+    closedMsg
+      ? `Closed-hours script (when closed per regular hours, not temporary closure): ${closedMsg}`
+      : `No custom closed-hours script on file—use Guest-facing summary from Hours and invite them to call ${displayName} back during open hours to order.`,
+    "After the closed-hours message, do not pressure them to order; offer to end the call politely.",
+    "When open again per live operations: resume normal ordering flow from get_menu_items.",
+  ];
+  return `## Closed hours behavior\n${lines.map((l) => `- ${l}`).join("\n")}`;
+}
+
+function buildUnsupportedRequestsSection(displayName: string): string {
+  const lines = [
+    "Refuse calmly and briefly—do not debate. One sentence plus safe alternative when possible.",
+    "Other restaurants, wrong business, or prank orders: decline; end_call if abusive after one warning.",
+    "Employment, press, investors, legal demands, or debt collection: not handled on this line—suggest contacting the restaurant during business hours; no promises of callback unless Handoff applies.",
+    "Refunds, chargebacks, billing disputes, or payment changes: do not process—route to Handoff (complaints / manager callback).",
+    "Table reservations, waitlist, or event space unless menu/tools support it: this line is for phone orders; suggest calling the store in person during open hours if they handle that.",
+    "Text/email receipts, coupons, gift cards, or loyalty balances unless tools exist: say you cannot do that on this call.",
+    "Items, prices, or modifiers not returned by get_menu_items: cannot add them.",
+    "Allergen-free, nut-free, gluten-free, or medical guarantees beyond menu text: do not guarantee; use Menu rules and Handoff if they insist on staff.",
+    "Illegal, threatening, harassing, or sexual content: refuse once; end_call if it continues.",
+    `Do not commit ${displayName} to discounts, comps, or policy exceptions—offer manager callback per Handoff.`,
+  ];
+  return `## Unsupported requests\n${lines.map((l) => `- ${l}`).join("\n")}`;
+}
 
 function buildRestaurantIdentitySection(
   displayName: string,
@@ -138,13 +204,28 @@ function buildOrderingPolicySection(profile: RestaurantProfile | null): string {
   return `## Ordering policy\n${lines.map((l) => `- ${l}`).join("\n")}`;
 }
 
-function buildMenuRulesSection(menu: MenuPromptSnapshot | null): string {
+function buildMenuRulesSection(
+  menu: MenuPromptSnapshot | null,
+  profile: RestaurantProfile | null
+): string {
   const lines = [
     "Menu truth comes only from get_menu_items at session start and after major changes—never from memory or guesses.",
     "If an item is not in the latest menu response, say so and offer the closest on-menu alternative.",
     "Read back critical details for ambiguous items (size, spice, protein) before moving on—for that item only.",
     "Respect is_available / sold-out flags from menu data; do not add unavailable items.",
   ];
+
+  const unavailableBehavior = parseUnavailableItemBehavior(
+    profile?.handoff_unavailable_item_behavior
+  );
+  if (unavailableBehavior) {
+    lines.push(
+      unavailableItemBehaviorPromptLine(
+        unavailableBehavior,
+        profile?.handoff_unavailable_item_notes ?? null
+      )
+    );
+  }
 
   if (menu) {
     lines.push(
@@ -172,6 +253,7 @@ function buildHandoffSection(
   displayName: string
 ): string {
   const lines = [
+    "Routing: manager or human → Manager / staff escalation below. Catering / large party → Catering route. Complaint or bad experience → Complaints route. Return to phone ordering only when the guest wants food and ordering is allowed.",
     "Wrong number or not ordering: apologize briefly and end the call politely (end_call when appropriate).",
     "Guest insists on a human, billing dispute, harassment, or you cannot complete the order after two clarifications: offer to have staff call back—do not pretend to be a manager.",
   ];
@@ -182,20 +264,45 @@ function buildHandoffSection(
 
   if (escName || escPhone || escEmail) {
     const parts = [
-      escName ? `contact: ${escName}` : null,
+      escName ? `manager: ${escName}` : null,
       escPhone ? `phone: ${escPhone}` : null,
       escEmail ? `email: ${escEmail}` : null,
     ].filter(Boolean);
     lines.push(
-      `Staff escalation (offer callback; do not cold-transfer on this line unless your platform supports it): ${parts.join("; ")}`
+      `Manager / staff escalation (offer callback; do not cold-transfer on this line unless your platform supports it): ${parts.join("; ")}`
     );
   } else {
     lines.push(
-      `No dedicated escalation contact on file—tell them ${displayName} will follow up and take their callback number if needed.`
+      `No manager phone or email on file—tell them ${displayName} will follow up and take their callback number if needed.`
     );
   }
 
-  return `## Handoff and fallback\n${lines.map((l) => `- ${l}`).join("\n")}`;
+  const catering = profile?.handoff_catering_route?.trim();
+  if (catering) {
+    lines.push(`Catering & large-party requests: ${catering}`);
+  } else {
+    lines.push(
+      "Catering & large-party requests: no dedicated route on file—take their callback number and offer staff follow-up."
+    );
+  }
+
+  const complaint = profile?.handoff_complaint_route?.trim();
+  if (complaint) {
+    lines.push(`Complaints & service issues: ${complaint}`);
+  } else {
+    lines.push(
+      "Complaints & service issues: apologize, do not argue; take details and offer manager callback using escalation contact when available."
+    );
+  }
+
+  const closedMsg = profile?.closed_hours_message?.trim();
+  if (closedMsg) {
+    lines.push(
+      `When closed per hours (not a temporary closure flag): ${closedMsg}`
+    );
+  }
+
+  return `## Handoff and escalation\n${lines.map((l) => `- ${l}`).join("\n")}`;
 }
 
 export function buildRestaurantOrderAgentPrompt(
@@ -206,11 +313,15 @@ export function buildRestaurantOrderAgentPrompt(
 
   const sections = [
     CORE_BEHAVIOR,
+    CALL_PURPOSE,
     buildRestaurantIdentitySection(displayName, input.profile),
+    buildGuestQuestionsSection(input.profile, displayName),
     buildOrderingPolicySection(input.profile),
-    buildMenuRulesSection(input.menu),
+    buildMenuRulesSection(input.menu, input.profile),
     buildCustomerInfoSection(),
     buildHandoffSection(input.profile, displayName),
+    buildClosedHoursBehaviorSection(input.profile, displayName),
+    buildUnsupportedRequestsSection(displayName),
   ];
 
   if (input.hoursPromptSection?.trim()) {
@@ -274,7 +385,16 @@ Collect real name and phone before finalize_order. Read phone in digit groups wh
 Respect pickup/delivery modes and ordering_allowed from get_menu_items operations. Refuse orders when operations block ordering.
 
 ## Handoff
-Offer staff callback using escalation contacts from the system prompt when the guest needs a human.
+Offer staff callback using escalation contacts from the system prompt when the guest needs a human. Catering and complaints follow routes in the system prompt.
+
+## Guest questions
+Hours and directions from the system prompt and get_menu_items only—short answers, then back to ordering.
+
+## Closed
+No cart tools when ordering is not allowed; use closed-hours script when provided.
+
+## Refusals
+Decline unsupported requests per Unsupported requests in the system prompt.
 
 ## Cart
 Every change uses sync_draft_order with the full items array and the same session_id.

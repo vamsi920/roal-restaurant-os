@@ -14,6 +14,9 @@ const PROBE_USER = "a0000001-0001-4001-8001-000000000001";
 const VITEST_GLOB = [
   "tests/unit/require-restaurant-access.test.ts",
   "tests/unit/auth-tenant-helpers.test.ts",
+  "tests/unit/tenant-isolation-live-qa.test.ts",
+  "tests/unit/tenant-isolation-query-scope.test.ts",
+  "tests/integration/tenant-isolation-onboarding-actions.test.ts",
   "tests/integration/api-menu-import-discard-history.test.ts",
   "tests/integration/api-notifications-events.test.ts",
   "tests/integration/api-billing-gates.test.ts",
@@ -116,6 +119,7 @@ void (async () => {
   const surfaces: Array<{ table: string; col: string; val: string; pk: string }> = [
     { table: "categories", col: "restaurant_id", val: REST_B, pk: "id" },
     { table: "draft_orders", col: "restaurant_id", val: REST_B, pk: "id" },
+    { table: "restaurant_profiles", col: "restaurant_id", val: REST_B, pk: "restaurant_id" },
     { table: "menu_imports", col: "organization_id", val: ORG_B, pk: "id" },
     { table: "usage_events", col: "organization_id", val: ORG_B, pk: "id" },
     {
@@ -155,7 +159,7 @@ void (async () => {
     name: "MCP RLS JWT probe (manual gate)",
     ok: true,
     detail:
-      "Re-run scripts/sql/tenant-isolation-probe.sql on deploy — passed 2026-05-23",
+      "Re-run scripts/sql/tenant-isolation-probe.sql on deploy (profiles, agent_call_events, audit_logs)",
   });
 
   summarize(checks);

@@ -5,7 +5,7 @@ import { PUBLIC_CTA } from "@/lib/landing/public-cta";
 export const LANDING_FOOTER = {
   brandName: "ROAL",
   brandHref: "/",
-  tagline: "Pickup calls answered with your live menu.",
+  tagline: "The phone agent for pickup orders during rush.",
   demoCta: PUBLIC_CTA.hearDemo,
   contactCta: { href: "/contact", label: "Contact" },
   essentialLinks: [
