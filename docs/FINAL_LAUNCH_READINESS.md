@@ -1,7 +1,7 @@
 # Final launch readiness snapshot
 
-**Date:** 2026-05-30 (updated pass **39/40**)  
-**Prompt:** Launch finalization **40/40** (commit; push withheld)  
+**Date:** 2026-05-30 (updated post-pass **40/40**)
+**Prompt:** Launch finalization **40/40** + post-push production recheck
 **Sources:** [`FLOW_QA_REPORT.md`](./FLOW_QA_REPORT.md) · [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md) · [`FEATURE_READINESS_AUDIT.md`](./FEATURE_READINESS_AUDIT.md) · git working tree · Cursor QA sessions (feature-flow 60 + launch passes 27–39)
 
 ---
@@ -10,13 +10,51 @@
 
 | Layer | Status |
 |-------|--------|
-| **Code / CI** | **Ready** — `lint` **pass**, `npm run build` **pass** (pass 34), focused voice/tenant suites green (passes 33, 38, 39) |
+| **Code / CI** | **Ready** — `npm run build` **pass**, `npx tsc --noEmit --pretty false` **pass**, focused voice/tenant suites green (passes 33, 38, 39 + post-push recheck) |
 | **Supabase** | **Ready** — project `mnkabwcbdxruefzuvuuv`, **27/27** migrations (`001`–`027` via `supabase db push`; no operator SQL required) |
-| **Product flows (automated)** | **Pass** — create → dedicated agent clone → menu sync → Edge draft/finalize → KDS ticket (pass 38); conversation-init fail-closed when agent unlinked (pass 38) |
+| **Product flows (automated)** | **Pass** — create → dedicated agent clone → menu sync → Edge draft/finalize → KDS ticket; conversation-init fail-closed when agent unlinked; existing QA restaurant voice lifecycle + menu auto-sync verified live post-push |
 | **Product readiness (pass 39)** | **Pass** — no fake dashboard metrics; dedicated-agent guard; mobile core pages verified (see below) |
 | **Production launch** | **Blocked (P0)** — **LB-01** open: `getroal.com` unreachable; live Twilio sign-off pending. **LB-04** open (same root cause). **LB-03 closed**; **LB-02 downgraded** |
 
 **Certification (39/40):** **Ready for staged pilot onboarding** (signup → menu → KDS → test order on a deployed host with env). **Not ready for production day-one with live forwarded guest calls** until **LB-01** closes — ops must deploy DNS, re-sync ElevenLabs, and confirm one live Twilio call.
+
+---
+
+## Post-push readiness recheck (2026-05-30 12:20 EDT)
+
+**Latest commits on `main`:**
+
+| Commit | Summary |
+|--------|---------|
+| `e0a4306` | `feat: launch readiness passes 27-40 (voice, KDS, QA, docs)` |
+| `8bea5a2` | `fix: harden voice agent readiness and landing` |
+
+**Current git state:** `main` is pushed to `origin/main`; working tree clean before this doc update.
+
+**Fixes after pass 40:**
+
+- Baked all three ElevenLabs webhook tool URLs with `restaurant_id` (`get_menu_items`, `sync_draft_order`, `finalize_order`) while retaining signed `x-roal-restaurant-id` headers for POST tools.
+- Successful dedicated-agent connect/resync now sets `elevenlabs_provision_status = ready`, clears provision/menu-sync errors, sets `elevenlabs_provisioned_at`, and records menu auto-sync success.
+- Voice-agent panel QA now verifies lifecycle fields, not only `last_sync_*`.
+- Landing page first-glimpse copy and font tokens were repaired; production build still passes.
+
+**Post-push commands run:**
+
+| Command | Result |
+|---------|--------|
+| Focused provisioning/autosync Vitest suite | **49/49** |
+| Tool baking / lifecycle unit tests | **18/18**, then focused **6/6** |
+| `npm run qa:phone-order-kds` | **5/5** |
+| `npm run qa:draft-finalize-elevenlabs` | **11/11** |
+| `QA_RESTAURANT_ID=... npm run qa:voice-agent-panel` | **10/10** |
+| `QA_RESTAURANT_ID=... QA_USER_ID=... npm run qa:voice-agent-provision` | **19/19** |
+| `QA_RESTAURANT_ID=... npm run qa:menu-auto-sync` | **24/24** |
+| `npm run build` | **pass** |
+| `npx tsc --noEmit --pretty false` | **pass** |
+| `npm run qa:lb01-phone-stack` | **11/13** — code/tool layers pass; prod DNS and prod HTTP fail |
+| `SMOKE_BASE_URL=https://getroal.com npm run smoke` | **0/5** — `getroal.com` unresolved / HTTP 000 |
+
+**Updated blocker verdict:** product code and live QA restaurant flows are ready for staged pilot onboarding. **Production forwarded guest calls remain blocked by DNS/production hosting (`getroal.com` NXDOMAIN from this host) and a human Twilio call sign-off.**
 
 ---
 
@@ -334,7 +372,7 @@ Pre-split ops layout (menu + voice + orders on one page). **Replaced** by functi
 
 ## KDS / Menu split — functional + UI refocus (01–40 + 68–79/80)
 
-**Series:** [`kds-functional-and-ui-80-prompts.md`](./kds-functional-and-ui-80-prompts.md) · IA source: [`KDS_REFOCUS_PLAN.md`](./KDS_REFOCUS_PLAN.md).  
+**Series:** [`kds-functional-and-ui-80-prompts.md`](./kds-functional-and-ui-80-prompts.md) · IA source: [`KDS_REFOCUS_PLAN.md`](./KDS_REFOCUS_PLAN.md).
 **Verdict:** **Functional + UI pass (68–79)** — route split unchanged; dashboard/public polish, KDS/menu designed states, theme/focus consistency, **lint clean**, **build pass**, **162** focused Vitest. **80/80** = final review only.
 
 ### Split status
@@ -1058,16 +1096,16 @@ downgraded). Public copy de-jargon pass; client env inlining fix.
 
 ### Prior QA sessions (documented; may overlap working tree)
 
-**Docs (Cursor-generated / updated):**  
+**Docs (Cursor-generated / updated):**
 `docs/FLOW_QA_REPORT.md`, `docs/LAUNCH_BLOCKERS.md`, `docs/E2E_SMOKE.md`, `docs/DEPLOYMENT.md`, `docs/ELEVENLABS.md`, `docs/AGENT_TOOL_SECURITY.md`, `docs/AUTH.md`, `docs/ONBOARDING.md`, `docs/PUBLIC_LAUNCH_PLAN.md`, plus QA audit plans (`AUTH_*`, `BLOG_*`, `MOBILE_*`, `DESKTOP_*`, `VISUAL_*`, `METRICS_*`, `PRODUCT_LANGUAGE_*`, etc.) and prompt queues (`feature-flow-qa-60-prompts.md`, `launch-finalization-40-prompts.md`, `launch-ready-site-100-prompts.md`).
 
-**Tests / config (prompt 56–60):**  
+**Tests / config (prompt 56–60):**
 `tests/unit/*`, `tests/integration/api-*.test.ts`, `vitest.config.ts`, `tsconfig.json`.
 
-**Scripts (prompts 07, 31, 55, 57):**  
+**Scripts (prompts 07, 31, 55, 57):**
 `scripts/public-route-smoke.mjs`, `scripts/auth-smoke.mjs`, `scripts/e2e-smoke.mjs`, `scripts/playwright-smoke-lib.mjs`, `scripts/qa-finalize-order-edge.mjs`, `scripts/deploy-production.sh`, `scripts/deploy-edge-functions.sh`, `scripts/smoke-test-production.sh`, ElevenLabs helper scripts.
 
-**Product (60-prompt fixes — subset; full list in FLOW_QA changelog):**  
+**Product (60-prompt fixes — subset; full list in FLOW_QA changelog):**
 Edge `supabase/functions/*`, `_shared/agent-tool-auth.ts`, dashboard/notifications/billing/analytics/admin components, `MenuScanner`, `LiveMenuSidebar`, `VoiceAgentPanel`, API routes (scanner commit/discard, orders), `lib/env.*`, `.env.example`.
 
 ### Git snapshot after triage (2026-05-23)
@@ -1079,7 +1117,7 @@ Edge `supabase/functions/*`, `_shared/agent-tool-auth.ts`, dashboard/notificatio
 | Removed | **1** | Root MP4 duplicate |
 | `.gitignore` | **+2 patterns** | `/*.mp4`, `/*.mov` at repo root |
 
-**Last commits on branch (for context):**  
+**Last commits on branch (for context):**
 `6f43cc7` voice menu tool / dietary / upsell · `be9ef17` realtime + prompt hygiene · `ca09bf1` mobile dashboard · `fe8624c` env example · `4326c78` restaurant card UI.
 
 ---
