@@ -72,14 +72,20 @@ async function runSyncPass(label: string) {
     phone_personalization_webhook: phoneWebhook,
   };
 
+  const now = new Date().toISOString();
   const { error } = await sb
     .from("restaurant_profiles")
     .update({
       elevenlabs_agent_id: agentId,
-      elevenlabs_last_sync_at: new Date().toISOString(),
+      elevenlabs_provision_status: "ready",
+      elevenlabs_provision_error: null,
+      elevenlabs_provisioned_at: now,
+      elevenlabs_menu_auto_sync_status: "succeeded",
+      elevenlabs_menu_auto_sync_error: null,
+      elevenlabs_last_sync_at: now,
       elevenlabs_last_sync_error: null,
       elevenlabs_last_sync_summary: summary,
-      updated_at: new Date().toISOString(),
+      updated_at: now,
     })
     .eq("restaurant_id", RESTAURANT_ID);
   if (error) throw new Error(error.message);
@@ -110,7 +116,7 @@ void (async () => {
   const { data: row, error: loadErr } = await sb!
     .from("restaurant_profiles")
     .select(
-      "elevenlabs_agent_id,elevenlabs_last_sync_at,elevenlabs_last_sync_error,elevenlabs_last_sync_summary"
+      "elevenlabs_agent_id,elevenlabs_provision_status,elevenlabs_provisioned_at,elevenlabs_last_sync_at,elevenlabs_last_sync_error,elevenlabs_last_sync_summary"
     )
     .eq("restaurant_id", RESTAURANT_ID)
     .maybeSingle();
@@ -124,6 +130,14 @@ void (async () => {
   checks.push({
     name: "profile: last_sync_error cleared",
     ok: row?.elevenlabs_last_sync_error == null,
+  });
+  checks.push({
+    name: "profile: provision_status ready",
+    ok: row?.elevenlabs_provision_status === "ready",
+  });
+  checks.push({
+    name: "profile: provisioned_at set",
+    ok: Boolean(row?.elevenlabs_provisioned_at),
   });
   const summary = row?.elevenlabs_last_sync_summary as {
     restaurant_tools_baked?: boolean;

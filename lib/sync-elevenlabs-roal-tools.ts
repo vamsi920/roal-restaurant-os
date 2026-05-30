@@ -298,7 +298,9 @@ export async function syncRoalElevenLabsTools(options?: {
         : "Updates the live draft order row for this call. Call whenever the guest changes the cart; use status draft while ordering.",
       response_timeout_secs: 45,
       api_schema: {
-        url: `${edgeBase}/functions/v1/sync-draft-order`,
+        url: baked
+          ? `${edgeBase}/functions/v1/sync-draft-order?restaurant_id=${encodeURIComponent(rid)}`
+          : `${edgeBase}/functions/v1/sync-draft-order`,
         method: "POST",
         content_type: "application/json",
         request_headers: {
@@ -316,7 +318,9 @@ export async function syncRoalElevenLabsTools(options?: {
         : "Confirms the order with guest name and phone. Call after the cart is synced; items optional if sync_draft_order already saved them.",
       response_timeout_secs: 45,
       api_schema: {
-        url: `${edgeBase}/functions/v1/finalize-order`,
+        url: baked
+          ? `${edgeBase}/functions/v1/finalize-order?restaurant_id=${encodeURIComponent(rid)}`
+          : `${edgeBase}/functions/v1/finalize-order`,
         method: "POST",
         content_type: "application/json",
         request_headers: {

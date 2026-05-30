@@ -106,6 +106,9 @@ describe("syncRoalElevenLabsTools baked config", () => {
       };
     };
     expect(syncSchema.url).toContain("/functions/v1/sync-draft-order");
+    expect(syncSchema.url).toContain(
+      `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
+    );
     expect(syncSchema.request_headers[ROAL_RESTAURANT_ID_HEADER]).toBe(
       RESTAURANT_ID
     );
@@ -120,8 +123,13 @@ describe("syncRoalElevenLabsTools baked config", () => {
 
     const finalize = configs.find((c) => c.name === "finalize_order")!;
     const finSchema = finalize.api_schema as {
+      url: string;
       request_body_schema: { properties: Record<string, unknown> };
     };
+    expect(finSchema.url).toContain("/functions/v1/finalize-order");
+    expect(finSchema.url).toContain(
+      `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
+    );
     expect(finSchema.request_body_schema.properties).not.toHaveProperty(
       "restaurant_id"
     );

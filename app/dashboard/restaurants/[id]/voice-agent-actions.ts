@@ -44,14 +44,20 @@ async function saveSyncSuccess(
   summary: VoiceAgentSyncSummary
 ) {
   const supabase = await createServerSupabase();
+  const now = new Date().toISOString();
   const { error } = await supabase
     .from("restaurant_profiles")
     .update({
       elevenlabs_agent_id: agentId,
-      elevenlabs_last_sync_at: new Date().toISOString(),
+      elevenlabs_provision_status: "ready",
+      elevenlabs_provision_error: null,
+      elevenlabs_provisioned_at: now,
+      elevenlabs_menu_auto_sync_status: "succeeded",
+      elevenlabs_menu_auto_sync_error: null,
+      elevenlabs_last_sync_at: now,
       elevenlabs_last_sync_error: null,
       elevenlabs_last_sync_summary: summary,
-      updated_at: new Date().toISOString(),
+      updated_at: now,
     })
     .eq("restaurant_id", restaurantId);
 

@@ -10,7 +10,7 @@ export type HowFlowBeat = {
 export const HOME_HOW_FLOW = {
   eyebrow: "How it works",
   title: "From menu to live calls in one simple flow.",
-  lead: "Add the menu. Test the agent. Forward rush-hour calls when ready.",
+  lead: "For owners: add the menu, test the agent, then forward rush-hour calls.",
   visualLabel: "Preview",
   beats: [
     {
