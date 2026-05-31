@@ -214,6 +214,31 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(deliveryOnly).toMatch(/never offer pickup/i);
   });
 
+  it("requires multilingual cart safety and FAQ translation guardrails", () => {
+    const prompt = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: baseProfile,
+      hoursPromptSection: null,
+      menu: { categoryCount: 2, itemCount: 10, modifierCount: 4 },
+      knowledgeEntries: [
+        {
+          category: "allergens",
+          question: "Gluten-free?",
+          answer: "Only marked items; no cross-contact guarantee.",
+          is_active: true,
+        },
+      ],
+    });
+
+    expect(prompt).toContain("Multilingual calls");
+    expect(prompt).toMatch(/Never pass translated item or modifier names/i);
+    expect(prompt).toMatch(/Prefer item_id from get_menu_items/i);
+    expect(prompt).toMatch(/restate the answer in the guest's language/i);
+    expect(prompt).toMatch(
+      /never add allergen guarantees, hours, or policy details/i
+    );
+  });
+
   it("includes catering, complaint, closed-hours, and unavailable-item rules when set", () => {
     const prompt = buildRestaurantOrderAgentPrompt({
       restaurantName: "QA Bistro",
@@ -273,5 +298,11 @@ describe("buildRoalKbPlaybook", () => {
     expect(kb).toContain("sync_draft_order");
     expect(kb).toMatch(/Every change uses sync_draft_order/);
     expect(kb).toMatch(/No fabricated customer_name or customer_phone/);
+  });
+
+  it("keeps cart tools on canonical menu strings during multilingual calls", () => {
+    const kb = buildRoalKbPlaybook();
+    expect(kb).toContain("Multilingual");
+    expect(kb).toMatch(/never translated menu strings/i);
   });
 });

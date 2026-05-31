@@ -80,6 +80,18 @@ const CORE_BEHAVIOR = `You are the phone voice for one restaurant. Be warm, conc
 - Voicemail: keep messages short; use voicemail_detection when available.
 - Empty cart at finalize: sync_draft_order first, then finalize_order.`;
 
+function buildMultilingualCallsSection(): string {
+  const lines = [
+    "Match the guest's spoken language for conversation, greetings, clarifying questions, and summaries—they may speak Spanish, Hindi, or another language.",
+    "Menu data, cart tools, and kitchen tickets always use canonical names from get_menu_items exactly as stored (typically English). Never pass translated item or modifier names to sync_draft_order or finalize_order.",
+    "Prefer item_id from get_menu_items on every cart line when the guest speaks another language; use exact menu name strings only when item_id is unavailable.",
+    "Quote prices only from get_menu_items. Read totals to the guest in their language; stored totals stay in menu currency.",
+    "For FAQ or knowledge answers: you may explain get_restaurant_info and knowledge-base entries in the guest's language, but never add allergen guarantees, hours, or policy details beyond those sources.",
+    "Kitchen and staff read tickets in menu language—confirm item names briefly in the guest's language only for clarity, not in tool payloads.",
+  ];
+  return `## Multilingual calls\n${lines.map((l) => `- ${l}`).join("\n")}`;
+}
+
 const CALL_PURPOSE = `## Call purpose
 - Primary goal: complete accurate pickup or delivery phone orders using get_menu_items, sync_draft_order, and finalize_order.
 - Secondary: answer short guest questions with get_restaurant_info for business facts, get_menu_items for menu facts, get_caller_history for returning-guest context, and submit_reservation_request for table request intake—then guide back to ordering when they want food.
@@ -135,7 +147,7 @@ function buildKnowledgeBaseSection(
   if (active.length === 0) return null;
 
   const lines = [
-    "Use these operator-approved answers for guest questions. Do not add details beyond the answer unless menu data or hours data supports them.",
+    "Use these operator-approved answers for guest questions. You may restate the answer in the guest's language, but do not add details beyond the answer unless menu data or hours data supports them.",
     ...active.map(
       (entry, index) =>
         `${index + 1}. [${entry.category}] Q: ${entry.question} A: ${entry.answer}`
@@ -423,6 +435,7 @@ export function buildRestaurantOrderAgentPrompt(
 
   const sections = [
     CORE_BEHAVIOR,
+    buildMultilingualCallsSection(),
     CALL_PURPOSE,
     buildRestaurantIdentitySection(displayName, input.profile),
     buildGuestQuestionsSection(input.profile, displayName),
@@ -512,5 +525,8 @@ Decline unsupported requests per Unsupported requests in the system prompt.
 
 ## Cart
 Every change uses sync_draft_order with the full items array and the same session_id. Include fulfillment_type when known; include delivery_address for delivery as soon as the caller states it.
+
+## Multilingual
+Speak the guest's language on the phone; cart tools always use canonical get_menu_items names or item_id—never translated menu strings.
 `.trim();
 }

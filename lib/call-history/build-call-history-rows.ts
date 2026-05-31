@@ -26,6 +26,10 @@ import {
 } from "@/lib/restaurant-reservations/schema";
 import { computeOrderTotals } from "@/lib/orders/compute-order-totals";
 import { fulfillmentLabelFromOrderRow } from "@/lib/orders/validate-fulfillment";
+import {
+  callerLanguageLabel as formatCallerLanguageLabel,
+  readCallerLanguageFromTranscriptMetadata,
+} from "@/lib/elevenlabs/caller-language";
 import { parseOrderLineItems } from "@/lib/orders/line-items";
 import type { MenuPriceContext } from "@/lib/orders/menu-price-context";
 import { formatMoney } from "@/lib/orders/money";
@@ -422,6 +426,9 @@ export function buildCallHistoryRows(input: {
       lineCount > 0
         ? fulfillmentLabelFromOrderRow(receipt ?? draft)
         : null;
+    const callerLanguageLabel = formatCallerLanguageLabel(
+      readCallerLanguageFromTranscriptMetadata(session.transcriptMetadata)
+    );
 
     return {
       sessionId: session.sessionId,
@@ -448,6 +455,7 @@ export function buildCallHistoryRows(input: {
       durationSeconds,
       isTestHarness,
       fulfillmentLabel,
+      callerLanguageLabel,
     };
   });
 

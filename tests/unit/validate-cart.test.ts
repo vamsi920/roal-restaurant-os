@@ -84,6 +84,24 @@ describe("validateCartForSync", () => {
     expect(result.normalizedItems).toHaveLength(0);
   });
 
+  it("rejects translated menu names but accepts item_id for multilingual calls", () => {
+    const byTranslatedName = validateCartForSync(
+      [{ name: "Hamburguesa clásica", quantity: 1 }],
+      menuItems,
+      menuModifiers
+    );
+    expect(byTranslatedName.ok).toBe(false);
+    expect(byTranslatedName.issues[0]?.code).toBe("unknown_item_name");
+
+    const byItemId = validateCartForSync(
+      [{ item_id: ITEM_BURGER_ID, quantity: 1 }],
+      menuItems,
+      menuModifiers
+    );
+    expect(byItemId.ok).toBe(true);
+    expect(byItemId.normalizedItems[0]?.name).toBe("Classic Burger");
+  });
+
   it("rejects unknown modifiers on sync", () => {
     const result = validateCartForSync(
       [

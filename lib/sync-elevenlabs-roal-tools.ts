@@ -38,14 +38,24 @@ export type RoalBakedToolName = (typeof ROAL_BAKED_TOOL_NAMES)[number];
 
 const LINE_ITEM_BODY = {
   type: "object",
-  description: "One cart line",
-  required: ["name", "quantity"],
+  description:
+    "One cart line from get_menu_items. Prefer item_id on multilingual calls.",
   properties: {
-    name: { type: "string", description: "Item name" },
+    item_id: {
+      type: "string",
+      description:
+        "UUID from get_menu_items. Preferred on multilingual calls—never translate or invent.",
+    },
+    name: {
+      type: "string",
+      description:
+        "Exact canonical menu name from get_menu_items (as stored, typically English). Never translate for tools.",
+    },
     quantity: { type: "integer", description: "Quantity" },
     customizations: {
       type: "array",
-      description: "Modifier strings",
+      description:
+        "Exact modifier strings from get_menu_items, not translated.",
       items: { type: "string", description: "One customization" },
     },
   },
@@ -511,7 +521,7 @@ export async function syncRoalElevenLabsTools(options?: {
           type: "webhook",
           name: "get_restaurant_info",
           description:
-            "Fetches live restaurant business facts for this location: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions. No parameters required.",
+            "Fetches live restaurant business facts for this location: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions. FAQ answers may be restated in the guest's language for speech only—never invent facts beyond the response. No parameters required.",
           response_timeout_secs: 30,
           api_schema: {
             url: `${edgeBase}/functions/v1/get-restaurant-info?restaurant_id=${encodeURIComponent(rid)}&restaurant_name=${encodeURIComponent(resolvedName)}`,
@@ -523,7 +533,7 @@ export async function syncRoalElevenLabsTools(options?: {
           type: "webhook",
           name: "get_restaurant_info",
           description:
-            "Fetches live restaurant business facts: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions.",
+            "Fetches live restaurant business facts: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions. FAQ answers may be restated in the guest's language for speech only—never invent facts beyond the response.",
           response_timeout_secs: 30,
           api_schema: {
             url: `${edgeBase}/functions/v1/get-restaurant-info`,

@@ -30,6 +30,7 @@ export type CallHistoryRow = {
   durationSeconds: number | null;
   isTestHarness: boolean;
   fulfillmentLabel: string | null;
+  callerLanguageLabel: string | null;
 };
 
 export type CallHistoryIntent =

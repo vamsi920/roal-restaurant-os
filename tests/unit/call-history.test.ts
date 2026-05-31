@@ -186,6 +186,33 @@ describe("buildCallHistoryRows", () => {
     expect(rows[0]?.isActionable).toBe(true);
   });
 
+  it("surfaces caller language from post-call metadata", () => {
+    const rows = buildCallHistoryRows({
+      sessions: [
+        session({
+          sessionId: "spanish-call",
+          transcriptMetadata: {
+            caller_language: "es",
+            transcript_summary: "Guest ordered pickup in Spanish.",
+          },
+        }),
+      ],
+      drafts: [],
+      receipts: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          session_id: "spanish-call",
+          customer_name: "Maria",
+          customer_phone: "+15551234567",
+          items: [{ name: "Classic Burger", quantity: 1, customizations: [] }],
+          created_at: "2026-05-30T17:15:00.000Z",
+        },
+      ],
+    });
+
+    expect(rows[0]?.callerLanguageLabel).toBe("Spanish");
+  });
+
   it("classifies menu and info calls from transcript text", () => {
     const rows = buildCallHistoryRows({
       sessions: [

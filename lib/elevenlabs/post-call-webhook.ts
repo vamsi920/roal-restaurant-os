@@ -12,6 +12,7 @@ import {
   mergeHandoffTranscriptFlags,
   staffHandoffReasonFromMetadata,
 } from "@/lib/elevenlabs/handoff-metadata";
+import { readCallerLanguageFromPostCallData } from "@/lib/elevenlabs/caller-language";
 import { emitPostCallFollowUpNotifications } from "@/lib/notifications/call-follow-up-events";
 
 export const ELEVENLABS_WEBHOOK_SIGNATURE_HEADER = "elevenlabs-signature";
@@ -233,6 +234,7 @@ function buildTranscriptMetadata(event: ElevenLabsPostCallEvent): JsonRecord {
     call_duration_secs: metadata.call_duration_secs ?? null,
     cost: metadata.cost ?? null,
     called_number: readCalledNumber(data),
+    caller_language: readCallerLanguageFromPostCallData(data),
     recording_url: readRecordingUrl(data),
     transcript: Array.isArray(data.transcript) ? data.transcript : [],
     analysis,
@@ -261,6 +263,10 @@ function mergePostCallTranscriptMetadata(
     null;
   merged.called_number =
     asString(incoming.called_number) || asString(existing.called_number) || null;
+  merged.caller_language =
+    asString(incoming.caller_language) ||
+    asString(existing.caller_language) ||
+    null;
   return merged;
 }
 

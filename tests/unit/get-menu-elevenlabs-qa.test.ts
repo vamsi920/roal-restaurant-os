@@ -50,4 +50,16 @@ describe("get_menu_items ElevenLabs verification (launch 18)", () => {
     expect(harness).toContain("serviceModesFromProfile");
     expect(harness).toContain("service_modes: serviceModes");
   });
+
+  it("sync_draft_order schema exposes item_id and canonical menu name guidance", () => {
+    const tools = readFileSync(
+      join(REPO, "lib/sync-elevenlabs-roal-tools.ts"),
+      "utf8"
+    );
+    expect(tools).toContain("Prefer item_id on multilingual calls");
+    expect(tools).toContain("Exact canonical menu name from get_menu_items");
+    expect(tools).toMatch(
+      /FAQ answers may be restated in the guest's language for speech only/i
+    );
+  });
 });
