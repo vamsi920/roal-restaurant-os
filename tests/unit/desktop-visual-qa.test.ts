@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 const REPO = join(import.meta.dirname, "../..");
 
 describe("desktop visual QA hooks (landing pass)", () => {
-  it("landing hero keeps frosted surface and warm palette without video layer", () => {
+  it("landing hero keeps frosted surface with the premium video layer", () => {
     const css = readFileSync(join(REPO, "app/landing-home.css"), "utf8");
     const page = readFileSync(join(REPO, "components/landing/landing-page.tsx"), "utf8");
     const shell = readFileSync(
@@ -14,9 +14,9 @@ describe("desktop visual QA hooks (landing pass)", () => {
     );
 
     expect(page).toContain("roal-hero__stage");
-    expect(shell).not.toContain("LandingVideoBackground");
+    expect(shell).toContain("LandingVideoBackground");
     expect(css).toContain("backdrop-filter: blur");
-    expect(css).not.toMatch(/home-video-layer/);
+    expect(css).toMatch(/home-video-layer/);
     expect(css).toContain("--home-paper");
     expect(css).toContain("--home-red");
     expect(css).not.toMatch(/home-violet|home-cyan/);

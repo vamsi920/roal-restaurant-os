@@ -123,6 +123,31 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(prompt).not.toMatch(/appetizer and two fitting main/i);
   });
 
+  it("does not invent prep minutes when profile is missing", () => {
+    const prompt = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: null,
+      hoursPromptSection: null,
+      menu: null,
+    });
+
+    expect(prompt).toMatch(/get_restaurant_info.*prep_time_message/i);
+    expect(prompt).not.toMatch(/about 20 minutes/i);
+  });
+
+  it("guides order status lookups via get_order_status in guest questions", () => {
+    const prompt = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: baseProfile,
+      hoursPromptSection: null,
+      menu: null,
+    });
+
+    expect(prompt).toContain("get_order_status");
+    expect(prompt).toMatch(/is it ready/i);
+    expect(prompt).toMatch(/never guess prep time/i);
+  });
+
   it("requires reservation request (not confirmed) and allergen disclaimers", () => {
     const prompt = buildRestaurantOrderAgentPrompt({
       restaurantName: "QA Bistro",

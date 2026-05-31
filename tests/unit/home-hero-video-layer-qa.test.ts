@@ -5,10 +5,10 @@ import { describe, expect, it } from "vitest";
 const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
-describe("home hero background (restaurant landing, no video layer)", () => {
-  it("uses warm paper canvas instead of video layer CSS", () => {
+describe("home hero background (restaurant landing)", () => {
+  it("uses a premium video layer over the lavender paper canvas", () => {
     const css = read("app/landing-home.css");
-    expect(css).not.toMatch(/home-video-layer|roal-bg-drift/);
+    expect(css).toMatch(/home-video-layer|roal-bg-drift/);
     expect(css).not.toMatch(/home-violet|home-cyan|home-blue|home-lime/);
     expect(css).toMatch(
       /\.landing-home\.landing-home-canvas\s*\{[\s\S]*--home-paper:[\s\S]*--home-cream:/
@@ -18,18 +18,16 @@ describe("home hero background (restaurant landing, no video layer)", () => {
     );
   });
 
-  it("shell does not render LandingVideoBackground", () => {
+  it("shell renders LandingVideoBackground", () => {
     const shell = read("components/landing/home/landing-home-shell.tsx");
-    expect(shell).not.toContain("LandingVideoBackground");
-    expect(shell).not.toContain("landing-video-bg");
+    expect(shell).toContain("LandingVideoBackground");
+    expect(shell).toContain("landing-video-bg");
   });
 
-  it("keeps reduced-motion safe without video hooks", () => {
+  it("keeps reduced-motion safe with video hooks", () => {
     const css = read("app/landing-home.css");
     expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)/);
-    expect(css).not.toMatch(
-      /@media \(prefers-reduced-motion: reduce\)[\s\S]*home-video-layer/
-    );
+    expect(css).toMatch(/animation-duration:\s*0\.001ms/);
   });
 
   it("landing page references all three restaurant images", () => {

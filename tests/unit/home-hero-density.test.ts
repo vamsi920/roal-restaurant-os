@@ -42,12 +42,12 @@ describe("home hero density (restaurant landing)", () => {
     expect(page).toContain("roal-hero__stage");
     expect(page).not.toContain("home-hero__qualifier");
     expect(page).not.toContain("home-glass-panel");
-    expect(shell).not.toContain("LandingVideoBackground");
+    expect(shell).toContain("LandingVideoBackground");
 
     expect(css).toMatch(/\.roal-hero\s*\{[^}]*padding:/s);
     expect(css).toContain(".roal-hero__stage");
     expect(css).toMatch(/\.roal-hero__stage\s*\{[^}]*backdrop-filter:\s*blur/s);
     expect(css).toMatch(/\.roal-hero__stage\s*\{[^}]*min-height:\s*clamp\(/s);
-    expect(css).not.toMatch(/home-video-layer/);
+    expect(css).toMatch(/home-video-layer/);
   });
 });

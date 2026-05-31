@@ -6,7 +6,7 @@ const REPO = join(import.meta.dirname, "../..");
 const CSS = () => readFileSync(join(REPO, "app/landing-home.css"), "utf8");
 
 describe("home hero responsive (restaurant landing)", () => {
-  it("keeps frosted surface without legacy video layer hooks", () => {
+  it("keeps frosted surface with the premium video background layer", () => {
     const css = CSS();
     const page = readFileSync(
       join(REPO, "components/landing/landing-page.tsx"),
@@ -18,9 +18,9 @@ describe("home hero responsive (restaurant landing)", () => {
     );
 
     expect(page).toContain("roal-hero__stage");
-    expect(shell).not.toContain("LandingVideoBackground");
+    expect(shell).toContain("LandingVideoBackground");
     expect(css).toMatch(/\.roal-hero__stage[\s\S]*backdrop-filter:\s*blur/);
-    expect(css).not.toMatch(/home-video-layer/);
+    expect(css).toMatch(/home-video-layer/);
     expect(css).toContain("--home-paper");
     expect(css).toContain("--home-cream");
     expect(css).not.toMatch(/home-violet|home-cyan|home-blue|home-lime/);

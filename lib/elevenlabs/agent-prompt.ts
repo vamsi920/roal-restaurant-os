@@ -107,6 +107,7 @@ function buildGuestQuestionsSection(
     "Hours / open now / holidays: use get_restaurant_info and live get_menu_items operations—never guess. Quote times only from those sources.",
     "Directions / address / parking: use get_restaurant_info address and operator knowledge entries; offer to repeat slowly. Do not invent landmarks or parking rules.",
     "Wait time / prep time: use get_restaurant_info prep_time_message or get_menu_items operations only. Phrase it as an estimate, never a guarantee.",
+    'Existing pickup order ("is it ready?", "where is my order?"): use get_order_status after the guest gives the phone number or name on the order; speak only the returned status/message—never guess prep time or kitchen state.',
     "Menu questions (what do you have, spicy, sizes, ingredients): answer only from the latest get_menu_items—name up to three real items; invite them to order if interested.",
     "Prices: menu data only; if missing, say you do not have the price on file.",
     `Policies or amenities not in menu or profile (WiFi, dress code, reservations, jobs): say ${displayName} does not have that on this line—offer store phone if listed in This restaurant, or staff callback per Handoff—never invent.`,
@@ -265,7 +266,7 @@ function buildRestaurantIdentitySection(
 function buildOrderingPolicySection(profile: RestaurantProfile | null): string {
   const pickup = profile?.allows_pickup ?? true;
   const delivery = profile?.allows_delivery ?? false;
-  const prep = profile?.prep_time_minutes ?? 20;
+  const prepMinutes = profile?.prep_time_minutes;
 
   const modes: string[] = [];
   if (pickup) modes.push("pickup");
@@ -273,8 +274,17 @@ function buildOrderingPolicySection(profile: RestaurantProfile | null): string {
 
   const lines = [
     `Fulfillment offered: ${modes.length ? modes.join(" and ") : "none configured—ask staff to update profile"}`,
-    `Typical prep time (quote when asked, not a guarantee): about ${prep} minutes`,
   ];
+
+  if (prepMinutes != null && prepMinutes > 0) {
+    lines.push(
+      `Typical prep time (quote when asked, not a guarantee): about ${prepMinutes} minutes`
+    );
+  } else {
+    lines.push(
+      "Wait/prep time: call get_restaurant_info and read prep_time_message only—do not quote minutes unless that tool returns a configured estimate."
+    );
+  }
 
   if (pickup && !delivery) {
     lines.push(

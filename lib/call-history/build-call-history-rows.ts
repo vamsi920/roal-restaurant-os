@@ -158,6 +158,39 @@ function metadataLooksLikeVoicemail(metadata: Record<string, unknown>): boolean 
   );
 }
 
+function transcriptLooksLikeOrderStatusInquiry(blob: string): boolean {
+  return (
+    blob.includes("is it ready") ||
+    blob.includes("order is ready") ||
+    blob.includes("order ready") ||
+    blob.includes("where is my order") ||
+    blob.includes("order status") ||
+    blob.includes("pickup ready") ||
+    blob.includes("ready for pickup") ||
+    blob.includes("still being prepared") ||
+    blob.includes("when will my order") ||
+    blob.includes("check on my order") ||
+    blob.includes("status of my order")
+  );
+}
+
+function transcriptLooksLikeInfoFaq(blob: string): boolean {
+  return (
+    blob.includes("hours") ||
+    blob.includes("open") ||
+    blob.includes("close") ||
+    blob.includes("directions") ||
+    blob.includes("address") ||
+    blob.includes("allergen") ||
+    blob.includes("allergy") ||
+    blob.includes("menu") ||
+    blob.includes("wait time") ||
+    blob.includes("prep time") ||
+    blob.includes("pickup time") ||
+    transcriptLooksLikeOrderStatusInquiry(blob)
+  );
+}
+
 function inferCallIntent(input: {
   outcome: AgentCallOutcome;
   status: string;
@@ -174,10 +207,13 @@ function inferCallIntent(input: {
   }
   if (input.followUpReason) return "handoff";
   if (input.hasReservationRequest) return "reservation";
-  if (input.outcome === "order_completed" && input.lineCount > 0) return "order";
-  if (input.lineCount > 0) return "order";
 
   const blob = transcriptBlob(input.metadata);
+  const looksLikeOrderStatus = transcriptLooksLikeOrderStatusInquiry(blob);
+
+  if (input.outcome === "order_completed" && input.lineCount > 0) return "order";
+  if (input.lineCount > 0 && !looksLikeOrderStatus) return "order";
+
   if (
     blob.includes("reservation") ||
     blob.includes("book a table") ||
@@ -186,17 +222,7 @@ function inferCallIntent(input: {
   ) {
     return "reservation";
   }
-  if (
-    blob.includes("hours") ||
-    blob.includes("open") ||
-    blob.includes("close") ||
-    blob.includes("directions") ||
-    blob.includes("address") ||
-    blob.includes("allergen") ||
-    blob.includes("allergy") ||
-    blob.includes("menu") ||
-    blob.includes("wait time")
-  ) {
+  if (transcriptLooksLikeInfoFaq(blob)) {
     return "faq";
   }
 

@@ -22,7 +22,7 @@ describe("home hero mobile (restaurant landing)", () => {
     expect(css).toMatch(
       /\.landing-home\.landing-home-canvas\s*\{[^}]*overflow-x:\s*clip/m
     );
-    expect(css).not.toMatch(/home-video-layer/);
+    expect(css).toMatch(/home-video-layer/);
     expect(css).toMatch(
       /@media \(max-width: 640px\)[\s\S]*\.roal-hero__stage\s*\{[^}]*border-radius:\s*1\.05rem/m
     );

@@ -236,6 +236,43 @@ describe("buildCallHistoryRows", () => {
     });
   });
 
+  it("classifies pickup order status inquiries as info, not orders", () => {
+    const rows = buildCallHistoryRows({
+      sessions: [
+        session({
+          sessionId: "status-call",
+          outcome: "no_order",
+          transcriptMetadata: {
+            transcript_summary:
+              "Guest asked if their pickup order is ready and gave a phone number.",
+          },
+        }),
+      ],
+      drafts: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          session_id: "status-call",
+          status: "draft",
+          items: [{ name: "Burger", quantity: 1 }],
+          customer_name: "Sam",
+          customer_phone: "+15551234567",
+          created_at: "2026-05-30T17:00:00.000Z",
+          updated_at: "2026-05-30T17:05:00.000Z",
+          completed_at: null,
+          canceled_at: null,
+        },
+      ],
+      receipts: [],
+    });
+
+    expect(rows[0]).toMatchObject({
+      intent: "faq",
+      intentLabel: "Menu or info",
+      lineCount: 1,
+      ownerActionLabel: "Answered from restaurant info",
+    });
+  });
+
   it("surfaces sanitized transcript lines from webhook metadata", () => {
     const rows = buildCallHistoryRows({
       sessions: [
