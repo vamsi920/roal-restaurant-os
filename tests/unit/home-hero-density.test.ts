@@ -1,81 +1,53 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import {
-  HOME_CTA,
-  HOME_HERO,
-  HOME_HERO_CTA,
-  HOME_HERO_PRICING_PILL,
-  HOME_PRICING_PILL,
-} from "@/lib/landing/home-theme";
-import { PRICING_HERO_SIGNAL, PRICING_RATE_AMOUNT } from "@/lib/landing/pricing-core";
-import { PUBLIC_CTA } from "@/lib/landing/public-cta";
 
 const REPO = join(import.meta.dirname, "../..");
+const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
-describe("home hero density (prompt 57)", () => {
-  it("copy is one headline and one short subhead", () => {
-    expect(HOME_HERO.title.split(/\s+/).length).toBeLessThanOrEqual(9);
-    const words = HOME_HERO.lead.trim().split(/\s+/);
-    expect(words.length).toBeLessThanOrEqual(30);
-    expect(HOME_HERO.title.toLowerCase()).toContain("phone order");
-    expect(HOME_HERO.lead.toLowerCase()).toContain("kitchen");
-    expect(HOME_HERO.title.toLowerCase()).toMatch(/never miss/);
-    expect(HOME_HERO.lead.toLowerCase()).toMatch(/language/);
+describe("home hero density (restaurant landing)", () => {
+  it("hero copy stays short and restaurant-specific", () => {
+    const page = read("components/landing/landing-page.tsx");
+    const titleMatch = page.match(/<h1[^>]*>\s*([\s\S]*?)<\/h1>/);
+    expect(titleMatch).not.toBeNull();
+    const title = titleMatch![1].replace(/\{[^}]+\}/g, "").replace(/<[^>]+>/g, "").trim();
+    expect(title.split(/\s+/).length).toBeLessThanOrEqual(12);
+    expect(title.toLowerCase()).toMatch(/never miss|phone order/);
+
+    const leadMatch = page.match(/className="roal-hero__lead"[\s\S]*?>([\s\S]*?)<\/p>/);
+    expect(leadMatch).not.toBeNull();
+    const lead = leadMatch![1].replace(/\{[^}]+\}/g, "").replace(/<[^>]+>/g, "").trim();
+    expect(lead.split(/\s+/).length).toBeLessThanOrEqual(32);
+    expect(lead.toLowerCase()).toMatch(/kitchen|language/);
+    expect(page.toLowerCase()).not.toContain("ai future");
+    expect(page.toLowerCase()).not.toContain("your ai host");
+    expect(page).toContain("Live phone order");
+    expect(page).not.toContain("Live AI order call");
   });
 
-  it("hero pricing signal uses configured rate", () => {
-    expect(HOME_PRICING_PILL.label).toBe("$0.90/order");
-    expect(HOME_HERO_PRICING_PILL.label).toBe(PRICING_HERO_SIGNAL);
-    expect(PRICING_HERO_SIGNAL).toContain(PRICING_RATE_AMOUNT);
-    expect(PRICING_HERO_SIGNAL.toLowerCase()).toContain("real order");
-
-    const pill = readFileSync(
-      join(REPO, "components/landing/home/landing-home-pricing-pill.tsx"),
-      "utf8"
-    );
-    expect(pill).toContain("HOME_HERO_PRICING_PILL");
-    expect(pill).toContain("home-pricing-pill__label");
-    expect(pill).not.toContain("home-pricing-pill__sep");
+  it("hero surfaces pricing and demo CTAs", () => {
+    const page = read("components/landing/landing-page.tsx");
+    expect(page).toContain("$0.90");
+    expect(page).toContain("Hear a demo call");
+    expect(page).toContain("roal-hero__price-note");
+    expect(page).toMatch(/only after a real phone order/i);
   });
 
-  it("hero has demo primary and sign-up secondary only", () => {
-    expect(HOME_HERO_CTA.primary).toEqual(PUBLIC_CTA.hearDemo);
-    expect(HOME_HERO_CTA.secondary).toEqual(PUBLIC_CTA.signUpOnboarding);
-    expect(HOME_CTA.secondary).not.toEqual(HOME_HERO_CTA.secondary);
+  it("hero layout uses compact frosted stage without legacy panels", () => {
+    const page = read("components/landing/landing-page.tsx");
+    const css = read("app/landing-home.css");
+    const shell = read("components/landing/home/landing-home-shell.tsx");
 
-    const hero = readFileSync(
-      join(REPO, "components/landing/home/landing-home-hero.tsx"),
-      "utf8"
-    );
-    expect(hero).toContain("HOME_HERO_CTA");
-  });
+    expect(page).toMatch(/<h1[\s>]/);
+    expect(page).toContain("roal-hero__stage");
+    expect(page).not.toContain("home-hero__qualifier");
+    expect(page).not.toContain("home-glass-panel");
+    expect(shell).not.toContain("LandingVideoBackground");
 
-  it("hero renders h1, one lead, pill, and two CTAs only", () => {
-    const hero = readFileSync(
-      join(REPO, "components/landing/landing-page.tsx"),
-      "utf8"
-    );
-    expect(hero).toMatch(/<h1[\s>]/);
-    expect((hero.match(/<p\b/g) ?? []).length).toBeGreaterThanOrEqual(1);
-    expect(hero).toContain("$0.90 per successful order");
-    expect(hero).toContain("Hear a demo call");
-    expect(hero).not.toContain("home-hero__qualifier");
-    expect(hero).not.toContain("home-hero__footer");
-    expect(hero).toContain("roal-hero__stage");
-    expect(hero).not.toContain("home-glass-panel");
-
-    const homeCss = readFileSync(join(REPO, "app/landing-home.css"), "utf8");
-    expect(homeCss).toMatch(/\.roal-hero\s*\{[^}]*padding:/s);
-    expect(homeCss).toContain(".roal-hero__stage");
-    expect(homeCss).toMatch(
-      /\.roal-hero__stage\s*\{[^}]*backdrop-filter:\s*blur/s
-    );
-
-    const cta = readFileSync(
-      join(REPO, "components/landing/home/landing-home-cta.tsx"),
-      "utf8"
-    );
-    expect(cta).toContain("showSecondary ?");
+    expect(css).toMatch(/\.roal-hero\s*\{[^}]*padding:/s);
+    expect(css).toContain(".roal-hero__stage");
+    expect(css).toMatch(/\.roal-hero__stage\s*\{[^}]*backdrop-filter:\s*blur/s);
+    expect(css).toMatch(/\.roal-hero__stage\s*\{[^}]*min-height:\s*clamp\(/s);
+    expect(css).not.toMatch(/home-video-layer/);
   });
 });

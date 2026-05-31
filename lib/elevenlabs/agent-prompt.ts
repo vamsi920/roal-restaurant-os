@@ -330,13 +330,19 @@ function buildMenuRulesSection(
   }
 
   if (menu) {
-    lines.push(
-      `Menu size hint: ${menu.categoryCount} categories, ${menu.itemCount} items${
-        menu.modifierCount > 0
-          ? `, ${menu.modifierCount} modifier options—confirm required choices before syncing`
-          : ""
-      }.`
-    );
+    if (menu.itemCount === 0) {
+      lines.push(
+        "This location has no orderable menu items on file: do not add items or call sync_draft_order or finalize_order. Say ordering is unavailable on this line and offer staff callback per Handoff."
+      );
+    } else {
+      lines.push(
+        `Menu size hint: ${menu.categoryCount} categories, ${menu.itemCount} items${
+          menu.modifierCount > 0
+            ? `, ${menu.modifierCount} modifier options—confirm required choices before syncing`
+            : ""
+        }.`
+      );
+    }
   }
 
   return `## Menu rules\n${lines.map((l) => `- ${l}`).join("\n")}`;

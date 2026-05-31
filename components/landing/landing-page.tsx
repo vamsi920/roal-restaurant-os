@@ -3,26 +3,26 @@ import Link from "next/link";
 import { LandingHomeShell } from "./home/landing-home-shell";
 
 const heroProof = [
-  "Answers when staff cannot",
-  "Takes orders in the customer's language",
-  "You pay only for successful orders",
+  "Picks up when staff cannot",
+  "Speaks the customer's language",
+  "Charges only for completed orders",
 ] as const;
 
 const rushStory = [
   {
-    label: "Rush hour",
-    title: "The phone keeps ringing.",
-    body: "Your team is cooking, serving, packing, and the guest on the phone is already deciding where else to order.",
+    label: "7:12 PM",
+    title: "The phone rings while the line is out the door.",
+    body: "Your team is cooking, packing, and helping guests. One unanswered call can become one lost order.",
   },
   {
-    label: "ROAL answers",
-    title: "A calm voice takes over.",
-    body: "ROAL greets the guest, understands the order, handles menu questions, and confirms pickup or delivery details.",
+    label: "ROAL picks up",
+    title: "A natural voice takes the order.",
+    body: "It answers in the customer's language, understands menu questions, confirms items, and captures pickup details.",
   },
   {
     label: "Kitchen ready",
-    title: "Your staff sees the ticket.",
-    body: "No transcript, no dashboard maze. Just the name, items, notes, timing, and total where your team can act.",
+    title: "Staff see the ticket, not the chaos.",
+    body: "The kitchen gets the confirmed order, notes, time, and total in a clean view your team can act on.",
   },
 ] as const;
 
@@ -30,65 +30,68 @@ const setupSteps = [
   {
     step: "01",
     title: "Upload the menu",
-    body: "ROAL learns dishes, modifiers, sold-out items, hours, and fulfillment rules.",
+    body: "Photos or PDFs become the live menu ROAL uses to answer calls and build orders.",
   },
   {
     step: "02",
     title: "Connect the phone",
-    body: "Forward overflow, busy-hour, or after-hours calls from the number guests already use.",
+    body: "Forward missed, busy-hour, or after-hours calls from the number guests already know.",
   },
   {
     step: "03",
-    title: "Watch orders arrive",
-    body: "Every successful call becomes a clean ticket for the restaurant location it belongs to.",
+    title: "Watch tickets arrive",
+    body: "Completed calls turn into clean kitchen tickets for the right restaurant location.",
   },
 ] as const;
 
 const ticketRows = [
-  ["Guest", "Maria G. · returning caller"],
-  ["Language", "Spanish call · English ticket"],
+  ["Guest", "Maria G. - repeat caller"],
+  ["Language", "Spanish call - kitchen ticket in English"],
   ["Items", "2 margherita pizzas, garlic knots"],
   ["Timing", "Pickup at 7:40 PM"],
-  ["Charge", "$0.90 only after the order succeeds"],
+  ["Billing", "$0.90 only when this order succeeds"],
 ] as const;
 
 const benefits = [
   {
-    value: "0",
-    label: "missed rush calls needed",
+    value: "Rush",
+    label: "covered when the team is busiest",
   },
   {
     value: "24/7",
-    label: "phone coverage when you want it",
+    label: "pickup coverage after closing and between shifts",
   },
   {
     value: "$0.90",
-    label: "per successful order",
+    label: "only after a successful order",
   },
 ] as const;
 
 const faqs = [
   {
-    question: "What does ROAL do for my restaurant?",
+    question: "What problem does ROAL solve?",
     answer:
-      "ROAL answers your phone, speaks naturally with guests, takes orders from your real menu, and sends a kitchen-ready ticket to the right restaurant location.",
+      "ROAL protects the phone orders restaurants lose when staff cannot answer during lunch rush, dinner rush, prep, closing, or after-hours.",
   },
   {
-    question: "Will guests understand they can just talk normally?",
+    question: "Does it sound like a normal phone call?",
     answer:
-      "Yes. ROAL is built for normal phone conversation. Guests can ask menu questions, change items, give notes, and confirm the order in the language they are most comfortable using.",
+      "Yes. Guests can talk naturally, ask menu questions, change items, give notes, and order in the language they are most comfortable using.",
   },
   {
     question: "Do I pay for missed calls, hangups, or random questions?",
     answer:
-      "No. The pricing promise is simple: ROAL charges for successful orders, not noise.",
+      "No. The pricing promise is simple: ROAL charges for successful orders, not calls that never become revenue.",
   },
   {
     question: "Can my staff still answer the phone?",
     answer:
-      "Yes. ROAL is designed to protect the calls your team cannot reach during busy moments, not replace restaurant judgment.",
+      "Yes. ROAL covers the calls your team cannot reach, without taking control away from the restaurant.",
   },
 ] as const;
+
+const languageChips = ["English", "Spanish", "Hindi", "Guest's language"] as const;
+const callBeats = ["Answers", "Understands", "Confirms", "Sends ticket"] as const;
 
 function ArrowIcon() {
   return (
@@ -148,14 +151,13 @@ export function LandingPage() {
       <section className="roal-hero" aria-labelledby="hero-heading">
         <div className="roal-hero__stage public-reveal">
           <div className="roal-hero__copy">
-            <p className="roal-kicker">AI phone ordering for busy restaurants</p>
+            <p className="roal-kicker">AI phone orders for restaurants</p>
             <h1 id="hero-heading" className="roal-hero__title">
-              Missed calls should not become missed orders.
+              Never miss another phone order.
             </h1>
             <p className="roal-hero__lead">
-              ROAL answers your restaurant phone, speaks with guests like a trained
-              host, takes the order in their language, and sends your kitchen a clean
-              ticket.
+              ROAL answers in the customer&apos;s language and sends the order to
+              your kitchen.
             </p>
 
             <div className="roal-hero__actions" aria-label="Primary actions">
@@ -166,6 +168,11 @@ export function LandingPage() {
               <Link href="/pricing" className="roal-button roal-button--secondary">
                 Only pay for successful orders
               </Link>
+            </div>
+
+            <div className="roal-hero__price-note" aria-label="Pricing promise">
+              <strong>$0.90</strong>
+              <span>only after a real phone order succeeds</span>
             </div>
 
             <div className="roal-hero__proof" aria-label="ROAL promises">
@@ -187,20 +194,30 @@ export function LandingPage() {
               priority
               className="roal-hero__image"
             />
+            <div className="roal-hero__status" aria-label="ROAL call flow">
+              {callBeats.map((beat) => (
+                <span key={beat}>{beat}</span>
+              ))}
+            </div>
             <div className="roal-call-card">
               <div className="roal-call-card__top">
                 <span>
                   <PhoneIcon />
-                  Live order call
+                  Live phone order
                 </span>
                 <strong>00:48</strong>
+              </div>
+              <div className="roal-language-row" aria-label="Languages ROAL can handle">
+                {languageChips.map((language) => (
+                  <span key={language}>{language}</span>
+                ))}
               </div>
               <p className="roal-call-card__line">
                 &ldquo;Two margherita pizzas, garlic knots, pickup at 7:40.&rdquo;
               </p>
               <div className="roal-call-card__ticket">
                 <span>Ticket sent</span>
-                <strong>Kitchen can start now</strong>
+                <strong>Kitchen sees the order now</strong>
               </div>
             </div>
           </div>
@@ -210,11 +227,11 @@ export function LandingPage() {
       <section className="roal-section roal-section--story" aria-labelledby="story-heading">
         <div className="home-wrap roal-story-layout">
           <div className="roal-section__copy public-reveal">
-            <p className="roal-kicker">The rush-hour problem</p>
-            <h2 id="story-heading">When your team is busiest, your phone still expects perfect service.</h2>
+            <p className="roal-kicker">The real problem</p>
+            <h2 id="story-heading">Busy restaurants do not lose demand. They lose reachable moments.</h2>
             <p>
-              ROAL protects the moment most restaurants lose money: a guest calls,
-              nobody can answer, and the order goes somewhere else.
+              Guests still call. They still want pickup. ROAL makes sure the call is
+              answered when your team is too busy to grab the phone.
             </p>
           </div>
 
@@ -231,35 +248,44 @@ export function LandingPage() {
       </section>
 
       <section className="roal-section roal-section--steps" aria-labelledby="steps-heading">
-        <div className="home-wrap">
+        <div className="home-wrap roal-steps-layout">
           <div className="roal-section__copy roal-section__copy--center public-reveal">
-            <p className="roal-kicker">How it works</p>
+            <p className="roal-kicker">How it starts</p>
             <h2 id="steps-heading">Menu in. Phone connected. Orders out.</h2>
-            <p>Simple enough for an owner to understand before the first demo call ends.</p>
+            <p>Built for owners who want fewer missed calls, not another system to babysit.</p>
           </div>
 
-          <ol className="roal-steps public-reveal-stagger">
-            {setupSteps.map((item) => (
-              <li key={item.step} className="roal-step public-reveal-item">
-                <span>{item.step}</span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div className="roal-steps-panel public-reveal">
+            <Image
+              src="/landing/menu-food-grid.png"
+              alt="Restaurant menu items ready for phone ordering"
+              width={1200}
+              height={900}
+              className="roal-steps-panel__menu"
+            />
+            <ol className="roal-steps public-reveal-stagger">
+              {setupSteps.map((item) => (
+                <li key={item.step} className="roal-step public-reveal-item">
+                  <span>{item.step}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
 
-      <section className="roal-section roal-section--ticket" aria-labelledby="ticket-heading">
+      <section className="roal-section" aria-labelledby="ticket-heading">
         <div className="home-wrap roal-ticket-layout public-reveal">
           <div className="roal-section__copy">
             <p className="roal-kicker">What staff sees</p>
-            <h2 id="ticket-heading">Not a transcript. A ticket.</h2>
+            <h2 id="ticket-heading">No transcript hunting. Just the order.</h2>
             <p>
-              The phone conversation becomes the exact information your team needs to
-              cook, pack, and hand off the order.
+              ROAL keeps the conversation natural for the guest and turns it into
+              the simple ticket your team needs.
             </p>
           </div>
 
@@ -278,12 +304,12 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="roal-section roal-section--pay" aria-labelledby="pay-heading">
+      <section className="roal-section roal-section--pricing" aria-labelledby="pay-heading">
         <div className="home-wrap roal-pay-panel public-reveal">
           <div className="roal-pay-panel__copy">
-            <p className="roal-kicker">Pricing that feels fair</p>
-            <h2 id="pay-heading">Only pay when ROAL creates a real order.</h2>
-            <p>No charge for hangups, wrong numbers, or basic questions. If the call does not become revenue, it should not become a bill.</p>
+            <p className="roal-kicker">Simple pricing</p>
+            <h2 id="pay-heading">Pay when ROAL brings in an order.</h2>
+            <p>No charge for hangups, wrong numbers, or questions that do not become orders.</p>
           </div>
 
           <div className="roal-pay-panel__price" aria-label="$0.90 per successful order">
@@ -302,7 +328,7 @@ export function LandingPage() {
           <div className="roal-proof-strip public-reveal">
             <div>
               <p className="roal-kicker">Why it matters</p>
-              <h2 id="proof-heading">More orders without adding another person to the phone.</h2>
+              <h2 id="proof-heading">More phone revenue without another phone shift.</h2>
             </div>
             <dl>
               {benefits.map((item) => (
@@ -316,11 +342,11 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="roal-section roal-section--faq" aria-labelledby="faq-heading">
+      <section className="roal-section" aria-labelledby="faq-heading">
         <div className="home-wrap roal-faq-layout">
           <div className="roal-section__copy public-reveal">
             <p className="roal-kicker">Questions owners ask</p>
-            <h2 id="faq-heading">Clear before you connect the line.</h2>
+            <h2 id="faq-heading">Clear before the first call.</h2>
           </div>
 
           <div className="roal-faq-list public-reveal-stagger">
@@ -346,10 +372,10 @@ export function LandingPage() {
             />
             <div className="roal-final-panel__copy">
               <p className="roal-kicker">Try one call first</p>
-              <h2 id="final-heading">Hear the order your restaurant would have missed.</h2>
-              <p>
-                Bring your menu. Listen to ROAL answer. See the ticket. Then decide
-                whether your phone should keep losing orders during rush hour.
+              <h2 id="final-heading">Hear ROAL take an order from your menu.</h2>
+              <p className="roal-final-panel__lead">
+                Bring your menu. Listen to a real ordering scenario. See the exact
+                ticket your team would receive.
               </p>
               <div className="roal-hero__actions">
                 <Link href="/demo" className="roal-button roal-button--primary">

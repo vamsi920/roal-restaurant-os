@@ -190,7 +190,7 @@ function asString(value: unknown): string {
 }
 
 function collectMetadataStrings(metadata: Record<string, unknown>): string[] {
-  const pieces: string[] = [
+  const pieces: unknown[] = [
     metadata.transcript_summary,
     metadata.summary,
     metadata.intent,

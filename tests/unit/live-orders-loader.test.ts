@@ -25,6 +25,27 @@ vi.mock("@/lib/live-orders/call-evidence", () => ({
   loadOrderCallEvidenceBySession: vi.fn(async () => ({})),
 }));
 
+vi.mock("@/lib/restaurant-launch/load-checklist", () => ({
+  loadRestaurantLaunchGate: vi.fn(async (_supabase, input) => ({
+    restaurantId: input.restaurantId,
+    restaurantName: input.restaurantName,
+    phase: "blocked" as const,
+    phaseLabel: "Blocked",
+    isLiveReady: false,
+    topBlockerLabel: null,
+    topBlockerDetail: null,
+    primaryAction: { label: "Setup", href: "#" },
+    checklist: {
+      restaurantId: input.restaurantId,
+      restaurantName: input.restaurantName,
+      items: [],
+      completedCount: 0,
+      totalCount: 8,
+      isLaunchReady: false,
+    },
+  })),
+}));
+
 vi.mock("@/lib/live-orders/readiness-from-profile", () => ({
   phoneAgentReadinessFromProfile: vi.fn(() => ({
     agentLinked: false,

@@ -151,6 +151,17 @@ export function buildReviewHints(menu: ScannedMenu): ReviewHint[] {
     pushHint(hints, "categories", "No categories extracted", "error", "heuristic");
   }
 
+  const totalItems = menu.categories.reduce((sum, cat) => sum + cat.items.length, 0);
+  if (totalItems === 0) {
+    pushHint(
+      hints,
+      "categories",
+      "No menu items to import — add at least one item before committing",
+      "error",
+      "heuristic"
+    );
+  }
+
   return hints;
 }
 
