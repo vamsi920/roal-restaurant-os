@@ -1,8 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ROAL_RESTAURANT_ID_HEADER } from "@/lib/sync-elevenlabs-roal-tools";
+import {
+  ROAL_BAKED_TOOL_NAMES,
+  ROAL_RESTAURANT_ID_HEADER,
+} from "@/lib/sync-elevenlabs-roal-tools";
 
 const RESTAURANT_ID = "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
+const RESTAURANT_B = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const AGENT_ID = "agent_baked_test";
+const AGENT_B = "agent_location_b";
+const TEMPLATE_AGENT_ID = "agent_template_global";
 const EDGE_BASE = "https://test.supabase.co";
 
 const elevenLabsMocks = vi.hoisted(() => ({
@@ -14,12 +20,21 @@ const elevenLabsMocks = vi.hoisted(() => ({
 }));
 
 vi.mock("@/lib/env.server", () => ({
-  requireElevenLabsAgentId: vi.fn(() => AGENT_ID),
+  getElevenLabsAgentId: vi.fn(() => TEMPLATE_AGENT_ID),
+  requireElevenLabsAgentId: vi.fn((fallback?: string | null) => {
+    const id = fallback?.trim() || AGENT_ID;
+    if (!id) throw new Error("missing agent");
+    return id;
+  }),
   requireRoalToolSecrets: vi.fn(() => ({
     agentToolSecret: "legacy-secret",
     supabaseAnonKey: "anon-key",
     edgeBase: EDGE_BASE,
   })),
+}));
+
+vi.mock("@/lib/agent-tools/token", () => ({
+  mintAgentToolToken: vi.fn(() => "roal1.signed.jwt.token"),
 }));
 
 vi.mock("@/lib/elevenlabs", () => ({
@@ -74,15 +89,16 @@ describe("syncRoalElevenLabsTools baked config", () => {
       (c) => c[0].tool_config as Record<string, unknown>
     );
     const names = configs.map((c) => c.name).sort();
-    expect(names).toEqual([
-      "finalize_order",
-      "get_caller_history",
-      "get_menu_items",
-      "get_order_status",
-      "get_restaurant_info",
-      "submit_reservation_request",
-      "sync_draft_order",
-    ]);
+    expect(names).toEqual([...ROAL_BAKED_TOOL_NAMES].sort());
+
+    expect(elevenLabsMocks.patchConvaiAgent).toHaveBeenCalledWith(
+      AGENT_ID,
+      expect.any(Object)
+    );
+    expect(elevenLabsMocks.patchConvaiAgent).not.toHaveBeenCalledWith(
+      TEMPLATE_AGENT_ID,
+      expect.anything()
+    );
 
     const getMenu = configs.find((c) => c.name === "get_menu_items")!;
     const apiSchema = getMenu.api_schema as {
@@ -98,7 +114,8 @@ describe("syncRoalElevenLabsTools baked config", () => {
     expect(apiSchema.request_headers[ROAL_RESTAURANT_ID_HEADER]).toBe(
       RESTAURANT_ID
     );
-    expect(apiSchema.request_headers.Authorization).toMatch(/^Bearer /);
+    expect(apiSchema.request_headers.Authorization).toBe("Bearer roal1.signed.jwt.token");
+    expect(apiSchema.request_headers.apikey).toBe("anon-key");
 
     const restaurantInfo = configs.find((c) => c.name === "get_restaurant_info")!;
     const infoSchema = restaurantInfo.api_schema as {
@@ -237,5 +254,63 @@ describe("syncRoalElevenLabsTools baked config", () => {
       "requested_date",
       "requested_time",
     ]);
+  });
+
+  it("bakes location-specific URLs per restaurant (multi-location isolation)", async () => {
+    await syncRoalElevenLabsTools({
+      agentId: AGENT_ID,
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "North",
+    });
+
+    vi.clearAllMocks();
+    elevenLabsMocks.listAllConvaiTools.mockResolvedValue([]);
+    elevenLabsMocks.createConvaiTool.mockImplementation(
+      async ({ tool_config }: { tool_config: { name: string } }) => ({
+        id: `tool-b-${tool_config.name}`,
+        tool_config,
+      })
+    );
+    elevenLabsMocks.getConvaiAgent.mockResolvedValue({
+      conversation_config: {
+        agent: { dynamic_variables: { dynamic_variable_placeholders: {} } },
+      },
+    });
+
+    await syncRoalElevenLabsTools({
+      agentId: AGENT_B,
+      restaurantId: RESTAURANT_B,
+      restaurantName: "South",
+    });
+
+    const southMenu = elevenLabsMocks.createConvaiTool.mock.calls.find(
+      (c) => (c[0].tool_config as { name: string }).name === "get_menu_items"
+    )![0].tool_config as {
+      api_schema: { url: string; request_headers: Record<string, string> };
+    };
+    expect(southMenu.api_schema.url).toContain(
+      `restaurant_id=${encodeURIComponent(RESTAURANT_B)}`
+    );
+    expect(southMenu.api_schema.url).not.toContain(RESTAURANT_ID);
+    expect(southMenu.api_schema.request_headers[ROAL_RESTAURANT_ID_HEADER]).toBe(
+      RESTAURANT_B
+    );
+    expect(elevenLabsMocks.patchConvaiAgent).toHaveBeenCalledWith(
+      AGENT_B,
+      expect.any(Object)
+    );
+  });
+
+  it("refuses to bake tools onto the shared template agent", async () => {
+    await expect(
+      syncRoalElevenLabsTools({
+        agentId: TEMPLATE_AGENT_ID,
+        restaurantId: RESTAURANT_ID,
+        restaurantName: "Egg Mania",
+      })
+    ).rejects.toThrow(/shared template agent/i);
+
+    expect(elevenLabsMocks.createConvaiTool).not.toHaveBeenCalled();
+    expect(elevenLabsMocks.patchConvaiAgent).not.toHaveBeenCalled();
   });
 });

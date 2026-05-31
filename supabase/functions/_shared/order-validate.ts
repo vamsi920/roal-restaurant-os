@@ -45,6 +45,14 @@ const PLACEHOLDER_NAME_RE =
 const PLACEHOLDER_PHONE_RE =
   /^(555[-.\s]?)?0{3,}[-.\s]?0{4}$|^1234567890$|^0000000000$/;
 
+function normalizeMenuName(name: string): string {
+  return name.trim().replace(/\s+/g, " ");
+}
+
+function groupKey(itemId: string, groupName: string): string {
+  return `${itemId}::${normalizeMenuName(groupName).toLowerCase()}`;
+}
+
 function buildMenuIndex(
   items: MenuItemRow[],
   modifiers: MenuModifierRow[]
@@ -220,15 +228,16 @@ function validateModifierGroups(
     selected.push(mod);
   }
 
-  const groups = new Map<string, MenuModifierRow[]>();
+  const groups = new Map<string, { label: string; mods: MenuModifierRow[] }>();
   for (const m of modifiers) {
-    const g = m.group_name?.trim() || "Options";
-    const list = groups.get(g) ?? [];
-    list.push(m);
-    groups.set(g, list);
+    const label = m.group_name?.trim() || "Options";
+    const key = groupKey(item.id, label);
+    const entry = groups.get(key) ?? { label, mods: [] };
+    entry.mods.push(m);
+    groups.set(key, entry);
   }
 
-  for (const [groupName, groupMods] of groups) {
+  for (const { label: groupName, mods: groupMods } of groups.values()) {
     const minRequired = Math.max(0, ...groupMods.map((m) => m.min_selection ?? 0));
     const maxAllowed = Math.min(
       99,
@@ -300,6 +309,21 @@ function validateCart(
         };
   }
 
+  if (items.length > 100) {
+    return {
+      ok: false,
+      issues: [
+        {
+          index: 0,
+          code: "items_too_large",
+          message: "Cart cannot exceed 100 lines.",
+          suggestion: "Split into a smaller order or confirm quantities.",
+        },
+      ],
+      normalizedItems: [],
+    };
+  }
+
   const index = buildMenuIndex(menuItems, menuModifiers);
   const issues: CartValidationIssue[] = [];
   const normalizedItems: NormalizedCartLine[] = [];
@@ -366,8 +390,11 @@ function validateCart(
     });
   });
 
+  const hasBlockingIssues = issues.length > 0;
+  const hasLines = normalizedItems.length > 0;
+
   return {
-    ok: issues.length === 0 && normalizedItems.length > 0,
+    ok: !hasBlockingIssues && hasLines,
     issues,
     normalizedItems,
   };

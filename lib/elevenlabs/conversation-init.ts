@@ -1,3 +1,4 @@
+import { getElevenLabsAgentId } from "@/lib/env.server";
 import { getConvaiAgent } from "@/lib/elevenlabs";
 import {
   DEFAULT_RESTAURANT_NAME,
@@ -207,6 +208,11 @@ async function resolveRestaurantBySavedAgentId(
   const aid = agentId.trim();
   if (!aid) return null;
 
+  const templateAgentId = getElevenLabsAgentId();
+  if (templateAgentId && aid === templateAgentId) {
+    return null;
+  }
+
   const supabase = getServiceRoleSupabase();
   if (!supabase) return null;
 
@@ -246,12 +252,15 @@ export async function lookupRestaurantByCalledNumber(
 
   if (error || !profiles?.length) return null;
 
-  const match = profiles.find((row) => {
+  const matches = profiles.filter((row) => {
     const phone =
       typeof row.phone === "string" ? row.phone : String(row.phone ?? "");
     return phoneLookupKey(phone) === key;
   });
 
+  if (matches.length !== 1) return null;
+
+  const match = matches[0];
   if (!match?.restaurant_id) return null;
 
   const restaurantId = String(match.restaurant_id);

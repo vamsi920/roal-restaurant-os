@@ -1,34 +1,32 @@
 /**
- * ROAL premium home page.
- * Scoped to `.landing-home` so public interior pages and dashboard styles remain isolated.
+ * ROAL home page.
+ * Psychology-first goal: restaurant owners understand the promise in one glance.
  */
 
 @import "./public-theme.css";
 
 .landing-home.landing-home-canvas {
-  --home-ink: 14 18 26;
-  --home-muted: 78 86 101;
-  --home-soft: 232 239 255;
-  --home-blue: 62 121 255;
-  --home-blue-deep: 33 63 148;
-  --home-cyan: 91 221 239;
-  --home-lime: 198 245 111;
+  --home-ink: 10 15 24;
+  --home-muted: 76 85 101;
+  --home-muted-strong: 44 53 68;
   --home-panel: 255 255 255;
   --home-line: 217 226 244;
-  --home-gutter: clamp(1rem, 4vw, 2.75rem);
-  --home-content-max: 74rem;
-  --home-display: clamp(3rem, 6.3vw, 6.65rem);
-  --home-h2: clamp(2rem, 4.6vw, 4.7rem);
+  --home-blue: 53 115 255;
+  --home-blue-deep: 24 54 140;
+  --home-cyan: 106 225 244;
+  --home-lime: 199 245 103;
+  --home-violet: 155 137 255;
+  --home-gutter: clamp(1rem, 4vw, 3rem);
+  --home-max: 75rem;
   --home-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --home-focus-ring: rgb(var(--home-blue) / 0.68);
   position: relative;
   isolation: isolate;
   min-height: 100dvh;
   overflow-x: clip;
   background:
-    radial-gradient(circle at 78% 0%, rgb(var(--home-cyan) / 0.38), transparent 29rem),
-    radial-gradient(circle at 15% 8%, rgb(218 228 255 / 0.94), transparent 28rem),
-    linear-gradient(180deg, rgb(244 250 255) 0%, rgb(246 248 255) 42%, rgb(255 255 255) 100%);
+    radial-gradient(circle at 78% 0%, rgb(var(--home-cyan) / 0.36), transparent 30rem),
+    radial-gradient(circle at 12% 12%, rgb(var(--home-violet) / 0.22), transparent 27rem),
+    linear-gradient(180deg, #f6fbff 0%, #f8faff 48%, #ffffff 100%);
   color: rgb(var(--home-ink));
   font-family: var(--font-body, "Plus Jakarta Sans", system-ui, sans-serif);
 }
@@ -39,12 +37,12 @@
   box-sizing: border-box;
 }
 
-.landing-home :is(h1, h2, h3, p, summary, a, button, small, span) {
+.landing-home :is(h1, h2, h3, p, a, button, summary, span, strong, small) {
   overflow-wrap: break-word;
 }
 
 .landing-home :is(a, button, summary):focus-visible {
-  outline: 2px solid var(--home-focus-ring);
+  outline: 2px solid rgb(var(--home-blue) / 0.7);
   outline-offset: 4px;
 }
 
@@ -54,11 +52,11 @@
 }
 
 .landing-home .home-wrap {
-  width: min(var(--home-content-max), calc(100vw - (var(--home-gutter) * 2)));
+  width: min(var(--home-max), calc(100vw - (var(--home-gutter) * 2)));
   margin-inline: auto;
 }
 
-/* Animated background */
+/* Background */
 
 .landing-home .home-video-layer {
   position: fixed;
@@ -74,7 +72,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.34;
+  opacity: 0.32;
   filter: saturate(1.1) contrast(1.02);
 }
 
@@ -86,21 +84,21 @@
 
 .landing-home .home-video-layer__blobs {
   background:
-    radial-gradient(circle at 64% 15%, rgb(110 220 255 / 0.48), transparent 22rem),
-    radial-gradient(circle at 90% 45%, rgb(203 245 111 / 0.32), transparent 19rem),
-    radial-gradient(circle at 18% 22%, rgb(151 170 255 / 0.4), transparent 22rem);
-  animation: roal-bg-drift 16s var(--home-ease) infinite alternate;
+    radial-gradient(circle at 63% 12%, rgb(var(--home-cyan) / 0.48), transparent 23rem),
+    radial-gradient(circle at 88% 43%, rgb(var(--home-lime) / 0.32), transparent 20rem),
+    radial-gradient(circle at 18% 20%, rgb(var(--home-violet) / 0.32), transparent 24rem);
+  animation: roal-bg-drift 18s var(--home-ease) infinite alternate;
 }
 
 .landing-home .home-video-layer__wash {
   background:
-    linear-gradient(180deg, rgb(246 250 255 / 0.76), rgb(250 252 255 / 0.9) 62%, rgb(255 255 255)),
-    linear-gradient(90deg, rgb(255 255 255 / 0.72), transparent 52%);
+    linear-gradient(180deg, rgb(247 251 255 / 0.78), rgb(250 252 255 / 0.92) 62%, #ffffff),
+    linear-gradient(90deg, rgb(255 255 255 / 0.76), transparent 56%);
 }
 
 @keyframes roal-bg-drift {
   from {
-    transform: translate3d(-1.5rem, -0.8rem, 0) scale(1);
+    transform: translate3d(-1.2rem, -0.8rem, 0) scale(1);
   }
   to {
     transform: translate3d(1.2rem, 1rem, 0) scale(1.04);
@@ -126,13 +124,13 @@
   gap: clamp(1rem, 3vw, 2.6rem);
   width: min(72rem, calc(100vw - 2rem));
   min-height: 4rem;
-  border: 1px solid rgb(255 255 255 / 0.76);
+  border: 1px solid rgb(255 255 255 / 0.8);
   border-radius: 999px;
-  background: rgb(255 255 255 / 0.68);
+  background: rgb(255 255 255 / 0.7);
   padding: 0.48rem 0.55rem 0.48rem 0.92rem;
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.86),
-    0 24px 70px rgb(24 39 82 / 0.13);
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    0 22px 60px rgb(23 40 80 / 0.12);
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
   pointer-events: auto;
@@ -152,13 +150,14 @@
   text-decoration: none;
 }
 
-.landing-home .public-nav-logo__word {
-  line-height: 1;
-}
-
 .landing-home .public-nav-links {
   justify-content: center;
   gap: clamp(1rem, 2.3vw, 2rem);
+}
+
+.landing-home .public-nav-actions {
+  justify-content: flex-end;
+  gap: 0.45rem;
 }
 
 .landing-home .public-nav-link,
@@ -173,7 +172,6 @@
   font-size: 0.85rem;
   font-weight: 780;
   line-height: 1;
-  letter-spacing: 0;
   text-decoration: none;
   transition:
     color 0.2s var(--home-ease),
@@ -186,18 +184,13 @@
   color: rgb(var(--home-blue));
 }
 
-.landing-home .public-nav-actions {
-  justify-content: flex-end;
-  gap: 0.45rem;
-}
-
 .landing-home .public-nav-login {
   padding-inline: 0.8rem;
 }
 
 .landing-home .public-nav-cta {
   min-height: 3rem;
-  padding-inline: 1.22rem;
+  padding-inline: 1.18rem;
   background: rgb(var(--home-ink));
   color: white;
   box-shadow: 0 18px 42px rgb(var(--home-ink) / 0.18);
@@ -220,7 +213,7 @@
   inset: 0;
   z-index: 30;
   border: 0;
-  background: rgb(9 14 24 / 0.26);
+  background: rgb(9 14 24 / 0.25);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -293,10 +286,6 @@
   background: rgb(255 255 255 / 0.72);
 }
 
-.landing-home .public-nav-drawer__link.is-active {
-  color: rgb(var(--home-blue));
-}
-
 .landing-home .public-nav-drawer__ghost {
   flex: 1;
   border: 1px solid rgb(var(--home-ink) / 0.12);
@@ -310,7 +299,7 @@
   background: rgb(var(--home-ink));
 }
 
-/* Core typography and buttons */
+/* Shared type and controls */
 
 .landing-home .roal-kicker {
   display: inline-flex;
@@ -321,34 +310,40 @@
   border: 1px solid rgb(var(--home-blue) / 0.18);
   border-radius: 999px;
   background: rgb(255 255 255 / 0.72);
-  padding: 0.44rem 0.8rem;
+  padding: 0.43rem 0.78rem;
   color: rgb(var(--home-blue-deep));
   font-size: 0.74rem;
   font-weight: 900;
   line-height: 1.15;
-  letter-spacing: 0;
 }
 
 .landing-home :is(.roal-hero__title, .roal-section h2, .roal-final h2) {
   margin: 0;
   color: rgb(var(--home-ink));
-  font-family: var(--font-display, "Sora", "Plus Jakarta Sans", system-ui, sans-serif);
-  font-weight: 760;
+  font-family: var(--font-display, "Sora", var(--font-body), system-ui, sans-serif);
+  font-weight: 700;
   letter-spacing: 0;
   text-wrap: balance;
 }
 
 .landing-home .roal-hero__title {
-  max-width: 11.8ch;
-  font-size: clamp(3.25rem, 7.1vw, 7.1rem);
-  line-height: 0.88;
+  max-width: 14ch;
+  font-size: clamp(2.9rem, 6.2vw, 6.25rem);
+  line-height: 0.93;
+}
+
+.landing-home .roal-section h2,
+.landing-home .roal-final h2 {
+  max-width: 15ch;
+  font-size: clamp(2rem, 4vw, 4.25rem);
+  line-height: 1;
 }
 
 .landing-home :is(.roal-hero__lead, .roal-section p:not(.roal-kicker), .roal-final p:not(.roal-kicker)) {
   margin: 0;
-  color: rgb(var(--home-muted));
-  font-size: clamp(1rem, 1.4vw, 1.16rem);
-  font-weight: 620;
+  color: rgb(var(--home-muted-strong));
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
+  font-weight: 600;
   line-height: 1.58;
   text-wrap: pretty;
 }
@@ -358,9 +353,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.52rem;
-  min-height: 3.2rem;
+  min-height: 3.15rem;
   border-radius: 999px;
-  padding: 0.82rem 1.25rem;
+  padding: 0.82rem 1.22rem;
   font-size: 0.94rem;
   font-weight: 870;
   line-height: 1.15;
@@ -386,9 +381,9 @@
   box-shadow: 0 20px 46px rgb(var(--home-ink) / 0.2);
 }
 
-.landing-home .roal-btn--secondary {
+.landing-home .roal-btn--quiet {
   border: 1px solid rgb(var(--home-ink) / 0.12);
-  background: rgb(255 255 255 / 0.72);
+  background: rgb(255 255 255 / 0.74);
   color: rgb(var(--home-ink));
 }
 
@@ -398,30 +393,30 @@
   padding: clamp(3rem, 5vh, 4rem) var(--home-gutter) clamp(1.5rem, 4vw, 3.5rem);
 }
 
-.landing-home .roal-hero__panel {
+.landing-home .roal-hero__shell {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 0.78fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(22rem, 0.82fr);
   align-items: center;
-  gap: clamp(1.4rem, 4vw, 4.5rem);
-  width: min(78rem, calc(100vw - 2rem));
-  min-height: min(40rem, calc(100svh - 9.2rem));
+  gap: clamp(1.5rem, 4.5vw, 4.8rem);
+  width: min(79rem, calc(100vw - 2rem));
+  min-height: min(41rem, calc(100svh - 9.2rem));
   margin-inline: auto;
   overflow: hidden;
   border: 1px solid rgb(255 255 255 / 0.8);
-  border-radius: clamp(1.45rem, 3vw, 2.65rem);
+  border-radius: clamp(1.45rem, 3vw, 2.7rem);
   background:
-    linear-gradient(135deg, rgb(255 255 255 / 0.93), rgb(255 255 255 / 0.62) 52%, rgb(221 244 255 / 0.72)),
+    linear-gradient(135deg, rgb(255 255 255 / 0.94), rgb(255 255 255 / 0.66) 52%, rgb(219 244 255 / 0.74)),
     rgb(255 255 255 / 0.76);
-  padding: clamp(1.1rem, 3.6vw, 3.5rem);
+  padding: clamp(1.1rem, 3.6vw, 3.6rem);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.92),
+    inset 0 1px 0 rgb(255 255 255 / 0.94),
     0 56px 150px rgb(27 46 87 / 0.18);
   backdrop-filter: blur(30px) saturate(1.24);
   -webkit-backdrop-filter: blur(30px) saturate(1.24);
 }
 
-.landing-home .roal-hero__panel::before {
+.landing-home .roal-hero__shell::before {
   content: "";
   position: absolute;
   inset: 1px;
@@ -431,63 +426,57 @@
     linear-gradient(180deg, rgb(var(--home-ink) / 0.035) 1px, transparent 1px);
   background-size: 3.6rem 3.6rem;
   mask-image: linear-gradient(140deg, black 0%, transparent 62%);
-  opacity: 0.25;
+  opacity: 0.22;
   pointer-events: none;
 }
 
 .landing-home .roal-hero__copy,
-.landing-home .roal-hero__stage,
-.landing-home .roal-call-demo {
+.landing-home .roal-hero__visual,
+.landing-home .roal-call-card {
   position: relative;
   z-index: 1;
 }
 
 .landing-home .roal-hero__copy {
   display: grid;
-  align-content: center;
   justify-items: start;
   gap: clamp(0.92rem, 2vw, 1.25rem);
   min-width: 0;
 }
 
 .landing-home .roal-hero__lead {
-  max-width: 42rem;
+  max-width: 43rem;
 }
 
-.landing-home .roal-hero__signals,
-.landing-home .roal-hero__actions {
+.landing-home .roal-hero__actions,
+.landing-home .roal-hero__proof {
   display: flex;
   flex-wrap: wrap;
   gap: 0.58rem;
   max-width: 100%;
 }
 
-.landing-home .roal-hero__actions {
-  align-items: center;
-  margin-top: 0.1rem;
-}
-
-.landing-home .roal-hero__signals span {
+.landing-home .roal-hero__proof span {
   display: inline-flex;
   align-items: center;
-  min-height: 2.2rem;
+  min-height: 2.15rem;
   border: 1px solid rgb(var(--home-ink) / 0.08);
   border-radius: 999px;
   background: rgb(255 255 255 / 0.68);
-  padding: 0.5rem 0.78rem;
-  color: rgb(var(--home-ink) / 0.74);
-  font-size: 0.82rem;
+  padding: 0.48rem 0.75rem;
+  color: rgb(var(--home-ink) / 0.76);
+  font-size: 0.81rem;
   font-weight: 850;
-  line-height: 1.1;
+  line-height: 1.12;
 }
 
-.landing-home .roal-hero__signals span:first-child {
+.landing-home .roal-hero__proof span:first-child {
   background: rgb(var(--home-lime));
   color: rgb(var(--home-ink));
-  box-shadow: 0 14px 34px rgb(114 154 34 / 0.15);
+  box-shadow: 0 14px 34px rgb(114 154 34 / 0.16);
 }
 
-.landing-home .roal-hero__stage {
+.landing-home .roal-hero__visual {
   display: grid;
   min-width: 0;
   isolation: isolate;
@@ -497,8 +486,8 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 12.4;
-  border: 1px solid rgb(255 255 255 / 0.8);
+  aspect-ratio: 16 / 12.2;
+  border: 1px solid rgb(255 255 255 / 0.82);
   border-radius: clamp(1.1rem, 2.8vw, 1.9rem);
   object-fit: cover;
   box-shadow:
@@ -506,17 +495,17 @@
     0 34px 90px rgb(28 48 91 / 0.2);
 }
 
-.landing-home .roal-hero__stage::after {
+.landing-home .roal-hero__visual::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   border-radius: clamp(1.1rem, 2.8vw, 1.9rem);
-  background: linear-gradient(180deg, transparent 42%, rgb(8 14 26 / 0.36));
+  background: linear-gradient(180deg, transparent 42%, rgb(8 14 26 / 0.38));
   pointer-events: none;
 }
 
-.landing-home .roal-call-demo {
+.landing-home .roal-call-card {
   position: absolute;
   right: clamp(0.75rem, 3vw, 1.35rem);
   bottom: clamp(0.75rem, 3vw, 1.35rem);
@@ -526,7 +515,7 @@
   width: min(24rem, calc(100% - 1.5rem));
   border: 1px solid rgb(255 255 255 / 0.74);
   border-radius: clamp(1.1rem, 2.8vw, 1.7rem);
-  background: rgb(255 255 255 / 0.88);
+  background: rgb(255 255 255 / 0.9);
   padding: clamp(0.95rem, 2.2vw, 1.22rem);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.9),
@@ -535,7 +524,7 @@
   -webkit-backdrop-filter: blur(18px) saturate(1.15);
 }
 
-.landing-home .roal-call-demo__top {
+.landing-home .roal-call-card__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -545,25 +534,25 @@
   font-weight: 850;
 }
 
-.landing-home .roal-call-demo__top span {
+.landing-home .roal-call-card__top span {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
   color: rgb(var(--home-blue-deep));
 }
 
-.landing-home .roal-call-demo__top svg {
+.landing-home .roal-call-card__top svg {
   width: 1rem;
   height: 1rem;
 }
 
-.landing-home .roal-call-demo__top strong {
+.landing-home .roal-call-card__top strong {
   color: rgb(var(--home-ink));
 }
 
-.landing-home .roal-call-demo__line {
+.landing-home .roal-call-card__bubble {
   display: grid;
-  gap: 0.28rem;
+  gap: 0.3rem;
   max-width: 94%;
   border: 1px solid rgb(var(--home-ink) / 0.07);
   border-radius: 1rem;
@@ -574,8 +563,8 @@
   line-height: 1.35;
 }
 
-.landing-home .roal-call-demo__line span,
-.landing-home .roal-ticket span {
+.landing-home .roal-call-card__bubble span,
+.landing-home .roal-call-card__ticket span {
   color: currentColor;
   opacity: 0.6;
   font-size: 0.67rem;
@@ -584,35 +573,35 @@
   text-transform: uppercase;
 }
 
-.landing-home .roal-call-demo__line--guest {
-  background: rgb(255 255 255 / 0.7);
+.landing-home .roal-call-card__bubble--guest {
+  background: rgb(255 255 255 / 0.72);
   color: rgb(var(--home-ink) / 0.72);
 }
 
-.landing-home .roal-call-demo__line--agent {
+.landing-home .roal-call-card__bubble--agent {
   margin-left: auto;
   background: rgb(var(--home-ink));
   color: white;
   box-shadow: 0 16px 40px rgb(var(--home-ink) / 0.16);
 }
 
-.landing-home .roal-ticket {
+.landing-home .roal-call-card__ticket {
   display: grid;
   gap: 0.18rem;
   border-radius: 1.05rem;
   background:
-    linear-gradient(135deg, rgb(var(--home-lime) / 0.56), rgb(255 255 255 / 0.72));
+    linear-gradient(135deg, rgb(var(--home-lime) / 0.56), rgb(255 255 255 / 0.74));
   padding: 0.88rem;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.82);
 }
 
-.landing-home .roal-ticket strong {
+.landing-home .roal-call-card__ticket strong {
   color: rgb(var(--home-ink));
   font-size: 0.96rem;
   line-height: 1.25;
 }
 
-.landing-home .roal-ticket small {
+.landing-home .roal-call-card__ticket small {
   color: rgb(var(--home-muted));
   font-size: 0.8rem;
   font-weight: 760;
@@ -627,189 +616,182 @@
   padding-block: clamp(3.2rem, 7vw, 6.2rem);
 }
 
-.landing-home .roal-section h2 {
-  max-width: 13.5ch;
-  font-size: var(--home-h2);
-  line-height: 0.96;
-}
-
-.landing-home .roal-section__intro,
-.landing-home .roal-problem__copy,
-.landing-home .roal-proof__copy,
-.landing-home .roal-flow-heading,
-.landing-home .roal-ticket-story > div:first-child,
-.landing-home .roal-pricing > div:first-child {
+.landing-home .roal-section__intro {
   display: grid;
   gap: 0.78rem;
+  max-width: 58rem;
+  margin-bottom: clamp(1rem, 3vw, 1.7rem);
 }
 
-.landing-home .roal-problem,
-.landing-home .roal-ticket-story,
-.landing-home .roal-faq-layout {
+.landing-home .roal-section__intro--center {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.landing-home .roal-pain {
   display: grid;
-  grid-template-columns: minmax(18rem, 0.86fr) minmax(0, 1fr);
-  align-items: start;
+  grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1fr);
+  align-items: end;
   gap: clamp(1.4rem, 4vw, 3.2rem);
 }
 
-.landing-home .roal-section--problem {
-  padding-top: clamp(1rem, 3vw, 2rem);
+.landing-home .roal-pain__stack,
+.landing-home .roal-flow,
+.landing-home .roal-metrics,
+.landing-home .roal-faq__list {
+  display: grid;
+  gap: 0.9rem;
 }
 
-.landing-home .roal-rush-card,
-.landing-home .roal-proof,
-.landing-home .roal-proof-card,
-.landing-home .roal-flow__item,
+.landing-home .roal-pain__line,
+.landing-home .roal-flow__card,
+.landing-home .roal-ticket,
 .landing-home .roal-pricing,
-.landing-home .roal-kitchen-ticket,
-.landing-home .roal-faq-item {
+.landing-home .roal-metric,
+.landing-home .roal-faq__item {
   border: 1px solid rgb(255 255 255 / 0.78);
-  background: rgb(255 255 255 / 0.66);
+  background: rgb(255 255 255 / 0.68);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.82),
+    inset 0 1px 0 rgb(255 255 255 / 0.84),
     0 20px 64px rgb(24 39 82 / 0.08);
   backdrop-filter: blur(18px) saturate(1.08);
   -webkit-backdrop-filter: blur(18px) saturate(1.08);
 }
 
-.landing-home .roal-rush-card {
-  display: grid;
-  gap: 0.65rem;
-  border-radius: clamp(1.2rem, 3vw, 1.7rem);
-  padding: clamp(1rem, 2.7vw, 1.4rem);
-}
-
-.landing-home .roal-rush-card span {
+.landing-home .roal-pain__line {
   display: flex;
   align-items: center;
-  min-height: 3.2rem;
-  border-radius: 1rem;
-  background: rgb(255 255 255 / 0.66);
-  padding-inline: 1rem;
+  min-height: 4.2rem;
+  border-radius: 1.15rem;
+  padding: 1rem 1.1rem;
   color: rgb(var(--home-ink));
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1rem, 2vw, 1.18rem);
   font-weight: 850;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.72);
 }
 
-.landing-home .roal-rush-card span:first-child {
+.landing-home .roal-pain__line:first-child {
   background: rgb(var(--home-ink));
   color: white;
 }
 
-.landing-home .roal-proof {
-  display: grid;
-  grid-template-columns: minmax(16rem, 0.68fr) minmax(0, 1fr);
-  gap: clamp(1rem, 3vw, 2rem);
-  overflow: hidden;
-  border-radius: clamp(1.35rem, 3vw, 2rem);
-  padding: clamp(0.65rem, 2vw, 1rem);
-}
-
-.landing-home .roal-proof__visual {
-  overflow: hidden;
-  border-radius: clamp(1rem, 2.5vw, 1.45rem);
-}
-
-.landing-home .roal-proof__image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 24rem;
-  object-fit: cover;
-}
-
-.landing-home .roal-proof__copy {
-  align-content: center;
-  padding: clamp(1rem, 3vw, 2.3rem);
-}
-
-.landing-home .roal-proof-grid {
-  display: grid;
+.landing-home .roal-flow {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.72rem;
-  margin-top: 0.2rem;
-}
-
-.landing-home .roal-proof-card {
-  display: grid;
-  gap: 0.42rem;
-  min-height: 8.2rem;
-  align-content: end;
-  border-radius: 1.1rem;
-  padding: 1rem;
-}
-
-.landing-home .roal-proof-card strong {
-  color: rgb(var(--home-ink));
-  font-family: var(--font-display, "Sora", "Plus Jakarta Sans", system-ui, sans-serif);
-  font-size: clamp(1.9rem, 4.2vw, 3.7rem);
-  font-weight: 760;
-  line-height: 0.9;
-}
-
-.landing-home .roal-proof-card span {
-  color: rgb(var(--home-muted));
-  font-size: 0.84rem;
-  font-weight: 790;
-  line-height: 1.25;
-}
-
-.landing-home .roal-flow-heading {
-  max-width: 48rem;
-  margin-bottom: clamp(1rem, 3vw, 1.6rem);
-}
-
-.landing-home .roal-flow,
-.landing-home .roal-faq-list {
-  display: grid;
-  gap: 0.9rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.landing-home .roal-flow {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.landing-home .roal-flow__item {
+.landing-home .roal-flow__card {
+  position: relative;
   display: grid;
-  gap: 1rem;
-  min-height: 18rem;
   align-content: end;
+  gap: 0.72rem;
+  min-height: 18rem;
+  overflow: hidden;
   border-radius: 1.25rem;
   padding: clamp(1rem, 2.7vw, 1.45rem);
 }
 
-.landing-home .roal-flow__item > span {
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+.landing-home .roal-flow__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 76% 10%, rgb(var(--home-cyan) / 0.25), transparent 10rem),
+    linear-gradient(180deg, transparent 22%, rgb(255 255 255 / 0.35));
+  pointer-events: none;
+}
+
+.landing-home .roal-flow__card:nth-child(2)::before {
+  background:
+    radial-gradient(circle at 20% 8%, rgb(var(--home-lime) / 0.34), transparent 10rem),
+    linear-gradient(180deg, transparent 22%, rgb(255 255 255 / 0.35));
+}
+
+.landing-home .roal-flow__card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.landing-home .roal-flow__card > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 2.35rem;
   border-radius: 999px;
   background: rgb(var(--home-blue) / 0.1);
+  padding-inline: 0.85rem;
   color: rgb(var(--home-blue-deep));
   font-size: 0.78rem;
   font-weight: 950;
 }
 
-.landing-home .roal-flow__item h3 {
+.landing-home .roal-flow__card h3 {
   margin: 0;
   color: rgb(var(--home-ink));
-  font-family: var(--font-display, "Sora", "Plus Jakarta Sans", system-ui, sans-serif);
-  font-size: clamp(1.25rem, 2.4vw, 1.72rem);
-  font-weight: 760;
+  font-family: var(--font-display, "Sora", var(--font-body), system-ui, sans-serif);
+  font-size: clamp(1.22rem, 2.3vw, 1.65rem);
+  font-weight: 700;
   line-height: 1.05;
 }
 
-.landing-home .roal-flow__item p {
-  margin-top: 0.65rem;
-  font-size: 0.95rem;
+.landing-home .roal-ticket-story,
+.landing-home .roal-faq {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.4rem, 4vw, 3.2rem);
+}
+
+.landing-home .roal-ticket-story__copy {
+  display: grid;
+  gap: 0.78rem;
+  max-width: 42rem;
+}
+
+.landing-home .roal-ticket {
+  display: grid;
+  gap: 0.35rem;
+  border-radius: clamp(1.25rem, 3vw, 1.8rem);
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.landing-home .roal-ticket__head,
+.landing-home .roal-ticket__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 0.72);
+  padding: 0.95rem 1rem;
+}
+
+.landing-home .roal-ticket__head {
+  background: rgb(var(--home-ink));
+  color: white;
+}
+
+.landing-home .roal-ticket__head span,
+.landing-home .roal-ticket__row span {
+  color: currentColor;
+  opacity: 0.62;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.landing-home .roal-ticket__row strong {
+  color: rgb(var(--home-ink));
+  font-size: 0.98rem;
+  line-height: 1.25;
+  text-align: right;
 }
 
 .landing-home .roal-section--pricing {
-  padding-block: clamp(2.5rem, 6vw, 5rem);
+  padding-block: clamp(2.8rem, 6vw, 5rem);
 }
 
 .landing-home .roal-pricing {
@@ -820,12 +802,17 @@
   overflow: hidden;
   border-radius: clamp(1.35rem, 3vw, 2rem);
   background:
-    radial-gradient(circle at 90% 15%, rgb(var(--home-lime) / 0.72), transparent 22rem),
-    linear-gradient(135deg, rgb(255 255 255 / 0.94), rgb(231 242 255 / 0.72));
+    radial-gradient(circle at 88% 12%, rgb(var(--home-lime) / 0.72), transparent 22rem),
+    linear-gradient(135deg, rgb(255 255 255 / 0.95), rgb(231 242 255 / 0.74));
   padding: clamp(1.35rem, 4vw, 2.5rem);
 }
 
-.landing-home .roal-price-lockup {
+.landing-home .roal-pricing > div:first-child {
+  display: grid;
+  gap: 0.78rem;
+}
+
+.landing-home .roal-price {
   display: grid;
   justify-items: end;
   gap: 0.5rem;
@@ -833,99 +820,96 @@
   text-align: right;
 }
 
-.landing-home .roal-price-lockup strong {
+.landing-home .roal-price strong {
   color: rgb(var(--home-blue-deep));
-  font-family: var(--font-display, "Sora", "Plus Jakarta Sans", system-ui, sans-serif);
+  font-family: var(--font-display, "Sora", var(--font-body), system-ui, sans-serif);
   font-size: clamp(4rem, 9vw, 6.5rem);
   font-weight: 760;
   line-height: 0.86;
 }
 
-.landing-home .roal-price-lockup span {
+.landing-home .roal-price span {
   color: rgb(var(--home-muted));
   font-size: 1rem;
   font-weight: 850;
 }
 
-.landing-home .roal-ticket-story {
-  align-items: center;
+.landing-home .roal-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.landing-home .roal-kitchen-ticket {
+.landing-home .roal-metric {
   display: grid;
-  gap: 0.35rem;
-  border-radius: clamp(1.25rem, 3vw, 1.8rem);
-  padding: clamp(1rem, 3vw, 1.5rem);
+  align-content: end;
+  gap: 0.62rem;
+  min-height: 12rem;
+  border-radius: 1.25rem;
+  padding: clamp(1rem, 2.7vw, 1.4rem);
 }
 
-.landing-home .roal-kitchen-ticket__head,
-.landing-home .roal-kitchen-ticket__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  border-radius: 1rem;
-  background: rgb(255 255 255 / 0.7);
-  padding: 0.95rem 1rem;
+.landing-home .roal-metric:first-child {
+  background:
+    radial-gradient(circle at 74% 12%, rgb(var(--home-cyan) / 0.42), transparent 12rem),
+    rgb(255 255 255 / 0.68);
 }
 
-.landing-home .roal-kitchen-ticket__head {
-  background: rgb(var(--home-ink));
-  color: white;
+.landing-home .roal-metric:nth-child(2) {
+  background:
+    radial-gradient(circle at 74% 12%, rgb(var(--home-lime) / 0.55), transparent 12rem),
+    rgb(255 255 255 / 0.68);
 }
 
-.landing-home .roal-kitchen-ticket__head span,
-.landing-home .roal-kitchen-ticket__row span {
-  color: currentColor;
-  opacity: 0.62;
-  font-size: 0.75rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.landing-home .roal-kitchen-ticket__row strong {
+.landing-home .roal-metric strong {
   color: rgb(var(--home-ink));
-  font-size: 0.98rem;
-  line-height: 1.25;
-  text-align: right;
+  font-family: var(--font-display, "Sora", var(--font-body), system-ui, sans-serif);
+  font-size: clamp(3.2rem, 7vw, 5.7rem);
+  font-weight: 700;
+  line-height: 0.88;
 }
 
-.landing-home .roal-section--faq {
-  padding-top: clamp(2.8rem, 6vw, 5rem);
+.landing-home .roal-metric span {
+  color: rgb(var(--home-muted-strong));
+  font-size: 0.95rem;
+  font-weight: 750;
+  line-height: 1.32;
 }
 
-.landing-home .roal-faq-item {
+.landing-home .roal-faq {
+  align-items: start;
+}
+
+.landing-home .roal-faq__item {
   border-radius: 1.05rem;
   padding: 0.1rem 1rem;
 }
 
-.landing-home .roal-faq-item summary {
+.landing-home .roal-faq__item summary {
   cursor: pointer;
   list-style: none;
   padding: 1rem 0;
   color: rgb(var(--home-ink));
-  font-family: var(--font-display, "Sora", "Plus Jakarta Sans", system-ui, sans-serif);
+  font-family: var(--font-display, "Sora", var(--font-body), system-ui, sans-serif);
   font-size: clamp(1rem, 2vw, 1.12rem);
   font-weight: 760;
   line-height: 1.25;
 }
 
-.landing-home .roal-faq-item summary::-webkit-details-marker {
+.landing-home .roal-faq__item summary::-webkit-details-marker {
   display: none;
 }
 
-.landing-home .roal-faq-item summary::after {
+.landing-home .roal-faq__item summary::after {
   content: "+";
   float: right;
   margin-left: 1rem;
   color: rgb(var(--home-blue));
 }
 
-.landing-home .roal-faq-item[open] summary::after {
+.landing-home .roal-faq__item[open] summary::after {
   content: "-";
 }
 
-.landing-home .roal-faq-item p {
+.landing-home .roal-faq__item p {
   padding: 0 0 1rem;
   font-size: 0.96rem;
 }
@@ -994,7 +978,7 @@
   opacity: 0.82;
 }
 
-.landing-home .roal-final .roal-btn--secondary {
+.landing-home .roal-final .roal-btn--quiet {
   border-color: rgb(255 255 255 / 0.24);
   background: rgb(255 255 255 / 0.14);
   color: white;
@@ -1016,9 +1000,9 @@
     box-shadow: 0 24px 54px rgb(var(--home-ink) / 0.22);
   }
 
-  .landing-home .roal-btn--secondary:hover {
+  .landing-home .roal-btn--quiet:hover {
     border-color: rgb(var(--home-ink) / 0.18);
-    background: rgb(255 255 255 / 0.9);
+    background: rgb(255 255 255 / 0.92);
   }
 }
 
@@ -1039,25 +1023,24 @@
 }
 
 @media (max-width: 899px) {
-  .landing-home .roal-hero__panel,
-  .landing-home .roal-problem,
-  .landing-home .roal-proof,
+  .landing-home .roal-hero__shell,
+  .landing-home .roal-pain,
   .landing-home .roal-ticket-story,
-  .landing-home .roal-faq-layout,
-  .landing-home .roal-pricing {
+  .landing-home .roal-pricing,
+  .landing-home .roal-faq {
     grid-template-columns: 1fr;
   }
 
-  .landing-home .roal-proof-grid,
-  .landing-home .roal-flow {
+  .landing-home .roal-flow,
+  .landing-home .roal-metrics {
     grid-template-columns: 1fr;
   }
 
-  .landing-home .roal-proof__image {
-    min-height: 18rem;
+  .landing-home .roal-flow__card {
+    min-height: 13rem;
   }
 
-  .landing-home .roal-call-demo {
+  .landing-home .roal-call-card {
     position: relative;
     right: auto;
     bottom: auto;
@@ -1065,28 +1048,23 @@
     margin: -5.25rem auto 0;
   }
 
-  .landing-home .roal-price-lockup {
+  .landing-home .roal-price {
     justify-items: start;
     text-align: left;
   }
 
-  .landing-home .roal-kitchen-ticket__row {
+  .landing-home .roal-ticket__row {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.35rem;
   }
 
-  .landing-home .roal-kitchen-ticket__row strong {
+  .landing-home .roal-ticket__row strong {
     text-align: left;
   }
 }
 
 @media (max-width: 640px) {
-  .landing-home.landing-home-canvas {
-    --home-display: clamp(2.55rem, 12vw, 3.7rem);
-    --home-h2: clamp(2rem, 9.5vw, 2.85rem);
-  }
-
   .landing-home .home-nav {
     padding-inline: 0.5rem;
   }
@@ -1102,10 +1080,10 @@
   }
 
   .landing-home .roal-hero {
-    padding: 4.7rem 0.5rem 2.1rem;
+    padding: 4.7rem 0.55rem 2.1rem;
   }
 
-  .landing-home .roal-hero__panel {
+  .landing-home .roal-hero__shell {
     width: 100%;
     gap: 1rem;
     border-radius: 1.25rem;
@@ -1113,26 +1091,32 @@
   }
 
   .landing-home .roal-hero__title {
-    max-width: 11.8ch;
+    max-width: 13.5ch;
+    font-size: clamp(2.45rem, 11vw, 3.45rem);
+  }
+
+  .landing-home .roal-section h2,
+  .landing-home .roal-final h2 {
+    font-size: clamp(2rem, 9.5vw, 2.85rem);
   }
 
   .landing-home .roal-hero__lead {
     font-size: 1rem;
   }
 
-  .landing-home .roal-hero__signals,
-  .landing-home .roal-hero__actions {
+  .landing-home .roal-hero__actions,
+  .landing-home .roal-hero__proof {
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
   }
 
-  .landing-home .roal-hero__signals span,
+  .landing-home .roal-hero__proof span,
   .landing-home .roal-btn {
     width: 100%;
   }
 
-  .landing-home .roal-hero__signals span {
+  .landing-home .roal-hero__proof span {
     justify-content: center;
   }
 
@@ -1140,40 +1124,28 @@
     aspect-ratio: 4 / 3.65;
   }
 
-  .landing-home .roal-call-demo {
+  .landing-home .roal-call-card {
     width: 100%;
     margin-top: 0.8rem;
   }
 
-  .landing-home .roal-call-demo__line {
+  .landing-home .roal-call-card__bubble {
     max-width: 100%;
   }
 
   .landing-home .home-wrap {
-    width: min(100% - 1rem, var(--home-content-max));
+    width: min(100% - 1rem, var(--home-max));
   }
 
   .landing-home .roal-section {
     padding-block: 3.25rem;
   }
 
-  .landing-home .roal-section--problem {
-    padding-top: 0.5rem;
-  }
-
-  .landing-home .roal-proof-card {
-    min-height: 8.5rem;
-  }
-
-  .landing-home .roal-rush-card,
-  .landing-home .roal-proof,
+  .landing-home .roal-pain__line,
   .landing-home .roal-pricing,
-  .landing-home .roal-kitchen-ticket {
+  .landing-home .roal-ticket,
+  .landing-home .roal-final {
     border-radius: 1.15rem;
-  }
-
-  .landing-home .roal-flow__item {
-    min-height: auto;
   }
 
   .landing-home .roal-pricing {

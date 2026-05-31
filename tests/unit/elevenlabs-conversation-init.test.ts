@@ -4,6 +4,7 @@ import {
   isElevenLabsConversationInitAuthorized,
   lookupRestaurantByCalledNumber,
   parseElevenLabsConversationInitRequestBody,
+  persistElevenLabsConversationStarted,
   phoneLookupKey,
   readElevenLabsConversationInitAgentId,
   readElevenLabsConversationInitCalledNumber,
@@ -17,6 +18,10 @@ import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 
 vi.mock("@/lib/supabase/server", () => ({
   getServiceRoleSupabase: vi.fn(),
+}));
+
+vi.mock("@/lib/env.server", () => ({
+  getElevenLabsAgentId: vi.fn(() => "agent_template_global"),
 }));
 
 import { getServiceRoleSupabase } from "@/lib/supabase/server";
@@ -301,6 +306,87 @@ describe("resolveRestaurantForElevenLabsConversationInit", () => {
     });
   });
 
+  it("routes two org locations to distinct restaurants by called_number", async () => {
+    const RESTAURANT_A = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+    const RESTAURANT_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+    const PHONE_A = "+15551111111";
+    const PHONE_B = "+15552222222";
+
+    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+      from: vi.fn((table: string) => {
+        if (table === "restaurant_profiles") {
+          return {
+            select: vi.fn((cols: string) => {
+              const fields = cols.split(",").map((c) => c.trim());
+              if (fields.includes("phone")) {
+                return {
+                  not: vi.fn().mockResolvedValue({
+                    data: [
+                      {
+                        restaurant_id: RESTAURANT_A,
+                        phone: PHONE_A,
+                        elevenlabs_agent_id: "agent_a",
+                      },
+                      {
+                        restaurant_id: RESTAURANT_B,
+                        phone: PHONE_B,
+                        elevenlabs_agent_id: "agent_b",
+                      },
+                    ],
+                    error: null,
+                  }),
+                };
+              }
+              return {
+                eq: vi.fn((_field: string, value: string) => ({
+                  maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
+                })),
+              };
+            }),
+          };
+        }
+        if (table === "restaurants") {
+          return {
+            select: vi.fn(() => ({
+              eq: vi.fn((_field: string, id: string) => ({
+                maybeSingle: vi.fn().mockResolvedValue({
+                  data:
+                    id === RESTAURANT_A
+                      ? { name: "North Location" }
+                      : { name: "South Location" },
+                  error: null,
+                }),
+              })),
+            })),
+          };
+        }
+        throw new Error(table);
+      }),
+    } as never);
+
+    const north = await resolveRestaurantForElevenLabsConversationInit({
+      agentId: "",
+      calledNumber: PHONE_A,
+    });
+    const south = await resolveRestaurantForElevenLabsConversationInit({
+      agentId: "",
+      calledNumber: PHONE_B,
+    });
+
+    expect(north).toMatchObject({
+      restaurantId: RESTAURANT_A,
+      restaurantName: "North Location",
+      linkedAgentId: "agent_a",
+      resolvedVia: "called_number",
+    });
+    expect(south).toMatchObject({
+      restaurantId: RESTAURANT_B,
+      restaurantName: "South Location",
+      linkedAgentId: "agent_b",
+      resolvedVia: "called_number",
+    });
+  });
+
   it("falls back to called_number when agent id is unknown", async () => {
     mockSupabaseProfiles([
       {
@@ -348,11 +434,188 @@ describe("resolveRestaurantForElevenLabsConversationInit", () => {
 
     expect(ctx).toBeNull();
   });
+
+  it("returns null when phone matches but location has no dedicated agent", async () => {
+    mockSupabaseProfiles([
+      {
+        restaurant_id: RESTAURANT_ID,
+        phone: PHONE,
+        elevenlabs_agent_id: null,
+      },
+    ]);
+
+    const ctx = await resolveRestaurantForElevenLabsConversationInit({
+      agentId: "",
+      calledNumber: PHONE,
+    });
+
+    expect(ctx).toBeNull();
+  });
+
+  it("ignores shared template agent_id and falls back to called_number", async () => {
+    mockSupabaseProfiles([
+      {
+        restaurant_id: RESTAURANT_ID,
+        phone: PHONE,
+        elevenlabs_agent_id: AGENT_ID,
+      },
+    ]);
+
+    const ctx = await resolveRestaurantForElevenLabsConversationInit({
+      agentId: "agent_template_global",
+      calledNumber: PHONE,
+    });
+
+    expect(ctx).toEqual({
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Egg Mania",
+      linkedAgentId: AGENT_ID,
+      resolvedVia: "called_number",
+    });
+  });
+});
+
+describe("persistElevenLabsConversationStarted", () => {
+  const RESTAURANT_ID = "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
+  const AGENT_ID = "agent_dedicated_01";
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("upserts an active agent_call_events row keyed by restaurant and session", async () => {
+    const upsert = vi.fn().mockResolvedValue({ error: null });
+    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+      from: vi.fn(() => ({ upsert })),
+    } as never);
+
+    const result = await persistElevenLabsConversationStarted({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT_ID,
+      sessionId: "CA_active_call_01",
+      callerPhone: "+15551234567",
+      calledNumber: "+15559876543",
+      resolvedVia: "agent_id",
+      upsellExperimentVariant: "treatment",
+    });
+
+    expect(result).toEqual({ stored: true });
+    expect(upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        restaurant_id: RESTAURANT_ID,
+        agent_id: AGENT_ID,
+        conversation_id: "CA_active_call_01",
+        session_id: "CA_active_call_01",
+        caller_phone: "+15551234567",
+        status: "active",
+        outcome: "in_progress",
+        ended_at: null,
+        transcript_metadata: expect.objectContaining({
+          event_type: "conversation_init",
+          called_number: "+15559876543",
+          resolved_via: "agent_id",
+          upsell_experiment_variant: "treatment",
+        }),
+      }),
+      { onConflict: "restaurant_id,session_id" }
+    );
+  });
 });
 
 describe("lookupRestaurantByCalledNumber", () => {
+  const RESTAURANT_A = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+  const RESTAURANT_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+  const AGENT_A = "agent_location_a";
+  const AGENT_B = "agent_location_b";
+  const PHONE_A = "+15551111111";
+  const PHONE_B = "+15552222222";
+
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  function mockMultiLocationProfiles(
+    profiles: {
+      restaurant_id: string;
+      phone: string | null;
+      elevenlabs_agent_id: string | null;
+    }[]
+  ) {
+    const restaurants = new Map<string, { name: string }>([
+      [RESTAURANT_A, { name: "North Location" }],
+      [RESTAURANT_B, { name: "South Location" }],
+    ]);
+
+    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+      from: vi.fn((table: string) => {
+        if (table === "restaurant_profiles") {
+          return {
+            select: vi.fn(() => ({
+              not: vi.fn().mockResolvedValue({ data: profiles, error: null }),
+            })),
+          };
+        }
+        if (table === "restaurants") {
+          return {
+            select: vi.fn(() => ({
+              eq: vi.fn((_field: string, id: string) => ({
+                maybeSingle: vi.fn().mockResolvedValue({
+                  data: restaurants.get(id) ?? null,
+                  error: null,
+                }),
+              })),
+            })),
+          };
+        }
+        throw new Error(table);
+      }),
+    } as never);
+  }
+
+  it("resolves each location by its own called_number (multi-location isolation)", async () => {
+    mockMultiLocationProfiles([
+      {
+        restaurant_id: RESTAURANT_A,
+        phone: PHONE_A,
+        elevenlabs_agent_id: AGENT_A,
+      },
+      {
+        restaurant_id: RESTAURANT_B,
+        phone: PHONE_B,
+        elevenlabs_agent_id: AGENT_B,
+      },
+    ]);
+
+    const north = await lookupRestaurantByCalledNumber(PHONE_A);
+    const south = await lookupRestaurantByCalledNumber(PHONE_B);
+
+    expect(north).toEqual({
+      restaurantId: RESTAURANT_A,
+      restaurantName: "North Location",
+      linkedAgentId: AGENT_A,
+    });
+    expect(south).toEqual({
+      restaurantId: RESTAURANT_B,
+      restaurantName: "South Location",
+      linkedAgentId: AGENT_B,
+    });
+  });
+
+  it("returns null when the same inbound number matches multiple locations", async () => {
+    mockMultiLocationProfiles([
+      {
+        restaurant_id: RESTAURANT_A,
+        phone: PHONE_A,
+        elevenlabs_agent_id: AGENT_A,
+      },
+      {
+        restaurant_id: RESTAURANT_B,
+        phone: PHONE_A,
+        elevenlabs_agent_id: AGENT_B,
+      },
+    ]);
+
+    expect(await lookupRestaurantByCalledNumber(PHONE_A)).toBeNull();
   });
 
   it("matches profile phone by last 10 digits", async () => {

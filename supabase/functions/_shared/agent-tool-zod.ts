@@ -204,6 +204,10 @@ export const OperationsSchema = z
     ordering_allowed: z.boolean(),
     message: z.string().optional(),
     status: z.string().optional(),
+    is_open_now: z.boolean().optional(),
+    timezone: z.string().optional(),
+    temporarily_closed: z.boolean().optional(),
+    temporarily_closed_reason: z.string().nullable().optional(),
   })
   .passthrough();
 

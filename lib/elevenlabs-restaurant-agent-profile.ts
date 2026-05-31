@@ -1,4 +1,5 @@
 import {
+  getElevenLabsAgentId,
   getRestaurantAgentTimezone,
   isRoalOrderKbEnabled,
   requireElevenLabsAgentId,
@@ -154,6 +155,16 @@ export async function applyRestaurantOrderAgentProfile(options?: {
 }): Promise<ApplyRestaurantProfileResult> {
   getElevenLabsApiKey();
   const agentId = requireElevenLabsAgentId(options?.agentId);
+  const rid = options?.restaurantId?.trim();
+
+  if (rid) {
+    const templateAgentId = getElevenLabsAgentId();
+    if (templateAgentId && agentId === templateAgentId) {
+      throw new Error(
+        "Refusing to patch the shared template agent for a restaurant location. Use a dedicated ElevenLabs agent."
+      );
+    }
+  }
 
   const raw = (await getConvaiAgent(agentId)) as Record<string, unknown>;
   const cc = asRecord(raw.conversation_config);
@@ -164,7 +175,6 @@ export async function applyRestaurantOrderAgentProfile(options?: {
   if (!pr) throw new Error("Agent missing conversation_config.agent.prompt");
 
   const restaurantName = options?.restaurantName?.trim() || "the restaurant";
-  const rid = options?.restaurantId?.trim();
 
   let profile = null;
   let hoursPromptSection: string | null = null;

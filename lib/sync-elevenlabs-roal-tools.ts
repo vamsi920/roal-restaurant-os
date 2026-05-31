@@ -1,4 +1,5 @@
 import {
+  getElevenLabsAgentId,
   requireElevenLabsAgentId,
   requireRoalToolSecrets,
 } from "@/lib/env.server";
@@ -21,6 +22,19 @@ import { getServiceRoleSupabase } from "@/lib/supabase/server";
 
 /** Sent on every webhook call when tools are baked to a restaurant (Twilio cannot resolve conv dynamic vars). */
 export const ROAL_RESTAURANT_ID_HEADER = "x-roal-restaurant-id";
+
+/** Canonical ROAL ConvAI webhook tools attached per dedicated restaurant agent. */
+export const ROAL_BAKED_TOOL_NAMES = [
+  "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
+  "sync_draft_order",
+  "finalize_order",
+  "get_order_status",
+] as const;
+
+export type RoalBakedToolName = (typeof ROAL_BAKED_TOOL_NAMES)[number];
 
 const LINE_ITEM_BODY = {
   type: "object",
@@ -421,6 +435,15 @@ export async function syncRoalElevenLabsTools(options?: {
   const { agentToolSecret, supabaseAnonKey, edgeBase } = requireRoalToolSecrets();
 
   const rid = options?.restaurantId?.trim() ?? "";
+  if (rid) {
+    const templateAgentId = getElevenLabsAgentId();
+    if (templateAgentId && agentId === templateAgentId) {
+      throw new Error(
+        "Cannot bake ROAL tools onto the shared template agent. Use the location dedicated ElevenLabs agent."
+      );
+    }
+  }
+
   const rname = options?.restaurantName ?? "";
   const baked = rid.length > 0;
   const resolvedName = mergeRestaurantPlaceholders({}, rid, rname).restaurant_name;
@@ -437,15 +460,7 @@ export async function syncRoalElevenLabsTools(options?: {
         apikey: supabaseAnonKey,
       };
 
-  const toolNames = [
-    "get_menu_items",
-    "get_restaurant_info",
-    "get_caller_history",
-    "submit_reservation_request",
-    "sync_draft_order",
-    "finalize_order",
-    "get_order_status",
-  ] as const;
+  const toolNames = ROAL_BAKED_TOOL_NAMES;
 
   const toolMode = baked ? "baked" : "dynamic";
 

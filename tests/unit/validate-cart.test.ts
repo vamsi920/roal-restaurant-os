@@ -61,6 +61,32 @@ describe("validateCartForSync", () => {
     expect(result.ok).toBe(false);
     expect(result.issues.some((i) => i.code === "invalid_quantity")).toBe(true);
   });
+
+  it("rejects unavailable items on sync", () => {
+    const result = validateCartForSync(
+      [{ item_id: ITEM_SOLD_OUT_ID, quantity: 1 }],
+      menuItems,
+      menuModifiers
+    );
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((i) => i.code === "item_unavailable")).toBe(true);
+  });
+
+  it("rejects unknown modifiers on sync", () => {
+    const result = validateCartForSync(
+      [
+        {
+          item_id: ITEM_BURGER_ID,
+          quantity: 1,
+          customizations: ["Ghost topping"],
+        },
+      ],
+      menuItems,
+      menuModifiers
+    );
+    expect(result.ok).toBe(false);
+    expect(result.issues.some((i) => i.code === "unknown_modifier")).toBe(true);
+  });
 });
 
 describe("validateCartForFinalize", () => {

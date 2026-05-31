@@ -81,6 +81,42 @@ describe("GET/POST /api/integrations/elevenlabs/conversation-init", () => {
     expect(JSON.stringify(body)).not.toMatch(/qa-conversation-init-secret/);
   });
 
+  it("routes agent_id + called_number and upserts active call on Twilio init", async () => {
+    const res = await POST(
+      new Request(base, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          caller_id: "+15551234567",
+          agent_id: AGENT,
+          called_number: CALLED,
+          call_sid: "CA_route_upsert",
+        }),
+      })
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(resolveRestaurantForElevenLabsConversationInit).toHaveBeenCalledWith({
+      agentId: AGENT,
+      calledNumber: CALLED,
+    });
+    expect(readAgentPlaceholdersForInit).toHaveBeenCalledWith(AGENT);
+    expect(persistElevenLabsConversationStarted).toHaveBeenCalledWith({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT,
+      sessionId: "CA_route_upsert",
+      callerPhone: "+15551234567",
+      calledNumber: CALLED,
+      resolvedVia: "agent_id",
+      upsellExperimentVariant: getUpsellExperimentVariant(
+        RESTAURANT_ID,
+        "CA_route_upsert"
+      ),
+    });
+    expect(body.dynamic_variables.restaurant_id).toBe(RESTAURANT_ID);
+  });
+
   it("POST form-urlencoded Twilio body resolves agent_id and called_number", async () => {
     const res = await POST(
       new Request(base, {
@@ -254,6 +290,17 @@ describe("GET/POST /api/integrations/elevenlabs/conversation-init", () => {
     expect(res.status).toBe(404);
     expect(body.code).toBe("restaurant_not_linked");
     expect(readAgentPlaceholdersForInit).not.toHaveBeenCalled();
+  });
+
+  it("does not upsert active call rows when session id is missing", async () => {
+    const res = await GET(
+      new Request(
+        `${base}?agent_id=${encodeURIComponent(AGENT)}&called_number=${encodeURIComponent(CALLED)}`
+      )
+    );
+
+    expect(res.status).toBe(200);
+    expect(persistElevenLabsConversationStarted).not.toHaveBeenCalled();
   });
 
   it("returns 404 when agent_id is not linked to a restaurant profile", async () => {

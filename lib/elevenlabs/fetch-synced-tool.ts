@@ -1,17 +1,12 @@
 import { elevenlabsFetch, listAllConvaiTools } from "@/lib/elevenlabs";
 import { getElevenLabsAgentId } from "@/lib/env.server";
+import {
+  ROAL_BAKED_TOOL_NAMES,
+  type RoalBakedToolName,
+} from "@/lib/sync-elevenlabs-roal-tools";
 
-export const ROAL_SYNCED_TOOL_NAMES = [
-  "get_menu_items",
-  "get_restaurant_info",
-  "get_caller_history",
-  "submit_reservation_request",
-  "sync_draft_order",
-  "finalize_order",
-  "get_order_status",
-] as const;
-
-export type RoalSyncedToolName = (typeof ROAL_SYNCED_TOOL_NAMES)[number];
+export const ROAL_SYNCED_TOOL_NAMES = ROAL_BAKED_TOOL_NAMES;
+export type RoalSyncedToolName = RoalBakedToolName;
 
 export type SyncedRoalToolConfig = {
   id: string;
