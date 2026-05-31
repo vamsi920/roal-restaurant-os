@@ -13,6 +13,7 @@ describe("auth UI polish", () => {
 
     expect(layout).toContain("auth-page.css");
     expect(layout).toContain("public-theme-canvas");
+    expect(layout).toContain("public-auth-canvas");
     expect(form).toContain("PublicFormField");
     expect(form).toContain("public-auth-trust");
     expect(form).toContain("signInWithPassword");
@@ -55,6 +56,7 @@ describe("auth UI polish", () => {
     const css = readFileSync(join(REPO, "app/auth-page.css"), "utf8");
     expect(layout).toContain("public-auth-main__wash");
     expect(css).toContain("public-auth-panel__eyebrow");
+    expect(css).toContain("public-auth-canvas");
   });
 
   it("auth form avoids invalid fields on server errors", () => {

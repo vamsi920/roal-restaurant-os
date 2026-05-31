@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="public-theme public-theme-canvas flex min-h-[100dvh] flex-col">
+    <div className="public-theme public-theme-canvas public-auth-canvas flex min-h-[100dvh] flex-col">
       <a href="#auth-main" className="public-auth-skip-link">
         Skip to form
       </a>

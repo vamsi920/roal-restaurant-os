@@ -123,6 +123,21 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(prompt).not.toMatch(/appetizer and two fitting main/i);
   });
 
+  it("requires reservation request (not confirmed) and allergen disclaimers", () => {
+    const prompt = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: baseProfile,
+      hoursPromptSection: null,
+      menu: null,
+    });
+
+    expect(prompt).toContain("submit_reservation_request");
+    expect(prompt).toMatch(/request, not confirmed/i);
+    expect(prompt).toMatch(/staff will confirm/i);
+    expect(prompt).toMatch(/Never claim allergen-free, nut-free, or gluten-free/i);
+    expect(prompt).toMatch(/do not guarantee accommodation/i);
+  });
+
   it("requires menu-first, per-change sync, and real guest identity (prompt 41)", () => {
     const prompt = buildRestaurantOrderAgentPrompt({
       restaurantName: "Test Diner",

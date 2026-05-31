@@ -11,17 +11,18 @@ export const SIGNUP_PAGE_COPY = {
   entry: {
     eyebrow: "Get started",
     title: "Open your workspace",
-    description: "Confirm email, scan your menu, test a pickup call—then forward rush-hour rings.",
+    description:
+      "Set up the menu, run a test pickup call, then forward rush-hour rings to ROAL.",
   },
   steps: [
     { title: "Create account", tag: "Confirm your email" },
-    { title: "Add your menu", tag: "Scan or import" },
-    { title: "Test on the pass", tag: "About 20 minutes" },
+    { title: "Add your menu", tag: "Scan or import your pass" },
+    { title: "Test a pickup call", tag: "Then go live on your line" },
   ],
   form: {
     eyebrow: "Create account",
     title: "Start free",
-    lead: "Work email—we send a confirm link.",
+    lead: "Work email—we send a confirm link before you go live.",
     submitLabel: "Create account",
     loadingLabel: "One moment…",
     passwordPlaceholder: "8+ characters",

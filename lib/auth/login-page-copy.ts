@@ -9,18 +9,25 @@ export const LOGIN_PAGE_COPY = {
   entry: {
     eyebrow: "Restaurant workspace",
     title: "Sign in to ROAL",
-    description: "Live menu, pickup line, and kitchen tickets in one place.",
+    description:
+      "Your phone line, live menu, and kitchen tickets—built for rush-hour pickup.",
   },
   highlights: [
-    { title: "Live menu on calls", tag: "Same menu as your pass" },
-    { title: "Tickets on screen", tag: "Name + phone confirmed" },
-    { title: "Pay per pickup", tag: "Not per ring" },
+    {
+      title: "Answers in their language",
+      tag: "Pickup calls on your restaurant line",
+    },
+    {
+      title: "Tickets hit the kitchen",
+      tag: "Confirmed name, phone, and items",
+    },
+    { title: "Pay per completed order", tag: "$0.90 when the ticket lands—not per ring" },
   ],
   asideNote: "Use the email tied to your workspace.",
   form: {
     eyebrow: "Sign in",
     title: "Welcome back",
-    lead: "Work email and password.",
+    lead: "Work email and password for your restaurant workspace.",
     submitLabel: "Sign in",
     loadingLabel: "One moment…",
     passwordPlaceholder: "Your password",

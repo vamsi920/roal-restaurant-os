@@ -30,6 +30,7 @@ describe("auth route QA", () => {
     expect(source).toContain('"/dashboard/:path*"');
     expect(source).toContain('"/login"');
     expect(source).toContain('"/signup"');
+    expect(source).toContain('"/reset-password"');
     expect(source).toContain('"/auth/callback"');
   });
 

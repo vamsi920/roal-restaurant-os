@@ -29,7 +29,7 @@ const LAUNCH_FAQ_ENTRIES = [
     pages: ["home"],
     question: "What does ROAL actually do?",
     answer:
-      "ROAL answers pickup calls on your restaurant line, talks naturally with the guest, uses your live menu and hours, confirms the order, then sends the ticket to your kitchen screen.",
+      "ROAL answers pickup calls, speaks naturally, uses your live menu and hours, and sends confirmed tickets to your kitchen.",
   },
   {
     id: "home-menu-setup",
@@ -44,14 +44,14 @@ const LAUNCH_FAQ_ENTRIES = [
     pages: ["home"],
     question: "Will guests feel stuck talking to a robot?",
     answer:
-      "They just call your restaurant. ROAL speaks naturally, switches languages, handles item changes, and confirms the pickup order before the call ends.",
+      "No. They call your restaurant, speak normally, switch languages if needed, and confirm pickup before hanging up.",
     link: { href: "/demo", label: "Hear a demo call" },
   },
   {
     id: "home-completed-order",
     pages: ["home"],
     question: "When do we pay?",
-    answer: `Only when a real order is confirmed and the ticket reaches your kitchen screen. ${PRICING_RATE_LINE}. No order, no charge.`,
+    answer: `Pay when pickup confirms and the ticket hits your kitchen screen. ${PRICING_PILL_PRICE}. No order, no charge.`,
     link: { href: HOME_PRICING_PILL.href, label: "Pricing" },
   },
   {

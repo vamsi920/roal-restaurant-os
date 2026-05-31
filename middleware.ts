@@ -27,6 +27,7 @@ export const config = {
     "/dashboard/:path*",
     "/login",
     "/signup",
+    "/reset-password",
     "/auth/callback",
     "/api/:path*",
   ],

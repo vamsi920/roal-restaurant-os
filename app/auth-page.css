@@ -1,7 +1,59 @@
 /**
- * Auth pages (`/login`, `/signup`, `/reset-password`) — match marketing glass + lavender.
+ * Auth pages (`/login`, `/signup`, `/reset-password`) — warm restaurant-first shell (matches `/`).
  * Form behavior unchanged; styles only.
  */
+
+.public-theme.public-auth-canvas {
+  --public-ink: 28 26 24;
+  --public-muted: 110 102 94;
+  --public-subtle: 110 102 94;
+  --public-bg-base: 250 246 240;
+  --public-bg-elev: 255 252 248;
+  --public-surface-glass: 255 252 248;
+  --public-accent-lavender: 180 58 46;
+  --public-accent-violet: 196 140 58;
+  --public-surface-border: rgb(228 218 205 / 0.9);
+  --public-focus-ring: rgb(180 58 46 / 0.78);
+  --public-focus-glow: 0 0 0 4px rgb(180 58 46 / 0.2);
+  --public-shadow-card: 0 14px 40px rgb(28 26 24 / 0.08);
+  background:
+    radial-gradient(circle at 12% 8%, rgb(196 140 58 / 0.1), transparent 28rem),
+    radial-gradient(circle at 88% 12%, rgb(180 58 46 / 0.06), transparent 24rem),
+    linear-gradient(
+      180deg,
+      rgb(250 246 240),
+      rgb(255 252 248) 44%,
+      rgb(245 240 232)
+    );
+  color: rgb(var(--public-ink));
+}
+
+.public-theme.public-auth-canvas .public-auth-header {
+  border-bottom-color: rgb(228 218 205 / 0.9);
+  background: rgb(255 252 248 / 0.9);
+}
+
+.public-theme.public-auth-canvas .public-auth-header__mark {
+  border-color: rgb(180 58 46 / 0.28);
+  background: rgb(255 252 248);
+}
+
+.public-theme.public-auth-canvas .public-auth-header__cta {
+  background: rgb(var(--public-ink));
+  box-shadow: 0 10px 24px rgb(28 26 24 / 0.14);
+}
+
+.public-theme.public-auth-canvas .public-auth-main {
+  align-items: flex-start;
+  padding: clamp(1.15rem, 3.5vw, 2.25rem) var(--public-gutter);
+}
+
+@media (min-width: 768px) {
+  .public-theme.public-auth-canvas .public-auth-main {
+    align-items: center;
+    padding: clamp(1.35rem, 4vw, 2.5rem) var(--public-gutter);
+  }
+}
 
 .public-theme .public-auth-main {
   position: relative;
@@ -21,12 +73,12 @@
   background:
     radial-gradient(
       ellipse 80% 55% at 50% -5%,
-      rgb(var(--public-accent-lavender) / 0.2),
+      rgb(196 140 58 / 0.14),
       transparent 62%
     ),
     radial-gradient(
       ellipse 50% 40% at 100% 100%,
-      rgb(var(--public-accent-violet) / 0.08),
+      rgb(var(--public-accent-lavender) / 0.08),
       transparent 55%
     );
 }
@@ -42,7 +94,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgb(100 85 175);
+  color: rgb(var(--public-accent-lavender));
 }
 
 .public-theme .public-auth-panel,
@@ -83,8 +135,8 @@
 .public-theme .public-signup-aside__card {
   padding: clamp(1.25rem, 3.5vw, 1.65rem);
   border-radius: var(--public-radius-card);
-  border: 1px solid rgb(var(--public-accent-lavender) / 0.32);
-  background: rgb(var(--public-surface-glass) / 0.52);
+  border: 1px solid rgb(228 218 205 / 0.95);
+  background: rgb(var(--public-surface-glass) / 0.92);
   backdrop-filter: blur(var(--public-blur-glass));
   box-shadow: var(--public-shadow-card);
 }
@@ -105,7 +157,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgb(100 85 175);
+  color: rgb(var(--public-accent-lavender));
 }
 
 .public-theme .public-auth-beats {
@@ -122,8 +174,8 @@
   align-items: flex-start;
   padding: 0.7rem 0.85rem;
   border-radius: var(--public-radius-md, 0.75rem);
-  border: 1px solid rgb(var(--public-accent-lavender) / 0.22);
-  background: rgb(var(--public-surface-glass) / 0.38);
+  border: 1px solid rgb(228 218 205 / 0.9);
+  background: rgb(250 246 240 / 0.88);
 }
 
 .public-theme .public-auth-beats__num {
@@ -135,8 +187,8 @@
   border-radius: 999px;
   font-size: 0.6875rem;
   font-weight: 700;
-  background: rgb(var(--public-accent-lavender) / 0.2);
-  color: rgb(100 80 180);
+  background: rgb(var(--public-accent-lavender) / 0.14);
+  color: rgb(140 42 32);
 }
 
 .public-theme .public-auth-beats__title {
@@ -369,9 +421,9 @@
 .public-theme .public-auth-panel .public-auth-forgot-row button:focus-visible,
 .public-theme .public-auth-panel .public-auth-footer a:focus-visible,
 .public-theme .public-auth-panel .public-auth-footer button:focus-visible {
-  outline: 2px solid var(--public-focus-ring, rgb(100 85 175 / 0.78));
+  outline: 2px solid var(--public-focus-ring);
   outline-offset: var(--public-focus-offset, 3px);
-  box-shadow: var(--public-focus-glow, 0 0 0 4px rgb(var(--public-accent-lavender) / 0.28));
+  box-shadow: var(--public-focus-glow);
 }
 
 .public-theme .public-auth-panel .public-auth-footer button:disabled,
@@ -389,9 +441,21 @@
 .public-theme .public-auth-panel a:focus-visible,
 .public-theme .public-auth-submit:focus-visible,
 .public-theme .public-auth-forgot-row button:focus-visible {
-  outline: 2px solid var(--public-focus-ring, rgb(100 85 175 / 0.78));
+  outline: 2px solid var(--public-focus-ring);
   outline-offset: var(--public-focus-offset, 3px);
-  box-shadow: var(--public-focus-glow, 0 0 0 4px rgb(var(--public-accent-lavender) / 0.28));
+  box-shadow: var(--public-focus-glow);
+}
+
+.public-theme.public-auth-canvas .public-auth-panel,
+.public-theme.public-auth-canvas .public-signup-aside__card {
+  border-color: rgb(228 218 205 / 0.95);
+  background: rgb(255 252 248 / 0.94);
+}
+
+.public-theme.public-auth-canvas .public-btn-primary:focus-visible,
+.public-theme.public-auth-canvas .public-auth-submit:focus-visible {
+  outline-color: rgb(var(--public-accent-lavender));
+  box-shadow: var(--public-focus-glow), 0 2px 10px rgb(var(--public-ink) / 0.12);
 }
 
 @media (prefers-reduced-motion: reduce) {
