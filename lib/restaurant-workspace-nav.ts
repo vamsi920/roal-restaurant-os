@@ -4,9 +4,12 @@ export type RestaurantWorkspaceDestinationId =
   | "orders"
   | "menu"
   | "liveAgent"
-  | "callHistory"
+  | "calls"
   | "analytics"
-  | "billing";
+  | "billing"
+  | "settings";
+
+export const RESTAURANT_CALLS_FOLLOWUPS_LABEL = "Calls / Follow-ups";
 
 export type RestaurantWorkspaceDestination = {
   id: RestaurantWorkspaceDestinationId;
@@ -66,9 +69,9 @@ export function buildRestaurantWorkspaceNav(
       label: "Live Agent",
     },
     {
-      id: "callHistory",
+      id: "calls",
       href: `${base}/calls`,
-      label: "Call history",
+      label: RESTAURANT_CALLS_FOLLOWUPS_LABEL,
     },
     {
       id: "analytics",
@@ -79,6 +82,11 @@ export function buildRestaurantWorkspaceNav(
       id: "billing",
       href: billingHref,
       label: "Billing",
+    },
+    {
+      id: "settings",
+      href: `${base}/menu#restaurant-settings`,
+      label: "Settings",
     },
   ];
 
@@ -96,12 +104,14 @@ export function restaurantWorkspaceMobileNavLabel(
       return "Menu";
     case "liveAgent":
       return "Agent";
-    case "callHistory":
+    case "calls":
       return "Calls";
     case "analytics":
       return "Stats";
     case "billing":
       return "Plan";
+    case "settings":
+      return "Settings";
     default:
       return id;
   }
@@ -115,9 +125,10 @@ export function isRestaurantWorkspaceNavActive(
   const base = `/dashboard/restaurants/${restaurantId}`;
   const menuPath = `${base}/menu`;
   const liveAgentPath = `${base}/agent`;
-  const callHistoryPath = `${base}/calls`;
+  const callsPath = `${base}/calls`;
   const analyticsPath = `${base}/analytics`;
   const billingPath = `${base}/billing`;
+  const settingsPath = `${base}/menu`;
 
   switch (itemId) {
     case "orders":
@@ -126,8 +137,8 @@ export function isRestaurantWorkspaceNavActive(
       return pathname.startsWith(menuPath);
     case "liveAgent":
       return pathname.startsWith(liveAgentPath);
-    case "callHistory":
-      return pathname.startsWith(callHistoryPath);
+    case "calls":
+      return pathname.startsWith(callsPath);
     case "analytics":
       return (
         pathname.startsWith(analyticsPath) || pathname.startsWith("/dashboard/analytics")
@@ -136,6 +147,8 @@ export function isRestaurantWorkspaceNavActive(
       return (
         pathname.startsWith(billingPath) || pathname.startsWith("/dashboard/billing")
       );
+    case "settings":
+      return pathname.startsWith(settingsPath);
     default:
       return false;
   }

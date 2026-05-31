@@ -1,7 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { writeAuditLog } from "@/lib/observability/audit";
 import { dispatchNotification } from "@/lib/notifications/dispatch";
+import { shouldSkipProductionOwnerNotification } from "@/lib/notifications/session-guard";
 import type { NotificationEventType } from "@/lib/notifications/types";
+import { HANDOFF_REASON_LABELS } from "@/lib/elevenlabs/handoff-metadata";
 
 export function stateTransitioned(
   previous: string | null | undefined,
@@ -293,17 +295,32 @@ export async function emitStaffHandoffRequested(
     outcome?: string | null;
     summary?: string | null;
     reason?: string | null;
+    transcriptMetadata?: Record<string, unknown>;
   }
 ): Promise<boolean> {
+  if (
+    shouldSkipProductionOwnerNotification(
+      input.sessionId,
+      input.transcriptMetadata ?? {}
+    )
+  ) {
+    return false;
+  }
+
   const ctx = await loadRestaurantOperationalContext(supabase, input.restaurantId);
   if (!ctx) return false;
 
-  const callerLabel = input.callerPhone?.trim() || "A caller";
-  const reason = input.reason?.trim() || "handoff requested";
+  const phone = input.callerPhone?.trim() || null;
+  const callerLabel = phone
+    ? phone
+    : "A caller (callback number was not captured on the call)";
+  const reasonKey = input.reason?.trim() || "handoff_requested";
+  const reasonLabel =
+    HANDOFF_REASON_LABELS[reasonKey] ?? reasonKey.replace(/_/g, " ");
   const summary = input.summary?.trim();
   const body = summary
-    ? `${callerLabel} needs staff follow-up: ${summary}`
-    : `${callerLabel} needs staff follow-up after a phone call.`;
+    ? `${callerLabel} needs staff follow-up (${reasonLabel}): ${summary} Next: collect name and callback number, then return the call.`
+    : `${callerLabel} needs staff follow-up (${reasonLabel}). Next: collect name and callback number before promising a return call.`;
 
   const notified = await dispatchNotification(supabase, {
     organizationId: ctx.organizationId,
@@ -317,10 +334,10 @@ export async function emitStaffHandoffRequested(
       conversation_id: input.conversationId ?? input.sessionId,
       caller_phone: input.callerPhone ?? null,
       outcome: input.outcome ?? null,
-      reason,
+      reason: reasonKey,
       transcript_summary: summary ?? null,
     },
-    idempotencyKey: `staff_handoff:${ctx.restaurantId}:${input.sessionId}`,
+    idempotencyKey: `staff_handoff:${ctx.restaurantId}:${input.sessionId}:${reasonKey}`,
   });
 
   if (!notified) return false;
@@ -336,7 +353,7 @@ export async function emitStaffHandoffRequested(
       conversation_id: input.conversationId ?? input.sessionId,
       caller_phone: input.callerPhone ?? null,
       call_outcome: input.outcome ?? null,
-      reason,
+      reason: reasonKey,
     },
   });
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { OnboardingVoiceAgentStep } from "@/components/onboarding/onboarding-voice-agent-step";
+import { OnboardingReadinessPanel } from "@/components/onboarding/OnboardingReadinessPanel";
 import { RestaurantLaunchChecklist } from "@/components/restaurant-launch/RestaurantLaunchChecklist";
 import { MenuScanner } from "@/app/dashboard/restaurants/[id]/MenuScanner";
 import {
@@ -158,6 +159,15 @@ export function OnboardingWizard({ initialState }: Props) {
           />
         </div>
         <p className="mt-1.5 text-xs text-subtle tabular-nums">{overallPercent}% complete</p>
+        {state.restaurants.length === 0 && orgId ? (
+          <p className="mt-3 text-sm text-muted">
+            No locations yet.{" "}
+            <Link href="/dashboard/restaurants" className="font-medium text-accent hover:underline">
+              Create a location
+            </Link>{" "}
+            or add one in the store profile step below.
+          </p>
+        ) : null}
         {state.restaurants.length > 1 ? (
           <label className="mt-4 block max-w-md">
             <span className="text-xs font-medium uppercase tracking-wide text-subtle">
@@ -210,6 +220,8 @@ export function OnboardingWizard({ initialState }: Props) {
                 restaurantId,
                 resumeStep,
                 stepStatus: navStepStatus,
+                readiness: state.readiness,
+                menuItemCount: state.menuItemCount,
               });
               return (
                 <li key={key}>
@@ -239,6 +251,11 @@ export function OnboardingWizard({ initialState }: Props) {
               );
             })}
           </ul>
+          {state.readiness ? (
+            <div className="mt-4 border-t border-line pt-4">
+              <OnboardingReadinessPanel readiness={state.readiness} compact />
+            </div>
+          ) : null}
           {state.launchChecklist ? (
             <div className="mt-4 border-t border-line pt-4">
               <RestaurantLaunchChecklist
@@ -281,6 +298,7 @@ export function OnboardingWizard({ initialState }: Props) {
                 key={restaurantId ?? "new"}
                 restaurant={restaurant}
                 pending={pending}
+                hoursConfigured={state.hoursConfigured}
                 initialPhone={profileDefaults?.phone ?? ""}
                 initialTimezone={profileDefaults?.timezone ?? ""}
                 initialAddress={profileDefaults?.address_line1 ?? ""}
@@ -313,6 +331,7 @@ export function OnboardingWizard({ initialState }: Props) {
                 restaurantName={restaurant?.name ?? "Restaurant"}
                 menuItemCount={state.menuItemCount}
                 categoryCount={state.menuCategoryCount}
+                hoursConfigured={state.hoursConfigured}
                 pending={pending}
                 onContinue={() =>
                   run(async () => {
@@ -550,6 +569,7 @@ function AccountStep({
 function ProfileStep({
   restaurant,
   pending,
+  hoursConfigured,
   initialPhone,
   initialTimezone,
   initialAddress,
@@ -558,6 +578,7 @@ function ProfileStep({
 }: {
   restaurant: OnboardingWizardState["activeRestaurant"];
   pending: boolean;
+  hoursConfigured: boolean;
   initialPhone: string;
   initialTimezone: string;
   initialAddress: string;
@@ -657,19 +678,42 @@ function ProfileStep({
       </label>
       <label className="block">
         <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-          Address (optional)
+          Address
         </span>
         <input
           className="input-base mt-1.5"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           placeholder="123 Main St"
+          required
           disabled={pending}
         />
       </label>
       <p className="text-xs text-muted">
-        After you save, continue to menu and voice setup for this location. Hours are
-        configured in {RESTAURANT_MENU_SETUP_TITLE}.
+        Guest phone line above is what callers use for pickup orders. Forward your
+        public restaurant line to the agent after sync on the voice agent step.
+      </p>
+      {restaurant ? (
+        <p className="text-xs text-muted">
+          Hours:{" "}
+          {hoursConfigured ? (
+            <span className="text-success">Configured</span>
+          ) : (
+            <>
+              <span className="text-warning">Not set yet</span>
+              {" · "}
+              <Link
+                href={restaurantMenuSetupHref(restaurant.id)}
+                className="font-medium text-accent hover:underline"
+              >
+                Set hours in {RESTAURANT_MENU_SETUP_TITLE}
+              </Link>
+            </>
+          )}
+        </p>
+      ) : null}
+      <p className="text-xs text-muted">
+        After you save, continue to menu import and voice setup for this location.
       </p>
       <button type="submit" className="btn-primary" disabled={pending || !name.trim()}>
         Save & continue
@@ -683,6 +727,7 @@ function MenuStep({
   restaurantName,
   menuItemCount,
   categoryCount,
+  hoursConfigured,
   pending,
   onContinue,
   onSkip,
@@ -692,6 +737,7 @@ function MenuStep({
   restaurantName: string;
   menuItemCount: number;
   categoryCount: number;
+  hoursConfigured: boolean;
   pending: boolean;
   onContinue: () => void;
   onSkip: () => void;
@@ -703,21 +749,31 @@ function MenuStep({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted">
-        Build the menu for{" "}
-        <span className="font-medium text-ink">{restaurantName}</span> before the voice
-        agent takes orders.
+        Build and review the menu for{" "}
+        <span className="font-medium text-ink">{restaurantName}</span> before the
+        voice agent takes orders.
       </p>
+      {!hoursConfigured ? (
+        <p className="rounded-lg border border-dashed border-warning/35 bg-warning/5 px-3 py-2 text-sm text-muted">
+          Set weekly hours in{" "}
+          <Link href={menuHref} className="font-medium text-accent hover:underline">
+            {RESTAURANT_MENU_SETUP_TITLE}
+          </Link>{" "}
+          before syncing the agent.
+        </p>
+      ) : null}
       {hasMenu ? (
         <p className="text-sm text-success">
           {menuItemCount} menu item{menuItemCount === 1 ? "" : "s"}
           {categoryCount > 0
             ? ` across ${categoryCount} categor${categoryCount === 1 ? "y" : "ies"}`
             : ""}
-          .
+          . Review names and prices before continuing.
         </p>
       ) : (
         <p className="text-sm text-muted">
-          Scan a menu photo below or add items in {RESTAURANT_MENU_SETUP_TITLE}.
+          Scan a menu photo below or add items in {RESTAURANT_MENU_SETUP_TITLE}. No
+          demo menu is loaded — add your real items.
         </p>
       )}
       <MenuScanner
@@ -726,13 +782,15 @@ function MenuStep({
         onScanComplete={onScanned}
       />
       <Link href={menuHref} className="text-sm font-medium text-accent hover:underline">
-        Open {RESTAURANT_MENU_SETUP_TITLE} for this location
+        {hasMenu
+          ? `Review and edit menu in ${RESTAURANT_MENU_SETUP_TITLE}`
+          : `Open ${RESTAURANT_MENU_SETUP_TITLE} for this location`}
       </Link>
       <div className="flex flex-wrap gap-2">
         <button
           type="button"
           className="btn-primary"
-          disabled={pending || !hasMenu}
+          disabled={pending || !hasMenu || !hoursConfigured}
           onClick={onContinue}
         >
           Continue to voice agent
@@ -746,6 +804,15 @@ function MenuStep({
           Skip for now
         </button>
       </div>
+      {!hasMenu ? (
+        <p className="text-xs text-subtle">
+          Voice agent sync stays blocked until at least one menu item exists.
+        </p>
+      ) : !hoursConfigured ? (
+        <p className="text-xs text-subtle">
+          Voice agent sync stays blocked until weekly hours are configured.
+        </p>
+      ) : null}
     </div>
   );
 }

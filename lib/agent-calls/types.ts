@@ -49,6 +49,9 @@ export type DraftOrderCallRow = {
   items: unknown;
   customer_name: string | null;
   customer_phone: string | null;
+  fulfillment_type?: string | null;
+  delivery_address?: string | null;
+  delivery_instructions?: string | null;
   created_at: string;
   updated_at: string;
   completed_at: string | null;
@@ -61,6 +64,9 @@ export type ReceiptCallRow = {
   customer_name: string | null;
   customer_phone: string | null;
   items: unknown;
+  fulfillment_type?: string | null;
+  delivery_address?: string | null;
+  delivery_instructions?: string | null;
   created_at: string;
 };
 

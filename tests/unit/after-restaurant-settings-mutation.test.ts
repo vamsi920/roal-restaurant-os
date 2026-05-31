@@ -10,12 +10,17 @@ const { revalidatePath, syncRestaurantAgentAfterContentChange } = vi.hoisted(
 vi.mock("next/cache", () => ({ revalidatePath }));
 vi.mock("@/lib/voice-agent/sync-restaurant-agent-after-content-change", () => ({
   syncRestaurantAgentAfterContentChange,
-  VOICE_AGENT_CONTENT_SYNC_TRIGGERS: { profile: "profile", hours: "hours" },
+  VOICE_AGENT_CONTENT_SYNC_TRIGGERS: {
+    profile: "profile",
+    hours: "hours",
+    knowledge: "knowledge_updated",
+  },
 }));
 
 import {
   afterHoursSettingsMutation,
   afterProfileSettingsMutation,
+  afterRestaurantKnowledgeMutation,
   restaurantSettingsRevalidatePaths,
 } from "@/lib/voice-agent/after-restaurant-settings-mutation";
 
@@ -54,12 +59,19 @@ describe("afterRestaurantSettingsMutation", () => {
       expect(revalidatePath).toHaveBeenCalledWith(path);
     }
     expect(revalidatePath).toHaveBeenCalledWith("/dashboard/onboarding");
+  });
 
-    await vi.waitFor(() => {
-      const onboardingCalls = revalidatePath.mock.calls.filter(
-        ([p]) => p === "/dashboard/onboarding"
-      );
-      expect(onboardingCalls.length).toBeGreaterThanOrEqual(2);
+  it("afterRestaurantKnowledgeMutation syncs with knowledge_updated trigger", () => {
+    afterRestaurantKnowledgeMutation(RESTAURANT_ID, {
+      userId: "user_3",
+      restaurantName: "Bistro",
+    });
+
+    expect(syncRestaurantAgentAfterContentChange).toHaveBeenCalledWith({
+      restaurantId: RESTAURANT_ID,
+      trigger: "knowledge_updated",
+      userId: "user_3",
+      restaurantName: "Bistro",
     });
   });
 

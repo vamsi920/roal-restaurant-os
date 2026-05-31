@@ -3,6 +3,7 @@ import {
   lineCountFromItems,
   resolveAgentCallStatus,
 } from "@/lib/agent-calls/classify-outcome";
+import { outcomeForVoicemailAwareCall } from "@/lib/agent-calls/voicemail-call";
 import {
   AGENT_CALL_OUTCOMES,
   type AgentCallOutcome,
@@ -110,14 +111,22 @@ function deriveOneSession(
 
   const drafts = indexBySession(input.drafts);
   const receipts = indexBySession(input.receipts);
-  const draft = drafts.get(sessionId) ?? null;
-  const receipt = receipts.get(sessionId) ?? null;
+  const draftRow = drafts.get(sessionId) ?? null;
+  const receiptRow = receipts.get(sessionId) ?? null;
+  const draft =
+    draftRow?.restaurant_id === input.restaurantId ? draftRow : null;
+  const receipt =
+    receiptRow?.restaurant_id === input.restaurantId ? receiptRow : null;
   const usage = usageForSession(input.usageEvents, sessionId);
+
+  const storedRow = input.storedEvents?.find((row) => row.session_id === sessionId);
+  const transcriptMetadata = storedRow?.transcript_metadata ?? {};
 
   const outcome = classifyAgentCallOutcome({
     draft,
     receipt,
     usage,
+    transcriptMetadata,
     now,
     abandonedAfterMs,
   });
@@ -155,6 +164,7 @@ function deriveOneSession(
   });
 
   const callerPhone =
+    storedRow?.caller_phone?.trim() ||
     draft?.customer_phone?.trim() ||
     receipt?.customer_phone?.trim() ||
     null;
@@ -169,8 +179,8 @@ function deriveOneSession(
     outcome,
     startedAt,
     endedAt,
-    transcriptMetadata: {},
-    source: "derived",
+    transcriptMetadata,
+    source: storedRow ? "stored" : "derived",
   };
 }
 
@@ -196,12 +206,25 @@ function mergeStoredOverDerived(
   derived: AgentCallSession,
   stored: AgentCallSession
 ): AgentCallSession {
-  const outcome =
+  let outcome =
     derived.outcome === "order_completed"
       ? derived.outcome
       : stored.outcome !== "unknown"
         ? stored.outcome
         : derived.outcome;
+
+  outcome = outcomeForVoicemailAwareCall({
+    transcriptMetadata: stored.transcriptMetadata,
+    receipt:
+      derived.outcome === "order_completed"
+        ? { session_id: derived.sessionId }
+        : null,
+    inferredOutcome: outcome,
+  }) as AgentCallOutcome;
+
+  if (outcome === "order_completed" && derived.outcome !== "order_completed") {
+    outcome = "no_order";
+  }
 
   return {
     ...derived,
@@ -229,7 +252,8 @@ export function deriveAgentCallSessions(
 
   const derived: AgentCallSession[] = [];
 
-  for (const { sessionId } of sessions.values()) {
+  for (const { restaurantId, sessionId } of sessions.values()) {
+    if (restaurantId !== input.restaurantId) continue;
     const base = deriveOneSession(input, sessionId);
     const storedRow = storedBySession.get(sessionId);
     if (storedRow) {

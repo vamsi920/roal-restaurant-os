@@ -1,4 +1,5 @@
 import { lineCountFromItems } from "@/lib/agent-calls/classify-outcome";
+import { isTestHarnessBillingSession } from "@/lib/billing/billable-orders";
 import type {
   AgentCallOutcome,
   AgentCallSession,
@@ -12,7 +13,19 @@ import type {
   CallHistoryTranscriptLine,
   CallHistoryIntent,
 } from "@/lib/call-history/types";
+import {
+  callerContactFromTranscriptMetadata,
+  isVoicemailTranscriptMetadata,
+  voicemailCallbackReasonFromMetadata,
+} from "@/lib/agent-calls/voicemail-call";
+import { followUpLabelFromHandoffMetadata } from "@/lib/elevenlabs/handoff-metadata";
+import {
+  isOpenReservationStatus,
+  reservationNextOwnerAction,
+  type ReservationRequestStatus,
+} from "@/lib/restaurant-reservations/schema";
 import { computeOrderTotals } from "@/lib/orders/compute-order-totals";
+import { fulfillmentLabelFromOrderRow } from "@/lib/orders/validate-fulfillment";
 import { parseOrderLineItems } from "@/lib/orders/line-items";
 import type { MenuPriceContext } from "@/lib/orders/menu-price-context";
 import { formatMoney } from "@/lib/orders/money";
@@ -91,6 +104,14 @@ function isTruthyFlag(value: unknown): boolean {
   return value === true || asString(value).toLowerCase() === "true";
 }
 
+export function isTestHarnessCallSession(input: {
+  sessionId: string;
+  transcriptMetadata?: Record<string, unknown>;
+}): boolean {
+  if (isTestHarnessBillingSession(input.sessionId)) return true;
+  return isTruthyFlag(input.transcriptMetadata?.is_test_harness);
+}
+
 function transcriptBlob(metadata: Record<string, unknown>): string {
   const pieces = [
     metadata.transcript_summary,
@@ -149,7 +170,8 @@ function inferCallIntent(input: {
   }
   if (input.followUpReason) return "handoff";
   if (input.hasReservationRequest) return "reservation";
-  if (input.outcome === "order_completed" || input.lineCount > 0) return "order";
+  if (input.outcome === "order_completed" && input.lineCount > 0) return "order";
+  if (input.lineCount > 0) return "order";
 
   const blob = transcriptBlob(input.metadata);
   if (
@@ -182,6 +204,7 @@ function ownerActionFor(input: {
   outcome: AgentCallOutcome;
   followUpReason: string | null;
   hasReservationRequest: boolean;
+  reservationStatus?: ReservationRequestStatus | null;
 }): { label: string; actionable: boolean } {
   if (input.intent === "active_call") {
     return { label: "Watch live order screen", actionable: true };
@@ -192,8 +215,14 @@ function ownerActionFor(input: {
   if (input.followUpReason) {
     return { label: input.followUpReason, actionable: true };
   }
+  if (input.reservationStatus) {
+    return {
+      label: reservationNextOwnerAction(input.reservationStatus),
+      actionable: isOpenReservationStatus(input.reservationStatus),
+    };
+  }
   if (input.hasReservationRequest || input.intent === "reservation") {
-    return { label: "Confirm table with guest", actionable: true };
+    return { label: "Review table request", actionable: true };
   }
   if (input.outcome === "order_completed") {
     return { label: "Prepare kitchen ticket", actionable: false };
@@ -210,6 +239,8 @@ function ownerActionFor(input: {
 export function followUpReasonFromTranscriptMetadata(
   metadata: Record<string, unknown>
 ): string | null {
+  const fromHandoff = followUpLabelFromHandoffMetadata(metadata);
+  if (fromHandoff) return fromHandoff;
   for (const key of FOLLOW_UP_KEYS) {
     if (isTruthyFlag(metadata[key])) return FOLLOW_UP_LABELS[key];
   }
@@ -260,11 +291,15 @@ export function transcriptLinesFromMetadata(
   return lines;
 }
 
-function indexBySession<T extends { session_id: string }>(
-  rows: T[]
+function indexBySession<T extends { session_id: string; restaurant_id?: string }>(
+  rows: T[],
+  restaurantId?: string
 ): Map<string, T> {
   const map = new Map<string, T>();
   for (const row of rows) {
+    if (restaurantId && row.restaurant_id && row.restaurant_id !== restaurantId) {
+      continue;
+    }
     map.set(row.session_id, row);
   }
   return map;
@@ -290,25 +325,33 @@ export function formatCallHistoryTotal(
 }
 
 export function buildCallHistoryRows(input: {
+  restaurantId?: string;
   sessions: AgentCallSession[];
   drafts: DraftOrderCallRow[];
   receipts: ReceiptCallRow[];
   reservationSessionIds?: Iterable<string | null | undefined>;
+  reservationBySession?: Map<string, { status: ReservationRequestStatus }>;
   menuCtx?: MenuPriceContext | null;
   pricing?: OrderPricingSettings;
   limit?: number;
 }): CallHistoryRow[] {
-  const drafts = indexBySession(input.drafts);
-  const receipts = indexBySession(input.receipts);
+  const restaurantId =
+    input.restaurantId?.trim() || input.sessions[0]?.restaurantId?.trim() || "";
+  const scopedSessions = restaurantId
+    ? input.sessions.filter((session) => session.restaurantId === restaurantId)
+    : input.sessions;
+  const drafts = indexBySession(input.drafts, restaurantId || undefined);
+  const receipts = indexBySession(input.receipts, restaurantId || undefined);
   const reservationSessionIds = new Set(
     [...(input.reservationSessionIds ?? [])]
       .map((id) => id?.trim())
       .filter((id): id is string => Boolean(id))
   );
+  const reservationBySession = input.reservationBySession ?? new Map();
   const pricing = input.pricing ?? DEFAULT_ORDER_PRICING;
   const limit = input.limit ?? 100;
 
-  const rows: CallHistoryRow[] = input.sessions.map((session) => {
+  const rows: CallHistoryRow[] = scopedSessions.map((session) => {
     const draft = drafts.get(session.sessionId) ?? null;
     const receipt = receipts.get(session.sessionId) ?? null;
     const items = receipt?.items ?? draft?.items ?? [];
@@ -317,19 +360,37 @@ export function buildCallHistoryRows(input: {
       ? formatCallHistoryTotal(items, input.menuCtx, pricing)
       : null;
 
+    const metaContact = callerContactFromTranscriptMetadata(
+      session.transcriptMetadata
+    );
     const callerName =
-      draft?.customer_name?.trim() || receipt?.customer_name?.trim() || null;
+      draft?.customer_name?.trim() ||
+      receipt?.customer_name?.trim() ||
+      metaContact.callerName ||
+      null;
     const callerPhone =
       session.callerPhone?.trim() ||
       draft?.customer_phone?.trim() ||
       receipt?.customer_phone?.trim() ||
+      metaContact.callerPhone ||
       null;
 
     const occurredAt = session.endedAt ?? session.startedAt;
-    const followUpReason = followUpReasonFromTranscriptMetadata(
+    let followUpReason = followUpReasonFromTranscriptMetadata(
       session.transcriptMetadata
     );
-    const hasReservationRequest = reservationSessionIds.has(session.sessionId);
+    if (
+      isVoicemailTranscriptMetadata(session.transcriptMetadata) &&
+      !followUpReason
+    ) {
+      followUpReason = "Voicemail left";
+    }
+    const voicemailReason = voicemailCallbackReasonFromMetadata(
+      session.transcriptMetadata
+    );
+    const reservationLink = reservationBySession.get(session.sessionId) ?? null;
+    const hasReservationRequest =
+      reservationLink != null || reservationSessionIds.has(session.sessionId);
     const intent = inferCallIntent({
       outcome: session.outcome,
       status: session.status,
@@ -343,14 +404,24 @@ export function buildCallHistoryRows(input: {
       outcome: session.outcome,
       followUpReason,
       hasReservationRequest,
+      reservationStatus: reservationLink?.status ?? null,
     });
     const transcriptSummary =
       asString(session.transcriptMetadata.transcript_summary) ||
       asString(session.transcriptMetadata.summary) ||
+      voicemailReason ||
       null;
     const durationSeconds = asFiniteNumber(
       session.transcriptMetadata.call_duration_secs
     );
+    const isTestHarness = isTestHarnessCallSession({
+      sessionId: session.sessionId,
+      transcriptMetadata: session.transcriptMetadata,
+    });
+    const fulfillmentLabel =
+      lineCount > 0
+        ? fulfillmentLabelFromOrderRow(receipt ?? draft)
+        : null;
 
     return {
       sessionId: session.sessionId,
@@ -375,6 +446,8 @@ export function buildCallHistoryRows(input: {
       transcriptLines: transcriptLinesFromMetadata(session.transcriptMetadata),
       recordingUrl: recordingUrlFromTranscriptMetadata(session.transcriptMetadata),
       durationSeconds,
+      isTestHarness,
+      fulfillmentLabel,
     };
   });
 
@@ -390,21 +463,26 @@ export function buildCallHistorySummary(input: {
   rows: CallHistoryRow[];
   openReservationRequests: number;
 }): CallHistorySummary {
-  const totalCalls = input.rows.length;
-  const completedOrders = input.rows.filter((row) => row.outcome === "order_completed").length;
-  const endedCalls = input.rows.filter((row) => row.status !== "active").length;
-  const voicemailCalls = input.rows.filter((row) => row.intent === "voicemail").length;
+  const operationalRows = input.rows.filter((row) => !row.isTestHarness);
+  const totalCalls = operationalRows.length;
+  const completedOrders = operationalRows.filter(
+    (row) => row.outcome === "order_completed" && row.lineCount > 0
+  ).length;
+  const endedCalls = operationalRows.filter((row) => row.status !== "active").length;
+  const voicemailCalls = operationalRows.filter((row) => row.intent === "voicemail").length;
 
   return {
     totalCalls,
-    activeCalls: input.rows.filter((row) => row.status === "active").length,
+    activeCalls: operationalRows.filter((row) => row.status === "active").length,
     completedOrders,
     voicemailCalls,
     openReservationRequests: input.openReservationRequests,
-    staffFollowUps: input.rows.filter((row) => row.needsStaffFollowUp || row.isActionable).length,
-    noOrderCalls: input.rows.filter((row) => row.outcome === "no_order").length,
-    recordingsAvailable: input.rows.filter((row) => row.recordingUrl != null).length,
-    transcriptsAvailable: input.rows.filter(
+    staffFollowUps: operationalRows.filter(
+      (row) => row.needsStaffFollowUp || row.isActionable
+    ).length,
+    noOrderCalls: operationalRows.filter((row) => row.outcome === "no_order").length,
+    recordingsAvailable: operationalRows.filter((row) => row.recordingUrl != null).length,
+    transcriptsAvailable: operationalRows.filter(
       (row) => row.transcriptSummary != null || row.transcriptLines.length > 0
     ).length,
     orderConversionPercent:

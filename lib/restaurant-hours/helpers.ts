@@ -168,3 +168,21 @@ export function operationsPayloadFromBundle(bundle: RestaurantHoursBundle) {
     upcoming_exceptions: bundle.exceptions,
   };
 }
+
+/** Caller-safe operations when hours cannot be evaluated — never imply the restaurant is open. */
+export function operationsPayloadForRestaurantInfo(
+  bundle: RestaurantHoursBundle | null
+) {
+  if (!bundle) {
+    return {
+      ordering_allowed: false,
+      is_open_now: false,
+      status: "closed" as const,
+      message:
+        "Hours are not configured for this location. Do not tell the caller the restaurant is open now.",
+      weekly_hours: [],
+      upcoming_exceptions: [],
+    };
+  }
+  return operationsPayloadFromBundle(bundle);
+}

@@ -257,10 +257,30 @@ Deno.serve(async (req: Request) => {
     }));
   }
 
+  const { data: profileRow, error: profileErr } = await supabase
+    .from("restaurant_profiles")
+    .select("allows_pickup, allows_delivery")
+    .eq("restaurant_id", restaurantId)
+    .maybeSingle();
+
+  if (profileErr) {
+    meter(500);
+    return agentToolErrorResponse(
+      { error: "database_error", code: "database_error", message: profileErr.message },
+      500
+    );
+  }
+
+  const service_modes = {
+    pickup: profileRow?.allows_pickup === true,
+    delivery: profileRow?.allows_delivery === true,
+  };
+
   const responseBody = {
     restaurant,
     categories: nested,
     restaurant_name_hint: restaurantNameHint,
+    service_modes,
     operations,
   };
 

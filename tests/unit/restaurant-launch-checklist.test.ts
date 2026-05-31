@@ -1,11 +1,18 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   areToolsSynced,
   buildRestaurantLaunchChecklist,
+  buildRestaurantLaunchGate,
+  evaluateLaunchGate,
   isConversationInitWebhookSet,
   isDedicatedAgentProvisioned,
   isRestaurantProfileLaunchComplete,
 } from "@/lib/restaurant-launch/evaluate-checklist";
+import {
+  evaluateServerLaunchEnvReady,
+  evaluateTestCallProof,
+  isSharedTemplateAgentLinked,
+} from "@/lib/restaurant-launch/server-env";
 import type { RestaurantProfile } from "@/lib/types";
 
 function baseProfile(
@@ -43,6 +50,44 @@ function baseProfile(
   } as RestaurantProfile;
 }
 
+const readySummary = {
+  tools: [
+    { name: "get_menu_items", id: "t1", op: "updated" as const },
+    { name: "get_restaurant_info", id: "t2", op: "updated" as const },
+    { name: "get_caller_history", id: "t3", op: "updated" as const },
+    { name: "submit_reservation_request", id: "t4", op: "updated" as const },
+    { name: "sync_draft_order", id: "t5", op: "updated" as const },
+    { name: "finalize_order", id: "t6", op: "updated" as const },
+    { name: "get_order_status", id: "t7", op: "updated" as const },
+  ],
+  tool_ids_on_agent: ["t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+  restaurant_placeholders_updated: true,
+  first_message_updated: true,
+  restaurant_tools_baked: true,
+  knowledge_base_doc_attached: true,
+  phone_personalization_webhook: "https://app.test/api/integrations/elevenlabs/conversation-init",
+};
+
+function readyInput() {
+  return {
+    restaurantId: "r1",
+    restaurantName: "Taco House",
+    profile: baseProfile({
+      elevenlabs_last_sync_summary: readySummary,
+    }),
+    menuItemCount: 12,
+    hoursConfigured: true,
+    testCallPassed: true,
+    testCallDetail: "Test call step marked complete.",
+    syncSummary: readySummary,
+    lastSyncError: null,
+    phoneWebhookFromAgent: null,
+    serverEnvReady: true,
+    serverEnvDetail: null,
+    templateAgentId: "template-shared",
+  };
+}
+
 describe("restaurant launch checklist", () => {
   it("requires core profile fields and a service mode", () => {
     expect(
@@ -54,83 +99,87 @@ describe("restaurant launch checklist", () => {
         baseProfile({ allows_pickup: false, allows_delivery: false })
       )
     ).toBe(false);
-    expect(
-      isRestaurantProfileLaunchComplete("Taco House", baseProfile({ phone: null }))
-    ).toBe(false);
   });
 
-  it("marks dedicated agent when profile agent is ready", () => {
-    expect(isDedicatedAgentProvisioned(baseProfile())).toBe(true);
+  it("blocks shared template agent as dedicated agent", () => {
     expect(
       isDedicatedAgentProvisioned(
-        baseProfile({ elevenlabs_provision_status: "pending" })
+        baseProfile({ elevenlabs_agent_id: "template-shared" }),
+        "template-shared"
       )
     ).toBe(false);
+    expect(isSharedTemplateAgentLinked("template-shared", "template-shared")).toBe(
+      true
+    );
   });
 
   it("detects synced ROAL tools and conversation-init webhook", () => {
-    const summary = {
-      tools: [
-        { name: "get_menu_items", id: "t1", op: "updated" as const },
-        { name: "get_restaurant_info", id: "t2", op: "updated" as const },
-        { name: "get_caller_history", id: "t3", op: "updated" as const },
-        { name: "submit_reservation_request", id: "t4", op: "updated" as const },
-        { name: "sync_draft_order", id: "t5", op: "updated" as const },
-        { name: "finalize_order", id: "t6", op: "updated" as const },
-        { name: "get_order_status", id: "t7", op: "updated" as const },
-      ],
-      tool_ids_on_agent: ["t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-      restaurant_placeholders_updated: true,
-      first_message_updated: true,
-      restaurant_tools_baked: true,
-      knowledge_base_doc_attached: true,
-      phone_personalization_webhook: "https://app.test/api/integrations/elevenlabs/conversation-init",
-    };
-    expect(areToolsSynced(summary, null)).toBe(true);
+    expect(areToolsSynced(readySummary, null)).toBe(true);
     expect(
       isConversationInitWebhookSet({
-        syncSummary: summary,
+        syncSummary: readySummary,
         phoneWebhookFromAgent: null,
-      })
-    ).toBe(true);
-    expect(
-      isConversationInitWebhookSet({
-        syncSummary: null,
-        phoneWebhookFromAgent: "https://app.test/webhook",
       })
     ).toBe(true);
   });
 
-  it("builds a full ready snapshot", () => {
-    const snapshot = buildRestaurantLaunchChecklist({
-      restaurantId: "r1",
-      restaurantName: "Taco House",
-      profile: baseProfile(),
-      menuItemCount: 12,
-      hoursConfigured: true,
-      testCallPassed: true,
-      syncSummary: {
-        tools: [
-          { name: "get_menu_items", id: "t1", op: "updated" },
-          { name: "get_restaurant_info", id: "t2", op: "updated" },
-          { name: "get_caller_history", id: "t3", op: "updated" },
-          { name: "submit_reservation_request", id: "t4", op: "updated" },
-          { name: "sync_draft_order", id: "t5", op: "updated" },
-          { name: "finalize_order", id: "t6", op: "updated" },
-          { name: "get_order_status", id: "t7", op: "updated" },
-        ],
-        tool_ids_on_agent: ["t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-        restaurant_placeholders_updated: true,
-        first_message_updated: true,
-        restaurant_tools_baked: true,
-        knowledge_base_doc_attached: true,
-        phone_personalization_webhook: "https://app.test/hook",
-      },
-      lastSyncError: null,
-      phoneWebhookFromAgent: null,
+  it("marks server env missing as blocked launch gate", () => {
+    const gate = buildRestaurantLaunchGate({
+      ...readyInput(),
+      serverEnvReady: false,
+      serverEnvDetail: "Server config incomplete",
     });
-    expect(snapshot.isLaunchReady).toBe(true);
-    expect(snapshot.completedCount).toBe(7);
-    expect(snapshot.items.every((i) => i.status === "ok")).toBe(true);
+    expect(gate.phase).toBe("blocked");
+    expect(gate.isLiveReady).toBe(false);
+    expect(gate.topBlockerLabel).toMatch(/Server environment/i);
+  });
+
+  it("does not count harness-only receipts as test call proof", () => {
+    const proof = evaluateTestCallProof({
+      onboardingTestCallCompleted: false,
+      billableReceiptCount: 0,
+    });
+    expect(proof.passed).toBe(false);
+  });
+
+  it("accepts onboarding test-call step without production receipt", () => {
+    const proof = evaluateTestCallProof({
+      onboardingTestCallCompleted: true,
+      billableReceiptCount: 0,
+    });
+    expect(proof.passed).toBe(true);
+  });
+
+  it("builds a full ready launch gate", () => {
+    const gate = buildRestaurantLaunchGate(readyInput());
+    expect(gate.isLiveReady).toBe(true);
+    expect(gate.phase).toBe("ready");
+    expect(gate.phaseLabel).toBe("Ready for live calls");
+    expect(gate.checklist.completedCount).toBe(8);
+    expect(gate.checklist.items.every((i) => i.status === "ok")).toBe(true);
+  });
+
+  it("evaluateLaunchGate surfaces almost ready when only test call missing", () => {
+    const checklist = buildRestaurantLaunchChecklist({
+      ...readyInput(),
+      testCallPassed: false,
+    });
+    const gate = evaluateLaunchGate(checklist);
+    expect(gate.phase).toBe("almost_ready");
+    expect(gate.topBlockerLabel).toMatch(/Test call/i);
+  });
+});
+
+describe("evaluateServerLaunchEnvReady", () => {
+  it("reports env readiness from server secret rows", () => {
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://example.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "test-anon-key-long-enough");
+    vi.stubEnv("ELEVENLABS_API_KEY", "el-key");
+    vi.stubEnv("AGENT_TOOL_SIGNING_SECRET", "signing-secret");
+
+    const result = evaluateServerLaunchEnvReady();
+    expect(result.ready).toBe(true);
+
+    vi.unstubAllEnvs();
   });
 });

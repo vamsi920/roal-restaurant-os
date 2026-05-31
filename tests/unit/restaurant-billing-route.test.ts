@@ -25,7 +25,8 @@ describe("restaurant billing (prompt 20)", () => {
     const load = readFileSync(LOAD, "utf8");
     expect(load).toContain("loadRestaurantBilling");
     expect(load).toContain("restaurantId: input.restaurantId");
-    expect(load).toContain('? "restaurant"\n    : "organization"');
+    expect(load).toContain("phone_order_receipts");
+    expect(load).toContain("accessibleRestaurantIds");
   });
 
   it("links billing from workspace rail to restaurant route", () => {
@@ -39,7 +40,8 @@ describe("restaurant billing (prompt 20)", () => {
     expect(dash).toContain('snapshot.scope === "restaurant"');
     expect(dash).toContain("Organization plan");
     expect(dash).toContain("This location — usage this period");
-    expect(dash).toContain("No metered activity for this location");
+    expect(dash).toContain("No billable phone orders");
+    expect(dash).toContain("billablePhoneOrders");
     expect(dash).not.toMatch(/savings|recovered revenue|fabricat/i);
   });
 

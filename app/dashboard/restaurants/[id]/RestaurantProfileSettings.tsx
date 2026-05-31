@@ -8,20 +8,51 @@ import {
   UNAVAILABLE_ITEM_BEHAVIORS,
 } from "@/lib/restaurant-profile/handoff-rules";
 import { RestaurantProfileInputSchema } from "@/lib/restaurant-profile/schema";
+import { RestaurantKnowledgeEditor } from "@/components/restaurant-knowledge/RestaurantKnowledgeEditor";
+import { RestaurantUpsellEditor } from "@/components/restaurant-upsell/RestaurantUpsellEditor";
+import type {
+  RestaurantKnowledgeFormEntry,
+  RestaurantKnowledgeEntry,
+} from "@/lib/restaurant-knowledge/schema";
+import type { RestaurantUpsellFormEntry } from "@/lib/restaurant-upsell/schema";
+import type { RestaurantUpsellRule } from "@/lib/restaurant-upsell/schema";
+import type { RestaurantMenuSnapshot } from "@/lib/menu-editor/load-menu";
 import type { Restaurant, RestaurantProfile } from "@/lib/types";
 
 type Props = {
   restaurant: Restaurant;
   profile: RestaurantProfile;
+  knowledgeEntries?: RestaurantKnowledgeEntry[];
   knowledgeBaseText?: string;
+  upsellRules?: RestaurantUpsellRule[];
   upsellRulesText?: string;
+  menu?: Pick<RestaurantMenuSnapshot, "categories" | "items" | "modifiers">;
 };
+
+function toKnowledgeFormEntries(
+  entries: RestaurantKnowledgeEntry[]
+): RestaurantKnowledgeFormEntry[] {
+  return entries.map((entry) => ({
+    category: entry.category,
+    question: entry.question,
+    answer: entry.answer,
+    is_active: entry.is_active,
+  }));
+}
+
+function toUpsellFormEntries(
+  rules: RestaurantUpsellRule[]
+): RestaurantUpsellFormEntry[] {
+  return rules.map((rule) => ({
+    trigger_text: rule.trigger_text,
+    offer_text: rule.offer_text,
+    is_active: rule.is_active,
+  }));
+}
 
 function toFormState(
   restaurant: Restaurant,
-  profile: RestaurantProfile,
-  knowledgeBaseText: string,
-  upsellRulesText: string
+  profile: RestaurantProfile
 ) {
   return {
     name: restaurant.name,
@@ -49,20 +80,23 @@ function toFormState(
       profile.handoff_unavailable_item_behavior ?? "",
     handoff_unavailable_item_notes: profile.handoff_unavailable_item_notes ?? "",
     closed_hours_message: profile.closed_hours_message ?? "",
-    knowledge_base_text: knowledgeBaseText,
-    upsell_rules_text: upsellRulesText,
   };
 }
 
 export function RestaurantProfileSettings({
   restaurant,
   profile,
-  knowledgeBaseText = "",
-  upsellRulesText = "",
+  knowledgeEntries = [],
+  upsellRules = [],
+  menu,
 }: Props) {
   const [open, setOpen] = useState(true);
-  const [form, setForm] = useState(() =>
-    toFormState(restaurant, profile, knowledgeBaseText, upsellRulesText)
+  const [form, setForm] = useState(() => toFormState(restaurant, profile));
+  const [knowledgeFormEntries, setKnowledgeFormEntries] = useState(() =>
+    toKnowledgeFormEntries(knowledgeEntries)
+  );
+  const [upsellFormEntries, setUpsellFormEntries] = useState(() =>
+    toUpsellFormEntries(upsellRules)
   );
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
@@ -102,8 +136,8 @@ export function RestaurantProfileSettings({
       handoff_unavailable_item_behavior: form.handoff_unavailable_item_behavior,
       handoff_unavailable_item_notes: form.handoff_unavailable_item_notes,
       closed_hours_message: form.closed_hours_message,
-      knowledge_base_text: form.knowledge_base_text,
-      upsell_rules_text: form.upsell_rules_text,
+      knowledge_entries: knowledgeFormEntries,
+      upsell_entries: upsellFormEntries,
     };
 
     const parsed = RestaurantProfileInputSchema.safeParse(payload);
@@ -475,48 +509,33 @@ export function RestaurantProfileSettings({
             </Field>
           </FieldGroup>
 
-          <FieldGroup title="Guest knowledge base">
-            <p className="-mt-2 text-xs text-muted">
-              Answers the agent can use for policies, allergens, directions,
-              parking, popular questions, and edge cases. One line per answer:
-              <span className="mt-1 block font-medium text-ink">
-                [category] question =&gt; answer
-              </span>
-            </p>
-            <Field label="FAQ / policy answers">
-              <textarea
-                className="input-base min-h-[10rem] resize-y font-mono text-xs leading-relaxed"
-                rows={7}
-                value={form.knowledge_base_text}
-                onChange={(e) =>
-                  setField("knowledge_base_text", e.target.value)
-                }
-                placeholder={"[allergens] Do you have gluten-free options? => We can mention gluten-friendly menu items if marked, but we cannot guarantee no cross-contact.\n[directions] Where should pickup guests park? => Use the short-term spaces behind the building and come to the pickup counter."}
-                disabled={pending}
-              />
-            </Field>
+          <FieldGroup title="Guest knowledge &amp; FAQs">
+            <RestaurantKnowledgeEditor
+              entries={knowledgeFormEntries}
+              onChange={(entries) => {
+                setSaved(false);
+                setKnowledgeFormEntries(entries);
+              }}
+              disabled={pending}
+            />
           </FieldGroup>
 
-          <FieldGroup title="Add-ons &amp; combos">
-            <p className="-mt-2 text-xs text-muted">
-              Optional upsell rules. The agent still checks the live menu and
-              only offers real available items. One line per rule:
-              <span className="mt-1 block font-medium text-ink">
-                trigger item or situation =&gt; short offer
-              </span>
-            </p>
-            <Field label="Upsell rules">
-              <textarea
-                className="input-base min-h-[8rem] resize-y font-mono text-xs leading-relaxed"
-                rows={6}
-                value={form.upsell_rules_text}
-                onChange={(e) =>
-                  setField("upsell_rules_text", e.target.value)
-                }
-                placeholder={"Biryani order => Offer mango lassi or raita if available.\nLarge pizza => Ask if they want garlic knots with that."}
+          <FieldGroup title="Smart upsells">
+            {menu ? (
+              <RestaurantUpsellEditor
+                entries={upsellFormEntries}
+                menu={menu}
+                onChange={(entries) => {
+                  setSaved(false);
+                  setUpsellFormEntries(entries);
+                }}
                 disabled={pending}
               />
-            </Field>
+            ) : (
+              <p className="text-xs text-muted">
+                Load the menu workspace to configure upsell rules against live items.
+              </p>
+            )}
           </FieldGroup>
 
           <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">

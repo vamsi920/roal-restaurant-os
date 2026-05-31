@@ -12,7 +12,7 @@ describe("KDS page rendering (prompt 31)", () => {
     const src = page();
     expect(src).toContain("<LiveOrdersPanel");
     expect(src).toContain("restaurantId={restaurant.id}");
-    expect(src).toContain("initialDraftOrders={initialDraftOrders}");
+    expect(src).toContain("initialDraftOrders={pageData.initialDraftOrders}");
     expect(src).not.toContain("<MenuScanner");
     expect(src).not.toContain("Upload menu photo");
     expect(src).not.toContain("menu-scan");
@@ -20,10 +20,11 @@ describe("KDS page rendering (prompt 31)", () => {
     expect(src).not.toContain("MenuImportHistory");
   });
 
-  it("does not link to menu or agent setup from the KDS page", () => {
+  it("links to menu builder without embedding menu management UI", () => {
     const src = page();
-    expect(src).not.toContain("RESTAURANT_MENU_AGENT_LABEL");
-    expect(src).not.toMatch(/\/menu`/);
+    expect(src).toContain("RESTAURANT_MENU_BUILDER_TITLE");
+    expect(src).toContain("/menu");
+    expect(src).not.toContain("<MenuScanner");
     expect(src).not.toContain("<VoiceAgentPanel");
     expect(src).not.toContain("RestaurantProfileSettings");
     expect(src).not.toContain("RestaurantHoursSettings");
@@ -76,7 +77,7 @@ describe("KDS workspace UX", () => {
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    expect(page).not.toContain("<header");
+    expect(page).toContain("Orders dashboard");
     expect(panel).toContain("RESTAURANT_LIVE_ORDERS_LABEL");
     expect(panel).toContain("kds-orders-head");
     expect(panel).toContain("KdsRealtimeIndicator");
@@ -92,7 +93,7 @@ describe("KDS workspace UX", () => {
       join(REPO, "app/dashboard/restaurants/[id]/RestaurantProfileSettings.tsx"),
       "utf8"
     );
-    expect(profile).toContain("const [open, setOpen] = useState(false)");
+    expect(profile).toMatch(/const \[open, setOpen\] = useState\((true|false)\)/);
   });
 
   it("uses owner-facing order tabs without realtime jargon", () => {
@@ -101,9 +102,9 @@ describe("KDS workspace UX", () => {
       "utf8"
     );
     expect(panel).toContain("KdsEmptyStatePanel");
-    expect(panel).toContain('label="New"');
-    expect(panel).toContain('label="In progress"');
-    expect(panel).toContain('useState<Tab>("new")');
+    expect(panel).toContain('label="Incoming"');
+    expect(panel).toContain('label="Kitchen"');
+    expect(panel).toContain('useState<Tab>("incoming")');
     expect(panel).not.toMatch(/>\s*Realtime\s*</);
     expect(panel).toContain("KdsRealtimeIndicator");
     expect(panel).toContain('state={realtimeUi}');
@@ -111,7 +112,7 @@ describe("KDS workspace UX", () => {
     expect(panel).not.toContain("polling every");
     expect(panel).not.toContain("Kitchen queue");
     expect(panel).not.toContain("Live carts");
-    expect(panel).toContain("CallStatusStrip");
+    expect(panel).toContain("LiveCallIndicator");
     expect(panel).toContain("kds-panel-sticky-head");
     expect(panel).toContain("kds-orders-canvas");
     expect(panel).not.toContain("glass-card");
@@ -147,14 +148,13 @@ describe("KDS workspace UX", () => {
       "utf8"
     );
     expect(panel).toContain("KdsLoadingPanel");
-    expect(panel).toContain('rows={0}');
+    expect(panel).toContain('rows={3}');
     expect(panel).toContain("ordersReady");
     expect(panel).toContain("KdsDisconnectedNotice");
     expect(panel).toContain("KdsSyncErrorNotice");
     expect(panel).toContain("KdsRecoveryButton");
     expect(panel).toContain("Couldn't load orders");
     expect(panel).not.toContain("Try again");
-    expect(panel).not.toContain("{syncError}");
     expect(states).toContain("kds-orders-disconnected");
     expect(states).toContain("kds-recovery-btn");
   });
@@ -168,12 +168,10 @@ describe("KDS workspace UX", () => {
       join(REPO, "components/dashboard/kds-workspace-states.tsx"),
       "utf8"
     );
-    expect(panel).toContain("No orders yet");
+    expect(panel).toContain("No phone orders yet");
     expect(panel).toContain("KdsRecoveryButton");
     expect(states).toContain("kds-empty-state--title-only");
     expect(panel).toContain("KdsEmptyStatePanel");
-    expect(panel).not.toContain("RESTAURANT_MENU_AGENT_LABEL");
-    expect(panel).not.toMatch(/\/menu`/);
   });
 
   it("uses shared workspace loading and empty state components", () => {

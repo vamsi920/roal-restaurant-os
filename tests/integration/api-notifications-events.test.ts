@@ -24,9 +24,14 @@ vi.mock("@/lib/notifications/stuck-orders", () => ({
   notifyStuckOrdersForOrganization: vi.fn(),
 }));
 
+vi.mock("@/lib/notifications/stuck-active-calls", () => ({
+  notifyStuckActiveCallsForOrganization: vi.fn(),
+}));
+
 import { requireAuthContext, resolveOrganizationId } from "@/lib/auth/context-server";
 import { dispatchNotification } from "@/lib/notifications/dispatch";
 import { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
+import { notifyStuckActiveCallsForOrganization } from "@/lib/notifications/stuck-active-calls";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 function mockRestaurantLookup(organizationId: string | null) {
@@ -233,6 +238,7 @@ describe("POST /api/notifications/check-stuck", () => {
       errorResponse: null,
     });
     vi.mocked(notifyStuckOrdersForOrganization).mockResolvedValue(2);
+    vi.mocked(notifyStuckActiveCallsForOrganization).mockResolvedValue(1);
   });
 
   it("returns 401 when unauthenticated", async () => {
@@ -276,10 +282,17 @@ describe("POST /api/notifications/check-stuck", () => {
     const body = await res.json();
 
     expect(res.status).toBe(200);
-    expect(body).toEqual({ ok: true, notified: 2 });
+    expect(body).toEqual({ ok: true, notified: 3 });
     expect(notifyStuckOrdersForOrganization).toHaveBeenCalledWith(expect.anything(), {
       organizationId: ORG_ID,
       restaurantNames: new Map([[RESTAURANT_ID, "Test"]]),
     });
+    expect(notifyStuckActiveCallsForOrganization).toHaveBeenCalledWith(
+      expect.anything(),
+      {
+        organizationId: ORG_ID,
+        restaurantNames: new Map([[RESTAURANT_ID, "Test"]]),
+      }
+    );
   });
 });

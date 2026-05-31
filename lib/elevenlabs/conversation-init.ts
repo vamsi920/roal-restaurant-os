@@ -1,3 +1,4 @@
+import { isTestHarnessBillingSession } from "@/lib/billing/billable-orders";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import { getConvaiAgent } from "@/lib/elevenlabs";
 import {
@@ -101,6 +102,20 @@ export function phoneLookupKey(phone: string): string | null {
   const digits = phone.replace(/\D/g, "");
   if (digits.length < 10) return null;
   return digits.slice(-10);
+}
+
+/** Normalize inbound caller ids for storage and staff follow-up display. */
+export function normalizeVoiceCallerPhone(
+  value: string | null | undefined
+): string | null {
+  const trimmed = typeof value === "string" ? value.trim() : "";
+  if (!trimmed) return null;
+  const digits = trimmed.replace(/\D/g, "");
+  if (digits.length === 10) return `+1${digits}`;
+  if (digits.length === 11 && digits.startsWith("1")) return `+${digits}`;
+  if (trimmed.startsWith("+") && digits.length >= 10) return `+${digits}`;
+  if (digits.length >= 10) return `+${digits}`;
+  return trimmed;
 }
 
 /** Parse ElevenLabs Twilio POST (JSON or application/x-www-form-urlencoded). */
@@ -341,6 +356,7 @@ export async function persistElevenLabsConversationStarted(
   const agentId = input.linkedAgentId.trim() || null;
   const upsellExperimentVariant =
     input.upsellExperimentVariant?.trim() || null;
+  const isTestHarness = isTestHarnessBillingSession(sessionId);
 
   const { error } = await supabase.from("agent_call_events").upsert(
     {
@@ -359,6 +375,7 @@ export async function persistElevenLabsConversationStarted(
         called_number: calledNumber,
         resolved_via: input.resolvedVia,
         upsell_experiment_variant: upsellExperimentVariant,
+        ...(isTestHarness ? { is_test_harness: true } : {}),
       },
       updated_at: now,
     },

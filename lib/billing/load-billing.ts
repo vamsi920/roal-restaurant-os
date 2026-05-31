@@ -2,6 +2,11 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { isOrgAdmin } from "@/lib/auth/roles";
 import type { MembershipRole } from "@/lib/types";
 import {
+  countBillablePhoneOrders,
+  estimateBillablePhoneOrderChargeUsd,
+  type BillableReceiptRow,
+} from "@/lib/billing/billable-orders";
+import {
   buildFeatureEntitlements,
   buildLimitChecks,
   isTrialActive,
@@ -34,6 +39,50 @@ function upgradePlanIds(current: BillingPlanId): BillingPlanId[] {
   return PLAN_ORDER.slice(idx + 1);
 }
 
+async function loadScopedRestaurantIds(
+  supabase: SupabaseClient,
+  organizationId: string,
+  restaurantId?: string,
+  accessibleRestaurantIds?: string[]
+): Promise<string[]> {
+  const { data, error } = await supabase
+    .from("restaurants")
+    .select("id")
+    .eq("organization_id", organizationId);
+
+  if (error) throw new Error(error.message);
+
+  let ids = (data ?? []).map((row) => String(row.id));
+  if (restaurantId) {
+    ids = ids.filter((id) => id === restaurantId);
+  } else if (accessibleRestaurantIds?.length) {
+    const allowed = new Set(accessibleRestaurantIds);
+    ids = ids.filter((id) => allowed.has(id));
+  }
+  return ids;
+}
+
+async function loadBillableReceiptsForPeriod(
+  supabase: SupabaseClient,
+  input: {
+    restaurantIds: string[];
+    periodStart: Date;
+    periodEnd: Date;
+  }
+): Promise<BillableReceiptRow[]> {
+  if (input.restaurantIds.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from("phone_order_receipts")
+    .select("restaurant_id, session_id, items, created_at")
+    .in("restaurant_id", input.restaurantIds)
+    .gte("created_at", input.periodStart.toISOString())
+    .lte("created_at", input.periodEnd.toISOString());
+
+  if (error) throw new Error(error.message);
+  return (data ?? []) as BillableReceiptRow[];
+}
+
 export async function loadRestaurantBilling(
   supabase: SupabaseClient,
   input: {
@@ -58,6 +107,8 @@ export async function loadOrganizationBilling(
     membershipRole: MembershipRole;
     restaurantId?: string;
     restaurantName?: string;
+    /** Org rollup: only include restaurants the caller may access. */
+    accessibleRestaurantIds?: string[];
   }
 ): Promise<BillingSnapshot | null> {
   const scope: BillingSnapshot["scope"] = input.restaurantId
@@ -97,12 +148,24 @@ export async function loadOrganizationBilling(
     ? new Date(row.billing_period_end)
     : new Date(periodStart.getFullYear(), periodStart.getMonth() + 1, 1);
 
-  const [usageSummary, restaurantCountResult] = await Promise.all([
+  const restaurantIds = await loadScopedRestaurantIds(
+    supabase,
+    input.organizationId,
+    input.restaurantId,
+    input.accessibleRestaurantIds
+  );
+
+  const [usageSummary, receipts, restaurantCountResult] = await Promise.all([
     getUsageSummary(supabase, {
       organizationId: input.organizationId,
       restaurantId: input.restaurantId,
       since: periodStart,
       until: periodEnd,
+    }),
+    loadBillableReceiptsForPeriod(supabase, {
+      restaurantIds,
+      periodStart,
+      periodEnd,
     }),
     input.restaurantId
       ? Promise.resolve({ count: 1, error: null })
@@ -116,10 +179,13 @@ export async function loadOrganizationBilling(
     throw new Error(restaurantCountResult.error.message);
   }
 
+  const billablePhoneOrders = countBillablePhoneOrders(receipts);
+
   const usage = {
     menuScans: countUsage(usageSummary, "menu_scan"),
-    voiceOrders: countUsage(usageSummary, "voice_order"),
-    completedOrders: countUsage(usageSummary, "order_completed"),
+    billablePhoneOrders,
+    estimatedBillableChargeUsd:
+      estimateBillablePhoneOrderChargeUsd(billablePhoneOrders),
     toolCalls: countUsage(usageSummary, "tool_call"),
     importAttempts: countUsage(usageSummary, "import_attempt"),
     activeLocations: usageSummary.activeLocations,

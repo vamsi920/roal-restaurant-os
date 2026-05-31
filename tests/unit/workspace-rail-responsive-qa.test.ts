@@ -17,7 +17,7 @@ describe("workspace rail responsive (prompt 21)", () => {
     expect(rail).toContain("workspace-rail-bottom");
     expect(rail).toContain("workspace-rail-bottom__list");
     expect(rail).toContain("gridTemplateColumns");
-    expect(rail).toContain('case "callHistory"');
+    expect(rail).toContain('case "settings"');
     expect(rail).toContain("overflow-x-clip");
     expect(rail).toContain("kds-workspace__main");
   });

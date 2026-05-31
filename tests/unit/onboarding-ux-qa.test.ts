@@ -44,6 +44,8 @@ describe("onboarding UX (launch 11)", () => {
       "utf8"
     );
     expect(voiceStep).toContain("retryRestaurantVoiceAgentProvisionAction");
+    expect(voiceStep).toContain("syncRestaurantVoiceAgentOnboardingAction");
+    expect(wizard).toContain("OnboardingReadinessPanel");
     expect(wizard).toContain("Skip for now");
     expect(wizard).toContain("isOnboardingStepNavDisabled");
     expect(wizard).toContain('role="alert"');

@@ -207,10 +207,13 @@ Deno.serve(async (req: Request) => {
   }
 
   let operations: Record<string, unknown> = {
-    ordering_allowed: true,
-    is_open_now: true,
-    status: "open",
-    message: "Hours not configured.",
+    ordering_allowed: false,
+    is_open_now: false,
+    status: "closed",
+    message:
+      "Hours are not configured for this location. Do not tell the caller the restaurant is open now.",
+    weekly_hours: [],
+    upcoming_exceptions: [],
   };
   try {
     const hours = await loadHoursForRestaurant(supabase, restaurantId);
@@ -228,7 +231,7 @@ Deno.serve(async (req: Request) => {
       upcoming_exceptions: hours.exceptions,
     };
   } catch {
-    // Permissive default matches get_menu_items; do not block informational calls.
+    // Keep unconfigured operations; do not invent open hours.
   }
 
   const { data: entries, error: entriesError } = await supabase
@@ -254,6 +257,7 @@ Deno.serve(async (req: Request) => {
 
   const p = (profile ?? null) as JsonRecord | null;
   const prep = intOrNull(p?.prep_time_minutes);
+  const knowledgeRows = entries ?? [];
   const responseBody = {
     ok: true as const,
     restaurant: {
@@ -272,18 +276,22 @@ Deno.serve(async (req: Request) => {
         display: addressDisplay(p),
       },
       service_modes: {
-        pickup: bool(p?.allows_pickup, true),
-        delivery: bool(p?.allows_delivery, false),
+        pickup: p ? bool(p.allows_pickup) : false,
+        delivery: p ? bool(p.allows_delivery) : false,
       },
       prep_time_minutes: prep,
       prep_time_message: prepMessage(prep),
     },
     operations,
-    knowledge_entries: (entries ?? []).map((entry) => ({
+    knowledge_entries: knowledgeRows.map((entry) => ({
       category: String(entry.category ?? "general"),
       question: String(entry.question ?? ""),
       answer: String(entry.answer ?? ""),
     })),
+    knowledge_status_message:
+      knowledgeRows.length > 0
+        ? "Use only the knowledge_entries in this response for operator-approved FAQ answers."
+        : "No operator FAQ entries are configured for this location. Do not invent policies, allergens, parking, catering, refund, or reservation answers—use profile address, operations hours, get_menu_items, or offer a staff callback.",
   };
 
   const validated = parseAgentToolResponse(

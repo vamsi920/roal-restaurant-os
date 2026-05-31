@@ -10,6 +10,13 @@ import type {
   CallHistoryOutcomeFilter,
   CallHistorySnapshot,
 } from "@/lib/call-history/types";
+import {
+  isOpenReservationStatus,
+  reservationNextOwnerAction,
+  reservationStatusChipClass,
+  reservationStatusLabel,
+  type ReservationOwnerUpdateStatus,
+} from "@/lib/restaurant-reservations/schema";
 import { cn } from "@/lib/cn";
 
 const FILTERS: { id: CallHistoryOutcomeFilter; label: string }[] = [
@@ -182,13 +189,13 @@ function FollowUpInbox({
       <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wide text-amber-900">
-            Staff follow-up inbox
+            Follow-up inbox
           </p>
           <h3
             id="staff-follow-up-heading"
             className="mt-1 text-base font-semibold text-ink"
           >
-            Calls that need a human response
+            What to do next for callbacks, handoffs, and complaints
           </h3>
         </div>
         <p className="text-xs text-muted">
@@ -345,12 +352,13 @@ function ReservationInbox({
   const router = useRouter();
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const open = rows.filter((row) => row.status === "requested").slice(0, 6);
-  if (open.length === 0) return null;
+  const recent = rows.slice(0, 20);
+  const openCount = rows.filter((row) => isOpenReservationStatus(row.status)).length;
+  if (recent.length === 0) return null;
 
   async function updateStatus(
     requestId: string,
-    status: "confirmed" | "declined"
+    status: ReservationOwnerUpdateStatus
   ) {
     setError(null);
     setPendingId(requestId);
@@ -382,11 +390,11 @@ function ReservationInbox({
             id="reservation-requests-heading"
             className="mt-1 text-base font-semibold text-ink"
           >
-            Staff needs to confirm these tables
+            Table requests from phone calls
           </h3>
         </div>
         <p className="text-xs text-muted">
-          {open.length} open {open.length === 1 ? "request" : "requests"}
+          {openCount} open · {recent.length} recent
         </p>
       </div>
       {error ? (
@@ -396,53 +404,84 @@ function ReservationInbox({
       ) : null}
 
       <ul className="mt-3 grid gap-2 md:grid-cols-2">
-        {open.map((row) => (
-          <li
-            key={row.id}
-            className="rounded-xl border border-accent/20 bg-card px-3 py-2.5"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-ink">
-                  {row.partySize} at {row.requestedTime}
-                </p>
-                <p className="mt-0.5 text-xs text-muted">
-                  {row.requestedDate} · {row.customerName} · {row.customerPhone}
-                </p>
+        {recent.map((row) => {
+          const open = isOpenReservationStatus(row.status);
+          return (
+            <li
+              key={row.id}
+              className="rounded-xl border border-accent/20 bg-card px-3 py-2.5"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-ink">
+                    Party of {row.partySize} · {row.requestedTime}
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted">
+                    {row.requestedDate} · {row.customerName} · {row.customerPhone}
+                  </p>
+                </div>
+                <span
+                  className={cn(
+                    "shrink-0 rounded px-1.5 py-0.5 text-micro font-semibold uppercase",
+                    reservationStatusChipClass(row.status)
+                  )}
+                >
+                  {reservationStatusLabel(row.status)}
+                </span>
               </div>
-              <span className="rounded bg-accent-soft px-1.5 py-0.5 text-micro font-semibold uppercase text-accent">
-                Request
-              </span>
-            </div>
-            {row.notes ? (
-              <p className="mt-2 text-xs text-muted [overflow-wrap:anywhere]">
-                {row.notes}
+              {row.notes ? (
+                <p className="mt-2 text-xs text-muted [overflow-wrap:anywhere]">
+                  {row.notes}
+                </p>
+              ) : null}
+              <p className="mt-2 text-[0.7rem] font-medium text-ink">
+                Next: {reservationNextOwnerAction(row.status)}
               </p>
-            ) : null}
-            <p className="mt-2 text-[0.7rem] text-subtle">
-              Created {formatWhen(row.createdAt)}
-              {row.sessionId ? ` · ${truncateSessionId(row.sessionId)}` : ""}
-            </p>
-            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-              <button
-                type="button"
-                onClick={() => void updateStatus(row.id, "confirmed")}
-                disabled={pendingId === row.id}
-                className="kds-thumb-btn min-h-10 rounded-lg border border-success/30 bg-success/10 px-3 text-xs font-semibold text-success hover:bg-success/15 disabled:cursor-wait disabled:opacity-60"
-              >
-                {pendingId === row.id ? "Updating..." : "Mark confirmed"}
-              </button>
-              <button
-                type="button"
-                onClick={() => void updateStatus(row.id, "declined")}
-                disabled={pendingId === row.id}
-                className="kds-thumb-btn min-h-10 rounded-lg border border-line bg-elev px-3 text-xs font-semibold text-muted hover:text-ink disabled:cursor-wait disabled:opacity-60"
-              >
-                Decline
-              </button>
-            </div>
-          </li>
-        ))}
+              <p className="mt-1 text-[0.7rem] text-subtle">
+                Created {formatWhen(row.createdAt)}
+                {row.sessionId ? ` · ${truncateSessionId(row.sessionId)}` : ""}
+              </p>
+              {open ? (
+                <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                  {row.status === "requested" ? (
+                    <button
+                      type="button"
+                      onClick={() => void updateStatus(row.id, "contacted")}
+                      disabled={pendingId === row.id}
+                      className="kds-thumb-btn min-h-10 rounded-lg border border-warning/30 bg-warning/10 px-3 text-xs font-semibold text-amber-900 hover:bg-warning/15 disabled:cursor-wait disabled:opacity-60"
+                    >
+                      {pendingId === row.id ? "Updating..." : "Mark contacted"}
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    onClick={() => void updateStatus(row.id, "confirmed")}
+                    disabled={pendingId === row.id}
+                    className="kds-thumb-btn min-h-10 rounded-lg border border-success/30 bg-success/10 px-3 text-xs font-semibold text-success hover:bg-success/15 disabled:cursor-wait disabled:opacity-60"
+                  >
+                    {pendingId === row.id ? "Updating..." : "Confirm table"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void updateStatus(row.id, "declined")}
+                    disabled={pendingId === row.id}
+                    className="kds-thumb-btn min-h-10 rounded-lg border border-line bg-elev px-3 text-xs font-semibold text-muted hover:text-ink disabled:cursor-wait disabled:opacity-60"
+                  >
+                    Decline
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void updateStatus(row.id, "canceled")}
+                    disabled={pendingId === row.id}
+                    className="kds-thumb-btn min-h-10 rounded-lg border border-line bg-elev px-3 text-xs font-semibold text-muted hover:text-ink disabled:cursor-wait disabled:opacity-60"
+                  >
+                    Close / cancel
+                  </button>
+                </div>
+              ) : null}
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
@@ -481,10 +520,10 @@ export function RestaurantCallHistoryPanel({
           id="call-history-heading"
           className="text-lg font-semibold tracking-tight text-ink"
         >
-          Call history &amp; outcomes
+          Calls &amp; follow-ups
         </h2>
         <p className="mt-1 text-sm text-muted">
-          Live and recent phone sessions with orders, reservations, transcripts, recordings,
+          Active calls, completed orders, voicemail, reservations, transcripts, recordings,
           and staff follow-up. Last {CALL_HISTORY_DEFAULT_RANGE_DAYS} days ({rangeLabel}).
         </p>
         <CommandCenterSummary snapshot={snapshot} />
@@ -551,6 +590,9 @@ export function RestaurantCallHistoryPanel({
                       Intent
                     </th>
                     <th scope="col" className="px-2 py-2">
+                      Fulfillment
+                    </th>
+                    <th scope="col" className="px-2 py-2">
                       Session
                     </th>
                     <th scope="col" className="px-2 py-2">
@@ -601,6 +643,9 @@ export function RestaurantCallHistoryPanel({
                             {row.intentLabel}
                           </span>
                         </td>
+                        <td className="px-2 py-2.5 align-top text-xs text-muted">
+                          {row.fulfillmentLabel ?? "—"}
+                        </td>
                         <td className="px-2 py-2.5 align-top font-mono text-xs text-muted">
                           <span title={row.sessionId}>
                             {truncateSessionId(row.sessionId)}
@@ -636,6 +681,11 @@ export function RestaurantCallHistoryPanel({
                             >
                               {row.outcomeLabel}
                             </span>
+                            {row.isTestHarness ? (
+                              <span className="rounded bg-elev px-1.5 py-0.5 text-micro font-semibold uppercase text-muted">
+                                Test call
+                              </span>
+                            ) : null}
                             {row.needsStaffFollowUp ? (
                               <span className="rounded bg-warning/15 px-1.5 py-0.5 text-micro font-semibold uppercase text-amber-900">
                                 Follow up

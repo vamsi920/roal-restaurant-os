@@ -35,4 +35,19 @@ describe("get_menu_items ElevenLabs verification (launch 18)", () => {
     expect(lib).toContain("ROAL_BAKED_TOOL_NAMES");
     expect(lib).toContain("ROAL_SYNCED_TOOL_NAMES = ROAL_BAKED_TOOL_NAMES");
   });
+
+  it("get_menu_items response includes service_modes from profile", () => {
+    const edge = readFileSync(
+      join(REPO, "supabase/functions/get-menu/index.ts"),
+      "utf8"
+    );
+    const harness = readFileSync(
+      join(REPO, "lib/voice-agent/test-harness/build-get-menu.ts"),
+      "utf8"
+    );
+    expect(edge).toContain("allows_pickup, allows_delivery");
+    expect(edge).toContain("service_modes");
+    expect(harness).toContain("serviceModesFromProfile");
+    expect(harness).toContain("service_modes: serviceModes");
+  });
 });

@@ -23,6 +23,12 @@ export function normalizeOrderStatus(
   return "new";
 }
 
+export function isVoiceCartStatus(
+  status: string | null | undefined
+): boolean {
+  return status === VOICE_CART_STATUS;
+}
+
 export function isSyncDraftOrderStatus(status: string): boolean {
   return (
     status === VOICE_CART_STATUS || status === LEGACY_CONFIRMED_STATUS

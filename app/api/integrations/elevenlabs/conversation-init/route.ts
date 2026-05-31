@@ -51,6 +51,11 @@ async function handleInit(req: Request): Promise<NextResponse> {
     });
 
     if (!resolved) {
+      console.warn("[elevenlabs/conversation-init] restaurant_not_linked", {
+        agentId: agentId || null,
+        calledNumber: calledNumber || null,
+        hasSessionId: Boolean(sessionId?.trim()),
+      });
       return NextResponse.json(
         {
           error:

@@ -7,8 +7,10 @@ export const MOCK_AGENT_ID = "agent_test_01";
 export function createMockSyncSupabase(options?: {
   agentId?: string | null;
   restaurantName?: string;
+  restaurantId?: string;
 }) {
   const agentId = options?.agentId === undefined ? MOCK_AGENT_ID : options.agentId;
+  const restaurantId = options?.restaurantId ?? "00000000-0000-4000-8000-000000000099";
   const updates: Record<string, unknown>[] = [];
   const chain = {
     update: vi.fn((patch: Record<string, unknown>) => {
@@ -37,12 +39,31 @@ export function createMockSyncSupabase(options?: {
           select: vi.fn(() => ({
             eq: vi.fn(() => ({
               maybeSingle: vi.fn().mockResolvedValue({
-                data: { elevenlabs_agent_id: agentId },
+                data: {
+                  elevenlabs_agent_id: agentId,
+                  elevenlabs_menu_auto_sync_status: null,
+                },
                 error: null,
               }),
             })),
           })),
           update: chain.update,
+        };
+      }
+      if (table === "restaurants") {
+        return {
+          select: vi.fn(() => ({
+            eq: vi.fn(() => ({
+              maybeSingle: vi.fn().mockResolvedValue({
+                data: {
+                  id: restaurantId,
+                  name: options?.restaurantName ?? "Test Kitchen",
+                  organization_id: "00000000-0000-4000-8000-000000000001",
+                },
+                error: null,
+              }),
+            })),
+          })),
         };
       }
       throw new Error(`Unexpected table: ${table}`);

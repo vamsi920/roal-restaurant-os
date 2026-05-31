@@ -61,6 +61,19 @@ export function afterProfileSettingsMutation(
   );
 }
 
+/** Knowledge/FAQ save → dedicated agent prompt + knowledge doc refresh. */
+export function afterRestaurantKnowledgeMutation(
+  restaurantId: string,
+  options?: AfterRestaurantSettingsMutationOptions
+): void {
+  afterRestaurantSettingsMutation(
+    restaurantId,
+    VOICE_AGENT_CONTENT_SYNC_TRIGGERS.knowledge,
+    options,
+    () => revalidatePath("/dashboard/onboarding")
+  );
+}
+
 /** Hours save → agent prompt with weekly hours, exceptions, and ordering gates. */
 export function afterHoursSettingsMutation(
   restaurantId: string,
@@ -70,5 +83,18 @@ export function afterHoursSettingsMutation(
     restaurantId,
     VOICE_AGENT_CONTENT_SYNC_TRIGGERS.hours,
     options
+  );
+}
+
+/** Upsell rules save → dedicated agent prompt refresh with menu-bound offers. */
+export function afterRestaurantUpsellMutation(
+  restaurantId: string,
+  options?: AfterRestaurantSettingsMutationOptions
+): void {
+  afterRestaurantSettingsMutation(
+    restaurantId,
+    VOICE_AGENT_CONTENT_SYNC_TRIGGERS.upsell,
+    options,
+    () => revalidatePath("/dashboard/onboarding")
   );
 }

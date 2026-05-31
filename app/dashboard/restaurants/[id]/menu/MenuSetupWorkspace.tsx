@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   RESTAURANT_LIVE_ORDERS_LABEL,
   RESTAURANT_MENU_AGENT_LABEL,
-  RESTAURANT_MENU_SETUP_TITLE,
+  RESTAURANT_MENU_BUILDER_TITLE,
 } from "@/lib/dashboard-restaurant-labels";
 import type { RestaurantMenuSetupPageData } from "@/lib/restaurant-menu-setup/load-page-data";
 import { MenuImportHistory } from "@/components/menu-import/MenuImportHistory";
@@ -24,8 +24,8 @@ export function MenuSetupWorkspace({
   menuTemplates,
   billingGates,
   profile,
-  knowledgeBaseText,
-  upsellRulesText,
+  knowledgeEntries,
+  upsellRules,
   hoursBundle,
   voiceAgentCenter,
 }: Props) {
@@ -54,13 +54,31 @@ export function MenuSetupWorkspace({
         </span>
       </nav>
 
+      <nav
+        aria-label="Phone operations views"
+        className="flex flex-wrap items-center gap-2 text-xs font-medium"
+      >
+        <Link
+          href={`/dashboard/restaurants/${restaurant.id}`}
+          className="rounded-md border border-line bg-elev px-2.5 py-1 text-muted hover:text-ink"
+        >
+          {RESTAURANT_LIVE_ORDERS_LABEL}
+        </Link>
+        <span
+          aria-current="page"
+          className="rounded-md bg-accent-soft px-2.5 py-1 text-accent"
+        >
+          {RESTAURANT_MENU_BUILDER_TITLE}
+        </span>
+      </nav>
+
       <header className="menu-setup-header flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
         <div className="min-w-0 max-w-2xl">
           <h1 id="menu-setup-page-heading" className="text-balance text-ink">
-            {RESTAURANT_MENU_SETUP_TITLE}
+            {RESTAURANT_MENU_BUILDER_TITLE}
           </h1>
           <p className="mt-2 text-pretty text-sm text-muted sm:text-base">
-            Upload a menu photo, then review and edit the live menu.
+            Scan or import your menu, watch live updates, and keep the voice agent in sync.
           </p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
@@ -87,6 +105,29 @@ export function MenuSetupWorkspace({
       />
 
       <div className="menu-setup-primary min-w-0">
+        <nav
+          aria-label="Menu builder sections"
+          className="mb-3 flex flex-wrap gap-2 text-xs font-medium"
+        >
+          <a
+            href="#menu-scan"
+            className="rounded-md border border-line bg-elev px-2.5 py-1 text-muted hover:text-ink"
+          >
+            Scan &amp; import
+          </a>
+          <a
+            href="#menu-live"
+            className="rounded-md border border-line bg-elev px-2.5 py-1 text-muted hover:text-ink"
+          >
+            Live menu
+          </a>
+          <a
+            href="#menu-setup-manual-editor-heading"
+            className="rounded-md border border-line bg-elev px-2.5 py-1 text-muted hover:text-ink"
+          >
+            Manual edits
+          </a>
+        </nav>
         <nav aria-label="Setup progress" className="menu-setup-progress">
           <ol className="menu-setup-progress__list">
             <li className="menu-setup-progress__item">
@@ -234,7 +275,8 @@ export function MenuSetupWorkspace({
         </details>
 
         <details
-          className="menu-setup-restaurant-basics menu-setup-more__block"
+          id="restaurant-settings"
+          className="menu-setup-restaurant-basics menu-setup-more__block scroll-mt-28"
           aria-labelledby="menu-setup-basics-summary"
         >
           <summary
@@ -251,8 +293,9 @@ export function MenuSetupWorkspace({
             <RestaurantProfileSettings
               restaurant={restaurant}
               profile={profile}
-              knowledgeBaseText={knowledgeBaseText}
-              upsellRulesText={upsellRulesText}
+              knowledgeEntries={knowledgeEntries}
+              upsellRules={upsellRules}
+              menu={menu}
             />
             {hoursBundle ? (
               <RestaurantHoursSettings

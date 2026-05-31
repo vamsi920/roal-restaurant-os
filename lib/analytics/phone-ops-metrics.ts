@@ -10,6 +10,7 @@ import type {
   PeakCallWindowRow,
 } from "@/lib/analytics/types";
 import {
+  callEventReceiptSessionKey,
   conversionPercent,
   estimateRevenueCents,
   type AgentCallEventAnalyticsRow,
@@ -17,8 +18,6 @@ import {
   type ReceiptRow,
   type UsageRow,
 } from "@/lib/analytics/aggregate";
-import { computeOrderTotals } from "@/lib/orders/compute-order-totals";
-import { parseOrderLineItems } from "@/lib/orders/line-items";
 import type { MenuPriceContext } from "@/lib/orders/menu-price-context";
 import type { OrderPricingSettings } from "@/lib/orders/pricing-settings";
 
@@ -127,11 +126,7 @@ export function collectOrderSessions(
 }
 
 export function sessionHasCompletedOrder(session: OrderSessionRecord): boolean {
-  return (
-    session.hasReceipt ||
-    session.hasCompletedDraft ||
-    session.hasOrderCompletedUsage
-  );
+  return session.hasReceipt;
 }
 
 export function countStuckKitchenOrders(
@@ -203,11 +198,9 @@ export function bucketOrderSessionsByDay(
     if (!row.restaurant_id || !restaurantIdSet.has(row.restaurant_id)) continue;
     const sid = row.session_id?.trim();
     if (!sid) continue;
-    if (row.event_type === "order_completed") {
+    if (row.event_type === "order_completed" || row.event_type === "voice_order") {
       const day = dayKeyUtc(row.occurred_at);
       addSession(day, row.restaurant_id, sid);
-      const bucket = map.get(day);
-      if (bucket) bucket.completed += 1;
     }
   }
 
@@ -285,6 +278,7 @@ export function peakCallHoursFromEvents(
 
 export function peakCallWindowsFromEvents(
   events: AgentCallEventAnalyticsRow[],
+  receiptSessionKeys: Set<string> = new Set(),
   limit = 6
 ): PeakCallWindowRow[] {
   const buckets = new Map<string, { callCount: number; completedCount: number }>();
@@ -307,7 +301,10 @@ export function peakCallWindowsFromEvents(
     const key = `${dayOfWeekUtc}:${hourUtc}`;
     const bucket = buckets.get(key) ?? { callCount: 0, completedCount: 0 };
     bucket.callCount += 1;
-    if (event.outcome === "order_completed") bucket.completedCount += 1;
+    const sessionKey = callEventReceiptSessionKey(event);
+    if (sessionKey != null && receiptSessionKeys.has(sessionKey)) {
+      bucket.completedCount += 1;
+    }
     buckets.set(key, bucket);
   }
 
@@ -387,13 +384,12 @@ export function computeSessionConversionTrend(
 }
 
 export function averageOrderEstimateCents(
-  completedOrders: OrderRow[],
   receipts: ReceiptRow[],
   menuByRestaurant: Map<string, MenuPriceContext>,
   pricingByRestaurant: Map<string, OrderPricingSettings>
 ): { avgCents: number | null; complete: boolean; sampleSize: number } {
   const revenue = estimateRevenueCents(
-    completedOrders,
+    receipts,
     menuByRestaurant,
     pricingByRestaurant
   );
@@ -405,61 +401,9 @@ export function averageOrderEstimateCents(
     };
   }
 
-  const seen = new Set<string>();
-  const perOrderTotals: { cents: number | null; complete: boolean }[] = [];
-
-  for (const order of completedOrders) {
-    if (order.status !== "completed") continue;
-    const key = sessionKey(order.restaurant_id, order.session_id);
-    if (seen.has(key)) continue;
-    seen.add(key);
-
-    const menu = menuByRestaurant.get(order.restaurant_id);
-    const pricing = pricingByRestaurant.get(order.restaurant_id);
-    if (!menu || !pricing) continue;
-
-    const totals = computeOrderTotals(
-      parseOrderLineItems(order.items),
-      menu,
-      pricing
-    );
-    perOrderTotals.push({
-      cents: totals.totalCents,
-      complete: totals.complete,
-    });
-  }
-
-  for (const receipt of receipts) {
-    const key = sessionKey(receipt.restaurant_id, receipt.session_id);
-    if (seen.has(key)) continue;
-    seen.add(key);
-
-    const menu = menuByRestaurant.get(receipt.restaurant_id);
-    const pricing = pricingByRestaurant.get(receipt.restaurant_id);
-    if (!menu || !pricing) continue;
-
-    const totals = computeOrderTotals(
-      parseOrderLineItems(receipt.items),
-      menu,
-      pricing
-    );
-    perOrderTotals.push({
-      cents: totals.totalCents,
-      complete: totals.complete,
-    });
-  }
-
-  const priced = perOrderTotals.filter((row) => row.cents != null);
-  if (priced.length === 0) {
-    return { avgCents: null, complete: false, sampleSize: 0 };
-  }
-
-  const sum = priced.reduce((acc, row) => acc + (row.cents ?? 0), 0);
-  const complete = priced.every((row) => row.complete);
-
   return {
-    avgCents: Math.round(sum / priced.length),
-    complete,
-    sampleSize: priced.length,
+    avgCents: Math.round(revenue.totalCents / revenue.orderCount),
+    complete: revenue.complete,
+    sampleSize: revenue.orderCount,
   };
 }

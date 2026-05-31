@@ -221,6 +221,10 @@ export const GetMenuResponseSchema = z
       .passthrough(),
     categories: z.array(MenuCategorySchema),
     restaurant_name_hint: z.string().nullable().optional(),
+    service_modes: z.object({
+      pickup: z.boolean(),
+      delivery: z.boolean(),
+    }),
     operations: OperationsSchema,
   })
   .strict();
@@ -256,6 +260,13 @@ export const FinalizeOrderResponseSchema = z
   })
   .strict();
 
+export const OrderStatusTimelineEntrySchema = z
+  .object({
+    label: z.string(),
+    description: z.string(),
+  })
+  .strict();
+
 export const OrderStatusSummarySchema = z
   .object({
     found: z.boolean(),
@@ -268,6 +279,7 @@ export const OrderStatusSummarySchema = z
     item_count: z.number().int().min(0),
     updated_at: z.string().nullable(),
     created_at: z.string().nullable().optional(),
+    status_timeline: z.array(OrderStatusTimelineEntrySchema),
   })
   .strict();
 
@@ -370,6 +382,7 @@ export const GetRestaurantInfoResponseSchema = z
       .strict(),
     operations: RestaurantInfoOperationsSchema,
     knowledge_entries: z.array(RestaurantInfoKnowledgeEntrySchema),
+    knowledge_status_message: z.string(),
   })
   .strict();
 

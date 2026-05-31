@@ -55,14 +55,14 @@ export async function loadRestaurantAgentCallSessions(
   let draftsQuery = supabase
     .from("draft_orders")
     .select(
-      "restaurant_id, session_id, status, items, customer_name, customer_phone, created_at, updated_at, completed_at, canceled_at"
+      "restaurant_id, session_id, status, items, customer_name, customer_phone, fulfillment_type, delivery_address, delivery_instructions, created_at, updated_at, completed_at, canceled_at"
     )
     .eq("restaurant_id", restaurantId);
 
   let receiptsQuery = supabase
     .from("phone_order_receipts")
     .select(
-      "restaurant_id, session_id, customer_name, customer_phone, items, created_at"
+      "restaurant_id, session_id, customer_name, customer_phone, items, fulfillment_type, delivery_address, delivery_instructions, created_at"
     )
     .eq("restaurant_id", restaurantId);
 

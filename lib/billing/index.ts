@@ -37,6 +37,18 @@ export {
   assertOrganizationBillingGate,
   loadOrganizationGateVerdicts,
 } from "@/lib/billing/assert-gate";
+export {
+  BILLABLE_PHONE_ORDER_RATE_USD,
+  TEST_HARNESS_SESSION_PREFIX,
+  billableReceiptSessionKey,
+  buildBillableReceiptSessionKeys,
+  countBillablePhoneOrders,
+  estimateBillablePhoneOrderChargeUsd,
+  filterBillablePhoneOrderReceipts,
+  isBillablePhoneOrderReceipt,
+  isTestHarnessBillingSession,
+  isTranscriptOnlyOrderCompletion,
+} from "@/lib/billing/billable-orders";
 export { planLimitJsonResponse } from "@/lib/billing/gate-http";
 export type {
   BillingPlanId,

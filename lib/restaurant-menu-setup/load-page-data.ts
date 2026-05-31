@@ -18,9 +18,11 @@ import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
 import type { RestaurantHoursBundle } from "@/lib/restaurant-hours/types";
 import { ensureRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { loadRestaurantKnowledgeEntries } from "@/lib/restaurant-knowledge/helpers";
+import type { RestaurantKnowledgeEntry } from "@/lib/restaurant-knowledge/schema";
 import { serializeKnowledgeEntries } from "@/lib/restaurant-knowledge/schema";
 import { loadRestaurantUpsellRules } from "@/lib/restaurant-upsell/helpers";
 import { serializeUpsellRules } from "@/lib/restaurant-upsell/schema";
+import type { RestaurantUpsellRule } from "@/lib/restaurant-upsell/schema";
 import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
 import type { VoiceAgentControlCenterSnapshot } from "@/lib/voice-agent/control-center-types";
@@ -35,7 +37,9 @@ export type RestaurantMenuSetupPageData = {
   billingGates: Record<BillingGateAction, GateVerdict> | null;
   profile: RestaurantProfile;
   knowledgeBaseText: string;
+  knowledgeEntries: RestaurantKnowledgeEntry[];
   upsellRulesText: string;
+  upsellRules: RestaurantUpsellRule[];
   hoursBundle: RestaurantHoursBundle | null;
   voiceAgentCenter: VoiceAgentControlCenterSnapshot;
 };
@@ -77,8 +81,12 @@ export async function loadRestaurantMenuSetupPageData(
     listOrganizationMenuTemplates(supabase, organizationId).catch(() => []),
     ensureRestaurantProfile(supabase, restaurantId, organizationId),
     loadRestaurantHoursBundle(supabase, restaurantId),
-    loadRestaurantKnowledgeEntries(supabase, restaurantId).catch(() => []),
-    loadRestaurantUpsellRules(supabase, restaurantId).catch(() => []),
+    loadRestaurantKnowledgeEntries(supabase, restaurantId, {
+      activeOnly: false,
+    }).catch(() => []),
+    loadRestaurantUpsellRules(supabase, restaurantId, {
+      activeOnly: false,
+    }).catch(() => []),
   ]);
 
   if (menuCopySourcesResult.error) {
@@ -119,7 +127,9 @@ export async function loadRestaurantMenuSetupPageData(
     billingGates,
     profile,
     knowledgeBaseText: serializeKnowledgeEntries(knowledgeEntries),
+    knowledgeEntries,
     upsellRulesText: serializeUpsellRules(upsellRules),
+    upsellRules,
     hoursBundle,
     voiceAgentCenter,
   };

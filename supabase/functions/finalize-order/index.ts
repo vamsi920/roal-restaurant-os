@@ -26,11 +26,15 @@ import {
   cartLinesForStorage,
   formatCartValidationError,
   formatCustomerValidationError,
+  formatFulfillmentValidationError,
   validateCartForFinalize,
   validateCustomerForFinalize,
+  validateFulfillmentForOrder,
 } from "../_shared/order-validate.ts";
+import { loadFulfillmentServiceModes } from "../_shared/load-fulfillment-profile.ts";
 import { FINALIZE_ORDER_STATUS } from "../_shared/order-status.ts";
 import { assertVoiceOrderBillingGate } from "../_shared/billing-gate.ts";
+import { markAgentCallOrderCompleted } from "../_shared/mark-call-order-completed.ts";
 import {
   createAgentToolMeter,
   resolveRestaurantOrganizationId,
@@ -269,19 +273,40 @@ Deno.serve(async (req: Request) => {
   const deliveryInstructions =
     parsed.data.delivery_instructions ?? draftDeliveryInstructions ?? null;
 
-  if (fulfillmentType === "delivery" && !deliveryAddress?.trim()) {
-    meter(400, { lineCount: storedItems.length });
+  let serviceModes;
+  try {
+    serviceModes = await loadFulfillmentServiceModes(supabase, restaurantId);
+  } catch (e) {
+    meter(500);
     return agentToolErrorResponse(
       {
-        error: "missing_delivery_address",
-        code: "missing_delivery_address",
-        message: "Delivery orders require a delivery address before finalizing.",
-        recovery_hint:
-          "Ask the guest for the full delivery address, then call finalize_order again with fulfillment_type delivery and delivery_address.",
+        error: "database_error",
+        code: "database_error",
+        message: e instanceof Error ? e.message : "Failed to load profile",
       },
-      400
+      500
     );
   }
+
+  const fulfillmentCheck = validateFulfillmentForOrder({
+    allowsPickup: serviceModes.allowsPickup,
+    allowsDelivery: serviceModes.allowsDelivery,
+    fulfillmentType,
+    deliveryAddress,
+    requireDeliveryAddress: true,
+  });
+  if (!fulfillmentCheck.ok) {
+    meter(400, { lineCount: storedItems.length });
+    return agentToolErrorResponse(
+      formatFulfillmentValidationError(
+        fulfillmentCheck.issue,
+        "finalize_order"
+      ),
+      fulfillmentCheck.issue.code === "missing_delivery_address" ? 400 : 422
+    );
+  }
+
+  const resolvedFulfillmentType = fulfillmentCheck.fulfillmentType;
 
   const row = {
     restaurant_id: restaurantId,
@@ -290,7 +315,7 @@ Deno.serve(async (req: Request) => {
     items: storedItems,
     customer_name: customerCheck.customer_name,
     customer_phone: customerCheck.customer_phone,
-    fulfillment_type: fulfillmentType,
+    fulfillment_type: resolvedFulfillmentType,
     delivery_address: deliveryAddress,
     delivery_instructions: deliveryInstructions,
     updated_at: new Date().toISOString(),
@@ -316,7 +341,7 @@ Deno.serve(async (req: Request) => {
     items: storedItems,
     customer_name: customerCheck.customer_name,
     customer_phone: customerCheck.customer_phone,
-    fulfillment_type: fulfillmentType,
+    fulfillment_type: resolvedFulfillmentType,
     delivery_address: deliveryAddress,
     delivery_instructions: deliveryInstructions,
   };
@@ -349,6 +374,15 @@ Deno.serve(async (req: Request) => {
   if (!validated.ok) {
     meter(validated.status);
     return agentToolErrorResponse(validated.body, validated.status);
+  }
+
+  try {
+    await markAgentCallOrderCompleted(supabase, {
+      restaurantId,
+      sessionId: parsed.data.session_id,
+    });
+  } catch (markErr) {
+    console.error("[finalize_order] markAgentCallOrderCompleted failed", markErr);
   }
 
   if (idempotencyKey) {

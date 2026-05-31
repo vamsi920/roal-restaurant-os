@@ -1,13 +1,16 @@
 import { describe, expect, it } from "vitest";
+import { buildRecentPhoneOutcomes } from "@/lib/live-orders/build-recent-outcomes";
 import {
   buildCompletedOrdersFromReceipts,
   countSessionToolErrors,
   handoffSignalsFromTranscript,
   partitionCommandCenterSessions,
+  sessionToCommandCenterCallRow,
 } from "@/lib/command-center/partition-command-center";
 import type { AgentCallSession, UsageCallRow } from "@/lib/agent-calls/types";
 
 const RESTAURANT_ID = "11111111-1111-4111-8111-111111111111";
+const REST_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
 
 function session(
   partial: Partial<AgentCallSession> & Pick<AgentCallSession, "sessionId">
@@ -176,6 +179,99 @@ describe("command center partition", () => {
       usageEvents: [],
       completedOrders: [],
     });
+    expect(snap.unknownCalls).toHaveLength(1);
+  });
+
+  it("excludes sessions and receipts from other restaurants", () => {
+    const completed = buildCompletedOrdersFromReceipts(
+      [
+        {
+          restaurant_id: REST_B,
+          session_id: "foreign_receipt",
+          customer_name: "Wrong",
+          customer_phone: "+15550009999",
+          items: [{ name: "Burger", quantity: 1, customizations: [] }],
+          created_at: "2026-05-30T18:00:00.000Z",
+        },
+        {
+          restaurant_id: RESTAURANT_ID,
+          session_id: "local_receipt",
+          customer_name: "Alex",
+          customer_phone: "+15551234567",
+          items: [{ name: "Salad", quantity: 1, customizations: [] }],
+          created_at: "2026-05-30T18:05:00.000Z",
+        },
+      ],
+      RESTAURANT_ID
+    );
+
+    const snap = partitionCommandCenterSessions({
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test",
+      linkedAgentId: null,
+      rangeSince: "2026-05-30T00:00:00.000Z",
+      rangeUntil: "2026-05-30T23:59:59.000Z",
+      sessions: [
+        session({ sessionId: "local_receipt", outcome: "order_completed" }),
+        {
+          ...session({
+            sessionId: "foreign_session",
+            outcome: "no_order",
+          }),
+          restaurantId: REST_B,
+        },
+      ],
+      usageEvents: [],
+      completedOrders: completed,
+    });
+
+    expect(completed).toHaveLength(1);
+    expect(completed[0]?.sessionId).toBe("local_receipt");
+    expect(snap.completedOrders).toHaveLength(1);
+    expect(snap.unknownCalls).toHaveLength(0);
+    expect(snap.handoffCalls).toHaveLength(0);
+    expect(snap.activeCalls).toHaveLength(0);
+  });
+
+  it("surfaces voicemail callbacks in recent outcomes from handoff bucket", () => {
+    const row = sessionToCommandCenterCallRow(
+      session({
+        sessionId: "s_vm",
+        outcome: "no_order",
+        transcriptMetadata: { voicemail_detected: true },
+      }),
+      []
+    );
+    const outcomes = buildRecentPhoneOutcomes({
+      failed: [],
+      handoff: [row],
+      unknown: [],
+    });
+    expect(outcomes[0]?.kind).toBe("voicemail");
+    expect(outcomes[0]?.headline).toBe("Voicemail callback");
+  });
+
+  it("does not place transcript-only order_completed sessions in completed orders", () => {
+    const snap = partitionCommandCenterSessions({
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test",
+      linkedAgentId: null,
+      rangeSince: "2026-05-30T00:00:00.000Z",
+      rangeUntil: "2026-05-30T23:59:59.000Z",
+      sessions: [
+        session({
+          sessionId: "s_fake_completed",
+          outcome: "order_completed",
+          transcriptMetadata: {
+            transcript: [{ role: "agent", tool_calls: [{ name: "finalize_order" }] }],
+          },
+        }),
+      ],
+      usageEvents: [],
+      completedOrders: [],
+    });
+
+    expect(snap.completedOrders).toHaveLength(0);
     expect(snap.unknownCalls).toHaveLength(1);
   });
 });

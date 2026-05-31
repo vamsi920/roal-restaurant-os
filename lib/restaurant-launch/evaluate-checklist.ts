@@ -8,8 +8,14 @@ import type {
   LaunchChecklistItem,
   LaunchChecklistItemId,
   LaunchChecklistStatus,
+  LaunchGatePhase,
+  LaunchGateSnapshot,
   RestaurantLaunchChecklistSnapshot,
 } from "@/lib/restaurant-launch/types";
+import {
+  isSharedTemplateAgentLinked,
+  topLaunchBlocker,
+} from "@/lib/restaurant-launch/server-env";
 import type { RestaurantProfile } from "@/lib/types";
 
 const ROAL_TOOL_NAMES = [
@@ -29,9 +35,13 @@ export type LaunchChecklistInput = {
   menuItemCount: number;
   hoursConfigured: boolean;
   testCallPassed: boolean;
+  testCallDetail?: string;
   syncSummary: VoiceAgentSyncSummary | null;
   lastSyncError: string | null;
   phoneWebhookFromAgent: string | null;
+  serverEnvReady: boolean;
+  serverEnvDetail?: string | null;
+  templateAgentId?: string | null;
 };
 
 export function isRestaurantProfileLaunchComplete(
@@ -48,9 +58,18 @@ export function isRestaurantProfileLaunchComplete(
 }
 
 export function isDedicatedAgentProvisioned(
-  profile: RestaurantProfile | null
+  profile: RestaurantProfile | null,
+  templateAgentId?: string | null
 ): boolean {
   if (!profile?.elevenlabs_agent_id?.trim()) return false;
+  if (
+    isSharedTemplateAgentLinked(
+      profile.elevenlabs_agent_id,
+      templateAgentId
+    )
+  ) {
+    return false;
+  }
   return profile.elevenlabs_provision_status === "ready";
 }
 
@@ -116,6 +135,7 @@ function itemHref(restaurantId: string, id: LaunchChecklistItemId): string {
       return restaurantMenuSetupHref(restaurantId);
     case "hours_set":
       return restaurantMenuSetupHref(restaurantId);
+    case "server_env_ready":
     case "agent_provisioned":
     case "tools_synced":
     case "conversation_init_webhook":
@@ -136,13 +156,21 @@ export function buildRestaurantLaunchChecklist(
   );
   const menuOk = input.menuItemCount > 0;
   const hoursOk = input.hoursConfigured;
-  const agentOk = isDedicatedAgentProvisioned(input.profile);
+  const sharedTemplate = isSharedTemplateAgentLinked(
+    input.profile?.elevenlabs_agent_id,
+    input.templateAgentId
+  );
+  const agentOk = isDedicatedAgentProvisioned(
+    input.profile,
+    input.templateAgentId
+  );
   const toolsOk = areToolsSynced(input.syncSummary, input.lastSyncError);
   const webhookOk = isConversationInitWebhookSet({
     syncSummary: input.syncSummary,
     phoneWebhookFromAgent: input.phoneWebhookFromAgent,
   });
   const testOk = input.testCallPassed;
+  const serverEnvOk = input.serverEnvReady;
 
   const specs: Array<{
     id: LaunchChecklistItemId;
@@ -150,6 +178,15 @@ export function buildRestaurantLaunchChecklist(
     status: LaunchChecklistStatus;
     detail?: string;
   }> = [
+    {
+      id: "server_env_ready",
+      label: "Server environment ready",
+      status: serverEnvOk ? "ok" : "error",
+      detail: serverEnvOk
+        ? undefined
+        : input.serverEnvDetail?.trim() ||
+          "Server config incomplete — ElevenLabs and Supabase settings required.",
+    },
     {
       id: "profile_complete",
       label: "Restaurant profile complete",
@@ -175,11 +212,19 @@ export function buildRestaurantLaunchChecklist(
     {
       id: "agent_provisioned",
       label: "Dedicated agent provisioned",
-      status: agentOk ? "ok" : input.profile?.elevenlabs_provision_status === "failed" ? "error" : "pending",
+      status: agentOk
+        ? "ok"
+        : sharedTemplate
+          ? "error"
+          : input.profile?.elevenlabs_provision_status === "failed"
+            ? "error"
+            : "pending",
       detail: agentOk
         ? undefined
-        : input.profile?.elevenlabs_provision_error?.trim() ||
-          "Connect on Live Agent to create a dedicated ElevenLabs agent.",
+        : sharedTemplate
+          ? "Shared template agent is linked — provision a dedicated agent for this location."
+          : input.profile?.elevenlabs_provision_error?.trim() ||
+            "Connect on Live Agent to create a dedicated ElevenLabs agent.",
     },
     {
       id: "tools_synced",
@@ -203,7 +248,7 @@ export function buildRestaurantLaunchChecklist(
       label: "Test call passed",
       status: testOk ? "ok" : "pending",
       detail: testOk
-        ? "Test order recorded or step marked complete."
+        ? input.testCallDetail || "Test order recorded or step marked complete."
         : "Run a test call on Live Agent and complete a sample order.",
     },
   ];
@@ -224,4 +269,82 @@ export function buildRestaurantLaunchChecklist(
     totalCount: items.length,
     isLaunchReady,
   };
+}
+
+const PHASE_LABEL: Record<LaunchGatePhase, string> = {
+  ready: "Ready for live calls",
+  almost_ready: "Almost ready",
+  blocked: "Blocked",
+};
+
+function deriveLaunchGatePhase(
+  checklist: RestaurantLaunchChecklistSnapshot
+): LaunchGatePhase {
+  if (checklist.isLaunchReady) return "ready";
+
+  const byId = new Map(checklist.items.map((item) => [item.id, item]));
+  const server = byId.get("server_env_ready");
+  const agent = byId.get("agent_provisioned");
+  const tools = byId.get("tools_synced");
+
+  if (
+    server?.status === "error" ||
+    agent?.status === "error" ||
+    tools?.status === "error"
+  ) {
+    return "blocked";
+  }
+
+  return "almost_ready";
+}
+
+export function evaluateLaunchGate(
+  checklist: RestaurantLaunchChecklistSnapshot
+): LaunchGateSnapshot {
+  const phase = deriveLaunchGatePhase(checklist);
+  const blocker = topLaunchBlocker(checklist.items);
+  const ordersHref = restaurantLiveOrdersHref(checklist.restaurantId);
+
+  const primaryAction = blocker
+    ? {
+        label:
+          blocker.id === "test_call_passed"
+            ? "Run test call"
+            : blocker.id === "server_env_ready"
+              ? "Review server config"
+              : blocker.id === "menu_has_items"
+                ? "Add menu items"
+                : blocker.id === "hours_set"
+                  ? "Set weekly hours"
+                  : blocker.id === "conversation_init_webhook"
+                    ? "Configure webhook"
+                    : blocker.id === "agent_provisioned"
+                      ? "Finish voice agent setup"
+                      : blocker.id === "tools_synced"
+                        ? "Fix agent sync"
+                        : "Finish setup",
+        href: blocker.href,
+      }
+    : {
+        label: "Open orders dashboard",
+        href: ordersHref,
+      };
+
+  return {
+    restaurantId: checklist.restaurantId,
+    restaurantName: checklist.restaurantName,
+    phase,
+    phaseLabel: PHASE_LABEL[phase],
+    isLiveReady: checklist.isLaunchReady,
+    topBlockerLabel: blocker?.label ?? null,
+    topBlockerDetail: blocker?.detail ?? null,
+    primaryAction,
+    checklist,
+  };
+}
+
+export function buildRestaurantLaunchGate(
+  input: LaunchChecklistInput
+): LaunchGateSnapshot {
+  return evaluateLaunchGate(buildRestaurantLaunchChecklist(input));
 }

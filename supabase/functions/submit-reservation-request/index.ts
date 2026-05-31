@@ -23,6 +23,9 @@ import {
   loadIdempotentResponse,
   storeIdempotentResponse,
 } from "../_shared/idempotency.ts";
+import {
+  emitReservationRequestNotificationEdge,
+} from "../_shared/dispatch-restaurant-notification.ts";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -228,6 +231,27 @@ Deno.serve(async (req: Request) => {
       500
     );
   }
+
+  const { data: restaurantRow } = await supabase
+    .from("restaurants")
+    .select("name")
+    .eq("id", restaurantId)
+    .maybeSingle();
+
+  await emitReservationRequestNotificationEdge(supabase, {
+    organizationId,
+    restaurantId,
+    restaurantName: asString(restaurantRow?.name) || "Restaurant",
+    reservationId: asString((data as JsonRecord).id),
+    sessionId: parsed.data.session_id ?? null,
+    conversationId: parsed.data.conversation_id ?? parsed.data.session_id ?? null,
+    customerName: parsed.data.customer_name,
+    customerPhone: parsed.data.customer_phone,
+    partySize: parsed.data.party_size,
+    requestedDate: parsed.data.requested_date,
+    requestedTime: parsed.data.requested_time,
+    notes: parsed.data.notes ?? null,
+  });
 
   const body = {
     ok: true as const,

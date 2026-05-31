@@ -165,7 +165,7 @@ describe("operational event emitters", () => {
       supabase,
       expect.objectContaining({
         eventType: "staff_handoff_requested",
-        idempotencyKey: `staff_handoff:${restaurantId}:conv_123`,
+        idempotencyKey: `staff_handoff:${restaurantId}:conv_123:manager_requested`,
         title: "Staff follow-up needed · Test",
         payload: expect.objectContaining({
           session_id: "conv_123",

@@ -4,7 +4,7 @@ export type DailyOrderPoint = {
   date: string;
   /** Unique order sessions with activity that day (drafts, receipts, usage). */
   orderSessions: number;
-  /** Receipts finalized or order_completed usage that day. */
+  /** Phone receipts finalized that day. */
   completed: number;
   canceled: number;
 };
@@ -18,11 +18,14 @@ export type PeakHourRow = {
 export type CallOutcomeStats = {
   total: number;
   active: number;
+  /** Calls linked to a saved phone receipt (not transcript-only). */
   completed: number;
   noOrder: number;
   abandoned: number;
   canceled: number;
   unknown: number;
+  voicemailOrCallback: number;
+  handoff: number;
 };
 
 export type PeakCallWindowRow = {
@@ -81,6 +84,8 @@ export type UpsellAttachStats = {
   configuredRules: number;
   eligibleOrders: number;
   attachedOrders: number;
+  /** Eligible orders that did not include the configured offer line. */
+  skippedOrders: number;
   attachPercent: number | null;
   attributedRevenueCents: number | null;
   revenueComplete: boolean;
@@ -107,6 +112,19 @@ export type MenuScanStats = {
   committed: number;
   failed: number;
   successPercent: number | null;
+};
+
+export type CallerQuestionTopicRow = {
+  topicId: string;
+  label: string;
+  count: number;
+  percentOfFaqCalls: number | null;
+  exampleSnippets: string[];
+};
+
+export type CallerQuestionTopicsSnapshot = {
+  faqNoOrderCallCount: number;
+  topics: CallerQuestionTopicRow[];
 };
 
 export type AnalyticsScope = "organization" | "restaurant";
@@ -138,6 +156,7 @@ export type AnalyticsSnapshot = {
     averageOrderSampleSize: number;
     upsellAttach: UpsellAttachStats;
     stuckOrderCount: number;
+    reservationRequests: number;
     callOutcomes: CallOutcomeStats;
   };
   ordersOverTime: DailyOrderPoint[];
@@ -146,6 +165,7 @@ export type AnalyticsSnapshot = {
   peakCallWindows: PeakCallWindowRow[];
   conversionTrend: ConversionTrend;
   popularItems: PopularItemRow[];
+  topCallerQuestions: CallerQuestionTopicsSnapshot;
   byRestaurant: RestaurantAnalyticsRow[];
   menuScans: MenuScanStats;
 };

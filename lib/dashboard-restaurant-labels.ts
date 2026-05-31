@@ -11,6 +11,9 @@ export const RESTAURANT_MENU_AGENT_LABEL = "Menu";
 
 export const RESTAURANT_MENU_SETUP_TITLE = "Menu setup";
 
+/** Owner-facing menu workspace title (builder + sync). */
+export const RESTAURANT_MENU_BUILDER_TITLE = "Menu builder";
+
 const KDS_PATH = /^\/dashboard\/restaurants\/[^/]+\/?$/;
 const MENU_AGENT_PATH = /^\/dashboard\/restaurants\/[^/]+\/menu\/?$/;
 const LIVE_AGENT_PATH = /^\/dashboard\/restaurants\/[^/]+\/agent\/?$/;

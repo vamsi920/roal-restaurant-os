@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, beforeEach } from "vitest";
 import { RESTAURANT_ID } from "../fixtures/menu";
 import {
   createMockSyncSupabase,
@@ -6,6 +6,10 @@ import {
   mockRunSyncSuccess,
   mockSyncResult,
 } from "../helpers/mock-sync-restaurant-agent";
+
+vi.mock("@/lib/env.server", () => ({
+  getElevenLabsAgentId: vi.fn(() => null),
+}));
 
 const USER_ID = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const ORG_ID = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
@@ -16,6 +20,7 @@ const revalidatePath = vi.fn();
 const afterMenuContentMutationSpy = vi.fn();
 const afterProfileSettingsMutationSpy = vi.fn();
 const afterHoursSettingsMutationSpy = vi.fn();
+const afterRestaurantUpsellMutationSpy = vi.fn();
 const createServerSupabase = vi.fn();
 const markRestaurantMenuTemplateLocalOverride = vi.fn();
 
@@ -60,6 +65,7 @@ describe("content-change auto-sync (pass 13)", () => {
     afterMenuContentMutationSpy.mockReset();
     afterProfileSettingsMutationSpy.mockReset();
     afterHoursSettingsMutationSpy.mockReset();
+    afterRestaurantUpsellMutationSpy.mockReset();
     createServerSupabase.mockResolvedValue({ from: vi.fn() });
     markRestaurantMenuTemplateLocalOverride.mockResolvedValue({
       marked: false,
@@ -162,6 +168,27 @@ describe("content-change auto-sync (pass 13)", () => {
       });
       await vi.waitFor(() => {
         expect(revalidatePath).toHaveBeenCalledWith("/dashboard/onboarding");
+      });
+    });
+
+    it("afterRestaurantUpsellMutation calls sync with upsell trigger", async () => {
+      syncRestaurantAgentAfterContentChange.mockResolvedValue(
+        mockSyncResult({ ok: true, trigger: "upsell_updated" })
+      );
+      const { afterRestaurantUpsellMutation } = await import(
+        "@/lib/voice-agent/after-restaurant-settings-mutation"
+      );
+
+      afterRestaurantUpsellMutation(RESTAURANT_ID, {
+        userId: USER_ID,
+        restaurantName: "Test Kitchen",
+      });
+
+      expect(syncRestaurantAgentAfterContentChange).toHaveBeenCalledWith({
+        restaurantId: RESTAURANT_ID,
+        trigger: "upsell_updated",
+        userId: USER_ID,
+        restaurantName: "Test Kitchen",
       });
     });
 
@@ -361,6 +388,73 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
     );
   });
 
+  it("saveRestaurantProfileSettingsAction schedules upsell sync when upsell entries change", async () => {
+    vi.doMock("@/lib/auth/context-server", () => ({
+      requireRestaurantAccess: vi.fn().mockResolvedValue(accessOk()),
+    }));
+    vi.doMock("@/lib/restaurant-profile/helpers", () => ({
+      upsertRestaurantProfile: vi.fn().mockResolvedValue({
+        restaurant_id: RESTAURANT_ID,
+        name: "Test Kitchen",
+      }),
+    }));
+    vi.doMock("@/lib/onboarding/helpers", () => ({
+      updateRestaurantOnboardingStep: vi.fn().mockResolvedValue(undefined),
+    }));
+    vi.doMock("@/lib/supabase/server", () => ({
+      createServerSupabase: vi.fn().mockResolvedValue({}),
+    }));
+    vi.doMock("@/lib/voice-agent/after-restaurant-settings-mutation", () => ({
+      afterProfileSettingsMutation: afterProfileSettingsMutationSpy,
+      afterRestaurantKnowledgeMutation: vi.fn(),
+      afterRestaurantUpsellMutation: afterRestaurantUpsellMutationSpy,
+      afterHoursSettingsMutation: vi.fn(),
+    }));
+    vi.doMock("@/lib/restaurant-upsell/helpers", () => ({
+      replaceRestaurantUpsellRules: vi.fn().mockResolvedValue([]),
+    }));
+
+    const { saveRestaurantProfileSettingsAction } = await import(
+      "@/app/dashboard/restaurants/[id]/profile-actions"
+    );
+
+    const result = await saveRestaurantProfileSettingsAction(RESTAURANT_ID, {
+      name: "Test Kitchen",
+      phone: null,
+      address_line1: null,
+      address_line2: null,
+      city: null,
+      region: null,
+      postal_code: null,
+      country: "US",
+      timezone: "America/Chicago",
+      cuisine: null,
+      website: null,
+      allows_pickup: true,
+      allows_delivery: false,
+      prep_time_minutes: 20,
+      tax_rate_percent: 0,
+      service_fee_percent: 0,
+      escalation_name: null,
+      escalation_phone: null,
+      escalation_email: null,
+      upsell_entries: [
+        {
+          trigger_text: "Classic Burger",
+          offer_text: "House Salad",
+          is_active: true,
+        },
+      ],
+    });
+
+    expect(result.ok).toBe(true);
+    expect(afterRestaurantUpsellMutationSpy).toHaveBeenCalledWith(RESTAURANT_ID, {
+      userId: USER_ID,
+      restaurantName: "Test Kitchen",
+    });
+    expect(afterProfileSettingsMutationSpy).not.toHaveBeenCalled();
+  });
+
   it("saveRestaurantProfileSettingsAction schedules profile sync after upsert", async () => {
     vi.doMock("@/lib/auth/context-server", () => ({
       requireRestaurantAccess: vi.fn().mockResolvedValue(accessOk()),
@@ -379,7 +473,12 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
     }));
     vi.doMock("@/lib/voice-agent/after-restaurant-settings-mutation", () => ({
       afterProfileSettingsMutation: afterProfileSettingsMutationSpy,
+      afterRestaurantKnowledgeMutation: vi.fn(),
+      afterRestaurantUpsellMutation: afterRestaurantUpsellMutationSpy,
       afterHoursSettingsMutation: vi.fn(),
+    }));
+    vi.doMock("@/lib/restaurant-upsell/helpers", () => ({
+      replaceRestaurantUpsellRules: vi.fn().mockResolvedValue([]),
     }));
 
     const { saveRestaurantProfileSettingsAction } = await import(

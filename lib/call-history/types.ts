@@ -28,6 +28,8 @@ export type CallHistoryRow = {
   transcriptLines: CallHistoryTranscriptLine[];
   recordingUrl: string | null;
   durationSeconds: number | null;
+  isTestHarness: boolean;
+  fulfillmentLabel: string | null;
 };
 
 export type CallHistoryIntent =
@@ -76,7 +78,13 @@ export type ReservationRequestRow = {
   requestedDate: string;
   requestedTime: string;
   notes: string | null;
-  status: "requested" | "confirmed" | "declined" | "canceled" | string;
+  status:
+    | "requested"
+    | "contacted"
+    | "confirmed"
+    | "declined"
+    | "canceled"
+    | string;
   sessionId: string | null;
   createdAt: string;
 };

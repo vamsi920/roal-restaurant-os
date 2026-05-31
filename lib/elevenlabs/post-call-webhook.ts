@@ -1,9 +1,18 @@
 import crypto from "crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getServiceRoleSupabase } from "@/lib/supabase/server";
-import { lookupRestaurantForElevenLabsAgent } from "@/lib/elevenlabs/conversation-init";
+import {
+  lookupRestaurantByCalledNumber,
+  lookupRestaurantForElevenLabsAgent,
+  normalizeVoiceCallerPhone,
+} from "@/lib/elevenlabs/conversation-init";
 import type { AgentCallOutcome, AgentCallStatus } from "@/lib/agent-calls/types";
-import { emitStaffHandoffRequested } from "@/lib/notifications/operational-events";
+import { isVoicemailTranscriptMetadata } from "@/lib/agent-calls/voicemail-call";
+import {
+  mergeHandoffTranscriptFlags,
+  staffHandoffReasonFromMetadata,
+} from "@/lib/elevenlabs/handoff-metadata";
+import { emitPostCallFollowUpNotifications } from "@/lib/notifications/call-follow-up-events";
 
 export const ELEVENLABS_WEBHOOK_SIGNATURE_HEADER = "elevenlabs-signature";
 export const ELEVENLABS_WEBHOOK_TOLERANCE_SECONDS = 30 * 60;
@@ -87,34 +96,36 @@ function readCallerPhone(data: JsonRecord): string | null {
     failureMetadata.from_number
   );
 
-  return value || null;
+  return normalizeVoiceCallerPhone(value);
 }
 
-function transcriptHasSuccessfulFinalize(transcript: unknown): boolean {
-  if (!Array.isArray(transcript)) return false;
-  return transcript.some((turn) => {
-    const row = asRecord(turn);
-    const toolCalls = Array.isArray(row.tool_calls) ? row.tool_calls : [];
-    const toolResults = Array.isArray(row.tool_results) ? row.tool_results : [];
-    const all = [...toolCalls, ...toolResults].map((item) =>
-      JSON.stringify(item ?? {}).toLowerCase()
-    );
-    return all.some(
-      (blob) =>
-        blob.includes("finalize_order") &&
-        !blob.includes('"error"') &&
-        !blob.includes("failed")
-    );
-  });
+function readCalledNumber(data: JsonRecord): string | null {
+  const metadata = asRecord(data.metadata);
+  const phoneCall = asRecord(metadata.phone_call);
+  const value = firstString(
+    metadata.called_number,
+    metadata.calledNumber,
+    metadata.to_number,
+    metadata.to,
+    phoneCall.called_number,
+    phoneCall.calledNumber,
+    phoneCall.to,
+    phoneCall.to_number,
+    data.called_number,
+    data.calledNumber
+  );
+  return value || null;
 }
 
 function inferOutcome(type: string, data: JsonRecord): AgentCallOutcome {
   if (type === "call_initiation_failure") return "abandoned";
   if (type === "post_call_audio") return "unknown";
 
+  const voicemailFlags = readVoicemailFlags(data);
+  if (isVoicemailTranscriptMetadata(voicemailFlags)) return "no_order";
+
   const analysis = asRecord(data.analysis);
   const callSuccessful = asString(analysis.call_successful).toLowerCase();
-  if (transcriptHasSuccessfulFinalize(data.transcript)) return "order_completed";
   if (callSuccessful === "failure" || callSuccessful === "failed") return "abandoned";
   if (callSuccessful === "success") return "no_order";
   return "unknown";
@@ -122,35 +133,12 @@ function inferOutcome(type: string, data: JsonRecord): AgentCallOutcome {
 
 function readHandoffFlags(data: JsonRecord): JsonRecord {
   const analysis = asRecord(data.analysis);
-  const collection = asRecord(analysis.data_collection_results);
-  const metadata = asRecord(data.metadata);
-  const summary = asString(analysis.transcript_summary).toLowerCase();
-  const handoffKeys = [
-    "handoff_requested",
-    "handoff_required",
-    "manager_requested",
-    "callback_requested",
-    "escalation_requested",
-  ];
-
-  const flags: JsonRecord = {};
-  for (const key of handoffKeys) {
-    const raw = collection[key] ?? metadata[key] ?? data[key];
-    if (raw === true || asString(raw).toLowerCase() === "true") {
-      flags[key] = true;
-    }
-  }
-
-  if (
-    summary.includes("manager") ||
-    summary.includes("handoff") ||
-    summary.includes("call back") ||
-    summary.includes("callback")
-  ) {
-    flags.handoff_requested = true;
-  }
-
-  return flags;
+  return mergeHandoffTranscriptFlags({
+    dataCollection: asRecord(analysis.data_collection_results),
+    metadata: asRecord(data.metadata),
+    data,
+    analysisSummary: asString(analysis.transcript_summary) || null,
+  });
 }
 
 function readVoicemailFlags(data: JsonRecord): JsonRecord {
@@ -244,6 +232,7 @@ function buildTranscriptMetadata(event: ElevenLabsPostCallEvent): JsonRecord {
     termination_reason: metadata.termination_reason ?? null,
     call_duration_secs: metadata.call_duration_secs ?? null,
     cost: metadata.cost ?? null,
+    called_number: readCalledNumber(data),
     recording_url: readRecordingUrl(data),
     transcript: Array.isArray(data.transcript) ? data.transcript : [],
     analysis,
@@ -253,25 +242,32 @@ function buildTranscriptMetadata(event: ElevenLabsPostCallEvent): JsonRecord {
   };
 }
 
+function mergePostCallTranscriptMetadata(
+  existing: JsonRecord,
+  incoming: JsonRecord
+): JsonRecord {
+  const merged: JsonRecord = { ...existing, ...incoming };
+  const existingTranscript = Array.isArray(existing.transcript)
+    ? existing.transcript
+    : [];
+  const incomingTranscript = Array.isArray(incoming.transcript)
+    ? incoming.transcript
+    : [];
+  merged.transcript =
+    incomingTranscript.length > 0 ? incomingTranscript : existingTranscript;
+  merged.recording_url =
+    safeHttpUrl(incoming.recording_url) ??
+    safeHttpUrl(existing.recording_url) ??
+    null;
+  merged.called_number =
+    asString(incoming.called_number) || asString(existing.called_number) || null;
+  return merged;
+}
+
 export function staffHandoffReasonFromTranscriptMetadata(
   metadata: JsonRecord
 ): string | null {
-  const handoffKeys = [
-    "voicemail_detected",
-    "handoff_requested",
-    "handoff_required",
-    "manager_requested",
-    "callback_requested",
-    "escalation_requested",
-  ];
-
-  for (const key of handoffKeys) {
-    if (metadata[key] === true || asString(metadata[key]).toLowerCase() === "true") {
-      return key;
-    }
-  }
-
-  return null;
+  return staffHandoffReasonFromMetadata(metadata);
 }
 
 function parseSignatureHeader(header: string): { timestamp: string; signature: string } | null {
@@ -334,6 +330,13 @@ async function resolveRestaurantId(input: {
       .eq("id", fromPayload)
       .maybeSingle();
     if (data?.id) return String(data.id);
+    return null;
+  }
+
+  const calledNumber = readCalledNumber(input.data);
+  if (calledNumber) {
+    const byPhone = await lookupRestaurantByCalledNumber(calledNumber);
+    if (byPhone?.restaurantId) return byPhone.restaurantId;
   }
 
   if (!input.agentId) return null;
@@ -390,6 +393,29 @@ export async function persistElevenLabsPostCallEvent(
   const parsed = await parseElevenLabsPostCallEvent(event, supabase);
   if (!parsed) return { stored: false, reason: "unresolved_event" };
 
+  const { data: existing } = await supabase
+    .from("agent_call_events")
+    .select("transcript_metadata, outcome")
+    .eq("restaurant_id", parsed.restaurantId)
+    .eq("session_id", parsed.sessionId)
+    .maybeSingle();
+
+  const priorMetadata = asRecord(existing?.transcript_metadata);
+  const priorOutcome = asString(existing?.outcome) || null;
+  const transcriptMetadata = mergePostCallTranscriptMetadata(
+    priorMetadata,
+    parsed.transcriptMetadata
+  );
+  const priorHandoffReason =
+    staffHandoffReasonFromTranscriptMetadata(priorMetadata);
+  const handoffReason = staffHandoffReasonFromTranscriptMetadata(transcriptMetadata);
+  const reasonChanged =
+    Boolean(handoffReason) && handoffReason !== priorHandoffReason;
+  const needsReview =
+    !handoffReason &&
+    (parsed.outcome === "abandoned" || event.type === "call_initiation_failure") &&
+    (!existing || priorOutcome !== parsed.outcome);
+
   const { error } = await supabase.from("agent_call_events").upsert(
     {
       restaurant_id: parsed.restaurantId,
@@ -401,7 +427,7 @@ export async function persistElevenLabsPostCallEvent(
       outcome: parsed.outcome,
       started_at: parsed.startedAt,
       ended_at: parsed.endedAt,
-      transcript_metadata: parsed.transcriptMetadata,
+      transcript_metadata: transcriptMetadata,
       updated_at: new Date().toISOString(),
     },
     { onConflict: "restaurant_id,session_id" }
@@ -409,23 +435,21 @@ export async function persistElevenLabsPostCallEvent(
 
   if (error) throw new Error(error.message);
 
-  const handoffReason = staffHandoffReasonFromTranscriptMetadata(
-    parsed.transcriptMetadata
-  );
-  if (handoffReason) {
-    await emitStaffHandoffRequested(supabase, {
+  if (reasonChanged || needsReview) {
+    await emitPostCallFollowUpNotifications(supabase, {
       restaurantId: parsed.restaurantId,
       sessionId: parsed.sessionId,
       conversationId: parsed.conversationId,
       callerPhone: parsed.callerPhone,
       outcome: parsed.outcome,
-      reason: handoffReason,
-      summary:
-        typeof parsed.transcriptMetadata.transcript_summary === "string"
-          ? parsed.transcriptMetadata.transcript_summary
-          : null,
+      webhookEventType: event.type,
+      transcriptMetadata,
+      priorHandoffReason,
     });
   }
 
-  return { stored: true, parsed };
+  return {
+    stored: true,
+    parsed: { ...parsed, transcriptMetadata },
+  };
 }

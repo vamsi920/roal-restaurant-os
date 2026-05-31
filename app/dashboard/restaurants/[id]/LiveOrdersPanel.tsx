@@ -154,7 +154,6 @@ function realtimeCallRowFromEvent(
   const sessionId = row.session_id?.trim();
   if (!sessionId) return null;
   const metadata = row.transcript_metadata ?? {};
-  const transcript = Array.isArray(metadata.transcript) ? metadata.transcript : [];
   const handoffSignals = Array.isArray(metadata.handoff_signals)
     ? metadata.handoff_signals.filter(
         (signal): signal is string => typeof signal === "string" && signal.trim().length > 0
@@ -170,7 +169,7 @@ function realtimeCallRowFromEvent(
     startedAt: row.started_at || row.updated_at || new Date().toISOString(),
     endedAt: row.ended_at ?? null,
     lastActivityAt: row.updated_at || row.ended_at || row.started_at || new Date().toISOString(),
-    lineCount: transcript.length,
+    lineCount: 0,
     toolErrorCount: 0,
     handoffSignals,
   };
@@ -412,6 +411,7 @@ export function LiveOrdersPanel({
           (payload: RealtimePostgresChangesPayload<PhoneOrderReceiptRow>) => {
             if (payload.eventType === "INSERT") {
               const row = payload.new as PhoneOrderReceiptRow;
+              if (row.restaurant_id !== restaurantId) return;
               setReceipts((prev) => {
                 const rest = prev.filter((p) => p.session_id !== row.session_id);
                 return [row, ...rest];

@@ -15,7 +15,7 @@ describe("metrics safety copy", () => {
       join(REPO, "components/landing/landing-page.tsx"),
       "utf8"
     );
-    expect(page).toContain("HomeCapabilitiesStrip");
+    expect(page).toContain("promiseCards");
     expect(page).not.toContain("HomeMetricsStrip");
   });
 

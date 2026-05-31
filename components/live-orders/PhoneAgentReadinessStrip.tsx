@@ -1,81 +1,48 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import type { PhoneAgentReadinessSnapshot } from "@/lib/live-orders/readiness-from-profile";
+import type { LaunchGatePhase, LaunchGateSnapshot } from "@/lib/restaurant-launch/types";
 
-const STATUS_TONE: Record<string, string> = {
-  connected: "bg-success/15 text-success",
-  misconfigured: "bg-warning/15 text-amber-900",
-  unreachable: "bg-danger/10 text-danger",
-  disconnected: "bg-elev text-muted",
+const PHASE_TONE: Record<LaunchGatePhase, string> = {
+  ready: "bg-success/15 text-success",
+  almost_ready: "bg-warning/15 text-amber-900",
+  blocked: "bg-danger/10 text-danger",
 };
-
-const MENU_TONE: Record<string, string> = {
-  ok: "bg-success/15 text-success",
-  warn: "bg-warning/15 text-amber-900",
-  error: "bg-danger/10 text-danger",
-  neutral: "bg-elev text-muted",
-};
-
-function menuTone(
-  readiness: PhoneAgentReadinessSnapshot
-): keyof typeof MENU_TONE {
-  if (!readiness.menuAutoSync.agentLinked) return "neutral";
-  if (readiness.menuAutoSync.status === "failed") return "error";
-  if (readiness.menuAutoSync.status === "syncing") return "warn";
-  if (
-    readiness.menuAutoSync.status === "succeeded" &&
-    readiness.menuAutoSync.lastSyncedAt
-  ) {
-    return "ok";
-  }
-  return readiness.menuAutoSync.agentLinked ? "warn" : "neutral";
-}
 
 export function PhoneAgentReadinessStrip({
-  restaurantId,
-  readiness,
+  launchGate,
 }: {
   restaurantId: string;
-  readiness: PhoneAgentReadinessSnapshot;
+  launchGate: LaunchGateSnapshot;
 }) {
-  const agentTone =
-    STATUS_TONE[readiness.connectionStatus] ?? STATUS_TONE.disconnected;
-
   return (
     <div
-      className="kds-readiness-strip flex min-w-0 flex-wrap items-center gap-2"
+      className="kds-readiness-strip flex min-w-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center"
       role="region"
-      aria-label="Phone agent readiness"
+      aria-label="Launch readiness"
     >
       <span
         className={cn(
           "rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-          agentTone
+          PHASE_TONE[launchGate.phase]
         )}
       >
-        {readiness.connectionLabel}
+        {launchGate.phaseLabel}
       </span>
-      <span
-        className={cn(
-          "rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-          MENU_TONE[menuTone(readiness)]
-        )}
-      >
-        {readiness.menuSyncLabel}
-      </span>
-      <span
-        className={cn(
-          "rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-          readiness.envReady ? MENU_TONE.ok : MENU_TONE.warn
-        )}
-      >
-        {readiness.envReady ? "Server ready" : "Server config incomplete"}
-      </span>
+      {launchGate.topBlockerLabel ? (
+        <span className="min-w-0 text-xs text-muted [overflow-wrap:anywhere]">
+          {launchGate.topBlockerLabel}
+          {launchGate.topBlockerDetail ? ` — ${launchGate.topBlockerDetail}` : ""}
+        </span>
+      ) : (
+        <span className="text-xs text-success">
+          This location can take live phone orders now.
+        </span>
+      )}
       <Link
-        href={`/dashboard/restaurants/${restaurantId}/agent`}
-        className="ml-auto text-xs font-medium text-accent hover:underline"
+        href={launchGate.primaryAction.href}
+        className="sm:ml-auto text-xs font-semibold text-accent hover:underline"
       >
-        Live agent setup
+        {launchGate.primaryAction.label}
       </Link>
     </div>
   );

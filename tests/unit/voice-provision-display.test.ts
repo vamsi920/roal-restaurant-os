@@ -30,7 +30,7 @@ describe("voice provision display", () => {
     ).toBe(`/dashboard/restaurants/${RID}`);
   });
 
-  it("treats skipped provision as non-failure for routing", () => {
+  it("routes skipped provision to Live Agent for retry", () => {
     expect(
       isVoiceProvisionApiFailure({
         ok: false,
@@ -38,11 +38,24 @@ describe("voice provision display", () => {
         skipped: true,
       })
     ).toBe(false);
-    expect(resolvePostCreateRestaurantHref(RID, {
-      ok: false,
-      warning: "skipped",
-      skipped: true,
-    })).toBe(`/dashboard/restaurants/${RID}`);
+    expect(
+      resolvePostCreateRestaurantHref(RID, {
+        ok: false,
+        warning: "skipped",
+        skipped: true,
+      })
+    ).toBe(`/dashboard/restaurants/${RID}/agent`);
+  });
+
+  it("shows needs_attention when skipped error is stored without agent id", () => {
+    expect(
+      voiceProvisionUiStateFromProfile({
+        elevenlabs_provision_status: null,
+        elevenlabs_provision_error:
+          "Voice agent auto-setup skipped (ELEVENLABS_AGENT_ID not configured). Connect manually from Live Agent.",
+        elevenlabs_agent_id: null,
+      })
+    ).toBe("needs_attention");
   });
 
   it("card href follows profile provision state", () => {

@@ -370,6 +370,7 @@ describe("get_menu_items response schema", () => {
         },
       ],
       restaurant_name_hint: "Test Bistro",
+      service_modes: { pickup: true, delivery: false },
       operations: {
         ordering_allowed: true,
         message: "Open now.",
@@ -401,6 +402,12 @@ describe("get_order_status response schema", () => {
           item_count: 3,
           updated_at: "2026-05-30T18:00:00.000Z",
           created_at: "2026-05-30T17:45:00.000Z",
+          status_timeline: [
+            {
+              label: "Ready for pickup",
+              description: "The order is ready for the guest.",
+            },
+          ],
         },
       },
       { tool: "get_order_status" }
@@ -507,6 +514,8 @@ describe("get_restaurant_info response schema", () => {
             answer: "Use the short-term spaces behind the restaurant.",
           },
         ],
+        knowledge_status_message:
+          "Use only the knowledge_entries in this response for operator-approved FAQ answers.",
       },
       { tool: "get_restaurant_info" }
     );

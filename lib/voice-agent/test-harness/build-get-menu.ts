@@ -2,6 +2,10 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
 import { evaluateRestaurantHours } from "@/lib/restaurant-hours/core";
+import {
+  getRestaurantProfile,
+  serviceModesFromProfile,
+} from "@/lib/restaurant-profile/helpers";
 
 export async function buildGetMenuHarnessResponse(
   supabase: SupabaseClient,
@@ -54,6 +58,8 @@ export async function buildGetMenuHarnessResponse(
   }
 
   const menu = await loadRestaurantMenu(supabase, restaurantId);
+  const profile = await getRestaurantProfile(supabase, restaurantId);
+  const serviceModes = serviceModesFromProfile(profile);
   const modifiersByItem: Record<string, unknown[]> = {};
   for (const m of menu.modifiers) {
     if (!modifiersByItem[m.item_id]) modifiersByItem[m.item_id] = [];
@@ -89,6 +95,7 @@ export async function buildGetMenuHarnessResponse(
       restaurant,
       categories: nested,
       restaurant_name_hint: restaurantNameHint ?? null,
+      service_modes: serviceModes,
       operations,
     },
   };

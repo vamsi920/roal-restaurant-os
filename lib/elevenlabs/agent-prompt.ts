@@ -1,5 +1,6 @@
 import type { RestaurantProfile } from "@/lib/types";
 import type { RestaurantKnowledgeEntry } from "@/lib/restaurant-knowledge/schema";
+import type { PromptReadyUpsellRule } from "@/lib/restaurant-upsell/menu-binding";
 import type { RestaurantUpsellRule } from "@/lib/restaurant-upsell/schema";
 import { formatProfileAddress } from "@/lib/restaurant-profile/helpers";
 import {
@@ -20,12 +21,14 @@ export type BuildRestaurantOrderAgentPromptInput = {
   menu: MenuPromptSnapshot | null;
   knowledgeEntries?: readonly Pick<
     RestaurantKnowledgeEntry,
-    "category" | "question" | "answer"
+    "category" | "question" | "answer" | "is_active"
   >[];
   upsellRules?: readonly Pick<
     RestaurantUpsellRule,
     "trigger_text" | "offer_text"
   >[];
+  /** Menu-verified upsell rules only (offer exists and is available). */
+  promptReadyUpsellRules?: readonly PromptReadyUpsellRule[];
 };
 
 const CORE_BEHAVIOR = `You are the phone voice for one restaurant. Be warm, concise, and accurate. Never invent menu items, prices, policies, hours, or guest identity. Sound human and efficient—never stretch the call with repeated summaries or filler.
@@ -43,7 +46,7 @@ const CORE_BEHAVIOR = `You are the phone voice for one restaurant. Be warm, conc
 5. Take the order: brief line per item ("Got it")—do not read the full cart until the pre-finalize summary.
 6. Recommendations: one short line per option (name + at most one clause). No long descriptions unless they ask.
 7. Dietary or allergy asks: use only get_menu_items—suggest up to three real items that fit; say honestly if none qualify. Never claim allergen-free, nut-free, or gluten-free unless the menu data states it.
-8. Upselling: if upsell_experiment_variant is "control", do not proactively upsell; only add extras the guest asks for. Otherwise offer one real add-on from get_menu_items tied to their choices—one short yes/no question. Prefer configured Upsell rules when relevant. Skip if rushed or done.
+8. Upselling: follow Upsell rules when present. Offer at most one configured add-on during an active order—one short natural yes/no question. Use only items returned by get_menu_items (exact names, real prices). Never invent add-ons, combos, bundles, discounts, or unavailable items. If they accept, add the item with sync_draft_order and continue. If they decline, thank them briefly and continue checkout without blocking finalize_order. Skip upselling when rushed, angry, done ordering, FAQ-only, voicemail/callback, staff handoff, reservation intake, no-order calls, or upsell_experiment_variant is "control".
 9. When done ordering: one tight recap (items + quantities + one total if prices are reliable), then ask for name and callback phone in the same breath when possible.
 10. If name, phone, or delivery address (delivery only) is missing: ask once more; read phone back in short digit groups when audio was noisy.
 11. Call finalize_order only with a confirmed cart, fulfillment_type, authentic customer_name, authentic customer_phone, and delivery_address when fulfillment_type is delivery. After success: one short closing—no second full recap.
@@ -109,16 +112,24 @@ function buildGuestQuestionsSection(
 
 function buildKnowledgeBaseSection(
   entries:
-    | readonly Pick<RestaurantKnowledgeEntry, "category" | "question" | "answer">[]
+    | readonly Pick<
+        RestaurantKnowledgeEntry,
+        "category" | "question" | "answer" | "is_active"
+      >[]
     | undefined
 ): string | null {
   const active = (entries ?? [])
+    .filter(
+      (entry) =>
+        entry.is_active !== false &&
+        entry.question.trim() &&
+        entry.answer.trim()
+    )
     .map((entry) => ({
       category: entry.category,
       question: entry.question.trim(),
       answer: entry.answer.trim(),
     }))
-    .filter((entry) => entry.question && entry.answer)
     .slice(0, 24);
 
   if (active.length === 0) return null;
@@ -137,25 +148,39 @@ function buildKnowledgeBaseSection(
 function buildUpsellRulesSection(
   rules:
     | readonly Pick<RestaurantUpsellRule, "trigger_text" | "offer_text">[]
-    | undefined
+    | undefined,
+  promptReadyRules?: readonly PromptReadyUpsellRule[]
 ): string | null {
-  const active = (rules ?? [])
-    .map((rule) => ({
-      trigger: rule.trigger_text.trim(),
-      offer: rule.offer_text.trim(),
-    }))
-    .filter((rule) => rule.trigger && rule.offer)
-    .slice(0, 20);
+  const active =
+    promptReadyRules ??
+    (rules ?? [])
+      .map((rule) => ({
+        trigger_text: rule.trigger_text.trim(),
+        offer_text: rule.offer_text.trim(),
+        menu_trigger_names: [] as string[],
+        menu_offer_names: [] as string[],
+      }))
+      .filter((rule) => rule.trigger_text && rule.offer_text)
+      .slice(0, 20);
 
   if (active.length === 0) return null;
 
   const lines = [
-    'Use these operator-approved upsell rules only when upsell_experiment_variant is not "control" and they fit the guest\'s current cart. The offered item must exist and be available in get_menu_items. Ask once, as a short yes/no question, then move on.',
-    'If upsell_experiment_variant is "control", skip proactive upsell offers so analytics can compare treatment vs control tickets.',
-    ...active.map(
-      (rule, index) =>
-        `${index + 1}. When: ${rule.trigger} Offer: ${rule.offer}`
-    ),
+    'Use only these operator-approved upsell rules when upsell_experiment_variant is not "control", the guest is actively building a cart, and skip conditions in Conversation flow do not apply.',
+    "Never offer an item, modifier, combo, discount, or price that is not in the latest get_menu_items response.",
+    "Ask once as a short yes/no question. If they say yes, add the exact menu line with sync_draft_order. If they say no, continue checkout without asking again.",
+    "Do not upsell during FAQ-only calls, voicemail/callback, staff handoff, reservation intake, rushed or angry calls, or when they are done ordering.",
+    ...active.map((rule, index) => {
+      const triggerHint =
+        rule.menu_trigger_names.length > 0
+          ? `menu trigger match: ${rule.menu_trigger_names.join(", ")}`
+          : `trigger text: ${rule.trigger_text}`;
+      const offerHint =
+        rule.menu_offer_names.length > 0
+          ? `offer menu item(s): ${rule.menu_offer_names.join(", ")}`
+          : `offer text: ${rule.offer_text}`;
+      return `${index + 1}. When ${triggerHint}. ${offerHint}. Operator note: ${rule.offer_text}`;
+    }),
   ];
 
   return `## Upsell rules\n${lines.map((l) => `- ${l}`).join("\n")}`;
@@ -241,11 +266,11 @@ function buildOrderingPolicySection(profile: RestaurantProfile | null): string {
 
   if (pickup && !delivery) {
     lines.push(
-      "Pickup only: do not offer delivery. If they ask for delivery, explain pickup-only and offer pickup."
+      "Pickup only: never offer delivery. If they ask for delivery, explain pickup-only and offer pickup."
     );
   } else if (delivery && !pickup) {
     lines.push(
-      "Delivery only: do not offer pickup. If they ask for pickup, explain delivery-only."
+      "Delivery only: never offer pickup. If they ask for pickup, explain delivery-only and collect a delivery address."
     );
   } else if (pickup && delivery) {
     lines.push(
@@ -331,6 +356,8 @@ function buildHandoffSection(
 ): string {
   const lines = [
     "Routing: manager or human → Manager / staff escalation below. Catering / large party → Catering route. Complaint or bad experience → Complaints route. Return to phone ordering only when the guest wants food and ordering is allowed.",
+    "For catering, complaints, manager requests, reservation follow-up, or any guest who needs a person: collect their real name, callback phone, and a short reason before ending the call. Never invent contact details.",
+    "Never tell the guest catering is booked, a complaint is resolved, a table is confirmed, or a manager is on the line unless that is explicitly true outside this call.",
     "Wrong number or not ordering: apologize briefly and end the call politely (end_call when appropriate).",
     "Guest insists on a human, billing dispute, harassment, or you cannot complete the order after two clarifications: offer to have staff call back—do not pretend to be a manager.",
   ];
@@ -394,7 +421,7 @@ export function buildRestaurantOrderAgentPrompt(
     buildRestaurantIdentitySection(displayName, input.profile),
     buildGuestQuestionsSection(input.profile, displayName),
     buildKnowledgeBaseSection(input.knowledgeEntries),
-    buildUpsellRulesSection(input.upsellRules),
+    buildUpsellRulesSection(input.upsellRules, input.promptReadyUpsellRules),
     buildOrderingPolicySection(input.profile),
     buildMenuRulesSection(input.menu, input.profile),
     buildCustomerInfoSection(),

@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { retryRestaurantVoiceAgentProvisionAction } from "@/app/dashboard/onboarding/actions";
+import {
+  retryRestaurantVoiceAgentProvisionAction,
+  syncRestaurantVoiceAgentOnboardingAction,
+} from "@/app/dashboard/onboarding/actions";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { RESTAURANT_MENU_AGENT_LABEL } from "@/lib/dashboard-restaurant-labels";
 import type { OnboardingRestaurantVoiceProvision } from "@/lib/onboarding/restaurant-voice-provision";
@@ -19,6 +22,16 @@ type Props = {
   onSkipManual: () => void;
 };
 
+function formatSyncTime(iso: string | null): string | null {
+  if (!iso) return null;
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(iso));
+}
+
 export function OnboardingVoiceAgentStep({
   restaurantId,
   restaurantName,
@@ -30,8 +43,10 @@ export function OnboardingVoiceAgentStep({
 }: Props) {
   const router = useRouter();
   const [retrying, setRetrying] = useState(false);
+  const [syncing, setSyncing] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
   const agentHref = restaurantVoiceAgentHref(restaurantId);
+  const lastSyncLabel = formatSyncTime(voice.lastSyncAt);
 
   useEffect(() => {
     if (voice.uiState !== "in_progress") return;
@@ -59,13 +74,43 @@ export function OnboardingVoiceAgentStep({
     }
   }
 
-  const busy = pending || retrying;
+  async function runSync() {
+    setLocalError(null);
+    setSyncing(true);
+    try {
+      await syncRestaurantVoiceAgentOnboardingAction({
+        restaurantId,
+        organizationId,
+      });
+      router.refresh();
+    } catch (e) {
+      setLocalError(
+        formatSupabaseClientError(
+          e instanceof Error ? e.message : "Could not sync voice agent."
+        )
+      );
+    } finally {
+      setSyncing(false);
+    }
+  }
+
+  const busy = pending || retrying || syncing;
   const displayError =
     localError ||
     voice.provisionError ||
     (voice.uiState === "needs_attention" ? voice.lastSyncError : null);
 
-  if (voice.uiState === "ready") {
+  const syncStatus = voice.toolsSynced
+    ? lastSyncLabel
+      ? `Last synced ${lastSyncLabel}`
+      : "Tools synced"
+    : voice.lastSyncError
+      ? `Sync error: ${voice.lastSyncError}`
+      : voice.agentId
+        ? "Agent linked — sync tools before taking calls"
+        : null;
+
+  if (voice.uiState === "ready" && voice.toolsSynced) {
     return (
       <div className="space-y-4 max-w-lg">
         <p className="text-sm text-success">
@@ -77,6 +122,13 @@ export function OnboardingVoiceAgentStep({
             </span>
           ) : null}
         </p>
+        {syncStatus ? (
+          <p className="text-xs text-muted">{syncStatus}</p>
+        ) : null}
+        <p className="text-sm text-muted">
+          Forward your public phone line to the agent when you are ready for live
+          guest traffic. Phone forwarding details are on Live Agent.
+        </p>
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
@@ -85,6 +137,37 @@ export function OnboardingVoiceAgentStep({
             onClick={onContinue}
           >
             Continue to test call
+          </button>
+          <Link href={agentHref} className="btn-ghost inline-flex items-center">
+            Open Live Agent
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (voice.uiState === "ready" && !voice.toolsSynced) {
+    return (
+      <div className="space-y-4 max-w-lg">
+        <p className="text-sm text-muted">
+          Agent is linked for{" "}
+          <span className="font-medium text-ink">{restaurantName}</span>. Sync
+          menu tools before taking guest calls.
+        </p>
+        {syncStatus ? (
+          <p className="text-xs text-muted [overflow-wrap:anywhere]">{syncStatus}</p>
+        ) : null}
+        {displayError ? (
+          <p
+            className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
+            role="alert"
+          >
+            {displayError}
+          </p>
+        ) : null}
+        <div className="flex flex-wrap gap-2">
+          <button type="button" className="btn-primary" disabled={busy} onClick={runSync}>
+            {syncing ? "Syncing…" : "Sync agent tools"}
           </button>
           <Link href={agentHref} className="btn-ghost inline-flex items-center">
             Open Live Agent
@@ -131,6 +214,9 @@ export function OnboardingVoiceAgentStep({
           <span className="font-medium text-ink">{restaurantName}</span>. Retry
           here or open Live Agent for details.
         </p>
+        {syncStatus ? (
+          <p className="text-xs text-muted [overflow-wrap:anywhere]">{syncStatus}</p>
+        ) : null}
         {displayError ? (
           <p
             className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
@@ -143,6 +229,11 @@ export function OnboardingVoiceAgentStep({
           <button type="button" className="btn-primary" disabled={busy} onClick={runRetry}>
             {retrying ? "Retrying…" : "Retry voice agent setup"}
           </button>
+          {voice.agentId ? (
+            <button type="button" className="btn-ghost" disabled={busy} onClick={runSync}>
+              {syncing ? "Syncing…" : "Sync tools"}
+            </button>
+          ) : null}
           <Link href={agentHref} className="btn-ghost inline-flex items-center">
             Open Live Agent
           </Link>

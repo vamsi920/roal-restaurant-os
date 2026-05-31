@@ -1,9 +1,9 @@
 /** Launch billing posture — success-based pilots; no fake self-serve checkout. */
 export const BILLING_LAUNCH_POSTURE = {
   model: "Success-based pricing",
-  pilotRate: "$0.90 per successful order",
+  pilotRate: "$0.90 per successful phone order",
   pilotRateDetail:
-    "Billed when the guest confirms on the call and the pickup ticket finalizes on your KDS—not per minute or per ring.",
+    "Missed and no-order calls are not charged. FAQ-only calls, voicemail, callbacks, reservations without orders, handoffs, and failed calls are also free.",
   selfServeCheckout:
     "Self-serve Stripe checkout is not enabled in this build. There are no working Upgrade or payment buttons until that ships.",
   pilotBilling:

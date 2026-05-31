@@ -38,6 +38,35 @@ describe("buildOrderStatusHistory", () => {
     expect(history[0]?.description).toMatch(/live phone cart/i);
   });
 
+  it("shows kitchen queue ticket after finalize from draft session", () => {
+    const history = buildOrderStatusHistory({
+      id: "1",
+      restaurant_id: "r",
+      session_id: "s",
+      status: "new",
+      items: [{ item_id: "x", name: "Classic Burger", quantity: 2 }],
+      customer_name: "Maria Lopez",
+      customer_phone: "+14155551212",
+      fulfillment_type: "pickup",
+      delivery_address: null,
+      delivery_instructions: null,
+      created_at: "2026-01-01T12:00:00.000Z",
+      updated_at: "2026-01-01T12:08:00.000Z",
+      accepted_at: null,
+      in_progress_at: null,
+      ready_at: null,
+      completed_at: null,
+      canceled_at: null,
+    } as DraftOrderRow);
+
+    expect(history.map((h) => h.label)).toEqual([
+      "Call received",
+      "Ticket sent to kitchen",
+      "New order",
+    ]);
+    expect(history[1]?.tone).toBe("ticket");
+  });
+
   it("shows an active call cart before kitchen finalization", () => {
     const history = buildOrderStatusHistory({
       id: "1",

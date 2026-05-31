@@ -86,7 +86,7 @@ export async function loadRestaurantCommandCenter(
     limit: sessionLimit,
   });
 
-  const completedOrders = buildCompletedOrdersFromReceipts(receipts);
+  const completedOrders = buildCompletedOrdersFromReceipts(receipts, restaurantId);
 
   return partitionCommandCenterSessions({
     restaurantId,

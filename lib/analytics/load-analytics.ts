@@ -7,6 +7,8 @@ import {
   popularItemSources,
   averagePrepMinutes,
   buildMenuContexts,
+  buildReceiptSessionKeys,
+  callEventReceiptSessionKey,
   countCanceledByRestaurant,
   countReceiptsByRestaurant,
   conversionPercent,
@@ -19,6 +21,8 @@ import {
   type AgentCallEventAnalyticsRow,
   type UpsellRuleAnalyticsRow,
 } from "@/lib/analytics/aggregate";
+import { aggregateCallerQuestionTopics } from "@/lib/analytics/caller-question-topics";
+import { excludeTestHarnessSessions } from "@/lib/analytics/exclude-test-sessions";
 import {
   averageOrderEstimateCents,
   bucketOrderSessionsByDay,
@@ -74,6 +78,8 @@ export async function loadOrganizationAnalytics(
     organizationName: string;
     restaurantId?: string;
     restaurantName?: string;
+    /** Org rollup: only include restaurants the caller may access. */
+    accessibleRestaurantIds?: string[];
     rangeKey?: AnalyticsRangeKey | string | string[];
   }
 ): Promise<AnalyticsSnapshot> {
@@ -95,9 +101,13 @@ export async function loadOrganizationAnalytics(
   if (restError) throw new Error(restError.message);
 
   const restList = (restaurants ?? []) as Pick<Restaurant, "id" | "name">[];
-  const scopedRestList = input.restaurantId
+  let scopedRestList = input.restaurantId
     ? restList.filter((r) => r.id === input.restaurantId)
     : restList;
+  if (!input.restaurantId && input.accessibleRestaurantIds?.length) {
+    const allowed = new Set(input.accessibleRestaurantIds);
+    scopedRestList = scopedRestList.filter((r) => allowed.has(r.id));
+  }
   const restaurantIds = scopedRestList.map((r) => r.id);
   const restaurantIdSet = new Set(restaurantIds);
   if (restaurantIds.length === 0) {
@@ -132,6 +142,7 @@ export async function loadOrganizationAnalytics(
     upsellRulesResult,
     categoriesResult,
     profilesResult,
+    reservationsResult,
   ] = await Promise.all([
     usageQuery,
     supabase
@@ -151,7 +162,9 @@ export async function loadOrganizationAnalytics(
     importsQuery,
     supabase
       .from("agent_call_events")
-      .select("restaurant_id, status, outcome, started_at, ended_at")
+      .select(
+        "restaurant_id, session_id, status, outcome, started_at, ended_at, transcript_metadata"
+      )
       .in("restaurant_id", restaurantIds)
       .gte("started_at", sinceIso)
       .lte("started_at", untilIso),
@@ -168,6 +181,12 @@ export async function loadOrganizationAnalytics(
       .from("restaurant_profiles")
       .select("restaurant_id, tax_rate_percent, service_fee_percent")
       .in("restaurant_id", restaurantIds),
+    supabase
+      .from("restaurant_reservation_requests")
+      .select("id, restaurant_id, session_id")
+      .in("restaurant_id", restaurantIds)
+      .gte("created_at", sinceIso)
+      .lte("created_at", untilIso),
   ]);
 
   for (const result of [
@@ -189,12 +208,40 @@ export async function loadOrganizationAnalytics(
       throw new Error(callEventsResult.error.message);
     }
   } else {
-    callEvents = (callEventsResult.data ?? []) as AgentCallEventAnalyticsRow[];
+    callEvents = excludeTestHarnessSessions(
+      (callEventsResult.data ?? []) as AgentCallEventAnalyticsRow[]
+    );
   }
 
-  const usage = (usageResult.data ?? []) as UsageRow[];
-  const orders = (ordersResult.data ?? []) as OrderRow[];
-  const receipts = (receiptsResult.data ?? []) as ReceiptRow[];
+  let reservationRequests = 0;
+  if (reservationsResult.error) {
+    const msg = reservationsResult.error.message ?? "";
+    if (!/restaurant_reservation_requests/i.test(msg)) {
+      throw new Error(reservationsResult.error.message);
+    }
+  } else {
+    reservationRequests = excludeTestHarnessSessions(
+      (reservationsResult.data ?? []).filter((row) =>
+        restaurantIdSet.has(row.restaurant_id as string)
+      ) as Array<{ session_id?: string | null; restaurant_id: string }>
+    ).length;
+  }
+
+  const usage = excludeTestHarnessSessions(
+    ((usageResult.data ?? []) as UsageRow[]).filter(
+      (row) => row.restaurant_id != null && restaurantIdSet.has(row.restaurant_id)
+    )
+  );
+  const orders = excludeTestHarnessSessions(
+    ((ordersResult.data ?? []) as OrderRow[]).filter((row) =>
+      restaurantIdSet.has(row.restaurant_id)
+    )
+  );
+  const receipts = excludeTestHarnessSessions(
+    ((receiptsResult.data ?? []) as ReceiptRow[]).filter((row) =>
+      restaurantIdSet.has(row.restaurant_id)
+    )
+  );
   const imports = (importsResult.data ?? []) as MenuImportRow[];
   const upsellRules = (upsellRulesResult.data ?? []) as UpsellRuleAnalyticsRow[];
 
@@ -268,13 +315,13 @@ export async function loadOrganizationAnalytics(
 
   const completedOrders = orders.filter((o) => o.status === "completed");
   const prep = averagePrepMinutes(completedOrders);
+  const receiptSessionKeys = buildReceiptSessionKeys(receipts);
   const revenue = estimateRevenueCents(
-    completedOrders,
+    receipts,
     menuByRestaurant,
     pricingByRestaurant
   );
   const avgOrder = averageOrderEstimateCents(
-    completedOrders,
     receipts,
     menuByRestaurant,
     pricingByRestaurant
@@ -289,8 +336,15 @@ export async function loadOrganizationAnalytics(
   );
   const peakHours = peakOrderHoursFromReceipts(receipts);
   const peakCallHours = peakCallHoursFromEvents(callEvents);
-  const peakCallWindows = peakCallWindowsFromEvents(callEvents);
-  const callOutcomes = aggregateCallOutcomes(callEvents);
+  const peakCallWindows = peakCallWindowsFromEvents(
+    callEvents,
+    receiptSessionKeys
+  );
+  const callOutcomes = aggregateCallOutcomes(callEvents, receiptSessionKeys);
+  const topCallerQuestions = aggregateCallerQuestionTopics(
+    callEvents,
+    receiptSessionKeys
+  );
   const conversionTrend = computeSessionConversionTrend(
     sessions,
     sinceIso,
@@ -314,18 +368,23 @@ export async function loadOrganizationAnalytics(
       sessionHasCompletedOrder(s)
     ).length;
     const restCallEvents = callEvents.filter((e) => e.restaurant_id === r.id);
-    const restCompletedCalls = restCallEvents.filter(
-      (e) => e.outcome === "order_completed"
-    ).length;
+    const restReceiptKeys = buildReceiptSessionKeys(
+      receipts.filter((receipt) => receipt.restaurant_id === r.id)
+    );
+    const restCompletedCalls = restCallEvents.filter((event) => {
+      const key = callEventReceiptSessionKey(event);
+      return key != null && restReceiptKeys.has(key);
+    }).length;
     const restNoOrderCalls = restCallEvents.filter(
       (e) => e.outcome === "no_order"
     ).length;
     const restCompleted = completedOrders.filter(
       (o) => o.restaurant_id === r.id
     );
+    const restReceipts = receipts.filter((receipt) => receipt.restaurant_id === r.id);
     const restOrders = orders.filter((o) => o.restaurant_id === r.id);
     const restRevenue = estimateRevenueCents(
-      restCompleted,
+      restReceipts,
       menuByRestaurant,
       pricingByRestaurant
     );
@@ -398,6 +457,7 @@ export async function loadOrganizationAnalytics(
       averageOrderSampleSize: avgOrder.sampleSize,
       upsellAttach,
       stuckOrderCount,
+      reservationRequests,
       callOutcomes,
     },
     ordersOverTime,
@@ -406,6 +466,7 @@ export async function loadOrganizationAnalytics(
     peakCallWindows,
     conversionTrend,
     popularItems: aggregatePopularItems(popularSources),
+    topCallerQuestions,
     byRestaurant,
     menuScans: aggregateMenuScans(
       imports,
@@ -458,6 +519,7 @@ function emptySnapshot(
         configuredRules: 0,
         eligibleOrders: 0,
         attachedOrders: 0,
+        skippedOrders: 0,
         attachPercent: null,
         attributedRevenueCents: null,
         revenueComplete: true,
@@ -478,6 +540,7 @@ function emptySnapshot(
         experimentLiftComplete: true,
       },
       stuckOrderCount: 0,
+      reservationRequests: 0,
       callOutcomes: {
         total: 0,
         active: 0,
@@ -486,6 +549,8 @@ function emptySnapshot(
         abandoned: 0,
         canceled: 0,
         unknown: 0,
+        voicemailOrCallback: 0,
+        handoff: 0,
       },
     },
     ordersOverTime: dayKeys.map((date) => ({
@@ -508,6 +573,7 @@ function emptySnapshot(
       recentCompleted: 0,
     },
     popularItems: [],
+    topCallerQuestions: { faqNoOrderCallCount: 0, topics: [] },
     byRestaurant: [],
     menuScans: {
       attempts: 0,

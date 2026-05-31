@@ -51,6 +51,50 @@ describe("buildCallHistoryRows", () => {
     expect(rows[0]?.outcomeLabel).toBe("Order completed");
   });
 
+  it("shows fulfillment label without leaking delivery address", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [session({ sessionId: "conv_delivery" })],
+      drafts: [],
+      receipts: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          session_id: "conv_delivery",
+          customer_name: "Sam",
+          customer_phone: "+15551234567",
+          fulfillment_type: "delivery",
+          delivery_address: "742 Secret Lane, Other City",
+          items: [{ name: "Burger", quantity: 1, customizations: [] }],
+          created_at: "2026-05-30T17:15:00.000Z",
+        },
+      ],
+    });
+    expect(rows[0]?.fulfillmentLabel).toBe("Delivery");
+    expect(JSON.stringify(rows[0])).not.toContain("742 Secret Lane");
+  });
+
+  it("scopes fulfillment rows to the restaurant id", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [session({ sessionId: "conv_local" })],
+      drafts: [],
+      receipts: [
+        {
+          restaurant_id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+          session_id: "conv_local",
+          customer_name: "Foreign",
+          customer_phone: null,
+          fulfillment_type: "delivery",
+          delivery_address: "999 Foreign Ave",
+          items: [{ name: "Pie", quantity: 1, customizations: [] }],
+          created_at: "2026-05-30T17:15:00.000Z",
+        },
+      ],
+    });
+    expect(rows[0]?.fulfillmentLabel).toBeNull();
+    expect(JSON.stringify(rows[0])).not.toContain("999 Foreign Ave");
+  });
+
   it("sorts by occurredAt descending", () => {
     const rows = buildCallHistoryRows({
       sessions: [
@@ -117,9 +161,29 @@ describe("buildCallHistoryRows", () => {
     expect(rows[0]).toMatchObject({
       intent: "reservation",
       intentLabel: "Reservation",
-      ownerActionLabel: "Confirm table with guest",
+      ownerActionLabel: "Review table request",
       isActionable: true,
     });
+  });
+
+  it("links reservation request status to session owner action", () => {
+    const rows = buildCallHistoryRows({
+      sessions: [
+        session({
+          sessionId: "reservation-call",
+          outcome: "no_order",
+        }),
+      ],
+      drafts: [],
+      receipts: [],
+      reservationSessionIds: ["reservation-call"],
+      reservationBySession: new Map([
+        ["reservation-call", { status: "contacted" }],
+      ]),
+    });
+
+    expect(rows[0]?.ownerActionLabel).toMatch(/Confirm table or decline/i);
+    expect(rows[0]?.isActionable).toBe(true);
   });
 
   it("classifies menu and info calls from transcript text", () => {
@@ -328,9 +392,215 @@ describe("filterCallHistoryRows", () => {
   });
 });
 
+describe("call history operational surfaces", () => {
+  it("shows active calls from in-progress sessions", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [
+        session({
+          sessionId: "active",
+          status: "active",
+          outcome: "in_progress",
+          endedAt: null,
+        }),
+      ],
+      drafts: [],
+      receipts: [],
+    });
+    expect(rows[0]).toMatchObject({
+      outcome: "in_progress",
+      intent: "active_call",
+      outcomeLabel: "In progress",
+    });
+    expect(filterCallHistoryRows(rows, "active")).toHaveLength(1);
+  });
+
+  it("shows no-order calls without inventing completed orders", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [
+        session({
+          sessionId: "faq",
+          outcome: "no_order",
+          transcriptMetadata: {
+            transcript_summary: "Guest asked about hours only.",
+          },
+        }),
+      ],
+      drafts: [],
+      receipts: [],
+    });
+    expect(rows[0]?.outcome).toBe("no_order");
+    expect(rows[0]?.lineCount).toBe(0);
+    expect(rows[0]?.intent).not.toBe("order");
+    expect(filterCallHistoryRows(rows, "completed")).toHaveLength(0);
+  });
+
+  it("shows handoff follow-up with recording link when metadata includes URL", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [
+        session({
+          sessionId: "handoff",
+          outcome: "no_order",
+          transcriptMetadata: {
+            callback_requested: true,
+            recording_url: "https://audio.example.com/handoff.mp3",
+            transcript: [{ role: "guest", message: "Please call me back." }],
+          },
+        }),
+      ],
+      drafts: [],
+      receipts: [],
+    });
+    expect(rows[0]).toMatchObject({
+      needsStaffFollowUp: true,
+      followUpReason: "Callback requested",
+      recordingUrl: "https://audio.example.com/handoff.mp3",
+    });
+    expect(rows[0]?.transcriptLines.length).toBeGreaterThan(0);
+    expect(filterCallHistoryRows(rows, "needs_action")).toHaveLength(1);
+  });
+
+  it("excludes foreign-tenant receipts from local session rows", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [session({ sessionId: "shared_session" })],
+      drafts: [],
+      receipts: [
+        {
+          restaurant_id: REST_B,
+          session_id: "shared_session",
+          customer_name: "Wrong tenant",
+          customer_phone: "+15559999999",
+          items: [{ name: "Burger", quantity: 9, customizations: [] }],
+          created_at: "2026-05-30T17:15:00.000Z",
+        },
+      ],
+    });
+    expect(rows[0]?.callerName).not.toBe("Wrong tenant");
+    expect(rows[0]?.lineCount).toBe(0);
+    expect(rows[0]?.outcome).toBe("order_completed");
+  });
+
+  it("shows reservation follow-up intent when session is linked", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [
+        session({
+          sessionId: "reservation-call",
+          outcome: "no_order",
+        }),
+      ],
+      drafts: [],
+      receipts: [],
+      reservationSessionIds: ["reservation-call"],
+    });
+    expect(rows[0]).toMatchObject({
+      intent: "reservation",
+      ownerActionLabel: "Review table request",
+    });
+    expect(filterCallHistoryRows(rows, "reservations")).toHaveLength(1);
+  });
+
+  it("reports honest empty summary metrics", () => {
+    expect(
+      buildCallHistorySummary({ rows: [], openReservationRequests: 0 })
+    ).toMatchObject({
+      totalCalls: 0,
+      activeCalls: 0,
+      completedOrders: 0,
+      recordingsAvailable: 0,
+      transcriptsAvailable: 0,
+      orderConversionPercent: null,
+    });
+  });
+
+  it("marks harness sessions and excludes them from summary metrics", () => {
+    const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [
+        session({
+          sessionId: "roal-harness-live",
+          status: "active",
+          outcome: "in_progress",
+          endedAt: null,
+        }),
+        session({
+          sessionId: "conv-live-order",
+          outcome: "order_completed",
+        }),
+      ],
+      drafts: [],
+      receipts: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          session_id: "conv-live-order",
+          customer_name: "Alex",
+          customer_phone: "+15551234567",
+          items: [{ name: "Burger", quantity: 1, customizations: [] }],
+          created_at: "2026-05-30T17:15:00.000Z",
+        },
+      ],
+    });
+
+    expect(rows.find((row) => row.sessionId === "roal-harness-live")).toMatchObject({
+      isTestHarness: true,
+    });
+    expect(
+      buildCallHistorySummary({ rows, openReservationRequests: 0 })
+    ).toMatchObject({
+      totalCalls: 1,
+      activeCalls: 0,
+      completedOrders: 1,
+    });
+  });
+
+  it("surfaces catering and complaint follow-ups as needs action", () => {
+    const catering = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [
+        session({
+          sessionId: "catering",
+          outcome: "no_order",
+          transcriptMetadata: { catering_requested: true },
+        }),
+      ],
+      drafts: [],
+      receipts: [],
+    });
+    const complaint = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
+      sessions: [
+        session({
+          sessionId: "complaint",
+          outcome: "no_order",
+          transcriptMetadata: { complaint_requested: true },
+        }),
+      ],
+      drafts: [],
+      receipts: [],
+    });
+
+    expect(catering[0]).toMatchObject({
+      followUpReason: "Catering follow-up",
+      isActionable: true,
+    });
+    expect(complaint[0]).toMatchObject({
+      followUpReason: "Complaint follow-up",
+      isActionable: true,
+    });
+    expect(filterCallHistoryRows(catering, "needs_action")).toHaveLength(1);
+    expect(filterCallHistoryRows(complaint, "needs_action")).toHaveLength(1);
+  });
+});
+
+const REST_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+
 describe("buildCallHistorySummary", () => {
   it("summarizes command center metrics", () => {
     const rows = buildCallHistoryRows({
+      restaurantId: RESTAURANT_ID,
       sessions: [
         session({ sessionId: "order", outcome: "order_completed" }),
         session({
@@ -350,7 +620,16 @@ describe("buildCallHistorySummary", () => {
         }),
       ],
       drafts: [],
-      receipts: [],
+      receipts: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          session_id: "order",
+          customer_name: "Alex",
+          customer_phone: "+15551234567",
+          items: [{ name: "Burger", quantity: 1, customizations: [] }],
+          created_at: "2026-05-30T17:15:00.000Z",
+        },
+      ],
     });
 
     expect(

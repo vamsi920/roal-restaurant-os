@@ -95,6 +95,7 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(prompt).toContain("QA Bistro");
     expect(prompt).toContain("Never invent menu items");
     expect(prompt).toContain("Pickup only");
+    expect(prompt).toMatch(/never offer delivery/i);
     expect(prompt).toContain("about 25 minutes");
     expect(prompt).toContain("tax 8.25%");
     expect(prompt).toContain("get_menu_items");
@@ -108,6 +109,8 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(prompt).toContain("Upsell rules");
     expect(prompt).toContain("Biryani order");
     expect(prompt).toContain("Offer mango lassi or raita");
+    expect(prompt).toMatch(/Never invent add-ons/i);
+    expect(prompt).toMatch(/voicemail\/callback/i);
     expect(prompt).toContain("Closed hours behavior");
     expect(prompt).toContain("Unsupported requests");
     expect(prompt).toContain("Handoff and escalation");
@@ -176,6 +179,24 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(prompt).toContain("Catering / large party → Catering route");
     expect(prompt).toContain("Refunds, chargebacks");
     expect(prompt).toContain("do not call sync_draft_order or finalize_order");
+  });
+
+  it("never offers disabled fulfillment modes", () => {
+    const pickupOnly = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: { ...baseProfile, allows_pickup: true, allows_delivery: false },
+      hoursPromptSection: null,
+      menu: null,
+    });
+    expect(pickupOnly).toMatch(/never offer delivery/i);
+
+    const deliveryOnly = buildRestaurantOrderAgentPrompt({
+      restaurantName: "QA Bistro",
+      profile: { ...baseProfile, allows_pickup: false, allows_delivery: true },
+      hoursPromptSection: null,
+      menu: null,
+    });
+    expect(deliveryOnly).toMatch(/never offer pickup/i);
   });
 
   it("includes catering, complaint, closed-hours, and unavailable-item rules when set", () => {

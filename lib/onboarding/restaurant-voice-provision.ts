@@ -1,3 +1,7 @@
+import {
+  areToolsSynced,
+  parseVoiceAgentSyncSummary,
+} from "@/lib/restaurant-launch/evaluate-checklist";
 import type { RestaurantProfileProvisionFields } from "@/lib/voice-agent/provision-display";
 import {
   voiceProvisionUiStateFromProfile,
@@ -9,6 +13,8 @@ export type OnboardingRestaurantVoiceProvision = {
   agentId: string | null;
   provisionError: string | null;
   lastSyncError: string | null;
+  lastSyncAt: string | null;
+  toolsSynced: boolean;
 };
 
 export function onboardingVoiceProvisionFromProfile(
@@ -19,17 +25,27 @@ export function onboardingVoiceProvisionFromProfile(
     agentId: profile?.elevenlabs_agent_id?.trim() || null,
     provisionError: profile?.elevenlabs_provision_error?.trim() || null,
     lastSyncError: null,
+    lastSyncAt: null,
+    toolsSynced: false,
   };
 }
 
 export function onboardingVoiceProvisionFromProfileRow(
   profile: (RestaurantProfileProvisionFields & {
     elevenlabs_last_sync_error?: string | null;
+    elevenlabs_last_sync_at?: string | null;
+    elevenlabs_last_sync_summary?: unknown;
   }) | null | undefined
 ): OnboardingRestaurantVoiceProvision {
   const base = onboardingVoiceProvisionFromProfile(profile);
+  const syncSummary = parseVoiceAgentSyncSummary(
+    profile?.elevenlabs_last_sync_summary ?? null
+  );
+  const lastSyncError = profile?.elevenlabs_last_sync_error?.trim() || null;
   return {
     ...base,
-    lastSyncError: profile?.elevenlabs_last_sync_error?.trim() || null,
+    lastSyncError,
+    lastSyncAt: profile?.elevenlabs_last_sync_at?.trim() || null,
+    toolsSynced: areToolsSynced(syncSummary, lastSyncError),
   };
 }

@@ -17,6 +17,7 @@ describe("billing launch posture (launch 21)", () => {
 
   it("documents success-based pilot model", () => {
     expect(BILLING_LAUNCH_POSTURE.pilotRate).toContain("$0.90");
+    expect(BILLING_LAUNCH_POSTURE.pilotRate).toMatch(/successful phone order/i);
     expect(BILLING_LAUNCH_POSTURE.selfServeCheckout).toMatch(/not enabled/i);
     expect(BILLING_LAUNCH_POSTURE.pilotBilling).toMatch(/contact sales|manual/i);
   });

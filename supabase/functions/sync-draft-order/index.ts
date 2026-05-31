@@ -25,8 +25,11 @@ import { loadRestaurantMenuForValidation } from "../_shared/load-restaurant-menu
 import {
   cartLinesForStorage,
   formatCartValidationError,
+  formatFulfillmentValidationError,
   validateCartForSync,
+  validateFulfillmentForOrder,
 } from "../_shared/order-validate.ts";
+import { loadFulfillmentServiceModes } from "../_shared/load-fulfillment-profile.ts";
 import { coerceSyncDraftOrderStatus } from "../_shared/order-status.ts";
 import { assertVoiceOrderBillingGate } from "../_shared/billing-gate.ts";
 import {
@@ -220,6 +223,46 @@ Deno.serve(async (req: Request) => {
       formatCartValidationError(cartValidation, "sync_draft_order"),
       422
     );
+  }
+
+  let serviceModes;
+  try {
+    serviceModes = await loadFulfillmentServiceModes(supabase, restaurantId);
+  } catch (e) {
+    meter(500);
+    return agentToolErrorResponse(
+      {
+        error: "database_error",
+        code: "database_error",
+        message: e instanceof Error ? e.message : "Failed to load profile",
+      },
+      500
+    );
+  }
+
+  const hasCartLines = cartValidation.normalizedItems.length > 0;
+  const requestedFulfillment =
+    parsed.data.fulfillment_type ??
+    (hasCartLines ? "pickup" : null);
+
+  if (hasCartLines || parsed.data.fulfillment_type) {
+    const fulfillmentCheck = validateFulfillmentForOrder({
+      allowsPickup: serviceModes.allowsPickup,
+      allowsDelivery: serviceModes.allowsDelivery,
+      fulfillmentType: requestedFulfillment,
+      deliveryAddress: parsed.data.delivery_address ?? null,
+      requireDeliveryAddress: false,
+    });
+    if (!fulfillmentCheck.ok) {
+      meter(422, { lineCount: cartValidation.normalizedItems.length });
+      return agentToolErrorResponse(
+        formatFulfillmentValidationError(
+          fulfillmentCheck.issue,
+          "sync_draft_order"
+        ),
+        422
+      );
+    }
   }
 
   const storedStatus = coerceSyncDraftOrderStatus(parsed.data.status);

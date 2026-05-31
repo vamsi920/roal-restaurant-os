@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { loadOrganizationAnalytics } from "@/lib/analytics/load-analytics";
 import {
   bucketOrderSessionsByDay,
   collectOrderSessions,
@@ -38,6 +39,47 @@ describe("collectOrderSessions", () => {
     );
     expect(map.size).toBe(2);
     expect(sessionHasCompletedOrder(map.get(`${RESTAURANT}:s2`)!)).toBe(true);
+  });
+
+  it("does not treat usage-only order_completed as completed session", () => {
+    const map = collectOrderSessions(
+      [],
+      [],
+      [
+        {
+          event_type: "order_completed",
+          occurred_at: "2026-05-30T12:00:00.000Z",
+          restaurant_id: RESTAURANT,
+          session_id: "usage-only",
+          metadata: null,
+        },
+      ],
+      new Set([RESTAURANT])
+    );
+    const session = map.get(`${RESTAURANT}:usage-only`)!;
+    expect(session.hasOrderCompletedUsage).toBe(true);
+    expect(sessionHasCompletedOrder(session)).toBe(false);
+  });
+
+  it("excludes foreign restaurant rows from tenant scope", () => {
+    const map = collectOrderSessions(
+      [
+        {
+          restaurant_id: "foreign",
+          session_id: "s1",
+          status: "completed",
+          items: [],
+          created_at: "2026-05-30T10:00:00.000Z",
+          updated_at: "2026-05-30T10:05:00.000Z",
+          completed_at: null,
+          canceled_at: null,
+        },
+      ],
+      [],
+      [],
+      new Set([RESTAURANT])
+    );
+    expect(map.size).toBe(0);
   });
 });
 
@@ -112,6 +154,115 @@ describe("bucketOrderSessionsByDay", () => {
       new Set([RESTAURANT])
     );
     expect(series[0]?.orderSessions).toBe(1);
+    expect(series[0]?.completed).toBe(1);
     expect(series[1]?.orderSessions).toBe(0);
+  });
+
+  it("does not count usage-only order_completed as completed orders", () => {
+    const series = bucketOrderSessionsByDay(
+      [],
+      [],
+      [
+        {
+          event_type: "order_completed",
+          occurred_at: "2026-05-17T12:00:00.000Z",
+          restaurant_id: RESTAURANT,
+          session_id: "usage-only",
+          metadata: null,
+        },
+      ],
+      ["2026-05-17"],
+      new Set([RESTAURANT])
+    );
+    expect(series[0]?.orderSessions).toBe(1);
+    expect(series[0]?.completed).toBe(0);
+  });
+});
+
+describe("loadOrganizationAnalytics org rollup", () => {
+  it("excludes inaccessible restaurants from org rollup", async () => {
+    const REST_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+    const supabase = {
+      from: vi.fn((table: string) => {
+        const builder = {
+          select: vi.fn(() => builder),
+          eq: vi.fn(() => builder),
+          in: vi.fn(() => builder),
+          gte: vi.fn(() => builder),
+          lte: vi.fn(() => builder),
+          order: vi.fn(() => builder),
+          then(
+            onFulfilled?: (value: unknown) => unknown,
+            onRejected?: (reason: unknown) => unknown
+          ) {
+            const data =
+              table === "restaurants"
+                ? [
+                    { id: RESTAURANT, name: "Allowed" },
+                    { id: REST_B, name: "Blocked" },
+                  ]
+                : table === "phone_order_receipts"
+                  ? [
+                      {
+                        restaurant_id: RESTAURANT,
+                        session_id: "s1",
+                        items: [],
+                        created_at: "2026-05-17T12:00:00.000Z",
+                      },
+                      {
+                        restaurant_id: REST_B,
+                        session_id: "s2",
+                        items: [],
+                        created_at: "2026-05-17T12:00:00.000Z",
+                      },
+                    ]
+                  : [];
+            return Promise.resolve({ data, error: null }).then(
+              onFulfilled,
+              onRejected
+            );
+          },
+        };
+        return builder;
+      }),
+    };
+
+    const snapshot = await loadOrganizationAnalytics(supabase as never, {
+      organizationId: "org-1",
+      organizationName: "Org",
+      accessibleRestaurantIds: [RESTAURANT],
+    });
+
+    expect(snapshot.restaurantCount).toBe(1);
+    expect(snapshot.summary.ordersFinalized).toBe(1);
+    expect(snapshot.byRestaurant).toHaveLength(1);
+    expect(snapshot.byRestaurant[0]?.restaurantId).toBe(RESTAURANT);
+  });
+
+  it("returns honest empty snapshot when scoped restaurants missing", async () => {
+    const supabase = {
+      from: vi.fn(() => ({
+        select: vi.fn(function select() {
+          return this;
+        }),
+        eq: vi.fn(function eq() {
+          return this;
+        }),
+        order: vi.fn(function order() {
+          return Promise.resolve({ data: [], error: null });
+        }),
+      })),
+    };
+
+    const snapshot = await loadOrganizationAnalytics(supabase as never, {
+      organizationId: "org-1",
+      organizationName: "Org",
+      restaurantId: "missing",
+    });
+
+    expect(snapshot.summary.orderSessions).toBe(0);
+    expect(snapshot.summary.revenueCents).toBeNull();
+    expect(snapshot.summary.reservationRequests).toBe(0);
+    expect(snapshot.summary.callOutcomes.total).toBe(0);
   });
 });

@@ -18,10 +18,9 @@ describe("home hero density (prompt 57)", () => {
     expect(HOME_HERO.title.split(/\s+/).length).toBeLessThanOrEqual(9);
     const words = HOME_HERO.lead.trim().split(/\s+/);
     expect(words.length).toBeLessThanOrEqual(30);
-    expect(HOME_HERO.title.toLowerCase()).toContain("calls");
+    expect(HOME_HERO.title.toLowerCase()).toContain("phone order");
     expect(HOME_HERO.lead.toLowerCase()).toContain("kitchen");
-    expect(HOME_HERO.title.toLowerCase()).not.toMatch(/never miss/);
-    expect(HOME_HERO.title.toLowerCase()).toContain("roal");
+    expect(HOME_HERO.title.toLowerCase()).toMatch(/never miss/);
     expect(HOME_HERO.lead.toLowerCase()).toMatch(/language/);
   });
 
@@ -54,23 +53,23 @@ describe("home hero density (prompt 57)", () => {
 
   it("hero renders h1, one lead, pill, and two CTAs only", () => {
     const hero = readFileSync(
-      join(REPO, "components/landing/home/landing-home-hero.tsx"),
+      join(REPO, "components/landing/landing-page.tsx"),
       "utf8"
     );
     expect(hero).toMatch(/<h1[\s>]/);
     expect((hero.match(/<p\b/g) ?? []).length).toBeGreaterThanOrEqual(1);
-    expect(hero).toContain("LandingHomePricingPill");
-    expect(hero).toContain("LandingHomeCta");
+    expect(hero).toContain("$0.90 per successful order");
+    expect(hero).toContain("Hear a demo call");
     expect(hero).not.toContain("home-hero__qualifier");
     expect(hero).not.toContain("home-hero__footer");
-    expect(hero).toContain("home-hero__surface");
+    expect(hero).toContain("roal-hero__stage");
     expect(hero).not.toContain("home-glass-panel");
 
     const homeCss = readFileSync(join(REPO, "app/landing-home.css"), "utf8");
-    expect(homeCss).toMatch(/\.home-hero\s*\{[^}]*justify-content:\s*center/s);
-    expect(homeCss).toContain(".home-hero__surface");
+    expect(homeCss).toMatch(/\.roal-hero\s*\{[^}]*padding:/s);
+    expect(homeCss).toContain(".roal-hero__stage");
     expect(homeCss).toMatch(
-      /\.home-hero__surface\s*\{[^}]*backdrop-filter:\s*blur/s
+      /\.roal-hero__stage\s*\{[^}]*backdrop-filter:\s*blur/s
     );
 
     const cta = readFileSync(

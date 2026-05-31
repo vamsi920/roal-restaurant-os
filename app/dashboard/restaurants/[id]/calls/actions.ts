@@ -2,27 +2,29 @@
 
 import { revalidatePath } from "next/cache";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
+import {
+  isReservationOwnerUpdateStatus,
+  type ReservationOwnerUpdateStatus,
+} from "@/lib/restaurant-reservations/schema";
 import { createServerSupabase } from "@/lib/supabase/server";
-
-const RESERVATION_STATUSES = new Set(["confirmed", "declined", "canceled"]);
 
 export async function updateReservationRequestStatusAction(
   restaurantId: string,
   requestId: string,
-  status: "confirmed" | "declined" | "canceled"
+  status: ReservationOwnerUpdateStatus
 ) {
   const rid = restaurantId.trim();
   const id = requestId.trim();
   if (!rid || !id) {
     throw new Error("Reservation request is required.");
   }
-  if (!RESERVATION_STATUSES.has(status)) {
+  if (!isReservationOwnerUpdateStatus(status)) {
     throw new Error("Unsupported reservation status.");
   }
 
-  const access = await requireRestaurantAccess(rid, { requireAdmin: true });
+  const access = await requireRestaurantAccess(rid);
   if (access.errorResponse) {
-    throw new Error("Admin or owner access required.");
+    throw new Error("You do not have access to update this reservation.");
   }
 
   const supabase = await createServerSupabase();

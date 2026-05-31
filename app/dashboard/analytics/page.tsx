@@ -18,9 +18,15 @@ export default async function AnalyticsPage({
   if (!membership) redirect("/dashboard/onboarding");
 
   const supabase = await createServerSupabase();
+  const { data: accessibleRestaurants } = await supabase
+    .from("restaurants")
+    .select("id")
+    .eq("organization_id", membership.organization_id);
+
   const snapshot = await loadOrganizationAnalytics(supabase, {
     organizationId: membership.organization_id,
     organizationName: membership.organization.name,
+    accessibleRestaurantIds: (accessibleRestaurants ?? []).map((row) => row.id),
     rangeKey: searchParams.range,
   });
 

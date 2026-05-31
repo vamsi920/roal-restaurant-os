@@ -1,7 +1,7 @@
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
 
 export type LiveOrdersRecentOutcome = {
-  kind: "failed" | "handoff" | "unknown";
+  kind: "failed" | "handoff" | "voicemail" | "unknown";
   sessionId: string;
   callerPhone: string | null;
   headline: string;
@@ -10,6 +10,9 @@ export type LiveOrdersRecentOutcome = {
 };
 
 function outcomeHeadline(row: CommandCenterCallRow, kind: LiveOrdersRecentOutcome["kind"]): string {
+  if (kind === "voicemail") {
+    return "Voicemail callback";
+  }
   if (kind === "handoff") {
     return row.handoffSignals[0] ?? "Staff handoff";
   }
@@ -35,6 +38,10 @@ function outcomeDetail(row: CommandCenterCallRow, kind: LiveOrdersRecentOutcome[
   return null;
 }
 
+function isVoicemailOutcomeRow(row: CommandCenterCallRow): boolean {
+  return row.handoffSignals.includes("voicemail_detected");
+}
+
 export function buildRecentPhoneOutcomes(input: {
   failed: CommandCenterCallRow[];
   handoff: CommandCenterCallRow[];
@@ -43,6 +50,17 @@ export function buildRecentPhoneOutcomes(input: {
 }): LiveOrdersRecentOutcome[] {
   const limit = input.limit ?? 10;
   const rows: LiveOrdersRecentOutcome[] = [];
+
+  const handoffRows: CommandCenterCallRow[] = [];
+  const voicemailRows: CommandCenterCallRow[] = [];
+
+  for (const row of input.handoff) {
+    if (isVoicemailOutcomeRow(row)) {
+      voicemailRows.push(row);
+    } else {
+      handoffRows.push(row);
+    }
+  }
 
   for (const row of input.failed) {
     rows.push({
@@ -54,7 +72,17 @@ export function buildRecentPhoneOutcomes(input: {
       occurredAt: row.lastActivityAt,
     });
   }
-  for (const row of input.handoff) {
+  for (const row of voicemailRows) {
+    rows.push({
+      kind: "voicemail",
+      sessionId: row.sessionId,
+      callerPhone: row.callerPhone,
+      headline: outcomeHeadline(row, "voicemail"),
+      detail: outcomeDetail(row, "handoff"),
+      occurredAt: row.lastActivityAt,
+    });
+  }
+  for (const row of handoffRows) {
     rows.push({
       kind: "handoff",
       sessionId: row.sessionId,

@@ -66,16 +66,9 @@ export function buildLimitChecks(
     },
     {
       key: "voice_orders",
-      label: "Voice orders",
-      used: usage.voiceOrders,
+      label: "Successful phone orders",
+      used: usage.billablePhoneOrders,
       limit: limits.max_voice_orders_per_period,
-      unitLabel: "orders",
-    },
-    {
-      key: "completed_orders",
-      label: "Completed orders",
-      used: usage.completedOrders,
-      limit: limits.max_completed_orders_per_period,
       unitLabel: "orders",
     },
     {

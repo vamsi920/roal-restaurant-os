@@ -117,15 +117,15 @@ describe("empty usage meters", () => {
   it("renders zero usage without exceeded state in dev limits", () => {
     const usage = {
       menuScans: 0,
-      voiceOrders: 0,
-      completedOrders: 0,
+      billablePhoneOrders: 0,
+      estimatedBillableChargeUsd: 0,
       toolCalls: 0,
       importAttempts: 0,
       activeLocations: 0,
       restaurantCount: 0,
     };
     const checks = buildLimitChecks(usage, DEV_MODE_LIMITS);
-    expect(checks).toHaveLength(5);
+    expect(checks).toHaveLength(4);
     expect(checks.every((c) => c.level === "ok")).toBe(true);
     expect(checks.every((c) => c.used === 0)).toBe(true);
   });

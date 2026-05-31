@@ -71,7 +71,13 @@ export function resolvePostCreateRestaurantHref(
   restaurantId: string,
   provision: VoiceAgentProvisionApiResult | null | undefined
 ): string {
-  if (isVoiceProvisionApiFailure(provision)) {
+  if (
+    isVoiceProvisionApiFailure(provision) ||
+    (provision &&
+      provision.ok === false &&
+      "skipped" in provision &&
+      provision.skipped)
+  ) {
     return restaurantVoiceAgentHref(restaurantId);
   }
   return restaurantLiveOrdersHref(restaurantId);
@@ -90,6 +96,8 @@ export function voiceProvisionUiStateFromProfile(
   if (status === "pending" || status === "provisioning") return "in_progress";
 
   if (profile.elevenlabs_agent_id?.trim()) return "ready";
+
+  if (profile.elevenlabs_provision_error?.trim()) return "needs_attention";
 
   return "not_started";
 }

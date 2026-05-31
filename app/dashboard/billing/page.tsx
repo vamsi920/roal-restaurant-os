@@ -16,9 +16,15 @@ export default async function BillingPage() {
   }
 
   const supabase = await createServerSupabase();
+  const { data: accessibleRestaurants } = await supabase
+    .from("restaurants")
+    .select("id")
+    .eq("organization_id", membership.organization_id);
+
   const snapshot = await loadOrganizationBilling(supabase, {
     organizationId: membership.organization_id,
     membershipRole: membership.role,
+    accessibleRestaurantIds: (accessibleRestaurants ?? []).map((row) => row.id),
   });
 
   if (!snapshot) {

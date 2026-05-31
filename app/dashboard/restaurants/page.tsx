@@ -1,17 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
+import { buildPortfolioSummary } from "@/lib/restaurant-list/portfolio-summary";
 import type {
+  PortfolioSummary,
   RestaurantCardStats,
   RestaurantListProfile,
 } from "@/lib/restaurant-list/types";
 import { getBrowserSupabase } from "@/lib/supabase/client";
 import { cn } from "@/lib/cn";
 import type { Restaurant } from "@/lib/types";
+import type { MenuAutoSyncUiPhase } from "@/lib/voice-agent/menu-auto-sync-display";
 import {
   restaurantLiveOrdersHref,
   restaurantMenuSetupHref,
@@ -20,6 +23,8 @@ import {
 } from "@/lib/voice-agent/provision-display";
 import { VoiceProvisionStatusBadge } from "@/components/dashboard/voice-provision-status-badge";
 import { CreateRestaurantButton } from "./CreateRestaurantButton";
+
+const REALTIME_RELOAD_MS = 450;
 
 export default function RestaurantsPage() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -33,6 +38,7 @@ export default function RestaurantsPage() {
   const [error, setError] = useState<string | null>(null);
   const [flashedIds, setFlashedIds] = useState<Set<string>>(new Set());
   const flashTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const reloadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const flash = useCallback((id: string) => {
     setFlashedIds((prev) => new Set(prev).add(id));
@@ -52,13 +58,13 @@ export default function RestaurantsPage() {
   const loadRestaurants = useCallback(async () => {
     setError(null);
     const supabase = getBrowserSupabase();
-    const { data, error } = await supabase
+    const { data, error: loadError } = await supabase
       .from("restaurants")
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (error) {
-      setError(formatSupabaseClientError(error.message));
+    if (loadError) {
+      setError(formatSupabaseClientError(loadError.message));
       return;
     }
 
@@ -76,7 +82,7 @@ export default function RestaurantsPage() {
     const { data: profiles, error: profileError } = await supabase
       .from("restaurant_profiles")
       .select(
-        "restaurant_id, elevenlabs_provision_status, elevenlabs_provision_error, elevenlabs_agent_id, elevenlabs_last_sync_error, elevenlabs_menu_auto_sync_status, elevenlabs_menu_auto_sync_error"
+        "restaurant_id, phone, timezone, address_line1, allows_pickup, allows_delivery, elevenlabs_provision_status, elevenlabs_provision_error, elevenlabs_agent_id, elevenlabs_last_sync_error, elevenlabs_menu_auto_sync_status, elevenlabs_menu_auto_sync_error, elevenlabs_last_sync_at, elevenlabs_last_sync_summary"
       )
       .in("restaurant_id", ids);
 
@@ -92,7 +98,8 @@ export default function RestaurantsPage() {
     setProfilesByRestaurantId(map);
 
     try {
-      const stats = await loadRestaurantCardStats(supabase, ids, map);
+      const namesById = Object.fromEntries(rows.map((r) => [r.id, r.name]));
+      const stats = await loadRestaurantCardStats(supabase, ids, map, namesById);
       setStatsByRestaurantId(stats);
     } catch (statsErr) {
       console.error(
@@ -103,11 +110,18 @@ export default function RestaurantsPage() {
     }
   }, []);
 
+  const scheduleReload = useCallback(() => {
+    if (reloadTimerRef.current) clearTimeout(reloadTimerRef.current);
+    reloadTimerRef.current = setTimeout(() => {
+      void loadRestaurants();
+    }, REALTIME_RELOAD_MS);
+  }, [loadRestaurants]);
+
   useEffect(() => {
     const supabase = getBrowserSupabase();
-    loadRestaurants().finally(() => setLoading(false));
+    void loadRestaurants().finally(() => setLoading(false));
 
-    const channel = supabase
+    const restaurantsChannel = supabase
       .channel("restaurants-list")
       .on(
         "postgres_changes",
@@ -124,6 +138,7 @@ export default function RestaurantsPage() {
               );
             });
             flash(row.id);
+            scheduleReload();
           } else if (payload.eventType === "UPDATE") {
             const row = payload.new as Restaurant;
             setRestaurants((prev) =>
@@ -133,49 +148,65 @@ export default function RestaurantsPage() {
           } else if (payload.eventType === "DELETE") {
             const row = payload.old as Restaurant;
             setRestaurants((prev) => prev.filter((r) => r.id !== row.id));
+            scheduleReload();
           }
         }
       )
       .subscribe();
 
-    const profileChannel = supabase
-      .channel("restaurant-profiles-list")
+    const opsChannel = supabase
+      .channel("restaurant-ops-list")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "restaurant_profiles" },
-        () => {
-          void loadRestaurants();
-        }
+        () => scheduleReload()
       )
-      .subscribe();
-
-    const ordersChannel = supabase
-      .channel("restaurant-orders-list")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "draft_orders" },
-        () => {
-          void loadRestaurants();
-        }
+        () => scheduleReload()
       )
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "phone_order_receipts" },
-        () => {
-          void loadRestaurants();
-        }
+        () => scheduleReload()
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "agent_call_events" },
+        () => scheduleReload()
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "restaurant_reservation_requests" },
+        () => scheduleReload()
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "categories" },
+        () => scheduleReload()
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "items" },
+        () => scheduleReload()
       )
       .subscribe();
 
-    const timers = flashTimers.current;
+    const flashMap = flashTimers.current;
     return () => {
-      timers.forEach((timer) => clearTimeout(timer));
-      timers.clear();
-      supabase.removeChannel(channel);
-      supabase.removeChannel(profileChannel);
-      supabase.removeChannel(ordersChannel);
+      if (reloadTimerRef.current) clearTimeout(reloadTimerRef.current);
+      flashMap.forEach((timer) => clearTimeout(timer));
+      flashMap.clear();
+      supabase.removeChannel(restaurantsChannel);
+      supabase.removeChannel(opsChannel);
     };
-  }, [flash, loadRestaurants]);
+  }, [flash, loadRestaurants, scheduleReload]);
+
+  const portfolio = useMemo(
+    () => buildPortfolioSummary(statsByRestaurantId),
+    [statsByRestaurantId]
+  );
 
   return (
     <div className="locations-page min-w-0 space-y-6 overflow-x-clip sm:space-y-8">
@@ -185,7 +216,8 @@ export default function RestaurantsPage() {
             Locations
           </h1>
           <p className="mt-2 text-pretty text-sm leading-relaxed text-muted sm:text-[0.9375rem]">
-            Choose a location to open its workspace.
+            Portfolio view of every location — calls, orders, follow-ups, and
+            voice-agent readiness.
           </p>
         </div>
         <div className="w-full shrink-0 sm:w-auto">
@@ -200,20 +232,74 @@ export default function RestaurantsPage() {
       ) : restaurants.length === 0 ? (
         <EmptyState />
       ) : (
-        <ul className="locations-page__grid grid list-none grid-cols-1 gap-3 p-0 md:grid-cols-2 md:gap-4 xl:grid-cols-3 2xl:grid-cols-4">
-          {restaurants.map((r, idx) => (
-            <li key={r.id}>
-              <RestaurantCard
-                restaurant={r}
-                profile={profilesByRestaurantId[r.id] ?? null}
-                stats={statsByRestaurantId[r.id] ?? null}
-                index={idx}
-                flashed={flashedIds.has(r.id)}
-              />
-            </li>
-          ))}
-        </ul>
+        <>
+          <PortfolioSummaryStrip summary={portfolio} />
+          <ul className="locations-page__grid grid list-none grid-cols-1 gap-3 p-0 md:grid-cols-2 md:gap-4 xl:grid-cols-3 2xl:grid-cols-4">
+            {restaurants.map((r, idx) => (
+              <li key={r.id}>
+                <RestaurantCard
+                  restaurant={r}
+                  profile={profilesByRestaurantId[r.id] ?? null}
+                  stats={statsByRestaurantId[r.id] ?? null}
+                  index={idx}
+                  flashed={flashedIds.has(r.id)}
+                />
+              </li>
+            ))}
+          </ul>
+        </>
       )}
+    </div>
+  );
+}
+
+function PortfolioSummaryStrip({ summary }: { summary: PortfolioSummary }) {
+  return (
+    <section
+      className="locations-portfolio glass-card min-w-0 p-4 sm:p-5"
+      aria-labelledby="locations-portfolio-heading"
+    >
+      <h2
+        id="locations-portfolio-heading"
+        className="text-sm font-semibold text-ink"
+      >
+        Organization portfolio
+      </h2>
+      <p className="mt-1 text-xs text-muted">
+        Live rollups from your accessible locations — last 24 hours for orders.
+      </p>
+      <dl className="locations-portfolio__grid mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+        <PortfolioStat label="Locations" value={summary.totalLocations} />
+        <PortfolioStat
+          label="Ready for calls"
+          value={summary.locationsReadyForCalls}
+        />
+        <PortfolioStat label="Active calls" value={summary.activeCallsNow} />
+        <PortfolioStat
+          label="Orders (24h)"
+          value={summary.successfulOrdersInPeriod}
+        />
+        <PortfolioStat label="Open follow-ups" value={summary.openFollowUps} />
+        <PortfolioStat
+          label="Reservation requests"
+          value={summary.openReservationRequests}
+        />
+        <PortfolioStat
+          label="Needs attention"
+          value={summary.locationsNeedingAttention}
+        />
+      </dl>
+    </section>
+  );
+}
+
+function PortfolioStat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="locations-portfolio__stat min-w-0 rounded-lg border border-line/80 bg-elev/40 px-2.5 py-2">
+      <dt className="text-micro uppercase tracking-wider text-subtle">{label}</dt>
+      <dd className="mt-0.5 text-lg font-semibold tabular-nums text-ink">
+        {value}
+      </dd>
     </div>
   );
 }
@@ -235,11 +321,10 @@ function RestaurantCard({
   const ordersHref = restaurantLiveOrdersHref(restaurant.id);
   const menuHref = restaurantMenuSetupHref(restaurant.id);
   const agentHref = restaurantVoiceAgentHref(restaurant.id);
-
-  const agentLinked = stats?.agentLinked ?? Boolean(profile?.elevenlabs_agent_id?.trim());
-  const menuItemCount = stats?.menuItemCount;
-  const lastOrderLabel = formatLastOrderAt(stats?.lastOrderAt ?? null);
-  const syncError = stats?.syncError ?? null;
+  const nextAction = stats?.nextBestAction ?? {
+    label: "Open orders dashboard",
+    href: ordersHref,
+  };
 
   return (
     <article
@@ -273,8 +358,9 @@ function RestaurantCard({
           <h2 className="locations-card__title min-w-0">
             <Link
               href={ordersHref}
-              className="block truncate text-base font-semibold tracking-tight text-ink hover:text-accent sm:text-[1.0625rem]"
+              className="locations-card__title-link block truncate text-base font-semibold tracking-tight text-ink hover:text-accent sm:text-[1.0625rem]"
               title={restaurant.name}
+              aria-label={`Open ${restaurant.name}`}
             >
               {restaurant.name}
             </Link>
@@ -288,37 +374,81 @@ function RestaurantCard({
               profile={profile}
               compact
             />
+            {stats ? (
+              <span className="text-micro text-muted">
+                Menu · {menuSyncLabel(stats.menuSyncPhase)}
+              </span>
+            ) : null}
           </div>
         </div>
       </div>
 
-      <dl className="locations-card__stats mt-4 grid grid-cols-1 gap-2 text-sm sm:grid-cols-3 sm:gap-3">
-        <StatItem label="Agent" value={agentLinked ? "Linked" : "Not linked"} />
+      <dl className="locations-card__stats mt-4 grid grid-cols-2 gap-2 text-sm sm:grid-cols-3 sm:gap-3">
+        <StatItem
+          label="Active calls"
+          value={stats ? String(stats.activeCallCount) : "—"}
+        />
+        <StatItem
+          label="Follow-ups"
+          value={stats ? String(stats.openFollowUpCount) : "—"}
+        />
+        <StatItem
+          label="Reservations"
+          value={stats ? String(stats.openReservationCount) : "—"}
+        />
+        <StatItem
+          label="Orders (24h)"
+          value={stats ? String(stats.successfulOrdersInPeriod) : "—"}
+        />
         <StatItem
           label="Menu items"
-          value={
-            menuItemCount === undefined ? "—" : String(menuItemCount)
-          }
+          value={stats ? String(stats.menuItemCount) : "—"}
         />
-        <StatItem label="Last order" value={lastOrderLabel} />
+        <StatItem
+          label="Last order"
+          value={formatLastOrderAt(stats?.lastOrderAt ?? null)}
+        />
       </dl>
 
-      {syncError ? (
+      {stats?.syncError ? (
         <p
           className="locations-card__sync-error mt-3 rounded-lg border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
-          {syncError}
+          {stats.syncError}
         </p>
       ) : null}
 
-      <div className="locations-card__actions mt-4 grid grid-cols-3 gap-2 border-t border-line pt-4 sm:mt-5">
-        <FastPathLink href={ordersHref}>Orders</FastPathLink>
-        <FastPathLink href={menuHref}>Menu</FastPathLink>
-        <FastPathLink href={agentHref}>Agent</FastPathLink>
+      <div className="locations-card__actions mt-4 flex flex-col gap-2 border-t border-line pt-4 sm:mt-5">
+        <Link
+          href={nextAction.href}
+          className="btn-primary kds-thumb-btn inline-flex min-h-11 items-center justify-center px-3 text-center text-xs font-semibold sm:text-sm"
+        >
+          {nextAction.label}
+        </Link>
+        <div className="grid grid-cols-3 gap-2">
+          <FastPathLink href={ordersHref}>Orders</FastPathLink>
+          <FastPathLink href={menuHref}>Menu</FastPathLink>
+          <FastPathLink href={agentHref}>Agent</FastPathLink>
+        </div>
       </div>
     </article>
   );
+}
+
+function menuSyncLabel(phase: MenuAutoSyncUiPhase): string {
+  switch (phase) {
+    case "syncing":
+      return "Syncing";
+    case "failed":
+      return "Sync error";
+    case "succeeded":
+      return "Synced";
+    case "idle":
+      return "Not synced";
+    default:
+      return "No agent";
+  }
 }
 
 function StatItem({ label, value }: { label: string; value: string }) {
@@ -349,39 +479,52 @@ function FastPathLink({
 
 function LoadingState({ "aria-busy": ariaBusy }: { "aria-busy"?: "true" }) {
   return (
-    <div
-      className="locations-page__grid grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 xl:grid-cols-3 2xl:grid-cols-4"
-      role="status"
-      aria-live="polite"
-      aria-busy={ariaBusy}
-      aria-label="Loading restaurants"
-    >
-      {Array.from({ length: 4 }).map((_, idx) => (
-        <div
-          key={idx}
-          className="locations-card-skeleton glass-card flex min-w-0 flex-col p-4 sm:p-5"
-        >
-          <div className="flex gap-3">
-            <div className="skeleton h-10 w-10 shrink-0 rounded-lg" />
-            <div className="min-w-0 flex-1 space-y-2">
-              <div className="skeleton h-4 w-3/4 max-w-full" />
-              <div className="skeleton h-3 w-1/3 max-w-full" />
+    <>
+      <div className="locations-portfolio-skeleton glass-card p-4 sm:p-5">
+        <div className="skeleton h-4 w-40 max-w-full" />
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-7">
+          {Array.from({ length: 7 }).map((_, idx) => (
+            <div key={idx} className="skeleton h-14 rounded-lg" />
+          ))}
+        </div>
+      </div>
+      <div
+        className="locations-page__grid grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 xl:grid-cols-3 2xl:grid-cols-4"
+        role="status"
+        aria-live="polite"
+        aria-busy={ariaBusy}
+        aria-label="Loading restaurants"
+      >
+        {Array.from({ length: 4 }).map((_, idx) => (
+          <div
+            key={idx}
+            className="locations-card-skeleton glass-card flex min-w-0 flex-col p-4 sm:p-5"
+          >
+            <div className="flex gap-3">
+              <div className="skeleton h-10 w-10 shrink-0 rounded-lg" />
+              <div className="min-w-0 flex-1 space-y-2">
+                <div className="skeleton h-4 w-3/4 max-w-full" />
+                <div className="skeleton h-3 w-1/3 max-w-full" />
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {Array.from({ length: 6 }).map((__, statIdx) => (
+                <div key={statIdx} className="skeleton h-14 rounded-lg" />
+              ))}
+            </div>
+            <div className="mt-4 space-y-2 border-t border-line pt-4">
+              <div className="skeleton min-h-11 rounded-lg" />
+              <div className="grid grid-cols-3 gap-2">
+                <div className="skeleton min-h-11 rounded-lg" />
+                <div className="skeleton min-h-11 rounded-lg" />
+                <div className="skeleton min-h-11 rounded-lg" />
+              </div>
             </div>
           </div>
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            <div className="skeleton h-14 rounded-lg" />
-            <div className="skeleton h-14 rounded-lg" />
-            <div className="skeleton h-14 rounded-lg" />
-          </div>
-          <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line pt-4">
-            <div className="skeleton min-h-11 rounded-lg" />
-            <div className="skeleton min-h-11 rounded-lg" />
-            <div className="skeleton min-h-11 rounded-lg" />
-          </div>
-        </div>
-      ))}
-      <span className="sr-only">Loading restaurants…</span>
-    </div>
+        ))}
+        <span className="sr-only">Loading restaurants…</span>
+      </div>
+    </>
   );
 }
 
@@ -435,7 +578,8 @@ function EmptyState() {
       </div>
       <h3 className="relative mt-5 text-lg font-semibold">No locations yet</h3>
       <p className="relative mx-auto mt-2 max-w-md text-pretty text-sm leading-relaxed text-muted">
-        Add your first location to get started.
+        Create your first restaurant location to get started. Each location gets
+        its own dedicated phone agent for orders, reservations, and follow-ups.
       </p>
       <div className="relative mt-6 flex justify-center">
         <CreateRestaurantButton />

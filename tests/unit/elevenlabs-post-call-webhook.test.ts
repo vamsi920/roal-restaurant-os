@@ -1,14 +1,42 @@
 import crypto from "crypto";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   parseElevenLabsPostCallEvent,
+  persistElevenLabsPostCallEvent,
   staffHandoffReasonFromTranscriptMetadata,
   verifyElevenLabsWebhookSignature,
 } from "@/lib/elevenlabs/post-call-webhook";
 
-const RESTAURANT_ID = "11111111-1111-4111-8111-111111111111";
+vi.mock("@/lib/elevenlabs/conversation-init", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("@/lib/elevenlabs/conversation-init")>();
+  return {
+    ...actual,
+    lookupRestaurantForElevenLabsAgent: vi.fn(),
+    lookupRestaurantByCalledNumber: vi.fn(),
+  };
+});
 
-function fakeSupabase() {
+vi.mock("@/lib/supabase/server", () => ({
+  getServiceRoleSupabase: vi.fn(),
+}));
+
+vi.mock("@/lib/notifications/call-follow-up-events", () => ({
+  emitPostCallFollowUpNotifications: vi.fn().mockResolvedValue(undefined),
+}));
+
+import {
+  lookupRestaurantByCalledNumber,
+  lookupRestaurantForElevenLabsAgent,
+} from "@/lib/elevenlabs/conversation-init";
+import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { emitPostCallFollowUpNotifications } from "@/lib/notifications/call-follow-up-events";
+
+const RESTAURANT_ID = "11111111-1111-4111-8111-111111111111";
+const REST_B = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+
+function restaurantLookupSupabase(validIds: string[]) {
+  let requestedId = "";
   return {
     from(table: string) {
       return {
@@ -18,16 +46,67 @@ function fakeSupabase() {
         eq(column: string, value: string) {
           expect(table).toBe("restaurants");
           expect(column).toBe("id");
-          expect(value).toBe(RESTAURANT_ID);
+          requestedId = value;
           return this;
         },
         async maybeSingle() {
-          return { data: { id: RESTAURANT_ID }, error: null };
+          return {
+            data: validIds.includes(requestedId) ? { id: requestedId } : null,
+            error: null,
+          };
         },
       };
     },
   } as never;
 }
+
+function persistSupabase(input?: {
+  validRestaurantIds?: string[];
+  existingRef?: { current: Record<string, unknown> | null };
+}) {
+  const validRestaurantIds = input?.validRestaurantIds ?? [RESTAURANT_ID];
+  const existingRef = input?.existingRef ?? { current: null };
+  const upsert = vi.fn((row: { transcript_metadata: Record<string, unknown> }) => {
+    existingRef.current = row.transcript_metadata;
+    return Promise.resolve({ error: null });
+  });
+
+  return {
+    from(table: string) {
+      if (table === "restaurants") {
+        return restaurantLookupSupabase(validRestaurantIds).from(table);
+      }
+      if (table === "agent_call_events") {
+        const chain = {
+          select() {
+            return chain;
+          },
+          eq() {
+            return chain;
+          },
+          async maybeSingle() {
+            return {
+              data: existingRef.current
+                ? { transcript_metadata: existingRef.current }
+                : null,
+              error: null,
+            };
+          },
+          upsert,
+        };
+        return chain;
+      }
+      throw new Error(`unexpected table ${table}`);
+    },
+    upsert,
+  };
+}
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  vi.mocked(lookupRestaurantForElevenLabsAgent).mockResolvedValue(null);
+  vi.mocked(lookupRestaurantByCalledNumber).mockResolvedValue(null);
+});
 
 function sign(rawBody: string, secret: string, timestamp: number): string {
   const digest = crypto
@@ -99,7 +178,7 @@ describe("parseElevenLabsPostCallEvent", () => {
           },
         },
       },
-      fakeSupabase()
+      restaurantLookupSupabase([RESTAURANT_ID])
     );
 
     expect(parsed).toMatchObject({
@@ -109,7 +188,7 @@ describe("parseElevenLabsPostCallEvent", () => {
       sessionId: "conv_123",
       callerPhone: "+15551234567",
       status: "ended",
-      outcome: "order_completed",
+      outcome: "no_order",
       startedAt: "2026-05-30T18:00:00.000Z",
       endedAt: "2026-05-30T18:00:40.000Z",
     });
@@ -139,7 +218,7 @@ describe("parseElevenLabsPostCallEvent", () => {
           },
         },
       },
-      fakeSupabase()
+      restaurantLookupSupabase([RESTAURANT_ID])
     );
 
     expect(parsed).toMatchObject({
@@ -173,16 +252,220 @@ describe("parseElevenLabsPostCallEvent", () => {
           },
         },
       },
-      fakeSupabase()
+      restaurantLookupSupabase([RESTAURANT_ID])
     );
 
+    expect(parsed?.outcome).toBe("no_order");
     expect(parsed?.transcriptMetadata).toMatchObject({
       voicemail_detected: true,
       voicemail_source: "voicemail_detected",
+      recording_url: null,
     });
     expect(
       staffHandoffReasonFromTranscriptMetadata(parsed?.transcriptMetadata ?? {})
     ).toBe("voicemail_detected");
+  });
+
+  it("does not invent order_completed from transcript finalize tool mentions alone", async () => {
+    const parsed = await parseElevenLabsPostCallEvent(
+      {
+        type: "post_call_transcription",
+        data: {
+          conversation_id: "conv_transcript_only",
+          metadata: { restaurant_id: RESTAURANT_ID },
+          transcript: [
+            {
+              role: "agent",
+              tool_calls: [{ name: "finalize_order" }],
+              tool_results: [{ name: "finalize_order", result: "ok" }],
+            },
+          ],
+          analysis: { call_successful: "success" },
+        },
+      },
+      restaurantLookupSupabase([RESTAURANT_ID])
+    );
+
+    expect(parsed?.outcome).toBe("no_order");
+    expect(parsed?.sessionId).toBe("conv_transcript_only");
+  });
+
+  it("persists recording URL and transcript on the webhook payload", async () => {
+    const parsed = await parseElevenLabsPostCallEvent(
+      {
+        type: "post_call_transcription",
+        data: {
+          conversation_id: "conv_recording",
+          metadata: {
+            restaurant_id: RESTAURANT_ID,
+            recording_url: "https://cdn.example.com/recording.mp3",
+          },
+          transcript: [{ role: "agent", message: "Thanks for calling." }],
+          analysis: { call_successful: "success", transcript_summary: "FAQ call." },
+        },
+      },
+      restaurantLookupSupabase([RESTAURANT_ID])
+    );
+
+    expect(parsed?.transcriptMetadata).toMatchObject({
+      recording_url: "https://cdn.example.com/recording.mp3",
+      transcript_summary: "FAQ call.",
+    });
+    expect(parsed?.transcriptMetadata.transcript).toHaveLength(1);
+  });
+
+  it("resolves restaurant via called_number when payload restaurant id is absent", async () => {
+    vi.mocked(lookupRestaurantByCalledNumber).mockResolvedValue({
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Test Bistro",
+      linkedAgentId: "agent_linked",
+    });
+
+    const parsed = await parseElevenLabsPostCallEvent(
+      {
+        type: "post_call_transcription",
+        data: {
+          agent_id: "unknown_agent",
+          conversation_id: "conv_called_number",
+          metadata: {
+            called_number: "+1 (555) 010-0200",
+            phone_call: { caller_id: "(415) 555-0199" },
+          },
+          analysis: { call_successful: "success" },
+        },
+      },
+      restaurantLookupSupabase([RESTAURANT_ID])
+    );
+
+    expect(lookupRestaurantByCalledNumber).toHaveBeenCalledWith("+1 (555) 010-0200");
+    expect(parsed).toMatchObject({
+      restaurantId: RESTAURANT_ID,
+      conversationId: "conv_called_number",
+      sessionId: "conv_called_number",
+      callerPhone: "+14155550199",
+    });
+    expect(parsed?.transcriptMetadata.called_number).toBe("+1 (555) 010-0200");
+  });
+
+  it("ignores events when restaurant id is unknown", async () => {
+    const parsed = await parseElevenLabsPostCallEvent(
+      {
+        type: "post_call_transcription",
+        data: {
+          conversation_id: "conv_foreign",
+          conversation_initiation_client_data: {
+            dynamic_variables: { restaurant_id: REST_B },
+          },
+        },
+      },
+      restaurantLookupSupabase([RESTAURANT_ID])
+    );
+
+    expect(parsed).toBeNull();
+  });
+
+  it("ignores events when agent and called_number cannot be mapped", async () => {
+    const parsed = await parseElevenLabsPostCallEvent(
+      {
+        type: "post_call_transcription",
+        data: {
+          agent_id: "agent_unknown",
+          conversation_id: "conv_unmapped",
+          analysis: { call_successful: "success" },
+        },
+      },
+      restaurantLookupSupabase([RESTAURANT_ID])
+    );
+
+    expect(parsed).toBeNull();
+    expect(lookupRestaurantForElevenLabsAgent).toHaveBeenCalledWith("agent_unknown");
+  });
+});
+
+describe("persistElevenLabsPostCallEvent", () => {
+  const handoffEvent = {
+    type: "post_call_transcription",
+    data: {
+      conversation_id: "conv_dup",
+      metadata: { restaurant_id: RESTAURANT_ID },
+      analysis: {
+        call_successful: "success",
+        transcript_summary: "Guest asked for a manager.",
+        data_collection_results: { manager_requested: true },
+      },
+    },
+  };
+
+  it("upserts idempotently and emits staff handoff only once per reason", async () => {
+    const existingRef = { current: null as Record<string, unknown> | null };
+    const supabase = persistSupabase({ existingRef });
+    vi.mocked(getServiceRoleSupabase).mockReturnValue(supabase as never);
+
+    const first = await persistElevenLabsPostCallEvent(handoffEvent);
+    expect(first.stored).toBe(true);
+    const second = await persistElevenLabsPostCallEvent(handoffEvent);
+
+    expect(first.stored).toBe(true);
+    expect(second.stored).toBe(true);
+    expect(supabase.upsert).toHaveBeenCalledTimes(2);
+    expect(emitPostCallFollowUpNotifications).toHaveBeenCalledTimes(1);
+    expect(supabase.upsert.mock.calls[1]?.[0]).toMatchObject({
+      restaurant_id: RESTAURANT_ID,
+      session_id: "conv_dup",
+      conversation_id: "conv_dup",
+    });
+  });
+
+  it("merges recording URL on a duplicate webhook without dropping transcript", async () => {
+    const supabase = persistSupabase({
+      existingRef: {
+        current: {
+          event_type: "post_call_transcription",
+          transcript: [{ role: "agent", message: "Hello." }],
+          transcript_summary: "FAQ call.",
+        },
+      },
+    });
+    vi.mocked(getServiceRoleSupabase).mockReturnValue(supabase as never);
+
+    await persistElevenLabsPostCallEvent({
+      type: "post_call_transcription",
+      data: {
+        conversation_id: "conv_merge",
+        metadata: {
+          restaurant_id: RESTAURANT_ID,
+          recording_url: "https://cdn.example.com/late-recording.mp3",
+        },
+        analysis: { call_successful: "success" },
+      },
+    });
+
+    const row = supabase.upsert.mock.calls[0]?.[0] as {
+      transcript_metadata: Record<string, unknown>;
+    };
+    expect(row.transcript_metadata.recording_url).toBe(
+      "https://cdn.example.com/late-recording.mp3"
+    );
+    expect(row.transcript_metadata.transcript).toEqual([
+      { role: "agent", message: "Hello." },
+    ]);
+  });
+
+  it("returns unresolved when restaurant linkage cannot be established", async () => {
+    vi.mocked(getServiceRoleSupabase).mockReturnValue(
+      persistSupabase({ validRestaurantIds: [RESTAURANT_ID] }) as never
+    );
+
+    const result = await persistElevenLabsPostCallEvent({
+      type: "post_call_transcription",
+      data: {
+        conversation_id: "conv_missing",
+        metadata: { restaurant_id: REST_B },
+      },
+    });
+
+    expect(result).toEqual({ stored: false, reason: "unresolved_event" });
+    expect(emitPostCallFollowUpNotifications).not.toHaveBeenCalled();
   });
 });
 

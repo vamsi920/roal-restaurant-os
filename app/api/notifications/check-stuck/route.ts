@@ -4,6 +4,7 @@ import {
   resolveOrganizationId,
 } from "@/lib/auth/context-server";
 import { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
+import { notifyStuckActiveCallsForOrganization } from "@/lib/notifications/stuck-active-calls";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
@@ -33,10 +34,18 @@ export async function POST(req: Request) {
     (restaurants ?? []).map((r) => [r.id as string, r.name as string])
   );
 
-  const notified = await notifyStuckOrdersForOrganization(supabase, {
+  const notifiedOrders = await notifyStuckOrdersForOrganization(supabase, {
     organizationId: resolved.organizationId,
     restaurantNames: names,
   });
 
-  return NextResponse.json({ ok: true, notified });
+  const notifiedCalls = await notifyStuckActiveCallsForOrganization(supabase, {
+    organizationId: resolved.organizationId,
+    restaurantNames: names,
+  });
+
+  return NextResponse.json({
+    ok: true,
+    notified: notifiedOrders + notifiedCalls,
+  });
 }

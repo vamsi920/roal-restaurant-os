@@ -37,11 +37,15 @@ describe("real-data discipline (prompt 37)", () => {
     expect(kdsPage).toContain("loadLiveOrdersPageData");
     expect(kdsLoader).toContain('from("draft_orders")');
     expect(kdsLoader).toContain('from("phone_order_receipts")');
+    expect(kdsLoader).toContain("loadRestaurantLaunchGate");
     expect(panel).toContain("initialDraftOrders");
     expect(panel).toContain("postgres_changes");
     expect(panel).not.toMatch(/example order|fake.*order|seed.*order|MOCK_/i);
     expect(restaurants).toContain('from("restaurants")');
+    expect(restaurants).toContain("loadRestaurantCardStats");
+    expect(restaurants).toContain("buildPortfolioSummary");
     expect(restaurants).not.toMatch(/const\s+restaurants\s*=\s*\[/);
+    expect(restaurants).not.toMatch(/demoLocations|fakeLocations|MOCK_/i);
   });
 
   it("call and menu indicators derive live state from draft_orders", () => {

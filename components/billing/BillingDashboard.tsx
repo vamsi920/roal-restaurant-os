@@ -54,8 +54,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
   const isRestaurantScope = snapshot.scope === "restaurant";
   const usageTotal =
     snapshot.usage.menuScans +
-    snapshot.usage.voiceOrders +
-    snapshot.usage.completedOrders +
+    snapshot.usage.billablePhoneOrders +
     snapshot.usage.toolCalls;
   const organizationBillingHref = orgBillingHref ?? "/dashboard/billing";
 
@@ -273,15 +272,37 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         </h2>
         <p className="mt-1 text-sm text-muted">
           {isRestaurantScope
-            ? "Metered usage events for this location. Plan limits apply to your organization."
-            : "Metered from usage events. Soft warnings at 80%, hard limits at 100%."}
+            ? "Billable successful phone orders for this location. Only receipt-backed orders count toward pilot charges."
+            : "Billable successful phone orders across accessible locations. Only receipt-backed orders count toward pilot charges."}
         </p>
+        <p className="mt-2 text-sm text-muted">
+          {BILLING_LAUNCH_POSTURE.pilotRate}. {BILLING_LAUNCH_POSTURE.pilotRateDetail}
+        </p>
+        {snapshot.usage.billablePhoneOrders > 0 ? (
+          <p className="mt-2 text-sm text-ink">
+            Estimated pilot charge this period:{" "}
+            <span className="font-semibold">
+              ${snapshot.usage.estimatedBillableChargeUsd.toFixed(2)}
+            </span>{" "}
+            ({snapshot.usage.billablePhoneOrders.toLocaleString()} successful phone{" "}
+            {snapshot.usage.billablePhoneOrders === 1 ? "order" : "orders"})
+          </p>
+        ) : null}
         {isRestaurantScope && usageTotal === 0 ? (
           <p
             className="mt-3 rounded-lg border border-dashed border-line bg-elev px-4 py-3 text-sm text-muted"
             role="status"
           >
-            No metered activity for this location in the current billing period.
+            No billable phone orders for this location in the current billing period.
+            Missed and no-order calls are not charged.
+          </p>
+        ) : !isRestaurantScope && snapshot.usage.billablePhoneOrders === 0 ? (
+          <p
+            className="mt-3 rounded-lg border border-dashed border-line bg-elev px-4 py-3 text-sm text-muted"
+            role="status"
+          >
+            No billable phone orders yet this period. Missed and no-order calls are
+            not charged.
           </p>
         ) : null}
         <ul className="billing-dashboard__meters mt-4 grid gap-3 sm:grid-cols-2">

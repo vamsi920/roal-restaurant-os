@@ -1,3 +1,4 @@
+import { isVoicemailTranscriptMetadata } from "@/lib/agent-calls/voicemail-call";
 import { parseOrderLineItems } from "@/lib/orders/line-items";
 import type {
   AgentCallOutcome,
@@ -12,10 +13,6 @@ export function lineCountFromItems(items: unknown): number {
     (sum, line) => sum + Math.max(1, line.quantity),
     0
   );
-}
-
-function usageHasOrderCompleted(events: UsageCallRow[]): boolean {
-  return events.some((e) => e.event_type === "order_completed");
 }
 
 function usageLineCount(events: UsageCallRow[]): number {
@@ -41,18 +38,31 @@ export function classifyAgentCallOutcome(input: {
   draft: DraftOrderCallRow | null;
   receipt: ReceiptCallRow | null;
   usage: UsageCallRow[];
+  transcriptMetadata?: Record<string, unknown>;
   now: Date;
   abandonedAfterMs: number;
 }): AgentCallOutcome {
   const { draft, receipt, usage } = input;
 
+  if (
+    !receipt &&
+    input.transcriptMetadata &&
+    isVoicemailTranscriptMetadata(input.transcriptMetadata)
+  ) {
+    return "no_order";
+  }
+
   if (receipt) return "order_completed";
   if (draft?.canceled_at || draft?.status === "canceled") return "canceled";
-  if (usageHasOrderCompleted(usage)) return "order_completed";
 
   if (draft) {
     if (draft.status === "canceled") return "canceled";
-    if (draft.status === "completed") return "order_completed";
+    if (
+      draft.status === "completed" &&
+      lineCountFromItems(draft.items) > 0
+    ) {
+      return "order_completed";
+    }
 
     const lines = lineCountFromItems(draft.items);
     const usageLines = usageLineCount(usage);

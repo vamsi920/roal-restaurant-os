@@ -8,34 +8,34 @@ const CSS = () => readFileSync(join(REPO, "app/landing-home.css"), "utf8");
 describe("home hero responsive (prompt 06)", () => {
   it("keeps frosted surface and does not remove video layer hooks", () => {
     const css = CSS();
-    const hero = readFileSync(
-      join(REPO, "components/landing/home/landing-home-hero.tsx"),
+    const page = readFileSync(
+      join(REPO, "components/landing/landing-page.tsx"),
       "utf8"
     );
-    expect(hero).toContain("home-hero__surface");
-    expect(css).toMatch(/\.home-hero__surface[\s\S]*backdrop-filter:\s*blur/);
+    expect(page).toContain("roal-hero__stage");
+    expect(css).toMatch(/\.roal-hero__stage[\s\S]*backdrop-filter:\s*blur/);
     expect(css).toContain(".home-video-layer__video");
   });
 
   it("constrains hero stack width and pill on narrow phones", () => {
     const css = CSS();
-    expect(css).toContain(".home-hero__content > *");
-    expect(css).toContain(".home-pricing-pill--hero");
+    expect(css).toContain(".roal-hero__copy");
+    expect(css).toContain(".roal-hero__proof");
     expect(css).toMatch(
-      /@media \(max-width: 479px\)[\s\S]*\.home-pricing-pill--hero[\s\S]*hyphens:\s*auto/
+      /@media \(max-width: 640px\)[\s\S]*\.roal-hero__proof[\s\S]*width:\s*100%/
     );
     expect(css).toMatch(
-      /@media \(max-width: 479px\)[\s\S]*\.home-hero__surface[\s\S]*overflow:\s*hidden/
+      /@media \(max-width: 640px\)[\s\S]*\.roal-hero__stage[\s\S]*border-radius:\s*1\.05rem/
     );
   });
 
   it("adds tablet and desktop hero spacing bands", () => {
     const css = CSS();
     expect(css).toMatch(
-      /@media \(min-width: 768px\) and \(max-width: 1023px\)[\s\S]*\.home-hero__surface/
+      /@media \(max-width: 899px\)[\s\S]*\.roal-hero__stage/
     );
     expect(css).toMatch(
-      /@media \(min-width: 1024px\)[\s\S]*\.home-hero__surface[\s\S]*max-width:\s*min\(42rem/
+      /\.roal-hero__stage[\s\S]*width:\s*min\(73rem/
     );
   });
 });

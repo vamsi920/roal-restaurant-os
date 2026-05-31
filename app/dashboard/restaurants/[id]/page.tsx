@@ -13,7 +13,12 @@ import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
 import { ensureRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { orderPricingFromProfile } from "@/lib/orders/pricing-settings";
 import { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
-import { RESTAURANT_LIVE_ORDERS_LABEL } from "@/lib/dashboard-restaurant-labels";
+import { notifyStuckActiveCallsForOrganization } from "@/lib/notifications/stuck-active-calls";
+import {
+  RESTAURANT_LIVE_ORDERS_LABEL,
+  RESTAURANT_MENU_BUILDER_TITLE,
+} from "@/lib/dashboard-restaurant-labels";
+import Link from "next/link";
 import { loadLiveOrdersPageData } from "@/lib/live-orders/load-live-orders-page";
 import { PhoneAgentReadinessStrip } from "@/components/live-orders/PhoneAgentReadinessStrip";
 import { RecentPhoneOutcomesPanel } from "@/components/live-orders/RecentPhoneOutcomesPanel";
@@ -49,6 +54,12 @@ export default async function RestaurantKDSPage({
       (orgRestaurants ?? []).map((r) => [r.id as string, r.name as string])
     ),
   });
+  void notifyStuckActiveCallsForOrganization(supabase, {
+    organizationId: restaurant.organization_id,
+    restaurantNames: new Map(
+      (orgRestaurants ?? []).map((r) => [r.id as string, r.name as string])
+    ),
+  });
 
   const profile = await ensureRestaurantProfile(
     supabase,
@@ -79,16 +90,36 @@ export default async function RestaurantKDSPage({
     >
       <div className="kds-workspace kds-workspace--orders min-w-0 w-full max-w-full space-y-4">
         <header className="kds-ops-page-head min-w-0 space-y-3">
+          <nav
+            aria-label="Phone operations views"
+            className="flex flex-wrap items-center gap-2 text-xs font-medium"
+          >
+            <span
+              aria-current="page"
+              className="rounded-md bg-accent-soft px-2.5 py-1 text-accent"
+            >
+              Orders dashboard
+            </span>
+            <Link
+              href={`/dashboard/restaurants/${restaurant.id}/menu`}
+              className="rounded-md border border-line bg-elev px-2.5 py-1 text-muted hover:text-ink"
+            >
+              {RESTAURANT_MENU_BUILDER_TITLE}
+            </Link>
+          </nav>
           <div className="min-w-0">
             <p className="text-xs font-medium text-subtle">Phone operations</p>
             <h1 className="mt-1 truncate text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
               {restaurant.name}
             </h1>
-            <p className="mt-1 text-sm text-muted">{RESTAURANT_LIVE_ORDERS_LABEL}</p>
+            <p className="mt-1 text-sm text-muted">
+              {RESTAURANT_LIVE_ORDERS_LABEL} — live calls, kitchen tickets, and recent
+              phone outcomes only.
+            </p>
           </div>
           <PhoneAgentReadinessStrip
             restaurantId={restaurant.id}
-            readiness={pageData.readiness}
+            launchGate={pageData.launchGate}
           />
         </header>
 

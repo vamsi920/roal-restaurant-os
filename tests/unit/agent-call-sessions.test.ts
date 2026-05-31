@@ -141,11 +141,48 @@ describe("deriveAgentCallSessions", () => {
       conversationId: "el_conv_99",
       agentId: "agent_webhook",
       callerPhone: "+15552222222",
-      outcome: "order_completed",
+      outcome: "no_order",
       status: "ended",
       source: "stored",
       transcriptMetadata: { summary: "Guest ordered two burgers." },
     });
+  });
+
+  it("does not keep webhook-only order_completed without a receipt", () => {
+    const sessions = deriveAgentCallSessions({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT,
+      drafts: [],
+      receipts: [],
+      usageEvents: [
+        {
+          event_type: "order_completed",
+          occurred_at: "2026-05-30T17:40:00.000Z",
+          restaurant_id: RESTAURANT_ID,
+          session_id: SESSION,
+          metadata: { line_count: 2 },
+        },
+      ],
+      storedEvents: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          agent_id: AGENT,
+          conversation_id: SESSION,
+          session_id: SESSION,
+          caller_phone: "+15551111111",
+          status: "ended",
+          outcome: "order_completed",
+          started_at: "2026-05-30T17:00:00.000Z",
+          ended_at: "2026-05-30T17:41:00.000Z",
+          transcript_metadata: {
+            transcript: [{ role: "agent", tool_calls: [{ name: "finalize_order" }] }],
+          },
+        },
+      ],
+      now: NOW,
+    });
+
+    expect(sessions[0]?.outcome).toBe("no_order");
   });
 
   it("counts active in-progress calls within window", () => {

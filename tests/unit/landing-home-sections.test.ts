@@ -9,12 +9,12 @@ describe("landing home sections (prompt 29)", () => {
     const page = readFileSync(join(REPO, "components/landing/landing-page.tsx"), "utf8");
 
     for (const block of [
-      "HomeProductIntro",
-      "HomeProductProof",
-      "HomeHowItWorks",
-      "HomePay",
-      "HomeFaq",
-      "HomeCtaBand",
+      "rushStory",
+      "setupSteps",
+      "ticketRows",
+      "faqs",
+      "roal-pay-panel",
+      "roal-final-panel",
     ]) {
       expect(page).toContain(block);
     }

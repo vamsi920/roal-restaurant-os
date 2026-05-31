@@ -43,9 +43,9 @@ function usedForLimitKey(
     case "menu_scans":
       return u.menuScans;
     case "voice_orders":
-      return u.voiceOrders;
+      return u.billablePhoneOrders;
     case "completed_orders":
-      return u.completedOrders;
+      return u.billablePhoneOrders;
     case "tool_calls":
       return u.toolCalls;
   }

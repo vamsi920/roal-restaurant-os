@@ -162,6 +162,41 @@ vi.mock("@/lib/elevenlabs/load-menu-prompt-snapshot", () => ({
   ),
 }));
 
+vi.mock("@/lib/menu-editor/load-menu", () => ({
+  loadRestaurantMenu: vi.fn(() =>
+    Promise.resolve({
+      categories: [{ id: "c1", restaurant_id: "00000000-0000-4000-8000-000000000088", name: "Pizza", sort_order: 1, created_at: "", updated_at: "" }],
+      items: [
+        {
+          id: "i1",
+          category_id: "c1",
+          restaurant_id: "00000000-0000-4000-8000-000000000088",
+          name: "Margherita Pizza",
+          description: null,
+          price_cents: 1200,
+          is_available: true,
+          sort_order: 1,
+          created_at: "",
+          updated_at: "",
+        },
+        {
+          id: "i2",
+          category_id: "c1",
+          restaurant_id: "00000000-0000-4000-8000-000000000088",
+          name: "Garlic Knots",
+          description: null,
+          price_cents: 500,
+          is_available: true,
+          sort_order: 2,
+          created_at: "",
+          updated_at: "",
+        },
+      ],
+      modifiers: [],
+    })
+  ),
+}));
+
 vi.mock("@/lib/restaurant-knowledge/helpers", () => ({
   loadRestaurantKnowledgeEntries: vi.fn(() => Promise.resolve(knowledgeEntries)),
 }));
@@ -218,8 +253,8 @@ describe("restaurant profile/knowledge/upsell voice content sync", () => {
     expect(prompt).toContain("Where do guests park?");
     expect(prompt).toContain("lot behind the building");
     expect(prompt).toContain("Upsell rules");
-    expect(prompt).toContain("pizza order");
-    expect(prompt).toContain("garlic knots");
+    expect(prompt).toContain("Margherita Pizza");
+    expect(prompt).toContain("Garlic Knots");
     expect(prompt).toContain("Hours and ordering availability");
   });
 

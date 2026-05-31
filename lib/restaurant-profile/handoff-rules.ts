@@ -45,3 +45,15 @@ export function unavailableItemBehaviorPromptLine(
   const extra = notes?.trim();
   return extra ? `${base} Restaurant note: ${extra}` : base;
 }
+
+const PLACEHOLDER_PHONE_RE = /^(?:\+?1)?(?:555|000|123)[0-9\s().-]*$/;
+
+export function isValidStaffCallbackPhone(phone: string | null | undefined): boolean {
+  const raw = (phone ?? "").trim();
+  if (!raw) return false;
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length < 7 || digits.length > 15) return false;
+  if (/^(\d)\1+$/.test(digits)) return false;
+  if (PLACEHOLDER_PHONE_RE.test(raw)) return false;
+  return true;
+}

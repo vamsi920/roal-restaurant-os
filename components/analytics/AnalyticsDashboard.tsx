@@ -37,6 +37,9 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
     summary.completedKitchenOrders > 0 ||
     summary.ordersCanceled > 0 ||
     callOutcomes.total > 0 ||
+    callOutcomes.voicemailOrCallback > 0 ||
+    callOutcomes.handoff > 0 ||
+    summary.reservationRequests > 0 ||
     summary.upsellAttach.configuredRules > 0 ||
     menuScans.attempts > 0;
 
@@ -113,7 +116,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
         <StatCard
           label="Session → completed"
           value={formatPercent(summary.sessionConversionPercent)}
-          hint={`${summary.sessionsWithCompletedOrder} with receipt, completed ticket, or order_completed event`}
+          hint={`${summary.sessionsWithCompletedOrder} sessions with a saved phone receipt`}
         />
         <StatCard
           label="Avg order estimate"
@@ -123,8 +126,8 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
           )}
           hint={
             summary.averageOrderSampleSize > 0
-              ? `${summary.averageOrderSampleSize} priced orders · menu + tax/fee`
-              : "From receipts and completed kitchen tickets"
+              ? `${summary.averageOrderSampleSize} finalized receipts · menu + tax/fee`
+              : "From finalized phone receipts with menu prices"
           }
         />
         <StatCard
@@ -143,7 +146,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
         <StatCard
           label="Order calls"
           value={callOutcomes.completed.toLocaleString()}
-          hint="Webhook calls classified as completed orders"
+          hint="Calls with a saved phone receipt (not transcript-only)"
         />
         <StatCard
           label="Conversion trend"
@@ -174,7 +177,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
           value={formatPercent(summary.upsellAttach.attachPercent)}
           hint={
             summary.upsellAttach.configuredRules > 0
-              ? `${summary.upsellAttach.attachedOrders} attached · ${summary.upsellAttach.eligibleOrders} eligible orders`
+              ? `${summary.upsellAttach.attachedOrders} accepted · ${summary.upsellAttach.skippedOrders} skipped · ${summary.upsellAttach.eligibleOrders} suggested`
               : "Configure add-on rules in Restaurant profile"
           }
         />
@@ -224,8 +227,8 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
           )}
           hint={
             summary.revenueOrderCount > 0
-              ? `${summary.revenueOrderCount} completed kitchen orders`
-              : "Completed tickets with menu prices"
+              ? `${summary.revenueOrderCount} finalized phone receipts`
+              : "From saved phone receipts with menu prices"
           }
         />
         <StatCard
@@ -240,6 +243,29 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
               ? `${summary.prepSampleSize} completed orders`
               : "Created → completed"
           }
+        />
+      </section>
+
+      <section className="analytics-dashboard__stats analytics-dashboard__stats--followups grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="Voicemail / callback"
+          value={callOutcomes.voicemailOrCallback.toLocaleString()}
+          hint="Post-call webhook metadata · guest follow-up needed"
+        />
+        <StatCard
+          label="Staff handoffs"
+          value={callOutcomes.handoff.toLocaleString()}
+          hint="Calls routed to staff from webhook metadata"
+        />
+        <StatCard
+          label="Reservations"
+          value={summary.reservationRequests.toLocaleString()}
+          hint="Reservation requests captured by the voice agent"
+        />
+        <StatCard
+          label="Active calls"
+          value={callOutcomes.active.toLocaleString()}
+          hint="Calls still in progress when last synced"
         />
       </section>
 
@@ -269,6 +295,68 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
           }
         />
       </section>
+
+      {callOutcomes.total > 0 ? (
+        <section className="analytics-dashboard__top-questions min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
+          <div className="min-w-0">
+            <h2 className="text-sm font-semibold text-ink">
+              Top questions callers ask
+            </h2>
+            <p className="mt-1 text-xs text-muted">
+              Topics from FAQ / no-order calls in this period, based on call
+              transcript summaries.
+            </p>
+          </div>
+          {snapshot.topCallerQuestions.faqNoOrderCallCount === 0 ? (
+            <p className="mt-6 text-sm text-muted">
+              No FAQ / no-order calls in this range yet.
+            </p>
+          ) : snapshot.topCallerQuestions.topics.length === 0 ? (
+            <p className="mt-6 text-sm text-muted">
+              FAQ / no-order calls were recorded, but no question topics could
+              be classified yet.
+            </p>
+          ) : (
+            <ol className="analytics-dashboard__top-questions-list mt-4 space-y-2">
+              {snapshot.topCallerQuestions.topics.map((row, idx) => (
+                <li
+                  key={row.topicId}
+                  className="analytics-dashboard__top-questions-row rounded-lg border border-line bg-elev px-3 py-2.5"
+                >
+                  <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+                    <div className="min-w-0">
+                      <p className="flex min-w-0 items-center gap-2 text-sm font-medium text-ink">
+                        <span className="w-5 shrink-0 text-xs text-subtle">
+                          {idx + 1}
+                        </span>
+                        <span className="[overflow-wrap:anywhere]">{row.label}</span>
+                      </p>
+                      {row.exampleSnippets.length > 0 ? (
+                        <ul className="mt-2 space-y-1 pl-7 text-xs text-muted">
+                          {row.exampleSnippets.map((snippet) => (
+                            <li
+                              key={snippet}
+                              className="[overflow-wrap:anywhere] before:mr-1 before:text-subtle before:content-['“'] after:text-subtle after:content-['”']"
+                            >
+                              {snippet}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                    <div className="shrink-0 pl-7 text-sm text-muted sm:pl-0 sm:text-right">
+                      <span className="font-medium text-ink">{row.count}</span>
+                      <span className="ml-1 text-subtle">
+                        ({formatPercent(row.percentOfFaqCalls)})
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+        </section>
+      ) : null}
 
       {peakCallWindows.length > 0 ? (
         <section className="analytics-dashboard__rush-windows min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
@@ -306,7 +394,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
       <section className="analytics-dashboard__chart min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
         <h2 className="text-sm font-semibold text-ink">Sessions over time</h2>
         <p className="mt-1 text-xs text-muted">
-          Daily unique order sessions, finalized receipts / completions, and
+          Daily unique order sessions, finalized phone receipts, and
           cancellations.
         </p>
         <div className="analytics-dashboard__chart-scroll mt-5 min-w-0 max-w-full">

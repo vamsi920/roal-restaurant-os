@@ -19,6 +19,17 @@ vi.mock("@/lib/restaurant-hours/helpers", () => ({
   loadRestaurantHoursBundle: vi.fn(),
 }));
 
+vi.mock("@/lib/restaurant-profile/helpers", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("@/lib/restaurant-profile/helpers")>();
+  return {
+    ...actual,
+    getRestaurantProfile: vi.fn(),
+  };
+});
+
+import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+
 const SESSION_ID = "conv_sync_draft_pass52";
 const DRAFT_ORDER_ID = "77777777-7777-4777-8777-777777777777";
 
@@ -68,6 +79,10 @@ beforeEach(() => {
     items: menuItems,
     modifiers: menuModifiers,
   });
+  vi.mocked(getRestaurantProfile).mockResolvedValue({
+    allows_pickup: true,
+    allows_delivery: false,
+  } as never);
   vi.mocked(loadRestaurantHoursBundle).mockResolvedValue({
     profile: {
       timezone: "America/Chicago",
@@ -234,6 +249,46 @@ describe("sync_draft_order validation gates", () => {
       error: "restaurant_closed",
       operations: { ordering_allowed: false },
     });
+    expect(supabase.getStoredDraft()).toBeNull();
+  });
+
+  it("rejects delivery sync when allows_delivery is false", async () => {
+    const supabase = buildSupabaseWithDraftUpsert();
+    const result = await simulateHarnessTool({
+      supabase: supabase as unknown as SupabaseClient,
+      restaurantId: RESTAURANT_ID,
+      tool: "sync_draft_order",
+      body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 1 }], {
+        fulfillment_type: "delivery",
+        delivery_address: "742 Evergreen Terrace, Springfield",
+      }),
+      dryRun: false,
+    });
+
+    expect(result.httpStatus).toBe(422);
+    expect(result.response).toMatchObject({ code: "delivery_not_offered" });
+    expect(supabase.getStoredDraft()).toBeNull();
+  });
+
+  it("rejects pickup sync when allows_pickup is false", async () => {
+    vi.mocked(getRestaurantProfile).mockResolvedValue({
+      allows_pickup: false,
+      allows_delivery: true,
+    } as never);
+
+    const supabase = buildSupabaseWithDraftUpsert();
+    const result = await simulateHarnessTool({
+      supabase: supabase as unknown as SupabaseClient,
+      restaurantId: RESTAURANT_ID,
+      tool: "sync_draft_order",
+      body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 1 }], {
+        fulfillment_type: "pickup",
+      }),
+      dryRun: false,
+    });
+
+    expect(result.httpStatus).toBe(422);
+    expect(result.response).toMatchObject({ code: "pickup_not_offered" });
     expect(supabase.getStoredDraft()).toBeNull();
   });
 });

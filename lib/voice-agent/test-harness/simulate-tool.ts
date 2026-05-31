@@ -1,3 +1,4 @@
+import { markAgentCallOrderCompleted } from "@/lib/agent-calls/mark-call-order-completed";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   assertRestaurantIdMatches,
@@ -22,12 +23,19 @@ import {
   normalizeOrderStatus,
 } from "@/lib/order-status";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
-import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
+import {
+  loadRestaurantHoursBundle,
+  operationsPayloadForRestaurantInfo,
+} from "@/lib/restaurant-hours/helpers";
 import {
   formatProfileAddress,
   getRestaurantProfile,
+  serviceModesFromProfile,
 } from "@/lib/restaurant-profile/helpers";
-import { loadRestaurantKnowledgeEntries } from "@/lib/restaurant-knowledge/helpers";
+import {
+  loadRestaurantKnowledgeEntries,
+  restaurantInfoKnowledgeStatusMessage,
+} from "@/lib/restaurant-knowledge/helpers";
 import {
   cartLinesForStorage,
   formatCartValidationError,
@@ -37,6 +45,12 @@ import {
   validateCustomerForFinalize,
   type CartValidationResult,
 } from "@/lib/orders/validate-cart";
+import {
+  formatFulfillmentValidationError,
+  serviceModesFromProfileFlags,
+  validateFulfillmentForOrder,
+} from "@/lib/orders/validate-fulfillment";
+import { buildCallerOrderStatusTimeline } from "@/lib/orders/status-history";
 import { buildGetMenuHarnessResponse } from "@/lib/voice-agent/test-harness/build-get-menu";
 import type { HarnessToolName } from "@/lib/voice-agent/test-harness/types";
 
@@ -107,6 +121,34 @@ function orderStatusMessage(status: string | null, found: boolean): string {
   return "I found the order, but its kitchen status is unclear.";
 }
 
+function phoneDigits(value: string | null | undefined): string {
+  return (value ?? "").replace(/\D/g, "");
+}
+
+function phoneMatchKey(value: string | null | undefined): string {
+  const digits = phoneDigits(value);
+  return digits.length >= 10 ? digits.slice(-10) : digits;
+}
+
+const PLACEHOLDER_PHONE_RE = /^(?:\+?1)?(?:555|000|123)[0-9\s().-]*$/;
+
+function validHumanPhone(phone: string): boolean {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length < 7 || digits.length > 15) return false;
+  if (/^(\d)\1+$/.test(digits)) return false;
+  if (PLACEHOLDER_PHONE_RE.test(phone)) return false;
+  return true;
+}
+
+function reservationRequestMessage(row: {
+  party_size: number;
+  requested_date: string;
+  requested_time: string;
+}): string {
+  const guests = Number(row.party_size) === 1 ? "1 guest" : `${row.party_size} guests`;
+  return `Reservation request saved for ${guests} on ${row.requested_date} at ${row.requested_time}. Tell the caller this is a request, not a confirmed reservation, and staff will confirm.`;
+}
+
 function orderStatusSummary(row: Record<string, unknown> | null) {
   const status = row ? normalizeOrderStatus(String(row.status ?? "")) : null;
   return {
@@ -120,11 +162,10 @@ function orderStatusSummary(row: Record<string, unknown> | null) {
     item_count: row ? orderStatusLineCount(row.items) : 0,
     updated_at: row ? String(row.updated_at ?? "").trim() || null : null,
     created_at: row ? String(row.created_at ?? "").trim() || null : null,
+    status_timeline: row
+      ? buildCallerOrderStatusTimeline(row as Parameters<typeof buildCallerOrderStatusTimeline>[0])
+      : [],
   };
-}
-
-function callerPhoneDigits(value: string | null | undefined): string {
-  return (value ?? "").replace(/\D/g, "");
 }
 
 function callerItemNames(items: unknown): string[] {
@@ -185,9 +226,14 @@ async function lookupHarnessCallerHistory(input: {
     };
   }
 
+  const scopedReceipts = (candidates: Record<string, unknown>[]) =>
+    candidates.filter(
+      (row) => String(row.restaurant_id ?? "").trim() === input.restaurantId
+    );
+
   let rows: Record<string, unknown>[] = [];
   if (parsed.data.customer_phone) {
-    const targetDigits = callerPhoneDigits(parsed.data.customer_phone);
+    const targetKey = phoneMatchKey(parsed.data.customer_phone);
     const { data } = await input.supabase
       .from("phone_order_receipts")
       .select("id, restaurant_id, session_id, items, customer_name, customer_phone, created_at")
@@ -195,12 +241,15 @@ async function lookupHarnessCallerHistory(input: {
       .not("customer_phone", "is", null)
       .order("created_at", { ascending: false })
       .limit(100);
-    rows = (Array.isArray(data) ? data : [])
-      .filter(
-        (row) =>
-          callerPhoneDigits(String(row.customer_phone ?? "")) === targetDigits
-      )
-      .slice(0, 10) as Record<string, unknown>[];
+    rows =
+      targetKey.length >= 10
+        ? scopedReceipts(Array.isArray(data) ? (data as Record<string, unknown>[]) : [])
+            .filter(
+              (row) =>
+                phoneMatchKey(String(row.customer_phone ?? "")) === targetKey
+            )
+            .slice(0, 10)
+        : [];
   }
   if (rows.length === 0 && parsed.data.customer_name) {
     const { data } = await input.supabase
@@ -210,7 +259,9 @@ async function lookupHarnessCallerHistory(input: {
       .ilike("customer_name", parsed.data.customer_name)
       .order("created_at", { ascending: false })
       .limit(10);
-    rows = (Array.isArray(data) ? data : []) as Record<string, unknown>[];
+    rows = scopedReceipts(
+      Array.isArray(data) ? (data as Record<string, unknown>[]) : []
+    );
   }
 
   const responseBody = {
@@ -255,6 +306,40 @@ async function submitHarnessReservationRequest(input: {
       response: parsed.body,
       wroteDatabase: false,
     };
+  }
+
+  if (!validHumanPhone(parsed.data.customer_phone)) {
+    return {
+      httpStatus: 400,
+      ok: false,
+      response: {
+        error: "validation_failed",
+        code: "invalid_customer_phone",
+        message: "Reservation request requires a real callback phone.",
+        recovery_hint:
+          "Ask the guest for the best callback number, read it back, then submit the reservation request again.",
+      },
+      wroteDatabase: false,
+    };
+  }
+
+  const idempotencyKey = parsed.data.idempotency_key?.trim() || null;
+  if (idempotencyKey && !input.dryRun) {
+    const { data: cached } = await input.supabase
+      .from("agent_tool_idempotency")
+      .select("response_body, http_status")
+      .eq("restaurant_id", input.restaurantId)
+      .eq("idempotency_key", idempotencyKey)
+      .eq("tool_name", "submit_reservation_request")
+      .maybeSingle();
+    if (cached?.response_body) {
+      return {
+        httpStatus: Number(cached.http_status ?? 200),
+        ok: true,
+        response: cached.response_body,
+        wroteDatabase: false,
+      };
+    }
   }
 
   const row = {
@@ -323,7 +408,7 @@ async function submitHarnessReservationRequest(input: {
     ok: true as const,
     reservation_request: {
       ...row,
-      message: `Reservation request saved for ${row.party_size} guests on ${row.requested_date} at ${row.requested_time}. Tell the caller this is a request, not a confirmed reservation, and staff will confirm.`,
+      message: reservationRequestMessage(row),
     },
   };
   const validated = parseAgentToolResponse(
@@ -339,6 +424,18 @@ async function submitHarnessReservationRequest(input: {
       wroteDatabase: !input.dryRun,
     };
   }
+
+  if (idempotencyKey && !input.dryRun) {
+    await input.supabase.from("agent_tool_idempotency").upsert({
+      restaurant_id: input.restaurantId,
+      idempotency_key: idempotencyKey,
+      tool_name: "submit_reservation_request",
+      http_status: 200,
+      response_body: validated.data,
+      created_at: new Date().toISOString(),
+    });
+  }
+
   return {
     httpStatus: 200,
     ok: true,
@@ -366,6 +463,14 @@ async function lookupHarnessOrderStatus(input: {
     };
   }
 
+  const scopedRow = (candidate: Record<string, unknown> | null | undefined) => {
+    if (!candidate) return null;
+    if (String(candidate.restaurant_id ?? "").trim() !== input.restaurantId) {
+      return null;
+    }
+    return candidate;
+  };
+
   let row: Record<string, unknown> | null = null;
   if (parsed.data.session_id) {
     const { data } = await input.supabase
@@ -374,17 +479,26 @@ async function lookupHarnessOrderStatus(input: {
       .eq("restaurant_id", input.restaurantId)
       .eq("session_id", parsed.data.session_id)
       .maybeSingle();
-    row = (data as Record<string, unknown> | null) ?? null;
+    row = scopedRow((data as Record<string, unknown> | null) ?? null);
   }
   if (!row && parsed.data.customer_phone) {
+    const targetKey = phoneMatchKey(parsed.data.customer_phone);
     const { data } = await input.supabase
       .from("draft_orders")
       .select("*")
       .eq("restaurant_id", input.restaurantId)
-      .eq("customer_phone", parsed.data.customer_phone)
+      .not("customer_phone", "is", null)
       .order("updated_at", { ascending: false })
-      .limit(1);
-    row = Array.isArray(data) && data[0] ? (data[0] as Record<string, unknown>) : null;
+      .limit(100);
+    const rows = Array.isArray(data) ? (data as Record<string, unknown>[]) : [];
+    const match =
+      targetKey.length >= 10
+        ? rows.find(
+            (entry) =>
+              phoneMatchKey(String(entry.customer_phone ?? "")) === targetKey
+          )
+        : undefined;
+    row = scopedRow(match ?? null);
   }
   if (!row && parsed.data.customer_name) {
     const { data } = await input.supabase
@@ -394,7 +508,9 @@ async function lookupHarnessOrderStatus(input: {
       .ilike("customer_name", parsed.data.customer_name)
       .order("updated_at", { ascending: false })
       .limit(1);
-    row = Array.isArray(data) && data[0] ? (data[0] as Record<string, unknown>) : null;
+    row = scopedRow(
+      Array.isArray(data) && data[0] ? (data[0] as Record<string, unknown>) : null
+    );
   }
 
   const responseBody = {
@@ -485,18 +601,50 @@ export async function simulateHarnessTool(input: {
   }
 
   if (tool === "get_restaurant_info") {
+    const scopeCheck = assertRestaurantIdMatches(
+      typeof body.restaurant_id === "string" ? body.restaurant_id : undefined,
+      restaurantId
+    );
+    if (!scopeCheck.ok) {
+      return {
+        httpStatus: scopeCheck.status,
+        ok: false,
+        response: scopeCheck.body,
+        wroteDatabase: false,
+      };
+    }
+
+    const { data: restaurant, error: restaurantError } = await supabase
+      .from("restaurants")
+      .select("id, name")
+      .eq("id", restaurantId)
+      .maybeSingle();
+    if (restaurantError) {
+      return {
+        httpStatus: 500,
+        ok: false,
+        response: {
+          error: restaurantError.message,
+          code: "database_error",
+        },
+        wroteDatabase: false,
+      };
+    }
+    if (!restaurant) {
+      return {
+        httpStatus: 404,
+        ok: false,
+        response: {
+          error: "not_found",
+          code: "restaurant_not_found",
+          message: "Restaurant not found.",
+        },
+        wroteDatabase: false,
+      };
+    }
+
     const profile = await getRestaurantProfile(supabase, restaurantId);
     const hours = await loadRestaurantHoursBundle(supabase, restaurantId);
-    const evaluated = hours?.evaluation ?? {
-      ordering_allowed: true,
-      is_open_now: true,
-      status: "open",
-      message: "Hours not configured.",
-      local_date: new Date().toISOString().slice(0, 10),
-      local_time: new Date().toISOString().slice(11, 16),
-      local_day_of_week: new Date().getUTCDay(),
-      next_open_hint: null,
-    };
     const knowledge = await loadRestaurantKnowledgeEntries(supabase, restaurantId, {
       activeOnly: true,
       limit: 24,
@@ -505,7 +653,7 @@ export async function simulateHarnessTool(input: {
       ok: true as const,
       restaurant: {
         id: restaurantId,
-        name: input.restaurantName ?? "Restaurant",
+        name: String(restaurant.name ?? input.restaurantName ?? "").trim() || "Restaurant",
         phone: profile?.phone ?? null,
         website: profile?.website ?? null,
         cuisine: profile?.cuisine ?? null,
@@ -518,32 +666,19 @@ export async function simulateHarnessTool(input: {
           country: profile?.country ?? null,
           display: profile ? formatProfileAddress(profile) : null,
         },
-        service_modes: {
-          pickup: profile?.allows_pickup ?? true,
-          delivery: profile?.allows_delivery ?? false,
-        },
+        service_modes: serviceModesFromProfile(profile),
         prep_time_minutes: profile?.prep_time_minutes ?? null,
         prep_time_message: infoPrepMessage(profile?.prep_time_minutes ?? null),
       },
-      operations: {
-        timezone: hours?.profile.timezone ?? profile?.timezone ?? "America/Chicago",
-        temporarily_closed: hours?.profile.temporarily_closed ?? false,
-        temporarily_closed_reason:
-          hours?.profile.temporarily_closed_reason ?? null,
-        ordering_allowed: evaluated.ordering_allowed,
-        is_open_now: evaluated.is_open_now,
-        status: evaluated.status,
-        message: evaluated.message,
-        local_date: evaluated.local_date,
-        local_time: evaluated.local_time,
-        weekly_hours: hours?.weekly ?? [],
-        upcoming_exceptions: hours?.exceptions ?? [],
-      },
+      operations: operationsPayloadForRestaurantInfo(hours),
       knowledge_entries: knowledge.map((entry) => ({
         category: entry.category,
         question: entry.question,
         answer: entry.answer,
       })),
+      knowledge_status_message: restaurantInfoKnowledgeStatusMessage(
+        knowledge.length
+      ),
     };
     const validated = parseAgentToolResponse(
       GetRestaurantInfoResponseSchema,
@@ -613,6 +748,9 @@ export async function simulateHarnessTool(input: {
     };
   }
 
+  const profile = await getRestaurantProfile(supabase, restaurantId);
+  const serviceModes = serviceModesFromProfileFlags(profile);
+
   const menu = await loadRestaurantMenu(supabase, restaurantId);
 
   if (tool === "sync_draft_order") {
@@ -644,6 +782,32 @@ export async function simulateHarnessTool(input: {
         cartValidation,
         wroteDatabase: false,
       };
+    }
+
+    const hasCartLines = cartValidation.normalizedItems.length > 0;
+    const requestedFulfillment =
+      parsed.data.fulfillment_type ?? (hasCartLines ? "pickup" : null);
+
+    if (hasCartLines || parsed.data.fulfillment_type) {
+      const fulfillmentCheck = validateFulfillmentForOrder({
+        allowsPickup: serviceModes.allowsPickup,
+        allowsDelivery: serviceModes.allowsDelivery,
+        fulfillmentType: requestedFulfillment,
+        deliveryAddress: parsed.data.delivery_address ?? null,
+        requireDeliveryAddress: false,
+      });
+      if (!fulfillmentCheck.ok) {
+        return {
+          httpStatus: 422,
+          ok: false,
+          response: formatFulfillmentValidationError(
+            fulfillmentCheck.issue,
+            "sync_draft_order"
+          ),
+          cartValidation,
+          wroteDatabase: false,
+        };
+      }
     }
 
     const storedStatus = coerceSyncDraftOrderStatus(parsed.data.status);
@@ -812,20 +976,28 @@ export async function simulateHarnessTool(input: {
     const deliveryInstructions =
       parsed.data.delivery_instructions ?? draftDeliveryInstructions ?? null;
 
-    if (fulfillmentType === "delivery" && !deliveryAddress?.trim()) {
+    const fulfillmentCheck = validateFulfillmentForOrder({
+      allowsPickup: serviceModes.allowsPickup,
+      allowsDelivery: serviceModes.allowsDelivery,
+      fulfillmentType,
+      deliveryAddress,
+      requireDeliveryAddress: true,
+    });
+    if (!fulfillmentCheck.ok) {
       return {
-        httpStatus: 400,
+        httpStatus:
+          fulfillmentCheck.issue.code === "missing_delivery_address" ? 400 : 422,
         ok: false,
-        response: {
-          error: "missing_delivery_address",
-          code: "missing_delivery_address",
-          message:
-            "Delivery orders require a delivery address before finalizing.",
-        },
+        response: formatFulfillmentValidationError(
+          fulfillmentCheck.issue,
+          "finalize_order"
+        ),
         cartValidation,
         wroteDatabase: false,
       };
     }
+
+    const resolvedFulfillmentType = fulfillmentCheck.fulfillmentType;
 
     const row = {
       restaurant_id: restaurantId,
@@ -834,7 +1006,7 @@ export async function simulateHarnessTool(input: {
       items: storedItems,
       customer_name: customerCheck.customer_name,
       customer_phone: customerCheck.customer_phone,
-      fulfillment_type: fulfillmentType,
+      fulfillment_type: resolvedFulfillmentType,
       delivery_address: deliveryAddress,
       delivery_instructions: deliveryInstructions,
       updated_at: new Date().toISOString(),
@@ -884,7 +1056,7 @@ export async function simulateHarnessTool(input: {
       items: storedItems,
       customer_name: customerCheck.customer_name,
       customer_phone: customerCheck.customer_phone,
-      fulfillment_type: fulfillmentType,
+      fulfillment_type: resolvedFulfillmentType,
       delivery_address: deliveryAddress,
       delivery_instructions: deliveryInstructions,
     };
@@ -892,11 +1064,27 @@ export async function simulateHarnessTool(input: {
       .from("phone_order_receipts")
       .upsert(receiptRow, { onConflict: "restaurant_id,session_id" });
 
-    const responseBody = {
+    let responseBody: Record<string, unknown> = {
       ok: true as const,
       draft_order: data,
-      receipt_skipped: Boolean(recErr),
     };
+    if (recErr) {
+      const msg = recErr.message ?? "";
+      if (
+        /phone_order_receipts/i.test(msg) &&
+        /does not exist|schema cache|Could not find the table/i.test(msg)
+      ) {
+        responseBody = { ok: true, draft_order: data, receipt_skipped: true };
+      } else {
+        return {
+          httpStatus: 500,
+          ok: false,
+          response: { error: recErr.message, code: "database_error" },
+          cartValidation,
+          wroteDatabase: true,
+        };
+      }
+    }
     const validated = parseAgentToolResponse(
       FinalizeOrderResponseSchema,
       responseBody,
@@ -910,6 +1098,15 @@ export async function simulateHarnessTool(input: {
         cartValidation,
         wroteDatabase: true,
       };
+    }
+
+    try {
+      await markAgentCallOrderCompleted(supabase, {
+        restaurantId,
+        sessionId: parsed.data.session_id,
+      });
+    } catch {
+      // Receipt is source of truth; call row update is best-effort.
     }
 
     return {

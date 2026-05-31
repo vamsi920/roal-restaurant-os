@@ -172,8 +172,30 @@ describe("restaurant knowledge text", () => {
           category: "policies",
           question: "Do you take reservations?",
           answer: "This line handles pickup orders.",
+          is_active: true,
+        },
+        {
+          category: "hours",
+          question: "Hidden draft",
+          answer: "Not live yet.",
+          is_active: false,
         },
       ])
     ).toBe("[policies] Do you take reservations? => This line handles pickup orders.");
+  });
+
+  it("accepts structured knowledge_entries with active state", () => {
+    const result = RestaurantProfileInputSchema.safeParse({
+      ...base,
+      knowledge_entries: [
+        {
+          category: "allergens",
+          question: "Nut-free?",
+          answer: "We cannot guarantee nut-free preparation.",
+          is_active: true,
+        },
+      ],
+    });
+    expect(result.success).toBe(true);
   });
 });

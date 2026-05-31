@@ -23,7 +23,9 @@ describe("analytics live posture (launch 23)", () => {
     expect(dash).toContain("Call orders");
     expect(dash).toContain("FAQ / no order");
     expect(dash).toContain("Upsell attach rate");
-    expect(dash).toContain("Eligible orders");
+    expect(dash).toContain("eligible orders");
+    expect(dash).toContain("Voicemail / callback");
+    expect(dash).toContain("Reservations");
     expect(dash).toContain("Avg order estimate");
     expect(dash).toContain("Stuck orders");
     expect(dash).toContain("Menu scan");

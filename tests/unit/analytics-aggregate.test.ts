@@ -5,17 +5,24 @@ import {
   aggregatePopularItems,
   aggregateUpsellAttachStats,
   bucketUsageByDay,
+  buildReceiptSessionKeys,
   conversionPercent,
+  estimateRevenueCents,
   popularItemSources,
   type OrderRow,
   type ReceiptRow,
   type UsageRow,
 } from "@/lib/analytics/aggregate";
 import {
+  averageOrderEstimateCents,
+  bucketOrderSessionsByDay,
+  collectOrderSessions,
   peakCallHoursFromEvents,
   peakCallWindowsFromEvents,
+  sessionHasCompletedOrder,
 } from "@/lib/analytics/phone-ops-metrics";
 import { buildMenuPriceContext } from "@/lib/orders/menu-price-context";
+import { DEFAULT_ORDER_PRICING } from "@/lib/orders/pricing-settings";
 import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 
 describe("conversionPercent", () => {
@@ -69,6 +76,7 @@ describe("aggregateUpsellAttachStats", () => {
       configuredRules: 1,
       eligibleOrders: 2,
       attachedOrders: 1,
+      skippedOrders: 1,
       attachPercent: 50,
       attributedRevenueCents: null,
       revenueComplete: false,
@@ -160,6 +168,7 @@ describe("aggregateUpsellAttachStats", () => {
     expect(stats).toMatchObject({
       eligibleOrders: 1,
       attachedOrders: 1,
+      skippedOrders: 0,
       attachPercent: 100,
       attributedRevenueCents: 1100,
       revenueComplete: true,
@@ -433,15 +442,32 @@ describe("popularItemSources", () => {
   });
 });
 
-describe("call event analytics", () => {
-  it("counts post-call outcomes and peak call hours", () => {
+describe("excludeTestHarnessSessions", () => {
+  const receiptKeys = buildReceiptSessionKeys([
+    {
+      restaurant_id: "r1",
+      session_id: "ordered",
+      items: [],
+      created_at: "",
+    },
+  ]);
+
+  it("counts receipt-backed completed calls and peak windows", () => {
     const events = [
       {
         restaurant_id: "r1",
+        session_id: "ordered",
         status: "ended",
         outcome: "order_completed",
         started_at: "2026-05-30T18:10:00.000Z",
         ended_at: "2026-05-30T18:12:00.000Z",
+      },
+      {
+        restaurant_id: "r1",
+        status: "ended",
+        outcome: "order_completed",
+        started_at: "2026-05-30T18:20:00.000Z",
+        ended_at: "2026-05-30T18:21:00.000Z",
       },
       {
         restaurant_id: "r1",
@@ -459,22 +485,205 @@ describe("call event analytics", () => {
       },
     ];
 
-    expect(aggregateCallOutcomes(events)).toMatchObject({
-      total: 3,
+    expect(aggregateCallOutcomes(events, receiptKeys)).toMatchObject({
+      total: 4,
       completed: 1,
-      noOrder: 1,
+      noOrder: 2,
       abandoned: 1,
     });
     expect(peakCallHoursFromEvents(events)[0]).toMatchObject({
       hourUtc: 18,
-      orderCount: 2,
+      orderCount: 3,
     });
-    expect(peakCallWindowsFromEvents(events)[0]).toMatchObject({
+    expect(peakCallWindowsFromEvents(events, receiptKeys)[0]).toMatchObject({
       dayLabel: "Sat",
       hourUtc: 18,
-      callCount: 2,
+      callCount: 3,
       completedCount: 1,
-      conversionPercent: 50,
+      conversionPercent: 33,
     });
+  });
+
+  it("counts voicemail, callback, and handoff follow-ups", () => {
+    const events = [
+      {
+        restaurant_id: "r1",
+        status: "ended",
+        outcome: "no_order",
+        started_at: "2026-05-30T18:10:00.000Z",
+        ended_at: "2026-05-30T18:12:00.000Z",
+        transcript_metadata: { voicemail_detected: true },
+      },
+      {
+        restaurant_id: "r1",
+        status: "ended",
+        outcome: "no_order",
+        started_at: "2026-05-30T18:20:00.000Z",
+        ended_at: "2026-05-30T18:21:00.000Z",
+        transcript_metadata: { callback_requested: true },
+      },
+      {
+        restaurant_id: "r1",
+        status: "ended",
+        outcome: "no_order",
+        started_at: "2026-05-30T18:30:00.000Z",
+        ended_at: "2026-05-30T18:31:00.000Z",
+        transcript_metadata: { handoff_requested: true },
+      },
+    ];
+
+    expect(aggregateCallOutcomes(events)).toMatchObject({
+      voicemailOrCallback: 2,
+      handoff: 1,
+    });
+  });
+
+  it("excludes transcript-only order_completed from revenue metrics", () => {
+    expect(
+      aggregateCallOutcomes(
+        [
+          {
+            restaurant_id: "r1",
+            status: "ended",
+            outcome: "order_completed",
+            started_at: "2026-05-30T18:10:00.000Z",
+            ended_at: "2026-05-30T18:12:00.000Z",
+            transcript_metadata: {
+              transcript_summary: "Guest ordered two pizzas",
+            },
+          },
+        ],
+        new Set()
+      )
+    ).toMatchObject({
+      completed: 0,
+      noOrder: 1,
+    });
+  });
+});
+
+describe("estimateRevenueCents", () => {
+  const menu = buildMenuPriceContext(
+    [
+      {
+        id: "item-burger",
+        category_id: "cat-1",
+        name: "Burger",
+        description: null,
+        price: 12,
+        is_available: true,
+        sort_order: 1,
+        raw_menu_data: null,
+        updated_at: "",
+      },
+    ],
+    []
+  );
+  const menuByRestaurant = new Map([["r1", menu]]);
+  const pricingByRestaurant = new Map([["r1", DEFAULT_ORDER_PRICING]]);
+
+  it("counts only finalized phone receipts", () => {
+    const revenue = estimateRevenueCents(
+      [
+        {
+          restaurant_id: "r1",
+          session_id: "s1",
+          items: [{ name: "Burger", quantity: 2 }],
+          created_at: "",
+        },
+      ],
+      menuByRestaurant,
+      pricingByRestaurant
+    );
+
+    expect(revenue).toMatchObject({
+      orderCount: 1,
+      totalCents: 2400,
+      complete: true,
+    });
+  });
+
+  it("ignores usage-only completion without receipts", () => {
+    const revenue = estimateRevenueCents([], menuByRestaurant, pricingByRestaurant);
+    expect(revenue).toEqual({
+      totalCents: null,
+      complete: true,
+      orderCount: 0,
+    });
+  });
+});
+
+describe("averageOrderEstimateCents", () => {
+  const menu = buildMenuPriceContext(
+    [
+      {
+        id: "item-burger",
+        category_id: "cat-1",
+        name: "Burger",
+        description: null,
+        price: 10,
+        is_available: true,
+        sort_order: 1,
+        raw_menu_data: null,
+        updated_at: "",
+      },
+    ],
+    []
+  );
+  const menuByRestaurant = new Map([["r1", menu]]);
+  const pricingByRestaurant = new Map([["r1", DEFAULT_ORDER_PRICING]]);
+
+  it("averages receipt totals only", () => {
+    const avg = averageOrderEstimateCents(
+      [
+        {
+          restaurant_id: "r1",
+          session_id: "s1",
+          items: [{ name: "Burger", quantity: 1 }],
+          created_at: "",
+        },
+        {
+          restaurant_id: "r1",
+          session_id: "s2",
+          items: [{ name: "Burger", quantity: 3 }],
+          created_at: "",
+        },
+      ],
+      menuByRestaurant,
+      pricingByRestaurant
+    );
+
+    expect(avg).toMatchObject({
+      avgCents: 2000,
+      complete: true,
+      sampleSize: 2,
+    });
+  });
+});
+
+describe("excludeTestHarnessSessions", () => {
+  it("drops harness sessions from analytics inputs", async () => {
+    const { excludeTestHarnessSessions } = await import(
+      "@/lib/analytics/exclude-test-sessions"
+    );
+    const rows = [
+      { session_id: "conv-live-1", restaurant_id: "r1" },
+      { session_id: "roal-harness-abc", restaurant_id: "r1" },
+    ];
+    expect(excludeTestHarnessSessions(rows)).toEqual([
+      { session_id: "conv-live-1", restaurant_id: "r1" },
+    ]);
+  });
+
+  it("drops harness reservation rows before counting", async () => {
+    const { excludeTestHarnessSessions } = await import(
+      "@/lib/analytics/exclude-test-sessions"
+    );
+    const rows = [
+      { id: "a", restaurant_id: "r1", session_id: "conv-live-res" },
+      { id: "b", restaurant_id: "r1", session_id: "roal-harness-res" },
+      { id: "c", restaurant_id: "r1", session_id: null },
+    ];
+    expect(excludeTestHarnessSessions(rows)).toHaveLength(2);
   });
 });

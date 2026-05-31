@@ -23,6 +23,15 @@ export const RestaurantKnowledgeEntryInputSchema = z.object({
   answer: z.string().trim().min(2).max(1200),
 });
 
+export const RestaurantKnowledgeFormEntrySchema =
+  RestaurantKnowledgeEntryInputSchema.extend({
+    is_active: z.boolean().default(true),
+  });
+
+export type RestaurantKnowledgeFormEntry = z.infer<
+  typeof RestaurantKnowledgeFormEntrySchema
+>;
+
 export type RestaurantKnowledgeEntryInput = z.infer<
   typeof RestaurantKnowledgeEntryInputSchema
 >;
@@ -75,9 +84,13 @@ export function parseKnowledgeText(
 }
 
 export function serializeKnowledgeEntries(
-  entries: readonly Pick<RestaurantKnowledgeEntry, "category" | "question" | "answer">[]
+  entries: readonly Pick<
+    RestaurantKnowledgeEntry,
+    "category" | "question" | "answer" | "is_active"
+  >[]
 ): string {
   return entries
+    .filter((entry) => entry.is_active !== false)
     .map((entry) => `[${entry.category}] ${entry.question} => ${entry.answer}`)
     .join("\n");
 }

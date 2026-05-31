@@ -6,12 +6,14 @@ import {
   loadOrderCallEvidenceBySession,
   type OrderCallEvidence,
 } from "@/lib/live-orders/call-evidence";
-import {
-  phoneAgentReadinessFromProfile,
-  type PhoneAgentReadinessSnapshot,
-} from "@/lib/live-orders/readiness-from-profile";
+import { loadRestaurantLaunchGate } from "@/lib/restaurant-launch/load-checklist";
+import type { LaunchGateSnapshot } from "@/lib/restaurant-launch/types";
 import type { DraftOrderRow, PhoneOrderReceiptRow, RestaurantProfile } from "@/lib/types";
 import type { LiveOrdersRecentOutcome } from "@/lib/live-orders/build-recent-outcomes";
+import {
+  filterDraftOrdersForRestaurant,
+  filterReceiptsForRestaurant,
+} from "@/lib/live-orders/kds-orders-surface";
 
 export const LIVE_ORDERS_RECEIPT_LIMIT = 150;
 export const LIVE_ORDERS_OUTCOMES_RANGE_HOURS = 48;
@@ -19,7 +21,7 @@ export const LIVE_ORDERS_OUTCOMES_RANGE_HOURS = 48;
 export type LiveOrdersPageSnapshot = {
   restaurantId: string;
   restaurantName: string;
-  readiness: PhoneAgentReadinessSnapshot;
+  launchGate: LaunchGateSnapshot;
   activeCalls: CommandCenterCallRow[];
   recentOutcomes: LiveOrdersRecentOutcome[];
   outcomesEmpty: boolean;
@@ -55,7 +57,7 @@ export async function loadLiveOrdersPageData(
 
   const ordersClient = input.ordersDb ?? supabase;
 
-  const [commandCenter, draftsRes, receiptsRes] = await Promise.all([
+  const [commandCenter, draftsRes, receiptsRes, launchGate] = await Promise.all([
     loadRestaurantCommandCenter(supabase, {
       restaurantId,
       restaurantName: input.restaurantName,
@@ -80,15 +82,25 @@ export async function loadLiveOrdersPageData(
       .eq("restaurant_id", restaurantId)
       .order("created_at", { ascending: false })
       .limit(LIVE_ORDERS_RECEIPT_LIMIT),
+    loadRestaurantLaunchGate(supabase, {
+      restaurantId,
+      restaurantName: input.restaurantName,
+    }),
   ]);
 
   const draftErr = draftsRes.error?.message ?? null;
   const receiptErr = receiptsRes.error?.message ?? null;
 
-  const initialDraftOrders = (draftsRes.data as DraftOrderRow[]) ?? [];
+  const initialDraftOrders = filterDraftOrdersForRestaurant(
+    (draftsRes.data as DraftOrderRow[]) ?? [],
+    restaurantId
+  );
   const initialReceipts = receiptErr
     ? []
-    : ((receiptsRes.data as PhoneOrderReceiptRow[]) ?? []);
+    : filterReceiptsForRestaurant(
+        (receiptsRes.data as PhoneOrderReceiptRow[]) ?? [],
+        restaurantId
+      );
   const sessionIds = [
     ...initialDraftOrders.map((row) => row.session_id),
     ...initialReceipts.map((row) => row.session_id),
@@ -111,7 +123,7 @@ export async function loadLiveOrdersPageData(
   return {
     restaurantId,
     restaurantName: input.restaurantName,
-    readiness: phoneAgentReadinessFromProfile(input.profile),
+    launchGate,
     activeCalls: commandCenter.activeCalls,
     recentOutcomes,
     outcomesEmpty: recentOutcomes.length === 0,

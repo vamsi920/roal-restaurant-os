@@ -1,12 +1,24 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import {
+  filterBillablePhoneOrderReceipts,
+  type BillableReceiptRow,
+} from "@/lib/billing/billable-orders";
+import { getElevenLabsAgentId } from "@/lib/env.server";
 import { getRestaurantOnboarding } from "@/lib/onboarding/helpers";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import {
-  buildRestaurantLaunchChecklist,
+  buildRestaurantLaunchGate,
   parseVoiceAgentSyncSummary,
 } from "@/lib/restaurant-launch/evaluate-checklist";
-import type { RestaurantLaunchChecklistSnapshot } from "@/lib/restaurant-launch/types";
+import {
+  evaluateServerLaunchEnvReady,
+  evaluateTestCallProof,
+} from "@/lib/restaurant-launch/server-env";
+import type {
+  LaunchGateSnapshot,
+  RestaurantLaunchChecklistSnapshot,
+} from "@/lib/restaurant-launch/types";
 
 async function menuItemCount(
   supabase: SupabaseClient,
@@ -32,17 +44,25 @@ async function hoursConfigured(
 async function testCallPassed(
   supabase: SupabaseClient,
   restaurantId: string
-): Promise<boolean> {
+): Promise<{ passed: boolean; detail: string }> {
   const onboarding = await getRestaurantOnboarding(supabase, restaurantId);
-  const stepStatus = onboarding?.steps.test_call?.status;
-  if (stepStatus === "completed") return true;
+  const onboardingCompleted =
+    onboarding?.steps.test_call?.status === "completed";
 
-  const { count: receiptCount, error: receiptErr } = await supabase
+  const { data, error } = await supabase
     .from("phone_order_receipts")
-    .select("id", { count: "exact", head: true })
+    .select("restaurant_id, session_id, items, created_at")
     .eq("restaurant_id", restaurantId);
-  if (receiptErr) throw new Error(receiptErr.message);
-  return (receiptCount ?? 0) > 0;
+  if (error) throw new Error(error.message);
+
+  const billable = filterBillablePhoneOrderReceipts(
+    (data ?? []) as BillableReceiptRow[]
+  );
+
+  return evaluateTestCallProof({
+    onboardingTestCallCompleted: onboardingCompleted,
+    billableReceiptCount: billable.length,
+  });
 }
 
 export async function loadRestaurantLaunchChecklist(
@@ -53,26 +73,43 @@ export async function loadRestaurantLaunchChecklist(
     phoneWebhookFromAgent?: string | null;
   }
 ): Promise<RestaurantLaunchChecklistSnapshot> {
+  const gate = await loadRestaurantLaunchGate(supabase, input);
+  return gate.checklist;
+}
+
+export async function loadRestaurantLaunchGate(
+  supabase: SupabaseClient,
+  input: {
+    restaurantId: string;
+    restaurantName: string;
+    phoneWebhookFromAgent?: string | null;
+  }
+): Promise<LaunchGateSnapshot> {
   const profile = await getRestaurantProfile(supabase, input.restaurantId);
-  const [menuItems, hours, testOk] = await Promise.all([
+  const [menuItems, hours, testProof, serverEnv] = await Promise.all([
     menuItemCount(supabase, input.restaurantId),
     hoursConfigured(supabase, input.restaurantId),
     testCallPassed(supabase, input.restaurantId),
+    Promise.resolve(evaluateServerLaunchEnvReady()),
   ]);
 
   const syncSummary = parseVoiceAgentSyncSummary(
     profile?.elevenlabs_last_sync_summary ?? null
   );
 
-  return buildRestaurantLaunchChecklist({
+  return buildRestaurantLaunchGate({
     restaurantId: input.restaurantId,
     restaurantName: input.restaurantName,
     profile,
     menuItemCount: menuItems,
     hoursConfigured: hours,
-    testCallPassed: testOk,
+    testCallPassed: testProof.passed,
+    testCallDetail: testProof.detail,
     syncSummary,
     lastSyncError: profile?.elevenlabs_last_sync_error ?? null,
     phoneWebhookFromAgent: input.phoneWebhookFromAgent ?? null,
+    serverEnvReady: serverEnv.ready,
+    serverEnvDetail: serverEnv.detail,
+    templateAgentId: getElevenLabsAgentId(),
   });
 }

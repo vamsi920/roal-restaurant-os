@@ -9,6 +9,28 @@ export type RestaurantUpsellRuleInput = z.infer<
   typeof RestaurantUpsellRuleInputSchema
 >;
 
+export const RestaurantUpsellFormEntrySchema = RestaurantUpsellRuleInputSchema.extend({
+  is_active: z.boolean().default(true),
+});
+
+export type RestaurantUpsellFormEntry = z.infer<
+  typeof RestaurantUpsellFormEntrySchema
+>;
+
+export const UPSSELL_RULE_EXAMPLES: readonly {
+  trigger_text: string;
+  offer_text: string;
+}[] = [
+  {
+    trigger_text: "Biryani order",
+    offer_text: "Mango lassi or raita if available",
+  },
+  {
+    trigger_text: "Large pizza",
+    offer_text: "Garlic knots if available",
+  },
+];
+
 export type RestaurantUpsellRule = RestaurantUpsellRuleInput & {
   id: string;
   organization_id: string;

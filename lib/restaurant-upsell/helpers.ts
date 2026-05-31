@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type {
+  RestaurantUpsellFormEntry,
   RestaurantUpsellRule,
   RestaurantUpsellRuleInput,
 } from "@/lib/restaurant-upsell/schema";
@@ -41,12 +42,17 @@ export async function loadRestaurantUpsellRules(
   return ((data ?? []) as Record<string, unknown>[]).map(mapRow);
 }
 
+export type RestaurantUpsellRuleSaveInput = RestaurantUpsellRuleInput &
+  Pick<Partial<RestaurantUpsellFormEntry>, "is_active"> & {
+    sort_order?: number;
+  };
+
 export async function replaceRestaurantUpsellRules(
   supabase: SupabaseClient,
   input: {
     restaurantId: string;
     organizationId: string;
-    rules: RestaurantUpsellRuleInput[];
+    rules: RestaurantUpsellRuleSaveInput[];
   }
 ): Promise<RestaurantUpsellRule[]> {
   const { restaurantId, organizationId, rules } = input;
@@ -63,8 +69,8 @@ export async function replaceRestaurantUpsellRules(
     restaurant_id: restaurantId,
     trigger_text: rule.trigger_text,
     offer_text: rule.offer_text,
-    is_active: true,
-    sort_order: index,
+    is_active: rule.is_active ?? true,
+    sort_order: rule.sort_order ?? index,
   }));
 
   const { data, error } = await supabase

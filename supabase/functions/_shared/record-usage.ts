@@ -249,7 +249,12 @@ export async function recordAgentToolMetering(
     await recordActiveLocation(supabase, input.organizationId, input.restaurantId);
   }
 
-  if (input.recordOrderCompleted && input.sessionId && outcome === "success") {
+  if (
+    input.recordOrderCompleted &&
+    input.sessionId &&
+    outcome === "success" &&
+    (input.lineCount ?? 0) > 0
+  ) {
     await recordUsageEvent(supabase, {
       eventType: "order_completed",
       organizationId: input.organizationId,

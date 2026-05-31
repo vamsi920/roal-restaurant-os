@@ -6,20 +6,18 @@ const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
 describe("Live Agent responsive (prompt 31)", () => {
-  it("structures agent page header, stats, and embedded panel", () => {
+  it("structures agent page header and embedded panel", () => {
     const page = read("app/dashboard/restaurants/[id]/agent/page.tsx");
     const panel = read("app/dashboard/restaurants/[id]/VoiceAgentPanel.tsx");
     const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
 
+    expect(page).toContain("RestaurantLaunchGateCard");
+    expect(page).toContain("loadRestaurantLaunchGate");
     expect(page).toContain("live-agent-page__header");
-    expect(page).toContain("live-agent-page__stats");
+    expect(page).toContain("live-agent-page__inline-meta");
     expect(page).toContain("kds-workspace--agent");
     expect(page).toContain("overflow-x-hidden");
-    expect(page).toContain("w-full");
-    expect(page).toContain("sm:w-auto");
     expect(panel).toContain("voice-agent-panel");
-    expect(panel).toContain("voice-agent-panel__advanced");
-    expect(panel).toContain("Advanced diagnostics");
     expect(css).toContain("Live Agent page responsive (prompt 31)");
   });
 

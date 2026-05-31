@@ -1,11 +1,27 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+vi.mock("@/lib/env.public", () => ({
+  getPublicEnv: () => ({
+    NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co",
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
+  }),
+}));
 import { buildRecentPhoneOutcomes } from "@/lib/live-orders/build-recent-outcomes";
+import {
+  kdsHonestEmptyOrdersCopy,
+  shouldShowLiveCallIndicator,
+} from "@/lib/live-orders/kds-orders-surface";
 import {
   deriveProfileConnectionStatus,
   menuSyncLabelFromSnapshot,
   phoneAgentReadinessFromProfile,
 } from "@/lib/live-orders/readiness-from-profile";
+import {
+  buildRestaurantLaunchChecklist,
+  evaluateLaunchGate,
+} from "@/lib/restaurant-launch/evaluate-checklist";
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
+import type { DraftOrderRow } from "@/lib/types";
 
 function callRow(
   partial: Partial<CommandCenterCallRow> & Pick<CommandCenterCallRow, "sessionId">
@@ -55,6 +71,43 @@ describe("phoneAgentReadinessFromProfile", () => {
   });
 });
 
+describe("live orders launch gate wiring", () => {
+  it("orders page uses shared launch gate strip", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const page = readFileSync(
+      join(import.meta.dirname, "../..", "app/dashboard/restaurants/[id]/page.tsx"),
+      "utf8"
+    );
+    const loader = readFileSync(
+      join(import.meta.dirname, "../..", "lib/live-orders/load-live-orders-page.ts"),
+      "utf8"
+    );
+    expect(page).toContain("PhoneAgentReadinessStrip");
+    expect(page).toContain("launchGate={pageData.launchGate}");
+    expect(loader).toContain("loadRestaurantLaunchGate");
+  });
+
+  it("launch gate phase matches checklist truth", () => {
+    const checklist = buildRestaurantLaunchChecklist({
+      restaurantId: "r1",
+      restaurantName: "Taco House",
+      profile: null,
+      menuItemCount: 0,
+      hoursConfigured: false,
+      testCallPassed: false,
+      syncSummary: null,
+      lastSyncError: null,
+      phoneWebhookFromAgent: null,
+      serverEnvReady: false,
+      serverEnvDetail: "Server config incomplete",
+    });
+    const gate = evaluateLaunchGate(checklist);
+    expect(gate.phase).toBe("blocked");
+    expect(gate.isLiveReady).toBe(false);
+  });
+});
+
 describe("buildRecentPhoneOutcomes", () => {
   it("merges and sorts outcomes by time", () => {
     const outcomes = buildRecentPhoneOutcomes({
@@ -84,5 +137,36 @@ describe("buildRecentPhoneOutcomes", () => {
     expect(
       buildRecentPhoneOutcomes({ failed: [], handoff: [], unknown: [] })
     ).toEqual([]);
+  });
+});
+
+describe("KDS live orders page helpers", () => {
+  it("shows live call indicator for active draft carts", () => {
+    const order: DraftOrderRow = {
+      id: "d1",
+      restaurant_id: "11111111-1111-4111-8111-111111111111",
+      session_id: "sess",
+      status: "draft",
+      items: [{ name: "Burger", quantity: 1, customizations: [] }],
+      customer_name: null,
+      customer_phone: null,
+      created_at: "2026-05-30T17:00:00.000Z",
+      updated_at: "2026-05-30T17:00:00.000Z",
+      completed_at: null,
+      canceled_at: null,
+      fulfillment_type: null,
+      delivery_address: null,
+      delivery_instructions: null,
+      accepted_at: null,
+      in_progress_at: null,
+      ready_at: null,
+    };
+    expect(
+      shouldShowLiveCallIndicator({ liveCarts: [order], activeCalls: [] })
+    ).toBe(true);
+  });
+
+  it("uses honest empty-state copy", () => {
+    expect(kdsHonestEmptyOrdersCopy().title).toMatch(/No phone orders/i);
   });
 });

@@ -39,5 +39,7 @@ describe("KDS order card responsive (prompt 24)", () => {
     expect(parts).toContain("ORDER_ACTION_LABELS");
     expect(parts).toContain("aria-busy={pending}");
     expect(parts).toContain("PickupStatusBadge");
+    expect(parts).toContain("FulfillmentLine");
+    expect(parts).toContain("kds-order-card__fulfillment");
   });
 });

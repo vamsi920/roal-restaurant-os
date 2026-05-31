@@ -19,7 +19,10 @@ import type { OnboardingStepStatus } from "@/lib/onboarding/types";
 import { loadOnboardingWizardState } from "@/lib/onboarding/wizard-state.server";
 import { emitGoLiveIfTransition } from "@/lib/notifications/operational-events";
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
-import { upsertRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+import {
+  getRestaurantProfile,
+  upsertRestaurantProfile,
+} from "@/lib/restaurant-profile/helpers";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { applyDefaultOrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
 import { createServerSupabase } from "@/lib/supabase/server";
@@ -27,6 +30,8 @@ import {
   provisionRestaurantVoiceAgent,
   tryProvisionVoiceAgentForNewRestaurant,
 } from "@/lib/voice-agent/provision-restaurant-voice-agent";
+import { runRestaurantVoiceAgentSync } from "@/lib/voice-agent/run-restaurant-voice-agent-sync";
+import { sanitizeVoiceAgentDisplayError } from "@/lib/voice-agent/sanitize-display-error";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 
 function slugify(name: string): string {
@@ -139,7 +144,19 @@ export async function createRestaurantWizardAction(input: {
       "completed",
       { agent_id: provision.agent_id, source: "auto_on_create" }
     );
-  } else if (!("skipped" in provision && provision.skipped)) {
+  } else if ("skipped" in provision && provision.skipped) {
+    await updateRestaurantOnboardingStep(
+      supabase,
+      data.id,
+      input.organizationId,
+      "voice_agent",
+      "in_progress",
+      {
+        provision_skipped: true,
+        provision_error: provision.warning,
+      }
+    );
+  } else if (!provision.ok) {
     const phase = "phase" in provision ? provision.phase : "provision";
     await updateRestaurantOnboardingStep(
       supabase,
@@ -366,4 +383,78 @@ export async function completeMenuImportStepAction(input: {
   );
 
   revalidatePath("/dashboard/onboarding");
+}
+
+export async function syncRestaurantVoiceAgentOnboardingAction(input: {
+  restaurantId: string;
+  organizationId: string;
+}) {
+  await requireOrgMembership(input.organizationId);
+  const supabase = await createServerSupabase();
+
+  const { data: restaurant, error: restErr } = await supabase
+    .from("restaurants")
+    .select("id, name, organization_id")
+    .eq("id", input.restaurantId)
+    .maybeSingle();
+  if (restErr) throw new Error(formatSupabaseClientError(restErr.message));
+  if (!restaurant || restaurant.organization_id !== input.organizationId) {
+    throw new Error("Restaurant does not belong to this organization.");
+  }
+
+  const profile = await getRestaurantProfile(supabase, input.restaurantId);
+  const agentId = profile?.elevenlabs_agent_id?.trim();
+  if (!agentId) {
+    throw new Error("Provision the voice agent before syncing tools.");
+  }
+
+  try {
+    const { summary } = await runRestaurantVoiceAgentSync({
+      agentId,
+      restaurantId: input.restaurantId,
+      restaurantName: restaurant.name as string,
+    });
+    const now = new Date().toISOString();
+    const { error } = await supabase
+      .from("restaurant_profiles")
+      .update({
+        elevenlabs_provision_status: "ready",
+        elevenlabs_provision_error: null,
+        elevenlabs_menu_auto_sync_status: "succeeded",
+        elevenlabs_menu_auto_sync_error: null,
+        elevenlabs_last_sync_at: now,
+        elevenlabs_last_sync_error: null,
+        elevenlabs_last_sync_summary: summary,
+        updated_at: now,
+      })
+      .eq("restaurant_id", input.restaurantId);
+    if (error) throw new Error(formatSupabaseClientError(error.message));
+  } catch (e) {
+    const message = e instanceof Error ? e.message : "Sync failed";
+    const safeMessage =
+      sanitizeVoiceAgentDisplayError(message) ?? "Sync failed";
+    await supabase
+      .from("restaurant_profiles")
+      .update({
+        elevenlabs_last_sync_error: safeMessage.slice(0, 2000),
+        updated_at: new Date().toISOString(),
+      })
+      .eq("restaurant_id", input.restaurantId);
+    revalidatePath("/dashboard/onboarding");
+    revalidatePath(`/dashboard/restaurants/${input.restaurantId}/agent`);
+    throw new Error(safeMessage);
+  }
+
+  await updateRestaurantOnboardingStep(
+    supabase,
+    input.restaurantId,
+    input.organizationId,
+    "voice_agent",
+    "completed",
+    { agent_id: agentId, source: "onboarding_sync" }
+  );
+
+  revalidatePath("/dashboard/onboarding");
+  revalidatePath(`/dashboard/restaurants/${input.restaurantId}/agent`);
+  return { agentId };
 }

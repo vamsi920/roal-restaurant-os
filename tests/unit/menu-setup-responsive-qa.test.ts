@@ -33,6 +33,15 @@ describe("menu setup responsive (prompt 27)", () => {
     expect(css).toContain(".menu-import-history__file");
   });
 
+  it("styles upsell editor for phone and tablet layouts", () => {
+    const editor = read(
+      "components/restaurant-upsell/RestaurantUpsellEditor.tsx"
+    );
+    expect(editor).toContain("sm:grid-cols-2");
+    expect(editor).toContain("min-h-11");
+    expect(editor).toContain("flex-wrap");
+  });
+
   it("keeps realtime call indicator on real draft_orders data", () => {
     const indicator = read(
       "app/dashboard/restaurants/[id]/menu/MenuSetupCallIndicator.tsx"

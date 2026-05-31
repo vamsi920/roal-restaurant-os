@@ -17,7 +17,7 @@ function preferGradientOnlyBackground(): boolean {
  */
 export function LandingVideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [gradientOnly, setGradientOnly] = useState(true);
+  const [gradientOnly, setGradientOnly] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
 
   useLayoutEffect(() => {

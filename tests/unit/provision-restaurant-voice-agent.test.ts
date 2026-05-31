@@ -61,17 +61,35 @@ describe("tryProvisionVoiceAgentForNewRestaurant", () => {
     vi.mocked(getElevenLabsAgentId).mockReturnValue("agent_template");
   });
 
-  it("returns skipped when template agent env is unset", async () => {
+  it("returns skipped when template agent env is unset and persists skipped state", async () => {
     vi.mocked(getElevenLabsAgentId).mockReturnValue(null);
-    const result = await tryProvisionVoiceAgentForNewRestaurant({
-      restaurantId: RESTAURANT_ID,
-      restaurantName: "Skip",
-      organizationId: ORG_ID,
-      userId: USER_ID,
-    });
+    const { client, updates } = mockSupabase();
+    const result = await tryProvisionVoiceAgentForNewRestaurant(
+      {
+        restaurantId: RESTAURANT_ID,
+        restaurantName: "Skip",
+        organizationId: ORG_ID,
+        userId: USER_ID,
+      },
+      {
+        getSupabase: async () => client,
+        provisionConvaiAgent: vi.fn(),
+        runSync: vi.fn(),
+      }
+    );
     expect(result.ok).toBe(false);
     if (result.ok || !("skipped" in result)) return;
     expect(result.skipped).toBe(true);
+    expect(
+      updates.some(
+        (u) =>
+          u.elevenlabs_provision_error ===
+          "Voice agent auto-setup skipped (ELEVENLABS_AGENT_ID not configured). Connect manually from Live Agent."
+      )
+    ).toBe(true);
+    expect(updates.some((u) => u.elevenlabs_provision_status === "ready")).toBe(
+      false
+    );
   });
 });
 

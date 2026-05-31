@@ -30,6 +30,18 @@ function phoneDigits(value: string | null | undefined): string {
   return (value ?? "").replace(/\D/g, "");
 }
 
+function phoneMatchKey(value: string | null | undefined): string {
+  const digits = phoneDigits(value);
+  return digits.length >= 10 ? digits.slice(-10) : digits;
+}
+
+function scopedReceipts(
+  rows: JsonRecord[],
+  restaurantId: string
+): JsonRecord[] {
+  return rows.filter((row) => asString(row.restaurant_id) === restaurantId);
+}
+
 function itemNames(items: unknown): string[] {
   if (!Array.isArray(items)) return [];
   const names: string[] = [];
@@ -90,20 +102,25 @@ async function findCallerReceipts(
     "id, restaurant_id, session_id, items, customer_name, customer_phone, created_at";
 
   if (input.customer_phone) {
-    const targetDigits = phoneDigits(input.customer_phone);
-    const { data, error } = await supabase
-      .from("phone_order_receipts")
-      .select(select)
-      .eq("restaurant_id", restaurantId)
-      .not("customer_phone", "is", null)
-      .order("created_at", { ascending: false })
-      .limit(100);
-    if (error) throw error;
-    const rows = (Array.isArray(data) ? data : []) as JsonRecord[];
-    const exact = rows.filter(
-      (row) => phoneDigits(asString(row.customer_phone)) === targetDigits
-    );
-    if (exact.length > 0) return exact.slice(0, 10);
+    const targetKey = phoneMatchKey(input.customer_phone);
+    if (targetKey.length >= 10) {
+      const { data, error } = await supabase
+        .from("phone_order_receipts")
+        .select(select)
+        .eq("restaurant_id", restaurantId)
+        .not("customer_phone", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      const rows = scopedReceipts(
+        (Array.isArray(data) ? data : []) as JsonRecord[],
+        restaurantId
+      );
+      const exact = rows.filter(
+        (row) => phoneMatchKey(asString(row.customer_phone)) === targetKey
+      );
+      if (exact.length > 0) return exact.slice(0, 10);
+    }
   }
 
   if (input.customer_name) {
@@ -115,7 +132,10 @@ async function findCallerReceipts(
       .order("created_at", { ascending: false })
       .limit(10);
     if (error) throw error;
-    return (Array.isArray(data) ? data : []) as JsonRecord[];
+    return scopedReceipts(
+      (Array.isArray(data) ? data : []) as JsonRecord[],
+      restaurantId
+    );
   }
 
   return [];

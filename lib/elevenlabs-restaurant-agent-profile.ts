@@ -21,7 +21,12 @@ import {
   buildRestaurantVoicemailMessage,
   buildRoalKbPlaybook,
 } from "@/lib/elevenlabs/agent-prompt";
-import { loadMenuPromptSnapshot } from "@/lib/elevenlabs/load-menu-prompt-snapshot";
+import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
+import {
+  buildMenuUpsellCatalog,
+  filterUpsellRulesForPrompt,
+  type PromptReadyUpsellRule,
+} from "@/lib/restaurant-upsell/menu-binding";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { loadRestaurantKnowledgeEntries } from "@/lib/restaurant-knowledge/helpers";
 import type { RestaurantKnowledgeEntry } from "@/lib/restaurant-knowledge/schema";
@@ -181,6 +186,7 @@ export async function applyRestaurantOrderAgentProfile(options?: {
   let menu = null;
   let knowledgeEntries: RestaurantKnowledgeEntry[] = [];
   let upsellRules: RestaurantUpsellRule[] = [];
+  let promptReadyUpsellRules: PromptReadyUpsellRule[] = [];
 
   if (rid) {
     try {
@@ -196,19 +202,33 @@ export async function applyRestaurantOrderAgentProfile(options?: {
         // Hours injection is best-effort.
       }
       try {
-        menu = await loadMenuPromptSnapshot(supabase, rid);
+        const menuSnapshot = await loadRestaurantMenu(supabase, rid);
+        menu = {
+          categoryCount: menuSnapshot.categories.length,
+          itemCount: menuSnapshot.items.length,
+          modifierCount: menuSnapshot.modifiers.length,
+        };
+        try {
+          upsellRules = await loadRestaurantUpsellRules(supabase, rid);
+          promptReadyUpsellRules = filterUpsellRulesForPrompt(
+            upsellRules,
+            buildMenuUpsellCatalog(menuSnapshot)
+          );
+        } catch {
+          // Upsell rule injection is best-effort.
+        }
       } catch {
-        // Menu snapshot is best-effort.
+        try {
+          upsellRules = await loadRestaurantUpsellRules(supabase, rid);
+          promptReadyUpsellRules = [];
+        } catch {
+          // Upsell rule injection is best-effort.
+        }
       }
       try {
         knowledgeEntries = await loadRestaurantKnowledgeEntries(supabase, rid);
       } catch {
         // Knowledge injection is best-effort.
-      }
-      try {
-        upsellRules = await loadRestaurantUpsellRules(supabase, rid);
-      } catch {
-        // Upsell rule injection is best-effort.
       }
     } catch {
       // Profile load is best-effort when DB unavailable.
@@ -222,6 +242,7 @@ export async function applyRestaurantOrderAgentProfile(options?: {
     menu,
     knowledgeEntries,
     upsellRules,
+    promptReadyUpsellRules,
   });
 
   const firstMessage = buildRestaurantOrderFirstMessage(profile, restaurantName);

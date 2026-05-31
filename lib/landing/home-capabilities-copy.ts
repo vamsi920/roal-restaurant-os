@@ -3,7 +3,7 @@
 export const HOME_CAPABILITIES = {
   eyebrow: "What guests feel",
   title: "It feels like calling the restaurant, not a robot.",
-  note: "ROAL is focused on one job: answer pickup calls, understand the guest, confirm the order, and keep your team out of the phone chaos.",
+  note: "Capability statements only; not verified customer metrics. ROAL is focused on one job: answer pickup calls, understand the guest, confirm the order, and keep your team out of the phone chaos.",
   items: [
     {
       id: "answers-line",

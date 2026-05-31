@@ -51,8 +51,9 @@ export type BillingScope = "organization" | "restaurant";
 
 export type BillingUsageSnapshot = {
   menuScans: number;
-  voiceOrders: number;
-  completedOrders: number;
+  /** Receipt-backed successful phone orders in the billing period (billable). */
+  billablePhoneOrders: number;
+  estimatedBillableChargeUsd: number;
   toolCalls: number;
   importAttempts: number;
   activeLocations: number;

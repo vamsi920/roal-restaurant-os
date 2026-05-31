@@ -167,6 +167,15 @@ function mapRow(row: Record<string, unknown>): RestaurantProfile {
   };
 }
 
+export function serviceModesFromProfile(
+  profile: RestaurantProfile | null
+): { pickup: boolean; delivery: boolean } {
+  return {
+    pickup: profile?.allows_pickup === true,
+    delivery: profile?.allows_delivery === true,
+  };
+}
+
 export async function getRestaurantProfile(
   supabase: SupabaseClient,
   restaurantId: string

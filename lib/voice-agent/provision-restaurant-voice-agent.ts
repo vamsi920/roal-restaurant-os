@@ -245,6 +245,31 @@ async function persistProvisionSuccess(
   });
 }
 
+async function persistProvisionSkippedState(
+  supabase: SupabaseClient,
+  restaurantId: string,
+  message: string
+): Promise<void> {
+  await patchProfileLifecycle(supabase, restaurantId, {
+    elevenlabs_provision_status: null,
+    elevenlabs_provision_error: message.slice(0, 2000),
+    elevenlabs_menu_auto_sync_status: null,
+    elevenlabs_menu_auto_sync_error: null,
+  });
+}
+
+async function persistUnexpectedProvisionFailure(
+  supabase: SupabaseClient,
+  restaurantId: string,
+  message: string
+): Promise<void> {
+  const safeMessage = safeErrorMessage(message);
+  await patchProfileLifecycle(supabase, restaurantId, {
+    elevenlabs_provision_status: "failed",
+    elevenlabs_provision_error: safeMessage.slice(0, 2000),
+  });
+}
+
 /**
  * Clone a dedicated ConvAI agent from `ELEVENLABS_AGENT_ID`, sync ROAL tools/profile/webhook,
  * and persist lifecycle + summary on `restaurant_profiles`.
@@ -347,6 +372,8 @@ export async function provisionRestaurantVoiceAgent(
 const VOICE_AGENT_SKIPPED_WARNING =
   "Voice agent auto-setup skipped (ELEVENLABS_AGENT_ID not configured). Connect manually from Live Agent.";
 
+export const VOICE_AGENT_SKIPPED_SETUP_MESSAGE = VOICE_AGENT_SKIPPED_WARNING;
+
 const VOICE_AGENT_UNEXPECTED_WARNING =
   "Voice agent auto-setup hit an unexpected error. Your restaurant was created—retry from Live Agent when ElevenLabs is available.";
 
@@ -362,16 +389,24 @@ export async function tryProvisionVoiceAgentForNewRestaurant(
   },
   deps: ProvisionRestaurantVoiceAgentDeps = defaultProvisionRestaurantVoiceAgentDeps()
 ): Promise<VoiceAgentProvisionApiResult> {
-  if (!getElevenLabsAgentId()) {
-    return { ok: false, warning: VOICE_AGENT_SKIPPED_WARNING, skipped: true };
-  }
+  const rid = input.restaurantId.trim();
+  const orgId = input.organizationId.trim();
+  const uid = input.userId.trim();
 
   try {
+    const supabase = await deps.getSupabase();
+    await ensureRestaurantProfile(supabase, rid, orgId);
+
+    if (!getElevenLabsAgentId()) {
+      await persistProvisionSkippedState(supabase, rid, VOICE_AGENT_SKIPPED_WARNING);
+      return { ok: false, warning: VOICE_AGENT_SKIPPED_WARNING, skipped: true };
+    }
+
     const result = await provisionRestaurantVoiceAgent(
-      input.restaurantId,
+      rid,
       input.restaurantName,
-      input.organizationId,
-      input.userId,
+      orgId,
+      uid,
       deps
     );
 
@@ -394,9 +429,17 @@ export async function tryProvisionVoiceAgentForNewRestaurant(
       "[voice-agent] tryProvisionVoiceAgentForNewRestaurant",
       e instanceof Error ? e.message : e
     );
+    const warning = safeErrorMessage(e) || VOICE_AGENT_UNEXPECTED_WARNING;
+    try {
+      const supabase = await deps.getSupabase();
+      await ensureRestaurantProfile(supabase, rid, orgId);
+      await persistUnexpectedProvisionFailure(supabase, rid, warning);
+    } catch {
+      // Profile persistence is best-effort when setup throws early.
+    }
     return {
       ok: false,
-      warning: safeErrorMessage(e) || VOICE_AGENT_UNEXPECTED_WARNING,
+      warning,
       phase: "provision",
       agent_id: null,
     };

@@ -1,4 +1,5 @@
 import { lineCountFromItems } from "@/lib/agent-calls/classify-outcome";
+import { handoffSignalsFromMetadata } from "@/lib/elevenlabs/handoff-metadata";
 import type {
   AgentCallSession,
   DraftOrderCallRow,
@@ -13,23 +14,7 @@ import type {
 export function handoffSignalsFromTranscript(
   metadata: Record<string, unknown>
 ): string[] {
-  const signals: string[] = [];
-  if (metadata.handoff_requested === true) signals.push("handoff_requested");
-  if (metadata.escalation_requested === true) signals.push("escalation_requested");
-  const reason = metadata.handoff_reason ?? metadata.escalation_reason;
-  if (typeof reason === "string" && reason.trim()) {
-    signals.push(reason.trim());
-  }
-  const summary =
-    typeof metadata.summary === "string"
-      ? metadata.summary
-      : typeof metadata.transcript_summary === "string"
-        ? metadata.transcript_summary
-        : "";
-  if (/handoff|human|manager|staff|callback/i.test(summary)) {
-    signals.push("transcript_mention");
-  }
-  return signals;
+  return handoffSignalsFromMetadata(metadata);
 }
 
 export function countSessionToolErrors(
@@ -98,14 +83,20 @@ export function sessionToCommandCenterCallRow(
 
 export function buildCompletedOrdersFromReceipts(
   receipts: {
+    restaurant_id?: string;
     session_id: string;
     customer_name: string | null;
     customer_phone: string | null;
     items: unknown;
     created_at: string;
-  }[]
+  }[],
+  restaurantId?: string
 ): CommandCenterCompletedOrder[] {
-  return receipts
+  const scoped = restaurantId
+    ? receipts.filter((receipt) => receipt.restaurant_id === restaurantId)
+    : receipts;
+
+  return scoped
     .map((receipt) => ({
       sessionId: receipt.session_id,
       completedAt: receipt.created_at,
@@ -149,7 +140,11 @@ export function partitionCommandCenterSessions(input: {
   const lineBySession =
     input.draftLineCountBySession ?? new Map<string, number>();
 
-  for (const session of input.sessions) {
+  const scopedSessions = input.sessions.filter(
+    (session) => session.restaurantId === input.restaurantId
+  );
+
+  for (const session of scopedSessions) {
     if (receiptSessionIds.has(session.sessionId)) continue;
 
     const row = sessionToCommandCenterCallRow(

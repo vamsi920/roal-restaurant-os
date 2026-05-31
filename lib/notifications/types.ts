@@ -8,6 +8,12 @@ export const NOTIFICATION_EVENT_TYPES = [
   "go_live",
   "realtime_degraded",
   "staff_handoff_requested",
+  "voicemail_callback",
+  "reservation_request",
+  "catering_inquiry",
+  "complaint_caller",
+  "call_review_needed",
+  "stuck_active_call",
 ] as const;
 
 export type NotificationEventType = (typeof NOTIFICATION_EVENT_TYPES)[number];
@@ -73,6 +79,12 @@ export const NOTIFICATION_EVENT_LABELS: Record<NotificationEventType, string> = 
   go_live: "Location went live",
   realtime_degraded: "Realtime connection degraded",
   staff_handoff_requested: "Staff handoff requested",
+  voicemail_callback: "Voicemail / callback",
+  reservation_request: "Reservation request",
+  catering_inquiry: "Catering inquiry",
+  complaint_caller: "Complaint / unhappy caller",
+  call_review_needed: "Call needs review",
+  stuck_active_call: "Stuck live call",
 };
 
 export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
@@ -91,5 +103,17 @@ export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
   realtime_degraded:
     "When the live orders panel falls back to polling (Realtime offline).",
   staff_handoff_requested:
-    "When a phone call asks for manager/staff follow-up, catering help, callback, or escalation.",
+    "When a phone call asks for manager/staff follow-up or escalation.",
+  voicemail_callback:
+    "When a caller leaves voicemail or asks for a callback number follow-up.",
+  reservation_request:
+    "When the agent saves a table reservation request that still needs staff confirmation.",
+  catering_inquiry:
+    "When a caller asks about catering or large-party orders.",
+  complaint_caller:
+    "When a caller is unhappy and needs owner or manager follow-up.",
+  call_review_needed:
+    "When a call fails or ends without an order and needs owner review.",
+  stuck_active_call:
+    "When a live inbound call stays active past your threshold.",
 };

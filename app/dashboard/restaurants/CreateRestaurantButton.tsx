@@ -89,6 +89,14 @@ export function CreateRestaurantButton({ className }: { className?: string }) {
       const notice = voiceProvisionNoticeFromApi(provision);
       if (notice && provision?.ok === false && !("skipped" in provision && provision.skipped)) {
         setSubmitHint("Location created. Opening voice agent setup…");
+      } else if (
+        provision?.ok === false &&
+        "skipped" in provision &&
+        provision.skipped
+      ) {
+        setSubmitHint(
+          "Location created. Voice agent auto-setup skipped — finish on Live Agent."
+        );
       } else if (provision?.ok === true) {
         setSubmitHint("Location created. Voice agent is ready.");
       } else {

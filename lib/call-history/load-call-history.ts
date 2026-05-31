@@ -5,6 +5,10 @@ import {
   buildCallHistorySummary,
 } from "@/lib/call-history/build-call-history-rows";
 import type { CallHistorySnapshot } from "@/lib/call-history/types";
+import {
+  buildReservationBySessionMap,
+  isOpenReservationStatus,
+} from "@/lib/restaurant-reservations/schema";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import { buildMenuPriceContext } from "@/lib/orders/menu-price-context";
 import { orderPricingFromProfile } from "@/lib/orders/pricing-settings";
@@ -12,6 +16,7 @@ import type { RestaurantProfile } from "@/lib/types";
 
 export const CALL_HISTORY_DEFAULT_RANGE_DAYS = 7;
 export const CALL_HISTORY_DEFAULT_LIMIT = 75;
+export const CALL_HISTORY_RESERVATION_LIMIT = 25;
 
 export type LoadRestaurantCallHistoryInput = {
   restaurantId: string;
@@ -80,7 +85,7 @@ export async function loadRestaurantCallHistory(
       .gte("created_at", rangeSince)
       .lte("created_at", rangeUntil)
       .order("created_at", { ascending: false })
-      .limit(10),
+      .limit(CALL_HISTORY_RESERVATION_LIMIT),
   ]);
 
   const reservationRows = reservationsResult.error
@@ -105,18 +110,22 @@ export async function loadRestaurantCallHistory(
     ? orderPricingFromProfile(input.profile as RestaurantProfile)
     : undefined;
 
+  const reservationBySession = buildReservationBySessionMap(reservationRows);
+
   const rows = buildCallHistoryRows({
+    restaurantId,
     sessions,
     drafts,
     receipts,
     reservationSessionIds: reservationRows.map((row) => row.sessionId),
+    reservationBySession,
     menuCtx,
     pricing,
     limit,
   });
 
-  const openReservationRequests = reservationRows.filter(
-    (row) => row.status === "requested"
+  const openReservationRequests = reservationRows.filter((row) =>
+    isOpenReservationStatus(row.status)
   ).length;
 
   return {

@@ -1,8 +1,14 @@
+import {
+  isVoicemailTranscriptMetadata,
+  outcomeForVoicemailAwareCall,
+} from "@/lib/agent-calls/voicemail-call";
+import { followUpLabelFromHandoffMetadata } from "@/lib/elevenlabs/handoff-metadata";
 import { computeOrderTotals } from "@/lib/orders/compute-order-totals";
 import { parseOrderLineItems } from "@/lib/orders/line-items";
 import type { MenuPriceContext } from "@/lib/orders/menu-price-context";
 import { buildMenuPriceContext } from "@/lib/orders/menu-price-context";
 import type { OrderPricingSettings } from "@/lib/orders/pricing-settings";
+import { upsellOutcomeCounts } from "@/lib/restaurant-upsell/analytics-signals";
 import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 import type {
   CallOutcomeStats,
@@ -49,11 +55,91 @@ export type UpsellRuleAnalyticsRow = {
 
 export type AgentCallEventAnalyticsRow = {
   restaurant_id: string;
+  session_id?: string | null;
   status: string;
   outcome: string;
   started_at: string;
   ended_at: string | null;
+  transcript_metadata?: Record<string, unknown> | null;
 };
+
+export function receiptSessionKey(
+  restaurantId: string,
+  sessionId: string
+): string {
+  return `${restaurantId}:${sessionId.trim()}`;
+}
+
+export function buildReceiptSessionKeys(receipts: ReceiptRow[]): Set<string> {
+  const keys = new Set<string>();
+  for (const receipt of receipts) {
+    const sessionId = receipt.session_id?.trim();
+    if (!sessionId) continue;
+    keys.add(receiptSessionKey(receipt.restaurant_id, sessionId));
+  }
+  return keys;
+}
+
+export function callEventReceiptSessionKey(
+  event: AgentCallEventAnalyticsRow
+): string | null {
+  const sessionId = event.session_id?.trim();
+  if (!sessionId) return null;
+  return receiptSessionKey(event.restaurant_id, sessionId);
+}
+
+function callMetadata(
+  event: AgentCallEventAnalyticsRow
+): Record<string, unknown> {
+  return event.transcript_metadata ?? {};
+}
+
+function isTruthyFlag(value: unknown): boolean {
+  return value === true || String(value).trim().toLowerCase() === "true";
+}
+
+function isCallbackMetadata(metadata: Record<string, unknown>): boolean {
+  if (isTruthyFlag(metadata.callback_requested)) return true;
+  return followUpLabelFromHandoffMetadata(metadata) === "Callback requested";
+}
+
+export function classifyCallFollowUp(
+  metadata: Record<string, unknown>
+): "voicemail" | "callback" | "handoff" | null {
+  if (
+    isVoicemailTranscriptMetadata(metadata) ||
+    isTruthyFlag(metadata.voicemail_detected)
+  ) {
+    return "voicemail";
+  }
+  if (isCallbackMetadata(metadata)) return "callback";
+  const label = followUpLabelFromHandoffMetadata(metadata);
+  if (!label || label === "Voicemail left" || label === "Callback requested") {
+    return null;
+  }
+  return "handoff";
+}
+
+export function resolveAnalyticsCallOutcome(
+  event: AgentCallEventAnalyticsRow,
+  receiptSessionKeys: Set<string>
+): string {
+  const metadata = callMetadata(event);
+  const sessionKey = callEventReceiptSessionKey(event);
+  const hasReceipt =
+    sessionKey != null && receiptSessionKeys.has(sessionKey);
+
+  let outcome = event.outcome;
+  if (outcome === "order_completed" && !hasReceipt) {
+    outcome = "no_order";
+  }
+
+  return outcomeForVoicemailAwareCall({
+    transcriptMetadata: metadata,
+    receipt: hasReceipt ? { session_id: event.session_id!.trim() } : null,
+    inferredOutcome: outcome,
+  });
+}
 
 export type MenuImportRow = {
   extraction_status: string;
@@ -141,11 +227,14 @@ export function emptyCallOutcomeStats(): CallOutcomeStats {
     abandoned: 0,
     canceled: 0,
     unknown: 0,
+    voicemailOrCallback: 0,
+    handoff: 0,
   };
 }
 
 export function aggregateCallOutcomes(
-  events: AgentCallEventAnalyticsRow[]
+  events: AgentCallEventAnalyticsRow[],
+  receiptSessionKeys: Set<string> = new Set()
 ): CallOutcomeStats {
   const stats = emptyCallOutcomeStats();
   for (const event of events) {
@@ -153,7 +242,15 @@ export function aggregateCallOutcomes(
     if (event.status === "active" || event.outcome === "in_progress") {
       stats.active += 1;
     }
-    switch (event.outcome) {
+
+    const followUp = classifyCallFollowUp(callMetadata(event));
+    if (followUp === "voicemail" || followUp === "callback") {
+      stats.voicemailOrCallback += 1;
+    } else if (followUp === "handoff") {
+      stats.handoff += 1;
+    }
+
+    switch (resolveAnalyticsCallOutcome(event, receiptSessionKeys)) {
       case "order_completed":
         stats.completed += 1;
         break;
@@ -236,6 +333,7 @@ export function aggregateUpsellAttachStats(
       configuredRules: 0,
       eligibleOrders: 0,
       attachedOrders: 0,
+      skippedOrders: 0,
       attachPercent: null,
       attributedRevenueCents: null,
       revenueComplete: true,
@@ -375,6 +473,10 @@ export function aggregateUpsellAttachStats(
 
   const eligibleOrders = eligible.size;
   const attachedOrders = attached.size;
+  const skippedOrders = upsellOutcomeCounts({
+    eligibleOrders,
+    attachedOrders,
+  }).skipped;
   const attachedAverageOrderCents =
     attachedSubtotalSamples > 0
       ? Math.round(attachedSubtotalCents / attachedSubtotalSamples)
@@ -417,6 +519,7 @@ export function aggregateUpsellAttachStats(
     configuredRules: activeRules.length,
     eligibleOrders,
     attachedOrders,
+    skippedOrders,
     attachPercent: conversionPercent(attachedOrders, eligibleOrders),
     attributedRevenueCents:
       attachedOrders > 0 && pricedOfferLineCount > 0
@@ -516,21 +619,27 @@ export function aggregateMenuScans(
 }
 
 export function estimateRevenueCents(
-  orders: OrderRow[],
+  receipts: ReceiptRow[],
   menuByRestaurant: Map<string, MenuPriceContext>,
   pricingByRestaurant: Map<string, OrderPricingSettings>
 ): { totalCents: number | null; complete: boolean; orderCount: number } {
   let totalCents = 0;
   let complete = true;
   let orderCount = 0;
+  const seen = new Set<string>();
 
-  for (const order of orders) {
-    if (order.status !== "completed") continue;
-    const menu = menuByRestaurant.get(order.restaurant_id);
-    const pricing = pricingByRestaurant.get(order.restaurant_id);
+  for (const receipt of receipts) {
+    const sessionId = receipt.session_id?.trim();
+    if (!sessionId) continue;
+    const key = receiptSessionKey(receipt.restaurant_id, sessionId);
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    const menu = menuByRestaurant.get(receipt.restaurant_id);
+    const pricing = pricingByRestaurant.get(receipt.restaurant_id);
     if (!menu || !pricing) continue;
 
-    const lines = parseOrderLineItems(order.items);
+    const lines = parseOrderLineItems(receipt.items);
     if (lines.length === 0) continue;
 
     const totals = computeOrderTotals(lines, menu, pricing);

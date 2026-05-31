@@ -47,7 +47,9 @@ export async function replaceRestaurantKnowledgeEntries(
   input: {
     restaurantId: string;
     organizationId: string;
-    entries: RestaurantKnowledgeEntryInput[];
+    entries: Array<
+      RestaurantKnowledgeEntryInput & { is_active?: boolean }
+    >;
   }
 ): Promise<RestaurantKnowledgeEntry[]> {
   const { restaurantId, organizationId, entries } = input;
@@ -65,7 +67,7 @@ export async function replaceRestaurantKnowledgeEntries(
     category: entry.category,
     question: entry.question,
     answer: entry.answer,
-    is_active: true,
+    is_active: entry.is_active ?? true,
     sort_order: index,
   }));
 
@@ -77,4 +79,11 @@ export async function replaceRestaurantKnowledgeEntries(
 
   if (error) throw new Error(error.message);
   return ((data ?? []) as Record<string, unknown>[]).map(mapRow);
+}
+
+export function restaurantInfoKnowledgeStatusMessage(entryCount: number): string {
+  if (entryCount > 0) {
+    return "Use only the knowledge_entries in this response for operator-approved FAQ answers.";
+  }
+  return "No operator FAQ entries are configured for this location. Do not invent policies, allergens, parking, catering, refund, or reservation answers—use profile address, operations hours, get_menu_items, or offer a staff callback.";
 }

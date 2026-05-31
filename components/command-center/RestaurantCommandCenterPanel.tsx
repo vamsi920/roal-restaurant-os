@@ -103,12 +103,112 @@ function Bucket({
   );
 }
 
-export function RestaurantCommandCenterPanel({
+function CompactOutcomesList({
   snapshot,
 }: {
   snapshot: RestaurantCommandCenterSnapshot;
 }) {
+  type Row =
+    | { key: string; kind: "active" | "failed" | "handoff" | "unknown"; at: string; label: string; detail: string }
+    | { key: string; kind: "completed"; at: string; label: string; detail: string };
+
+  const rows: Row[] = [
+    ...snapshot.activeCalls.map((row) => ({
+      key: `active:${row.sessionId}`,
+      kind: "active" as const,
+      at: row.lastActivityAt,
+      label: formatCaller(row.callerPhone, null),
+      detail:
+        row.status === "active"
+          ? "In progress"
+          : row.outcome.replace(/_/g, " "),
+    })),
+    ...snapshot.completedOrders.map((order) => ({
+      key: `completed:${order.sessionId}`,
+      kind: "completed" as const,
+      at: order.completedAt,
+      label: formatCaller(order.callerPhone, order.customerName),
+      detail:
+        order.lineCount > 0
+          ? `${order.lineCount} item${order.lineCount === 1 ? "" : "s"}`
+          : "Receipt recorded",
+    })),
+    ...snapshot.failedCalls.map((row) => ({
+      key: `failed:${row.sessionId}`,
+      kind: "failed" as const,
+      at: row.lastActivityAt,
+      label: formatCaller(row.callerPhone, null),
+      detail: row.outcome.replace(/_/g, " "),
+    })),
+  ]
+    .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
+    .slice(0, 8);
+
+  if (rows.length === 0) {
+    return (
+      <KdsEmptyStatePanel title="No recent outcomes" tone="calm" icon="orders">
+        Calls and completed phone orders appear here from real draft and receipt
+        data.
+      </KdsEmptyStatePanel>
+    );
+  }
+
+  return (
+    <ul className="command-center__compact-list space-y-2">
+      {rows.map((row) => (
+        <li
+          key={row.key}
+          className="command-center__compact-row rounded-lg border border-line bg-elev/30 px-3 py-2 text-sm"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <span className="font-medium text-ink">{row.label}</span>
+            <time className="text-xs text-muted" dateTime={row.at}>
+              {formatWhen(row.at)}
+            </time>
+          </div>
+          <p className="mt-1 text-xs text-muted">
+            {row.kind === "completed" ? "Completed order" : "Call"} · {row.detail}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function RestaurantCommandCenterPanel({
+  snapshot,
+  compact = false,
+}: {
+  snapshot: RestaurantCommandCenterSnapshot;
+  compact?: boolean;
+}) {
   const rangeLabel = `${formatWhen(snapshot.rangeSince)} – ${formatWhen(snapshot.rangeUntil)}`;
+
+  if (compact) {
+    const { counts } = snapshot;
+    return (
+      <section
+        className="command-center command-center--compact min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm"
+        aria-labelledby="command-center-heading"
+      >
+        <header>
+          <h2
+            id="command-center-heading"
+            className="text-sm font-semibold text-ink"
+          >
+            Recent outcomes
+          </h2>
+          <p className="mt-1 text-xs text-muted">
+            Active {counts.active} · Completed {counts.completed} · Failed{" "}
+            {counts.failed} · Window {rangeLabel}
+          </p>
+        </header>
+        <div className="mt-3">
+          <CompactOutcomesList snapshot={snapshot} />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

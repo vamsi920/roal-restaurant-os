@@ -19,6 +19,7 @@ import {
   createAgentToolMeter,
   resolveRestaurantOrganizationId,
 } from "../_shared/record-usage.ts";
+import { buildCallerOrderStatusTimeline } from "../_shared/caller-status-timeline.ts";
 import { normalizeOrderStatus } from "../_shared/order-status.ts";
 
 type JsonRecord = Record<string, unknown>;
@@ -35,6 +36,15 @@ const STATUS_LABELS: Record<string, string> = {
 
 function asString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function phoneDigits(value: string | null | undefined): string {
+  return (value ?? "").replace(/\D/g, "");
+}
+
+function phoneMatchKey(value: string | null | undefined): string {
+  const digits = phoneDigits(value);
+  return digits.length >= 10 ? digits.slice(-10) : digits;
 }
 
 function lineCount(items: unknown): number {
@@ -89,6 +99,7 @@ function summarizeOrder(row: JsonRecord | null) {
     item_count: row ? lineCount(row.items) : 0,
     updated_at: row ? asString(row.updated_at) || null : null,
     created_at: row ? asString(row.created_at) || null : null,
+    status_timeline: row ? buildCallerOrderStatusTimeline(row) : [],
   };
 }
 
@@ -102,7 +113,13 @@ async function findOrder(
   }
 ): Promise<JsonRecord | null> {
   const select =
-    "id, restaurant_id, session_id, status, items, customer_name, customer_phone, created_at, updated_at";
+    "id, restaurant_id, session_id, status, items, customer_name, customer_phone, fulfillment_type, created_at, updated_at, accepted_at, in_progress_at, ready_at, completed_at, canceled_at";
+
+  const scopedRow = (row: JsonRecord | null | undefined): JsonRecord | null => {
+    if (!row) return null;
+    if (asString(row.restaurant_id) !== restaurantId) return null;
+    return row;
+  };
 
   if (input.session_id) {
     const { data, error } = await supabase
@@ -112,19 +129,28 @@ async function findOrder(
       .eq("session_id", input.session_id)
       .maybeSingle();
     if (error) throw error;
-    if (data) return data as JsonRecord;
+    const row = scopedRow(data as JsonRecord | null);
+    if (row) return row;
   }
 
   if (input.customer_phone) {
-    const { data, error } = await supabase
-      .from("draft_orders")
-      .select(select)
-      .eq("restaurant_id", restaurantId)
-      .eq("customer_phone", input.customer_phone)
-      .order("updated_at", { ascending: false })
-      .limit(1);
-    if (error) throw error;
-    if (Array.isArray(data) && data[0]) return data[0] as JsonRecord;
+    const targetKey = phoneMatchKey(input.customer_phone);
+    if (targetKey.length >= 10) {
+      const { data, error } = await supabase
+        .from("draft_orders")
+        .select(select)
+        .eq("restaurant_id", restaurantId)
+        .not("customer_phone", "is", null)
+        .order("updated_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      const rows = (Array.isArray(data) ? data : []) as JsonRecord[];
+      const match = rows.find(
+        (row) => phoneMatchKey(asString(row.customer_phone)) === targetKey
+      );
+      const row = scopedRow(match);
+      if (row) return row;
+    }
   }
 
   if (input.customer_name) {
@@ -136,7 +162,10 @@ async function findOrder(
       .order("updated_at", { ascending: false })
       .limit(1);
     if (error) throw error;
-    if (Array.isArray(data) && data[0]) return data[0] as JsonRecord;
+    const row = scopedRow(
+      Array.isArray(data) && data[0] ? (data[0] as JsonRecord) : null
+    );
+    if (row) return row;
   }
 
   return null;

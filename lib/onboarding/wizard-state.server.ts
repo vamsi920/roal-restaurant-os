@@ -22,6 +22,7 @@ import type { OnboardingWizardState } from "@/lib/onboarding/wizard-types";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { getPublicEnv } from "@/lib/env.public";
 import { onboardingVoiceProvisionFromProfileRow } from "@/lib/onboarding/restaurant-voice-provision";
+import { evaluateOnboardingReadiness } from "@/lib/onboarding/readiness";
 import { loadRestaurantLaunchChecklist } from "@/lib/restaurant-launch/load-checklist";
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
@@ -115,9 +116,11 @@ export async function loadOnboardingWizardState(
   };
   let menuCategoryCount = 0;
   let menuItemCount = 0;
+  let hoursConfigured = false;
   let activeRestaurantProfile: OnboardingWizardState["activeRestaurantProfile"] = null;
   let activeRestaurantVoice: OnboardingWizardState["activeRestaurantVoice"] = null;
   let launchChecklist: OnboardingWizardState["launchChecklist"] = null;
+  let readiness: OnboardingWizardState["readiness"] = null;
 
   if (activeRestaurant && organization) {
     restaurantOnboarding =
@@ -135,16 +138,22 @@ export async function loadOnboardingWizardState(
       .eq("restaurant_id", activeRestaurant.id);
     menuCategoryCount = count ?? 0;
 
-    const [profile, cardStats, checklist] = await Promise.all([
+    const [profile, cardStats, checklist, hoursResult] = await Promise.all([
       getRestaurantProfile(supabase, activeRestaurant.id),
       loadRestaurantCardStats(supabase, [activeRestaurant.id], {}),
       loadRestaurantLaunchChecklist(supabase, {
         restaurantId: activeRestaurant.id,
         restaurantName: activeRestaurant.name,
       }),
+      supabase
+        .from("restaurant_weekly_hours")
+        .select("restaurant_id")
+        .eq("restaurant_id", activeRestaurant.id)
+        .limit(1),
     ]);
 
     menuItemCount = cardStats[activeRestaurant.id]?.menuItemCount ?? 0;
+    hoursConfigured = (hoursResult.data?.length ?? 0) > 0;
 
     if (profile) {
       activeRestaurantProfile = {
@@ -173,6 +182,19 @@ export async function loadOnboardingWizardState(
     }
 
     launchChecklist = checklist;
+    readiness = evaluateOnboardingReadiness({
+      restaurantId: activeRestaurant.id,
+      restaurantName: activeRestaurant.name,
+      profile,
+      menuItemCount,
+      hoursConfigured,
+      testCallPassed:
+        checklist.items.find((item) => item.id === "test_call_passed")?.status ===
+        "ok",
+      serverEnvReady:
+        checklist.items.find((item) => item.id === "server_env_ready")?.status ===
+        "ok",
+    });
   }
 
   const orgSteps = organizationOnboarding?.steps ?? normalizeOrganizationSteps({});
@@ -212,10 +234,12 @@ export async function loadOnboardingWizardState(
     restaurantProgress,
     menuCategoryCount,
     menuItemCount,
+    hoursConfigured,
     activeRestaurantProfile,
     activeRestaurantVoice,
     activeStep,
     launchChecklist,
+    readiness,
     supabaseRef,
     edgeBase,
   };

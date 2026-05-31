@@ -11,8 +11,8 @@ import type { BillingSnapshot } from "@/lib/billing/types";
 function snapshot(overrides: Partial<BillingSnapshot> = {}): BillingSnapshot {
   const usage = {
     menuScans: 39,
-    voiceOrders: 10,
-    completedOrders: 5,
+    billablePhoneOrders: 10,
+    estimatedBillableChargeUsd: 9,
     toolCalls: 100,
     importAttempts: 0,
     activeLocations: 1,
@@ -76,8 +76,7 @@ describe("evaluateBillingGate", () => {
       effectiveStatus: "dev",
       usage: {
         menuScans: 999,
-        voiceOrders: 999,
-        completedOrders: 0,
+        billablePhoneOrders: 999,
         toolCalls: 0,
         importAttempts: 0,
         activeLocations: 99,
@@ -94,8 +93,7 @@ describe("evaluateBillingGate", () => {
     const s = snapshot({
       usage: {
         menuScans: 40,
-        voiceOrders: 0,
-        completedOrders: 0,
+        billablePhoneOrders: 0,
         toolCalls: 0,
         importAttempts: 0,
         activeLocations: 1,
@@ -113,8 +111,7 @@ describe("evaluateBillingGate", () => {
     const s = snapshot({
       usage: {
         menuScans: 32,
-        voiceOrders: 0,
-        completedOrders: 0,
+        billablePhoneOrders: 0,
         toolCalls: 0,
         importAttempts: 0,
         activeLocations: 1,
@@ -142,8 +139,7 @@ describe("evaluateBillingGate", () => {
     const s = snapshot({
       usage: {
         menuScans: 0,
-        voiceOrders: 0,
-        completedOrders: 0,
+        billablePhoneOrders: 0,
         toolCalls: 0,
         importAttempts: 0,
         activeLocations: 2,
@@ -170,8 +166,7 @@ describe("evaluateBillingGate", () => {
       limitChecks: [],
       usage: {
         menuScans: 40,
-        voiceOrders: 0,
-        completedOrders: 0,
+        billablePhoneOrders: 0,
         toolCalls: 0,
         importAttempts: 0,
         activeLocations: 1,
@@ -196,7 +191,7 @@ describe("evaluateOrganizationGates", () => {
 describe("planLimitJsonResponse", () => {
   it("returns structured 402 payload", () => {
     const verdict = evaluateBillingGate(
-      snapshot({ usage: { menuScans: 40, voiceOrders: 0, completedOrders: 0, toolCalls: 0, importAttempts: 0, activeLocations: 1, restaurantCount: 1 } }),
+      snapshot({ usage: { menuScans: 40, billablePhoneOrders: 0, estimatedBillableChargeUsd: 0, toolCalls: 0, importAttempts: 0, activeLocations: 1, restaurantCount: 1 } }),
       "menu_scan",
       { additionalUsage: 1 }
     );

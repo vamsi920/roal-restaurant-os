@@ -17,12 +17,14 @@ function formatCaller(phone: string | null): string {
 const KIND_LABEL: Record<LiveOrdersRecentOutcome["kind"], string> = {
   failed: "Failed",
   handoff: "Handoff",
+  voicemail: "Voicemail",
   unknown: "Unknown",
 };
 
 const KIND_CLASS: Record<LiveOrdersRecentOutcome["kind"], string> = {
   failed: "bg-danger/10 text-danger",
   handoff: "bg-warning/15 text-amber-900",
+  voicemail: "bg-warning/10 text-amber-950",
   unknown: "bg-elev text-muted",
 };
 

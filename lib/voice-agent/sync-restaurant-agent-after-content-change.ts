@@ -15,6 +15,8 @@ export const VOICE_AGENT_CONTENT_SYNC_TRIGGERS = {
   menu: "menu",
   hours: "hours",
   profile: "profile",
+  knowledge: "knowledge_updated",
+  upsell: "upsell_updated",
   scanner_commit: "scanner_commit",
   manual_resync: "manual_resync",
   publish_to_voice: "publish_to_voice",

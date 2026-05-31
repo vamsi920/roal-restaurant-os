@@ -12,7 +12,7 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
 
 export const metadata: Metadata = {
-  title: "Call history — ROAL",
+  title: "Calls & follow-ups — ROAL",
 };
 
 export const dynamic = "force-dynamic";
@@ -51,10 +51,13 @@ export default async function RestaurantCallHistoryPage({
     >
       <div className="kds-workspace min-w-0 max-w-full space-y-4">
         <header className="min-w-0">
-          <p className="text-xs font-medium text-subtle">Phone operations</p>
+          <p className="text-xs font-medium text-subtle">Calls &amp; follow-ups</p>
           <h1 className="mt-1 truncate text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
             {restaurant.name}
           </h1>
+          <p className="mt-1 max-w-2xl text-sm text-muted">
+            Phone command center for live calls, orders, voicemail, reservations, and staff follow-ups.
+          </p>
         </header>
         <RestaurantCallHistoryPanel snapshot={history} />
       </div>

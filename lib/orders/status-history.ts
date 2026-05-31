@@ -13,6 +13,21 @@ export type StatusHistoryEntry = {
   tone: "call" | "ticket" | "kitchen" | "done" | "danger";
 };
 
+/** Caller-safe milestones for get_order_status (no timestamps or internal tones). */
+export type CallerStatusTimelineEntry = {
+  label: string;
+  description: string;
+};
+
+export function buildCallerOrderStatusTimeline(
+  order: DraftOrderRow
+): CallerStatusTimelineEntry[] {
+  return buildOrderStatusHistory(order).map(({ label, description }) => ({
+    label,
+    description,
+  }));
+}
+
 function formatHistoryTime(iso: string): string {
   try {
     return new Intl.DateTimeFormat(undefined, {

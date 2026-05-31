@@ -4,6 +4,7 @@ import type {
   OrganizationOnboarding,
   RestaurantOnboarding,
 } from "@/lib/onboarding/types";
+import type { OnboardingReadinessSnapshot } from "@/lib/onboarding/readiness";
 import type { OnboardingRestaurantVoiceProvision } from "@/lib/onboarding/restaurant-voice-provision";
 import type { RestaurantLaunchChecklistSnapshot } from "@/lib/restaurant-launch/types";
 import type { Restaurant } from "@/lib/types";
@@ -32,6 +33,7 @@ export type OnboardingWizardState = {
   restaurantProgress: OnboardingProgressSummary;
   menuCategoryCount: number;
   menuItemCount: number;
+  hoursConfigured: boolean;
   activeRestaurantVoice: OnboardingRestaurantVoiceProvision | null;
   activeRestaurantProfile: {
     phone: string | null;
@@ -40,6 +42,7 @@ export type OnboardingWizardState = {
   } | null;
   activeStep: OnboardingStepKey;
   launchChecklist: RestaurantLaunchChecklistSnapshot | null;
+  readiness: OnboardingReadinessSnapshot | null;
   supabaseRef: string | null;
   edgeBase: string | null;
 };
