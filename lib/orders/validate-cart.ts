@@ -350,6 +350,7 @@ export function validateCartAgainstMenu(
         message: `${item.name} is sold out or unavailable.`,
         suggestion: "Pick another available item from get_menu_items.",
       });
+      return;
     }
 
     if (item.price == null || !Number.isFinite(Number(item.price))) {

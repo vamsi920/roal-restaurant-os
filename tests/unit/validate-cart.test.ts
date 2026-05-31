@@ -70,6 +70,18 @@ describe("validateCartForSync", () => {
     );
     expect(result.ok).toBe(false);
     expect(result.issues.some((i) => i.code === "item_unavailable")).toBe(true);
+    expect(result.normalizedItems).toHaveLength(0);
+  });
+
+  it("rejects sold-out items matched by exact menu name", () => {
+    const result = validateCartForSync(
+      [{ name: "Daily Special", quantity: 1 }],
+      menuItems,
+      menuModifiers
+    );
+    expect(result.ok).toBe(false);
+    expect(result.issues[0]?.code).toBe("item_unavailable");
+    expect(result.normalizedItems).toHaveLength(0);
   });
 
   it("rejects unknown modifiers on sync", () => {
@@ -103,6 +115,7 @@ describe("validateCartForFinalize", () => {
     );
     expect(result.ok).toBe(false);
     expect(result.issues.some((i) => i.code === "item_unavailable")).toBe(true);
+    expect(result.normalizedItems).toHaveLength(0);
   });
 
   it("rejects items without a menu price", () => {

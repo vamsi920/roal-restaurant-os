@@ -83,6 +83,16 @@ vi.mock("@/lib/restaurant-hours/helpers", () => ({
   loadRestaurantHoursBundle: vi.fn().mockResolvedValue(null),
 }));
 
+vi.mock("@/lib/restaurant-profile/helpers", async (importOriginal) => {
+  const actual = await importOriginal<
+    typeof import("@/lib/restaurant-profile/helpers")
+  >();
+  return {
+    ...actual,
+    getRestaurantProfile: vi.fn().mockResolvedValue(null),
+  };
+});
+
 describe("buildGetMenuHarnessResponse / Edge get-menu parity", () => {
   it("nests items under categories with price and availability", async () => {
     const supabase = mockSupabaseForMenu();
