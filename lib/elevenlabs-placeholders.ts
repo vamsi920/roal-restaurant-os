@@ -38,11 +38,14 @@ export function readAgentDynamicPlaceholders(agentRoot: unknown): Record<
 
 export const DEFAULT_RESTAURANT_NAME = "the restaurant";
 
+import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
+
 /** Never leave restaurant_name empty — phone/Twilio sessions can omit client-passed vars until stream is up. */
 export function mergeRestaurantPlaceholders(
   existing: Record<string, string>,
   restaurantId: string,
-  restaurantName: string
+  restaurantName: string,
+  options?: { sessionId?: string | null }
 ): Record<string, string> {
   const id = restaurantId.trim();
   const name = restaurantName.trim() || DEFAULT_RESTAURANT_NAME;
@@ -50,6 +53,10 @@ export function mergeRestaurantPlaceholders(
     ...existing,
     restaurant_id: id,
     restaurant_name: name,
+    upsell_experiment_variant: getUpsellExperimentVariant(
+      id,
+      options?.sessionId
+    ),
   };
 }
 

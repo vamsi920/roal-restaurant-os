@@ -3,10 +3,13 @@ import { parseOrderLineItems } from "@/lib/orders/line-items";
 import type { MenuPriceContext } from "@/lib/orders/menu-price-context";
 import { buildMenuPriceContext } from "@/lib/orders/menu-price-context";
 import type { OrderPricingSettings } from "@/lib/orders/pricing-settings";
+import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 import type {
+  CallOutcomeStats,
   DailyOrderPoint,
   MenuScanStats,
   PopularItemRow,
+  UpsellAttachStats,
 } from "@/lib/analytics/types";
 import { dayKeyUtc } from "@/lib/analytics/range";
 import type { DbItem, DbModifier } from "@/lib/types";
@@ -35,6 +38,21 @@ export type ReceiptRow = {
   session_id: string;
   items: unknown;
   created_at: string;
+};
+
+export type UpsellRuleAnalyticsRow = {
+  restaurant_id: string;
+  trigger_text: string;
+  offer_text: string;
+  is_active: boolean;
+};
+
+export type AgentCallEventAnalyticsRow = {
+  restaurant_id: string;
+  status: string;
+  outcome: string;
+  started_at: string;
+  ended_at: string | null;
 };
 
 export type MenuImportRow = {
@@ -114,6 +132,50 @@ export function countReceiptsByRestaurant(
   return map;
 }
 
+export function emptyCallOutcomeStats(): CallOutcomeStats {
+  return {
+    total: 0,
+    active: 0,
+    completed: 0,
+    noOrder: 0,
+    abandoned: 0,
+    canceled: 0,
+    unknown: 0,
+  };
+}
+
+export function aggregateCallOutcomes(
+  events: AgentCallEventAnalyticsRow[]
+): CallOutcomeStats {
+  const stats = emptyCallOutcomeStats();
+  for (const event of events) {
+    stats.total += 1;
+    if (event.status === "active" || event.outcome === "in_progress") {
+      stats.active += 1;
+    }
+    switch (event.outcome) {
+      case "order_completed":
+        stats.completed += 1;
+        break;
+      case "no_order":
+        stats.noOrder += 1;
+        break;
+      case "abandoned":
+        stats.abandoned += 1;
+        break;
+      case "canceled":
+        stats.canceled += 1;
+        break;
+      case "unknown":
+        stats.unknown += 1;
+        break;
+      default:
+        break;
+    }
+  }
+  return stats;
+}
+
 export function aggregatePopularItems(
   sources: Array<{ items: unknown }>,
   limit = 10
@@ -141,6 +203,245 @@ export function aggregatePopularItems(
     }))
     .sort((a, b) => b.quantity - a.quantity)
     .slice(0, limit);
+}
+
+function normalizedTokens(value: string): string[] {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length >= 3);
+}
+
+function textMatchesLine(ruleText: string, lineName: string): boolean {
+  const ruleTokens = normalizedTokens(ruleText);
+  const lineTokens = normalizedTokens(lineName);
+  if (ruleTokens.length === 0 || lineTokens.length === 0) return false;
+  const ruleSet = new Set(ruleTokens);
+  const lineSet = new Set(lineTokens);
+  const lineInRule = lineTokens.every((token) => ruleSet.has(token));
+  const ruleInLine = ruleTokens.every((token) => lineSet.has(token));
+  return lineInRule || ruleInLine;
+}
+
+export function aggregateUpsellAttachStats(
+  sources: Array<{ restaurant_id: string; session_id: string; items: unknown }>,
+  rules: UpsellRuleAnalyticsRow[],
+  menuByRestaurant: Map<string, MenuPriceContext> = new Map()
+): UpsellAttachStats {
+  const activeRules = rules.filter((rule) => rule.is_active !== false);
+  if (activeRules.length === 0) {
+    return {
+      configuredRules: 0,
+      eligibleOrders: 0,
+      attachedOrders: 0,
+      attachPercent: null,
+      attributedRevenueCents: null,
+      revenueComplete: true,
+      averageRevenuePerAttachedOrderCents: null,
+      attachedAverageOrderCents: null,
+      unattachedAverageOrderCents: null,
+      observedTicketLiftCents: null,
+      observedTicketLiftPercent: null,
+      observedLiftComplete: true,
+      attachedLiftSampleSize: 0,
+      unattachedLiftSampleSize: 0,
+      experimentTreatmentOrders: 0,
+      experimentControlOrders: 0,
+      experimentTreatmentAverageOrderCents: null,
+      experimentControlAverageOrderCents: null,
+      experimentTicketLiftCents: null,
+      experimentTicketLiftPercent: null,
+      experimentLiftComplete: true,
+    };
+  }
+
+  const eligible = new Set<string>();
+  const attached = new Set<string>();
+  let attributedRevenueCents = 0;
+  let pricedOfferLineCount = 0;
+  let revenueComplete = true;
+  let attachedSubtotalCents = 0;
+  let attachedSubtotalSamples = 0;
+  let unattachedSubtotalCents = 0;
+  let unattachedSubtotalSamples = 0;
+  let observedLiftComplete = true;
+  let experimentTreatmentSubtotalCents = 0;
+  let experimentTreatmentSamples = 0;
+  let experimentControlSubtotalCents = 0;
+  let experimentControlSamples = 0;
+  let experimentLiftComplete = true;
+  const rulesByRestaurant = new Map<string, UpsellRuleAnalyticsRow[]>();
+  for (const rule of activeRules) {
+    const list = rulesByRestaurant.get(rule.restaurant_id) ?? [];
+    list.push(rule);
+    rulesByRestaurant.set(rule.restaurant_id, list);
+  }
+
+  for (const source of sources) {
+    const restaurantRules = rulesByRestaurant.get(source.restaurant_id) ?? [];
+    if (restaurantRules.length === 0) continue;
+    const lines = parseOrderLineItems(source.items);
+    if (lines.length === 0) continue;
+    const names = lines.map((line) => line.name).filter(Boolean);
+    const orderKey = `${source.restaurant_id}:${source.session_id}`;
+    const menu = menuByRestaurant.get(source.restaurant_id) ?? null;
+    const priced = menu
+      ? computeOrderTotals(lines, menu).lines
+      : lines.map((line) => ({
+          name: line.name,
+          lineTotalCents:
+            line.unitPrice == null
+              ? null
+              : Math.round(line.unitPrice * 100) * line.quantity,
+        }));
+    const countedOfferLines = new Set<number>();
+    let orderEligible = false;
+    let orderAttached = false;
+
+    for (const rule of restaurantRules) {
+      const triggerMatched = names.some((name) =>
+        textMatchesLine(rule.trigger_text, name)
+      );
+      if (!triggerMatched) continue;
+      eligible.add(orderKey);
+      orderEligible = true;
+      let offerAttached = false;
+      names.forEach((name, index) => {
+        if (!textMatchesLine(rule.offer_text, name)) return;
+        offerAttached = true;
+        if (countedOfferLines.has(index)) return;
+        countedOfferLines.add(index);
+        const lineTotalCents = priced[index]?.lineTotalCents;
+        if (lineTotalCents == null) {
+          revenueComplete = false;
+        } else {
+          pricedOfferLineCount += 1;
+          attributedRevenueCents += lineTotalCents;
+        }
+      });
+      if (offerAttached) {
+        attached.add(orderKey);
+        orderAttached = true;
+      }
+    }
+
+    if (orderEligible) {
+      const totals = menu ? computeOrderTotals(lines, menu) : null;
+      let subtotalCents: number | null = totals?.subtotalCents ?? null;
+      if (totals && !totals.complete) observedLiftComplete = false;
+
+      if (!menu) {
+        let sum = 0;
+        let complete = true;
+        for (const line of lines) {
+          if (line.unitPrice == null) {
+            complete = false;
+            continue;
+          }
+          sum += Math.round(line.unitPrice * 100) * line.quantity;
+        }
+        subtotalCents = sum > 0 ? sum : null;
+        if (!complete) observedLiftComplete = false;
+      }
+
+      if (subtotalCents == null) {
+        observedLiftComplete = false;
+        experimentLiftComplete = false;
+      } else if (orderAttached) {
+        attachedSubtotalSamples += 1;
+        attachedSubtotalCents += subtotalCents;
+      } else {
+        unattachedSubtotalSamples += 1;
+        unattachedSubtotalCents += subtotalCents;
+      }
+
+      if (subtotalCents != null) {
+        const variant = getUpsellExperimentVariant(
+          source.restaurant_id,
+          source.session_id
+        );
+        if (variant === "control") {
+          experimentControlSamples += 1;
+          experimentControlSubtotalCents += subtotalCents;
+        } else {
+          experimentTreatmentSamples += 1;
+          experimentTreatmentSubtotalCents += subtotalCents;
+        }
+      }
+    }
+  }
+
+  const eligibleOrders = eligible.size;
+  const attachedOrders = attached.size;
+  const attachedAverageOrderCents =
+    attachedSubtotalSamples > 0
+      ? Math.round(attachedSubtotalCents / attachedSubtotalSamples)
+      : null;
+  const unattachedAverageOrderCents =
+    unattachedSubtotalSamples > 0
+      ? Math.round(unattachedSubtotalCents / unattachedSubtotalSamples)
+      : null;
+  const observedTicketLiftCents =
+    attachedAverageOrderCents != null && unattachedAverageOrderCents != null
+      ? attachedAverageOrderCents - unattachedAverageOrderCents
+      : null;
+  const observedTicketLiftPercent =
+    observedTicketLiftCents != null &&
+    unattachedAverageOrderCents != null &&
+    unattachedAverageOrderCents > 0
+      ? Math.round((observedTicketLiftCents / unattachedAverageOrderCents) * 100)
+      : null;
+  const experimentTreatmentAverageOrderCents =
+    experimentTreatmentSamples > 0
+      ? Math.round(experimentTreatmentSubtotalCents / experimentTreatmentSamples)
+      : null;
+  const experimentControlAverageOrderCents =
+    experimentControlSamples > 0
+      ? Math.round(experimentControlSubtotalCents / experimentControlSamples)
+      : null;
+  const experimentTicketLiftCents =
+    experimentTreatmentAverageOrderCents != null &&
+    experimentControlAverageOrderCents != null
+      ? experimentTreatmentAverageOrderCents - experimentControlAverageOrderCents
+      : null;
+  const experimentTicketLiftPercent =
+    experimentTicketLiftCents != null &&
+    experimentControlAverageOrderCents != null &&
+    experimentControlAverageOrderCents > 0
+      ? Math.round((experimentTicketLiftCents / experimentControlAverageOrderCents) * 100)
+      : null;
+
+  return {
+    configuredRules: activeRules.length,
+    eligibleOrders,
+    attachedOrders,
+    attachPercent: conversionPercent(attachedOrders, eligibleOrders),
+    attributedRevenueCents:
+      attachedOrders > 0 && pricedOfferLineCount > 0
+        ? attributedRevenueCents
+        : null,
+    revenueComplete,
+    averageRevenuePerAttachedOrderCents:
+      attachedOrders > 0 && pricedOfferLineCount > 0
+        ? Math.round(attributedRevenueCents / attachedOrders)
+        : null,
+    attachedAverageOrderCents,
+    unattachedAverageOrderCents,
+    observedTicketLiftCents,
+    observedTicketLiftPercent,
+    observedLiftComplete,
+    attachedLiftSampleSize: attachedSubtotalSamples,
+    unattachedLiftSampleSize: unattachedSubtotalSamples,
+    experimentTreatmentOrders: experimentTreatmentSamples,
+    experimentControlOrders: experimentControlSamples,
+    experimentTreatmentAverageOrderCents,
+    experimentControlAverageOrderCents,
+    experimentTicketLiftCents,
+    experimentTicketLiftPercent,
+    experimentLiftComplete,
+  };
 }
 
 export function averagePrepMinutes(orders: OrderRow[]): {
@@ -299,19 +600,27 @@ export function conversionPercent(
 export function popularItemSources(
   completedOrders: OrderRow[],
   receipts: ReceiptRow[]
-): Array<{ items: unknown }> {
+): Array<{ restaurant_id: string; session_id: string; items: unknown }> {
   const seen = new Set<string>();
-  const sources: Array<{ items: unknown }> = [];
+  const sources: Array<{ restaurant_id: string; session_id: string; items: unknown }> = [];
 
   for (const order of completedOrders) {
     seen.add(`${order.restaurant_id}:${order.session_id}`);
-    sources.push({ items: order.items });
+    sources.push({
+      restaurant_id: order.restaurant_id,
+      session_id: order.session_id,
+      items: order.items,
+    });
   }
 
   for (const receipt of receipts) {
     const key = `${receipt.restaurant_id}:${receipt.session_id}`;
     if (seen.has(key)) continue;
-    sources.push({ items: receipt.items });
+    sources.push({
+      restaurant_id: receipt.restaurant_id,
+      session_id: receipt.session_id,
+      items: receipt.items,
+    });
   }
 
   return sources;

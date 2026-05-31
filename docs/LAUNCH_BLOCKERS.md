@@ -48,10 +48,11 @@ Operator docs: [`DEPLOYMENT.md`](./DEPLOYMENT.md) · [`ELEVENLABS.md`](./ELEVENL
 
 **Human actions to close (owner: ops + human):**
 
-1. Deploy Next.js to production; point **`getroal.com`** (or update `NEXT_PUBLIC_APP_URL` to live origin).
-2. Set production env on host + Supabase Edge: `npm run ensure:signing-parity` (or match `AGENT_TOOL_SIGNING_SECRET` manually); `npm run resync:elevenlabs-all`.
-3. Re-run `npm run qa:lb01-phone-stack` — expect prod DNS + HTTP pass.
-4. Place **one inbound Twilio test call** → confirm ElevenLabs logs show `get_menu_items` **HTTP 200**.
+1. Deploy Next.js to production; for Netlify, connect this repo and use committed `netlify.toml` (`npm run build`, `.next`, Node 20).
+2. Point **`getroal.com`** DNS to the production host, or update `NEXT_PUBLIC_APP_URL` to the actual live origin.
+3. Set production env on host + Supabase Edge: `npm run ensure:signing-parity` (or match `AGENT_TOOL_SIGNING_SECRET` manually); `npm run resync:elevenlabs-all`.
+4. Re-run `npm run qa:lb01-phone-stack` — expect prod DNS + HTTP pass.
+5. Place **one inbound Twilio test call** → confirm ElevenLabs logs show `get_menu_items` **HTTP 200**.
 
 ### LB-04 — Production deploy smoke (P1)
 

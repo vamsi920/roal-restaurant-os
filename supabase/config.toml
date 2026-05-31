@@ -9,3 +9,15 @@ verify_jwt = false
 
 [functions.finalize-order]
 verify_jwt = false
+
+[functions.get-order-status]
+verify_jwt = false
+
+[functions.get-caller-history]
+verify_jwt = false
+
+[functions.submit-reservation-request]
+verify_jwt = false
+
+[functions.get-restaurant-info]
+verify_jwt = false

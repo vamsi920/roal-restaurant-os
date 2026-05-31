@@ -4,9 +4,12 @@ import {
   ELEVENLABS_CONVERSATION_INIT_SECRET_HEADER,
   isElevenLabsConversationInitAuthorized,
   parseElevenLabsConversationInitRequestBody,
+  persistElevenLabsConversationStarted,
   readAgentPlaceholdersForInit,
   readElevenLabsConversationInitAgentId,
+  readElevenLabsConversationInitCallerPhone,
   readElevenLabsConversationInitCalledNumber,
+  readElevenLabsConversationInitSessionId,
   resolveRestaurantForElevenLabsConversationInit,
 } from "@/lib/elevenlabs/conversation-init";
 import { getElevenLabsConversationInitSecret } from "@/lib/env.server";
@@ -28,6 +31,8 @@ async function handleInit(req: Request): Promise<NextResponse> {
   const body = await parseElevenLabsConversationInitRequestBody(req);
   const agentId = readElevenLabsConversationInitAgentId(url, body);
   const calledNumber = readElevenLabsConversationInitCalledNumber(url, body);
+  const sessionId = readElevenLabsConversationInitSessionId(url, body);
+  const callerPhone = readElevenLabsConversationInitCallerPhone(url, body);
 
   if (!agentId && !calledNumber) {
     return NextResponse.json(
@@ -68,14 +73,26 @@ async function handleInit(req: Request): Promise<NextResponse> {
     }
 
     const agentPlaceholders = await readAgentPlaceholdersForInit(effectiveAgentId);
-
-    return NextResponse.json(
-      buildElevenLabsConversationInitPayload({
+    const initPayload = buildElevenLabsConversationInitPayload({
+      restaurantId: resolved.restaurantId,
+      restaurantName: resolved.restaurantName,
+      sessionId,
+      agentPlaceholders,
+    });
+    if (sessionId) {
+      await persistElevenLabsConversationStarted({
         restaurantId: resolved.restaurantId,
-        restaurantName: resolved.restaurantName,
-        agentPlaceholders,
-      })
-    );
+        linkedAgentId: effectiveAgentId,
+        sessionId,
+        callerPhone,
+        calledNumber,
+        resolvedVia: resolved.resolvedVia,
+        upsellExperimentVariant:
+          initPayload.dynamic_variables.upsell_experiment_variant,
+      }).catch(() => null);
+    }
+
+    return NextResponse.json(initPayload);
   } catch {
     return NextResponse.json(
       { error: "Failed to build conversation initiation data" },

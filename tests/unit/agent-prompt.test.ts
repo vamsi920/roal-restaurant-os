@@ -71,6 +71,25 @@ describe("buildRestaurantOrderAgentPrompt", () => {
       profile: baseProfile,
       hoursPromptSection: hours,
       menu: { categoryCount: 2, itemCount: 10, modifierCount: 4 },
+      knowledgeEntries: [
+        {
+          category: "allergens",
+          question: "Do you have gluten-free options?",
+          answer:
+            "Mention marked gluten-friendly items only; do not guarantee no cross-contact.",
+        },
+        {
+          category: "directions",
+          question: "Where do pickup guests park?",
+          answer: "Use the short-term spaces behind the building.",
+        },
+      ],
+      upsellRules: [
+        {
+          trigger_text: "Biryani order",
+          offer_text: "Offer mango lassi or raita if available.",
+        },
+      ],
     });
 
     expect(prompt).toContain("QA Bistro");
@@ -82,6 +101,13 @@ describe("buildRestaurantOrderAgentPrompt", () => {
     expect(prompt).toContain("customer_name and customer_phone");
     expect(prompt).toContain("Call purpose");
     expect(prompt).toContain("Guest questions (hours, directions, menu)");
+    expect(prompt).toContain("Restaurant knowledge base");
+    expect(prompt).toContain("Do you have gluten-free options?");
+    expect(prompt).toContain("do not guarantee no cross-contact");
+    expect(prompt).toContain("Where do pickup guests park?");
+    expect(prompt).toContain("Upsell rules");
+    expect(prompt).toContain("Biryani order");
+    expect(prompt).toContain("Offer mango lassi or raita");
     expect(prompt).toContain("Closed hours behavior");
     expect(prompt).toContain("Unsupported requests");
     expect(prompt).toContain("Handoff and escalation");

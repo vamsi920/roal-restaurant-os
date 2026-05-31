@@ -68,7 +68,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
 
     expect(result.ok).toBe(true);
     expect(result.restaurant_tools_baked).toBe(true);
-    expect(elevenLabsMocks.createConvaiTool).toHaveBeenCalledTimes(3);
+    expect(elevenLabsMocks.createConvaiTool).toHaveBeenCalledTimes(7);
 
     const configs = elevenLabsMocks.createConvaiTool.mock.calls.map(
       (c) => c[0].tool_config as Record<string, unknown>
@@ -76,7 +76,11 @@ describe("syncRoalElevenLabsTools baked config", () => {
     const names = configs.map((c) => c.name).sort();
     expect(names).toEqual([
       "finalize_order",
+      "get_caller_history",
       "get_menu_items",
+      "get_order_status",
+      "get_restaurant_info",
+      "submit_reservation_request",
       "sync_draft_order",
     ]);
 
@@ -95,6 +99,21 @@ describe("syncRoalElevenLabsTools baked config", () => {
       RESTAURANT_ID
     );
     expect(apiSchema.request_headers.Authorization).toMatch(/^Bearer /);
+
+    const restaurantInfo = configs.find((c) => c.name === "get_restaurant_info")!;
+    const infoSchema = restaurantInfo.api_schema as {
+      url: string;
+      method: string;
+      request_headers: Record<string, string>;
+    };
+    expect(infoSchema.method).toBe("GET");
+    expect(infoSchema.url).toContain("/functions/v1/get-restaurant-info");
+    expect(infoSchema.url).toContain(
+      `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
+    );
+    expect(infoSchema.request_headers[ROAL_RESTAURANT_ID_HEADER]).toBe(
+      RESTAURANT_ID
+    );
 
     const syncDraft = configs.find((c) => c.name === "sync_draft_order")!;
     const syncSchema = syncDraft.api_schema as {
@@ -120,6 +139,12 @@ describe("syncRoalElevenLabsTools baked config", () => {
     expect(syncSchema.request_body_schema.properties).not.toHaveProperty(
       "restaurant_id"
     );
+    expect(syncSchema.request_body_schema.properties).toHaveProperty(
+      "fulfillment_type"
+    );
+    expect(syncSchema.request_body_schema.properties).toHaveProperty(
+      "delivery_address"
+    );
 
     const finalize = configs.find((c) => c.name === "finalize_order")!;
     const finSchema = finalize.api_schema as {
@@ -133,5 +158,84 @@ describe("syncRoalElevenLabsTools baked config", () => {
     expect(finSchema.request_body_schema.properties).not.toHaveProperty(
       "restaurant_id"
     );
+    expect(finSchema.request_body_schema.properties).toHaveProperty(
+      "fulfillment_type"
+    );
+    expect(finSchema.request_body_schema.properties).toHaveProperty(
+      "delivery_address"
+    );
+
+    const orderStatus = configs.find((c) => c.name === "get_order_status")!;
+    const statusSchema = orderStatus.api_schema as {
+      url: string;
+      request_headers: Record<string, string>;
+      request_body_schema: {
+        properties: Record<string, unknown>;
+      };
+    };
+    expect(statusSchema.url).toContain("/functions/v1/get-order-status");
+    expect(statusSchema.url).toContain(
+      `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
+    );
+    expect(statusSchema.request_headers[ROAL_RESTAURANT_ID_HEADER]).toBe(
+      RESTAURANT_ID
+    );
+    expect(statusSchema.request_body_schema.properties).not.toHaveProperty(
+      "restaurant_id"
+    );
+    expect(statusSchema.request_body_schema.properties).toHaveProperty(
+      "customer_phone"
+    );
+
+    const callerHistory = configs.find((c) => c.name === "get_caller_history")!;
+    const callerSchema = callerHistory.api_schema as {
+      url: string;
+      request_headers: Record<string, string>;
+      request_body_schema: {
+        properties: Record<string, unknown>;
+      };
+    };
+    expect(callerSchema.url).toContain("/functions/v1/get-caller-history");
+    expect(callerSchema.url).toContain(
+      `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
+    );
+    expect(callerSchema.request_headers[ROAL_RESTAURANT_ID_HEADER]).toBe(
+      RESTAURANT_ID
+    );
+    expect(callerSchema.request_body_schema.properties).not.toHaveProperty(
+      "restaurant_id"
+    );
+    expect(callerSchema.request_body_schema.properties).toHaveProperty(
+      "customer_phone"
+    );
+
+    const reservation = configs.find((c) => c.name === "submit_reservation_request")!;
+    const reservationSchema = reservation.api_schema as {
+      url: string;
+      request_headers: Record<string, string>;
+      request_body_schema: {
+        required: string[];
+        properties: Record<string, unknown>;
+      };
+    };
+    expect(reservationSchema.url).toContain(
+      "/functions/v1/submit-reservation-request"
+    );
+    expect(reservationSchema.url).toContain(
+      `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
+    );
+    expect(reservationSchema.request_headers[ROAL_RESTAURANT_ID_HEADER]).toBe(
+      RESTAURANT_ID
+    );
+    expect(reservationSchema.request_body_schema.properties).not.toHaveProperty(
+      "restaurant_id"
+    );
+    expect(reservationSchema.request_body_schema.required).toEqual([
+      "customer_name",
+      "customer_phone",
+      "party_size",
+      "requested_date",
+      "requested_time",
+    ]);
   });
 });

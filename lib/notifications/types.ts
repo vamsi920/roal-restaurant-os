@@ -7,6 +7,7 @@ export const NOTIFICATION_EVENT_TYPES = [
   "menu_auto_sync_failure",
   "go_live",
   "realtime_degraded",
+  "staff_handoff_requested",
 ] as const;
 
 export type NotificationEventType = (typeof NOTIFICATION_EVENT_TYPES)[number];
@@ -71,6 +72,7 @@ export const NOTIFICATION_EVENT_LABELS: Record<NotificationEventType, string> = 
   menu_auto_sync_failure: "Menu auto-sync failure",
   go_live: "Location went live",
   realtime_degraded: "Realtime connection degraded",
+  staff_handoff_requested: "Staff handoff requested",
 };
 
 export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
@@ -88,4 +90,6 @@ export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
   go_live: "When a location completes onboarding and goes live.",
   realtime_degraded:
     "When the live orders panel falls back to polling (Realtime offline).",
+  staff_handoff_requested:
+    "When a phone call asks for manager/staff follow-up, catering help, callback, or escalation.",
 };

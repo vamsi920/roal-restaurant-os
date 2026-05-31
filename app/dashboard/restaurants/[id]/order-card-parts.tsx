@@ -59,6 +59,32 @@ export function CustomerLine({
   );
 }
 
+export function FulfillmentLine({
+  fulfillmentType,
+  address,
+  instructions,
+}: {
+  fulfillmentType: "pickup" | "delivery" | string | null;
+  address?: string | null;
+  instructions?: string | null;
+}) {
+  const isDelivery = fulfillmentType === "delivery" || Boolean(address?.trim());
+  const label = isDelivery ? "Delivery" : "Pickup";
+  return (
+    <div className="kds-order-card__fulfillment mt-2 rounded-lg border border-line/70 bg-elev/70 px-3 py-2 text-sm">
+      <p className="font-semibold text-ink">{label}</p>
+      {isDelivery && address?.trim() ? (
+        <p className="mt-0.5 text-muted [overflow-wrap:anywhere]">{address}</p>
+      ) : null}
+      {isDelivery && instructions?.trim() ? (
+        <p className="mt-1 text-xs text-subtle [overflow-wrap:anywhere]">
+          Note: {instructions}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 function OrderActionSpinner() {
   return (
     <svg

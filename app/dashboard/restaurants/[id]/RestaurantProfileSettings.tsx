@@ -13,9 +13,16 @@ import type { Restaurant, RestaurantProfile } from "@/lib/types";
 type Props = {
   restaurant: Restaurant;
   profile: RestaurantProfile;
+  knowledgeBaseText?: string;
+  upsellRulesText?: string;
 };
 
-function toFormState(restaurant: Restaurant, profile: RestaurantProfile) {
+function toFormState(
+  restaurant: Restaurant,
+  profile: RestaurantProfile,
+  knowledgeBaseText: string,
+  upsellRulesText: string
+) {
   return {
     name: restaurant.name,
     phone: profile.phone ?? "",
@@ -42,12 +49,21 @@ function toFormState(restaurant: Restaurant, profile: RestaurantProfile) {
       profile.handoff_unavailable_item_behavior ?? "",
     handoff_unavailable_item_notes: profile.handoff_unavailable_item_notes ?? "",
     closed_hours_message: profile.closed_hours_message ?? "",
+    knowledge_base_text: knowledgeBaseText,
+    upsell_rules_text: upsellRulesText,
   };
 }
 
-export function RestaurantProfileSettings({ restaurant, profile }: Props) {
+export function RestaurantProfileSettings({
+  restaurant,
+  profile,
+  knowledgeBaseText = "",
+  upsellRulesText = "",
+}: Props) {
   const [open, setOpen] = useState(true);
-  const [form, setForm] = useState(() => toFormState(restaurant, profile));
+  const [form, setForm] = useState(() =>
+    toFormState(restaurant, profile, knowledgeBaseText, upsellRulesText)
+  );
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
@@ -86,6 +102,8 @@ export function RestaurantProfileSettings({ restaurant, profile }: Props) {
       handoff_unavailable_item_behavior: form.handoff_unavailable_item_behavior,
       handoff_unavailable_item_notes: form.handoff_unavailable_item_notes,
       closed_hours_message: form.closed_hours_message,
+      knowledge_base_text: form.knowledge_base_text,
+      upsell_rules_text: form.upsell_rules_text,
     };
 
     const parsed = RestaurantProfileInputSchema.safeParse(payload);
@@ -452,6 +470,50 @@ export function RestaurantProfileSettings({ restaurant, profile }: Props) {
                   setField("closed_hours_message", e.target.value)
                 }
                 placeholder="What to say when the guest calls outside your regular open hours (see Hours below)."
+                disabled={pending}
+              />
+            </Field>
+          </FieldGroup>
+
+          <FieldGroup title="Guest knowledge base">
+            <p className="-mt-2 text-xs text-muted">
+              Answers the agent can use for policies, allergens, directions,
+              parking, popular questions, and edge cases. One line per answer:
+              <span className="mt-1 block font-medium text-ink">
+                [category] question =&gt; answer
+              </span>
+            </p>
+            <Field label="FAQ / policy answers">
+              <textarea
+                className="input-base min-h-[10rem] resize-y font-mono text-xs leading-relaxed"
+                rows={7}
+                value={form.knowledge_base_text}
+                onChange={(e) =>
+                  setField("knowledge_base_text", e.target.value)
+                }
+                placeholder={"[allergens] Do you have gluten-free options? => We can mention gluten-friendly menu items if marked, but we cannot guarantee no cross-contact.\n[directions] Where should pickup guests park? => Use the short-term spaces behind the building and come to the pickup counter."}
+                disabled={pending}
+              />
+            </Field>
+          </FieldGroup>
+
+          <FieldGroup title="Add-ons &amp; combos">
+            <p className="-mt-2 text-xs text-muted">
+              Optional upsell rules. The agent still checks the live menu and
+              only offers real available items. One line per rule:
+              <span className="mt-1 block font-medium text-ink">
+                trigger item or situation =&gt; short offer
+              </span>
+            </p>
+            <Field label="Upsell rules">
+              <textarea
+                className="input-base min-h-[8rem] resize-y font-mono text-xs leading-relaxed"
+                rows={6}
+                value={form.upsell_rules_text}
+                onChange={(e) =>
+                  setField("upsell_rules_text", e.target.value)
+                }
+                placeholder={"Biryani order => Offer mango lassi or raita if available.\nLarge pizza => Ask if they want garlic knots with that."}
                 disabled={pending}
               />
             </Field>

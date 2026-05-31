@@ -69,8 +69,8 @@ vi.mock("@/lib/usage/record", () => ({
   recordRestaurantUsage: vi.fn(),
 }));
 
-vi.mock("next/cache", () => ({
-  revalidatePath: vi.fn(),
+vi.mock("@/lib/voice-agent/after-menu-content-mutation", () => ({
+  afterMenuContentMutation: vi.fn(),
 }));
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
@@ -81,6 +81,8 @@ import {
 } from "@/lib/scanner/menu-import-audit";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { recordRestaurantUsage } from "@/lib/usage/record";
+import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
+import { VOICE_AGENT_CONTENT_SYNC_TRIGGERS } from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
 
 function commitRequest(body: Record<string, unknown>) {
   return POST(
@@ -246,5 +248,22 @@ describe("POST /api/scanner/commit", () => {
         metadata: expect.objectContaining({ outcome: "committed" }),
       })
     );
+    expect(afterMenuContentMutation).toHaveBeenCalledWith(RESTAURANT_ID, {
+      userId: USER_ID,
+      restaurantName: "Test",
+      trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.scanner_commit,
+    });
+  });
+
+  it("does not schedule voice sync when commit is blocked", async () => {
+    vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
+
+    const res = await commitRequest({
+      restaurant_id: RESTAURANT_ID,
+      menu: { categories: [] },
+    });
+
+    expect(res.status).toBe(422);
+    expect(afterMenuContentMutation).not.toHaveBeenCalled();
   });
 });

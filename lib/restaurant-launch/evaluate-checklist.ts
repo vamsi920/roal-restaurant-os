@@ -14,8 +14,12 @@ import type { RestaurantProfile } from "@/lib/types";
 
 const ROAL_TOOL_NAMES = [
   "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
   "sync_draft_order",
   "finalize_order",
+  "get_order_status",
 ] as const;
 
 export type LaunchChecklistInput = {

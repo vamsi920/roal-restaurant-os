@@ -9,27 +9,27 @@ export type HowFlowBeat = {
 
 export const HOME_HOW_FLOW = {
   eyebrow: "How it works",
-  title: "From menu to live calls in one simple flow.",
-  lead: "For owners: add the menu, test the agent, then forward rush-hour calls.",
+  title: "Go from menu to live phone coverage without changing how guests order.",
+  lead: "Keep the setup plain: load the menu, test the call, forward the line when you trust the flow.",
   visualLabel: "Preview",
   beats: [
     {
       id: "share-menu",
       step: 1,
-      title: "Add your menu",
-      body: "Items, prices, modifiers, hours, pickup timing, and sold-out notes.",
+      title: "Load the real menu",
+      body: "Items, prices, modifiers, hours, sold-out notes, and pickup timing become the source ROAL uses on calls.",
     },
     {
       id: "connect-line",
       step: 2,
-      title: "Test the phone agent",
-      body: "Try questions, substitutions, language changes, and noisy-call edge cases.",
+      title: "Test it like a customer",
+      body: "Call in, switch languages, change items, ask questions, and approve how ROAL responds before going live.",
     },
     {
       id: "kitchen-orders",
       step: 3,
-      title: "Go live for rush",
-      body: "Confirmed pickup orders land on the kitchen screen for your team.",
+      title: "Forward rush-hour calls",
+      body: "Confirmed pickup orders show guest name, items, notes, total, and pickup time on the kitchen screen.",
     },
   ] satisfies HowFlowBeat[],
 } as const;

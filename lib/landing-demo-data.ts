@@ -42,29 +42,29 @@ export type LandingPreviewData = {
 
 export const LANDING_DEMO: LandingPreviewData = {
   source: "demo",
-  restaurantName: "Joe's Corner Kitchen",
+  restaurantName: "Napoli Pizza",
   scanStats: { categories: 4, items: 18, modifiers: 12 },
   categories: [
     {
       id: "c1",
-      name: "Poke & Bowls",
+      name: "Pizzas",
       sort_order: 1,
       items: [
         {
           id: "i1",
-          name: "Spicy tuna poke",
-          description: "Sesame rice, cucumber, avocado",
-          price: 14.5,
+          name: "Margherita pizza",
+          description: "San Marzano tomato, mozzarella, basil",
+          price: 17.0,
           is_available: true,
           modifiers: [
-            { group_name: "Protein", modifier_name: "Extra tuna" },
-            { group_name: "Spice", modifier_name: "Mild" },
+            { group_name: "Toppings", modifier_name: "No basil" },
+            { group_name: "Size", modifier_name: "Large" },
           ],
         },
         {
           id: "i2",
-          name: "Salmon bowl",
-          price: 15.0,
+          name: "Pepperoni pizza",
+          price: 18.0,
           is_available: true,
           modifiers: [],
         },
@@ -72,33 +72,33 @@ export const LANDING_DEMO: LandingPreviewData = {
     },
     {
       id: "c2",
-      name: "Noodles",
+      name: "Sides",
       sort_order: 2,
       items: [
         {
           id: "i3",
-          name: "Garlic noodles",
-          price: 12.0,
+          name: "Garlic knots",
+          price: 6.0,
           is_available: true,
-          modifiers: [],
+          modifiers: [{ group_name: "Sauce", modifier_name: "Add marinara" }],
         },
       ],
     },
     {
       id: "c3",
-      name: "Sides",
+      name: "Drinks",
       sort_order: 3,
       items: [
         {
           id: "i4",
-          name: "Miso soup",
-          price: 4.5,
+          name: "Lemonade",
+          price: 3.0,
           is_available: true,
           modifiers: [],
         },
         {
           id: "i5",
-          name: "Edamame",
+          name: "House cola",
           price: 5.0,
           is_available: false,
           modifiers: [],
@@ -111,14 +111,14 @@ export const LANDING_DEMO: LandingPreviewData = {
     customer_name: "Alex",
     customer_phone: "(512) 555-0142",
     items: [
-      { name: "Spicy tuna poke", quantity: 1, customizations: ["Extra tuna"] },
-      { name: "Miso soup", quantity: 1 },
+      { name: "Margherita pizza", quantity: 2, customizations: ["One no basil"] },
+      { name: "Garlic knots", quantity: 1, customizations: ["Add marinara"] },
     ],
     updated_at: "2026-05-23T19:39:00.000Z",
   },
   completedReceipt: {
     customer_name: "Maria",
-    items: [{ name: "Garlic noodles", quantity: 1 }],
+    items: [{ name: "Pepperoni pizza", quantity: 1 }],
     created_at: "2026-05-23T18:39:00.000Z",
   },
 };

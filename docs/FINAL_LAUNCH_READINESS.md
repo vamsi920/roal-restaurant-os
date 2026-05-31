@@ -79,6 +79,8 @@ Four launch criteria verified with code review + automated evidence. See also [`
 | Check | Evidence |
 |-------|----------|
 | Auto-provision on create | `POST /api/restaurants` → `tryProvisionVoiceAgentForNewRestaurant` → `provisionRestaurantConvaiAgent` **duplicates** from `ELEVENLABS_AGENT_ID` template, persists **new** `elevenlabs_agent_id` on profile (`lib/elevenlabs/agent-provision.ts`) |
+| Default menu inheritance | `POST /api/restaurants` applies the org default `organization_menu_templates` menu before provisioning, records inherited template ancestry on `restaurants`, tracks local inherited-menu edits, and the menu workspace can re-apply or push that inherited template to linked locations; unchanged locations are replaced, customized locations receive only missing brand categories/items, and dedicated agents sync from the brand menu |
+| Publish to voice | Menu workspace exposes **Publish to voice**, which runs the content-sync path for prompt, tools, menu, hours, FAQ, and policies and updates `restaurant_profiles` sync status |
 | Unit proof | `tests/unit/restaurant-auto-provision-elevenlabs.test.ts` — `runSync` receives **cloned** id, never template id |
 | Manual connect guard (pass 39) | `connectVoiceAgentAction` rejects when pasted id equals env template (`tests/unit/voice-agent-dedicated-connect.test.ts` **2/2**) |
 | Inbound call binding | `conversation-init` returns **404** `restaurant_not_linked` if agent not on profile (pass 38) — no empty `restaurant_id` success |

@@ -1,16 +1,16 @@
 /** Short homepage product explanation (below hero). */
 
 export const HOME_PRODUCT_INTRO = {
-  title: "The busiest hour is exactly when the phone rings.",
-  lead: "ROAL keeps the call calm, gets the order right, and lets your team stay with the food.",
+  title: "The problem is not your staff. It is the timing of the call.",
+  lead: "Pickup calls arrive when hands are full: ovens open, bags need packing, guests are waiting. ROAL covers the phone so your team can stay in service.",
   before: {
     label: "Without ROAL",
-    title: "Every ring pulls someone away.",
-    points: ["Staff stop packing to answer", "Guests repeat items over noise", "Pickup revenue leaks during rush"],
+    title: "A ringing phone becomes lost revenue.",
+    points: ["Guests hang up and order somewhere else", "Staff stops cooking to answer simple calls", "Menu questions slow down the counter"],
   },
   after: {
     label: "With ROAL",
-    title: "The call becomes an order.",
-    points: ["Answers like a trained host", "Uses your menu, prices, and hours", "Sends a confirmed ticket to the kitchen"],
+    title: "Every caller gets a calm order taker.",
+    points: ["Answers on your normal phone line", "Uses your live menu and hours", "Sends confirmed orders to the kitchen"],
   },
 } as const;

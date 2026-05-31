@@ -22,6 +22,10 @@ export type HealthReport = {
     edge_get_menu: HealthCheckResult;
     edge_sync_draft_order: HealthCheckResult;
     edge_finalize_order: HealthCheckResult;
+    edge_get_order_status: HealthCheckResult;
+    edge_get_caller_history: HealthCheckResult;
+    edge_submit_reservation_request: HealthCheckResult;
+    edge_get_restaurant_info: HealthCheckResult;
   };
 };
 
@@ -64,6 +68,10 @@ export async function runHealthChecks(): Promise<HealthReport> {
     edge_get_menu: { ok: false, status: "fail" },
     edge_sync_draft_order: { ok: false, status: "fail" },
     edge_finalize_order: { ok: false, status: "fail" },
+    edge_get_order_status: { ok: false, status: "fail" },
+    edge_get_caller_history: { ok: false, status: "fail" },
+    edge_submit_reservation_request: { ok: false, status: "fail" },
+    edge_get_restaurant_info: { ok: false, status: "fail" },
   };
 
   try {
@@ -124,14 +132,30 @@ export async function runHealthChecks(): Promise<HealthReport> {
     };
 
     const edgeBase = env.NEXT_PUBLIC_SUPABASE_URL.replace(/\/+$/, "");
-    const [getMenu, syncDraft, finalize] = await Promise.all([
+    const [
+      getMenu,
+      syncDraft,
+      finalize,
+      getOrderStatus,
+      getCallerHistory,
+      submitReservationRequest,
+      getRestaurantInfo,
+    ] = await Promise.all([
       probeEdgeFunction(`${edgeBase}/functions/v1/get-menu`),
       probeEdgeFunction(`${edgeBase}/functions/v1/sync-draft-order`),
       probeEdgeFunction(`${edgeBase}/functions/v1/finalize-order`),
+      probeEdgeFunction(`${edgeBase}/functions/v1/get-order-status`),
+      probeEdgeFunction(`${edgeBase}/functions/v1/get-caller-history`),
+      probeEdgeFunction(`${edgeBase}/functions/v1/submit-reservation-request`),
+      probeEdgeFunction(`${edgeBase}/functions/v1/get-restaurant-info`),
     ]);
     checks.edge_get_menu = getMenu;
     checks.edge_sync_draft_order = syncDraft;
     checks.edge_finalize_order = finalize;
+    checks.edge_get_order_status = getOrderStatus;
+    checks.edge_get_caller_history = getCallerHistory;
+    checks.edge_submit_reservation_request = submitReservationRequest;
+    checks.edge_get_restaurant_info = getRestaurantInfo;
   } catch (e) {
     checks.env_server = {
       ok: false,
@@ -159,6 +183,26 @@ export async function runHealthChecks(): Promise<HealthReport> {
       message: "Skipped (env error)",
     };
     checks.edge_finalize_order = {
+      ok: false,
+      status: "warn",
+      message: "Skipped (env error)",
+    };
+    checks.edge_get_order_status = {
+      ok: false,
+      status: "warn",
+      message: "Skipped (env error)",
+    };
+    checks.edge_get_caller_history = {
+      ok: false,
+      status: "warn",
+      message: "Skipped (env error)",
+    };
+    checks.edge_submit_reservation_request = {
+      ok: false,
+      status: "warn",
+      message: "Skipped (env error)",
+    };
+    checks.edge_get_restaurant_info = {
       ok: false,
       status: "warn",
       message: "Skipped (env error)",

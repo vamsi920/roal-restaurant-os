@@ -13,6 +13,7 @@ import {
   finalizeConversationInitDynamicVariables,
   valueHasUnresolvedTemplate,
 } from "@/lib/elevenlabs-placeholders";
+import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 
 vi.mock("@/lib/supabase/server", () => ({
   getServiceRoleSupabase: vi.fn(),
@@ -109,6 +110,7 @@ describe("buildElevenLabsConversationInitPayload", () => {
       "11111111-1111-1111-1111-111111111111"
     );
     expect(payload.dynamic_variables.restaurant_name).toBe("QA Bistro");
+    expect(payload.dynamic_variables.upsell_experiment_variant).toBe("treatment");
   });
 
   it("merges agent placeholders with resolved restaurant fields", () => {
@@ -125,6 +127,22 @@ describe("buildElevenLabsConversationInitPayload", () => {
     );
     expect(payload.dynamic_variables.restaurant_name).toBe("QA Bistro");
     expect(payload.dynamic_variables.extra_key).toBe("keep-me");
+    expect(payload.dynamic_variables.upsell_experiment_variant).toBe("treatment");
+  });
+
+  it("uses session id to assign the upsell experiment variant", () => {
+    const payload = buildElevenLabsConversationInitPayload({
+      restaurantId: "11111111-1111-1111-1111-111111111111",
+      restaurantName: "QA Bistro",
+      sessionId: "CA-session-123",
+    });
+
+    expect(payload.dynamic_variables.upsell_experiment_variant).toBe(
+      getUpsellExperimentVariant(
+        "11111111-1111-1111-1111-111111111111",
+        "CA-session-123"
+      )
+    );
   });
 
   it("falls back restaurant_name when empty", () => {

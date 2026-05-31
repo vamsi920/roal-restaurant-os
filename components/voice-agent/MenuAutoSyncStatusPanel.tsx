@@ -11,7 +11,7 @@ import {
   resolveMenuAutoSyncDisplay,
   formatMenuAutoSyncWhen,
 } from "@/lib/voice-agent/menu-auto-sync-display";
-import { resyncRestaurantAgentMenuAction } from "@/app/dashboard/restaurants/[id]/voice-agent-actions";
+import { publishRestaurantVoiceContentAction } from "@/app/dashboard/restaurants/[id]/voice-agent-actions";
 
 type Props = {
   restaurantId: string;
@@ -51,7 +51,7 @@ export function MenuAutoSyncStatusPanel({
     setActionError(null);
     startTransition(async () => {
       try {
-        const result = await resyncRestaurantAgentMenuAction(
+        const result = await publishRestaurantVoiceContentAction(
           restaurantId,
           restaurantName
         );
@@ -62,7 +62,7 @@ export function MenuAutoSyncStatusPanel({
         router.refresh();
       } catch (e) {
         setActionError(
-          e instanceof Error ? e.message : "Re-sync failed. Try again."
+          e instanceof Error ? e.message : "Publish failed. Try again."
         );
       }
     });
@@ -128,7 +128,7 @@ export function MenuAutoSyncStatusPanel({
           aria-busy={pending}
           onClick={onResync}
         >
-          {pending ? "Syncing…" : "Re-sync now"}
+          {pending ? "Publishing…" : "Publish to voice"}
         </button>
       </div>
     );
@@ -148,11 +148,11 @@ export function MenuAutoSyncStatusPanel({
             id={`menu-auto-sync-heading-${restaurantId}`}
             className="kds-panel__title"
           >
-            Voice menu sync
+            Publish to voice
           </h2>
           <p className="kds-panel__lead">
-            Pushes your live menu, hours, and store policies to the linked
-            ElevenLabs agent.
+            Push your current menu, hours, FAQ, policies, and tool URLs to the linked
+            ElevenLabs agent before taking calls.
           </p>
         </div>
         <span
@@ -218,7 +218,7 @@ export function MenuAutoSyncStatusPanel({
             aria-busy={pending}
             onClick={onResync}
           >
-            {pending ? "Syncing…" : "Re-sync now"}
+            {pending ? "Publishing…" : "Publish to voice"}
           </button>
           <Link
             href={agentHref}

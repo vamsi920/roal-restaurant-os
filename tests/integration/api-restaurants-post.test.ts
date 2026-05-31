@@ -46,6 +46,10 @@ vi.mock("@/lib/supabase/server", () => ({
   createServerSupabase: vi.fn(),
 }));
 
+vi.mock("@/lib/menu-editor/copy-menu", () => ({
+  applyDefaultOrganizationMenuTemplate: vi.fn(),
+}));
+
 vi.mock("@/lib/voice-agent/provision-restaurant-voice-agent", () => ({
   tryProvisionVoiceAgentForNewRestaurant: vi.fn(),
 }));
@@ -55,12 +59,17 @@ import {
   resolveOrganizationId,
 } from "@/lib/auth/context-server";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
+import { applyDefaultOrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { tryProvisionVoiceAgentForNewRestaurant } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 
 describe("POST /api/restaurants", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(applyDefaultOrganizationMenuTemplate).mockResolvedValue({
+      applied: false,
+      reason: "no_default_template",
+    });
     vi.mocked(tryProvisionVoiceAgentForNewRestaurant).mockResolvedValue({
       ok: true,
       agent_id: "agent_auto_01",
@@ -264,6 +273,65 @@ describe("POST /api/restaurants", () => {
       name: "New Place",
       organization_id: ORG_ID,
     });
+  });
+
+  it("applies default org menu template on create when configured", async () => {
+    const restaurant = {
+      id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      name: "Template Kitchen",
+      organization_id: ORG_ID,
+      created_at: new Date().toISOString(),
+    };
+
+    vi.mocked(requireAuthContext).mockResolvedValue({
+      context: ownerContext(),
+      errorResponse: null,
+    });
+    vi.mocked(resolveOrganizationId).mockReturnValue({ organizationId: ORG_ID });
+    vi.mocked(assertOrganizationBillingGate).mockResolvedValue({
+      ok: true,
+      verdict: { hardBlocked: false, message: "" },
+    } as never);
+    vi.mocked(applyDefaultOrganizationMenuTemplate).mockResolvedValue({
+      applied: true,
+      templateId: "tpl_default_01",
+      templateName: "Brand menu",
+      stats: { categories: 2, items: 8, modifiers: 3 },
+    });
+
+    const supabase = { from: vi.fn() };
+    const single = vi.fn().mockResolvedValue({ data: restaurant, error: null });
+    const insert = vi.fn().mockReturnValue({
+      select: vi.fn().mockReturnValue({ single }),
+    });
+    vi.mocked(supabase.from).mockReturnValue({ insert });
+    vi.mocked(createServerSupabase).mockResolvedValue(supabase as never);
+
+    const res = await POST(
+      new Request("http://localhost/api/restaurants", {
+        method: "POST",
+        body: JSON.stringify({ name: restaurant.name }),
+      })
+    );
+
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.menu_template_inheritance).toEqual({
+      applied: true,
+      templateId: "tpl_default_01",
+      templateName: "Brand menu",
+      stats: { categories: 2, items: 8, modifiers: 3 },
+    });
+    expect(applyDefaultOrganizationMenuTemplate).toHaveBeenCalledWith(
+      supabase,
+      {
+        organizationId: ORG_ID,
+        targetRestaurantId: restaurant.id,
+      }
+    );
+    expect(applyDefaultOrganizationMenuTemplate).toHaveBeenCalledBefore(
+      tryProvisionVoiceAgentForNewRestaurant
+    );
   });
 
   it("returns 200 with warning when voice agent provision fails", async () => {

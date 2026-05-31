@@ -24,8 +24,12 @@ type Props = {
 
 const TOOLS: HarnessToolName[] = [
   "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
   "sync_draft_order",
   "finalize_order",
+  "get_order_status",
 ];
 
 const DEFAULT_SYNC_BODY = `{
@@ -38,6 +42,15 @@ const DEFAULT_SYNC_BODY = `{
 const DEFAULT_FINALIZE_BODY = `{
   "customer_name": "Test Guest",
   "customer_phone": "555-010-2233"
+}`;
+
+const DEFAULT_RESERVATION_BODY = `{
+  "customer_name": "Test Guest",
+  "customer_phone": "415-555-2233",
+  "party_size": 4,
+  "requested_date": "tomorrow",
+  "requested_time": "7 PM",
+  "notes": "Window table if available"
 }`;
 
 export function VoiceAgentTestHarness({
@@ -132,9 +145,23 @@ export function VoiceAgentTestHarness({
 
   function loadManualTemplate(tool: HarnessToolName) {
     setManualTool(tool);
-    if (tool === "get_menu_items") setManualBody("{}");
+    if (tool === "get_menu_items" || tool === "get_restaurant_info") {
+      setManualBody("{}");
+    }
+    else if (tool === "get_caller_history") {
+      setManualBody(`{
+  "customer_phone": "555-010-2233"
+}`);
+    }
+    else if (tool === "submit_reservation_request") {
+      setManualBody(DEFAULT_RESERVATION_BODY);
+    }
     else if (tool === "sync_draft_order") setManualBody(DEFAULT_SYNC_BODY);
-    else setManualBody(DEFAULT_FINALIZE_BODY);
+    else if (tool === "get_order_status") {
+      setManualBody(`{
+  "customer_phone": "555-010-2233"
+}`);
+    } else setManualBody(DEFAULT_FINALIZE_BODY);
   }
 
   const panelBody = (

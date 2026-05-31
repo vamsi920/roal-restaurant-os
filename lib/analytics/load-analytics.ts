@@ -1,7 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   aggregateMenuScans,
+  aggregateCallOutcomes,
   aggregatePopularItems,
+  aggregateUpsellAttachStats,
   popularItemSources,
   averagePrepMinutes,
   buildMenuContexts,
@@ -14,6 +16,8 @@ import {
   type OrderRow,
   type ReceiptRow,
   type UsageRow,
+  type AgentCallEventAnalyticsRow,
+  type UpsellRuleAnalyticsRow,
 } from "@/lib/analytics/aggregate";
 import {
   averageOrderEstimateCents,
@@ -21,6 +25,8 @@ import {
   collectOrderSessions,
   computeSessionConversionTrend,
   countStuckKitchenOrders,
+  peakCallHoursFromEvents,
+  peakCallWindowsFromEvents,
   peakOrderHoursFromReceipts,
   sessionHasCompletedOrder,
 } from "@/lib/analytics/phone-ops-metrics";
@@ -122,6 +128,8 @@ export async function loadOrganizationAnalytics(
     ordersResult,
     receiptsResult,
     importsResult,
+    callEventsResult,
+    upsellRulesResult,
     categoriesResult,
     profilesResult,
   ] = await Promise.all([
@@ -142,6 +150,17 @@ export async function loadOrganizationAnalytics(
       .lte("created_at", untilIso),
     importsQuery,
     supabase
+      .from("agent_call_events")
+      .select("restaurant_id, status, outcome, started_at, ended_at")
+      .in("restaurant_id", restaurantIds)
+      .gte("started_at", sinceIso)
+      .lte("started_at", untilIso),
+    supabase
+      .from("restaurant_upsell_rules")
+      .select("restaurant_id, trigger_text, offer_text, is_active")
+      .in("restaurant_id", restaurantIds)
+      .eq("is_active", true),
+    supabase
       .from("categories")
       .select("id, restaurant_id")
       .in("restaurant_id", restaurantIds),
@@ -158,14 +177,26 @@ export async function loadOrganizationAnalytics(
     importsResult,
     categoriesResult,
     profilesResult,
+    upsellRulesResult,
   ]) {
     if (result.error) throw new Error(result.error.message);
+  }
+
+  let callEvents: AgentCallEventAnalyticsRow[] = [];
+  if (callEventsResult.error) {
+    const msg = callEventsResult.error.message ?? "";
+    if (!/agent_call_events/i.test(msg)) {
+      throw new Error(callEventsResult.error.message);
+    }
+  } else {
+    callEvents = (callEventsResult.data ?? []) as AgentCallEventAnalyticsRow[];
   }
 
   const usage = (usageResult.data ?? []) as UsageRow[];
   const orders = (ordersResult.data ?? []) as OrderRow[];
   const receipts = (receiptsResult.data ?? []) as ReceiptRow[];
   const imports = (importsResult.data ?? []) as MenuImportRow[];
+  const upsellRules = (upsellRulesResult.data ?? []) as UpsellRuleAnalyticsRow[];
 
   const categoryRestaurantMap = new Map<string, string>();
   for (const cat of categoriesResult.data ?? []) {
@@ -257,6 +288,9 @@ export async function loadOrganizationAnalytics(
     restaurantIdSet
   );
   const peakHours = peakOrderHoursFromReceipts(receipts);
+  const peakCallHours = peakCallHoursFromEvents(callEvents);
+  const peakCallWindows = peakCallWindowsFromEvents(callEvents);
+  const callOutcomes = aggregateCallOutcomes(callEvents);
   const conversionTrend = computeSessionConversionTrend(
     sessions,
     sinceIso,
@@ -264,6 +298,11 @@ export async function loadOrganizationAnalytics(
   );
 
   const popularSources = popularItemSources(completedOrders, receipts);
+  const upsellAttach = aggregateUpsellAttachStats(
+    popularSources,
+    upsellRules,
+    menuByRestaurant
+  );
 
   const canceledByRest = countCanceledByRestaurant(orders);
   const receiptsByRest = countReceiptsByRestaurant(receipts);
@@ -273,6 +312,13 @@ export async function loadOrganizationAnalytics(
     const restSessions = sessions.filter((s) => s.restaurantId === r.id);
     const restCompletedSessions = restSessions.filter((s) =>
       sessionHasCompletedOrder(s)
+    ).length;
+    const restCallEvents = callEvents.filter((e) => e.restaurant_id === r.id);
+    const restCompletedCalls = restCallEvents.filter(
+      (e) => e.outcome === "order_completed"
+    ).length;
+    const restNoOrderCalls = restCallEvents.filter(
+      (e) => e.outcome === "no_order"
     ).length;
     const restCompleted = completedOrders.filter(
       (o) => o.restaurant_id === r.id
@@ -284,12 +330,28 @@ export async function loadOrganizationAnalytics(
       pricingByRestaurant
     );
     const prepSlice = prepByRest.get(r.id) ?? { avg: null, sampleSize: 0 };
+    const restUpsellAttach = aggregateUpsellAttachStats(
+      popularSources.filter((source) => source.restaurant_id === r.id),
+      upsellRules.filter((rule) => rule.restaurant_id === r.id),
+      menuByRestaurant
+    );
 
     return {
       restaurantId: r.id,
       restaurantName: r.name,
       orderSessions: restSessions.length,
       sessionsCompleted: restCompletedSessions,
+      callCount: restCallEvents.length,
+      callOrderCount: restCompletedCalls,
+      callConversionPercent: conversionPercent(
+        restCompletedCalls,
+        restCallEvents.length
+      ),
+      faqNoOrderCallCount: restNoOrderCalls,
+      faqNoOrderPercent: conversionPercent(
+        restNoOrderCalls,
+        restCallEvents.length
+      ),
       finalized: receiptsByRest.get(r.id) ?? 0,
       completedKitchen: restCompleted.length,
       canceled: canceledByRest.get(r.id) ?? 0,
@@ -299,6 +361,11 @@ export async function loadOrganizationAnalytics(
       ),
       revenueCents: restRevenue.totalCents,
       revenueComplete: restRevenue.complete,
+      upsellEligibleOrders: restUpsellAttach.eligibleOrders,
+      upsellAttachedOrders: restUpsellAttach.attachedOrders,
+      upsellAttachPercent: restUpsellAttach.attachPercent,
+      upsellAttributedRevenueCents: restUpsellAttach.attributedRevenueCents,
+      upsellRevenueComplete: restUpsellAttach.revenueComplete,
       avgPrepMinutes: prepSlice.avg,
       stuckOrders: countStuckKitchenOrders(restOrders),
     };
@@ -329,10 +396,14 @@ export async function loadOrganizationAnalytics(
       averageOrderCents: avgOrder.avgCents,
       averageOrderComplete: avgOrder.complete,
       averageOrderSampleSize: avgOrder.sampleSize,
+      upsellAttach,
       stuckOrderCount,
+      callOutcomes,
     },
     ordersOverTime,
     peakHours,
+    peakCallHours,
+    peakCallWindows,
     conversionTrend,
     popularItems: aggregatePopularItems(popularSources),
     byRestaurant,
@@ -383,7 +454,39 @@ function emptySnapshot(
       averageOrderCents: null,
       averageOrderComplete: true,
       averageOrderSampleSize: 0,
+      upsellAttach: {
+        configuredRules: 0,
+        eligibleOrders: 0,
+        attachedOrders: 0,
+        attachPercent: null,
+        attributedRevenueCents: null,
+        revenueComplete: true,
+        averageRevenuePerAttachedOrderCents: null,
+        attachedAverageOrderCents: null,
+        unattachedAverageOrderCents: null,
+        observedTicketLiftCents: null,
+        observedTicketLiftPercent: null,
+        observedLiftComplete: true,
+        attachedLiftSampleSize: 0,
+        unattachedLiftSampleSize: 0,
+        experimentTreatmentOrders: 0,
+        experimentControlOrders: 0,
+        experimentTreatmentAverageOrderCents: null,
+        experimentControlAverageOrderCents: null,
+        experimentTicketLiftCents: null,
+        experimentTicketLiftPercent: null,
+        experimentLiftComplete: true,
+      },
       stuckOrderCount: 0,
+      callOutcomes: {
+        total: 0,
+        active: 0,
+        completed: 0,
+        noOrder: 0,
+        abandoned: 0,
+        canceled: 0,
+        unknown: 0,
+      },
     },
     ordersOverTime: dayKeys.map((date) => ({
       date,
@@ -392,6 +495,8 @@ function emptySnapshot(
       canceled: 0,
     })),
     peakHours: [],
+    peakCallHours: [],
+    peakCallWindows: [],
     conversionTrend: {
       label: "Later half vs earlier half of range",
       priorPercent: null,

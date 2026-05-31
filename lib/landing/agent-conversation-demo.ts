@@ -11,51 +11,51 @@ export type TranscriptLine = {
 };
 
 export const AGENT_CONVERSATION_DEMO = {
-  restaurant: "Joe's Corner Kitchen",
+  restaurant: "Napoli Pizza",
   scenario: "Friday pickup · illustrative transcript",
   lines: [
     {
       id: "1",
       speaker: "agent",
-      text: "Thanks for calling Joe's Corner Kitchen—this is our pickup line. Ordering for pickup today?",
+      text: "Thanks for calling Napoli Pizza. I can take your pickup order.",
     },
     {
       id: "2",
       speaker: "guest",
-      text: "Yeah, pickup. I wanted the spicy tuna poke—",
+      text: "Can I place a pickup order in Spanish?",
     },
     {
       id: "3",
       speaker: "guest",
-      text: "Actually—can I add a miso soup too?",
+      text: "Two margherita pizzas and garlic knots.",
       beat: "interrupt",
     },
     {
       id: "4",
       speaker: "agent",
-      text: "Absolutely. For the poke, did you want extra tuna? That's fifty cents on your menu.",
+      text: "Claro. One pizza with no basil, one regular. Garlic knots with marinara?",
       beat: "modifier",
     },
     {
       id: "5",
       speaker: "guest",
-      text: "Yes, extra tuna. And mild spice, not the hot level.",
+      text: "Yes, add marinara. Pickup under Alex.",
     },
     {
       id: "6",
       speaker: "agent",
-      text: "Mild spice—got it. Anything else, or should I read back what I have so far?",
+      text: "Got it. Your pickup total is $43.47 and it will be ready in about 18 minutes.",
       beat: "clarify",
     },
     {
       id: "7",
       speaker: "guest",
-      text: "That's everything.",
+      text: "Perfect, thank you.",
     },
     {
       id: "8",
       speaker: "agent",
-      text: "Got it. One spicy tuna poke, extra tuna, mild spice, and one miso soup for pickup. Name and phone number when you're ready?",
+      text: "Confirmed. I sent the ticket to the kitchen with the no-basil note and marinara.",
       beat: "confirm",
     },
     {

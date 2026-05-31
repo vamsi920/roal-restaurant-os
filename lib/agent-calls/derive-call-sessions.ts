@@ -46,6 +46,9 @@ function collectSessionIds(input: DeriveAgentCallSessionsInput): Map<
       add(input.restaurantId, row.session_id);
     }
   }
+  for (const row of input.storedEvents ?? []) {
+    add(row.restaurant_id, row.session_id);
+  }
 
   return map;
 }
@@ -193,9 +196,17 @@ function mergeStoredOverDerived(
   derived: AgentCallSession,
   stored: AgentCallSession
 ): AgentCallSession {
+  const outcome =
+    derived.outcome === "order_completed"
+      ? derived.outcome
+      : stored.outcome !== "unknown"
+        ? stored.outcome
+        : derived.outcome;
+
   return {
     ...derived,
     ...stored,
+    outcome,
     conversationId: stored.conversationId || derived.conversationId,
     agentId: stored.agentId || derived.agentId,
     callerPhone: stored.callerPhone || derived.callerPhone,

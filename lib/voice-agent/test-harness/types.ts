@@ -2,8 +2,12 @@ import type { CartValidationResult } from "@/lib/voice-agent/validate-cart-items
 
 export type HarnessToolName =
   | "get_menu_items"
+  | "get_restaurant_info"
+  | "get_caller_history"
+  | "submit_reservation_request"
   | "sync_draft_order"
-  | "finalize_order";
+  | "finalize_order"
+  | "get_order_status";
 
 export type HarnessRequiredModifierHint = {
   itemName: string;

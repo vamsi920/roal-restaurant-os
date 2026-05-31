@@ -218,12 +218,15 @@ Deno.serve(async (req: Request) => {
   }
 
   let rawItems: unknown;
+  let draftFulfillmentType: string | null = null;
+  let draftDeliveryAddress: string | null = null;
+  let draftDeliveryInstructions: string | null = null;
   if (parsed.data.items) {
     rawItems = parsed.data.items;
   } else {
     const { data: cur, error: e1 } = await supabase
       .from("draft_orders")
-      .select("items")
+      .select("items, fulfillment_type, delivery_address, delivery_instructions")
       .eq("restaurant_id", restaurantId)
       .eq("session_id", parsed.data.session_id)
       .maybeSingle();
@@ -235,6 +238,14 @@ Deno.serve(async (req: Request) => {
       );
     }
     rawItems = cur?.items;
+    draftFulfillmentType =
+      typeof cur?.fulfillment_type === "string" ? cur.fulfillment_type : null;
+    draftDeliveryAddress =
+      typeof cur?.delivery_address === "string" ? cur.delivery_address : null;
+    draftDeliveryInstructions =
+      typeof cur?.delivery_instructions === "string"
+        ? cur.delivery_instructions
+        : null;
   }
 
   const cartValidation = validateCartForFinalize(
@@ -251,6 +262,26 @@ Deno.serve(async (req: Request) => {
   }
 
   const storedItems = cartLinesForStorage(cartValidation.normalizedItems);
+  const fulfillmentType =
+    parsed.data.fulfillment_type ?? draftFulfillmentType ?? "pickup";
+  const deliveryAddress =
+    parsed.data.delivery_address ?? draftDeliveryAddress ?? null;
+  const deliveryInstructions =
+    parsed.data.delivery_instructions ?? draftDeliveryInstructions ?? null;
+
+  if (fulfillmentType === "delivery" && !deliveryAddress?.trim()) {
+    meter(400, { lineCount: storedItems.length });
+    return agentToolErrorResponse(
+      {
+        error: "missing_delivery_address",
+        code: "missing_delivery_address",
+        message: "Delivery orders require a delivery address before finalizing.",
+        recovery_hint:
+          "Ask the guest for the full delivery address, then call finalize_order again with fulfillment_type delivery and delivery_address.",
+      },
+      400
+    );
+  }
 
   const row = {
     restaurant_id: restaurantId,
@@ -259,6 +290,9 @@ Deno.serve(async (req: Request) => {
     items: storedItems,
     customer_name: customerCheck.customer_name,
     customer_phone: customerCheck.customer_phone,
+    fulfillment_type: fulfillmentType,
+    delivery_address: deliveryAddress,
+    delivery_instructions: deliveryInstructions,
     updated_at: new Date().toISOString(),
   };
 
@@ -282,6 +316,9 @@ Deno.serve(async (req: Request) => {
     items: storedItems,
     customer_name: customerCheck.customer_name,
     customer_phone: customerCheck.customer_phone,
+    fulfillment_type: fulfillmentType,
+    delivery_address: deliveryAddress,
+    delivery_instructions: deliveryInstructions,
   };
   const { error: recErr } = await supabase
     .from("phone_order_receipts")

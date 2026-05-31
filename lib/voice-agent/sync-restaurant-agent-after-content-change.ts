@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { getElevenLabsAgentId } from "@/lib/env.server";
 import { EnvValidationError } from "@/lib/env.shared";
 import { createServerSupabase } from "@/lib/supabase/server";
 import type { ElevenLabsMenuAutoSyncStatus } from "@/lib/types";
@@ -16,6 +17,7 @@ export const VOICE_AGENT_CONTENT_SYNC_TRIGGERS = {
   profile: "profile",
   scanner_commit: "scanner_commit",
   manual_resync: "manual_resync",
+  publish_to_voice: "publish_to_voice",
 } as const;
 
 export type VoiceAgentContentSyncTrigger =
@@ -220,6 +222,19 @@ export async function syncRestaurantAgentAfterContentChange(
         skipped: true,
         skipReason: "no_linked_agent",
         agentId: null,
+        error: null,
+        trigger,
+        summary: null,
+      };
+    }
+
+    const templateAgentId = getElevenLabsAgentId();
+    if (templateAgentId && agentId === templateAgentId) {
+      return {
+        ok: true,
+        skipped: true,
+        skipReason: "shared_template_agent",
+        agentId,
         error: null,
         trigger,
         summary: null,

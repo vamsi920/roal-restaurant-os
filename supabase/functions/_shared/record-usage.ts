@@ -128,8 +128,12 @@ export async function resolveRestaurantOrganizationId(
 
 export type AgentToolMeterTool =
   | "get_menu_items"
+  | "get_restaurant_info"
+  | "get_caller_history"
+  | "submit_reservation_request"
   | "sync_draft_order"
-  | "finalize_order";
+  | "finalize_order"
+  | "get_order_status";
 
 /** Fire-and-forget tool metering (success or error HTTP status). */
 export function scheduleAgentToolMetering(

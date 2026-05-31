@@ -62,6 +62,10 @@ export type Restaurant = {
   organization_id: string;
   name: string;
   created_at: string;
+  inherited_menu_template_id?: string | null;
+  inherited_menu_template_applied_at?: string | null;
+  inherited_menu_template_override_count?: number | null;
+  inherited_menu_template_last_local_edit_at?: string | null;
 };
 
 /** `restaurant_profiles.elevenlabs_provision_status` */
@@ -118,6 +122,17 @@ export type RestaurantProfile = {
   created_at: string;
   updated_at: string;
 };
+
+export type {
+  RestaurantKnowledgeCategory,
+  RestaurantKnowledgeEntry,
+  RestaurantKnowledgeEntryInput,
+} from "@/lib/restaurant-knowledge/schema";
+
+export type {
+  RestaurantUpsellRule,
+  RestaurantUpsellRuleInput,
+} from "@/lib/restaurant-upsell/schema";
 
 /** Dev/POC default org created by migration 008. */
 export const LEGACY_POC_ORGANIZATION_ID =
@@ -185,6 +200,9 @@ export type DraftOrderRow = {
   items: unknown;
   customer_name: string | null;
   customer_phone: string | null;
+  fulfillment_type: "pickup" | "delivery" | null;
+  delivery_address: string | null;
+  delivery_instructions: string | null;
   accepted_at: string | null;
   in_progress_at: string | null;
   ready_at: string | null;
@@ -202,5 +220,8 @@ export type PhoneOrderReceiptRow = {
   items: unknown;
   customer_name: string | null;
   customer_phone: string | null;
+  fulfillment_type: "pickup" | "delivery" | null;
+  delivery_address: string | null;
+  delivery_instructions: string | null;
   created_at: string;
 };

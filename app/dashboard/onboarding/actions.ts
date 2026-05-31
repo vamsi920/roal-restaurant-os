@@ -21,6 +21,7 @@ import { emitGoLiveIfTransition } from "@/lib/notifications/operational-events";
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { upsertRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
+import { applyDefaultOrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
 import { createServerSupabase } from "@/lib/supabase/server";
 import {
   provisionRestaurantVoiceAgent,
@@ -116,6 +117,11 @@ export async function createRestaurantWizardAction(input: {
   if (error) throw new Error(formatSupabaseClientError(error.message));
 
   await ensureRestaurantOnboarding(supabase, data.id, input.organizationId);
+
+  await applyDefaultOrganizationMenuTemplate(supabase, {
+    organizationId: input.organizationId,
+    targetRestaurantId: data.id,
+  });
 
   const provision = await tryProvisionVoiceAgentForNewRestaurant({
     restaurantId: data.id,

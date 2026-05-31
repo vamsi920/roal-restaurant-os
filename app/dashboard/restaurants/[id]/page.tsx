@@ -104,6 +104,7 @@ export default async function RestaurantKDSPage({
               initialReceipts={pageData.initialReceipts}
               initialLoadError={pageData.ordersLoadError}
               initialActiveCalls={pageData.activeCalls}
+              initialCallEvidenceBySession={pageData.initialCallEvidenceBySession}
             />
           </div>
           <RecentPhoneOutcomesPanel

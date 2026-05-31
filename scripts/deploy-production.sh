@@ -34,7 +34,7 @@ if command -v supabase >/dev/null 2>&1; then
   esac
 
   echo ""
-  read -r -p "Deploy Edge Functions (get-menu, sync-draft-order, finalize-order)? [y/N] " DEPLOY_EDGE
+  read -r -p "Deploy Edge Functions (get-menu, sync-draft-order, finalize-order, get-order-status)? [y/N] " DEPLOY_EDGE
   case "$DEPLOY_EDGE" in
     [yY]|[yY][eE][sS]) bash "$ROOT/scripts/deploy-edge-functions.sh" ;;
   esac

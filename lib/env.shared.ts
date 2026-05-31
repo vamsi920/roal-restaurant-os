@@ -88,6 +88,8 @@ export const ENV_HINTS: Record<string, string> = {
     "Preferred HMAC secret for per-restaurant roal1.* tokens (falls back to AGENT_TOOL_SECRET)",
   ELEVENLABS_CONVERSATION_INIT_SECRET:
     "Optional shared secret for GET/POST /api/integrations/elevenlabs/conversation-init (Twilio personalization webhook)",
+  ELEVENLABS_WEBHOOK_SECRET:
+    "Shared HMAC secret from ElevenLabs post-call webhook settings",
   ELEVENLABS_SYNC_TOKEN:
     "Optional: require Authorization Bearer on POST /api/integrations/elevenlabs/sync-roal-tools",
   RESTAURANT_AGENT_TIMEZONE:

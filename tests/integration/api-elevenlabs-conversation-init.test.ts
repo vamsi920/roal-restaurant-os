@@ -17,6 +17,7 @@ vi.mock("@/lib/elevenlabs/conversation-init", async (importOriginal) => {
     ...actual,
     resolveRestaurantForElevenLabsConversationInit: vi.fn(),
     readAgentPlaceholdersForInit: vi.fn(),
+    persistElevenLabsConversationStarted: vi.fn(),
   };
 });
 
@@ -24,8 +25,10 @@ import { getElevenLabsConversationInitSecret } from "@/lib/env.server";
 import {
   resolveRestaurantForElevenLabsConversationInit,
   readAgentPlaceholdersForInit,
+  persistElevenLabsConversationStarted,
 } from "@/lib/elevenlabs/conversation-init";
 import { valueHasUnresolvedTemplate } from "@/lib/elevenlabs-placeholders";
+import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 
 const base = "http://localhost/api/integrations/elevenlabs/conversation-init";
 
@@ -49,6 +52,9 @@ describe("GET/POST /api/integrations/elevenlabs/conversation-init", () => {
       restaurant_id: "stale-placeholder",
       restaurant_name: "{{restaurant_name}}",
     });
+    vi.mocked(persistElevenLabsConversationStarted).mockResolvedValue({
+      stored: true,
+    });
   });
 
   it("GET ?agent_id= returns conversation_initiation_client_data without templates", async () => {
@@ -66,6 +72,7 @@ describe("GET/POST /api/integrations/elevenlabs/conversation-init", () => {
     expect(body.type).toBe("conversation_initiation_client_data");
     expect(body.dynamic_variables.restaurant_id).toBe(RESTAURANT_ID);
     expect(body.dynamic_variables.restaurant_name).toBe("QA Bistro");
+    expect(body.dynamic_variables.upsell_experiment_variant).toBe("treatment");
     expect(
       Object.values(body.dynamic_variables as Record<string, string>).some((v) =>
         valueHasUnresolvedTemplate(String(v))
@@ -94,6 +101,21 @@ describe("GET/POST /api/integrations/elevenlabs/conversation-init", () => {
       agentId: AGENT,
       calledNumber: CALLED,
     });
+    expect(persistElevenLabsConversationStarted).toHaveBeenCalledWith({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT,
+      sessionId: "CAxxxxxxxx",
+      callerPhone: "+15551234567",
+      calledNumber: CALLED,
+      resolvedVia: "agent_id",
+      upsellExperimentVariant: getUpsellExperimentVariant(
+        RESTAURANT_ID,
+        "CAxxxxxxxx"
+      ),
+    });
+    expect(body.dynamic_variables.upsell_experiment_variant).toBe(
+      getUpsellExperimentVariant(RESTAURANT_ID, "CAxxxxxxxx")
+    );
     expect(body.dynamic_variables.restaurant_name).toBe("QA Bistro");
   });
 
@@ -117,7 +139,53 @@ describe("GET/POST /api/integrations/elevenlabs/conversation-init", () => {
       agentId: AGENT,
       calledNumber: CALLED,
     });
+    expect(persistElevenLabsConversationStarted).toHaveBeenCalledWith({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT,
+      sessionId: "CAxxxxxxxx",
+      callerPhone: "+15551234567",
+      calledNumber: CALLED,
+      resolvedVia: "agent_id",
+      upsellExperimentVariant: getUpsellExperimentVariant(
+        RESTAURANT_ID,
+        "CAxxxxxxxx"
+      ),
+    });
     expect(body.dynamic_variables.restaurant_name).toBe("QA Bistro");
+  });
+
+  it("continues returning init variables when active-call persistence fails", async () => {
+    vi.mocked(persistElevenLabsConversationStarted).mockRejectedValue(
+      new Error("database unavailable")
+    );
+
+    const res = await POST(
+      new Request(base, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          agent_id: AGENT,
+          conversation_id: "conv_live_123",
+          caller_phone: "+15550001111",
+        }),
+      })
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(body.dynamic_variables.restaurant_id).toBe(RESTAURANT_ID);
+    expect(persistElevenLabsConversationStarted).toHaveBeenCalledWith({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT,
+      sessionId: "conv_live_123",
+      callerPhone: "+15550001111",
+      calledNumber: "",
+      resolvedVia: "agent_id",
+      upsellExperimentVariant: getUpsellExperimentVariant(
+        RESTAURANT_ID,
+        "conv_live_123"
+      ),
+    });
   });
 
   it("POST ?agentId= camelCase query is accepted", async () => {

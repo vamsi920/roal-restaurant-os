@@ -1,11 +1,17 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
+import { getElevenLabsAgentId } from "@/lib/env.server";
 import {
   syncRestaurantAgentAfterContentChange,
   VOICE_AGENT_CONTENT_SYNC_TRIGGERS,
 } from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
 
+vi.mock("@/lib/env.server", () => ({
+  getElevenLabsAgentId: vi.fn(() => null),
+}));
+
 const RESTAURANT_ID = "00000000-0000-4000-8000-000000000099";
 const AGENT_ID = "agent_linked_01";
+const TEMPLATE_AGENT_ID = "agent_template_global_roal";
 
 function mockSupabase(agentId: string | null) {
   const updates: Record<string, unknown>[] = [];
@@ -54,6 +60,28 @@ function mockSupabase(agentId: string | null) {
 describe("syncRestaurantAgentAfterContentChange", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  it("skips menu auto-sync when profile links the shared template agent", async () => {
+    vi.mocked(getElevenLabsAgentId).mockReturnValue(TEMPLATE_AGENT_ID);
+    const { client } = mockSupabase(TEMPLATE_AGENT_ID);
+    const runSync = vi.fn();
+
+    const result = await syncRestaurantAgentAfterContentChange(
+      {
+        restaurantId: RESTAURANT_ID,
+        trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.menu,
+      },
+      { getSupabase: async () => client as never, runSync }
+    );
+
+    expect(result).toMatchObject({
+      ok: true,
+      skipped: true,
+      skipReason: "shared_template_agent",
+      agentId: TEMPLATE_AGENT_ID,
+    });
+    expect(runSync).not.toHaveBeenCalled();
   });
 
   it("skips when no linked agent", async () => {

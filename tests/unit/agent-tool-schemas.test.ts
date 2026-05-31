@@ -1,9 +1,17 @@
 import { describe, expect, it } from "vitest";
 import {
   FinalizeOrderRequestSchema,
+  GetCallerHistoryRequestSchema,
+  GetCallerHistoryResponseSchema,
+  GetRestaurantInfoPostBodySchema,
+  GetRestaurantInfoResponseSchema,
+  GetOrderStatusRequestSchema,
+  GetOrderStatusResponseSchema,
   GetMenuPostBodySchema,
   GetMenuQuerySchema,
   GetMenuResponseSchema,
+  SubmitReservationRequestSchema,
+  SubmitReservationResponseSchema,
   SyncDraftOrderRequestSchema,
   assertRestaurantIdMatches,
   formatZodValidationError,
@@ -32,6 +40,23 @@ describe("agent tool request schemas", () => {
         restaurant_id: RESTAURANT_ID,
         session_id: SESSION_ID,
         status: "draft",
+        items: [{ name: "Classic Burger", quantity: 1 }],
+      },
+      { tool: "sync_draft_order" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+
+  it("parses delivery details on sync_draft_order", () => {
+    const parsed = parseAgentToolRequest(
+      SyncDraftOrderRequestSchema,
+      {
+        restaurant_id: RESTAURANT_ID,
+        session_id: SESSION_ID,
+        status: "draft",
+        fulfillment_type: "delivery",
+        delivery_address: "123 Market St, Apt 4B",
+        delivery_instructions: "Ring side gate buzzer",
         items: [{ name: "Classic Burger", quantity: 1 }],
       },
       { tool: "sync_draft_order" }
@@ -97,6 +122,46 @@ describe("agent tool request schemas", () => {
         true
       );
       expect(parsed.body.recovery_hint).toContain("finalize_order");
+    }
+  });
+
+  it("parses delivery details on finalize_order", () => {
+    const parsed = parseAgentToolRequest(
+      FinalizeOrderRequestSchema,
+      {
+        restaurant_id: RESTAURANT_ID,
+        session_id: SESSION_ID,
+        customer_name: "Maria Lopez",
+        customer_phone: "4155551212",
+        fulfillment_type: "delivery",
+        delivery_address: "123 Market St, Apt 4B",
+        delivery_instructions: "Leave at lobby desk",
+        items: [{ name: "Classic Burger", quantity: 1 }],
+      },
+      { tool: "finalize_order" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+
+  it("rejects finalize delivery without delivery_address", () => {
+    const parsed = parseAgentToolRequest(
+      FinalizeOrderRequestSchema,
+      {
+        restaurant_id: RESTAURANT_ID,
+        session_id: SESSION_ID,
+        customer_name: "Maria Lopez",
+        customer_phone: "4155551212",
+        fulfillment_type: "delivery",
+        items: [{ name: "Classic Burger", quantity: 1 }],
+      },
+      { tool: "finalize_order" }
+    );
+    expect(parsed.ok).toBe(false);
+    if (!parsed.ok) {
+      expect(parsed.body.issues?.some((i) => i.path === "delivery_address")).toBe(
+        true
+      );
+      expect(parsed.body.recovery_hint).toContain("delivery_address");
     }
   });
 
@@ -179,6 +244,99 @@ describe("agent tool request schemas", () => {
     );
     expect(parsed.ok).toBe(true);
   });
+
+  it("parses get_restaurant_info POST body", () => {
+    const parsed = parseAgentToolRequest(
+      GetRestaurantInfoPostBodySchema,
+      {},
+      { tool: "get_restaurant_info" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+
+  it("parses get_order_status by customer phone", () => {
+    const parsed = parseAgentToolRequest(
+      GetOrderStatusRequestSchema,
+      {
+        restaurant_id: RESTAURANT_ID,
+        customer_phone: "+15551234567",
+      },
+      { tool: "get_order_status" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+
+  it("rejects get_order_status without lookup details", () => {
+    const parsed = parseAgentToolRequest(
+      GetOrderStatusRequestSchema,
+      { restaurant_id: RESTAURANT_ID },
+      { tool: "get_order_status" }
+    );
+    expect(parsed.ok).toBe(false);
+    if (!parsed.ok) {
+      expect(parsed.body.recovery_hint).toContain("session_id");
+    }
+  });
+
+  it("parses get_caller_history by customer phone", () => {
+    const parsed = parseAgentToolRequest(
+      GetCallerHistoryRequestSchema,
+      {
+        restaurant_id: RESTAURANT_ID,
+        customer_phone: "+15551234567",
+      },
+      { tool: "get_caller_history" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+
+  it("rejects get_caller_history without caller details", () => {
+    const parsed = parseAgentToolRequest(
+      GetCallerHistoryRequestSchema,
+      { restaurant_id: RESTAURANT_ID },
+      { tool: "get_caller_history" }
+    );
+    expect(parsed.ok).toBe(false);
+    if (!parsed.ok) {
+      expect(parsed.body.recovery_hint).toContain("phone number or name");
+    }
+  });
+
+  it("parses submit_reservation_request", () => {
+    const parsed = parseAgentToolRequest(
+      SubmitReservationRequestSchema,
+      {
+        restaurant_id: RESTAURANT_ID,
+        session_id: SESSION_ID,
+        customer_name: "Priya Shah",
+        customer_phone: "+14155550199",
+        party_size: 4,
+        requested_date: "tomorrow",
+        requested_time: "7 PM",
+        notes: "Birthday dinner",
+      },
+      { tool: "submit_reservation_request" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+
+  it("rejects submit_reservation_request without reservation details", () => {
+    const parsed = parseAgentToolRequest(
+      SubmitReservationRequestSchema,
+      {
+        restaurant_id: RESTAURANT_ID,
+        customer_name: "P",
+      },
+      { tool: "submit_reservation_request" }
+    );
+    expect(parsed.ok).toBe(false);
+    if (!parsed.ok) {
+      expect(parsed.body.issues?.some((i) => i.path === "party_size")).toBe(true);
+      expect(parsed.body.issues?.some((i) => i.path === "requested_date")).toBe(
+        true
+      );
+    }
+  });
 });
 
 describe("get_menu_items response schema", () => {
@@ -222,6 +380,136 @@ describe("get_menu_items response schema", () => {
     const parsed = parseAgentToolResponse(GetMenuResponseSchema, body, {
       tool: "get_menu_items",
     });
+    expect(parsed.ok).toBe(true);
+  });
+});
+
+describe("get_order_status response schema", () => {
+  it("accepts a found order status payload", () => {
+    const parsed = parseAgentToolResponse(
+      GetOrderStatusResponseSchema,
+      {
+        ok: true,
+        order: {
+          found: true,
+          status: "ready",
+          status_label: "ready for pickup",
+          message: "That order is ready for pickup.",
+          session_id: SESSION_ID,
+          customer_name: "Maria Lopez",
+          customer_phone: "+15551234567",
+          item_count: 3,
+          updated_at: "2026-05-30T18:00:00.000Z",
+          created_at: "2026-05-30T17:45:00.000Z",
+        },
+      },
+      { tool: "get_order_status" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+});
+
+describe("get_caller_history response schema", () => {
+  it("accepts returning caller history payload", () => {
+    const parsed = parseAgentToolResponse(
+      GetCallerHistoryResponseSchema,
+      {
+        ok: true,
+        caller: {
+          found: true,
+          customer_name: "Maria Lopez",
+          customer_phone: "+15551234567",
+          visit_count: 2,
+          completed_order_count: 2,
+          last_order_at: "2026-05-30T17:45:00.000Z",
+          last_order_items: ["Paneer Tikka", "Naan"],
+          favorite_items: ["Paneer Tikka"],
+          message:
+            "Returning guest with 2 completed pickup orders here. You may mention you can help with their usual, but do not assume they want it.",
+        },
+      },
+      { tool: "get_caller_history" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+});
+
+describe("submit_reservation_request response schema", () => {
+  it("accepts reservation request payload", () => {
+    const parsed = parseAgentToolResponse(
+      SubmitReservationResponseSchema,
+      {
+        ok: true,
+        reservation_request: {
+          id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+          restaurant_id: RESTAURANT_ID,
+          session_id: SESSION_ID,
+          conversation_id: SESSION_ID,
+          customer_name: "Priya Shah",
+          customer_phone: "+14155550199",
+          party_size: 4,
+          requested_date: "tomorrow",
+          requested_time: "7 PM",
+          notes: "Birthday dinner",
+          status: "requested",
+          created_at: "2026-05-30T19:15:00.000Z",
+          message:
+            "Reservation request saved for 4 guests on tomorrow at 7 PM. Staff will confirm.",
+        },
+      },
+      { tool: "submit_reservation_request" }
+    );
+    expect(parsed.ok).toBe(true);
+  });
+});
+
+describe("get_restaurant_info response schema", () => {
+  it("accepts live business facts, operations, and FAQ entries", () => {
+    const parsed = parseAgentToolResponse(
+      GetRestaurantInfoResponseSchema,
+      {
+        ok: true,
+        restaurant: {
+          id: RESTAURANT_ID,
+          name: "Test Bistro",
+          phone: "+15551234567",
+          website: "https://example.com",
+          cuisine: "Pizza",
+          address: {
+            line1: "123 Main St",
+            line2: null,
+            city: "Austin",
+            region: "TX",
+            postal_code: "78701",
+            country: "US",
+            display: "123 Main St, Austin, TX, 78701, US",
+          },
+          service_modes: {
+            pickup: true,
+            delivery: false,
+          },
+          prep_time_minutes: 20,
+          prep_time_message:
+            "Typical pickup prep time is about 20 minutes. Quote this as an estimate, not a promise.",
+        },
+        operations: {
+          ordering_allowed: true,
+          is_open_now: true,
+          status: "open",
+          message: "Open now.",
+          local_date: "2026-05-30",
+          local_time: "18:00",
+        },
+        knowledge_entries: [
+          {
+            category: "directions",
+            question: "Where do I park?",
+            answer: "Use the short-term spaces behind the restaurant.",
+          },
+        ],
+      },
+      { tool: "get_restaurant_info" }
+    );
     expect(parsed.ok).toBe(true);
   });
 });

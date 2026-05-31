@@ -1,10 +1,16 @@
-import { normalizeOrderStatus } from "@/lib/order-status";
-import type { DraftOrderRow } from "@/lib/types";
+import {
+  isVoiceCartStatus,
+  normalizeOrderStatus,
+} from "@/lib/order-status";
+import { parseOrderLineItems } from "@/lib/orders/line-items";
+import type { DraftOrderRow, PhoneOrderReceiptRow } from "@/lib/types";
 
 export type StatusHistoryEntry = {
   label: string;
   at: string;
   iso: string;
+  description: string;
+  tone: "call" | "ticket" | "kitchen" | "done" | "danger";
 };
 
 function formatHistoryTime(iso: string): string {
@@ -22,12 +28,47 @@ export function buildOrderStatusHistory(
   order: DraftOrderRow
 ): StatusHistoryEntry[] {
   const entries: StatusHistoryEntry[] = [];
+  const lineCount = parseOrderLineItems(order.items).reduce(
+    (sum, line) => sum + Math.max(1, line.quantity),
+    0
+  );
 
   if (order.created_at) {
     entries.push({
-      label: "Order placed",
+      label: "Call received",
       iso: order.created_at,
       at: formatHistoryTime(order.created_at),
+      description: "ROAL opened a live phone cart for this guest.",
+      tone: "call",
+    });
+  }
+
+  const status = normalizeOrderStatus(order.status);
+  if (isVoiceCartStatus(status)) {
+    entries.push({
+      label: lineCount > 0 ? "Guest is building an order" : "Guest is on the line",
+      iso: order.updated_at || order.created_at,
+      at: formatHistoryTime(order.updated_at || order.created_at),
+      description:
+        lineCount > 0
+          ? `${lineCount} item${lineCount === 1 ? "" : "s"} captured so far. The ticket is not finalized yet.`
+          : "The call is active; items may appear as the guest orders.",
+      tone: "call",
+    });
+    return dedupeAndSort(entries);
+  }
+
+  const finalizedAt =
+    order.updated_at && !order.accepted_at && !order.canceled_at
+      ? order.updated_at
+      : null;
+  if (finalizedAt && (status === "new" || status === "completed")) {
+    entries.push({
+      label: "Ticket sent to kitchen",
+      iso: finalizedAt,
+      at: formatHistoryTime(finalizedAt),
+      description: "The guest confirmed the order and ROAL sent it to the queue.",
+      tone: "ticket",
     });
   }
 
@@ -41,12 +82,48 @@ export function buildOrderStatusHistory(
       | "canceled_at"
     >;
     label: string;
+    description: string;
+    tone: StatusHistoryEntry["tone"];
   }[] = [
-    { key: "accepted_at", label: "Accepted" },
-    { key: "in_progress_at", label: "Cooking" },
-    { key: "ready_at", label: "Ready for pickup" },
-    { key: "completed_at", label: "Picked up" },
-    { key: "canceled_at", label: "Canceled" },
+    {
+      key: "accepted_at",
+      label: "Kitchen accepted",
+      description: "Staff acknowledged the confirmed ticket.",
+      tone: "kitchen",
+    },
+    {
+      key: "in_progress_at",
+      label: "Preparing order",
+      description: "The kitchen marked this order in progress.",
+      tone: "kitchen",
+    },
+    {
+      key: "ready_at",
+      label:
+        order.fulfillment_type === "delivery"
+          ? "Ready for delivery"
+          : "Ready for pickup",
+      description:
+        order.fulfillment_type === "delivery"
+          ? "The order is ready for handoff to delivery."
+          : "The order is ready for the guest.",
+      tone: "kitchen",
+    },
+    {
+      key: "completed_at",
+      label: "Order completed",
+      description:
+        order.fulfillment_type === "delivery"
+          ? "The delivery order was completed."
+          : "The pickup order was completed.",
+      tone: "done",
+    },
+    {
+      key: "canceled_at",
+      label: "Order canceled",
+      description: "Staff canceled the ticket from the queue.",
+      tone: "danger",
+    },
   ];
 
   for (const step of steps) {
@@ -56,11 +133,12 @@ export function buildOrderStatusHistory(
         label: step.label,
         iso,
         at: formatHistoryTime(iso),
+        description: step.description,
+        tone: step.tone,
       });
     }
   }
 
-  const status = normalizeOrderStatus(order.status);
   if (
     status === "new" &&
     !order.accepted_at &&
@@ -71,22 +149,43 @@ export function buildOrderStatusHistory(
       label: "New order",
       iso: order.updated_at,
       at: formatHistoryTime(order.updated_at),
+      description: "The ticket is waiting for the kitchen to accept it.",
+      tone: "ticket",
     });
   }
 
-  return entries.sort(
-    (a, b) => new Date(a.iso).getTime() - new Date(b.iso).getTime()
-  );
+  return dedupeAndSort(entries);
 }
 
 export function buildReceiptStatusHistory(
-  createdAt: string
+  receiptOrCreatedAt: string | PhoneOrderReceiptRow
 ): StatusHistoryEntry[] {
+  const createdAt =
+    typeof receiptOrCreatedAt === "string"
+      ? receiptOrCreatedAt
+      : receiptOrCreatedAt.created_at;
   return [
     {
-      label: "Order completed",
+      label: "Phone order finalized",
       iso: createdAt,
       at: formatHistoryTime(createdAt),
+      description:
+        "ROAL confirmed the guest's order and stored the receipt for this session.",
+      tone: "done",
     },
   ];
+}
+
+function dedupeAndSort(entries: StatusHistoryEntry[]): StatusHistoryEntry[] {
+  const seen = new Set<string>();
+  const out: StatusHistoryEntry[] = [];
+  for (const entry of entries) {
+    const key = `${entry.iso}:${entry.label}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(entry);
+  }
+  return out.sort(
+    (a, b) => new Date(a.iso).getTime() - new Date(b.iso).getTime()
+  );
 }

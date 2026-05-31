@@ -4,10 +4,15 @@ import {
   isTerminalOrderStatus,
 } from "@/lib/order-status";
 import { dayKeyUtc } from "@/lib/analytics/range";
-import type { ConversionTrend, DailyOrderPoint } from "@/lib/analytics/types";
+import type {
+  ConversionTrend,
+  DailyOrderPoint,
+  PeakCallWindowRow,
+} from "@/lib/analytics/types";
 import {
   conversionPercent,
   estimateRevenueCents,
+  type AgentCallEventAnalyticsRow,
   type OrderRow,
   type ReceiptRow,
   type UsageRow,
@@ -236,6 +241,8 @@ const HOUR_LABELS = [
   "11 PM",
 ];
 
+const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 export function peakOrderHoursFromReceipts(
   receipts: ReceiptRow[],
   limit = 3
@@ -253,6 +260,83 @@ export function peakOrderHoursFromReceipts(
     }))
     .filter((row) => row.orderCount > 0)
     .sort((a, b) => b.orderCount - a.orderCount)
+    .slice(0, limit);
+}
+
+export function peakCallHoursFromEvents(
+  events: AgentCallEventAnalyticsRow[],
+  limit = 3
+): import("@/lib/analytics/types").PeakHourRow[] {
+  const counts = new Array(24).fill(0) as number[];
+  for (const event of events) {
+    const h = new Date(event.started_at).getUTCHours();
+    if (Number.isFinite(h) && h >= 0 && h < 24) counts[h] += 1;
+  }
+  return counts
+    .map((orderCount, hourUtc) => ({
+      hourUtc,
+      label: HOUR_LABELS[hourUtc] ?? `${hourUtc}:00 UTC`,
+      orderCount,
+    }))
+    .filter((row) => row.orderCount > 0)
+    .sort((a, b) => b.orderCount - a.orderCount)
+    .slice(0, limit);
+}
+
+export function peakCallWindowsFromEvents(
+  events: AgentCallEventAnalyticsRow[],
+  limit = 6
+): PeakCallWindowRow[] {
+  const buckets = new Map<string, { callCount: number; completedCount: number }>();
+
+  for (const event of events) {
+    const started = new Date(event.started_at);
+    const dayOfWeekUtc = started.getUTCDay();
+    const hourUtc = started.getUTCHours();
+    if (
+      !Number.isFinite(dayOfWeekUtc) ||
+      !Number.isFinite(hourUtc) ||
+      dayOfWeekUtc < 0 ||
+      dayOfWeekUtc > 6 ||
+      hourUtc < 0 ||
+      hourUtc > 23
+    ) {
+      continue;
+    }
+
+    const key = `${dayOfWeekUtc}:${hourUtc}`;
+    const bucket = buckets.get(key) ?? { callCount: 0, completedCount: 0 };
+    bucket.callCount += 1;
+    if (event.outcome === "order_completed") bucket.completedCount += 1;
+    buckets.set(key, bucket);
+  }
+
+  return [...buckets.entries()]
+    .map(([key, bucket]) => {
+      const [dayRaw, hourRaw] = key.split(":");
+      const dayOfWeekUtc = Number(dayRaw);
+      const hourUtc = Number(hourRaw);
+      return {
+        dayOfWeekUtc,
+        dayLabel: DAY_LABELS[dayOfWeekUtc] ?? `Day ${dayOfWeekUtc}`,
+        hourUtc,
+        hourLabel: HOUR_LABELS[hourUtc] ?? `${hourUtc}:00 UTC`,
+        callCount: bucket.callCount,
+        completedCount: bucket.completedCount,
+        conversionPercent: conversionPercent(
+          bucket.completedCount,
+          bucket.callCount
+        ),
+      };
+    })
+    .sort((a, b) => {
+      if (b.callCount !== a.callCount) return b.callCount - a.callCount;
+      if (b.completedCount !== a.completedCount) {
+        return b.completedCount - a.completedCount;
+      }
+      if (a.dayOfWeekUtc !== b.dayOfWeekUtc) return a.dayOfWeekUtc - b.dayOfWeekUtc;
+      return a.hourUtc - b.hourUtc;
+    })
     .slice(0, limit);
 }
 

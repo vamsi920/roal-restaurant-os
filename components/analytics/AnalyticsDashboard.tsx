@@ -20,7 +20,15 @@ function formatTrendDelta(delta: number | null): string {
 }
 
 export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
-  const { summary, menuScans, conversionTrend, peakHours } = snapshot;
+  const {
+    summary,
+    menuScans,
+    conversionTrend,
+    peakHours,
+    peakCallHours,
+    peakCallWindows,
+  } = snapshot;
+  const { callOutcomes } = summary;
   const isRestaurantScope = snapshot.scope === "restaurant";
   const hasData =
     summary.orderSessions > 0 ||
@@ -28,6 +36,8 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
     summary.ordersFinalized > 0 ||
     summary.completedKitchenOrders > 0 ||
     summary.ordersCanceled > 0 ||
+    callOutcomes.total > 0 ||
+    summary.upsellAttach.configuredRules > 0 ||
     menuScans.attempts > 0;
 
   const emptyHref =
@@ -40,6 +50,10 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
   const peakLabel =
     peakHours.length > 0
       ? peakHours.map((h) => `${h.label} UTC (${h.orderCount})`).join(" · ")
+      : "—";
+  const peakCallLabel =
+    peakCallHours.length > 0
+      ? peakCallHours.map((h) => `${h.label} UTC (${h.orderCount})`).join(" · ")
       : "—";
 
   return (
@@ -65,8 +79,9 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
             ) : null}
           </p>
           <p className="mt-1 max-w-2xl text-pretty text-xs text-subtle">
-            Counts use unique order session IDs from drafts, receipts, and usage
-            events — not inferred call volume.
+            Order counts use unique session IDs from drafts, receipts, and usage
+            events. Call counts use ElevenLabs post-call webhook events when
+            configured.
           </p>
         </div>
         <AnalyticsRangePicker active={snapshot.rangeKey} />
@@ -121,14 +136,14 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
 
       <section className="analytics-dashboard__stats analytics-dashboard__stats--secondary grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          label="Orders finalized"
-          value={summary.ordersFinalized.toLocaleString()}
-          hint="Phone receipts saved (finalize_order)"
+          label="Calls recorded"
+          value={callOutcomes.total.toLocaleString()}
+          hint="ElevenLabs post-call webhook sessions"
         />
         <StatCard
-          label="Kitchen completed"
-          value={summary.completedKitchenOrders.toLocaleString()}
-          hint="Draft orders marked completed in KDS"
+          label="Order calls"
+          value={callOutcomes.completed.toLocaleString()}
+          hint="Webhook calls classified as completed orders"
         />
         <StatCard
           label="Conversion trend"
@@ -141,17 +156,66 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
           }
         />
         <StatCard
-          label="Peak order hours"
-          value={peakHours[0] ? peakHours[0].label : "—"}
+          label="Peak call hours"
+          value={peakCallHours[0] ? peakCallHours[0].label : "—"}
           hint={
-            peakHours.length > 0
-              ? `UTC from receipts · ${peakLabel}`
-              : "No receipts in range"
+            peakCallHours.length > 0
+              ? `UTC from post-call webhooks · ${peakCallLabel}`
+              : peakHours.length > 0
+                ? `No call webhooks yet. Receipt peak: ${peakLabel}`
+                : "No call events in range"
           }
         />
       </section>
 
+      <section className="analytics-dashboard__stats analytics-dashboard__stats--upsell grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="Upsell attach rate"
+          value={formatPercent(summary.upsellAttach.attachPercent)}
+          hint={
+            summary.upsellAttach.configuredRules > 0
+              ? `${summary.upsellAttach.attachedOrders} attached · ${summary.upsellAttach.eligibleOrders} eligible orders`
+              : "Configure add-on rules in Restaurant profile"
+          }
+        />
+        <StatCard
+          label="Upsell revenue"
+          value={formatUsdFromCents(
+            summary.upsellAttach.attributedRevenueCents,
+            summary.upsellAttach.revenueComplete
+          )}
+          hint="Estimated subtotal from attached offer items"
+        />
+        <StatCard
+          label="Controlled upsell lift"
+          value={formatUsdFromCents(
+            summary.upsellAttach.experimentTicketLiftCents,
+            summary.upsellAttach.experimentLiftComplete
+          )}
+          hint={
+            summary.upsellAttach.experimentTicketLiftPercent != null
+              ? `${formatPercent(summary.upsellAttach.experimentTicketLiftPercent)} treatment vs control`
+              : "Needs treatment and control eligible orders"
+          }
+        />
+        <StatCard
+          label="Experiment split"
+          value={`${summary.upsellAttach.experimentTreatmentOrders}/${summary.upsellAttach.experimentControlOrders}`}
+          hint={`${summary.upsellAttach.configuredRules} active rules · treatment/control eligible orders`}
+        />
+      </section>
+
       <section className="analytics-dashboard__stats analytics-dashboard__stats--tertiary grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="Orders finalized"
+          value={summary.ordersFinalized.toLocaleString()}
+          hint="Phone receipts saved (finalize_order)"
+        />
+        <StatCard
+          label="Kitchen completed"
+          value={summary.completedKitchenOrders.toLocaleString()}
+          hint="Draft orders marked completed in KDS"
+        />
         <StatCard
           label="Est. revenue (total)"
           value={formatUsdFromCents(
@@ -177,10 +241,23 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
               : "Created → completed"
           }
         />
+      </section>
+
+      <section className="analytics-dashboard__stats analytics-dashboard__stats--outcomes grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="FAQ / no order"
+          value={callOutcomes.noOrder.toLocaleString()}
+          hint="Calls that ended without an order"
+        />
+        <StatCard
+          label="Abandoned calls"
+          value={callOutcomes.abandoned.toLocaleString()}
+          hint="Failed initiation or abandoned conversation"
+        />
         <StatCard
           label="Canceled"
-          value={summary.ordersCanceled.toLocaleString()}
-          hint="Kitchen cancellations"
+          value={(summary.ordersCanceled + callOutcomes.canceled).toLocaleString()}
+          hint="Kitchen cancellations plus call-level cancels"
         />
         <StatCard
           label="Menu scan success"
@@ -192,6 +269,39 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
           }
         />
       </section>
+
+      {peakCallWindows.length > 0 ? (
+        <section className="analytics-dashboard__rush-windows min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
+          <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div className="min-w-0">
+              <h2 className="text-sm font-semibold text-ink">Busiest call windows</h2>
+              <p className="mt-1 text-xs text-muted">
+                Day and hour buckets from ElevenLabs post-call webhooks, shown in UTC.
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {peakCallWindows.map((row) => (
+              <div
+                key={`${row.dayOfWeekUtc}-${row.hourUtc}`}
+                className="rounded-lg border border-line bg-elev px-3 py-2.5"
+              >
+                <p className="text-xs font-medium uppercase tracking-wider text-subtle">
+                  {row.dayLabel} · {row.hourLabel} UTC
+                </p>
+                <p className="mt-1 text-lg font-semibold text-ink">
+                  {row.callCount} call{row.callCount === 1 ? "" : "s"}
+                </p>
+                <p className="mt-1 text-xs text-muted">
+                  {row.completedCount} order call
+                  {row.completedCount === 1 ? "" : "s"} ·{" "}
+                  {formatPercent(row.conversionPercent)} conversion
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="analytics-dashboard__chart min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
         <h2 className="text-sm font-semibold text-ink">Sessions over time</h2>
@@ -261,16 +371,21 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
             location.
           </p>
           <div className="analytics-dashboard__location-table dashboard-table mt-4 min-w-0">
-            <table className="w-full min-w-0 text-left text-sm xl:min-w-[720px]">
+            <table className="w-full min-w-0 text-left text-sm xl:min-w-[900px]">
               <thead className="text-xs uppercase tracking-wider text-subtle">
                 <tr className="border-b border-line">
                   <th className="px-2 py-2 font-medium">Location</th>
                   <th className="px-2 py-2 font-medium">Sessions</th>
+                  <th className="px-2 py-2 font-medium">Calls</th>
+                  <th className="px-2 py-2 font-medium">Call orders</th>
+                  <th className="px-2 py-2 font-medium">FAQ / no order</th>
                   <th className="px-2 py-2 font-medium">Completed</th>
                   <th className="px-2 py-2 font-medium">Finalized</th>
                   <th className="px-2 py-2 font-medium">Kitchen done</th>
                   <th className="px-2 py-2 font-medium">Stuck</th>
                   <th className="px-2 py-2 font-medium">Conversion</th>
+                  <th className="px-2 py-2 font-medium">Upsell</th>
+                  <th className="px-2 py-2 font-medium">Upsell rev.</th>
                   <th className="px-2 py-2 font-medium">Revenue est.</th>
                 </tr>
               </thead>
@@ -288,6 +403,21 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
                     <td data-label="Sessions" className="px-2 py-2.5 text-muted">
                       {row.orderSessions}
                     </td>
+                    <td data-label="Calls" className="px-2 py-2.5 text-muted">
+                      {row.callCount}
+                    </td>
+                    <td data-label="Call orders" className="px-2 py-2.5 text-muted">
+                      {row.callOrderCount}
+                      <span className="ml-1 text-subtle">
+                        ({formatPercent(row.callConversionPercent)})
+                      </span>
+                    </td>
+                    <td data-label="FAQ / no order" className="px-2 py-2.5 text-muted">
+                      {row.faqNoOrderCallCount}
+                      <span className="ml-1 text-subtle">
+                        ({formatPercent(row.faqNoOrderPercent)})
+                      </span>
+                    </td>
                     <td data-label="Completed" className="px-2 py-2.5 text-muted">
                       {row.sessionsCompleted}
                     </td>
@@ -302,6 +432,18 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
                     </td>
                     <td data-label="Conversion" className="px-2 py-2.5 text-muted">
                       {formatPercent(row.conversionPercent)}
+                    </td>
+                    <td data-label="Upsell" className="px-2 py-2.5 text-muted">
+                      {formatPercent(row.upsellAttachPercent)}
+                      <span className="ml-1 text-subtle">
+                        ({row.upsellAttachedOrders}/{row.upsellEligibleOrders})
+                      </span>
+                    </td>
+                    <td data-label="Upsell rev." className="px-2 py-2.5 text-muted">
+                      {formatUsdFromCents(
+                        row.upsellAttributedRevenueCents,
+                        row.upsellRevenueComplete
+                      )}
                     </td>
                     <td data-label="Revenue est." className="px-2 py-2.5 text-muted">
                       {formatUsdFromCents(
@@ -319,9 +461,14 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
 
       <p className="analytics-dashboard__footnote text-xs text-subtle [overflow-wrap:anywhere]">
         Order sessions are deduplicated by session ID across drafts, receipts,
-        and usage events. We do not report answered phone calls unless a session
-        is recorded. Revenue and average order use menu prices, tax, and service
-        fee from each location&apos;s profile; unmatched items are excluded.
+        and usage events. Call outcomes come from ElevenLabs post-call webhook
+        events when configured. Upsell attach rate compares configured trigger
+        and offer text to completed order line items; upsell revenue estimates
+        the matched offer line subtotal. Controlled upsell lift uses the
+        deterministic treatment/control call split from conversation-init;
+        control calls suppress proactive configured upsells. Revenue and average order use menu prices,
+        tax, and service fee from each location&apos;s profile; unmatched items are
+        excluded.
       </p>
         </>
       )}

@@ -98,13 +98,17 @@ Migration `015` creates private bucket `menu-uploads`. Confirm **Storage → men
 
 ## 2. Edge Function deploy
 
-Three functions power ElevenLabs server tools:
+Six functions power ElevenLabs server tools:
 
 | Function | Path |
 |----------|------|
 | `get-menu` | `/functions/v1/get-menu` |
+| `get-restaurant-info` | `/functions/v1/get-restaurant-info` |
+| `get-caller-history` | `/functions/v1/get-caller-history` |
+| `submit-reservation-request` | `/functions/v1/submit-reservation-request` |
 | `sync-draft-order` | `/functions/v1/sync-draft-order` |
 | `finalize-order` | `/functions/v1/finalize-order` |
+| `get-order-status` | `/functions/v1/get-order-status` |
 
 From repo root (project linked):
 
@@ -120,8 +124,12 @@ supabase secrets set AGENT_TOOL_SIGNING_SECRET='…'   # same value as Next.js
 # supabase secrets set AGENT_TOOL_SECRET='…'
 
 supabase functions deploy get-menu --no-verify-jwt
+supabase functions deploy get-restaurant-info --no-verify-jwt
+supabase functions deploy get-caller-history --no-verify-jwt
+supabase functions deploy submit-reservation-request --no-verify-jwt
 supabase functions deploy sync-draft-order --no-verify-jwt
 supabase functions deploy finalize-order --no-verify-jwt
+supabase functions deploy get-order-status --no-verify-jwt
 ```
 
 `verify_jwt = false` is set in `supabase/config.toml` because auth is **custom** (`roal1.*` token or `AGENT_TOOL_SECRET`) inside the handler—not Supabase user JWTs. The Supabase gateway still requires the **anon key** in the `apikey` header.
@@ -160,6 +168,7 @@ Copy [.env.example](../.env.example) and set values on your **hosting provider**
 |----------|---------|
 | `ELEVENLABS_API_KEY` | Connect agent, sync tools, patch agent |
 | `ELEVENLABS_AGENT_ID` | Default agent when not set per restaurant |
+| `ELEVENLABS_WEBHOOK_SECRET` | HMAC secret for ElevenLabs post-call transcript/outcome webhooks |
 
 ### Strongly recommended
 
@@ -215,6 +224,7 @@ npm run start
 - Framework preset: **Next.js**
 - Build command: `npm run build`
 - Output: Next.js default (`.next`)
+- Netlify reads the repo [`netlify.toml`](../netlify.toml): build command `npm run build`, publish directory `.next`, Node `20`.
 - Set all env vars in the dashboard **before** build; `NEXT_PUBLIC_*` are inlined at build time.
 - Redeploy after any `NEXT_PUBLIC_*` change.
 
@@ -304,7 +314,7 @@ Abbreviated deploy checks:
 
 - [ ] `GET /api/health` → `status` is `healthy` or `degraded` (not `unhealthy`)
 - [ ] `checks.supabase_db.ok` is true
-- [ ] `checks.edge_get_menu`, `edge_sync_draft_order`, `edge_finalize_order` reachable
+- [ ] `checks.edge_get_menu`, `edge_get_restaurant_info`, `edge_get_caller_history`, `edge_submit_reservation_request`, `edge_sync_draft_order`, `edge_finalize_order`, `edge_get_order_status` reachable
 - [ ] `npm test` passed for this release (Vitest; no live DB required)
 
 ### Auth & dashboard
@@ -322,8 +332,12 @@ Abbreviated deploy checks:
 
 - [ ] Connect ElevenLabs agent on KDS voice panel
 - [ ] Test harness or live call: `get_menu_items` returns menu
+- [ ] Test harness or live call: `get_restaurant_info` returns hours/address/prep-time facts
+- [ ] Test harness or live call: `get_caller_history` returns returning-guest context for a known phone/name, or a safe not-found response
+- [ ] Test harness or live call: `submit_reservation_request` saves a request and tells the guest staff must confirm
 - [ ] `sync_draft_order` appears on KDS live cart
 - [ ] `finalize_order` → receipt + kitchen queue
+- [ ] `get_order_status` returns latest kitchen status for a known phone/session
 - [ ] Accept → complete order; notification delivery log (dev console mode)
 
 ### Admin

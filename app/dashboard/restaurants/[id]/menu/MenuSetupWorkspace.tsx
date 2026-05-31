@@ -11,6 +11,7 @@ import { MenuScanner } from "../MenuScanner";
 import { RestaurantHoursSettings } from "../RestaurantHoursSettings";
 import { RestaurantProfileSettings } from "../RestaurantProfileSettings";
 import { MenuEditor } from "./MenuEditor";
+import { MenuCopyFromLocation } from "./MenuCopyFromLocation";
 import { MenuAutoSyncStatusPanel } from "@/components/voice-agent/MenuAutoSyncStatusPanel";
 import { MenuSetupCallIndicator } from "./MenuSetupCallIndicator";
 
@@ -19,8 +20,12 @@ type Props = RestaurantMenuSetupPageData;
 export function MenuSetupWorkspace({
   restaurant,
   menu,
+  menuCopySources,
+  menuTemplates,
   billingGates,
   profile,
+  knowledgeBaseText,
+  upsellRulesText,
   hoursBundle,
   voiceAgentCenter,
 }: Props) {
@@ -194,6 +199,30 @@ export function MenuSetupWorkspace({
 
         <details className="menu-setup-more__block">
           <summary className="menu-setup-more__summary">
+            Copy menu from another location
+          </summary>
+          <div className="menu-setup-more__body">
+            <h2 id="menu-setup-copy-heading" className="sr-only">
+              Copy menu from another location
+            </h2>
+            <MenuCopyFromLocation
+              restaurantId={restaurant.id}
+              sources={menuCopySources}
+              templates={menuTemplates}
+              inheritedTemplateId={restaurant.inherited_menu_template_id ?? null}
+              inheritedTemplateAppliedAt={restaurant.inherited_menu_template_applied_at ?? null}
+              inheritedTemplateOverrideCount={Number(
+                restaurant.inherited_menu_template_override_count ?? 0
+              )}
+              inheritedTemplateLastLocalEditAt={
+                restaurant.inherited_menu_template_last_local_edit_at ?? null
+              }
+            />
+          </div>
+        </details>
+
+        <details className="menu-setup-more__block">
+          <summary className="menu-setup-more__summary">
             Menu upload history
           </summary>
           <div className="menu-setup-more__body">
@@ -219,7 +248,12 @@ export function MenuSetupWorkspace({
             details change.
           </p>
           <div className="menu-setup-more__body menu-setup-more__body--basics">
-            <RestaurantProfileSettings restaurant={restaurant} profile={profile} />
+            <RestaurantProfileSettings
+              restaurant={restaurant}
+              profile={profile}
+              knowledgeBaseText={knowledgeBaseText}
+              upsellRulesText={upsellRulesText}
+            />
             {hoursBundle ? (
               <RestaurantHoursSettings
                 restaurantId={restaurant.id}

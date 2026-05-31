@@ -30,6 +30,11 @@ export function HomePay() {
               className="w-full sm:w-auto"
             />
           </div>
+          <ul className="home-pricing-teaser__proof" aria-label="Billing guardrails">
+            <li>No monthly minimum</li>
+            <li>Test calls stay free</li>
+            <li>Only confirmed kitchen tickets</li>
+          </ul>
         </div>
       </div>
     </section>

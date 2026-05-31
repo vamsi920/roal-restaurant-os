@@ -27,38 +27,38 @@ const LAUNCH_FAQ_ENTRIES = [
   {
     id: "home-what-calls",
     pages: ["home"],
-    question: "What calls does ROAL take?",
+    question: "What does ROAL actually do?",
     answer:
-      "Pickup order calls that you forward to ROAL. It uses your live menu, prices, hours, and pickup timing.",
+      "ROAL answers pickup calls on your restaurant line, talks naturally with the guest, uses your live menu and hours, confirms the order, then sends the ticket to your kitchen screen.",
   },
   {
     id: "home-menu-setup",
     pages: ["home"],
     question: "How do we set up the menu?",
     answer:
-      "Add items in the dashboard, review the important details, run test calls, then forward calls when you are comfortable.",
+      "Add your menu, review items and prices, run test calls, then forward calls when your team is comfortable.",
     link: { href: "/signup?next=/dashboard/onboarding", label: "Start setup" },
   },
   {
     id: "home-natural-voice",
     pages: ["home"],
-    question: "Will guests know what to do?",
+    question: "Will guests feel stuck talking to a robot?",
     answer:
-      "Yes. Guests can speak normally, change items, ask menu questions, switch language, and confirm before hanging up.",
+      "They just call your restaurant. ROAL speaks naturally, switches languages, handles item changes, and confirms the pickup order before the call ends.",
     link: { href: "/demo", label: "Hear a demo call" },
   },
   {
     id: "home-completed-order",
     pages: ["home"],
-    question: "When does ROAL charge me?",
-    answer: `Only when a pickup order is confirmed and the ticket reaches your kitchen screen. ${PRICING_RATE_LINE}.`,
+    question: "When do we pay?",
+    answer: `Only when a real order is confirmed and the ticket reaches your kitchen screen. ${PRICING_RATE_LINE}. No order, no charge.`,
     link: { href: HOME_PRICING_PILL.href, label: "Pricing" },
   },
   {
     id: "home-how-to-start",
     pages: ["home"],
     question: "How do we go live?",
-    answer: "Hear the demo, sign up, add your menu, test calls with your team, then forward your line when ready.",
+    answer: "Hear the demo, sign up, add the menu, test calls with your team, then forward the phone line when you are ready.",
     link: { href: "/signup?next=/dashboard/restaurants", label: "Sign up" },
   },
   {
@@ -203,9 +203,9 @@ export function launchFaqItemsFor(page: LaunchFaqPage): LaunchFaqItem[] {
 }
 
 export const HOME_FAQ = {
-  eyebrow: "FAQ",
-  title: "Questions owners ask first.",
-  lead: "Calls, menus, guest experience, and billing in plain language.",
+  eyebrow: "Owner FAQ",
+  title: "What restaurant owners ask before going live.",
+  lead: "The basics: what ROAL handles, how it uses your menu, and when you pay.",
   items: launchFaqItemsFor("home"),
 } as const;
 

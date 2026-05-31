@@ -16,8 +16,14 @@ const revalidatePath = vi.fn();
 const afterMenuContentMutationSpy = vi.fn();
 const afterProfileSettingsMutationSpy = vi.fn();
 const afterHoursSettingsMutationSpy = vi.fn();
+const createServerSupabase = vi.fn();
+const markRestaurantMenuTemplateLocalOverride = vi.fn();
 
 vi.mock("next/cache", () => ({ revalidatePath }));
+vi.mock("@/lib/supabase/server", () => ({ createServerSupabase }));
+vi.mock("@/lib/menu-editor/copy-menu", () => ({
+  markRestaurantMenuTemplateLocalOverride,
+}));
 vi.mock("@/lib/voice-agent/sync-restaurant-agent-after-content-change", async () => {
   const actual = await vi.importActual<
     typeof import("@/lib/voice-agent/sync-restaurant-agent-after-content-change")
@@ -54,6 +60,11 @@ describe("content-change auto-sync (pass 13)", () => {
     afterMenuContentMutationSpy.mockReset();
     afterProfileSettingsMutationSpy.mockReset();
     afterHoursSettingsMutationSpy.mockReset();
+    createServerSupabase.mockResolvedValue({ from: vi.fn() });
+    markRestaurantMenuTemplateLocalOverride.mockResolvedValue({
+      marked: false,
+      reason: "not_inherited",
+    });
   });
 
   describe("sync helper (mocked deps)", () => {

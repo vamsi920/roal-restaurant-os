@@ -63,6 +63,38 @@ export function readElevenLabsConversationInitCalledNumber(
   ]);
 }
 
+/** Stable call/session id from ElevenLabs/Twilio init payload. */
+export function readElevenLabsConversationInitSessionId(
+  url: URL,
+  body: unknown
+): string {
+  return readStringField(url, body, [
+    "conversation_id",
+    "conversationId",
+    "session_id",
+    "sessionId",
+    "call_sid",
+    "callSid",
+    "CallSid",
+  ]);
+}
+
+/** Caller phone from ElevenLabs/Twilio init payload. */
+export function readElevenLabsConversationInitCallerPhone(
+  url: URL,
+  body: unknown
+): string {
+  return readStringField(url, body, [
+    "caller_phone",
+    "callerPhone",
+    "caller_id",
+    "callerId",
+    "from",
+    "From",
+    "Caller",
+  ]);
+}
+
 /** Last 10 digits for matching `restaurant_profiles.phone` (US-centric). */
 export function phoneLookupKey(phone: string): string | null {
   const digits = phone.replace(/\D/g, "");
@@ -104,13 +136,15 @@ export type ElevenLabsConversationInitPayload = {
 export function buildElevenLabsConversationInitPayload(input: {
   restaurantId: string;
   restaurantName: string;
+  sessionId?: string | null;
   /** Agent placeholder keys from ElevenLabs (must include all defined dynamic variables). */
   agentPlaceholders?: Record<string, string>;
 }): ElevenLabsConversationInitPayload {
   const vars = mergeRestaurantPlaceholders(
     input.agentPlaceholders ?? {},
     input.restaurantId,
-    input.restaurantName
+    input.restaurantName,
+    { sessionId: input.sessionId }
   );
   return {
     type: "conversation_initiation_client_data",
@@ -262,4 +296,66 @@ export async function resolveRestaurantForElevenLabsConversationInit(input: {
   }
 
   return null;
+}
+
+export type PersistConversationStartedInput = {
+  restaurantId: string;
+  linkedAgentId: string;
+  sessionId: string;
+  callerPhone?: string | null;
+  calledNumber?: string | null;
+  resolvedVia: ConversationInitRestaurantContext["resolvedVia"];
+  upsellExperimentVariant?: string | null;
+  startedAt?: string;
+};
+
+/**
+ * Mark a phone call as active as soon as ElevenLabs asks for dynamic variables.
+ * Post-call webhooks upsert the same session later with ended/outcome details.
+ */
+export async function persistElevenLabsConversationStarted(
+  input: PersistConversationStartedInput
+): Promise<{ stored: boolean; reason?: string }> {
+  const restaurantId = input.restaurantId.trim();
+  const sessionId = input.sessionId.trim();
+  if (!restaurantId || !sessionId) {
+    return { stored: false, reason: "missing_restaurant_or_session" };
+  }
+
+  const supabase = getServiceRoleSupabase();
+  if (!supabase) return { stored: false, reason: "missing_service_role" };
+
+  const now = new Date().toISOString();
+  const startedAt = input.startedAt?.trim() || now;
+  const callerPhone = input.callerPhone?.trim() || null;
+  const calledNumber = input.calledNumber?.trim() || null;
+  const agentId = input.linkedAgentId.trim() || null;
+  const upsellExperimentVariant =
+    input.upsellExperimentVariant?.trim() || null;
+
+  const { error } = await supabase.from("agent_call_events").upsert(
+    {
+      restaurant_id: restaurantId,
+      agent_id: agentId,
+      conversation_id: sessionId,
+      session_id: sessionId,
+      caller_phone: callerPhone,
+      status: "active",
+      outcome: "in_progress",
+      started_at: startedAt,
+      ended_at: null,
+      transcript_metadata: {
+        event_type: "conversation_init",
+        init_received_at: now,
+        called_number: calledNumber,
+        resolved_via: input.resolvedVia,
+        upsell_experiment_variant: upsellExperimentVariant,
+      },
+      updated_at: now,
+    },
+    { onConflict: "restaurant_id,session_id" }
+  );
+
+  if (error) throw new Error(error.message);
+  return { stored: true };
 }

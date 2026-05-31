@@ -9,8 +9,12 @@ Replace `<project-ref>` with your Supabase project ref (e.g. `mnkabwcbdxruefzuvu
 | Function | URL |
 |----------|-----|
 | **get_menu_items** (code: `get-menu`) | `https://<project-ref>.supabase.co/functions/v1/get-menu` |
+| **get_restaurant_info** (code: `get-restaurant-info`) | `https://<project-ref>.supabase.co/functions/v1/get-restaurant-info` |
+| **get_caller_history** (code: `get-caller-history`) | `https://<project-ref>.supabase.co/functions/v1/get-caller-history` |
+| **submit_reservation_request** (code: `submit-reservation-request`) | `https://<project-ref>.supabase.co/functions/v1/submit-reservation-request` |
 | **sync_draft_order** (code: `sync-draft-order`) | `https://<project-ref>.supabase.co/functions/v1/sync-draft-order` |
 | **finalize_order** (code: `finalize-order`) | `https://<project-ref>.supabase.co/functions/v1/finalize-order` |
+| **get_order_status** (code: `get-order-status`) | `https://<project-ref>.supabase.co/functions/v1/get-order-status` |
 
 ## Secrets (Supabase Dashboard → Edge Functions → Secrets, or CLI)
 
@@ -42,13 +46,15 @@ supabase secrets set AGENT_TOOL_SIGNING_SECRET='<same-as-nextjs>'
 # optional legacy fallback:
 supabase secrets set AGENT_TOOL_SECRET='<legacy-global-bearer>'
 supabase functions deploy get-menu --no-verify-jwt
+supabase functions deploy get-restaurant-info --no-verify-jwt
 supabase functions deploy sync-draft-order --no-verify-jwt
 supabase functions deploy finalize-order --no-verify-jwt
+supabase functions deploy get-order-status --no-verify-jwt
 ```
 
 `--no-verify-jwt`: the Supabase **gateway** still expects your **publishable anon key** in the `apikey` header on every request. ROAL’s synced ElevenLabs tools send **`apikey: <NEXT_PUBLIC_SUPABASE_ANON_KEY>`** plus **`Authorization: Bearer <roal1 signed token>`** (minted on Connect) for the Edge handler’s own check.
 
-Repo `supabase/config.toml` sets `verify_jwt = false` for `get-menu`, `sync-draft-order`, and `finalize-order` so deploys match CLI `--no-verify-jwt`.
+Repo `supabase/config.toml` sets `verify_jwt = false` for `get-menu`, `get-restaurant-info`, `sync-draft-order`, `finalize-order`, and `get-order-status` so deploys match CLI `--no-verify-jwt`.
 
 ## Conversation dynamic variables
 
@@ -84,7 +90,19 @@ The webhook looks up `restaurant_profiles.elevenlabs_agent_id` and returns:
 }
 ```
 
-Requires `SUPABASE_SERVICE_ROLE_KEY` on the Next.js server so the lookup can run.
+Requires `SUPABASE_SERVICE_ROLE_KEY` on the Next.js server so the lookup can run. When the init payload includes `conversation_id`, `session_id`, or Twilio `call_sid`, ROAL also upserts an `agent_call_events` row with `status = active` and `outcome = in_progress`; the post-call webhook later closes the same session with outcome, transcript, and recording metadata.
+
+## Post-call webhooks (transcripts + outcomes)
+
+Enable ElevenLabs post-call webhooks in the ElevenLabs workspace settings and point the webhook URL to:
+
+```text
+{NEXT_PUBLIC_APP_URL}/api/integrations/elevenlabs/post-call-webhook
+```
+
+Set the generated HMAC secret as `ELEVENLABS_WEBHOOK_SECRET` on the ROAL hosting provider. The endpoint validates the `ElevenLabs-Signature` header, accepts `post_call_transcription`, `post_call_audio`, and `call_initiation_failure`, resolves the restaurant from the `restaurant_id` dynamic variable or saved `restaurant_profiles.elevenlabs_agent_id`, then upserts `agent_call_events`.
+
+Conversation-init events make the Command center show a real active phone call as soon as the call starts. Post-call events make the Call history / Command center pages use real ElevenLabs conversation ids, transcript summaries, handoff flags, and failure outcomes. They do not replace the server tools above; tools still answer business questions, create drafts, receipts, and order-status lookups during the call.
 
 **CLI (same as KDS Connect):** from repo root with `.env` + `.env.local`:
 
@@ -97,9 +115,29 @@ npm run elevenlabs:connect
 
 Writes `ELEVENLABS_CONVERSATION_INIT_SECRET` to `.env.local` if missing and PATCHes the agent (tools, literal `first_message`, placeholders, Twilio personalization webhook).
 
-**Deploy:** after pulling this behavior, redeploy `get-menu`, `sync-draft-order`, and `finalize-order` so the header fallback is live.
+**Deploy:** after pulling this behavior, redeploy `get-menu`, `sync-draft-order`, `finalize-order`, and `get-order-status` so the header fallback is live.
 
 After changing env or Supabase URL, run **Connect agent to this restaurant** again so ElevenLabs picks up headers and schemas.
+
+## Pickup vs delivery order fields
+
+`sync_draft_order` and `finalize_order` support fulfillment context:
+
+```json
+{
+  "session_id": "conversation-id",
+  "status": "draft",
+  "fulfillment_type": "delivery",
+  "delivery_address": "123 Market St Apt 4B, San Francisco, CA 94105",
+  "delivery_instructions": "Ring the side gate buzzer",
+  "items": [{ "name": "Margherita Pizza", "quantity": 1 }]
+}
+```
+
+- Use `fulfillment_type: "pickup"` or `"delivery"` after the guest chooses.
+- For delivery, collect and pass `delivery_address` before calling `finalize_order`; the Edge schema rejects delivery finalization without it.
+- `delivery_instructions` is optional and should only contain notes the caller actually stated.
+- The KDS live order cards and order detail modal show delivery address/instructions so staff can fulfill the order without reading transcripts.
 
 ## Netlify checklist (live KDS + Realtime)
 
@@ -132,7 +170,33 @@ If the Realtime websocket fails in the browser (network, extensions, or config),
 
 **Response shape:** `{ restaurant, categories: [ { id, name, sort_order, items: [ { id, name, description, price, is_available, modifiers: [...] } ] } ] }`
 
-## Tool 2 — `sync_draft_order` (Server Tool)
+## Tool 2 — `get_restaurant_info` (Server Tool)
+
+- **Name (ElevenLabs):** `get_restaurant_info`
+- **Description:** Fetches live business facts for non-order questions: open/closed status, address/directions fields, phone, website, pickup/delivery modes, prep-time estimate, and active operator FAQ entries.
+- **Method:** `GET` or `POST`
+- **URL:** `https://<project-ref>.supabase.co/functions/v1/get-restaurant-info`
+- **Headers:** `Authorization: Bearer <roal1 signed token or AGENT_TOOL_SECRET>` · `apikey: <Supabase anon / publishable key>` · `x-roal-restaurant-id: <uuid>` (baked)
+
+Use this when guests ask about hours, directions, parking, wait/prep time, policies, reservations, catering, or other business facts. The response intentionally does not expose order/cart data.
+
+## Tool 3 — `get_caller_history` (Server Tool)
+
+- **Name (ElevenLabs):** `get_caller_history`
+- **Description:** Looks up this restaurant's completed pickup receipts by caller phone or name. Use only after the guest states their phone/name or asks for their usual.
+- **Method:** POST
+- **Body:** `customer_phone` preferred; `customer_name` allowed only if the caller stated it.
+- **Safety:** Response includes only compact returning-guest context, last item names, and favorite item names. It does not expose full receipt JSON, prices, or cross-restaurant data. The agent must offer the usual as an option and must still get explicit confirmation.
+
+## Tool 4 — `submit_reservation_request` (Server Tool)
+
+- **Name (ElevenLabs):** `submit_reservation_request`
+- **Description:** Saves a table reservation request after the guest states name, callback phone, party size, requested date, and requested time.
+- **Method:** POST
+- **Body:** `customer_name`, `customer_phone`, `party_size`, `requested_date`, `requested_time`; optional `session_id`, `conversation_id`, `notes`.
+- **Safety:** This creates a staff request only. The agent must say staff will confirm and must not say the reservation is confirmed.
+
+## Tool 5 — `sync_draft_order` (Server Tool)
 
 - **Name (ElevenLabs):** `sync_draft_order`
 - **Description:** Updates the live order row for this call. Call whenever the guest adds/changes items or modifiers; use `draft` while ordering, `confirmed` when they finalize.
@@ -165,7 +229,7 @@ Optional fields (stored on the same row when provided — only if the caller act
 - `customer_name` (string)
 - `customer_phone` (string)
 
-## Tool 3 — `finalize_order` (Server Tool)
+## Tool 6 — `finalize_order` (Server Tool)
 
 - **Name (ElevenLabs):** `finalize_order`
 - **Description:** Marks the order confirmed and records guest name and phone. Call after `sync_draft_order` has built the cart (or pass `items` here).
@@ -187,12 +251,33 @@ Optional fields (stored on the same row when provided — only if the caller act
 
 If `items` is empty or omitted, the function reuses the last saved line items for that `(restaurant_id, session_id)` row. If there are no saved items, the request fails with `400`.
 
+## Tool 7 — `get_order_status` (Server Tool)
+
+- **Name (ElevenLabs):** `get_order_status`
+- **Description:** Looks up a recent pickup order when a caller asks whether it is ready, being prepared, completed, or canceled. Prefer `customer_phone`; use `session_id` when the caller is asking about the current call/order.
+- **Method:** `POST`
+- **URL:** `https://<project-ref>.supabase.co/functions/v1/get-order-status`
+- **Headers:** `Authorization: Bearer <roal1 token or AGENT_TOOL_SECRET>` · `x-roal-restaurant-id` (baked) · `Content-Type: application/json`
+
+**Body:**
+
+```json
+{
+  "restaurant_id": "uuid",
+  "customer_phone": "+1-555-0100",
+  "session_id": "<optional conversation id>",
+  "customer_name": "<optional guest name>"
+}
+```
+
+At least one of `session_id`, `customer_phone`, or `customer_name` is required. Response includes `found`, `status`, `status_label`, `message`, `item_count`, timestamps, and safe caller/order identifiers for speech.
+
 ## Next.js “Local demo” (this repo)
 
 On each restaurant KDS (`/dashboard/restaurants/[id]`):
 
 - **Phone orders (KDS)** — `draft_orders` for live carts + `phone_order_receipts` for completed orders (written on `finalize_order`); both scoped by `restaurant_id`, Realtime + periodic refresh in the UI.
-- **ElevenLabs panel** — calls `GET /api/integrations/elevenlabs/agent` using your **server** env `ELEVENLABS_API_KEY` (and optional `ELEVENLABS_AGENT_ID` or `?agent_id=`). Shows the three Edge tool URLs for that restaurant.
+- **ElevenLabs panel** — calls `GET /api/integrations/elevenlabs/agent` using your **server** env `ELEVENLABS_API_KEY` (and optional `ELEVENLABS_AGENT_ID` or `?agent_id=`). Shows the Edge tool URLs for that restaurant.
 
 Set in `.env` / `.env.local` (see [.env.example](../.env.example)):
 
@@ -205,7 +290,7 @@ To **change** agent settings from code, `PATCH /api/integrations/elevenlabs/agen
 
 ### Tool sync API (operator / CI)
 
-`POST /api/integrations/elevenlabs/sync-roal-tools` runs the same logic as **Connect agent to this restaurant** (`lib/sync-elevenlabs-roal-tools.ts`): create or update the three webhook tools (`get_menu_items`, `sync_draft_order`, `finalize_order`) and attach their ids to the agent `prompt.tool_ids`.
+`POST /api/integrations/elevenlabs/sync-roal-tools` runs the same logic as **Connect agent to this restaurant** (`lib/sync-elevenlabs-roal-tools.ts`): create or update the ROAL webhook tools (`get_menu_items`, `get_restaurant_info`, `get_caller_history`, `submit_reservation_request`, `sync_draft_order`, `finalize_order`, `get_order_status`) and attach their ids to the agent `prompt.tool_ids`.
 
 **Body (JSON):**
 
@@ -228,9 +313,12 @@ To **change** agent settings from code, `PATCH /api/integrations/elevenlabs/agen
 ```
 Tool usage policy:
 1. Call get_menu_items immediately at session start (no loading phrases to the guest). Opening already names the restaurant and asks pickup vs delivery.
-2. Every time the guest adds, removes, or changes an item or modifier, immediately call sync_draft_order with the full current items array and status "draft". Do not wait until the end of the call.
-3. When the guest is done ordering, give a concise recap (items + quantities + one total if prices are known), then ask for real name and phone. Call finalize_order only with values they actually said.
-4. Validation: If the guest orders something not in the last get_menu_items response, say it is not available and suggest the closest menu option. Never pass placeholder or invented name/phone to finalize_order.
+2. If the guest gives a phone/name early or asks for their usual, call get_caller_history. Offer prior/favorite items only as an option; never assume the order.
+3. If the guest wants a table reservation, collect name, callback phone, party size, date, and time; call submit_reservation_request and say staff will confirm.
+4. Every time the guest adds, removes, or changes an item or modifier, immediately call sync_draft_order with the full current items array and status "draft". Do not wait until the end of the call.
+5. When the guest is done ordering, give a concise recap (items + quantities + one total if prices are known), then ask for real name and phone. Call finalize_order only with values they actually said.
+6. Validation: If the guest orders something not in the last get_menu_items response, say it is not available and suggest the closest menu option. Never pass placeholder or invented name/phone to finalize_order.
+7. If a guest asks whether an order is ready, ask for the order phone/name if needed, call get_order_status, and speak only the returned status/message.
 ```
 
 Pass **`restaurant_id`** into the session via [dynamic variables](https://elevenlabs.io/docs) or your API session payload so the model always has the correct UUID (one agent config, many restaurants).
@@ -252,7 +340,7 @@ After rotation or first deploy, **Re-sync** each restaurant so ElevenLabs tool h
 
 ## Verify in ElevenLabs
 
-1. Deploy all three Edge functions; run `npm run ensure:signing-parity` (or set `AGENT_TOOL_SIGNING_SECRET` on Next.js + Edge).
+1. Deploy all Edge functions; run `npm run ensure:signing-parity` (or set `AGENT_TOOL_SIGNING_SECRET` on Next.js + Edge).
 2. KDS → **Connect agent to this restaurant** (or `npm run elevenlabs:connect` with `ROAL_SYNC_RESTAURANT_ID`).
 3. Run `npm run qa:lb01-phone-stack` and `npm run qa:get-menu-elevenlabs` against QA restaurant.
 4. Start a test conversation; confirm **Logs** show HTTP **200** on `get_menu_items`.

@@ -11,7 +11,15 @@ import { getPublicEnv } from "../lib/env.public";
 import { getElevenLabsAgentId } from "../lib/env.server";
 import { ROAL_RESTAURANT_ID_HEADER } from "../lib/sync-elevenlabs-roal-tools";
 
-const NAMES = ["get_menu_items", "sync_draft_order", "finalize_order"] as const;
+const NAMES = [
+  "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
+  "sync_draft_order",
+  "finalize_order",
+  "get_order_status",
+] as const;
 
 function refFromUrl(u: unknown): string | null {
   const m = String(u ?? "").match(/https:\/\/([a-z0-9]+)\.supabase\.co/i);

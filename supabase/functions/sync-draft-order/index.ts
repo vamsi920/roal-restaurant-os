@@ -232,6 +232,15 @@ Deno.serve(async (req: Request) => {
   };
   if (parsed.data.customer_name) row.customer_name = parsed.data.customer_name;
   if (parsed.data.customer_phone) row.customer_phone = parsed.data.customer_phone;
+  if (parsed.data.fulfillment_type) {
+    row.fulfillment_type = parsed.data.fulfillment_type;
+  }
+  if (parsed.data.delivery_address) {
+    row.delivery_address = parsed.data.delivery_address;
+  }
+  if (parsed.data.delivery_instructions) {
+    row.delivery_instructions = parsed.data.delivery_instructions;
+  }
 
   const { data, error } = await supabase
     .from("draft_orders")

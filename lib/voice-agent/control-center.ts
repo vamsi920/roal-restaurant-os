@@ -19,8 +19,12 @@ import type {
 
 const ROAL_TOOL_NAMES = [
   "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
   "sync_draft_order",
   "finalize_order",
+  "get_order_status",
 ] as const;
 
 export function buildVoiceAgentToolUrls(input: {
@@ -39,6 +43,24 @@ export function buildVoiceAgentToolUrls(input: {
       headerNote: "Baked: restaurant in URL + x-roal-restaurant-id when synced from KDS",
     },
     {
+      name: "get_restaurant_info",
+      label: "get_restaurant_info",
+      url: `${base}/functions/v1/get-restaurant-info?restaurant_id=${rid}&restaurant_name=${rname}`,
+      headerNote: "Baked: live hours, address, prep time, and FAQ answers",
+    },
+    {
+      name: "get_caller_history",
+      label: "get_caller_history",
+      url: `${base}/functions/v1/get-caller-history`,
+      headerNote: "POST · returning guest lookup by phone or guest name",
+    },
+    {
+      name: "submit_reservation_request",
+      label: "submit_reservation_request",
+      url: `${base}/functions/v1/submit-reservation-request`,
+      headerNote: "POST · reservation request intake; staff must confirm",
+    },
+    {
       name: "sync_draft_order",
       label: "sync_draft_order",
       url: `${base}/functions/v1/sync-draft-order`,
@@ -50,6 +72,12 @@ export function buildVoiceAgentToolUrls(input: {
       label: "finalize_order",
       url: `${base}/functions/v1/finalize-order`,
       headerNote: "POST · same auth headers as sync_draft_order",
+    },
+    {
+      name: "get_order_status",
+      label: "get_order_status",
+      url: `${base}/functions/v1/get-order-status`,
+      headerNote: "POST · lookup by session, phone, or guest name",
     },
   ];
 }
@@ -204,7 +232,7 @@ function buildChecklist(
   }
 
   const toolsOk =
-    snapshot.lastSyncTools.length >= 3 &&
+    snapshot.lastSyncTools.length >= ROAL_TOOL_NAMES.length &&
     ROAL_TOOL_NAMES.every((n) =>
       snapshot.lastSyncTools.some((t) => t.name === n)
     );
@@ -219,7 +247,7 @@ function buildChecklist(
     detail: snapshot.lastSyncAt
       ? toolsOk
         ? `Last sync ${formatRelative(snapshot.lastSyncAt)}`
-        : "Re-sync — expected get_menu_items, sync_draft_order, finalize_order"
+        : "Re-sync — expected get_menu_items, get_restaurant_info, get_caller_history, submit_reservation_request, sync_draft_order, finalize_order, get_order_status"
       : "Not synced yet",
   });
 
@@ -254,7 +282,7 @@ function buildChecklist(
       : "Run Connect / Sync to PATCH restaurant_id and restaurant_name on the agent.",
   });
 
-  const toolIdsOk = snapshot.toolIdsOnAgent.length >= 3;
+  const toolIdsOk = snapshot.toolIdsOnAgent.length >= ROAL_TOOL_NAMES.length;
   items.push({
     id: "tool_ids",
     label: "Tool IDs attached on agent prompt",

@@ -15,6 +15,26 @@ export type PeakHourRow = {
   orderCount: number;
 };
 
+export type CallOutcomeStats = {
+  total: number;
+  active: number;
+  completed: number;
+  noOrder: number;
+  abandoned: number;
+  canceled: number;
+  unknown: number;
+};
+
+export type PeakCallWindowRow = {
+  dayOfWeekUtc: number;
+  dayLabel: string;
+  hourUtc: number;
+  hourLabel: string;
+  callCount: number;
+  completedCount: number;
+  conversionPercent: number | null;
+};
+
 export type ConversionTrend = {
   label: string;
   priorPercent: number | null;
@@ -37,14 +57,48 @@ export type RestaurantAnalyticsRow = {
   restaurantName: string;
   orderSessions: number;
   sessionsCompleted: number;
+  callCount: number;
+  callOrderCount: number;
+  callConversionPercent: number | null;
+  faqNoOrderCallCount: number;
+  faqNoOrderPercent: number | null;
   finalized: number;
   completedKitchen: number;
   canceled: number;
   conversionPercent: number | null;
   revenueCents: number | null;
   revenueComplete: boolean;
+  upsellEligibleOrders: number;
+  upsellAttachedOrders: number;
+  upsellAttachPercent: number | null;
+  upsellAttributedRevenueCents: number | null;
+  upsellRevenueComplete: boolean;
   avgPrepMinutes: number | null;
   stuckOrders: number;
+};
+
+export type UpsellAttachStats = {
+  configuredRules: number;
+  eligibleOrders: number;
+  attachedOrders: number;
+  attachPercent: number | null;
+  attributedRevenueCents: number | null;
+  revenueComplete: boolean;
+  averageRevenuePerAttachedOrderCents: number | null;
+  attachedAverageOrderCents: number | null;
+  unattachedAverageOrderCents: number | null;
+  observedTicketLiftCents: number | null;
+  observedTicketLiftPercent: number | null;
+  observedLiftComplete: boolean;
+  attachedLiftSampleSize: number;
+  unattachedLiftSampleSize: number;
+  experimentTreatmentOrders: number;
+  experimentControlOrders: number;
+  experimentTreatmentAverageOrderCents: number | null;
+  experimentControlAverageOrderCents: number | null;
+  experimentTicketLiftCents: number | null;
+  experimentTicketLiftPercent: number | null;
+  experimentLiftComplete: boolean;
 };
 
 export type MenuScanStats = {
@@ -82,10 +136,14 @@ export type AnalyticsSnapshot = {
     averageOrderCents: number | null;
     averageOrderComplete: boolean;
     averageOrderSampleSize: number;
+    upsellAttach: UpsellAttachStats;
     stuckOrderCount: number;
+    callOutcomes: CallOutcomeStats;
   };
   ordersOverTime: DailyOrderPoint[];
   peakHours: PeakHourRow[];
+  peakCallHours: PeakHourRow[];
+  peakCallWindows: PeakCallWindowRow[];
   conversionTrend: ConversionTrend;
   popularItems: PopularItemRow[];
   byRestaurant: RestaurantAnalyticsRow[];

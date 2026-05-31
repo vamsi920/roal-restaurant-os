@@ -63,3 +63,16 @@ create policy "agent_call_events_update"
 
 comment on table public.agent_call_events is
   'Per-call record for voice agent sessions. Prefer lib/agent-calls derive from draft_orders, receipts, and usage_events; use this table when webhook transcript metadata or explicit outcomes are available.';
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_publication_tables
+    where pubname = 'supabase_realtime'
+      and schemaname = 'public'
+      and tablename = 'agent_call_events'
+  ) then
+    alter publication supabase_realtime add table public.agent_call_events;
+  end if;
+end $$;

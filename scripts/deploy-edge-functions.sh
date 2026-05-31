@@ -21,7 +21,7 @@ echo "    supabase secrets set AGENT_TOOL_SIGNING_SECRET='...'"
 echo "    # optional: AGENT_TOOL_SECRET='...'"
 echo ""
 
-FUNCTIONS=(get-menu sync-draft-order finalize-order)
+FUNCTIONS=(get-menu sync-draft-order finalize-order get-order-status get-caller-history submit-reservation-request get-restaurant-info)
 
 for fn in "${FUNCTIONS[@]}"; do
   echo "==> Deploying $fn"

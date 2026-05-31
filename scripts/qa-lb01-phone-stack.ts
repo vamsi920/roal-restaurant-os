@@ -20,7 +20,15 @@ import { ROAL_RESTAURANT_ID_HEADER } from "../lib/sync-elevenlabs-roal-tools";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
-const TOOL_NAMES = ["get_menu_items", "sync_draft_order", "finalize_order"] as const;
+const TOOL_NAMES = [
+  "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
+  "sync_draft_order",
+  "finalize_order",
+  "get_order_status",
+] as const;
 
 type Check = { name: string; ok: boolean; detail?: string };
 
@@ -155,7 +163,7 @@ void (async () => {
     });
   }
 
-  // 5. Baked tools on agent (all three phone-safe)
+  // 5. Baked tools on agent (all phone-safe)
   const agentRaw = agentId ? await getConvaiAgent(agentId) : null;
   const toolIds: string[] =
     agentRaw &&

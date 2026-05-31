@@ -17,7 +17,7 @@ export const PRICING_PILL_PRICE = "$0.90/order" as const;
 
 /** Hero pricing link — full line when rate matches {@link PRICING_RATE_AMOUNT}. */
 export const PRICING_HERO_SIGNAL =
-  `Only pay for real orders - ${PRICING_RATE_AMOUNT} each` as const;
+  `Only pay for real orders - ${PRICING_RATE_AMOUNT}` as const;
 
 /** Two-line owner explainer — pay vs no-pay, with short examples. */
 export const PRICING_ORDER_EXPLAINER = {

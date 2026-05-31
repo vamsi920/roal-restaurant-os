@@ -67,10 +67,41 @@ const CUSTOMER_PHONE_PROP = {
     "Guest's real callback number as they said it. Omit if unknown. Never invent, example, or placeholder numbers.",
 } as const;
 
+const FULFILLMENT_TYPE_PROP = {
+  type: "string",
+  enum: ["pickup", "delivery"],
+  description:
+    'The guest-selected fulfillment mode. Use "pickup" or "delivery" only after the guest chooses.',
+} as const;
+
+const DELIVERY_ADDRESS_PROP = {
+  type: "string",
+  description:
+    "Full delivery address exactly as the guest stated it. Required for delivery before finalize_order. Never invent or use placeholder addresses.",
+} as const;
+
+const DELIVERY_INSTRUCTIONS_PROP = {
+  type: "string",
+  description:
+    "Optional delivery note exactly as stated, such as suite, gate code, or leave-at-door instructions.",
+} as const;
+
 const FINALIZE_ITEMS_PROP = {
   type: "array",
   description: "Optional line items",
   items: LINE_ITEM_BODY,
+} as const;
+
+const ORDER_STATUS_CUSTOMER_PHONE_PROP = {
+  type: "string",
+  description:
+    "Phone number the guest says is tied to the pickup order. Prefer this for lookup. Never invent or use placeholder numbers.",
+} as const;
+
+const ORDER_STATUS_CUSTOMER_NAME_PROP = {
+  type: "string",
+  description:
+    "Guest name tied to the pickup order. Use only if the guest stated it; phone is more reliable when available.",
 } as const;
 
 function syncDraftBodySpec(mode: "baked" | "dynamic") {
@@ -80,6 +111,9 @@ function syncDraftBodySpec(mode: "baked" | "dynamic") {
     items: ITEMS_PROP,
     customer_name: CUSTOMER_NAME_PROP,
     customer_phone: CUSTOMER_PHONE_PROP,
+    fulfillment_type: FULFILLMENT_TYPE_PROP,
+    delivery_address: DELIVERY_ADDRESS_PROP,
+    delivery_instructions: DELIVERY_INSTRUCTIONS_PROP,
   };
   if (mode === "baked") {
     return {
@@ -121,6 +155,9 @@ function finalizeBodySpec(mode: "baked" | "dynamic") {
       description:
         "Exact phone the caller stated after you asked. Required. Never use fake, example, or assumed numbers; if missing, ask the caller—do not call this tool.",
     },
+    fulfillment_type: FULFILLMENT_TYPE_PROP,
+    delivery_address: DELIVERY_ADDRESS_PROP,
+    delivery_instructions: DELIVERY_INSTRUCTIONS_PROP,
     items: FINALIZE_ITEMS_PROP,
   };
   if (mode === "baked") {
@@ -141,6 +178,166 @@ function finalizeBodySpec(mode: "baked" | "dynamic") {
       "session_id",
       "customer_name",
       "customer_phone",
+    ],
+    properties: {
+      restaurant_id: {
+        type: "string",
+        dynamic_variable: "restaurant_id",
+      },
+      restaurant_name: {
+        type: "string",
+        dynamic_variable: "restaurant_name",
+      },
+      ...baseProps,
+    },
+  };
+}
+
+function orderStatusBodySpec(mode: "baked" | "dynamic") {
+  const baseProps = {
+    session_id: {
+      ...SESSION_ID_PROP,
+      description:
+        "Current or prior ElevenLabs conversation/session id if known. Omit if the guest is asking about an older order and you only have phone/name.",
+    },
+    customer_phone: ORDER_STATUS_CUSTOMER_PHONE_PROP,
+    customer_name: ORDER_STATUS_CUSTOMER_NAME_PROP,
+  };
+  if (mode === "baked") {
+    return {
+      type: "object",
+      description:
+        "Looks up the latest pickup order status for this restaurant by session_id, customer_phone, or customer_name. Restaurant is fixed for this agent.",
+      properties: baseProps,
+    };
+  }
+  return {
+    type: "object",
+    description:
+      "Looks up the latest pickup order status by session_id, customer_phone, or customer_name.",
+    required: ["restaurant_id"],
+    properties: {
+      restaurant_id: {
+        type: "string",
+        dynamic_variable: "restaurant_id",
+      },
+      restaurant_name: {
+        type: "string",
+        dynamic_variable: "restaurant_name",
+      },
+      ...baseProps,
+    },
+  };
+}
+
+function callerHistoryBodySpec(mode: "baked" | "dynamic") {
+  const baseProps = {
+    customer_phone: {
+      ...ORDER_STATUS_CUSTOMER_PHONE_PROP,
+      description:
+        "Phone number the guest stated. Prefer this for recognizing returning callers. Never invent or use placeholder numbers.",
+    },
+    customer_name: {
+      ...ORDER_STATUS_CUSTOMER_NAME_PROP,
+      description:
+        "Guest name as stated. Use only if the guest stated it and phone is unavailable.",
+    },
+  };
+  if (mode === "baked") {
+    return {
+      type: "object",
+      description:
+        "Looks up this restaurant's completed pickup history for a caller by phone or name. Restaurant is fixed for this agent. Use only after the guest states their phone/name or asks for their usual.",
+      properties: baseProps,
+    };
+  }
+  return {
+    type: "object",
+    description:
+      "Looks up completed pickup history for a caller by phone or name. Use only after the guest states their phone/name or asks for their usual.",
+    required: ["restaurant_id"],
+    properties: {
+      restaurant_id: {
+        type: "string",
+        dynamic_variable: "restaurant_id",
+      },
+      restaurant_name: {
+        type: "string",
+        dynamic_variable: "restaurant_name",
+      },
+      ...baseProps,
+    },
+  };
+}
+
+function reservationBodySpec(mode: "baked" | "dynamic") {
+  const baseProps = {
+    session_id: {
+      ...SESSION_ID_PROP,
+      description:
+        "Current ElevenLabs conversation/session id if available. Keep it stable for this call.",
+    },
+    conversation_id: {
+      type: "string",
+      description:
+        "Optional ElevenLabs conversation id. Use only if available from the call context.",
+    },
+    customer_name: {
+      type: "string",
+      description:
+        "Guest's real name as they stated it. Required. Never use placeholders or guessed names.",
+    },
+    customer_phone: {
+      type: "string",
+      description:
+        "Guest's real callback phone number as they stated it. Required. Never use placeholder numbers.",
+    },
+    party_size: {
+      type: "integer",
+      description: "Number of guests in the party, 1 to 100.",
+    },
+    requested_date: {
+      type: "string",
+      description:
+        "Requested reservation date in the guest's words, e.g. 'tonight', 'June 4', or 'next Friday'. Do not invent.",
+    },
+    requested_time: {
+      type: "string",
+      description:
+        "Requested reservation time in the guest's words, e.g. '7 PM'. Do not invent.",
+    },
+    notes: {
+      type: "string",
+      description:
+        "Optional short staff note such as occasion, seating preference, or accessibility need.",
+    },
+  };
+  if (mode === "baked") {
+    return {
+      type: "object",
+      description:
+        "Saves a reservation request for this restaurant. Restaurant is fixed for this agent. This does not confirm a table; staff must confirm later.",
+      required: [
+        "customer_name",
+        "customer_phone",
+        "party_size",
+        "requested_date",
+        "requested_time",
+      ],
+      properties: baseProps,
+    };
+  }
+  return {
+    type: "object",
+    description:
+      "Saves a reservation request. This does not confirm a table; staff must confirm later.",
+    required: [
+      "restaurant_id",
+      "customer_name",
+      "customer_phone",
+      "party_size",
+      "requested_date",
+      "requested_time",
     ],
     properties: {
       restaurant_id: {
@@ -207,7 +404,7 @@ export type SyncRoalElevenLabsToolsResult = {
 };
 
 /**
- * Creates or updates the three ROAL webhook tools in ElevenLabs and attaches
+ * Creates or updates the ROAL webhook tools in ElevenLabs and attaches
  * their ids to the Conv AI agent prompt.tool_ids.
  *
  * When `restaurantId` is set (KDS / API), tools embed that restaurant in the
@@ -242,8 +439,12 @@ export async function syncRoalElevenLabsTools(options?: {
 
   const toolNames = [
     "get_menu_items",
+    "get_restaurant_info",
+    "get_caller_history",
+    "submit_reservation_request",
     "sync_draft_order",
     "finalize_order",
+    "get_order_status",
   ] as const;
 
   const toolMode = baked ? "baked" : "dynamic";
@@ -290,6 +491,84 @@ export async function syncRoalElevenLabsTools(options?: {
             },
           },
         },
+    get_restaurant_info: baked
+      ? {
+          type: "webhook",
+          name: "get_restaurant_info",
+          description:
+            "Fetches live restaurant business facts for this location: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions. No parameters required.",
+          response_timeout_secs: 30,
+          api_schema: {
+            url: `${edgeBase}/functions/v1/get-restaurant-info?restaurant_id=${encodeURIComponent(rid)}&restaurant_name=${encodeURIComponent(resolvedName)}`,
+            method: "GET",
+            request_headers: edgeHeaders,
+          },
+        }
+      : {
+          type: "webhook",
+          name: "get_restaurant_info",
+          description:
+            "Fetches live restaurant business facts: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions.",
+          response_timeout_secs: 30,
+          api_schema: {
+            url: `${edgeBase}/functions/v1/get-restaurant-info`,
+            method: "GET",
+            request_headers: edgeHeaders,
+            query_params_schema: {
+              properties: {
+                restaurant_id: {
+                  type: "string",
+                  dynamic_variable: "restaurant_id",
+                },
+                restaurant_name: {
+                  type: "string",
+                  dynamic_variable: "restaurant_name",
+                },
+              },
+              required: ["restaurant_id"],
+            },
+          },
+        },
+    get_caller_history: {
+      type: "webhook",
+      name: "get_caller_history",
+      description: baked
+        ? "Recognizes returning callers for this restaurant from completed pickup receipts. Use after the guest gives a phone/name or asks for their usual. Do not assume identity or reorder without confirmation."
+        : "Recognizes returning callers from completed pickup receipts. Use after the guest gives a phone/name or asks for their usual. Do not assume identity or reorder without confirmation.",
+      response_timeout_secs: 30,
+      api_schema: {
+        url: baked
+          ? `${edgeBase}/functions/v1/get-caller-history?restaurant_id=${encodeURIComponent(rid)}`
+          : `${edgeBase}/functions/v1/get-caller-history`,
+        method: "POST",
+        content_type: "application/json",
+        request_headers: {
+          ...edgeHeaders,
+          "Content-Type": "application/json",
+        },
+        request_body_schema: callerHistoryBodySpec(toolMode),
+      },
+    },
+    submit_reservation_request: {
+      type: "webhook",
+      name: "submit_reservation_request",
+      description: baked
+        ? "Saves a reservation request for this restaurant after collecting real name, callback phone, party size, date, and time. It does not confirm a table; staff must confirm later."
+        : "Saves a reservation request after collecting real name, callback phone, party size, date, and time. It does not confirm a table; staff must confirm later.",
+      response_timeout_secs: 30,
+      api_schema: {
+        url: baked
+          ? `${edgeBase}/functions/v1/submit-reservation-request?restaurant_id=${encodeURIComponent(rid)}`
+          : `${edgeBase}/functions/v1/submit-reservation-request`,
+        method: "POST",
+        content_type: "application/json",
+        request_headers: {
+          ...edgeHeaders,
+          "Content-Type": "application/json",
+        },
+        request_body_schema: reservationBodySpec(toolMode),
+      },
+    },
     sync_draft_order: {
       type: "webhook",
       name: "sync_draft_order",
@@ -328,6 +607,26 @@ export async function syncRoalElevenLabsTools(options?: {
           "Content-Type": "application/json",
         },
         request_body_schema: finalizeBodySpec(toolMode),
+      },
+    },
+    get_order_status: {
+      type: "webhook",
+      name: "get_order_status",
+      description: baked
+        ? "Checks the latest pickup order status for this restaurant. Use when a caller asks if an order is ready, being prepared, completed, or canceled. Ask for phone number if needed."
+        : "Checks the latest pickup order status. Use when a caller asks if an order is ready, being prepared, completed, or canceled. Ask for phone number if needed.",
+      response_timeout_secs: 30,
+      api_schema: {
+        url: baked
+          ? `${edgeBase}/functions/v1/get-order-status?restaurant_id=${encodeURIComponent(rid)}`
+          : `${edgeBase}/functions/v1/get-order-status`,
+        method: "POST",
+        content_type: "application/json",
+        request_headers: {
+          ...edgeHeaders,
+          "Content-Type": "application/json",
+        },
+        request_body_schema: orderStatusBodySpec(toolMode),
       },
     },
   };

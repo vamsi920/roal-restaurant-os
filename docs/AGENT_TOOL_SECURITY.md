@@ -1,6 +1,6 @@
 # Agent tool security (ElevenLabs → Supabase Edge)
 
-ROAL voice-agent tools (`get-menu`, `sync-draft-order`, `finalize-order`) accept authenticated webhook calls from ElevenLabs. This document describes the production auth and validation design.
+ROAL voice-agent tools (`get-menu`, `get-restaurant-info`, `get-caller-history`, `submit-reservation-request`, `sync-draft-order`, `finalize-order`, `get-order-status`) accept authenticated webhook calls from ElevenLabs. This document describes the production auth and validation design.
 
 ## Authentication modes
 
@@ -45,8 +45,12 @@ Strict **Zod** schemas in `supabase/functions/_shared/agent-tool-zod.ts` (mirror
 | Tool | Request schema | Response schema |
 |------|----------------|-----------------|
 | `get_menu_items` | `GetMenuQuerySchema` / `GetMenuPostBodySchema` | `GetMenuResponseSchema` |
+| `get_restaurant_info` | `GetRestaurantInfoQuerySchema` / `GetRestaurantInfoPostBodySchema` | `GetRestaurantInfoResponseSchema` |
+| `get_caller_history` | `GetCallerHistoryRequestSchema` | `GetCallerHistoryResponseSchema` |
+| `submit_reservation_request` | `SubmitReservationRequestSchema` | `SubmitReservationResponseSchema` |
 | `sync_draft_order` | `SyncDraftOrderRequestSchema` | `SyncDraftOrderResponseSchema` |
 | `finalize_order` | `FinalizeOrderRequestSchema` | `FinalizeOrderResponseSchema` |
+| `get_order_status` | `GetOrderStatusRequestSchema` | `GetOrderStatusResponseSchema` |
 
 Failed requests return **HTTP 400** with:
 
@@ -81,6 +85,14 @@ After Zod parsing, `sync_draft_order` and `finalize_order` validate the cart aga
 
 Failures return **HTTP 422** (`order_validation_failed`) or **400** (`customer_validation_failed`) with per-line `issues[].suggestion`. Valid lines are stored with canonical `item_id`, `name`, `quantity`, and `customizations`.
 
+`get_restaurant_info` is read-only. It returns scoped business facts for the agent: open/closed status, address fields, phone, website, pickup/delivery flags, prep-time estimate, and active operator FAQ entries.
+
+`get_caller_history` is read-only. It requires authenticated restaurant scope plus a caller phone or stated name, reads only completed `phone_order_receipts`, and returns compact returning-guest context instead of full receipts or prices.
+
+`submit_reservation_request` is write-only request intake. It requires authenticated restaurant scope, real callback details, party size, requested date, and requested time. It stores a staff-confirmation request and does not claim a confirmed reservation.
+
+`get_order_status` is read-only. It still requires authenticated restaurant scope and one lookup identifier (`session_id`, `customer_phone`, or `customer_name`), but returns only the latest scoped order status summary and item count instead of full cart contents.
+
 ## Replay / idempotency
 
 For `sync_draft_order` and `finalize_order`:
@@ -100,7 +112,7 @@ ElevenLabs retries and duplicate webhooks should reuse the same key per logical 
 | `apikey` | Yes (Supabase gateway) | Publishable anon key |
 | `Authorization` | Yes | `roal1.*` token or legacy secret |
 | `x-roal-restaurant-id` | Baked tools | Restaurant UUID (must match token/body) |
-| `x-roal-idempotency-key` | Optional | Replay protection on POST tools |
+| `x-roal-idempotency-key` | Optional on write tools | Replay protection for draft/finalize retries |
 | `Content-Type` | POST | `application/json` |
 
 ## Secret rotation
@@ -137,8 +149,12 @@ supabase secrets set AGENT_TOOL_SIGNING_SECRET='...'
 # optional legacy fallback during migration:
 supabase secrets set AGENT_TOOL_SECRET='...'
 supabase functions deploy get-menu --no-verify-jwt
+supabase functions deploy get-restaurant-info --no-verify-jwt
+supabase functions deploy get-caller-history --no-verify-jwt
+supabase functions deploy submit-reservation-request --no-verify-jwt
 supabase functions deploy sync-draft-order --no-verify-jwt
 supabase functions deploy finalize-order --no-verify-jwt
+supabase functions deploy get-order-status --no-verify-jwt
 ```
 
 Then on each restaurant KDS: **Re-sync** voice agent.

@@ -14,9 +14,9 @@ Operator cross-links: [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md) · [`FINAL_LA
 | Layer | Status |
 |-------|--------|
 | **Product (pilot onboarding)** | **Ready** — signup → org → locations → menu → hours → voice agent connect/sync → KDS → test harness |
-| **Voice tool chain (automated)** | **Ready** — baked ElevenLabs tools → Edge `get-menu` / `sync-draft-order` / `finalize-order`; signing parity closed (LB-03) |
+| **Voice tool chain (automated)** | **Ready** — baked ElevenLabs tools → Edge `get-menu` / `sync-draft-order` / `finalize-order` / `get-order-status`; signing parity closed (LB-03) |
 | **Production live calls** | **Not ready (P0)** — **LB-01** open: production host/DNS + one signed-off Twilio call |
-| **Loman-style command center** | **Partial** — strong on orders/KDS/menu/voice ops; gaps on true live-call feed, transcripts, upsell config, peak-call analytics, shared multi-store menu |
+| **Loman-style command center** | **Partial** — strong on orders/KDS/menu/voice ops; conversation-init active-call rows, post-call webhook ingestion, call intent/action classification, staff handoff alerts/inbox, distinct voicemail inbox, call outcomes, call-history and order-detail transcript/recording links, peak-hour, rush-window, by-location call analytics, order-status lookup, upsell rule config, attach-rate, attributed upsell revenue, observed ticket lift, deterministic treatment/control upsell lift, override-aware shared-template cascade, and field-level diff visibility for customized inherited menus added; gaps remain on live transcript streaming, ROAL-hosted recording storage, experiment confidence tooling, and operator-approved per-field inherited menu updates |
 
 **Bottom line:** Safe for **staged pilot** on a deployed host with env + Edge secrets. **Not** safe to forward rush-hour production phone traffic until **LB-01** closes.
 
@@ -38,35 +38,39 @@ Operator cross-links: [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md) · [`FINAL_LA
 - **Locations list** — cards, stats (agent, menu count, last order), fast paths to Orders / Menu / Agent (`app/dashboard/restaurants/page.tsx`)
 - **Create restaurant** — modal, billing gate, auto voice provision attempt (`CreateRestaurantButton.tsx`, `POST /api/restaurants`)
 - **Per-location workspace** — desktop rail + mobile bottom nav (6 destinations), KDS orders home (`RestaurantWorkspaceRail.tsx`)
-- **Menu setup** — Gemini menu scan, import review/commit, live menu editor, modifiers, import history (`MenuScanner.tsx`, `MenuEditor.tsx`)
-- **Restaurant profile & hours** — timezone, address, pickup/delivery flags, weekly hours + exceptions (`RestaurantProfileSettings.tsx`, `RestaurantHoursSettings.tsx`)
+- **Menu setup** — Gemini menu scan, import review/commit, live menu editor, modifiers, import history, explicit **Publish to voice**, copy menu from another org location, reusable org menu templates, default new-location inheritance, local override tracking, field-level diff visibility for customized inherited menus, and controlled push to inherited locations (`MenuScanner.tsx`, `MenuEditor.tsx`, `MenuCopyFromLocation.tsx`, `MenuAutoSyncStatusPanel.tsx`)
+- **Restaurant profile, FAQ knowledge, upsell rules & hours** — timezone, address, pickup/delivery flags, operator FAQ/policy answers, add-on/combo suggestion rules, weekly hours + exceptions (`RestaurantProfileSettings.tsx`, `RestaurantHoursSettings.tsx`, `restaurant_knowledge_entries`, `restaurant_upsell_rules`)
 - **Live Agent** — connect/resync ElevenLabs agent, tool bake, menu auto-sync, launch checklist, command center snapshot, test call harness (`agent/page.tsx`, `VoiceAgentPanel.tsx`)
-- **Call history** — session list from operational data + `agent_call_events` when present (`/dashboard/restaurants/[id]/calls`)
-- **Analytics** — org rollup + per-location sessions/revenue (`/dashboard/analytics`, `/dashboard/restaurants/[id]/analytics`)
+- **Call history / command center** — session list from operational data + `agent_call_events` when present, with owner-readable intent labels, next-action labels, active/order/action/evidence summary cards, sanitized post-call transcript lines, reservation request linkage, voicemail filter/inbox, and recording links when ElevenLabs supplies a safe audio URL (`/dashboard/restaurants/[id]/calls`)
+- **Staff follow-up inbox** — voicemail messages are separated into a callback inbox; handoff/callback/manager/escalation calls appear above call history with caller, reason, outcome, session, and transcript summary (`RestaurantCallHistoryPanel.tsx`)
+- **ElevenLabs call ingestion** — conversation-init marks active calls; HMAC-verified post-call endpoint stores transcription/audio/failure events into `agent_call_events` (`/api/integrations/elevenlabs/conversation-init`, `/api/integrations/elevenlabs/post-call-webhook`)
+- **Analytics** — org rollup + per-location sessions/revenue, post-call outcome counts, FAQ/no-order calls by location, peak call hours, day/hour rush windows, by-location call conversion, configured upsell attach rate, attributed offer revenue, observed ticket lift, deterministic treatment/control upsell lift (`/dashboard/analytics`, `/dashboard/restaurants/[id]/analytics`)
 - **Onboarding wizard** — profile → menu → voice agent (provision + retry) → test call → go live (`components/onboarding/*`, pass **28**)
 - **Launch checklist** — real profile/menu/hours/agent/tools/webhook/test-call gates (`lib/restaurant-launch/*`, pass **27**)
-- **Operational notifications** — state-transition-only events (provision failure, menu sync failure, stuck orders, go-live) (`lib/notifications/operational-events.ts`, pass **29**)
+- **Operational notifications** — state-transition and call-escalation events (provision failure, menu sync failure, stuck orders, go-live, staff handoff requested) (`lib/notifications/operational-events.ts`, pass **32**)
 - **Billing (pilot)** — plan gates, usage events, honest UI when Stripe checkout off (`lib/billing/*`)
 - **Admin ops** — platform health snapshot for admins (`/dashboard/admin`)
 - **Settings / support** — notifications prefs, support page
 
 ### Voice / ElevenLabs
 
-- Three ConvAI webhook tools: `get_menu_items`, `sync_draft_order`, `finalize_order` (`lib/sync-elevenlabs-roal-tools.ts`)
+- Seven ConvAI webhook tools: `get_menu_items`, `get_restaurant_info`, `get_caller_history`, `submit_reservation_request`, `sync_draft_order`, `finalize_order`, `get_order_status` (`lib/sync-elevenlabs-roal-tools.ts`)
 - Per-restaurant tool bake (restaurant id in URL/headers)
-- **Conversation-init** personalization webhook (`app/api/integrations/elevenlabs/conversation-init/route.ts`)
+- **Conversation-init** personalization webhook + active-call row upsert (`app/api/integrations/elevenlabs/conversation-init/route.ts`)
 - Dedicated agent provision lifecycle on `restaurant_profiles` (migration **025**)
 - Menu auto-sync after content changes (`lib/voice-agent/after-menu-content-mutation.ts`)
 - Hours-aware menu (`ordering_allowed` in `get-menu`); **sync/finalize blocked when closed** (403 `restaurant_closed`)
-- Handoff rule columns on profile (migration **027**); prompt wiring in `lib/elevenlabs/agent-prompt.ts`
+- Handoff rule columns on profile (migration **027**) and operator FAQ knowledge entries (migration **028**); prompt wiring in `lib/elevenlabs/agent-prompt.ts`
 
 ### Edge (Supabase Functions)
 
 | Function | Role | JWT |
 |----------|------|-----|
 | `get-menu` | Menu + hours for agent | `verify_jwt = false` (custom `roal1` auth in handler) |
+| `get-restaurant-info` | Live business facts: hours, address, prep time, FAQ entries | same |
 | `sync-draft-order` | Draft cart → KDS | same |
 | `finalize-order` | Finalize → queue + receipt + usage | same |
+| `get-order-status` | Caller asks if pickup is ready / being prepared / completed | same |
 
 Shared: `_shared/agent-tool-auth.ts`, `_shared/record-usage.ts`, `_shared/restaurant-hours.ts`, Zod validation.
 
@@ -74,7 +78,7 @@ Shared: `_shared/agent-tool-auth.ts`, `_shared/record-usage.ts`, `_shared/restau
 
 - Core: `restaurants`, `categories`, `menu_items`, `modifier_groups`, `draft_orders`, `phone_order_receipts`
 - Ops: `restaurant_profiles`, `restaurant_weekly_hours`, `restaurant_hours_exceptions`, `usage_events`, `audit_logs`
-- Voice: provision + menu sync status on profile (**025**), `agent_call_events` (**026**), handoff columns (**027**)
+- Voice: provision + menu sync status on profile (**025**), `agent_call_events` (**026**), handoff columns (**027**), FAQ knowledge entries (**028**), upsell rules (**029**)
 - Onboarding: `restaurant_onboarding` (**010**)
 
 ### Public marketing (out of pass 37 scope)
@@ -96,19 +100,19 @@ Full matrix: [`LOMAN_FEATURE_GAP.md`](./LOMAN_FEATURE_GAP.md). Summary:
 
 | Loman pillar | ROAL status | Main gap |
 |--------------|-------------|----------|
-| Phone orders → kitchen | **Partial** | Pickup path strong; no delivery address workflow; no POS ticket |
-| FAQs / knowledge | **Partial** | Menu + profile + hours; no operator FAQ KB editor |
-| **Live calls + transcript** | **Gap / partial** | `CallStatusStrip` = active **drafts**, not telephony; `agent_call_events` table exists; no live transcript UI |
-| Unified command center | **Partial** | Orders + outcomes + agent ops on Live Agent; not full Loman-style call feed |
-| Menu/hours updates | **Present** | Scan, editor, hours, auto-sync to agent |
-| Upsell / ticket lift | **Gap** | Prompt-level only; no dashboard upsell rules or lift metrics |
-| Analytics (peak, conversion) | **Partial** | Session/revenue analytics; no peak-call heatmap or upsell lift |
-| Staff handoff | **Partial** | Profile handoff fields + prompt; no voicemail inbox, limited transfer automation |
-| Multi-location | **Partial** | Org analytics + per-store workspace; no shared menu template / regional routing |
+| Phone orders → kitchen | **Partial** | Pickup path strong + delivery address/instructions capture + owner-readable call/cart/ticket/kitchen timeline in order details; no delivery dispatch or POS ticket |
+| FAQs / knowledge | **Partial** | Menu + profile + hours + operator FAQ/policy entries; FAQ/no-order call counts by location; no per-entry FAQ analytics |
+| **Live calls + transcript** | **Partial** | Conversation-init creates active `agent_call_events` rows; the live orders page subscribes to `agent_call_events` for active-call indicators and post-call evidence refresh; Call History and order details show post-call transcript lines; no word-by-word live transcript streaming UI |
+| Unified command center | **Partial** | Calls page now groups active calls, orders won, action-needed calls, transcripts, recordings, reservations, and staff handoffs; KDS order details show phone-order timelines plus stored call evidence; still no live transcript stream |
+| Menu/hours/FAQ updates | **Present / partial** | Scan, editor, hours, knowledge entries, auto-sync plus explicit Publish to voice |
+| Upsell / ticket lift | **Partial** | Dashboard upsell rules feed the prompt; attach-rate, attributed offer revenue, observed ticket lift, and deterministic treatment/control lift exist; no confidence interval or operator experiment control yet |
+| Analytics (peak, conversion) | **Partial** | Session/revenue analytics; peak call + rush-window cards from post-call events; upsell attach rate, attributed revenue, observed lift, and deterministic controlled lift; no full heatmap or confidence tooling |
+| Staff handoff | **Partial** | Profile handoff fields + prompt + post-call staff/voicemail notification + voicemail/follow-up inboxes; no ROAL-hosted voicemail recording storage, limited transfer automation |
+| Multi-location | **Partial** | Org analytics + per-store workspace + copy menu between locations + reusable/default org menu templates for new-location inheritance + visible inherited-template ancestry/re-apply + controlled push to inherited locations; customized stores receive missing brand categories/items without overwriting local items and expose field-level preserved override counts; no per-field approval UI / regional routing |
 
 **Explicitly excluded (by design):** POS integrations, phone payment capture, reservation POS sync — see `LOMAN_FEATURE_GAP.md` § Excluded.
 
-**Suggested build order (from gap doc):** live call ingestion → peak analytics → handoff v2 → command center UX → shared menu → upsell config.
+**Suggested build order (from gap doc):** real-time call streaming → hosted recording storage / transfer v2 → per-field inherited menu approval UI → upsell experiment confidence + operator controls.
 
 ---
 
@@ -197,7 +201,7 @@ No new automated suite; consolidates evidence from passes 27–36 and [`LAUNCH_B
 
 ## Supabase migrations
 
-**Repo:** `supabase/migrations/001` … `027` (27 files).
+**Repo:** `supabase/migrations/001` … `031` (31 files).
 
 | # | File | Summary |
 |---|------|---------|
@@ -215,8 +219,11 @@ No new automated suite; consolidates evidence from passes 27–36 and [`LAUNCH_B
 | **025** | `025_restaurant_profile_voice_agent_lifecycle.sql` | Provision + menu auto-sync status columns |
 | **026** | `026_agent_call_events.sql` | `agent_call_events` + RLS |
 | **027** | `027_restaurant_handoff_rules.sql` | Handoff + closed-hours message columns |
+| **028** | `028_restaurant_knowledge_entries.sql` | Operator FAQ / policy knowledge for agent prompt |
+| **029** | `029_restaurant_upsell_rules.sql` | Operator add-on / combo suggestion rules for agent prompt |
+| **030–031** | notification enum/default updates | Staff handoff event + launch notification enum sync |
 
-**Remote (pass 31, 2026-05-30):** Migrations **025**, **026**, **027** applied to project **`mnkabwcbdxruefzuvuuv`** via Supabase MCP `apply_migration` (were missing before that pass). Prior migrations **001–024** were already aligned per [`FINAL_LAUNCH_READINESS.md`](./FINAL_LAUNCH_READINESS.md).
+**Remote (pass 32, 2026-05-30):** Migrations **025**, **026**, **027** applied to project **`mnkabwcbdxruefzuvuuv`** via Supabase MCP `apply_migration` (were missing before that pass). Prior migrations **001–024** were already aligned per [`FINAL_LAUNCH_READINESS.md`](./FINAL_LAUNCH_READINESS.md). Migrations **028** and **029** were applied via Supabase MCP for FAQ knowledge and upsell rule editors. Migrations **030** and **031** were applied via Supabase MCP for launch notification enum/default alignment and `staff_handoff_requested`.
 
 **Verify on deploy:**
 
@@ -237,10 +244,14 @@ npx supabase migration list
 | `get-menu` | **v10** | `verify_jwt = false` |
 | `sync-draft-order` | **v11** | `verify_jwt = false` |
 | `finalize-order` | **v11** | `verify_jwt = false` |
+| `get-order-status` | Deployed after pass 32 | `verify_jwt = false` |
+| `get-restaurant-info` | Deployed in pass 38 | `verify_jwt = false` |
+| `get-caller-history` | Deployed in pass 39 | `verify_jwt = false` |
+| `submit-reservation-request` | New in pass 40 | `verify_jwt = false` |
 
 **Secrets required on Edge:** `AGENT_TOOL_SIGNING_SECRET` (and related Supabase keys). Run `npm run ensure:signing-parity` before go-live.
 
-**Not separate Edge functions:** Auth and usage recording live in `_shared/` and ship inside the three functions above.
+**Not separate Edge functions:** Auth and usage recording live in `_shared/` and ship inside the functions above.
 
 **Re-deploy after handler changes:**
 

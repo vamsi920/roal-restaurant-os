@@ -58,6 +58,18 @@ export function readConvaiAgentId(response: unknown): string {
   throw new Error("ElevenLabs agent response missing agent_id");
 }
 
+/** Provision must yield a new agent id, never the shared template. */
+export function assertProvisionedAgentDiffersFromTemplate(
+  agentId: string,
+  templateAgentId: string
+): void {
+  if (agentId.trim() === templateAgentId.trim()) {
+    throw new Error(
+      "ElevenLabs provision returned the shared template agent; expected a dedicated clone."
+    );
+  }
+}
+
 export function readConvaiAgentName(agent: unknown): string | null {
   if (!agent || typeof agent !== "object") return null;
   const name = (agent as Record<string, unknown>).name;
@@ -131,8 +143,10 @@ export async function provisionRestaurantConvaiAgent(
     const created = await deps.createConvaiAgent(
       buildCreateConvaiAgentBodyFromTemplate(template, agentName)
     );
+    const agentId = readConvaiAgentId(created);
+    assertProvisionedAgentDiffersFromTemplate(agentId, templateAgentId);
     return {
-      agent_id: readConvaiAgentId(created),
+      agent_id: agentId,
       agent_name: agentName,
       template_agent_id: templateAgentId,
       method: "create",
@@ -143,8 +157,10 @@ export async function provisionRestaurantConvaiAgent(
     const duplicated = await deps.duplicateConvaiAgent(templateAgentId, {
       name: agentName,
     });
+    const agentId = readConvaiAgentId(duplicated);
+    assertProvisionedAgentDiffersFromTemplate(agentId, templateAgentId);
     return {
-      agent_id: readConvaiAgentId(duplicated),
+      agent_id: agentId,
       agent_name: agentName,
       template_agent_id: templateAgentId,
       method: "duplicate",
@@ -155,8 +171,10 @@ export async function provisionRestaurantConvaiAgent(
     const created = await deps.createConvaiAgent(
       buildCreateConvaiAgentBodyFromTemplate(template, agentName)
     );
+    const agentId = readConvaiAgentId(created);
+    assertProvisionedAgentDiffersFromTemplate(agentId, templateAgentId);
     return {
-      agent_id: readConvaiAgentId(created),
+      agent_id: agentId,
       agent_name: agentName,
       template_agent_id: templateAgentId,
       method: "create",

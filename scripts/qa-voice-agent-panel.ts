@@ -99,7 +99,7 @@ void (async () => {
   const connect = await runSyncPass("connect");
   checks.push({
     name: "connect: tools synced",
-    ok: connect.sync.tools.length >= 3,
+    ok: connect.sync.tools.length >= 5,
     detail: `${connect.sync.tools.length} tools`,
   });
   checks.push({
@@ -108,7 +108,7 @@ void (async () => {
   });
   checks.push({
     name: "connect: tool_ids on agent",
-    ok: connect.sync.tool_ids_on_agent.length >= 3,
+    ok: connect.sync.tool_ids_on_agent.length >= 5,
     detail: `${connect.sync.tool_ids_on_agent.length} ids`,
   });
 

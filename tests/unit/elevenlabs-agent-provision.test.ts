@@ -94,6 +94,25 @@ describe("resolveTemplateAgentId", () => {
 });
 
 describe("provisionRestaurantConvaiAgent", () => {
+  it("rejects when ElevenLabs returns the template agent id", async () => {
+    const deps = mockDeps({
+      duplicateConvaiAgent: vi.fn().mockResolvedValue({ agent_id: TEMPLATE_ID }),
+    });
+
+    await expect(
+      provisionRestaurantConvaiAgent(
+        {
+          restaurantId: RESTAURANT_ID,
+          restaurantName: "Must Not Share Template",
+          fallbackToCreateOnDuplicateError: false,
+        },
+        deps
+      )
+    ).rejects.toThrow(/shared template agent/i);
+
+    expect(deps.createConvaiAgent).not.toHaveBeenCalled();
+  });
+
   it("duplicates template with display name by default", async () => {
     const deps = mockDeps();
     const result = await provisionRestaurantConvaiAgent(

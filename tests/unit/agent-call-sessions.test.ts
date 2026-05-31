@@ -167,4 +167,74 @@ describe("deriveAgentCallSessions", () => {
 
     expect(countActiveDerivedCalls(sessions, NOW)).toBe(1);
   });
+
+  it("keeps receipt-completed outcome when stored webhook outcome is unknown", () => {
+    const sessions = deriveAgentCallSessions({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT,
+      drafts: [],
+      receipts: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          session_id: SESSION,
+          customer_name: "Alex",
+          customer_phone: "+15551111111",
+          items: [],
+          created_at: "2026-05-30T17:40:00.000Z",
+        },
+      ],
+      usageEvents: [],
+      storedEvents: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          agent_id: AGENT,
+          conversation_id: SESSION,
+          session_id: SESSION,
+          caller_phone: "+15551111111",
+          status: "ended",
+          outcome: "unknown",
+          started_at: "2026-05-30T17:00:00.000Z",
+          ended_at: "2026-05-30T17:41:00.000Z",
+          transcript_metadata: { summary: "Webhook arrived without outcome." },
+        },
+      ],
+      now: NOW,
+    });
+
+    expect(sessions[0]?.outcome).toBe("order_completed");
+    expect(sessions[0]?.source).toBe("stored");
+  });
+
+  it("includes webhook-only calls with no draft or receipt rows", () => {
+    const sessions = deriveAgentCallSessions({
+      restaurantId: RESTAURANT_ID,
+      linkedAgentId: AGENT,
+      drafts: [],
+      receipts: [],
+      usageEvents: [],
+      storedEvents: [
+        {
+          restaurant_id: RESTAURANT_ID,
+          agent_id: AGENT,
+          conversation_id: "conv_faq_only",
+          session_id: "conv_faq_only",
+          caller_phone: "+15552223333",
+          status: "ended",
+          outcome: "no_order",
+          started_at: "2026-05-30T17:00:00.000Z",
+          ended_at: "2026-05-30T17:02:00.000Z",
+          transcript_metadata: { transcript_summary: "Guest asked about hours." },
+        },
+      ],
+      now: NOW,
+    });
+
+    expect(sessions).toHaveLength(1);
+    expect(sessions[0]).toMatchObject({
+      sessionId: "conv_faq_only",
+      outcome: "no_order",
+      source: "stored",
+      transcriptMetadata: { transcript_summary: "Guest asked about hours." },
+    });
+  });
 });

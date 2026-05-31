@@ -22,6 +22,7 @@ import type { DbItem, DbModifier, DraftOrderRow } from "@/lib/types";
 import { cn } from "@/lib/cn";
 import {
   CustomerLine,
+  FulfillmentLine,
   OrderActionButton,
   OrderDetailsLink,
   OrderItemsList,
@@ -116,6 +117,11 @@ export function KitchenOrderCard({
       </div>
 
       <CustomerLine name={order.customer_name} phone={order.customer_phone} />
+      <FulfillmentLine
+        fulfillmentType={order.fulfillment_type}
+        address={order.delivery_address}
+        instructions={order.delivery_instructions}
+      />
       <OrderItemsList items={order.items} />
 
       {totalLabel ? (

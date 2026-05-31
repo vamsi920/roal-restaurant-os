@@ -24,9 +24,21 @@ describe("voice agent control center", () => {
       restaurantId: "11111111-1111-4111-8111-111111111111",
       restaurantName: "Test Bistro",
     });
-    expect(urls).toHaveLength(3);
+    expect(urls).toHaveLength(7);
     const getMenu = urls.find((u) => u.name === "get_menu_items");
     expect(getMenu?.url).toContain("restaurant_id=");
+    const info = urls.find((u) => u.name === "get_restaurant_info");
+    expect(info?.url).toContain("/functions/v1/get-restaurant-info");
+    const status = urls.find((u) => u.name === "get_order_status");
+    expect(status?.url).toContain("/functions/v1/get-order-status");
+    const history = urls.find((u) => u.name === "get_caller_history");
+    expect(history?.url).toContain("/functions/v1/get-caller-history");
+    const reservation = urls.find(
+      (u) => u.name === "submit_reservation_request"
+    );
+    expect(reservation?.url).toContain(
+      "/functions/v1/submit-reservation-request"
+    );
     for (const row of urls) {
       expect(row.url).not.toMatch(/secret|roal1\.|Bearer/i);
     }

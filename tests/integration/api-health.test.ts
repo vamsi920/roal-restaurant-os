@@ -45,6 +45,10 @@ describe("GET /api/health", () => {
         edge_get_menu: { ok: true, status: "pass" },
         edge_sync_draft_order: { ok: true, status: "pass" },
         edge_finalize_order: { ok: true, status: "pass" },
+        edge_get_order_status: { ok: true, status: "pass" },
+        edge_get_caller_history: { ok: true, status: "pass" },
+        edge_submit_reservation_request: { ok: true, status: "pass" },
+        edge_get_restaurant_info: { ok: true, status: "pass" },
       },
     });
 

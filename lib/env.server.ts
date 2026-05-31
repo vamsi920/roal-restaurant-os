@@ -19,6 +19,7 @@ const serverEnvSchema = z.object({
   AGENT_TOOL_SIGNING_SECRET: optionalString,
   ELEVENLABS_SYNC_TOKEN: optionalString,
   ELEVENLABS_CONVERSATION_INIT_SECRET: optionalString,
+  ELEVENLABS_WEBHOOK_SECRET: optionalString,
   RESTAURANT_AGENT_TIMEZONE: optionalString,
   ROAL_ORDER_KB: z.preprocess((v) => {
     const x = emptyToUndefined(v);
@@ -145,6 +146,10 @@ export function getElevenLabsSyncToken(): string | undefined {
 
 export function getElevenLabsConversationInitSecret(): string | undefined {
   return getServerEnv().ELEVENLABS_CONVERSATION_INIT_SECRET;
+}
+
+export function getElevenLabsWebhookSecret(): string | undefined {
+  return getServerEnv().ELEVENLABS_WEBHOOK_SECRET;
 }
 
 /** Summarize config for health checks / ops (no secret values). */

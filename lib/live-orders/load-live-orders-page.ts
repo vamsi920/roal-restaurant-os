@@ -3,6 +3,10 @@ import { loadRestaurantCommandCenter } from "@/lib/command-center/load-command-c
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
 import { buildRecentPhoneOutcomes } from "@/lib/live-orders/build-recent-outcomes";
 import {
+  loadOrderCallEvidenceBySession,
+  type OrderCallEvidence,
+} from "@/lib/live-orders/call-evidence";
+import {
   phoneAgentReadinessFromProfile,
   type PhoneAgentReadinessSnapshot,
 } from "@/lib/live-orders/readiness-from-profile";
@@ -23,6 +27,7 @@ export type LiveOrdersPageSnapshot = {
   rangeUntil: string;
   initialDraftOrders: DraftOrderRow[];
   initialReceipts: PhoneOrderReceiptRow[];
+  initialCallEvidenceBySession: Record<string, OrderCallEvidence>;
   ordersLoadError: string | null;
 };
 
@@ -80,6 +85,22 @@ export async function loadLiveOrdersPageData(
   const draftErr = draftsRes.error?.message ?? null;
   const receiptErr = receiptsRes.error?.message ?? null;
 
+  const initialDraftOrders = (draftsRes.data as DraftOrderRow[]) ?? [];
+  const initialReceipts = receiptErr
+    ? []
+    : ((receiptsRes.data as PhoneOrderReceiptRow[]) ?? []);
+  const sessionIds = [
+    ...initialDraftOrders.map((row) => row.session_id),
+    ...initialReceipts.map((row) => row.session_id),
+  ];
+  const initialCallEvidenceBySession = await loadOrderCallEvidenceBySession(
+    ordersClient,
+    {
+      restaurantId,
+      sessionIds,
+    }
+  ).catch(() => ({}));
+
   const recentOutcomes = buildRecentPhoneOutcomes({
     failed: commandCenter.failedCalls,
     handoff: commandCenter.handoffCalls,
@@ -96,10 +117,9 @@ export async function loadLiveOrdersPageData(
     outcomesEmpty: recentOutcomes.length === 0,
     rangeSince: commandCenter.rangeSince,
     rangeUntil: commandCenter.rangeUntil,
-    initialDraftOrders: (draftsRes.data as DraftOrderRow[]) ?? [],
-    initialReceipts: receiptErr
-      ? []
-      : ((receiptsRes.data as PhoneOrderReceiptRow[]) ?? []),
+    initialDraftOrders,
+    initialReceipts,
+    initialCallEvidenceBySession,
     ordersLoadError: draftErr ?? receiptErr,
   };
 }

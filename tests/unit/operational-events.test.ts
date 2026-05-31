@@ -15,6 +15,7 @@ import {
   emitGoLiveIfTransition,
   emitMenuAutoSyncFailureIfTransition,
   emitProvisionFailureIfTransition,
+  emitStaffHandoffRequested,
 } from "@/lib/notifications/operational-events";
 
 describe("stateTransitioned", () => {
@@ -128,6 +129,57 @@ describe("operational event emitters", () => {
     expect(writeAuditLog).toHaveBeenCalledWith(
       supabase,
       expect.objectContaining({ action: "restaurant.go_live", outcome: "success" })
+    );
+  });
+
+  it("dispatches staff handoff notifications with session idempotency", async () => {
+    const supabase = {
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            maybeSingle: vi.fn().mockResolvedValue({
+              data: {
+                id: restaurantId,
+                name: "Test",
+                organization_id: orgId,
+              },
+              error: null,
+            }),
+          }),
+        }),
+      }),
+    };
+
+    const sent = await emitStaffHandoffRequested(supabase as never, {
+      restaurantId,
+      sessionId: "conv_123",
+      conversationId: "conv_123",
+      callerPhone: "+15551234567",
+      outcome: "no_order",
+      reason: "manager_requested",
+      summary: "Guest asked for a manager callback about catering.",
+    });
+
+    expect(sent).toBe(true);
+    expect(dispatchNotification).toHaveBeenCalledWith(
+      supabase,
+      expect.objectContaining({
+        eventType: "staff_handoff_requested",
+        idempotencyKey: `staff_handoff:${restaurantId}:conv_123`,
+        title: "Staff follow-up needed · Test",
+        payload: expect.objectContaining({
+          session_id: "conv_123",
+          caller_phone: "+15551234567",
+          reason: "manager_requested",
+        }),
+      })
+    );
+    expect(writeAuditLog).toHaveBeenCalledWith(
+      supabase,
+      expect.objectContaining({
+        action: "voice_agent.staff_handoff_requested",
+        outcome: "success",
+      })
     );
   });
 });

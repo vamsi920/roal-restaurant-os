@@ -42,7 +42,14 @@ export type UsageImportAttemptMetadata = {
 };
 
 export type UsageToolCallMetadata = {
-  tool: "get_menu_items" | "sync_draft_order" | "finalize_order";
+  tool:
+    | "get_menu_items"
+    | "get_restaurant_info"
+    | "get_caller_history"
+    | "submit_reservation_request"
+    | "sync_draft_order"
+    | "finalize_order"
+    | "get_order_status";
   http_status: number;
   outcome: "success" | "error";
   line_count?: number;

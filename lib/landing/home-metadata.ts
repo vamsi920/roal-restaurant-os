@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { buildPublicPageMetadata } from "@/lib/seo/public-open-graph";
 
 const HOME_SEO = {
-  title: "ROAL - AI phone agent that answers restaurant pickup calls",
+  title: "ROAL - AI phone agent that takes restaurant pickup orders",
   description:
-    "ROAL answers busy restaurant phone calls in a natural voice, takes pickup orders from your live menu, sends tickets to the kitchen, and charges only for real orders.",
+    "ROAL answers restaurant pickup calls, speaks naturally in the customer's language, takes orders from your live menu, sends kitchen tickets, and charges only for successful orders.",
 } as const;
 
 export function buildHomePageMetadata(): Metadata {

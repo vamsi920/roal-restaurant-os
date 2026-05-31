@@ -99,6 +99,8 @@ export const RestaurantProfileInputSchema = z
     handoff_unavailable_item_behavior: optionalUnavailableBehavior,
     handoff_unavailable_item_notes: optionalLongText(400),
     closed_hours_message: optionalLongText(500),
+    knowledge_base_text: optionalLongText(4000).optional(),
+    upsell_rules_text: optionalLongText(3000).optional(),
   })
   .refine((d) => d.allows_pickup || d.allows_delivery, {
     message: "Enable at least pickup or delivery",

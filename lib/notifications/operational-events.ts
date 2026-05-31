@@ -282,3 +282,63 @@ export async function emitOrderStuckIfTransition(
 
   return true;
 }
+
+export async function emitStaffHandoffRequested(
+  supabase: SupabaseClient,
+  input: {
+    restaurantId: string;
+    sessionId: string;
+    conversationId?: string | null;
+    callerPhone?: string | null;
+    outcome?: string | null;
+    summary?: string | null;
+    reason?: string | null;
+  }
+): Promise<boolean> {
+  const ctx = await loadRestaurantOperationalContext(supabase, input.restaurantId);
+  if (!ctx) return false;
+
+  const callerLabel = input.callerPhone?.trim() || "A caller";
+  const reason = input.reason?.trim() || "handoff requested";
+  const summary = input.summary?.trim();
+  const body = summary
+    ? `${callerLabel} needs staff follow-up: ${summary}`
+    : `${callerLabel} needs staff follow-up after a phone call.`;
+
+  const notified = await dispatchNotification(supabase, {
+    organizationId: ctx.organizationId,
+    restaurantId: ctx.restaurantId,
+    restaurantName: ctx.restaurantName,
+    eventType: "staff_handoff_requested",
+    title: `Staff follow-up needed · ${ctx.restaurantName}`,
+    body,
+    payload: {
+      session_id: input.sessionId,
+      conversation_id: input.conversationId ?? input.sessionId,
+      caller_phone: input.callerPhone ?? null,
+      outcome: input.outcome ?? null,
+      reason,
+      transcript_summary: summary ?? null,
+    },
+    idempotencyKey: `staff_handoff:${ctx.restaurantId}:${input.sessionId}`,
+  });
+
+  if (!notified) return false;
+
+  void writeAuditLog(supabase, {
+    organizationId: ctx.organizationId,
+    restaurantId: ctx.restaurantId,
+    action: "voice_agent.staff_handoff_requested",
+    resourceType: "agent_call_event",
+    resourceId: input.sessionId,
+    outcome: "success",
+    metadata: {
+      conversation_id: input.conversationId ?? input.sessionId,
+      caller_phone: input.callerPhone ?? null,
+      call_outcome: input.outcome ?? null,
+      reason,
+    },
+  });
+
+  return true;
+}

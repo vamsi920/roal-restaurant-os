@@ -195,6 +195,13 @@ export async function resyncRestaurantAgentMenuAction(
   restaurantId: string,
   restaurantName: string
 ): Promise<ResyncRestaurantAgentMenuResult> {
+  return publishRestaurantVoiceContentAction(restaurantId, restaurantName);
+}
+
+export async function publishRestaurantVoiceContentAction(
+  restaurantId: string,
+  restaurantName: string
+): Promise<ResyncRestaurantAgentMenuResult> {
   const access = await requireRestaurantAccess(restaurantId);
   if (access.errorResponse) {
     throw new Error("You do not have access to this restaurant.");
@@ -204,7 +211,7 @@ export async function resyncRestaurantAgentMenuAction(
   const result = await syncRestaurantAgentAfterContentChange({
     restaurantId,
     restaurantName: name,
-    trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.manual_resync,
+    trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.publish_to_voice,
     userId: access.context.user.id,
   });
 
@@ -224,7 +231,7 @@ export async function resyncRestaurantAgentMenuAction(
       ok: false,
       skipped: true,
       skipReason: result.skipReason,
-      error: "Connect an agent on Live Agent before re-syncing.",
+      error: "Connect an agent on Live Agent before publishing to voice.",
       menuAutoSync,
     };
   }

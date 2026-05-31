@@ -22,6 +22,10 @@ import {
 } from "@/lib/elevenlabs/agent-prompt";
 import { loadMenuPromptSnapshot } from "@/lib/elevenlabs/load-menu-prompt-snapshot";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+import { loadRestaurantKnowledgeEntries } from "@/lib/restaurant-knowledge/helpers";
+import type { RestaurantKnowledgeEntry } from "@/lib/restaurant-knowledge/schema";
+import { loadRestaurantUpsellRules } from "@/lib/restaurant-upsell/helpers";
+import type { RestaurantUpsellRule } from "@/lib/restaurant-upsell/schema";
 import {
   buildAgentHoursPromptFromBundle,
   loadRestaurantHoursBundle,
@@ -165,6 +169,8 @@ export async function applyRestaurantOrderAgentProfile(options?: {
   let profile = null;
   let hoursPromptSection: string | null = null;
   let menu = null;
+  let knowledgeEntries: RestaurantKnowledgeEntry[] = [];
+  let upsellRules: RestaurantUpsellRule[] = [];
 
   if (rid) {
     try {
@@ -184,6 +190,16 @@ export async function applyRestaurantOrderAgentProfile(options?: {
       } catch {
         // Menu snapshot is best-effort.
       }
+      try {
+        knowledgeEntries = await loadRestaurantKnowledgeEntries(supabase, rid);
+      } catch {
+        // Knowledge injection is best-effort.
+      }
+      try {
+        upsellRules = await loadRestaurantUpsellRules(supabase, rid);
+      } catch {
+        // Upsell rule injection is best-effort.
+      }
     } catch {
       // Profile load is best-effort when DB unavailable.
     }
@@ -194,6 +210,8 @@ export async function applyRestaurantOrderAgentProfile(options?: {
     profile,
     hoursPromptSection,
     menu,
+    knowledgeEntries,
+    upsellRules,
   });
 
   const firstMessage = buildRestaurantOrderFirstMessage(profile, restaurantName);

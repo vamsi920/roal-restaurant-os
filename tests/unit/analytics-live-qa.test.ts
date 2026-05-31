@@ -17,6 +17,13 @@ describe("analytics live posture (launch 23)", () => {
       "utf8"
     );
     expect(dash).toContain("Order sessions");
+    expect(dash).toContain("Calls recorded");
+    expect(dash).toContain("Peak call hours");
+    expect(dash).toContain("Busiest call windows");
+    expect(dash).toContain("Call orders");
+    expect(dash).toContain("FAQ / no order");
+    expect(dash).toContain("Upsell attach rate");
+    expect(dash).toContain("Eligible orders");
     expect(dash).toContain("Avg order estimate");
     expect(dash).toContain("Stuck orders");
     expect(dash).toContain("Menu scan");
@@ -59,6 +66,8 @@ describe("analytics live posture (launch 23)", () => {
       "utf8"
     );
     expect(load).toContain("collectOrderSessions");
+    expect(load).toContain("restaurant_upsell_rules");
+    expect(load).toContain("aggregateUpsellAttachStats");
     expect(load).toContain('.eq("organization_id", input.organizationId)');
     expect(load).toContain(".in(\"restaurant_id\", restaurantIds)");
     expect(load).toContain("emptySnapshot");

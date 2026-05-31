@@ -4,6 +4,7 @@ import {
   createServerSupabase,
   getServiceRoleSupabase,
 } from "@/lib/supabase/server";
+import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 
 export const runtime = "nodejs";
 
@@ -41,6 +42,11 @@ export async function DELETE(
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
 
+      afterMenuContentMutation(restaurantId, {
+        userId: access.context.user.id,
+        restaurantName: access.access.restaurant.name,
+      });
+
       return NextResponse.json({
         ok: true,
         deleted_categories: deletedRows?.length ?? 0,
@@ -66,6 +72,11 @@ export async function DELETE(
         { status: 500 }
       );
     }
+
+    afterMenuContentMutation(restaurantId, {
+      userId: access.context.user.id,
+      restaurantName: access.access.restaurant.name,
+    });
 
     return NextResponse.json({
       ok: true,

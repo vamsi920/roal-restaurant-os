@@ -18,6 +18,7 @@ import { formatMoney } from "@/lib/orders/money";
 import { parseOrderLineItems } from "@/lib/orders/line-items";
 import { buildMenuPriceContext } from "@/lib/orders/menu-price-context";
 import type { OrderPricingSettings } from "@/lib/orders/pricing-settings";
+import type { OrderCallEvidence } from "@/lib/live-orders/call-evidence";
 import {
   buildOrderStatusHistory,
   buildReceiptStatusHistory,
@@ -45,6 +46,7 @@ type Props = {
   pricingSettings: OrderPricingSettings;
   pendingAction?: OrderAction | null;
   actionError?: string | null;
+  callEvidence?: OrderCallEvidence | null;
   onAction?: (action: OrderAction) => void;
   onDismissError?: () => void;
 };
@@ -59,6 +61,7 @@ export function OrderDetailModal({
   pricingSettings,
   pendingAction = null,
   actionError = null,
+  callEvidence = null,
   onAction,
   onDismissError,
 }: Props) {
@@ -89,8 +92,12 @@ export function OrderDetailModal({
         history: buildOrderStatusHistory(order),
         customerName: order.customer_name,
         customerPhone: order.customer_phone,
+        fulfillmentType: order.fulfillment_type,
+        deliveryAddress: order.delivery_address,
+        deliveryInstructions: order.delivery_instructions,
         sessionId: order.session_id,
         finalizedAt: null as string | null,
+        callEvidence,
         actions: getOrderActionsForStatus(order.status),
       };
     }
@@ -106,14 +113,18 @@ export function OrderDetailModal({
       status: null,
       statusLabel: "Done",
       badgeClass: "bg-elev text-muted",
-      history: buildReceiptStatusHistory(receipt.created_at),
+        history: buildReceiptStatusHistory(receipt),
       customerName: receipt.customer_name,
       customerPhone: receipt.customer_phone,
+      fulfillmentType: receipt.fulfillment_type,
+      deliveryAddress: receipt.delivery_address,
+      deliveryInstructions: receipt.delivery_instructions,
       sessionId: receipt.session_id,
       finalizedAt: receipt.created_at,
+      callEvidence,
       actions: [] as OrderAction[],
     };
-  }, [selection, menuCtx, pricingSettings]);
+  }, [selection, menuCtx, pricingSettings, callEvidence]);
 
   useEffect(() => {
     if (!open) {
@@ -214,7 +225,10 @@ export function OrderDetailModal({
                           Order summary
                         </Dialog.Title>
                         <p className="mt-0.5 truncate text-sm text-muted">
-                          {restaurantName} · Pickup
+                          {restaurantName} ·{" "}
+                          {detail.fulfillmentType === "delivery"
+                            ? "Delivery"
+                            : "Pickup"}
                         </p>
                       </div>
                       <div className="flex shrink-0 items-center gap-2">
@@ -263,6 +277,30 @@ export function OrderDetailModal({
                         ) : (
                           <p className="mt-1 text-sm text-muted">No phone on file</p>
                         )}
+                      </section>
+
+                      <section className="mt-6">
+                        <h3 className="text-sm font-semibold text-ink">
+                          Fulfillment
+                        </h3>
+                        <p className="mt-2 text-sm font-medium text-ink">
+                          {detail.fulfillmentType === "delivery"
+                            ? "Delivery"
+                            : "Pickup"}
+                        </p>
+                        {detail.fulfillmentType === "delivery" ? (
+                          <>
+                            <p className="mt-1 text-sm text-muted [overflow-wrap:anywhere]">
+                              {detail.deliveryAddress?.trim() ||
+                                "No delivery address on file"}
+                            </p>
+                            {detail.deliveryInstructions?.trim() ? (
+                              <p className="mt-1 text-sm text-muted [overflow-wrap:anywhere]">
+                                Note: {detail.deliveryInstructions}
+                              </p>
+                            ) : null}
+                          </>
+                        ) : null}
                       </section>
 
                       <section className="mt-6">
@@ -316,21 +354,97 @@ export function OrderDetailModal({
 
                       {detail.history.length > 0 ? (
                         <section className="mt-6">
-                          <h3 className="text-sm font-semibold text-ink">Timeline</h3>
+                          <div className="flex items-end justify-between gap-3">
+                            <div>
+                              <h3 className="text-sm font-semibold text-ink">
+                                Phone order timeline
+                              </h3>
+                              <p className="mt-1 text-xs text-muted">
+                                Call, ticket, kitchen, and completion milestones.
+                              </p>
+                            </div>
+                            <span className="rounded bg-elev px-2 py-1 text-micro font-semibold uppercase text-subtle">
+                              {detail.history.length} step
+                              {detail.history.length === 1 ? "" : "s"}
+                            </span>
+                          </div>
                           <ol className="mt-3 space-y-0 border-l border-line pl-4">
                             {detail.history.map((h, idx) => (
                               <li
                                 key={`${h.iso}-${idx}`}
                                 className="relative pb-4 last:pb-0"
                               >
-                                <span className="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-card bg-accent" />
-                                <p className="text-sm font-medium text-ink">
+                                <span
+                                  className={cn(
+                                    "absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-card",
+                                    h.tone === "call" && "bg-warning",
+                                    h.tone === "ticket" && "bg-accent",
+                                    h.tone === "kitchen" && "bg-ink",
+                                    h.tone === "done" && "bg-success",
+                                    h.tone === "danger" && "bg-danger"
+                                  )}
+                                />
+                                <p className="text-sm font-semibold text-ink">
                                   {h.label}
+                                </p>
+                                <p className="mt-0.5 text-sm text-muted">
+                                  {h.description}
                                 </p>
                                 <p className="text-sm text-muted">{h.at}</p>
                               </li>
                             ))}
                           </ol>
+                        </section>
+                      ) : null}
+
+                      {detail.callEvidence ? (
+                        <section className="mt-6 rounded-xl border border-line bg-elev/60 p-4">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <h3 className="text-sm font-semibold text-ink">
+                                Call transcript evidence
+                              </h3>
+                              <p className="mt-1 text-xs text-muted">
+                                Saved from the voice agent session for this order.
+                              </p>
+                            </div>
+                            {detail.callEvidence.recordingUrl ? (
+                              <a
+                                href={detail.callEvidence.recordingUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="shrink-0 text-xs font-medium text-accent underline-offset-2 hover:underline"
+                              >
+                                Recording
+                              </a>
+                            ) : null}
+                          </div>
+                          {detail.callEvidence.transcriptSummary ? (
+                            <p className="mt-3 text-sm text-muted [overflow-wrap:anywhere]">
+                              {detail.callEvidence.transcriptSummary}
+                            </p>
+                          ) : null}
+                          {detail.callEvidence.transcriptLines.length > 0 ? (
+                            <ol className="mt-3 space-y-2">
+                              {detail.callEvidence.transcriptLines.map((line, idx) => (
+                                <li
+                                  key={`${line.speaker}-${idx}`}
+                                  className="rounded-lg border border-line/70 bg-card px-3 py-2"
+                                >
+                                  <p className="text-[0.68rem] font-semibold uppercase tracking-wide text-subtle">
+                                    {line.speaker}
+                                  </p>
+                                  <p className="mt-1 text-sm text-muted [overflow-wrap:anywhere]">
+                                    {line.text}
+                                  </p>
+                                </li>
+                              ))}
+                            </ol>
+                          ) : !detail.callEvidence.transcriptSummary ? (
+                            <p className="mt-3 text-sm text-muted">
+                              Transcript turns have not arrived yet.
+                            </p>
+                          ) : null}
                         </section>
                       ) : null}
 

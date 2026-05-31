@@ -7,6 +7,7 @@ import { canCreateRestaurant } from "@/lib/auth/roles";
 import { ensureRestaurantOnboarding } from "@/lib/onboarding/helpers";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
 import { planLimitJsonResponse } from "@/lib/billing/gate-http";
+import { applyDefaultOrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { tryProvisionVoiceAgentForNewRestaurant } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 
@@ -68,6 +69,14 @@ export async function POST(req: Request) {
       resolved.organizationId
     );
 
+    const menuTemplateInheritance = await applyDefaultOrganizationMenuTemplate(
+      supabase,
+      {
+        organizationId: resolved.organizationId,
+        targetRestaurantId: data.id,
+      }
+    );
+
     const voiceAgentProvision = await tryProvisionVoiceAgentForNewRestaurant({
       restaurantId: data.id,
       restaurantName: name,
@@ -77,6 +86,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       restaurant: data,
+      menu_template_inheritance: menuTemplateInheritance,
       voice_agent_provision: voiceAgentProvision,
     });
   } catch (err) {

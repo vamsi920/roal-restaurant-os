@@ -11,6 +11,14 @@ export function HomeFaq() {
         lead: HOME_FAQ.lead,
       }}
       items={HOME_FAQ.items}
+      afterList={
+        <div className="home-faq__readiness" aria-label="Before forwarding calls">
+          <span>Before forwarding calls</span>
+          <strong>Menu loaded</strong>
+          <strong>Test calls passed</strong>
+          <strong>Kitchen screen ready</strong>
+        </div>
+      }
     />
   );
 }

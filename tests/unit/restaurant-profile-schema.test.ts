@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { RestaurantProfileInputSchema } from "@/lib/restaurant-profile/schema";
+import {
+  parseKnowledgeText,
+  serializeKnowledgeEntries,
+} from "@/lib/restaurant-knowledge/schema";
+import {
+  parseUpsellRulesText,
+  serializeUpsellRules,
+} from "@/lib/restaurant-upsell/schema";
 
 const base = {
   name: "Test Kitchen",
@@ -68,6 +76,9 @@ describe("RestaurantProfileInputSchema", () => {
       handoff_unavailable_item_behavior: "escalate_to_staff",
       handoff_unavailable_item_notes: "",
       closed_hours_message: "We reopen Tuesday at 11.",
+      knowledge_base_text:
+        "[policies] Do you take reservations? => This phone line handles pickup orders. For reservations, call during open hours.",
+      upsell_rules_text: "Pizza => Offer garlic knots if available.",
       escalation_phone: "(512) 555-0100",
     });
     expect(result.success).toBe(true);
@@ -97,5 +108,72 @@ describe("RestaurantProfileInputSchema", () => {
       escalation_phone: "123",
     });
     expect(result.success).toBe(false);
+  });
+});
+
+describe("restaurant upsell rules text", () => {
+  it("parses trigger-to-offer rules and skips malformed text", () => {
+    const rules = parseUpsellRulesText(`
+      Biryani order => Offer mango lassi or raita if available.
+      when large pizza -> Ask if they want garlic knots.
+      no separator here
+    `);
+
+    expect(rules).toEqual([
+      {
+        trigger_text: "Biryani order",
+        offer_text: "Offer mango lassi or raita if available.",
+      },
+      {
+        trigger_text: "large pizza",
+        offer_text: "Ask if they want garlic knots.",
+      },
+    ]);
+  });
+
+  it("serializes upsell rules for the dashboard textarea", () => {
+    expect(
+      serializeUpsellRules([
+        {
+          trigger_text: "Burger",
+          offer_text: "Offer fries if available.",
+        },
+      ])
+    ).toBe("Burger => Offer fries if available.");
+  });
+});
+
+describe("restaurant knowledge text", () => {
+  it("parses category-prefixed FAQ lines and skips malformed text", () => {
+    const entries = parseKnowledgeText(`
+      [allergens] Gluten free? => Mention marked gluten-friendly items only.
+      [directions] Parking? -> Use short-term spaces behind the building.
+      bad line without separator
+    `);
+
+    expect(entries).toEqual([
+      {
+        category: "allergens",
+        question: "Gluten free?",
+        answer: "Mention marked gluten-friendly items only.",
+      },
+      {
+        category: "directions",
+        question: "Parking?",
+        answer: "Use short-term spaces behind the building.",
+      },
+    ]);
+  });
+
+  it("serializes active entries for the dashboard textarea", () => {
+    expect(
+      serializeKnowledgeEntries([
+        {
+          category: "policies",
+          question: "Do you take reservations?",
+          answer: "This line handles pickup orders.",
+        },
+      ])
+    ).toBe("[policies] Do you take reservations? => This line handles pickup orders.");
   });
 });

@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
+import type { AgentCallOutcome, AgentCallStatus } from "@/lib/agent-calls/types";
 import { reportRealtimeDegraded } from "@/lib/notifications/report-realtime-degraded";
 import { getBrowserSupabase } from "@/lib/supabase/client";
 import type {
@@ -28,6 +29,12 @@ import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { RESTAURANT_LIVE_ORDERS_LABEL } from "@/lib/dashboard-restaurant-labels";
 import { LiveCallIndicator } from "./LiveCallIndicator";
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
+import {
+  buildOrderCallEvidence,
+  indexOrderCallEvidence,
+  type AgentCallEventEvidenceRow,
+  type OrderCallEvidence,
+} from "@/lib/live-orders/call-evidence";
 import {
   classifyKdsQueueLane,
   isKdsStuckOrder,
@@ -65,6 +72,9 @@ function normalizeDraftRow(row: DraftOrderRow): DraftOrderRow {
   return {
     ...row,
     status,
+    fulfillment_type: row.fulfillment_type ?? null,
+    delivery_address: row.delivery_address ?? null,
+    delivery_instructions: row.delivery_instructions ?? null,
     accepted_at: row.accepted_at ?? null,
     in_progress_at: row.in_progress_at ?? null,
     ready_at: row.ready_at ?? null,
@@ -90,6 +100,13 @@ function bootstrapKey(
 
 type Tab = "incoming" | "kitchen" | "done";
 
+type RealtimeAgentCallEventRow = AgentCallEventEvidenceRow & {
+  restaurant_id: string;
+  caller_phone: string | null;
+  status: string;
+  updated_at?: string | null;
+};
+
 function sortStuckFirst(orders: DraftOrderRow[], now: Date): DraftOrderRow[] {
   return [...orders].sort((a, b) => {
     const aStuck = isKdsStuckOrder(a, { now });
@@ -109,6 +126,56 @@ function cardStuckProps(order: DraftOrderRow, now: Date) {
   };
 }
 
+const AGENT_CALL_STATUSES = new Set<AgentCallStatus>(["active", "ended"]);
+const AGENT_CALL_OUTCOMES = new Set<AgentCallOutcome>([
+  "in_progress",
+  "order_completed",
+  "abandoned",
+  "canceled",
+  "no_order",
+  "unknown",
+]);
+
+function safeAgentCallStatus(value: string | null | undefined): AgentCallStatus {
+  return AGENT_CALL_STATUSES.has(value as AgentCallStatus)
+    ? (value as AgentCallStatus)
+    : "active";
+}
+
+function safeAgentCallOutcome(value: string | null | undefined): AgentCallOutcome {
+  return AGENT_CALL_OUTCOMES.has(value as AgentCallOutcome)
+    ? (value as AgentCallOutcome)
+    : "unknown";
+}
+
+function realtimeCallRowFromEvent(
+  row: RealtimeAgentCallEventRow
+): CommandCenterCallRow | null {
+  const sessionId = row.session_id?.trim();
+  if (!sessionId) return null;
+  const metadata = row.transcript_metadata ?? {};
+  const transcript = Array.isArray(metadata.transcript) ? metadata.transcript : [];
+  const handoffSignals = Array.isArray(metadata.handoff_signals)
+    ? metadata.handoff_signals.filter(
+        (signal): signal is string => typeof signal === "string" && signal.trim().length > 0
+      )
+    : [];
+
+  return {
+    sessionId,
+    conversationId: row.conversation_id?.trim() || sessionId,
+    callerPhone: row.caller_phone?.trim() || null,
+    status: safeAgentCallStatus(row.status),
+    outcome: safeAgentCallOutcome(row.outcome),
+    startedAt: row.started_at || row.updated_at || new Date().toISOString(),
+    endedAt: row.ended_at ?? null,
+    lastActivityAt: row.updated_at || row.ended_at || row.started_at || new Date().toISOString(),
+    lineCount: transcript.length,
+    toolErrorCount: 0,
+    handoffSignals,
+  };
+}
+
 const DONE_DRAFT_VISIBLE = 10;
 const DONE_RECEIPT_VISIBLE = 5;
 
@@ -122,6 +189,7 @@ type Props = {
   initialReceipts: PhoneOrderReceiptRow[];
   initialLoadError?: string | null;
   initialActiveCalls?: CommandCenterCallRow[];
+  initialCallEvidenceBySession?: Record<string, OrderCallEvidence>;
 };
 
 export function LiveOrdersPanel({
@@ -134,6 +202,7 @@ export function LiveOrdersPanel({
   initialReceipts,
   initialLoadError = null,
   initialActiveCalls = [],
+  initialCallEvidenceBySession = {},
 }: Props) {
   const [draftRows, setDraftRows] = useState<DraftOrderRow[]>(() =>
     initialDraftOrders.map(normalizeDraftRow)
@@ -144,6 +213,11 @@ export function LiveOrdersPanel({
   const [tab, setTab] = useState<Tab>("incoming");
   const [nowMs, setNowMs] = useState(() => Date.now());
   const [selection, setSelection] = useState<OrderDetailSelection | null>(null);
+  const [callEvidenceBySession, setCallEvidenceBySession] = useState<
+    Record<string, OrderCallEvidence>
+  >(initialCallEvidenceBySession);
+  const [activeCalls, setActiveCalls] =
+    useState<CommandCenterCallRow[]>(initialActiveCalls);
   const [refreshing, setRefreshing] = useState(false);
   const [ordersReady, setOrdersReady] = useState(
     initialLoadError != null ||
@@ -187,7 +261,9 @@ export function LiveOrdersPanel({
   useLayoutEffect(() => {
     setDraftRows(draftsRef.current.map(normalizeDraftRow));
     setReceipts(receiptsRef.current);
-  }, [serverKey]);
+    setCallEvidenceBySession(initialCallEvidenceBySession);
+    setActiveCalls(initialActiveCalls);
+  }, [serverKey, initialCallEvidenceBySession, initialActiveCalls]);
 
   const fetchAll = useCallback(async () => {
     const supabase = getBrowserSupabase();
@@ -219,6 +295,36 @@ export function LiveOrdersPanel({
     }
     if (!rRes.error && Array.isArray(rRes.data)) {
       setReceipts(rRes.data as PhoneOrderReceiptRow[]);
+    }
+    if (!dRes.error || !rRes.error) {
+      const sessionIds = [
+        ...(((dRes.data ?? []) as DraftOrderRow[]).map((row) => row.session_id)),
+        ...(((rRes.data ?? []) as PhoneOrderReceiptRow[]).map((row) => row.session_id)),
+      ]
+        .map((id) => id?.trim())
+        .filter((id): id is string => Boolean(id));
+      if (sessionIds.length > 0) {
+        const evidenceRes = await supabase
+          .from("agent_call_events")
+          .select(
+            "session_id, conversation_id, outcome, started_at, ended_at, transcript_metadata"
+          )
+          .eq("restaurant_id", restaurantId)
+          .in("session_id", [...new Set(sessionIds)])
+          .order("updated_at", { ascending: false })
+          .limit(sessionIds.length);
+        if (!evidenceRes.error && Array.isArray(evidenceRes.data)) {
+          setCallEvidenceBySession(
+            indexOrderCallEvidence(
+              evidenceRes.data
+                .map((row) =>
+                  buildOrderCallEvidence(row as AgentCallEventEvidenceRow)
+                )
+                .filter((row): row is OrderCallEvidence => row != null)
+            )
+          );
+        }
+      }
     }
     setOrdersReady(true);
   }, [restaurantId]);
@@ -319,6 +425,49 @@ export function LiveOrdersPanel({
               const row = payload.old as PhoneOrderReceiptRow;
               setReceipts((prev) => prev.filter((o) => o.id !== row.id));
             }
+          }
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "agent_call_events",
+            filter: `restaurant_id=eq.${restaurantId}`,
+          },
+          (payload: RealtimePostgresChangesPayload<RealtimeAgentCallEventRow>) => {
+            if (payload.eventType === "DELETE") {
+              const row = payload.old as Partial<RealtimeAgentCallEventRow>;
+              const sessionId = row.session_id?.trim();
+              if (!sessionId) return;
+              setActiveCalls((prev) => prev.filter((call) => call.sessionId !== sessionId));
+              setCallEvidenceBySession((prev) => {
+                const next = { ...prev };
+                delete next[sessionId];
+                return next;
+              });
+              return;
+            }
+
+            const row = payload.new as RealtimeAgentCallEventRow;
+            if (row.restaurant_id !== restaurantId) return;
+
+            const evidence = buildOrderCallEvidence(row);
+            if (evidence) {
+              setCallEvidenceBySession((prev) => ({
+                ...prev,
+                [evidence.sessionId]: evidence,
+              }));
+            }
+
+            const call = realtimeCallRowFromEvent(row);
+            if (!call) return;
+            const shouldShowActive =
+              call.status === "active" || call.outcome === "in_progress";
+            setActiveCalls((prev) => {
+              const without = prev.filter((existing) => existing.sessionId !== call.sessionId);
+              return shouldShowActive ? [call, ...without].slice(0, 12) : without;
+            });
           }
         )
         .subscribe((status: string, err?: Error) => {
@@ -656,7 +805,7 @@ export function LiveOrdersPanel({
         ) : null}
 
         <LiveCallIndicator
-          initialActiveCalls={initialActiveCalls}
+          initialActiveCalls={activeCalls}
           liveCarts={liveCarts}
           draftRows={draftRows}
         />
@@ -902,6 +1051,15 @@ export function LiveOrdersPanel({
     <OrderDetailModal
       open={!!selection}
       selection={selection}
+      callEvidence={
+        selection
+          ? callEvidenceBySession[
+              selection.kind === "draft"
+                ? selection.order.session_id
+                : selection.receipt.session_id
+            ] ?? null
+          : null
+      }
       onClose={() => setSelection(null)}
       restaurantName={restaurantName}
       menuItems={menuItems}

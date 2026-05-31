@@ -11,8 +11,12 @@ import { getServiceRoleSupabase } from "@/lib/supabase/server";
 
 export const ROAL_QA_TOOL_NAMES = [
   "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
   "sync_draft_order",
   "finalize_order",
+  "get_order_status",
 ] as const;
 
 export type QaCheck = { name: string; ok: boolean; detail?: string };
@@ -271,13 +275,13 @@ export function checksFromSyncSummary(
       ok: s?.restaurant_tools_baked === true,
     },
     {
-      name: `${label}: three tools in summary`,
-      ok: (s?.tools?.length ?? 0) >= 3,
+      name: `${label}: ROAL tools in summary`,
+      ok: (s?.tools?.length ?? 0) >= ROAL_QA_TOOL_NAMES.length,
       detail: s?.tools?.map((t) => t.name).join(", "),
     },
     {
       name: `${label}: tool_ids on agent`,
-      ok: (s?.tool_ids_on_agent?.length ?? 0) >= 3,
+      ok: (s?.tool_ids_on_agent?.length ?? 0) >= ROAL_QA_TOOL_NAMES.length,
       detail: String(s?.tool_ids_on_agent?.length ?? 0),
     },
   ];

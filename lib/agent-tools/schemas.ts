@@ -32,6 +32,10 @@ export const SyncDraftStatusSchema = z.enum(["draft", "confirmed"], {
   error: 'status must be "draft" or legacy "confirmed"',
 });
 
+export const FulfillmentTypeSchema = z.enum(["pickup", "delivery"], {
+  error: 'fulfillment_type must be "pickup" or "delivery"',
+});
+
 export const LineItemSchema = z
   .object({
     name: z.string().trim().min(1).max(200).optional(),
@@ -60,6 +64,9 @@ export const GetMenuPostBodySchema = z
   })
   .strict();
 
+export const GetRestaurantInfoQuerySchema = GetMenuQuerySchema;
+export const GetRestaurantInfoPostBodySchema = GetMenuPostBodySchema;
+
 export const SyncDraftOrderRequestSchema = z
   .object({
     restaurant_id: OptionalRestaurantIdSchema,
@@ -68,6 +75,9 @@ export const SyncDraftOrderRequestSchema = z
     items: z.array(LineItemSchema).max(100, "items cannot exceed 100 lines"),
     customer_name: z.string().trim().min(1).max(200).optional(),
     customer_phone: z.string().trim().min(1).max(40).optional(),
+    fulfillment_type: FulfillmentTypeSchema.optional(),
+    delivery_address: z.string().trim().min(1).max(500).optional(),
+    delivery_instructions: z.string().trim().min(1).max(500).optional(),
     idempotency_key: IdempotencyKeySchema.optional(),
   })
   .strict();
@@ -86,7 +96,79 @@ export const FinalizeOrderRequestSchema = z
       .trim()
       .min(1, "customer_phone is required")
       .max(40),
+    fulfillment_type: FulfillmentTypeSchema.optional(),
+    delivery_address: z.string().trim().min(1).max(500).optional(),
+    delivery_instructions: z.string().trim().min(1).max(500).optional(),
     items: z.array(LineItemSchema).max(100).optional(),
+    idempotency_key: IdempotencyKeySchema.optional(),
+  })
+  .strict()
+  .refine(
+    (body) =>
+      body.fulfillment_type !== "delivery" ||
+      Boolean(body.delivery_address?.trim()),
+    {
+      message: "delivery_address is required for delivery orders",
+      path: ["delivery_address"],
+    }
+  );
+
+export const GetOrderStatusRequestSchema = z
+  .object({
+    restaurant_id: OptionalRestaurantIdSchema,
+    session_id: SessionIdSchema.optional(),
+    customer_phone: z.string().trim().min(1).max(40).optional(),
+    customer_name: z.string().trim().min(1).max(200).optional(),
+  })
+  .strict()
+  .refine(
+    (body) => Boolean(body.session_id || body.customer_phone || body.customer_name),
+    {
+      message:
+        "Provide session_id, customer_phone, or customer_name to find an order.",
+      path: ["session_id"],
+    }
+  );
+
+export const GetCallerHistoryRequestSchema = z
+  .object({
+    restaurant_id: OptionalRestaurantIdSchema,
+    customer_phone: z.string().trim().min(1).max(40).optional(),
+    customer_name: z.string().trim().min(1).max(200).optional(),
+  })
+  .strict()
+  .refine((body) => Boolean(body.customer_phone || body.customer_name), {
+    message: "Provide customer_phone or customer_name to find caller history.",
+    path: ["customer_phone"],
+  });
+
+export const SubmitReservationRequestSchema = z
+  .object({
+    restaurant_id: OptionalRestaurantIdSchema,
+    session_id: SessionIdSchema.optional(),
+    conversation_id: z.string().trim().min(1).max(512).optional(),
+    customer_name: z
+      .string({ error: "customer_name is required" })
+      .trim()
+      .min(2, "customer_name must be at least 2 characters")
+      .max(200),
+    customer_phone: z
+      .string({ error: "customer_phone is required" })
+      .trim()
+      .min(7, "customer_phone must be at least 7 characters")
+      .max(40),
+    party_size: z.coerce.number().int().min(1).max(100),
+    requested_date: z
+      .string({ error: "requested_date is required" })
+      .trim()
+      .min(1, "requested_date is required")
+      .max(80),
+    requested_time: z
+      .string({ error: "requested_time is required" })
+      .trim()
+      .min(1, "requested_time is required")
+      .max(80),
+    notes: z.string().trim().max(500).optional(),
     idempotency_key: IdempotencyKeySchema.optional(),
   })
   .strict();
@@ -157,6 +239,9 @@ export const DraftOrderSchema = z
     items: z.array(z.unknown()),
     customer_name: z.string().nullable().optional(),
     customer_phone: z.string().nullable().optional(),
+    fulfillment_type: FulfillmentTypeSchema.nullable().optional(),
+    delivery_address: z.string().nullable().optional(),
+    delivery_instructions: z.string().nullable().optional(),
     updated_at: z.string().optional(),
   })
   .passthrough();
@@ -173,6 +258,123 @@ export const FinalizeOrderResponseSchema = z
     ok: z.literal(true),
     draft_order: DraftOrderSchema,
     receipt_skipped: z.boolean().optional(),
+  })
+  .strict();
+
+export const OrderStatusSummarySchema = z
+  .object({
+    found: z.boolean(),
+    status: z.string().nullable(),
+    status_label: z.string().nullable(),
+    message: z.string(),
+    session_id: z.string().nullable(),
+    customer_name: z.string().nullable().optional(),
+    customer_phone: z.string().nullable().optional(),
+    item_count: z.number().int().min(0),
+    updated_at: z.string().nullable(),
+    created_at: z.string().nullable().optional(),
+  })
+  .strict();
+
+export const GetOrderStatusResponseSchema = z
+  .object({
+    ok: z.literal(true),
+    order: OrderStatusSummarySchema,
+  })
+  .strict();
+
+export const CallerHistorySummarySchema = z
+  .object({
+    found: z.boolean(),
+    customer_name: z.string().nullable(),
+    customer_phone: z.string().nullable(),
+    visit_count: z.number().int().min(0),
+    completed_order_count: z.number().int().min(0),
+    last_order_at: z.string().nullable(),
+    last_order_items: z.array(z.string()),
+    favorite_items: z.array(z.string()),
+    message: z.string(),
+  })
+  .strict();
+
+export const GetCallerHistoryResponseSchema = z
+  .object({
+    ok: z.literal(true),
+    caller: CallerHistorySummarySchema,
+  })
+  .strict();
+
+export const ReservationRequestSummarySchema = z
+  .object({
+    id: z.string().uuid(),
+    restaurant_id: RestaurantIdSchema,
+    session_id: z.string().nullable(),
+    conversation_id: z.string().nullable(),
+    customer_name: z.string(),
+    customer_phone: z.string(),
+    party_size: z.number().int().min(1),
+    requested_date: z.string(),
+    requested_time: z.string(),
+    notes: z.string().nullable(),
+    status: z.string(),
+    created_at: z.string(),
+    message: z.string(),
+  })
+  .strict();
+
+export const SubmitReservationResponseSchema = z
+  .object({
+    ok: z.literal(true),
+    reservation_request: ReservationRequestSummarySchema,
+  })
+  .strict();
+
+const RestaurantInfoKnowledgeEntrySchema = z
+  .object({
+    category: z.string(),
+    question: z.string(),
+    answer: z.string(),
+  })
+  .strict();
+
+export const RestaurantInfoOperationsSchema = OperationsSchema.extend({
+  local_date: z.string().optional(),
+  local_time: z.string().optional(),
+}).passthrough();
+
+export const GetRestaurantInfoResponseSchema = z
+  .object({
+    ok: z.literal(true),
+    restaurant: z
+      .object({
+        id: z.string().uuid(),
+        name: z.string(),
+        phone: z.string().nullable(),
+        website: z.string().nullable(),
+        cuisine: z.string().nullable(),
+        address: z
+          .object({
+            line1: z.string().nullable(),
+            line2: z.string().nullable(),
+            city: z.string().nullable(),
+            region: z.string().nullable(),
+            postal_code: z.string().nullable(),
+            country: z.string().nullable(),
+            display: z.string().nullable(),
+          })
+          .strict(),
+        service_modes: z
+          .object({
+            pickup: z.boolean(),
+            delivery: z.boolean(),
+          })
+          .strict(),
+        prep_time_minutes: z.number().int().nullable(),
+        prep_time_message: z.string(),
+      })
+      .strict(),
+    operations: RestaurantInfoOperationsSchema,
+    knowledge_entries: z.array(RestaurantInfoKnowledgeEntrySchema),
   })
   .strict();
 
@@ -193,6 +395,22 @@ export type AgentToolErrorBody = {
 
 export type SyncDraftOrderRequest = z.infer<typeof SyncDraftOrderRequestSchema>;
 export type FinalizeOrderRequest = z.infer<typeof FinalizeOrderRequestSchema>;
+export type GetOrderStatusRequest = z.infer<typeof GetOrderStatusRequestSchema>;
+export type GetCallerHistoryRequest = z.infer<
+  typeof GetCallerHistoryRequestSchema
+>;
+export type GetCallerHistoryResponse = z.infer<
+  typeof GetCallerHistoryResponseSchema
+>;
+export type SubmitReservationRequest = z.infer<
+  typeof SubmitReservationRequestSchema
+>;
+export type SubmitReservationResponse = z.infer<
+  typeof SubmitReservationResponseSchema
+>;
+export type GetRestaurantInfoResponse = z.infer<
+  typeof GetRestaurantInfoResponseSchema
+>;
 
 const FIELD_SUGGESTIONS: Record<string, string> = {
   restaurant_id:
@@ -203,9 +421,20 @@ const FIELD_SUGGESTIONS: Record<string, string> = {
   items:
     "Pass the full current cart as items[]. Each line needs name or item_id and quantity 1–99.",
   customer_name:
-    "Ask the guest for their real name before calling finalize_order. Do not use placeholders.",
+    "Use the guest name only if they stated it. For finalize_order, ask for the real name first. For get_order_status and get_caller_history, prefer customer_phone when available.",
   customer_phone:
-    "Ask the guest for a callback number before finalize_order. Read it back if unclear.",
+    "Ask the guest for a callback number before finalize_order. For get_order_status and get_caller_history, prefer the phone number tied to the order.",
+  fulfillment_type:
+    'Set fulfillment_type to "pickup" or "delivery" after the guest chooses. Do not finalize until the choice is clear.',
+  delivery_address:
+    "For delivery orders, ask for the full delivery address before finalize_order. Never invent or use a placeholder address.",
+  delivery_instructions:
+    "Optional delivery notes only if the caller states them, such as gate code, suite, or leave-at-door instruction.",
+  party_size: "Ask how many guests are in the party before submitting a reservation request.",
+  requested_date:
+    "Ask for the requested reservation date in the guest's own words; do not invent a date.",
+  requested_time:
+    "Ask for the requested reservation time in the guest's own words; do not invent a time.",
   name: "Use the exact menu item name from get_menu_items, or pass item_id from the menu JSON.",
   item_id: "Use a valid item id from the latest get_menu_items response.",
   quantity: "Quantity must be an integer from 1 to 99.",
@@ -243,6 +472,9 @@ export function formatZodValidationError(
   const missingCustomer = issues.some(
     (i) => i.path === "customer_name" || i.path === "customer_phone"
   );
+  const missingDeliveryAddress = issues.some(
+    (i) => i.path === "delivery_address"
+  );
   const badLineItem = issues.some(
     (i) => i.path === "name" || /^items(\.\d+|\[\d+\])\.name$/.test(i.path)
   );
@@ -258,9 +490,15 @@ export function formatZodValidationError(
   } else if (missingItems) {
     recovery_hint =
       "Include items as an array of line objects (name or item_id plus quantity). Call get_menu_items first.";
+  } else if (missingCustomer && context?.tool === "get_caller_history") {
+    recovery_hint =
+      "Ask the guest for the phone number or name they used on a prior order, then call get_caller_history again.";
   } else if (missingCustomer) {
     recovery_hint =
       "Ask the guest for their real name and callback phone, then call finalize_order again.";
+  } else if (missingDeliveryAddress) {
+    recovery_hint =
+      "Ask the guest for the full delivery address, then call finalize_order again with fulfillment_type delivery and delivery_address.";
   } else if (badLineItem) {
     recovery_hint =
       "Each cart line needs a menu name or item_id from get_menu_items.";

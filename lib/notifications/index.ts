@@ -10,6 +10,7 @@ export {
   emitMenuAutoSyncFailureIfTransition,
   emitOrderStuckIfTransition,
   emitProvisionFailureIfTransition,
+  emitStaffHandoffRequested,
   stateTransitioned,
 } from "@/lib/notifications/operational-events";
 export {

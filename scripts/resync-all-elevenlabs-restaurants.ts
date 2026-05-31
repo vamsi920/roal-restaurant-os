@@ -30,7 +30,15 @@ import {
 } from "../lib/sync-elevenlabs-roal-tools";
 import { getServiceRoleSupabase } from "../lib/supabase/server";
 
-const TOOL_NAMES = ["get_menu_items", "sync_draft_order", "finalize_order"] as const;
+const TOOL_NAMES = [
+  "get_menu_items",
+  "get_restaurant_info",
+  "get_caller_history",
+  "submit_reservation_request",
+  "sync_draft_order",
+  "finalize_order",
+  "get_order_status",
+] as const;
 const LIST_ONLY = process.argv.includes("--list-only");
 
 type RestaurantRow = {

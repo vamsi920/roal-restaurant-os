@@ -5,6 +5,13 @@ import {
   assertCategoryNameAvailable,
   assertItemNameAvailable,
 } from "@/lib/menu-editor/duplicates.server";
+import {
+  applyOrganizationMenuTemplate,
+  applyOrganizationMenuTemplateToInheritedRestaurants,
+  copyRestaurantMenu,
+  saveRestaurantMenuAsTemplate,
+  setDefaultOrganizationMenuTemplate,
+} from "@/lib/menu-editor/copy-menu";
 import { mapMenuDbError } from "@/lib/menu-editor/errors";
 import { assertCategoryInRestaurant, assertItemInRestaurant } from "@/lib/menu-editor/scope";
 import {
@@ -297,6 +304,132 @@ export async function deleteItemAction(restaurantId: string, itemId: string) {
   if (error) throw new Error(mapMenuDbError(error, "item"));
   afterMenuContentMutation(restaurantId, { userId: access.context.user.id });
   return { ok: true as const };
+}
+
+export async function copyMenuFromRestaurantAction(
+  targetRestaurantId: string,
+  sourceRestaurantId: string
+) {
+  const targetAccess = await requireRestaurantAccess(targetRestaurantId);
+  if (targetAccess.errorResponse) {
+    throw new Error("You do not have access to this restaurant.");
+  }
+  const sourceAccess = await requireRestaurantAccess(sourceRestaurantId);
+  if (sourceAccess.errorResponse) {
+    throw new Error("You do not have access to the source restaurant.");
+  }
+
+  if (
+    sourceAccess.access.restaurant.organization_id !==
+    targetAccess.access.restaurant.organization_id
+  ) {
+    throw new Error("Source and target restaurants must be in the same organization.");
+  }
+
+  const supabase = await createServerSupabase();
+  const stats = await copyRestaurantMenu(supabase, {
+    sourceRestaurantId,
+    targetRestaurantId,
+  });
+
+  afterMenuContentMutation(targetRestaurantId, {
+    userId: targetAccess.context.user.id,
+    restaurantName: targetAccess.access.restaurant.name,
+  });
+
+  return { ok: true as const, stats };
+}
+
+export async function saveMenuTemplateAction(
+  restaurantId: string,
+  raw: { name?: string; makeDefault?: boolean }
+) {
+  const access = await requireRestaurantAccess(restaurantId);
+  if (access.errorResponse) {
+    throw new Error("You do not have access to this restaurant.");
+  }
+
+  const name = raw.name?.trim() ?? "";
+  const supabase = await createServerSupabase();
+  const template = await saveRestaurantMenuAsTemplate(supabase, {
+    restaurantId,
+    organizationId: access.access.restaurant.organization_id,
+    name,
+    userId: access.context.user.id,
+    makeDefault: raw.makeDefault === true,
+  });
+
+  return { ok: true as const, template };
+}
+
+export async function setDefaultMenuTemplateAction(
+  restaurantId: string,
+  templateId: string
+) {
+  const access = await requireRestaurantAccess(restaurantId);
+  if (access.errorResponse) {
+    throw new Error("You do not have access to this restaurant.");
+  }
+
+  const supabase = await createServerSupabase();
+  const template = await setDefaultOrganizationMenuTemplate(supabase, {
+    organizationId: access.access.restaurant.organization_id,
+    templateId,
+  });
+
+  return { ok: true as const, template };
+}
+
+export async function applyMenuTemplateAction(
+  targetRestaurantId: string,
+  templateId: string
+) {
+  const access = await requireRestaurantAccess(targetRestaurantId);
+  if (access.errorResponse) {
+    throw new Error("You do not have access to this restaurant.");
+  }
+
+  const supabase = await createServerSupabase();
+  const stats = await applyOrganizationMenuTemplate(supabase, {
+    organizationId: access.access.restaurant.organization_id,
+    templateId,
+    targetRestaurantId,
+  });
+
+  afterMenuContentMutation(targetRestaurantId, {
+    userId: access.context.user.id,
+    restaurantName: access.access.restaurant.name,
+    trackTemplateOverride: false,
+  });
+
+  return { ok: true as const, stats };
+}
+
+export async function applyTemplateToInheritedLocationsAction(
+  restaurantId: string,
+  templateId: string
+) {
+  const access = await requireRestaurantAccess(restaurantId);
+  if (access.errorResponse) {
+    throw new Error("You do not have access to this restaurant.");
+  }
+
+  const supabase = await createServerSupabase();
+  const result = await applyOrganizationMenuTemplateToInheritedRestaurants(supabase, {
+    organizationId: access.access.restaurant.organization_id,
+    templateId,
+    localOverrideStrategy: "add_missing",
+  });
+
+  for (const row of result.applied) {
+    afterMenuContentMutation(row.restaurantId, {
+      userId: access.context.user.id,
+      restaurantName: row.restaurantName ?? undefined,
+      trackTemplateOverride: false,
+    });
+  }
+
+  return { ok: true as const, result };
 }
 
 /** @deprecated Use saveModifierGroupAction — single-row save for legacy callers. */

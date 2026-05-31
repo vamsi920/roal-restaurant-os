@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { buildReviewHints } from "@/lib/menu-import/review-hints";
@@ -13,10 +12,8 @@ import {
 } from "@/lib/scanner/menu-import-audit";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { recordRestaurantUsage } from "@/lib/usage/record";
-import {
-  syncRestaurantAgentAfterContentChange,
-  VOICE_AGENT_CONTENT_SYNC_TRIGGERS,
-} from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
+import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
+import { VOICE_AGENT_CONTENT_SYNC_TRIGGERS } from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -115,14 +112,10 @@ export async function POST(req: Request) {
       },
     });
 
-    revalidatePath(`/dashboard/restaurants/${restaurantId}`);
-    revalidatePath(`/dashboard/restaurants/${restaurantId}/menu`);
-
-    void syncRestaurantAgentAfterContentChange({
-      restaurantId,
-      trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.scanner_commit,
-      restaurantName: access.access.restaurant.name,
+    afterMenuContentMutation(restaurantId, {
       userId: access.context.user.id,
+      restaurantName: access.access.restaurant.name,
+      trigger: VOICE_AGENT_CONTENT_SYNC_TRIGGERS.scanner_commit,
     });
 
     return NextResponse.json({ ok: true, stats, import_id: importId });
