@@ -4,6 +4,7 @@ import {
   ELEVENLABS_CONVERSATION_INIT_SECRET_HEADER,
   isElevenLabsConversationInitAuthorized,
   parseElevenLabsConversationInitRequestBody,
+  pickConversationInitEffectiveAgentId,
   persistElevenLabsConversationStarted,
   readAgentPlaceholdersForInit,
   readElevenLabsConversationInitAgentId,
@@ -66,7 +67,10 @@ async function handleInit(req: Request): Promise<NextResponse> {
       );
     }
 
-    const effectiveAgentId = agentId || resolved.linkedAgentId;
+    const effectiveAgentId = pickConversationInitEffectiveAgentId(
+      agentId,
+      resolved.linkedAgentId
+    );
     if (!effectiveAgentId) {
       return NextResponse.json(
         {

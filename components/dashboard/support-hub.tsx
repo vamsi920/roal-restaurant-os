@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { PageHeader, Panel } from "@/components/dashboard/page-primitives";
 import {
   RESTAURANT_LIVE_ORDERS_LABEL,
   RESTAURANT_MENU_AGENT_LABEL,
 } from "@/lib/dashboard-restaurant-labels";
+import { CONTACT_PILOT_EMAIL, buildPilotMailto } from "@/lib/landing/contact-mailto";
 
 const RUNBOOKS = [
   {
@@ -14,7 +16,7 @@ const RUNBOOKS = [
     ],
   },
   {
-    title: "Voice agent not syncing orders",
+    title: "Phone host not syncing orders",
     steps: [
       `Open ${RESTAURANT_MENU_AGENT_LABEL} → Connect or Re-sync agent.`,
       "Confirm Edge Functions are deployed and AGENT_TOOL_SIGNING_SECRET matches your host.",
@@ -32,7 +34,7 @@ const RUNBOOKS = [
   {
     title: "Stuck or missing kitchen orders",
     steps: [
-      `Use Refresh on ${RESTAURANT_LIVE_ORDERS_LABEL}; check Queue vs Live vs Done tabs.`,
+      `Use Refresh on ${RESTAURANT_LIVE_ORDERS_LABEL}; check Incoming vs Kitchen vs Done tabs.`,
       "Accept new orders from the queue before they time out.",
       "See notification settings for stuck-order alerts.",
     ],
@@ -40,73 +42,60 @@ const RUNBOOKS = [
 ] as const;
 
 export function SupportHub() {
-  return (
-    <div className="support-hub dashboard-page dashboard-page--medium min-w-0 max-w-full space-y-6 overflow-x-hidden sm:space-y-8">
-      <header className="dashboard-page__header min-w-0">
-        <p className="dashboard-page__eyebrow">Support</p>
-        <h1 className="dashboard-page__title">Help &amp; runbooks</h1>
-        <p className="dashboard-page__lead">
-          Quick fixes for setup and service. For pilot onboarding or billing, use
-          contact below.
-        </p>
-      </header>
+  const mailto = buildPilotMailto({ subject: "ROAL support" });
 
-      <div className="support-hub__cards grid min-w-0 gap-3 sm:grid-cols-2 sm:gap-4">
+  return (
+    <div className="support-hub dashboard-page dashboard-page--medium min-w-0 space-y-5 overflow-x-hidden">
+      <PageHeader
+        title="Support"
+        lead="Quick fixes for setup and service. For pilot onboarding or billing, email us."
+        actions={
+          <a href={mailto} className="btn-primary">
+            Email {CONTACT_PILOT_EMAIL}
+          </a>
+        }
+      />
+
+      <div className="support-hub__cards grid min-w-0 gap-3 sm:grid-cols-2">
         {RUNBOOKS.map((rb) => (
-          <section key={rb.title} className="support-hub__card dashboard-panel min-w-0">
-            <h2 className="dashboard-page__section-title">{rb.title}</h2>
-            <ol className="mt-3 list-decimal space-y-2 pl-4 text-sm leading-relaxed text-muted">
+          <Panel key={rb.title} className="support-hub__card" title={rb.title}>
+            <ol className="mt-2.5 list-decimal space-y-1.5 pl-4 text-[13px] leading-relaxed text-muted">
               {rb.steps.map((step) => (
                 <li key={step} className="text-pretty [overflow-wrap:anywhere]">
                   {step}
                 </li>
               ))}
             </ol>
-          </section>
+          </Panel>
         ))}
       </div>
 
-      <section className="dashboard-panel dashboard-panel--muted min-w-0">
-        <h2 className="dashboard-page__section-title">More resources</h2>
-        <ul className="mt-3 space-y-2.5 text-sm leading-relaxed">
-          <li>
-            <Link href="/dashboard/onboarding" className="text-accent hover:underline">
-              Setup wizard
-            </Link>
-            <span className="text-muted"> — first-store checklist</span>
-          </li>
-          <li>
-            <Link
-              href="/dashboard/settings/notifications"
-              className="text-accent hover:underline"
-            >
-              Notifications
-            </Link>
-            <span className="text-muted"> — order complete, sync fail, stuck orders</span>
-          </li>
-          <li>
-            <Link href="/api/health" className="text-accent hover:underline">
-              Platform health
-            </Link>
-            <span className="text-muted"> — JSON status for deploy checks</span>
-          </li>
-          <li>
-            <Link href="/contact" className="text-accent hover:underline">
-              Contact
-            </Link>
-            <span className="text-muted"> — pilot and billing questions</span>
-          </li>
+      <Panel title="More" muted>
+        <ul className="mt-2.5 grid gap-1.5 text-[13px] sm:grid-cols-2">
+          <ResourceLink href="/dashboard/onboarding" label="Go live checklist" detail="Real status per location" />
+          <ResourceLink
+            href="/dashboard/settings/notifications"
+            label="Notifications"
+            detail="Order complete, sync fail, stuck orders"
+          />
+          <ResourceLink href="/api/health" label="Platform health" detail="JSON status for deploy checks" />
+          <ResourceLink href="/contact" label="Contact" detail="Pilot and billing questions" />
         </ul>
-      </section>
-
-      <div className="dashboard-page__actions dashboard-page__actions--row">
-        <Link href="/dashboard/restaurants" className="btn-primary inline-flex">
-          Locations
-        </Link>
-        <Link href="/contact" className="btn-ghost inline-flex">
-          Contact support
-        </Link>
-      </div>
+      </Panel>
     </div>
+  );
+}
+
+function ResourceLink({ href, label, detail }: { href: string; label: string; detail: string }) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="flex min-h-11 flex-col justify-center rounded-md px-2 py-1.5 hover:bg-card lg:min-h-9"
+      >
+        <span className="font-medium text-ink">{label}</span>
+        <span className="text-[12px] text-muted">{detail}</span>
+      </Link>
+    </li>
   );
 }

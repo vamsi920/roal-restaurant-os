@@ -52,6 +52,8 @@ export type AdminEnvFlags = {
   agentToolSigning: boolean;
   appUrl: boolean;
   stripe: boolean;
+  places: boolean;
+  outboundCall: boolean;
 };
 
 export type AdminOpsSnapshot = {

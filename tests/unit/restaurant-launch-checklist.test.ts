@@ -4,6 +4,7 @@ import {
   buildRestaurantLaunchChecklist,
   buildRestaurantLaunchGate,
   evaluateLaunchGate,
+  evaluateConversationInitWebhook,
   isConversationInitWebhookSet,
   isDedicatedAgentProvisioned,
   isRestaurantProfileLaunchComplete,
@@ -121,6 +122,28 @@ describe("restaurant launch checklist", () => {
         phoneWebhookFromAgent: null,
       })
     ).toBe(true);
+  });
+
+  it("flags conversation-init webhook host mismatch with NEXT_PUBLIC_APP_URL", () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://getroal.com");
+
+    const evalResult = evaluateConversationInitWebhook({
+      syncSummary: {
+        ...readySummary,
+        phone_personalization_webhook:
+          "https://old-host.example.com/api/integrations/elevenlabs/conversation-init",
+      },
+      phoneWebhookFromAgent: null,
+    });
+
+    expect(evalResult.ok).toBe(false);
+    expect(evalResult.detail).toMatch(/does not match NEXT_PUBLIC_APP_URL/i);
+
+    const gate = buildRestaurantLaunchGate(readyInput());
+    expect(gate.isLiveReady).toBe(false);
+    expect(gate.topBlockerLabel).toMatch(/Conversation-init webhook/i);
+
+    vi.unstubAllEnvs();
   });
 
   it("marks server env missing as blocked launch gate", () => {

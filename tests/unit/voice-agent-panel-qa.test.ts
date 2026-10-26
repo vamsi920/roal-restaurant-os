@@ -40,8 +40,8 @@ describe("voice agent panel (launch 15)", () => {
       join(REPO, "scripts/qa-voice-agent-panel.ts"),
       "utf8"
     );
-    expect(script).toContain("restaurant_tools_baked");
-    expect(script).toContain("elevenlabs_agent_id");
-    expect(script).toContain("redactSecrets");
+    expect(script).toContain("provisionRestaurantVoiceAgent");
+    expect(script).toContain("resolveDedicatedElevenLabsAgentId");
+    expect(script).toContain("runRestaurantVoiceAgentSync");
   });
 });

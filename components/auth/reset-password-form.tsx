@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { AuthFormStatus } from "@/components/auth/auth-form-status";
-import { PublicFormField } from "@/components/landing/public";
+import { AuthField } from "@/components/auth/auth-field";
 import { cn } from "@/lib/cn";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { safeNextPath } from "@/lib/auth/safe-next";
@@ -87,7 +87,7 @@ export function ResetPasswordForm() {
   if (done) {
     return (
       <section
-        className="public-auth-panel public-auth-panel--success"
+        className="auth-panel auth-panel--success"
         role="status"
         aria-live="polite"
         aria-labelledby={titleId}
@@ -96,14 +96,14 @@ export function ResetPasswordForm() {
           id={titleId}
           ref={successTitleRef}
           tabIndex={-1}
-          className="public-auth-panel__title"
+          className="auth-panel__title"
         >
           {copy.successTitle}
         </h1>
-        <p className="public-auth-panel__lead">{copy.successLead}</p>
+        <p className="auth-panel__lead">{copy.successLead}</p>
         <Link
           href={next}
-          className="public-btn-primary public-auth-submit inline-flex w-full justify-center"
+          className="btn-primary btn-lg auth-submit"
           onClick={(e) => {
             e.preventDefault();
             window.location.assign(next);
@@ -119,17 +119,17 @@ export function ResetPasswordForm() {
     <form
       method="post"
       onSubmit={onSubmit}
-      className={cn("public-auth-panel", loading && "public-auth-panel--busy")}
+      className={cn("auth-panel", loading && "auth-panel--busy")}
       aria-labelledby={titleId}
       aria-describedby={hasError ? errorId : undefined}
     >
-      <h1 id={titleId} className="public-auth-panel__title">
+      <h1 id={titleId} className="auth-panel__title">
         {RESET_PASSWORD_PAGE_COPY.form.title}
       </h1>
-      <p className="public-auth-panel__lead">{RESET_PASSWORD_PAGE_COPY.form.lead}</p>
+      <p className="auth-panel__lead">{RESET_PASSWORD_PAGE_COPY.form.lead}</p>
 
-      <div className="public-form-fields">
-        <PublicFormField
+      <div className="auth-fields">
+        <AuthField
           id={passwordId}
           name="password"
           label={copy.passwordLabel}
@@ -144,7 +144,7 @@ export function ResetPasswordForm() {
           describedBy={`${passwordId}-hint${hasError ? ` ${errorId}` : ""}`}
           hint={copy.passwordHint}
         />
-        <PublicFormField
+        <AuthField
           id={confirmId}
           name="confirm"
           label={copy.confirmLabel}
@@ -167,15 +167,15 @@ export function ResetPasswordForm() {
         disabled={loading}
         aria-busy={loading}
         className={cn(
-          "public-btn-primary public-auth-submit",
-          loading && "public-auth-submit--busy"
+          "btn-primary btn-lg auth-submit",
+          loading && "opacity-70"
         )}
       >
         {loading ? copy.loadingLabel : copy.submitLabel}
       </button>
 
-      <p className="public-auth-footer">
-        <Link href="/login" className="public-blog-link font-medium">
+      <p className="auth-footer">
+        <Link href="/login" className="auth-link">
           Back to sign in
         </Link>
       </p>

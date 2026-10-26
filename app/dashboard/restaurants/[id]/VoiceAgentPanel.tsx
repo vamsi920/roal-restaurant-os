@@ -199,7 +199,7 @@ export function VoiceAgentPanel({
               className="voice-agent-panel__env-notice mt-3 rounded-lg border border-warning/30 bg-warning/[0.06] px-3 py-2 text-sm text-amber-950 [overflow-wrap:anywhere] sm:text-xs"
               role="status"
             >
-              Add required server settings before connecting.
+              Connect is disabled until required server secrets are configured.
             </p>
           ) : null}
           <div className="voice-agent-panel__controls mt-3 min-w-0">

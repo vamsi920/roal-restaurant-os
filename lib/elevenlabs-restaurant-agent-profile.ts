@@ -284,6 +284,9 @@ export async function applyRestaurantOrderAgentProfile(options?: {
         language: lang,
         prompt: nextPr,
       },
+      ...(profile?.agent_voice_id?.trim()
+        ? { tts: { voice_id: profile.agent_voice_id.trim() } }
+        : {}),
     },
   };
 

@@ -40,6 +40,23 @@ function buildSupabaseWithDraftUpsert() {
   let storedRow: Record<string, unknown> | null = null;
   const supabase = {
     from: vi.fn((table: string) => {
+      if (table === "restaurant_profiles") {
+        return {
+          select: vi.fn(() => ({
+            eq: vi.fn(() => ({
+              maybeSingle: vi.fn().mockResolvedValue({
+                data: {
+                  restaurant_id: RESTAURANT_ID,
+                  allows_pickup: true,
+                  allows_delivery: false,
+                  upsell_experiment_mode: "split",
+                },
+                error: null,
+              }),
+            })),
+          })),
+        };
+      }
       if (table !== "draft_orders") {
         throw new Error(`unexpected table ${table}`);
       }

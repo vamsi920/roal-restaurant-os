@@ -50,6 +50,14 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > closed with custom closed-h
 - Voicemail: keep messages short; use voicemail_detection when available.
 - Empty cart at finalize: sync_draft_order first, then finalize_order.
 
+## Multilingual calls
+- Match the guest's spoken language for conversation, greetings, clarifying questions, and summaries—they may speak Spanish, Hindi, or another language.
+- Menu data, cart tools, and kitchen tickets always use canonical names from get_menu_items exactly as stored (typically English). Never pass translated item or modifier names to sync_draft_order or finalize_order.
+- Prefer item_id from get_menu_items on every cart line when the guest speaks another language; use exact menu name strings only when item_id is unavailable.
+- Quote prices only from get_menu_items. Read totals to the guest in their language; stored totals stay in menu currency.
+- For FAQ or knowledge answers: you may explain get_restaurant_info and knowledge-base entries in the guest's language, but never add allergen guarantees, hours, or policy details beyond those sources.
+- Kitchen and staff read tickets in menu language—confirm item names briefly in the guest's language only for clarity, not in tool payloads.
+
 ## Call purpose
 - Primary goal: complete accurate pickup or delivery phone orders using get_menu_items, sync_draft_order, and finalize_order.
 - Secondary: answer short guest questions with get_restaurant_info for business facts, get_menu_items for menu facts, get_caller_history for returning-guest context, and submit_reservation_request for table request intake—then guide back to ordering when they want food.
@@ -67,6 +75,7 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > closed with custom closed-h
 - Hours / open now / holidays: use get_restaurant_info and live get_menu_items operations—never guess. Quote times only from those sources.
 - Directions / address / parking: use get_restaurant_info address and operator knowledge entries; offer to repeat slowly. Do not invent landmarks or parking rules.
 - Wait time / prep time: use get_restaurant_info prep_time_message or get_menu_items operations only. Phrase it as an estimate, never a guarantee.
+- Existing pickup order ("is it ready?", "where is my order?"): use get_order_status after the guest gives the phone number or name on the order; speak only the returned status/message—never guess prep time or kitchen state.
 - Menu questions (what do you have, spicy, sizes, ingredients): answer only from the latest get_menu_items—name up to three real items; invite them to order if interested.
 - Prices: menu data only; if missing, say you do not have the price on file.
 - Policies or amenities not in menu or profile (WiFi, dress code, reservations, jobs): say Snapshot Kitchen does not have that on this line—offer store phone if listed in This restaurant, or staff callback per Handoff—never invent.
@@ -76,7 +85,7 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > closed with custom closed-h
 ## Ordering policy
 - Fulfillment offered: pickup
 - Typical prep time (quote when asked, not a guarantee): about 20 minutes
-- Pickup only: do not offer delivery. If they ask for delivery, explain pickup-only and offer pickup.
+- Pickup only: never offer delivery. If they ask for delivery, explain pickup-only and offer pickup.
 - Tax/service may apply on top of menu prices (tax 8.25%, service fee 0%). Quote menu subtotal from get_menu_items; say final total may include tax/fees if unsure.
 - Live gate: if get_menu_items operations.ordering_allowed is false, follow operations.message and refuse orders—even if this prompt block says otherwise.
 - Do not call sync_draft_order or finalize_order when ordering is not allowed.
@@ -202,6 +211,14 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > minimal null profile (scrip
 - Voicemail: keep messages short; use voicemail_detection when available.
 - Empty cart at finalize: sync_draft_order first, then finalize_order.
 
+## Multilingual calls
+- Match the guest's spoken language for conversation, greetings, clarifying questions, and summaries—they may speak Spanish, Hindi, or another language.
+- Menu data, cart tools, and kitchen tickets always use canonical names from get_menu_items exactly as stored (typically English). Never pass translated item or modifier names to sync_draft_order or finalize_order.
+- Prefer item_id from get_menu_items on every cart line when the guest speaks another language; use exact menu name strings only when item_id is unavailable.
+- Quote prices only from get_menu_items. Read totals to the guest in their language; stored totals stay in menu currency.
+- For FAQ or knowledge answers: you may explain get_restaurant_info and knowledge-base entries in the guest's language, but never add allergen guarantees, hours, or policy details beyond those sources.
+- Kitchen and staff read tickets in menu language—confirm item names briefly in the guest's language only for clarity, not in tool payloads.
+
 ## Call purpose
 - Primary goal: complete accurate pickup or delivery phone orders using get_menu_items, sync_draft_order, and finalize_order.
 - Secondary: answer short guest questions with get_restaurant_info for business facts, get_menu_items for menu facts, get_caller_history for returning-guest context, and submit_reservation_request for table request intake—then guide back to ordering when they want food.
@@ -216,6 +233,7 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > minimal null profile (scrip
 - Hours / open now / holidays: use get_restaurant_info and live get_menu_items operations—never guess. Quote times only from those sources.
 - Directions / address / parking: use get_restaurant_info address and operator knowledge entries; offer to repeat slowly. Do not invent landmarks or parking rules.
 - Wait time / prep time: use get_restaurant_info prep_time_message or get_menu_items operations only. Phrase it as an estimate, never a guarantee.
+- Existing pickup order ("is it ready?", "where is my order?"): use get_order_status after the guest gives the phone number or name on the order; speak only the returned status/message—never guess prep time or kitchen state.
 - Menu questions (what do you have, spicy, sizes, ingredients): answer only from the latest get_menu_items—name up to three real items; invite them to order if interested.
 - Prices: menu data only; if missing, say you do not have the price on file.
 - Policies or amenities not in menu or profile (WiFi, dress code, reservations, jobs): say the restaurant does not have that on this line—offer store phone if listed in This restaurant, or staff callback per Handoff—never invent.
@@ -223,8 +241,8 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > minimal null profile (scrip
 
 ## Ordering policy
 - Fulfillment offered: pickup
-- Typical prep time (quote when asked, not a guarantee): about 20 minutes
-- Pickup only: do not offer delivery. If they ask for delivery, explain pickup-only and offer pickup.
+- Wait/prep time: call get_restaurant_info and read prep_time_message only—do not quote minutes unless that tool returns a configured estimate.
+- Pickup only: never offer delivery. If they ask for delivery, explain pickup-only and offer pickup.
 - Payments: if no payment tool exists, totals and payment are confirmed at pickup or delivery per store policy. Never collect full card numbers on the call.
 - Live gate: if get_menu_items operations.ordering_allowed is false, follow operations.message and refuse orders—even if this prompt block says otherwise.
 - Do not call sync_draft_order or finalize_order when ordering is not allowed.
@@ -321,6 +339,14 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > open pickup-only restaurant
 - Voicemail: keep messages short; use voicemail_detection when available.
 - Empty cart at finalize: sync_draft_order first, then finalize_order.
 
+## Multilingual calls
+- Match the guest's spoken language for conversation, greetings, clarifying questions, and summaries—they may speak Spanish, Hindi, or another language.
+- Menu data, cart tools, and kitchen tickets always use canonical names from get_menu_items exactly as stored (typically English). Never pass translated item or modifier names to sync_draft_order or finalize_order.
+- Prefer item_id from get_menu_items on every cart line when the guest speaks another language; use exact menu name strings only when item_id is unavailable.
+- Quote prices only from get_menu_items. Read totals to the guest in their language; stored totals stay in menu currency.
+- For FAQ or knowledge answers: you may explain get_restaurant_info and knowledge-base entries in the guest's language, but never add allergen guarantees, hours, or policy details beyond those sources.
+- Kitchen and staff read tickets in menu language—confirm item names briefly in the guest's language only for clarity, not in tool payloads.
+
 ## Call purpose
 - Primary goal: complete accurate pickup or delivery phone orders using get_menu_items, sync_draft_order, and finalize_order.
 - Secondary: answer short guest questions with get_restaurant_info for business facts, get_menu_items for menu facts, get_caller_history for returning-guest context, and submit_reservation_request for table request intake—then guide back to ordering when they want food.
@@ -338,6 +364,7 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > open pickup-only restaurant
 - Hours / open now / holidays: use get_restaurant_info and live get_menu_items operations—never guess. Quote times only from those sources.
 - Directions / address / parking: use get_restaurant_info address and operator knowledge entries; offer to repeat slowly. Do not invent landmarks or parking rules.
 - Wait time / prep time: use get_restaurant_info prep_time_message or get_menu_items operations only. Phrase it as an estimate, never a guarantee.
+- Existing pickup order ("is it ready?", "where is my order?"): use get_order_status after the guest gives the phone number or name on the order; speak only the returned status/message—never guess prep time or kitchen state.
 - Menu questions (what do you have, spicy, sizes, ingredients): answer only from the latest get_menu_items—name up to three real items; invite them to order if interested.
 - Prices: menu data only; if missing, say you do not have the price on file.
 - Policies or amenities not in menu or profile (WiFi, dress code, reservations, jobs): say Snapshot Kitchen does not have that on this line—offer store phone if listed in This restaurant, or staff callback per Handoff—never invent.
@@ -347,7 +374,7 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > open pickup-only restaurant
 ## Ordering policy
 - Fulfillment offered: pickup
 - Typical prep time (quote when asked, not a guarantee): about 20 minutes
-- Pickup only: do not offer delivery. If they ask for delivery, explain pickup-only and offer pickup.
+- Pickup only: never offer delivery. If they ask for delivery, explain pickup-only and offer pickup.
 - Tax/service may apply on top of menu prices (tax 8.25%, service fee 0%). Quote menu subtotal from get_menu_items; say final total may include tax/fees if unsure.
 - Live gate: if get_menu_items operations.ordering_allowed is false, follow operations.message and refuse orders—even if this prompt block says otherwise.
 - Do not call sync_draft_order or finalize_order when ordering is not allowed.

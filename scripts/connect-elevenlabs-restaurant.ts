@@ -40,6 +40,13 @@ void (async () => {
     "";
   if (!agentId) throw new Error("ELEVENLABS_AGENT_ID required");
 
+  const templateId = getElevenLabsAgentId();
+  if (templateId && agentId === templateId) {
+    throw new Error(
+      "ELEVENLABS_AGENT_ID is the shared template. Run npm run qa:voice-agent-provision or provision:backfill-voice-agents to create a dedicated agent."
+    );
+  }
+
   const origin = getSiteOrigin();
   if (!origin && !process.env.SKIP_APP_URL_CHECK) {
     throw new Error(

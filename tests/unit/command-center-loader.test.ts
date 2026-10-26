@@ -105,6 +105,7 @@ describe("command center partition", () => {
     });
     expect(snap.activeCalls).toHaveLength(1);
     expect(snap.counts.active).toBe(1);
+    expect(snap.peakCallContext.totalCallsInRange).toBe(1);
   });
 
   it("failed bucket for canceled and tool errors", () => {

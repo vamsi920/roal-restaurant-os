@@ -10,10 +10,11 @@ const RESTAURANT_ID = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const FOREIGN_ID = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
 
 describe("dashboard restaurant workspace (pass 65)", () => {
-  it("home redirects to the accessible locations list", () => {
+  it("home routes org admins to overview and members to the locations list", () => {
     const home = read("app/dashboard/page.tsx");
+    expect(home).toContain('redirect("/dashboard/overview")');
     expect(home).toContain('redirect("/dashboard/restaurants")');
-    expect(home).not.toContain("/dashboard/overview");
+    expect(home).toContain("isOrgAdmin");
   });
 
   it("locations page loads restaurants from the database only", () => {
@@ -43,7 +44,6 @@ describe("dashboard restaurant workspace (pass 65)", () => {
     expect(page).toContain("Reservations");
     expect(page).toContain("Orders (24h)");
     expect(page).toContain("nextBestAction");
-    expect(page).toContain("dedicated phone agent");
   });
 
   it("restaurant card links into the restaurant workspace", () => {
@@ -63,9 +63,9 @@ describe("dashboard restaurant workspace (pass 65)", () => {
 
     expect(nav.map((item) => item.id)).toEqual([
       "orders",
+      "calls",
       "menu",
       "liveAgent",
-      "calls",
       "analytics",
       "billing",
       "settings",

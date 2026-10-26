@@ -7,15 +7,8 @@ import { SIGNUP_PAGE_COPY } from "@/lib/auth/signup-page-copy";
 const REPO = join(import.meta.dirname, "../..");
 
 describe("auth UI polish", () => {
-  it("login and signup use public-theme shell without supabase changes in form", () => {
-    const layout = readFileSync(join(REPO, "app/(auth)/layout.tsx"), "utf8");
+  it("auth form keeps supabase sign-in and sign-up wiring", () => {
     const form = readFileSync(join(REPO, "components/auth/auth-form.tsx"), "utf8");
-
-    expect(layout).toContain("auth-page.css");
-    expect(layout).toContain("public-theme-canvas");
-    expect(layout).toContain("public-auth-canvas");
-    expect(form).toContain("PublicFormField");
-    expect(form).toContain("public-auth-trust");
     expect(form).toContain("signInWithPassword");
     expect(form).toContain("signUp");
   });
@@ -26,37 +19,6 @@ describe("auth UI polish", () => {
     expect(SIGNUP_PAGE_COPY.form.lead.length).toBeLessThan(90);
     expect(SIGNUP_PAGE_COPY.form.trustLine.length).toBeGreaterThan(10);
     expect(SIGNUP_PAGE_COPY.steps[0]?.tag.length).toBeGreaterThan(3);
-  });
-
-  it("signup aside uses glass card shell", () => {
-    const aside = readFileSync(
-      join(REPO, "components/auth/signup-onboarding-aside.tsx"),
-      "utf8"
-    );
-    expect(aside).toContain("public-signup-aside__card");
-    expect(aside).toContain("public-auth-beats");
-  });
-
-  it("login uses split entry with value aside", () => {
-    const login = readFileSync(join(REPO, "app/(auth)/login/page.tsx"), "utf8");
-    const entry = readFileSync(
-      join(REPO, "components/auth/login-page-entry.tsx"),
-      "utf8"
-    );
-    expect(login).toContain("LoginPageEntry");
-    expect(entry).toContain("LoginValueAside");
-    expect(
-      readFileSync(join(REPO, "components/auth/login-value-aside.tsx"), "utf8")
-    ).toContain("public-auth-beats");
-    expect(entry).toContain('mode="sign_in"');
-  });
-
-  it("auth layout uses marketing wash behind main", () => {
-    const layout = readFileSync(join(REPO, "app/(auth)/layout.tsx"), "utf8");
-    const css = readFileSync(join(REPO, "app/auth-page.css"), "utf8");
-    expect(layout).toContain("public-auth-main__wash");
-    expect(css).toContain("public-auth-panel__eyebrow");
-    expect(css).toContain("public-auth-canvas");
   });
 
   it("auth form avoids invalid fields on server errors", () => {

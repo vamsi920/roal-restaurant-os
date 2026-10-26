@@ -102,6 +102,7 @@ export async function runHealthChecks(): Promise<HealthReport> {
       missingOptional.push("AGENT_TOOL_SIGNING_SECRET");
     }
     if (!flags.serviceRole) missingOptional.push("SUPABASE_SERVICE_ROLE_KEY");
+    if (!flags.places) missingOptional.push("GOOGLE_PLACES_API_KEY");
 
     checks.env_server = {
       ok: flags.supabase,

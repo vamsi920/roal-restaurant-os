@@ -21,11 +21,13 @@ import type { OnboardingStepKey } from "@/lib/onboarding/steps";
 import type { OnboardingWizardState } from "@/lib/onboarding/wizard-types";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { getPublicEnv } from "@/lib/env.public";
+import { getElevenLabsAgentPhoneNumberId } from "@/lib/env.server";
 import { onboardingVoiceProvisionFromProfileRow } from "@/lib/onboarding/restaurant-voice-provision";
 import { evaluateOnboardingReadiness } from "@/lib/onboarding/readiness";
 import { loadRestaurantLaunchChecklist } from "@/lib/restaurant-launch/load-checklist";
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+import { readPendingRestaurantLookup } from "@/lib/restaurant-lookup/pending";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import type { Restaurant } from "@/lib/types";
@@ -217,6 +219,20 @@ export async function loadOnboardingWizardState(
     /* optional */
   }
 
+  let outboundCallConfigured = false;
+  try {
+    outboundCallConfigured = Boolean(getElevenLabsAgentPhoneNumberId());
+  } catch {
+    /* optional */
+  }
+
+  let pending = null as ReturnType<typeof readPendingRestaurantLookup>;
+  try {
+    pending = readPendingRestaurantLookup();
+  } catch {
+    pending = null;
+  }
+
   return {
     userEmail: context.user.email ?? null,
     organization: organization
@@ -240,6 +256,17 @@ export async function loadOnboardingWizardState(
     activeStep,
     launchChecklist,
     readiness,
+    pendingLookup: pending
+      ? {
+          placeId: pending.placeId,
+          name: pending.name,
+          city: pending.city,
+          address: pending.address,
+          phone: pending.phone,
+          website: pending.website,
+        }
+      : null,
+    outboundCallConfigured,
     supabaseRef,
     edgeBase,
   };

@@ -15,13 +15,16 @@ type Props = {
   compact?: boolean;
 };
 
-const STATE_CLASS: Record<
-  Exclude<VoiceProvisionUiState, "not_started">,
-  string
-> = {
-  ready: "voice-provision-badge--ready",
-  in_progress: "voice-provision-badge--progress",
-  needs_attention: "voice-provision-badge--attention",
+const STATE_CLASS: Record<Exclude<VoiceProvisionUiState, "not_started">, string> = {
+  ready: "chip--success voice-provision-badge--ready",
+  in_progress: "chip--warning voice-provision-badge--progress",
+  needs_attention: "chip--danger voice-provision-badge--attention",
+};
+
+const STATE_LABEL: Record<Exclude<VoiceProvisionUiState, "not_started">, string> = {
+  ready: "Host ready",
+  in_progress: "Setting up host",
+  needs_attention: "Host needs attention",
 };
 
 export function VoiceProvisionStatusBadge({
@@ -36,22 +39,21 @@ export function VoiceProvisionStatusBadge({
   if (!label) return null;
 
   const title = voiceProvisionBadgeTitle(state, profile);
-  const toneClass = STATE_CLASS[state];
 
   return (
     <span
       className={cn(
-        "voice-provision-badge",
+        "chip voice-provision-badge",
         compact && "voice-provision-badge--compact",
-        toneClass,
+        STATE_CLASS[state],
         className
       )}
       title={title}
     >
       {state === "in_progress" ? (
-        <span className="voice-provision-badge__dot" aria-hidden />
+        <span className="voice-provision-badge__dot animate-pulse" aria-hidden />
       ) : null}
-      <span className="voice-provision-badge__label">{label}</span>
+      <span className="voice-provision-badge__label">{STATE_LABEL[state]}</span>
     </span>
   );
 }

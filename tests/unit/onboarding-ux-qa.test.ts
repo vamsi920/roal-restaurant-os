@@ -30,15 +30,15 @@ describe("onboarding UX (launch 11)", () => {
     expect(copy).toMatch(/Menu setup/i);
   });
 
-  it("wizard supports menu and test-call skip", () => {
+  it("go-live checklist supports test-call skip and host retry/sync", () => {
     const wizard = readFileSync(
       join(REPO, "components/onboarding/onboarding-wizard.tsx"),
       "utf8"
     );
-    expect(wizard).toContain('step: "menu_import"');
-    expect(wizard).toContain('status: "skipped"');
-    expect(wizard).toContain('step: "test_call"');
+    expect(wizard).toContain('setStep("test_call", "skipped")');
+    expect(wizard).toContain('setStep("voice_agent", "skipped")');
     expect(wizard).toContain("OnboardingVoiceAgentStep");
+    expect(wizard).toContain("OnboardingTryCall");
     const voiceStep = readFileSync(
       join(REPO, "components/onboarding/onboarding-voice-agent-step.tsx"),
       "utf8"
@@ -47,9 +47,7 @@ describe("onboarding UX (launch 11)", () => {
     expect(voiceStep).toContain("syncRestaurantVoiceAgentOnboardingAction");
     expect(wizard).toContain("OnboardingReadinessPanel");
     expect(wizard).toContain("Skip for now");
-    expect(wizard).toContain("isOnboardingStepNavDisabled");
     expect(wizard).toContain('role="alert"');
-    expect(wizard).toContain("ONBOARDING_LAUNCH_STEPS");
     expect(wizard).toContain("RESTAURANT_LIVE_ORDERS_LABEL");
     expect(wizard).not.toMatch(/\bKDS\b/);
   });

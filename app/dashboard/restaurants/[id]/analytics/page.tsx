@@ -9,6 +9,7 @@ import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
 import { loadRestaurantAnalytics } from "@/lib/analytics/load-analytics";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
+import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
 
 export const metadata: Metadata = {
   title: "Analytics — ROAL",
@@ -35,19 +36,23 @@ export default async function RestaurantAnalyticsPage({
 
   const { restaurant, membership } = access;
   const supabase = await createServerSupabase();
-  const snapshot = await loadRestaurantAnalytics(supabase, {
-    organizationId: restaurant.organization_id,
-    organizationName: membership.organization.name,
-    restaurantId: restaurant.id,
-    restaurantName: restaurant.name,
-    rangeKey: searchParams.range,
-  });
+  const [snapshot, suggestionCount] = await Promise.all([
+    loadRestaurantAnalytics(supabase, {
+      organizationId: restaurant.organization_id,
+      organizationName: membership.organization.name,
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+      rangeKey: searchParams.range,
+    }),
+    countPendingKnowledgeSuggestions(supabase, restaurant.id),
+  ]);
 
   return (
     <RestaurantWorkspaceRail
       restaurantId={restaurant.id}
       restaurantName={restaurant.name}
       hasRestaurantAnalytics
+      suggestionCount={suggestionCount}
     >
       <AnalyticsDashboard
         snapshot={snapshot}

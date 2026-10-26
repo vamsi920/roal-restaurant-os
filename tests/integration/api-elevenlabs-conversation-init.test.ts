@@ -8,6 +8,7 @@ const CALLED = "+15559876543";
 
 vi.mock("@/lib/env.server", () => ({
   getElevenLabsConversationInitSecret: vi.fn(),
+  getElevenLabsAgentId: vi.fn(() => "agent_template_global"),
 }));
 
 vi.mock("@/lib/elevenlabs/conversation-init", async (importOriginal) => {
@@ -55,6 +56,36 @@ describe("GET/POST /api/integrations/elevenlabs/conversation-init", () => {
     vi.mocked(persistElevenLabsConversationStarted).mockResolvedValue({
       stored: true,
     });
+  });
+
+  it("prefers dedicated linkedAgentId over shared template agent_id in request", async () => {
+    vi.mocked(resolveRestaurantForElevenLabsConversationInit).mockResolvedValue({
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "QA Bistro",
+      linkedAgentId: AGENT,
+      resolvedVia: "called_number",
+    });
+
+    const res = await POST(
+      new Request(base, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          agent_id: "agent_template_global",
+          called_number: CALLED,
+          call_sid: "CA_template_override",
+        }),
+      })
+    );
+
+    expect(res.status).toBe(200);
+    expect(readAgentPlaceholdersForInit).toHaveBeenCalledWith(AGENT);
+    expect(readAgentPlaceholdersForInit).not.toHaveBeenCalledWith(
+      "agent_template_global"
+    );
+    expect(persistElevenLabsConversationStarted).toHaveBeenCalledWith(
+      expect.objectContaining({ linkedAgentId: AGENT })
+    );
   });
 
   it("GET ?agent_id= returns conversation_initiation_client_data without templates", async () => {

@@ -4,7 +4,7 @@ import type { BlogArticleContent, BlogPost } from "./types";
 const INLINE_LINK_RE = /\[([^\]]+)\]\((\/[^)]+)\)/g;
 
 /** Article CTAs and inline marketing paths must resolve to real routes. */
-export const BLOG_ALLOWED_CTA_HREFS = ["/demo", "/signup", "/pricing", "/contact"] as const;
+export const BLOG_ALLOWED_CTA_HREFS = ["/try", "/demo", "/signup", "/pricing", "/contact"] as const;
 
 const ALLOWED_INLINE_PATHS = new Set<string>([
   "/pricing",

@@ -452,6 +452,23 @@ describe("resolveRestaurantForElevenLabsConversationInit", () => {
     expect(ctx).toBeNull();
   });
 
+  it("returns null when phone matches but only linked id is shared template", async () => {
+    mockSupabaseProfiles([
+      {
+        restaurant_id: RESTAURANT_ID,
+        phone: PHONE,
+        elevenlabs_agent_id: null,
+      },
+    ]);
+
+    const ctx = await resolveRestaurantForElevenLabsConversationInit({
+      agentId: "agent_template_global",
+      calledNumber: PHONE,
+    });
+
+    expect(ctx).toBeNull();
+  });
+
   it("ignores shared template agent_id and falls back to called_number", async () => {
     mockSupabaseProfiles([
       {

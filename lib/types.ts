@@ -110,6 +110,10 @@ export type RestaurantProfile = {
   closed_hours_message: string | null;
   temporarily_closed: boolean;
   temporarily_closed_reason: string | null;
+  agent_display_name: string | null;
+  agent_voice_id: string | null;
+  agent_voice_label: string | null;
+  agent_greeting: string | null;
   elevenlabs_agent_id: string | null;
   elevenlabs_provision_status: ElevenLabsProvisionStatus | null;
   elevenlabs_provision_error: string | null;

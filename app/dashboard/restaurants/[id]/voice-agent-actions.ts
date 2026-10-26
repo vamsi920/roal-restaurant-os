@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { getElevenLabsAgentId } from "@/lib/env.server";
+import { resolveDedicatedElevenLabsAgentId } from "@/lib/voice-agent/dedicated-agent-id";
 import { getPublicEnv } from "@/lib/env.public";
 import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
 import { runRestaurantVoiceAgentSync } from "@/lib/voice-agent/run-restaurant-voice-agent-sync";
@@ -265,13 +266,15 @@ export async function resyncVoiceAgentAction(
   }
 
   const profile = await loadProfile(restaurantId);
-  const agentId =
-    profile.elevenlabs_agent_id?.trim() ||
-    getElevenLabsAgentId(null) ||
-    "";
+  const agentId = resolveDedicatedElevenLabsAgentId(
+    profile.elevenlabs_agent_id,
+    getElevenLabsAgentId()
+  );
 
   if (!agentId) {
-    throw new Error("No agent id saved. Connect an agent first.");
+    throw new Error(
+      "No dedicated agent saved. Auto-provision from onboarding or Retry on the voice agent step."
+    );
   }
 
   return connectVoiceAgentAction({

@@ -6,7 +6,7 @@ import {
   getConvaiAgent,
 } from "@/lib/elevenlabs";
 
-export type ConvaiAgentProvisionMethod = "duplicate" | "create";
+export type ConvaiAgentProvisionMethod = "duplicate" | "create" | "reuse";
 
 export type ElevenLabsAgentProvisionDeps = {
   getTemplateAgentId: () => string | null;

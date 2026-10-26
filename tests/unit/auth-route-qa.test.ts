@@ -78,8 +78,7 @@ describe("auth route QA", () => {
 
     expect(login).toContain("LoginPageEntry");
     expect(signup).toContain("SignupPageEntry");
-    expect(authLayout).toContain("public-auth-main");
-    expect(authLayout).toContain("PublicAuthHeader");
+    expect(authLayout).toContain("auth-page.css");
   });
 
   it("all dashboard app routes have page modules", () => {

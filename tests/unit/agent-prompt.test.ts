@@ -303,6 +303,59 @@ describe("buildRestaurantOrderFirstMessage", () => {
     expect(msg).toContain("QA Bistro");
     expect(msg).not.toMatch(/answer quick questions/i);
   });
+
+  it("introduces the persona name when agent_display_name is set", () => {
+    const msg = buildRestaurantOrderFirstMessage(
+      { ...baseProfile, agent_display_name: "  Addy ", agent_greeting: null },
+      "QA Bistro"
+    );
+    expect(msg).toContain("Hi, thanks for calling QA Bistro, this is Addy.");
+    expect(msg).toMatch(/what can I get started for you/i);
+  });
+
+  it("omits the persona clause when no display name is set", () => {
+    const msg = buildRestaurantOrderFirstMessage(
+      { ...baseProfile, agent_display_name: null, agent_greeting: null },
+      "QA Bistro"
+    );
+    expect(msg).toContain("Hi, thanks for calling QA Bistro.");
+    expect(msg).not.toContain("this is");
+  });
+
+  it("uses a custom agent_greeting verbatim over the persona template", () => {
+    const msg = buildRestaurantOrderFirstMessage(
+      {
+        ...baseProfile,
+        agent_display_name: "Addy",
+        agent_greeting: "  Yo, QA Bistro here, what's up?  ",
+      },
+      "QA Bistro"
+    );
+    expect(msg).toBe("Yo, QA Bistro here, what's up?");
+    expect(msg).not.toContain("this is Addy");
+  });
+
+  it("temporarily closed still wins over a custom greeting", () => {
+    const msg = buildRestaurantOrderFirstMessage(
+      { ...baseProfile, temporarily_closed: true, agent_greeting: "Custom hello" },
+      "QA Bistro"
+    );
+    expect(msg).not.toBe("Custom hello");
+    expect(msg).toMatch(/temporarily closed/i);
+  });
+
+  it("adapts the service line to pickup, delivery or both", () => {
+    const common = { ...baseProfile, agent_display_name: null, agent_greeting: null };
+    expect(
+      buildRestaurantOrderFirstMessage({ ...common, allows_pickup: true, allows_delivery: false }, "QA Bistro")
+    ).toMatch(/pickup orders/i);
+    expect(
+      buildRestaurantOrderFirstMessage({ ...common, allows_pickup: false, allows_delivery: true }, "QA Bistro")
+    ).toMatch(/delivery orders/i);
+    expect(
+      buildRestaurantOrderFirstMessage({ ...common, allows_pickup: true, allows_delivery: true }, "QA Bistro")
+    ).toMatch(/picking up, or would you like delivery/i);
+  });
 });
 
 describe("buildRestaurantVoicemailMessage", () => {

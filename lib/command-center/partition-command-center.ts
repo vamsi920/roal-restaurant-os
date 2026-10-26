@@ -11,6 +11,7 @@ import type {
   CommandCenterCounts,
   RestaurantCommandCenterSnapshot,
 } from "@/lib/command-center/types";
+import { buildKdsPeakCallContext } from "@/lib/live-orders/peak-call-context";
 export function handoffSignalsFromTranscript(
   metadata: Record<string, unknown>
 ): string[] {
@@ -209,6 +210,9 @@ export function partitionCommandCenterSessions(input: {
     handoffCalls: handoff,
     unknownCalls: unknown,
     counts,
+    peakCallContext: buildKdsPeakCallContext(
+      scopedSessions.map((session) => ({ startedAt: session.startedAt }))
+    ),
     isEmpty:
       counts.active +
         counts.completed +

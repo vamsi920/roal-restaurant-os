@@ -36,7 +36,6 @@ describe("auth flow smoke (static)", () => {
       '<AuthForm mode="sign_in"'
     );
     expect(signupEntry).toContain('<AuthForm mode="sign_up"');
-    expect(signupEntry).toContain("SignupOnboardingAside");
   });
 
   it("form exposes email/password field types and submit handler", () => {

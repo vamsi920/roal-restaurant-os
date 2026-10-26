@@ -12,12 +12,22 @@ import { loadRestaurantLaunchGate } from "@/lib/restaurant-launch/load-checklist
 import { RestaurantLaunchGateCard } from "@/components/restaurant-launch/RestaurantLaunchGateCard";
 import { loadRestaurantMenuSetupPageData } from "@/lib/restaurant-menu-setup/load-page-data";
 import { MenuAutoSyncStatusPanel } from "@/components/voice-agent/MenuAutoSyncStatusPanel";
+import { PhoneHostTestCall } from "@/components/voice-agent/PhoneHostTestCall";
+import { HostPersonaCard } from "@/components/voice-agent/HostPersonaCard";
+import { KnowledgeSuggestionsInbox } from "@/components/restaurant-knowledge/KnowledgeSuggestionsInbox";
+import { loadKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
+import { getElevenLabsAgentPhoneNumberId } from "@/lib/env.server";
+import { defaultAgentName, findTrialVoice } from "@/lib/trial/voices";
+import type { TrialScorecard } from "@/lib/trial/types";
+import { RESTAURANT_PHONE_HOST_LABEL } from "@/lib/restaurant-workspace-nav";
+import { cn } from "@/lib/cn";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
 import { VoiceAgentPanel } from "../VoiceAgentPanel";
 import { VoiceAgentTestHarness } from "../VoiceAgentTestHarness";
+import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
 
 export const metadata: Metadata = {
-  title: "Live Agent — ROAL",
+  title: `${RESTAURANT_PHONE_HOST_LABEL} — ROAL`,
 };
 
 export const dynamic = "force-dynamic";
@@ -29,14 +39,43 @@ const STATUS_LABEL: Record<string, string> = {
   disconnected: "Not connected",
 };
 
-const STATUS_TONE: Record<string, string> = {
-  connected: "bg-success/15 text-success",
-  misconfigured: "bg-warning/15 text-amber-900",
-  unreachable: "bg-danger/10 text-danger",
-  disconnected: "bg-elev text-muted",
+const STATUS_CHIP: Record<string, string> = {
+  connected: "chip--success",
+  misconfigured: "chip--warning",
+  unreachable: "chip--danger",
+  disconnected: "",
 };
 
-export default async function RestaurantLiveAgentPage({
+function dialable(value: string | null | undefined): boolean {
+  if (!value) return false;
+  const digits = value.replace(/\D/g, "");
+  if (digits.length === 10) return true;
+  if (digits.length === 11 && digits.startsWith("1")) return true;
+  return value.trim().startsWith("+") && digits.length >= 10 && digits.length <= 15;
+}
+
+function parseScorecard(value: unknown): TrialScorecard {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const out: TrialScorecard = {};
+  for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+    if (v === true) (out as Record<string, boolean>)[k] = true;
+  }
+  return out;
+}
+
+function formatWhen(iso: string | null): string {
+  if (!iso) return "—";
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(iso));
+  } catch {
+    return "—";
+  }
+}
+
+export default async function RestaurantPhoneHostPage({
   params,
 }: {
   params: { id: string };
@@ -56,7 +95,7 @@ export default async function RestaurantLiveAgentPage({
     organizationId: restaurant.organization_id,
     membershipRole: role,
   });
-  const [commandCenter, launchGate] = await Promise.all([
+  const [commandCenter, launchGate, suggestions, scorecardRow] = await Promise.all([
     loadRestaurantCommandCenter(supabase, {
       restaurantId: restaurant.id,
       restaurantName: restaurant.name,
@@ -66,101 +105,137 @@ export default async function RestaurantLiveAgentPage({
       restaurantName: restaurant.name,
       phoneWebhookFromAgent: setup.voiceAgentCenter?.lastSyncPhoneWebhook ?? null,
     }),
+    loadKnowledgeSuggestions(supabase, restaurant.id, { status: "pending" }).catch(
+      () => []
+    ),
+    supabase
+      .from("restaurant_profiles")
+      .select("trial_scorecard")
+      .eq("restaurant_id", restaurant.id)
+      .maybeSingle(),
   ]);
 
   const center = setup.voiceAgentCenter;
+  const profile = setup.profile;
   const menuSync = center.menuAutoSync;
-  const storePhone = setup.profile?.phone?.trim() || null;
+  const storePhone = profile.phone?.trim() || null;
+  const hostName = profile.agent_display_name?.trim() || defaultAgentName();
+  const voiceLabel =
+    profile.agent_voice_label?.trim() || findTrialVoice(profile.agent_voice_id)?.label || null;
+  const scorecard = parseScorecard(scorecardRow?.data?.trial_scorecard);
+  const agentReady = Boolean(profile.elevenlabs_agent_id?.trim());
+  const outboundAvailable = Boolean(getElevenLabsAgentPhoneNumberId()) && dialable(storePhone);
+  const voiceOrderGate = setup.billingGates?.voice_order ?? null;
+  const statusKey = center.connectionStatus;
 
   return (
     <RestaurantWorkspaceRail
       restaurantId={restaurant.id}
       restaurantName={restaurant.name}
-      hasRestaurantAnalytics
-      hasRestaurantBilling
+      suggestionCount={suggestions.length}
     >
-      <div className="kds-workspace kds-workspace--agent min-w-0 max-w-full space-y-4 overflow-x-hidden sm:space-y-5">
-        <RestaurantLaunchGateCard gate={launchGate} compact />
-
-        <header className="live-agent-page__header rounded-xl border border-line bg-card p-4 shadow-sm sm:p-5">
-          <div className="flex min-w-0 flex-col gap-3">
+      <div className="kds-workspace kds-workspace--agent phone-host min-w-0 max-w-full space-y-4 overflow-x-hidden sm:space-y-5">
+        <header className="ws-page-head live-agent-page__header min-w-0">
+          <div className="ws-page-head__row">
             <div className="min-w-0">
-              <p className="text-xs font-medium text-subtle">Live Agent</p>
-              <h1 className="mt-1 truncate text-xl font-semibold tracking-tight text-ink sm:text-2xl">
-                {restaurant.name}
+              <p className="ws-page-head__eyebrow">{RESTAURANT_PHONE_HOST_LABEL}</p>
+              <h1 className="ws-page-head__title">
+                {hostName}
+                <span className={cn("chip ml-2 align-middle", STATUS_CHIP[statusKey] ?? "")}>
+                  {STATUS_LABEL[statusKey] ?? STATUS_LABEL.disconnected}
+                </span>
               </h1>
+              <p className="ws-page-head__sub">
+                Answers for {restaurant.name}
+                {voiceLabel ? ` · ${voiceLabel} voice` : ""}
+                {center.lastSyncAt ? ` · synced ${formatWhen(center.lastSyncAt)}` : ""}
+              </p>
             </div>
-
-            <div className="live-agent-page__hero-badges flex flex-wrap items-center gap-2 text-xs">
-              <span
-                className={`rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider ${STATUS_TONE[center.connectionStatus] ?? STATUS_TONE.disconnected}`}
-              >
-                {STATUS_LABEL[center.connectionStatus] ?? STATUS_LABEL.disconnected}
-              </span>
-              <span className="text-muted">
-                Agent {center.agentId ? "linked" : "not linked"}
-              </span>
-              <span className="text-subtle" aria-hidden>
-                ·
-              </span>
-              <span className="text-muted">
-                Webhook {center.lastSyncPhoneWebhook ? "configured" : "—"}
-              </span>
+            <div className="ws-page-head__tools">
+              <MenuAutoSyncStatusPanel
+                restaurantId={restaurant.id}
+                restaurantName={restaurant.name}
+                initial={menuSync}
+                voiceOrderGate={voiceOrderGate}
+                variant="inline"
+              />
             </div>
-
-            <MenuAutoSyncStatusPanel
-              restaurantId={restaurant.id}
-              restaurantName={restaurant.name}
-              initial={menuSync}
-              voiceOrderGate={setup.billingGates?.voice_order ?? null}
-              variant="inline"
-            />
-
-            <dl className="live-agent-page__inline-meta grid gap-2 text-xs text-muted sm:grid-cols-2">
-              <div>
-                <dt className="text-micro font-semibold uppercase tracking-wider text-subtle">
-                  Store phone
-                </dt>
-                <dd className="mt-0.5 font-medium text-ink">
-                  {storePhone ?? "—"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-micro font-semibold uppercase tracking-wider text-subtle">
-                  Last sync
-                </dt>
-                <dd className="mt-0.5 font-medium text-ink">
-                  {center.lastSyncAt
-                    ? new Intl.DateTimeFormat(undefined, {
-                        dateStyle: "medium",
-                        timeStyle: "short",
-                      }).format(new Date(center.lastSyncAt))
-                    : "—"}
-                </dd>
-              </div>
-            </dl>
           </div>
+          <dl className="live-agent-page__inline-meta ws-page-head__meta">
+            <div>
+              <dt>Store phone</dt>
+              <dd>{storePhone ?? "—"}</dd>
+            </div>
+            <div>
+              <dt>Agent</dt>
+              <dd>{center.agentId ? "Linked" : "Not linked"}</dd>
+            </div>
+            <div>
+              <dt>Phone webhook</dt>
+              <dd>{center.lastSyncPhoneWebhook ? "Configured" : "—"}</dd>
+            </div>
+          </dl>
         </header>
+
+        {launchGate.phase !== "ready" ? (
+          <RestaurantLaunchGateCard gate={launchGate} compact />
+        ) : null}
+
+        <PhoneHostTestCall
+          restaurantId={restaurant.id}
+          organizationId={restaurant.organization_id}
+          restaurantName={restaurant.name}
+          hostName={hostName}
+          agentReady={agentReady}
+          outboundAvailable={outboundAvailable}
+          restaurantPhone={storePhone}
+          initialScorecard={scorecard}
+        />
+
+        <div className="phone-host__grid">
+          <KnowledgeSuggestionsInbox
+            restaurantId={restaurant.id}
+            hostName={hostName}
+            suggestions={suggestions}
+          />
+          <HostPersonaCard
+            restaurantId={restaurant.id}
+            restaurantName={restaurant.name}
+            initialName={profile.agent_display_name}
+            initialVoiceId={profile.agent_voice_id}
+            initialGreeting={profile.agent_greeting}
+          />
+        </div>
 
         <RestaurantCommandCenterPanel snapshot={commandCenter} compact />
 
-        <VoiceAgentPanel
-          embedded
-          initialCenter={center}
-          restaurantId={restaurant.id}
-          restaurantName={restaurant.name}
-          voiceOrderGate={setup.billingGates?.voice_order ?? null}
-        />
-
-        <details className="live-agent-page__test-call rounded-xl border border-line bg-card p-4 shadow-sm">
-          <summary className="cursor-pointer text-sm font-semibold text-ink">
-            Test call tools
+        <details className="phone-host__details card">
+          <summary className="phone-host__summary">
+            <span>Connection &amp; diagnostics</span>
+            <span className="phone-host__summary-hint">
+              Agent ID, sync, secrets, webhook URLs
+            </span>
           </summary>
-          <div className="mt-4">
-            <VoiceAgentTestHarness
+          <div className="phone-host__details-body">
+            <VoiceAgentPanel
+              embedded
+              initialCenter={center}
               restaurantId={restaurant.id}
-              variant="test-call"
+              restaurantName={restaurant.name}
+              voiceOrderGate={voiceOrderGate}
             />
+          </div>
+        </details>
+
+        <details className="phone-host__details card">
+          <summary className="phone-host__summary">
+            <span>Tool scenarios</span>
+            <span className="phone-host__summary-hint">
+              Dry-run the order tools without a call
+            </span>
+          </summary>
+          <div className="phone-host__details-body">
+            <VoiceAgentTestHarness restaurantId={restaurant.id} variant="test-call" flowStep />
           </div>
         </details>
       </div>

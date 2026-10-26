@@ -13,11 +13,16 @@ vi.mock("@/lib/notifications/operational-events", () => ({
   emitMenuAutoSyncFailureIfTransition: vi.fn().mockResolvedValue(false),
 }));
 
-import { provisionRestaurantConvaiAgent } from "@/lib/elevenlabs/agent-provision";
-import { provisionRestaurantVoiceAgent } from "@/lib/voice-agent/provision-restaurant-voice-agent";
+vi.mock("@/lib/env.server", () => ({
+  getElevenLabsAgentId: vi.fn(() => TEMPLATE_AGENT_ID),
+}));
 
 const TEMPLATE_AGENT_ID = "agent_template_env";
 const CLONED_AGENT_ID = "agent_restaurant_dedicated";
+
+import { provisionRestaurantConvaiAgent } from "@/lib/elevenlabs/agent-provision";
+import { provisionRestaurantVoiceAgent } from "@/lib/voice-agent/provision-restaurant-voice-agent";
+
 const RESTAURANT_ID = "00000000-0000-4000-8000-000000000099";
 const ORG_ID = "00000000-0000-4000-8000-000000000001";
 const USER_ID = "00000000-0000-4000-8000-000000000002";
@@ -66,7 +71,16 @@ describe("ElevenLabs clone provisioning (unit)", () => {
         profileUpdates.push(patch);
         return chain;
       }),
-      eq: vi.fn().mockResolvedValue({ error: null }),
+      eq: vi.fn(() => chain),
+      select: vi.fn(() => chain),
+      maybeSingle: vi.fn().mockResolvedValue({
+        data: {
+          elevenlabs_agent_id: null,
+          elevenlabs_provision_status: null,
+          elevenlabs_menu_auto_sync_status: null,
+        },
+        error: null,
+      }),
     };
     const client = {
       from: vi.fn(() => chain),

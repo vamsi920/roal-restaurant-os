@@ -22,7 +22,6 @@ describe("KDS page rendering (prompt 31)", () => {
 
   it("links to menu builder without embedding menu management UI", () => {
     const src = page();
-    expect(src).toContain("RESTAURANT_MENU_BUILDER_TITLE");
     expect(src).toContain("/menu");
     expect(src).not.toContain("<MenuScanner");
     expect(src).not.toContain("<VoiceAgentPanel");
@@ -77,7 +76,6 @@ describe("KDS workspace UX", () => {
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    expect(page).toContain("Orders dashboard");
     expect(panel).toContain("RESTAURANT_LIVE_ORDERS_LABEL");
     expect(panel).toContain("kds-orders-head");
     expect(panel).toContain("KdsRealtimeIndicator");

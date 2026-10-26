@@ -12,11 +12,16 @@ vi.mock("@/lib/supabase/server", () => ({
   getServiceRoleSupabase: vi.fn(),
 }));
 
+vi.mock("@/lib/voice-agent/after-menu-content-mutation", () => ({
+  afterMenuContentMutation: vi.fn(),
+}));
+
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import {
   createServerSupabase,
   getServiceRoleSupabase,
 } from "@/lib/supabase/server";
+import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 
 function accessOk() {
   return {
@@ -31,7 +36,7 @@ function accessOk() {
       },
       role: "owner" as const,
     },
-    context: null,
+    context: { user: { id: "user-1", email: "owner@example.com" } },
     errorResponse: null,
   };
 }
@@ -84,6 +89,10 @@ describe("DELETE /api/restaurants/[id]/menu", () => {
     });
     expect(rpc).toHaveBeenCalledWith("clear_restaurant_menu", {
       p_restaurant_id: RESTAURANT_ID,
+    });
+    expect(afterMenuContentMutation).toHaveBeenCalledWith(RESTAURANT_ID, {
+      userId: "user-1",
+      restaurantName: "Test",
     });
   });
 

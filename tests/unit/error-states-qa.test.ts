@@ -92,22 +92,4 @@ describe("error-state wiring (launch 30)", () => {
     );
     expect(billing).toContain("Pilot billing mode");
   });
-
-  it("create restaurant button formats API errors", () => {
-    const btn = readFileSync(
-      join(REPO, "app/dashboard/restaurants/CreateRestaurantButton.tsx"),
-      "utf8"
-    );
-    expect(btn).toContain("formatApiRouteError");
-    expect(btn).toContain('role="alert"');
-  });
-
-  it("contact form validates with role=alert", () => {
-    const form = readFileSync(
-      join(REPO, "components/landing/contact/contact-pilot-form.tsx"),
-      "utf8"
-    );
-    expect(form).toContain('role="alert"');
-    expect(form).not.toContain("error.message");
-  });
 });

@@ -1,12 +1,6 @@
-/** Canonical public routes + homepage hash anchors (nav/footer/CTA QA). */
+/** Canonical public routes + homepage hash anchors. */
 
-export const PUBLIC_HOME_HASH_IDS = ["how", "trust", "proof"] as const;
-
-/** In-page anchors on marketing routes (not homepage scroll targets). */
-export const PUBLIC_PAGE_LOCAL_HASH_IDS = [
-  "contact-form",
-  "security-technical-heading",
-] as const;
+export const PUBLIC_HOME_HASH_IDS = ["how", "pricing", "faq", "try"] as const;
 
 export type PublicHomeHashId = (typeof PUBLIC_HOME_HASH_IDS)[number];
 
@@ -14,9 +8,10 @@ export function publicHomeHash(id: PublicHomeHashId): `/#${PublicHomeHashId}` {
   return `/#${id}`;
 }
 
-/** App routes with a `page.tsx` under `app/` (marketing + legal). */
+/** App routes with a `page.tsx` under `app/` (marketing + legal + auth). */
 export const PUBLIC_MARKETING_ROUTES = [
   "/",
+  "/try",
   "/pricing",
   "/blog",
   "/about",
@@ -65,25 +60,12 @@ export function validatePublicHref(
   href: string,
   options: ValidatePublicHrefOptions
 ): { ok: true } | { ok: false; reason: string } {
-  if (href.startsWith("mailto:")) {
-    return { ok: true };
-  }
-  if (href.startsWith("http://") || href.startsWith("https://")) {
-    return { ok: true };
-  }
+  if (href.startsWith("mailto:")) return { ok: true };
+  if (href.startsWith("http://") || href.startsWith("https://")) return { ok: true };
 
   const { path, hash } = parsePublicHref(href);
 
-  if (path === "/" && !hash) {
-    return { ok: true };
-  }
-
-  if (
-    hash &&
-    (PUBLIC_PAGE_LOCAL_HASH_IDS as readonly string[]).includes(hash)
-  ) {
-    return { ok: true };
-  }
+  if (path === "/" && !hash) return { ok: true };
 
   if (hash && path !== "/" && path !== "") {
     return { ok: false, reason: `homepage hash only on / (got ${href})` };

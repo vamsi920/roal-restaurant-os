@@ -10,12 +10,18 @@ import {
   filterReceiptsForRestaurant,
   kdsConfirmedTicketOrders,
   kdsActiveDraftOrders,
+  kdsCallEvidenceCapabilityCopy,
   kdsHonestEmptyOrdersCopy,
   kdsSurfaceExcludesStaffManagementCopy,
   liveCallIndicatorCounts,
   recentOutcomeShowsNoOrderCall,
   shouldShowLiveCallIndicator,
 } from "@/lib/live-orders/kds-orders-surface";
+import {
+  buildKdsPeakCallContext,
+  kdsActionNeededOutcomeCount,
+  kdsPeakCallContextCopy,
+} from "@/lib/live-orders/peak-call-context";
 import { menuSyncLabelFromSnapshot } from "@/lib/live-orders/readiness-from-profile";
 import { menuAutoSyncFromProfile } from "@/lib/voice-agent/menu-auto-sync-display";
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
@@ -149,6 +155,49 @@ describe("KDS orders surface", () => {
     expect(kdsSurfaceExcludesStaffManagementCopy(copy.body)).toBe(true);
   });
 
+  it("states honest live vs post-call evidence capabilities", () => {
+    const copy = kdsCallEvidenceCapabilityCopy().toLowerCase();
+    expect(copy).toContain("live call indicator");
+    expect(copy).toContain("after the call ends");
+    expect(copy).toContain("not available yet");
+  });
+
+  it("derives peak call hour from recorded session timestamps", () => {
+    const context = buildKdsPeakCallContext([
+      { startedAt: "2026-05-30T18:15:00.000Z" },
+      { startedAt: "2026-05-30T18:45:00.000Z" },
+      { startedAt: "2026-05-30T12:00:00.000Z" },
+    ]);
+    expect(context.hasData).toBe(true);
+    expect(context.topHourLabel).toBe("6 PM");
+    expect(context.topHourCallCount).toBe(2);
+    expect(context.totalCallsInRange).toBe(3);
+    expect(kdsPeakCallContextCopy(context)).toContain("6 PM UTC");
+  });
+
+  it("counts action-needed outcomes without fake rows", () => {
+    expect(
+      kdsActionNeededOutcomeCount([
+        {
+          kind: "voicemail",
+          sessionId: "vm",
+          callerPhone: "+15550001111",
+          headline: "Voicemail callback",
+          detail: null,
+          occurredAt: "2026-05-30T18:00:00.000Z",
+        },
+        {
+          kind: "unknown",
+          sessionId: "other",
+          callerPhone: null,
+          headline: "No order placed",
+          detail: null,
+          occurredAt: "2026-05-30T17:00:00.000Z",
+        },
+      ])
+    ).toBe(1);
+  });
+
   it("does not use staff-management framing on KDS copy constants", () => {
     expect(kdsSurfaceExcludesStaffManagementCopy(RESTAURANT_LIVE_ORDERS_LABEL)).toBe(
       true
@@ -193,10 +242,22 @@ describe("menu builder separation", () => {
       join(import.meta.dirname, "../..", "components/live-orders/PhoneAgentReadinessStrip.tsx"),
       "utf8"
     );
+    const outcomes = readFileSync(
+      join(import.meta.dirname, "../..", "components/live-orders/RecentPhoneOutcomesPanel.tsx"),
+      "utf8"
+    );
+    const loader = readFileSync(
+      join(import.meta.dirname, "../..", "lib/live-orders/load-live-orders-page.ts"),
+      "utf8"
+    );
     expect(page).toContain("PhoneAgentReadinessStrip");
     expect(page).toContain("launchGate={pageData.launchGate}");
+    expect(page).toContain("peakCallContext={pageData.peakCallContext}");
     expect(strip).toContain("launchGate.phaseLabel");
     expect(strip).toContain("launchGate.topBlockerLabel");
     expect(strip).toContain("launchGate.primaryAction");
+    expect(outcomes).toContain("Peak call hour");
+    expect(loader).toContain("loadRestaurantCommandCenter");
+    expect(loader).toContain("peakCallContext");
   });
 });

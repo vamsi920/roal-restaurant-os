@@ -35,6 +35,7 @@ import {
   type AgentCallEventEvidenceRow,
   type OrderCallEvidence,
 } from "@/lib/live-orders/call-evidence";
+import { kdsCallEvidenceCapabilityCopy } from "@/lib/live-orders/kds-orders-surface";
 import {
   classifyKdsQueueLane,
   isKdsStuckOrder,
@@ -809,6 +810,9 @@ export function LiveOrdersPanel({
           liveCarts={liveCarts}
           draftRows={draftRows}
         />
+        <p className="px-3 pb-1 text-caption text-muted">
+          {kdsCallEvidenceCapabilityCopy()}
+        </p>
 
         <KdsQueueSummary chips={summaryChips} />
 

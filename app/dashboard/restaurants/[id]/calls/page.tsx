@@ -10,9 +10,12 @@ import { loadRestaurantCallHistory } from "@/lib/call-history/load-call-history"
 import { ensureRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
+import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
+import { defaultAgentName } from "@/lib/trial/voices";
+import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
 
 export const metadata: Metadata = {
-  title: "Calls & follow-ups — ROAL",
+  title: "Calls — ROAL",
 };
 
 export const dynamic = "force-dynamic";
@@ -38,26 +41,33 @@ export default async function RestaurantCallHistoryPage({
     restaurant.organization_id
   );
 
-  const history = await loadRestaurantCallHistory(supabase, {
-    restaurantId: restaurant.id,
-    restaurantName: restaurant.name,
-    profile,
-  });
+  const [history, suggestionCount] = await Promise.all([
+    loadRestaurantCallHistory(supabase, {
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+      profile,
+    }),
+    countPendingKnowledgeSuggestions(supabase, restaurant.id),
+  ]);
+  const hostName = profile.agent_display_name?.trim() || defaultAgentName();
 
   return (
     <RestaurantWorkspaceRail
       restaurantId={restaurant.id}
       restaurantName={restaurant.name}
+      suggestionCount={suggestionCount}
     >
       <div className="kds-workspace min-w-0 max-w-full space-y-4">
-        <header className="min-w-0">
-          <p className="text-xs font-medium text-subtle">Calls &amp; follow-ups</p>
-          <h1 className="mt-1 truncate text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            {restaurant.name}
-          </h1>
-          <p className="mt-1 max-w-2xl text-sm text-muted">
-            Phone command center for live calls, orders, voicemail, reservations, and staff follow-ups.
-          </p>
+        <header className="ws-page-head min-w-0">
+          <div className="ws-page-head__row">
+            <div className="min-w-0">
+              <h1 className="ws-page-head__title">Calls</h1>
+              <p className="ws-page-head__sub">
+                Every call {hostName} took: orders, voicemail, reservations, and the ones that
+                need a person.
+              </p>
+            </div>
+          </div>
         </header>
         <RestaurantCallHistoryPanel snapshot={history} />
       </div>

@@ -14,6 +14,7 @@ vi.mock("@/lib/voice-agent/sync-restaurant-agent-after-content-change", () => ({
     profile: "profile",
     hours: "hours",
     knowledge: "knowledge_updated",
+    upsell: "upsell_updated",
   },
 }));
 
@@ -21,6 +22,7 @@ import {
   afterHoursSettingsMutation,
   afterProfileSettingsMutation,
   afterRestaurantKnowledgeMutation,
+  afterRestaurantUpsellMutation,
   restaurantSettingsRevalidatePaths,
 } from "@/lib/voice-agent/after-restaurant-settings-mutation";
 
@@ -73,6 +75,21 @@ describe("afterRestaurantSettingsMutation", () => {
       userId: "user_3",
       restaurantName: "Bistro",
     });
+  });
+
+  it("afterRestaurantUpsellMutation syncs with upsell_updated trigger", () => {
+    afterRestaurantUpsellMutation(RESTAURANT_ID, {
+      userId: "user_4",
+      restaurantName: "Bistro",
+    });
+
+    expect(syncRestaurantAgentAfterContentChange).toHaveBeenCalledWith({
+      restaurantId: RESTAURANT_ID,
+      trigger: "upsell_updated",
+      userId: "user_4",
+      restaurantName: "Bistro",
+    });
+    expect(revalidatePath).toHaveBeenCalledWith("/dashboard/onboarding");
   });
 
   it("afterHoursSettingsMutation syncs with hours trigger", async () => {

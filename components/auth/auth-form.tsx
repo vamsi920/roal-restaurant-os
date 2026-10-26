@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { AuthFormStatus } from "@/components/auth/auth-form-status";
-import { PublicFormField } from "@/components/landing/public";
+import { AuthField } from "@/components/auth/auth-field";
 import { cn } from "@/lib/cn";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import {
@@ -142,7 +142,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
 
     return (
       <section
-        className="public-auth-panel public-auth-panel--success"
+        className="auth-panel auth-panel--success"
         role="status"
         aria-live="polite"
         aria-labelledby={forgotTitleId}
@@ -151,18 +151,18 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
           id={forgotTitleId}
           ref={forgotSentTitleRef}
           tabIndex={-1}
-          className="public-auth-panel__title"
+          className="auth-panel__title"
         >
           {forgot.forgotSentTitle}
         </h1>
-        <p className="public-auth-panel__lead">
+        <p className="auth-panel__lead">
           {forgot.forgotSentLead}{" "}
           <span className="font-medium text-ink">{email}</span>.
         </p>
-        <p className="public-auth-confirm-hint">{forgot.forgotSentHint}</p>
+        <p className="auth-hint">{forgot.forgotSentHint}</p>
         <button
           type="button"
-          className="public-btn-primary public-auth-submit"
+          className="btn-primary btn-lg auth-submit"
           onClick={() => setSignInView("sign_in")}
         >
           {forgot.forgotBackLabel}
@@ -178,17 +178,17 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
       <form
         method="post"
         onSubmit={onSubmit}
-        className={cn("public-auth-panel", loading && "public-auth-panel--busy")}
+        className={cn("auth-panel", loading && "auth-panel--busy")}
         aria-labelledby={titleId}
       >
-        <p className="public-auth-panel__eyebrow">Sign in</p>
-        <h1 id={titleId} className="public-auth-panel__title">
+        <p className="auth-panel__eyebrow">Sign in</p>
+        <h1 id={titleId} className="auth-panel__title">
           {forgot.forgotTitle}
         </h1>
-        <p className="public-auth-panel__lead">{forgot.forgotLead}</p>
+        <p className="auth-panel__lead">{forgot.forgotLead}</p>
 
-        <div className="public-form-fields">
-          <PublicFormField
+        <div className="auth-fields">
+          <AuthField
             id={emailId}
             name="email"
             label="Email"
@@ -210,17 +210,17 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
           disabled={loading}
           aria-busy={loading}
           className={cn(
-            "public-btn-primary public-auth-submit",
-            loading && "public-auth-submit--busy"
+            "btn-primary btn-lg auth-submit",
+            loading && "opacity-70"
           )}
         >
           {loading ? forgot.loadingLabel : forgot.forgotSubmitLabel}
         </button>
 
-        <p className="public-auth-footer">
+        <p className="auth-footer">
           <button
             type="button"
-            className="public-blog-link font-medium"
+            className="auth-link"
             disabled={loading}
             onClick={() => {
               setSignInView("sign_in");
@@ -240,7 +240,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
 
     return (
       <section
-        className="public-auth-panel public-auth-panel--success"
+        className="auth-panel auth-panel--success"
         role="status"
         aria-live="polite"
         aria-labelledby={confirmTitleId}
@@ -249,22 +249,22 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
           id={confirmTitleId}
           ref={confirmTitleRef}
           tabIndex={-1}
-          className="public-auth-panel__title"
+          className="auth-panel__title"
         >
           {confirm.title}
         </h1>
-        <p className="public-auth-panel__lead">
+        <p className="auth-panel__lead">
           {confirm.lead}{" "}
           <span className="font-medium text-ink">{email}</span>. {confirm.afterConfirm}
         </p>
-        <p className="public-auth-confirm-hint">{confirm.statusHint}</p>
+        <p className="auth-hint">{confirm.statusHint}</p>
         <Link
           href={authHrefWithNext("/login", next, "sign_in")}
-          className="public-btn-primary public-auth-submit inline-flex w-full justify-center"
+          className="btn-primary btn-lg auth-submit"
         >
           {confirm.backToSignIn}
         </Link>
-        <p className="public-auth-trust">{SIGNUP_PAGE_COPY.form.trustLine}</p>
+        <p className="auth-trust">{SIGNUP_PAGE_COPY.form.trustLine}</p>
       </section>
     );
   }
@@ -280,20 +280,20 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
     <form
       method="post"
       onSubmit={onSubmit}
-      className={cn("public-auth-panel", loading && "public-auth-panel--busy")}
+      className={cn("auth-panel", loading && "auth-panel--busy")}
       aria-labelledby={titleId}
       aria-describedby={hasError ? errorId : leadId}
     >
-      <p className="public-auth-panel__eyebrow">{copy.form.eyebrow}</p>
-      <h1 id={titleId} className="public-auth-panel__title">
+      <p className="auth-panel__eyebrow">{copy.form.eyebrow}</p>
+      <h1 id={titleId} className="auth-panel__title">
         {copy.form.title}
       </h1>
-      <p id={leadId} className="public-auth-panel__lead">
+      <p id={leadId} className="auth-panel__lead">
         {copy.form.lead}
       </p>
 
-      <div className="public-form-fields">
-        <PublicFormField
+      <div className="auth-fields">
+        <AuthField
           id={emailId}
           name="email"
           label="Email"
@@ -306,7 +306,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
           disabled={loading}
           describedBy={hasError ? errorId : undefined}
         />
-        <PublicFormField
+        <AuthField
           id={passwordId}
           name="password"
           label="Password"
@@ -322,10 +322,10 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
           hint={isSignUp && "passwordHint" in copy.form ? copy.form.passwordHint : undefined}
         />
         {!isSignUp ? (
-          <p className="public-auth-forgot-row">
+          <p className="auth-forgot-row">
             <button
               type="button"
-              className="public-blog-link text-sm font-medium"
+              className="auth-link"
               disabled={loading}
               onClick={() => {
                 setSignInView("forgot");
@@ -345,14 +345,14 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
         disabled={loading}
         aria-busy={loading}
         className={cn(
-          "public-btn-primary public-auth-submit",
-          loading && "public-auth-submit--busy"
+          "btn-primary btn-lg auth-submit",
+          loading && "opacity-70"
         )}
       >
         {loading ? copy.form.loadingLabel : copy.form.submitLabel}
       </button>
 
-      <p className="public-auth-footer">
+      <p className="auth-footer">
         {isSignUp ? (
           <>
             {SIGNUP_PAGE_COPY.footer.hasAccount}{" "}
@@ -362,7 +362,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
                 authCrossLinkNext(next, "sign_up"),
                 "sign_in"
               )}
-              className="public-blog-link font-medium"
+              className="auth-link"
             >
               {SIGNUP_PAGE_COPY.footer.signIn}
             </Link>
@@ -376,7 +376,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
                 authCrossLinkNext(next, "sign_in"),
                 "sign_up"
               )}
-              className="public-blog-link font-medium"
+              className="auth-link"
             >
               {LOGIN_PAGE_COPY.footer.createAccount}
             </Link>
@@ -385,7 +385,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
       </p>
 
       {"trustLine" in copy.form ? (
-        <p className="public-auth-trust">{copy.form.trustLine}</p>
+        <p className="auth-trust">{copy.form.trustLine}</p>
       ) : null}
     </form>
   );

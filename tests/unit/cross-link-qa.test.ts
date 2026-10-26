@@ -1,29 +1,22 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { BLOG_POSTS } from "@/lib/blog/posts";
-import { ABOUT_PAGE_COPY } from "@/lib/landing/about-page-copy";
-import { CONTACT_CTA } from "@/lib/landing/contact-page-copy";
-import { CONTACT_PILOT_EMAIL, mailtoUsesPilotInbox } from "@/lib/landing/contact-mailto";
-import {
-  FOOTER_COMPANY_LINKS,
-  FOOTER_PLATFORM_LINKS,
-  FOOTER_PRODUCT_LINKS,
-  LANDING_FOOTER,
-} from "@/lib/landing/footer-copy";
-import { HOME_FAQ } from "@/lib/landing/launch-faq";
-import { PUBLIC_CTA } from "@/lib/landing/public-cta";
+import { mailtoUsesPilotInbox } from "@/lib/landing/contact-mailto";
+import { HOME_FAQ, PRICING_FAQ, SECURITY_FAQ } from "@/lib/landing/launch-faq";
+import { PUBLIC_CTA, PUBLIC_CTA_PAIR } from "@/lib/landing/public-cta";
 import {
   PUBLIC_HOME_HASH_IDS,
   PUBLIC_MARKETING_ROUTES,
+  parsePublicHref,
   validatePublicHref,
 } from "@/lib/landing/public-links";
 import {
-  PUBLIC_NAV_LINKS,
-  PUBLIC_NAV_LOGIN,
-  PUBLIC_NAV_SIGNUP,
-} from "@/lib/landing/public-nav";
-import { SECURITY_CTA } from "@/lib/landing/security-page-copy";
+  SITE_FOOTER_COLUMNS,
+  SITE_NAV_LINKS,
+  SITE_NAV_SIGN_IN,
+  SITE_NAV_TRY,
+} from "@/lib/landing/site-nav";
 
 const APP_DIR = join(process.cwd(), "app");
 const BLOG_SLUGS = BLOG_POSTS.map((p) => p.slug);
@@ -39,27 +32,18 @@ function marketingPageExists(route: string): boolean {
 function collectMarketingHrefs(): string[] {
   const out: string[] = [];
 
-  for (const link of PUBLIC_NAV_LINKS) out.push(link.href);
-  out.push(PUBLIC_NAV_LOGIN.href, PUBLIC_NAV_SIGNUP.href);
+  for (const link of SITE_NAV_LINKS) out.push(link.href);
+  out.push(SITE_NAV_SIGN_IN.href, SITE_NAV_TRY.href);
 
-  for (const link of LANDING_FOOTER.essentialLinks) out.push(link.href);
-  out.push(LANDING_FOOTER.brandHref, LANDING_FOOTER.demoCta.href, LANDING_FOOTER.contactCta.href);
+  for (const column of SITE_FOOTER_COLUMNS) {
+    for (const link of column.links) out.push(link.href);
+  }
 
   for (const cta of Object.values(PUBLIC_CTA)) out.push(cta.href);
-  for (const cta of Object.values(SECURITY_CTA)) out.push(cta.href);
-  for (const cta of Object.values(CONTACT_CTA)) out.push(cta.href);
+  out.push(PUBLIC_CTA_PAIR.primary.href, PUBLIC_CTA_PAIR.secondary.href);
 
-  for (const link of ABOUT_PAGE_COPY.resources.links) out.push(link.href);
-  for (const item of ABOUT_PAGE_COPY.values.items) {
-    if (item.link) out.push(item.link.href);
-  }
-
-  for (const item of HOME_FAQ.items) {
-    if (item.link) out.push(item.link.href);
-  }
-
-  for (const links of [FOOTER_PRODUCT_LINKS, FOOTER_COMPANY_LINKS, FOOTER_PLATFORM_LINKS]) {
-    for (const link of links) out.push(link.href);
+  for (const item of [...HOME_FAQ.items, ...PRICING_FAQ, ...SECURITY_FAQ]) {
+    if ("link" in item && item.link) out.push(item.link.href);
   }
 
   return out;
@@ -87,24 +71,25 @@ describe("cross-link QA", () => {
 
   it("mailto CTAs use the pilot inbox", () => {
     expect(mailtoUsesPilotInbox(PUBLIC_CTA.bookDemoMailto.href)).toBe(true);
-    expect(mailtoUsesPilotInbox(CONTACT_CTA.bookDemo.href)).toBe(true);
   });
 
-  it("homepage hash anchors used in copy have matching ids", () => {
-    expect(existsSync(join(process.cwd(), "components/landing/home/sections/home-how-it-works.tsx"))).toBe(
-      true
-    );
-    const how = readFileSnippet("components/landing/home/sections/home-how-it-works.tsx");
-    const solution = readFileSnippet("components/landing/home/sections/home-solution.tsx");
-    const metrics = readFileSnippet("components/landing/public/public-metrics-strip.tsx");
+  it("homepage hash anchors used in nav and CTAs are declared", () => {
+    const hashes = collectMarketingHrefs()
+      .map((href) => parsePublicHref(href))
+      .filter((parsed) => parsed.hash)
+      .map((parsed) => parsed.hash);
+    expect(hashes.length).toBeGreaterThan(0);
+    for (const hash of hashes) {
+      expect(PUBLIC_HOME_HASH_IDS, `#${hash}`).toContain(hash);
+    }
+  });
 
-    expect(how).toContain('id="how"');
-    expect(solution).toContain('id="trust"');
-    expect(metrics).toContain('id={home ? "proof"');
-    expect(PUBLIC_HOME_HASH_IDS).toEqual(["how", "trust", "proof"]);
+  it("validatePublicHref rejects unknown routes, hashes and blog slugs", () => {
+    expect(validatePublicHref("/nope", { blogSlugs: BLOG_SLUGS }).ok).toBe(false);
+    expect(validatePublicHref("/#nope", { blogSlugs: BLOG_SLUGS }).ok).toBe(false);
+    expect(validatePublicHref("/pricing#how", { blogSlugs: BLOG_SLUGS }).ok).toBe(false);
+    expect(validatePublicHref("/blog/not-a-post", { blogSlugs: BLOG_SLUGS }).ok).toBe(false);
+    expect(validatePublicHref("mailto:x@y.z", { blogSlugs: BLOG_SLUGS }).ok).toBe(true);
+    expect(validatePublicHref("https://example.com", { blogSlugs: BLOG_SLUGS }).ok).toBe(true);
   });
 });
-
-function readFileSnippet(relativePath: string): string {
-  return readFileSync(join(process.cwd(), relativePath), "utf8");
-}

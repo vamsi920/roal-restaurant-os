@@ -1,29 +1,36 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Sora } from "next/font/google";
+import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { buildSiteMetadataDefaults } from "@/lib/seo/public-open-graph";
 import { getMetadataBase } from "@/lib/site-url";
 import "./typography.css";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const sora = Sora({
+const interTight = Inter_Tight({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
-  title: "ROAL — Pickup calls to your kitchen screen",
+  title: "ROAL — The AI phone host for restaurants",
   description:
-    "ROAL answers pickup calls from your live menu, sends kitchen tickets, and charges only for successful orders—not per-minute phone fees.",
+    "Paste your restaurant link, talk to your AI phone host in 60 seconds, then forward your number. ROAL takes pickup orders from your live menu and charges only for completed orders.",
   icons: {
     icon: [{ url: "/icons/roal-app-icon.svg", type: "image/svg+xml" }],
     apple: [{ url: "/icons/roal-app-icon.svg", type: "image/svg+xml" }],
@@ -41,7 +48,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`[color-scheme:light] ${plusJakarta.variable} ${sora.variable}`}>
+    <html lang="en" className={`[color-scheme:light] ${inter.variable} ${interTight.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-[100dvh] bg-base font-sans text-ink antialiased">
         {children}
       </body>

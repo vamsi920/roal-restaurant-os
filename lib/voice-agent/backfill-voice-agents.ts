@@ -1,4 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { getElevenLabsAgentId } from "@/lib/env.server";
+import { isSharedTemplateAgentLinked } from "@/lib/restaurant-launch/server-env";
 import { getServiceRoleSupabase } from "@/lib/supabase/server";
 import {
   defaultProvisionRestaurantVoiceAgentDeps,
@@ -53,14 +55,12 @@ export async function loadVoiceAgentBackfillCandidates(
   supabase: SupabaseClient,
   options: { force: boolean; limit: number | null }
 ): Promise<BackfillVoiceAgentCandidate[]> {
-  let query = supabase
+  const templateAgentId = getElevenLabsAgentId();
+
+  const query = supabase
     .from("restaurant_profiles")
     .select("restaurant_id, organization_id, elevenlabs_agent_id")
     .order("updated_at", { ascending: true });
-
-  if (!options.force) {
-    query = query.or('elevenlabs_agent_id.is.null,elevenlabs_agent_id.eq.""');
-  }
 
   const { data: profiles, error } = await query;
   if (error) throw new Error(error.message);
@@ -71,7 +71,8 @@ export async function loadVoiceAgentBackfillCandidates(
       typeof p.elevenlabs_agent_id === "string"
         ? p.elevenlabs_agent_id.trim()
         : "";
-    return agentId.length === 0;
+    if (agentId.length === 0) return true;
+    return isSharedTemplateAgentLinked(agentId, templateAgentId);
   });
 
   if (options.limit != null) {

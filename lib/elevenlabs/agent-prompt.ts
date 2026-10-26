@@ -237,6 +237,9 @@ function buildRestaurantIdentitySection(
   profile: RestaurantProfile | null
 ): string {
   const lines = [`Restaurant name (use in speech): ${displayName}`];
+  if (profile?.agent_display_name?.trim()) {
+    lines.push(`Your name (say it only if asked who they are speaking with): ${profile.agent_display_name.trim()}`);
+  }
   if (profile?.cuisine?.trim()) {
     lines.push(`Cuisine style: ${profile.cuisine.trim()}`);
   }
@@ -479,17 +482,22 @@ export function buildRestaurantOrderFirstMessage(
       : `Hi, thanks for calling ${name}. We're temporarily closed right now and can't take orders.`;
   }
 
+  const custom = profile?.agent_greeting?.trim();
+  if (custom) return custom;
+
   const pickup = profile?.allows_pickup ?? true;
   const delivery = profile?.allows_delivery ?? false;
+  const persona = profile?.agent_display_name?.trim();
+  const intro = persona ? `Hi, thanks for calling ${name}, this is ${persona}.` : `Hi, thanks for calling ${name}.`;
 
   if (pickup && !delivery) {
-    return `Hi, thanks for calling ${name}. This line is for pickup orders—what can I get started for you?`;
+    return `${intro} This line is for pickup orders—what can I get started for you?`;
   }
   if (delivery && !pickup) {
-    return `Hi, thanks for calling ${name}. This line is for delivery orders—what can I get started for you?`;
+    return `${intro} This line is for delivery orders—what can I get started for you?`;
   }
 
-  return `Hi, thanks for calling ${name}. Are you picking up, or would you like delivery?`;
+  return `${intro} Are you picking up, or would you like delivery?`;
 }
 
 export function buildRestaurantVoicemailMessage(restaurantName: string): string {

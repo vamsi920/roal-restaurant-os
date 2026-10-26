@@ -66,6 +66,35 @@ export async function duplicateConvaiAgent(
   return parseJsonOrThrow(res, "duplicate agent");
 }
 
+export async function getConvaiSignedUrl(agentId: string): Promise<string> {
+  const res = await elevenlabsFetch(
+    `/v1/convai/conversation/get_signed_url?agent_id=${encodeURIComponent(agentId)}`,
+    { method: "GET" }
+  );
+  const data = (await parseJsonOrThrow(res, "signed url")) as {
+    signed_url?: string;
+  };
+  const url = data.signed_url?.trim();
+  if (!url) throw new Error("ElevenLabs signed URL missing");
+  return url;
+}
+
+export async function startConvaiOutboundCall(input: {
+  agentId: string;
+  agentPhoneNumberId: string;
+  toNumber: string;
+}): Promise<unknown> {
+  const res = await elevenlabsFetch("/v1/convai/twilio/outbound-call", {
+    method: "POST",
+    body: JSON.stringify({
+      agent_id: input.agentId,
+      agent_phone_number_id: input.agentPhoneNumberId,
+      to_number: input.toNumber,
+    }),
+  });
+  return parseJsonOrThrow(res, "outbound call");
+}
+
 export type ConvaiToolListItem = {
   id: string;
   tool_config?: { type?: string; name?: string };

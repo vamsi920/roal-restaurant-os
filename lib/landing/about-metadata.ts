@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { ABOUT_PAGE_COPY } from "@/lib/landing/about-page-copy";
 import { buildPublicPageMetadata } from "@/lib/seo/public-open-graph";
 
 export function buildAboutPageMetadata(): Metadata {
-  const { title, description } = ABOUT_PAGE_COPY.seo;
   return buildPublicPageMetadata({
-    title,
-    description,
+    title: "About ROAL — An AI phone host for restaurants",
+    description:
+      "Why we built ROAL: busy restaurants miss calls, and every missed call is a missed order. ROAL answers, takes the order from your live menu, and sends the ticket to the kitchen.",
     canonicalPath: "/about",
   });
 }

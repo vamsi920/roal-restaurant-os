@@ -1,6 +1,6 @@
-# ROAL — Restaurant Operational Abstraction Layer
+# ROAL — The AI phone host for restaurants
 
-Multi-tenant SaaS for restaurants: menu scan (Gemini) → review/commit, live KDS with Supabase Realtime, ElevenLabs phone orders via signed Edge tools, billing gates, analytics, and admin ops.
+Paste a restaurant link, talk to its AI phone host in the browser a minute later, claim it, forward the number. Multi-tenant SaaS: magic onboarding (website/Maps link → host builds itself), menu scan (Gemini) → review/commit, live KDS with Supabase Realtime, ElevenLabs phone orders via signed Edge tools, call history + transcripts, unanswered-question FAQ inbox, billing gates, analytics, and admin ops.
 
 ## Stack
 
@@ -22,7 +22,7 @@ npm run dev
 
 Open <http://localhost:3000> → sign up at `/signup` → complete onboarding or add a membership (see [docs/AUTH.md](docs/AUTH.md)).
 
-Apply database migrations once (linked Supabase project):
+Apply database migrations once (linked Supabase project; `001`–`035`):
 
 ```bash
 supabase link --project-ref YOUR_PROJECT_REF
@@ -36,7 +36,9 @@ supabase db push
 | [docs/AUTH.md](docs/AUTH.md) | Sessions, roles, protected routes |
 | [docs/RLS.md](docs/RLS.md) | Production RLS model and dev paths |
 | [docs/TENANT_SCHEMA.md](docs/TENANT_SCHEMA.md) | Organizations, memberships, legacy POC org |
-| [docs/ONBOARDING.md](docs/ONBOARDING.md) | Wizard steps and helpers |
+| [docs/MAGIC_ONBOARDING.md](docs/MAGIC_ONBOARDING.md) | Try-a-call trial pipeline, claim flow, persona, FAQ inbox |
+| [docs/COMPETITOR_FEATURES.md](docs/COMPETITOR_FEATURES.md) | What we borrowed from competitors (internal) |
+| [docs/ONBOARDING.md](docs/ONBOARDING.md) | Legacy wizard steps and helpers |
 | [docs/ELEVENLABS.md](docs/ELEVENLABS.md) | Edge tool URLs, Connect agent, Netlify parity |
 | [docs/AGENT_TOOL_SECURITY.md](docs/AGENT_TOOL_SECURITY.md) | `roal1.*` tokens, validation, idempotency |
 | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Migrations `001`–`024`, Edge deploy, env, smoke tests |

@@ -11,6 +11,7 @@ import { RESTAURANT_MENU_SETUP_TITLE } from "@/lib/dashboard-restaurant-labels";
 import { MenuSetupWorkspace } from "./MenuSetupWorkspace";
 import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
+import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
 
 export const metadata: Metadata = {
   title: `${RESTAURANT_MENU_SETUP_TITLE} — ROAL`,
@@ -33,16 +34,20 @@ export default async function RestaurantMenuSetupPage({
 
   const { restaurant, role } = access;
   const supabase = await createServerSupabase();
-  const setup = await loadRestaurantMenuSetupPageData(supabase, {
-    restaurant,
-    organizationId: restaurant.organization_id,
-    membershipRole: role,
-  });
+  const [setup, suggestionCount] = await Promise.all([
+    loadRestaurantMenuSetupPageData(supabase, {
+      restaurant,
+      organizationId: restaurant.organization_id,
+      membershipRole: role,
+    }),
+    countPendingKnowledgeSuggestions(supabase, restaurant.id),
+  ]);
 
   return (
     <RestaurantWorkspaceRail
       restaurantId={restaurant.id}
       restaurantName={restaurant.name}
+      suggestionCount={suggestionCount}
     >
       <MenuSetupWorkspace {...setup} />
     </RestaurantWorkspaceRail>

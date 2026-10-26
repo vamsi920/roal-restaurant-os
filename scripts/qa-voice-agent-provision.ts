@@ -14,10 +14,12 @@
  * ROAL edge tool secrets, QA_USER_ID (for provision audit).
  */
 import { firstMessageHasUnresolvedTemplates } from "../lib/elevenlabs-placeholders";
+import { getElevenLabsAgentId } from "../lib/env.server";
 import {
   defaultProvisionRestaurantVoiceAgentDeps,
   provisionRestaurantVoiceAgent,
 } from "../lib/voice-agent/provision-restaurant-voice-agent";
+import { resolveDedicatedElevenLabsAgentId } from "../lib/voice-agent/dedicated-agent-id";
 import {
   checksFromSyncSummary,
   loadProfileVoiceState,
@@ -41,15 +43,23 @@ void (async () => {
   let agentId: string | null = null;
 
   const before = await loadProfileVoiceState(sb, ctx.restaurantId);
+  const templateId = getElevenLabsAgentId();
+  const dedicatedId = resolveDedicatedElevenLabsAgentId(
+    before?.elevenlabs_agent_id,
+    templateId
+  );
   const hadAgent =
-    before?.elevenlabs_agent_id != null &&
-    String(before.elevenlabs_agent_id).trim().length > 0;
+    Boolean(dedicatedId) &&
+    before?.elevenlabs_provision_status === "ready" &&
+    !forceProvision;
 
   if (!hadAgent || forceProvision) {
     console.log(
-      forceProvision && hadAgent
-        ? "QA_FORCE_PROVISION=1 — provisioning new dedicated agent"
-        : "Provisioning dedicated voice agent…"
+      forceProvision && dedicatedId
+        ? "QA_FORCE_PROVISION=1 — provisioning dedicated agent"
+        : dedicatedId
+          ? "Re-syncing dedicated agent (provision not ready)…"
+          : "Provisioning dedicated voice agent…"
     );
     const result = await provisionRestaurantVoiceAgent(
       ctx.restaurantId,
@@ -59,7 +69,8 @@ void (async () => {
       {
         ...defaultProvisionRestaurantVoiceAgentDeps(),
         getSupabase: async () => sb,
-      }
+      },
+      { forceReprovision: forceProvision }
     );
 
     checks.push({
@@ -81,7 +92,7 @@ void (async () => {
       detail: result.summary.provision?.method,
     });
   } else {
-    agentId = String(before!.elevenlabs_agent_id).trim();
+    agentId = dedicatedId!;
     console.log(`Using existing dedicated agent ${agentId}`);
     checks.push({
       name: "provision: skipped (agent already linked)",

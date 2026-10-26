@@ -1,10 +1,12 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import {
+  buildRestaurantConvaiAgentName,
   provisionRestaurantConvaiAgent,
   type ConvaiAgentProvisionMethod,
   type ProvisionRestaurantConvaiAgentResult,
 } from "@/lib/elevenlabs/agent-provision";
 import { getElevenLabsAgentId } from "@/lib/env.server";
+import { resolveDedicatedElevenLabsAgentId } from "@/lib/voice-agent/dedicated-agent-id";
 import { writeAuditLog } from "@/lib/observability/audit";
 import {
   emitMenuAutoSyncFailureIfTransition,
@@ -270,6 +272,92 @@ async function persistUnexpectedProvisionFailure(
   });
 }
 
+export type ProvisionRestaurantVoiceAgentOptions = {
+  forceReprovision?: boolean;
+};
+
+async function loadProfileAgentId(
+  supabase: SupabaseClient,
+  restaurantId: string
+): Promise<string | null> {
+  const { data, error } = await supabase
+    .from("restaurant_profiles")
+    .select("elevenlabs_agent_id")
+    .eq("restaurant_id", restaurantId)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+
+  return data?.elevenlabs_agent_id != null &&
+    String(data.elevenlabs_agent_id).trim()
+    ? String(data.elevenlabs_agent_id).trim()
+    : null;
+}
+
+async function finalizeProvisionSync(
+  supabase: SupabaseClient,
+  input: {
+    restaurantId: string;
+    restaurantName: string;
+    organizationId: string;
+    userId: string;
+    agentId: string;
+    provisionMeta: VoiceAgentProvisionSummary["provision"];
+    provisionRecord: ProvisionRestaurantConvaiAgentResult;
+  },
+  deps: ProvisionRestaurantVoiceAgentDeps
+): Promise<ProvisionRestaurantVoiceAgentResult> {
+  const rid = input.restaurantId;
+
+  await patchProfileLifecycle(supabase, rid, {
+    elevenlabs_agent_id: input.agentId,
+    elevenlabs_menu_auto_sync_status: "syncing",
+    elevenlabs_menu_auto_sync_error: null,
+  });
+
+  try {
+    const { sync, profile, summary: syncSummary } = await deps.runSync({
+      agentId: input.agentId,
+      restaurantId: rid,
+      restaurantName: input.restaurantName,
+    });
+
+    const summary: VoiceAgentProvisionSummary = {
+      ...syncSummary,
+      provision: input.provisionMeta,
+    };
+
+    await persistProvisionSuccess(supabase, {
+      restaurantId: rid,
+      organizationId: input.organizationId,
+      userId: input.userId,
+      agentId: input.agentId,
+      provision: input.provisionRecord,
+      summary,
+    });
+
+    return {
+      ok: true,
+      agentId: input.agentId,
+      provisionMethod: input.provisionMeta.method,
+      summary,
+      sync,
+      profile,
+    };
+  } catch (e) {
+    return persistProvisionFailure(supabase, {
+      restaurantId: rid,
+      restaurantName: input.restaurantName,
+      organizationId: input.organizationId,
+      userId: input.userId,
+      message: e instanceof Error ? e.message : "Agent sync failed",
+      agentId: input.agentId,
+      phase: "sync",
+      menuAutoSyncStatus: "failed",
+    });
+  }
+}
+
 /**
  * Clone a dedicated ConvAI agent from `ELEVENLABS_AGENT_ID`, sync ROAL tools/profile/webhook,
  * and persist lifecycle + summary on `restaurant_profiles`.
@@ -279,7 +367,8 @@ export async function provisionRestaurantVoiceAgent(
   name: string,
   organizationId: string,
   userId: string,
-  deps: ProvisionRestaurantVoiceAgentDeps = defaultProvisionRestaurantVoiceAgentDeps()
+  deps: ProvisionRestaurantVoiceAgentDeps = defaultProvisionRestaurantVoiceAgentDeps(),
+  options?: ProvisionRestaurantVoiceAgentOptions
 ): Promise<ProvisionRestaurantVoiceAgentResult> {
   const rid = restaurantId.trim();
   const restaurantName = name.trim();
@@ -293,8 +382,52 @@ export async function provisionRestaurantVoiceAgent(
   const supabase = await deps.getSupabase();
   await ensureRestaurantProfile(supabase, rid, orgId);
 
+  const templateAgentId = getElevenLabsAgentId();
+  const rawProfileAgentId = await loadProfileAgentId(supabase, rid);
+  const existingDedicated = options?.forceReprovision
+    ? null
+    : resolveDedicatedElevenLabsAgentId(rawProfileAgentId, templateAgentId);
+
   await markProvisionPhase(supabase, rid, "pending");
   await markProvisionPhase(supabase, rid, "provisioning");
+
+  if (existingDedicated) {
+    const provisionMeta: VoiceAgentProvisionSummary["provision"] = {
+      method: "reuse",
+      template_agent_id: templateAgentId ?? "",
+      agent_name: buildRestaurantConvaiAgentName(rid, restaurantName),
+    };
+    const provisionRecord: ProvisionRestaurantConvaiAgentResult = {
+      agent_id: existingDedicated,
+      agent_name: provisionMeta.agent_name,
+      template_agent_id: provisionMeta.template_agent_id,
+      method: "reuse",
+    };
+    return finalizeProvisionSync(
+      supabase,
+      {
+        restaurantId: rid,
+        restaurantName,
+        organizationId: orgId,
+        userId: uid,
+        agentId: existingDedicated,
+        provisionMeta,
+        provisionRecord,
+      },
+      deps
+    );
+  }
+
+  if (
+    rawProfileAgentId &&
+    templateAgentId &&
+    rawProfileAgentId === templateAgentId.trim()
+  ) {
+    await patchProfileLifecycle(supabase, rid, {
+      elevenlabs_agent_id: null,
+      elevenlabs_provision_error: null,
+    });
+  }
 
   let provision: ProvisionRestaurantConvaiAgentResult;
   try {
@@ -315,58 +448,25 @@ export async function provisionRestaurantVoiceAgent(
   }
 
   const agentId = provision.agent_id;
+  const provisionMeta: VoiceAgentProvisionSummary["provision"] = {
+    method: provision.method,
+    template_agent_id: provision.template_agent_id,
+    agent_name: provision.agent_name,
+  };
 
-  await patchProfileLifecycle(supabase, rid, {
-    elevenlabs_agent_id: agentId,
-    elevenlabs_menu_auto_sync_status: "syncing",
-    elevenlabs_menu_auto_sync_error: null,
-  });
-
-  try {
-    const { sync, profile, summary: syncSummary } = await deps.runSync({
-      agentId,
-      restaurantId: rid,
-      restaurantName,
-    });
-
-    const summary: VoiceAgentProvisionSummary = {
-      ...syncSummary,
-      provision: {
-        method: provision.method,
-        template_agent_id: provision.template_agent_id,
-        agent_name: provision.agent_name,
-      },
-    };
-
-    await persistProvisionSuccess(supabase, {
-      restaurantId: rid,
-      organizationId: orgId,
-      userId: uid,
-      agentId,
-      provision,
-      summary,
-    });
-
-    return {
-      ok: true,
-      agentId,
-      provisionMethod: provision.method,
-      summary,
-      sync,
-      profile,
-    };
-  } catch (e) {
-    return persistProvisionFailure(supabase, {
+  return finalizeProvisionSync(
+    supabase,
+    {
       restaurantId: rid,
       restaurantName,
       organizationId: orgId,
       userId: uid,
-      message: e instanceof Error ? e.message : "Agent sync failed",
       agentId,
-      phase: "sync",
-      menuAutoSyncStatus: "failed",
-    });
-  }
+      provisionMeta,
+      provisionRecord: provision,
+    },
+    deps
+  );
 }
 
 const VOICE_AGENT_SKIPPED_WARNING =

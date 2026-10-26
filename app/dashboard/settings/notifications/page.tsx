@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
+import { PageHeader } from "@/components/dashboard/page-primitives";
 import { NotificationDeliveryLog } from "@/components/notifications/NotificationDeliveryLog";
 import { NotificationSettingsForm } from "@/components/notifications/NotificationSettingsForm";
 import { getAuthContext } from "@/lib/auth/context-server";
@@ -58,22 +58,17 @@ export default async function NotificationSettingsPage() {
   );
 
   return (
-    <div className="notification-settings-page dashboard-page dashboard-page--medium dashboard-page__stack min-w-0 max-w-full space-y-6 overflow-x-hidden sm:space-y-8">
-      <header className="dashboard-page__header min-w-0">
-        <p className="dashboard-page__eyebrow">Settings</p>
-        <h1 className="dashboard-page__title">Notifications</h1>
-        <p className="dashboard-page__lead">
-          Alerts for completed orders, sync and scan failures, stuck tickets, and
-          Realtime outages. {NOTIFICATION_PROVIDER_POSTURE.devDefault}
-        </p>
-        <Link href="/dashboard/settings" className="dashboard-page__back">
-          ← Organization
-        </Link>
-      </header>
+    <div className="notification-settings-page dashboard-page dashboard-page--medium dashboard-page__stack min-w-0 space-y-5 overflow-x-hidden">
+      <PageHeader
+        backHref="/dashboard/settings"
+        backLabel="Settings"
+        title="Notifications"
+        lead={`Alerts for completed orders, sync and scan failures, stuck tickets, and realtime outages. ${NOTIFICATION_PROVIDER_POSTURE.devDefault}`}
+      />
 
       <NotificationSettingsForm settings={settings} canEdit={canEdit} />
       {!canEdit ? (
-        <p className="text-sm text-muted">{NOTIFICATION_PROVIDER_POSTURE.memberReadOnly}</p>
+        <p className="text-[13px] text-muted">{NOTIFICATION_PROVIDER_POSTURE.memberReadOnly}</p>
       ) : null}
       <NotificationDeliveryLog deliveries={rows} />
     </div>

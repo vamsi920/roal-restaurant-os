@@ -84,6 +84,11 @@ export function kdsHonestEmptyOrdersCopy(): {
   };
 }
 
+/** Honest KDS copy: live indicator yes, post-call evidence yes, live streaming no. */
+export function kdsCallEvidenceCapabilityCopy(): string {
+  return "Live call indicator updates during active calls. Transcript summary, turns, and recording links appear after the call ends; word-by-word live transcript streaming is not available yet.";
+}
+
 export function recentOutcomeShowsNoOrderCall(
   outcomes: LiveOrdersRecentOutcome[]
 ): boolean {

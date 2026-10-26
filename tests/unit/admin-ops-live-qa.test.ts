@@ -19,7 +19,8 @@ describe("admin ops live posture (launch 24)", () => {
       join(REPO, "app/dashboard/layout.tsx"),
       "utf8"
     );
-    expect(layout).toContain("showAdminNav={hasOrgAdminAccess(context)}");
+    expect(layout).toContain("showAdminNav={isPlatformAdminEmail(");
+    expect(layout).not.toContain("showAdminNav={hasOrgAdminAccess(");
     const shell = readFileSync(
       join(REPO, "components/dashboard/app-shell.tsx"),
       "utf8"

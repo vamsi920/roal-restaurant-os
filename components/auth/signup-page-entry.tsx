@@ -3,35 +3,49 @@
 import { useSearchParams } from "next/navigation";
 import { defaultAuthNextPath } from "@/lib/auth/auth-next-url";
 import { safeNextPath } from "@/lib/auth/safe-next";
-import { SIGNUP_ONBOARDING_NEXT } from "@/lib/auth/signup-page-copy";
+import { SIGNUP_ONBOARDING_NEXT, SIGNUP_PAGE_COPY } from "@/lib/auth/signup-page-copy";
 import { AuthForm } from "./auth-form";
-import { SignupOnboardingAside } from "./signup-onboarding-aside";
 
-/** `/signup` layout: onboarding story + account form (auth logic in AuthForm). */
+/** `/signup` layout: short onboarding story + account form (auth logic in AuthForm). */
 export function SignupPageEntry() {
   const searchParams = useSearchParams();
   const next = safeNextPath(searchParams.get("next"), defaultAuthNextPath("sign_up"));
   const onboardingPath = next === SIGNUP_ONBOARDING_NEXT || next.startsWith(`${SIGNUP_ONBOARDING_NEXT}/`);
+  const { entry, steps, asideNote } = SIGNUP_PAGE_COPY;
 
   return (
-    <div className="public-signup-entry min-w-0 overflow-x-clip">
-      <div className="public-signup-entry__grid w-full min-w-0">
-        <SignupOnboardingAside onboardingPath={onboardingPath} />
-        <div className="public-signup-entry__form w-full min-w-0">
-          <AuthForm mode="sign_up" />
-        </div>
+    <>
+      <aside className="auth-aside">
+        <p className="eyebrow">{entry.eyebrow}</p>
+        <h2 className="h2 mt-3">{entry.title}</h2>
+        <p className="lead mt-3">{entry.description}</p>
+        <ul className="auth-aside__list">
+          {steps.map((step, i) => (
+            <li key={step.title}>
+              <span className="auth-aside__num" aria-hidden>
+                {i + 1}
+              </span>
+              <div className="min-w-0">
+                <strong>{step.title}</strong>
+                <span>{step.tag}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className="auth-hint">{onboardingPath ? asideNote.onboardingPath : asideNote.default}</p>
+      </aside>
+      <div className="w-full min-w-0">
+        <AuthForm mode="sign_up" />
       </div>
-    </div>
+    </>
   );
 }
 
 export function SignupPageSkeleton() {
   return (
-    <div className="public-signup-entry min-w-0" aria-hidden>
-      <div className="public-signup-entry__grid">
-        <div className="public-signup-aside public-signup-entry__aside public-auth-panel--skeleton min-h-[22rem]" />
-        <div className="public-auth-panel public-auth-panel--skeleton min-h-[22rem] w-full" />
-      </div>
-    </div>
+    <>
+      <div className="auth-aside auth-panel auth-panel--skeleton min-h-[18rem]" aria-hidden />
+      <div className="auth-panel auth-panel--skeleton min-h-[22rem] w-full" aria-hidden />
+    </>
   );
 }

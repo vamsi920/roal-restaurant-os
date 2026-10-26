@@ -1,40 +1,39 @@
 import { buildPilotMailto } from "@/lib/landing/contact-mailto";
-import { publicHomeHash } from "@/lib/landing/public-links";
 
-/** Canonical public CTA labels (prompt 85). */
+/** Canonical public CTA labels — shared by marketing pages and the blog. */
 export const PUBLIC_CTA_LABELS = {
-  hearDemo: "Hear a demo call",
-  bookDemo: "Book a demo",
+  tryFree: "Try it free",
+  hearDemo: "Hear it on your menu",
+  bookDemo: "Talk to us",
   signUp: "Sign up",
   seePricing: "See pricing",
   seeHowItWorks: "See how it works",
-  sendMenu: "Send your menu",
 } as const;
 
 export type PublicCtaLink = { href: string; label: string };
 
 export const PUBLIC_CTA = {
+  tryFree: { href: "/try", label: PUBLIC_CTA_LABELS.tryFree },
   hearDemo: { href: "/demo", label: PUBLIC_CTA_LABELS.hearDemo },
   bookDemo: { href: "/contact", label: PUBLIC_CTA_LABELS.bookDemo },
   bookDemoMailto: {
     href: buildPilotMailto({
-      subject: "Book a ROAL demo",
-      body: "Restaurant name:\nCity:\nBest time to connect:\n",
+      subject: "ROAL — question from a restaurant",
+      body: "Restaurant name:\nCity:\nQuestion:\n",
     }),
     label: PUBLIC_CTA_LABELS.bookDemo,
   },
   signUp: { href: "/signup", label: PUBLIC_CTA_LABELS.signUp },
   signUpOnboarding: {
-    href: "/signup?next=/dashboard/restaurants",
+    href: "/signup?next=%2Fdashboard%2Fonboarding",
     label: PUBLIC_CTA_LABELS.signUp,
   },
   seePricing: { href: "/pricing", label: PUBLIC_CTA_LABELS.seePricing },
-  seeHowItWorks: { href: publicHomeHash("how"), label: PUBLIC_CTA_LABELS.seeHowItWorks },
-  contactForm: { href: "#contact-form", label: PUBLIC_CTA_LABELS.sendMenu },
-} as const;
+  seeHowItWorks: { href: "/#how", label: PUBLIC_CTA_LABELS.seeHowItWorks },
+} as const satisfies Record<string, PublicCtaLink>;
 
-/** Default pair on marketing pages: black primary + glass secondary. */
+/** Default pair on marketing pages: black primary + ghost secondary. */
 export const PUBLIC_CTA_PAIR: { primary: PublicCtaLink; secondary: PublicCtaLink } = {
-  primary: PUBLIC_CTA.hearDemo,
-  secondary: PUBLIC_CTA.bookDemo,
+  primary: PUBLIC_CTA.tryFree,
+  secondary: PUBLIC_CTA.seePricing,
 };

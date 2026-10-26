@@ -1,5 +1,10 @@
 import type { VoiceAgentSyncSummary } from "@/lib/voice-agent/voice-agent-sync-summary";
 import {
+  ELEVENLABS_CONVERSATION_INIT_PATH,
+  getSiteOrigin,
+  webhookHostMatchesAppOrigin,
+} from "@/lib/site-url";
+import {
   restaurantLiveOrdersHref,
   restaurantMenuSetupHref,
   restaurantVoiceAgentHref,
@@ -122,9 +127,55 @@ export function isConversationInitWebhookSet(input: {
   syncSummary: VoiceAgentSyncSummary | null;
   phoneWebhookFromAgent: string | null;
 }): boolean {
-  const fromSummary = input.syncSummary?.phone_personalization_webhook?.trim();
-  if (fromSummary) return true;
-  return Boolean(input.phoneWebhookFromAgent?.trim());
+  return evaluateConversationInitWebhook(input).ok;
+}
+
+export function evaluateConversationInitWebhook(input: {
+  syncSummary: VoiceAgentSyncSummary | null;
+  phoneWebhookFromAgent: string | null;
+}): { ok: boolean; detail: string | null } {
+  const url =
+    input.syncSummary?.phone_personalization_webhook?.trim() ||
+    input.phoneWebhookFromAgent?.trim() ||
+    "";
+
+  if (!url) {
+    return {
+      ok: false,
+      detail:
+        "Re-sync on Live Agent after setting NEXT_PUBLIC_APP_URL and ELEVENLABS_CONVERSATION_INIT_SECRET.",
+    };
+  }
+
+  if (!url.includes(ELEVENLABS_CONVERSATION_INIT_PATH)) {
+    return {
+      ok: false,
+      detail: `ElevenLabs webhook must target ${ELEVENLABS_CONVERSATION_INIT_PATH}.`,
+    };
+  }
+
+  const appOrigin = getSiteOrigin();
+  if (!appOrigin) {
+    return {
+      ok: true,
+      detail:
+        "Webhook saved on agent. Set NEXT_PUBLIC_APP_URL on the server to verify production host alignment.",
+    };
+  }
+
+  const { aligned, webhookHost, appHost } = webhookHostMatchesAppOrigin({
+    webhookUrl: url,
+    appOrigin,
+  });
+
+  if (!aligned) {
+    return {
+      ok: false,
+      detail: `Webhook host ${webhookHost ?? "?"} does not match NEXT_PUBLIC_APP_URL host ${appHost ?? "?"}. Re-sync after updating the app URL.`,
+    };
+  }
+
+  return { ok: true, detail: null };
 }
 
 function itemHref(restaurantId: string, id: LaunchChecklistItemId): string {
@@ -165,10 +216,11 @@ export function buildRestaurantLaunchChecklist(
     input.templateAgentId
   );
   const toolsOk = areToolsSynced(input.syncSummary, input.lastSyncError);
-  const webhookOk = isConversationInitWebhookSet({
+  const webhookEval = evaluateConversationInitWebhook({
     syncSummary: input.syncSummary,
     phoneWebhookFromAgent: input.phoneWebhookFromAgent,
   });
+  const webhookOk = webhookEval.ok;
   const testOk = input.testCallPassed;
   const serverEnvOk = input.serverEnvReady;
 
@@ -238,10 +290,8 @@ export function buildRestaurantLaunchChecklist(
     {
       id: "conversation_init_webhook",
       label: "Conversation-init webhook set",
-      status: webhookOk ? "ok" : "pending",
-      detail: webhookOk
-        ? undefined
-        : "Re-sync after setting ELEVENLABS_CONVERSATION_INIT_SECRET and app URL.",
+      status: webhookOk ? "ok" : webhookEval.detail ? "error" : "pending",
+      detail: webhookOk ? undefined : webhookEval.detail ?? undefined,
     },
     {
       id: "test_call_passed",

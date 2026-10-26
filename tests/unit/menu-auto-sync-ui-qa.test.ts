@@ -35,8 +35,6 @@ describe("menu auto-sync UI (pass 12)", () => {
       "utf8"
     );
     expect(settings).toContain("RestaurantUpsellEditor");
-    expect(settings).toContain("upsell_entries");
-    expect(settings).toContain("Smart upsells");
     expect(editor).toContain("No upsell rules yet");
     expect(editor).toContain("auditUpsellRuleAgainstMenu");
     expect(editor).not.toMatch(/demo rule|fake upsell|placeholder row/i);

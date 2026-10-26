@@ -1,6 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { loadRestaurantCommandCenter } from "@/lib/command-center/load-command-center";
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
+import { kdsActionNeededOutcomeCount } from "@/lib/live-orders/peak-call-context";
+import type { KdsPeakCallContext } from "@/lib/live-orders/peak-call-context";
 import { buildRecentPhoneOutcomes } from "@/lib/live-orders/build-recent-outcomes";
 import {
   loadOrderCallEvidenceBySession,
@@ -30,6 +32,8 @@ export type LiveOrdersPageSnapshot = {
   initialDraftOrders: DraftOrderRow[];
   initialReceipts: PhoneOrderReceiptRow[];
   initialCallEvidenceBySession: Record<string, OrderCallEvidence>;
+  peakCallContext: KdsPeakCallContext;
+  actionNeededCount: number;
   ordersLoadError: string | null;
 };
 
@@ -132,6 +136,8 @@ export async function loadLiveOrdersPageData(
     initialDraftOrders,
     initialReceipts,
     initialCallEvidenceBySession,
+    peakCallContext: commandCenter.peakCallContext,
+    actionNeededCount: kdsActionNeededOutcomeCount(recentOutcomes),
     ordersLoadError: draftErr ?? receiptErr,
   };
 }

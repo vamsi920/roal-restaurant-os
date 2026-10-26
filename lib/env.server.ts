@@ -21,6 +21,8 @@ const serverEnvSchema = z.object({
   ELEVENLABS_CONVERSATION_INIT_SECRET: optionalString,
   ELEVENLABS_WEBHOOK_SECRET: optionalString,
   RESTAURANT_AGENT_TIMEZONE: optionalString,
+  GOOGLE_PLACES_API_KEY: optionalString,
+  ELEVENLABS_AGENT_PHONE_NUMBER_ID: optionalString,
   ROAL_ORDER_KB: z.preprocess((v) => {
     const x = emptyToUndefined(v);
     if (x === undefined) return undefined;
@@ -152,6 +154,23 @@ export function getElevenLabsWebhookSecret(): string | undefined {
   return getServerEnv().ELEVENLABS_WEBHOOK_SECRET;
 }
 
+export function getGooglePlacesApiKey(): string {
+  const env = getServerEnv();
+  return requireField(
+    env.GOOGLE_PLACES_API_KEY,
+    "GOOGLE_PLACES_API_KEY",
+    "restaurant name lookup (Google Places)"
+  );
+}
+
+export function hasGooglePlacesApiKey(): boolean {
+  return Boolean(getServerEnv().GOOGLE_PLACES_API_KEY);
+}
+
+export function getElevenLabsAgentPhoneNumberId(): string | null {
+  return getServerEnv().ELEVENLABS_AGENT_PHONE_NUMBER_ID ?? null;
+}
+
 /** Summarize config for health checks / ops (no secret values). */
 export function getEnvStatus(): {
   supabase: boolean;
@@ -162,6 +181,8 @@ export function getEnvStatus(): {
   agentToolSigning: boolean;
   appUrl: boolean;
   stripe: boolean;
+  places: boolean;
+  outboundCall: boolean;
 } {
   const env = getServerEnv();
   const vercelUrl = process.env.VERCEL_URL?.trim();
@@ -176,6 +197,8 @@ export function getEnvStatus(): {
     stripe: Boolean(
       env.STRIPE_SECRET_KEY && env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     ),
+    places: Boolean(env.GOOGLE_PLACES_API_KEY),
+    outboundCall: Boolean(env.ELEVENLABS_AGENT_PHONE_NUMBER_ID),
   };
 }
 

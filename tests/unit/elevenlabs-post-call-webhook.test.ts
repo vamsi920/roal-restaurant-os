@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   parseElevenLabsPostCallEvent,
   persistElevenLabsPostCallEvent,
+  resolvePostCallPersistedOutcome,
   staffHandoffReasonFromTranscriptMetadata,
   verifyElevenLabsWebhookSignature,
 } from "@/lib/elevenlabs/post-call-webhook";
@@ -63,9 +64,11 @@ function restaurantLookupSupabase(validIds: string[]) {
 function persistSupabase(input?: {
   validRestaurantIds?: string[];
   existingRef?: { current: Record<string, unknown> | null };
+  existingOutcome?: string | null;
 }) {
   const validRestaurantIds = input?.validRestaurantIds ?? [RESTAURANT_ID];
   const existingRef = input?.existingRef ?? { current: null };
+  const existingOutcome = input?.existingOutcome ?? null;
   const upsert = vi.fn((row: { transcript_metadata: Record<string, unknown> }) => {
     existingRef.current = row.transcript_metadata;
     return Promise.resolve({ error: null });
@@ -87,8 +90,13 @@ function persistSupabase(input?: {
           async maybeSingle() {
             return {
               data: existingRef.current
-                ? { transcript_metadata: existingRef.current }
-                : null,
+                ? {
+                    transcript_metadata: existingRef.current,
+                    outcome: existingOutcome,
+                  }
+                : existingOutcome
+                  ? { transcript_metadata: {}, outcome: existingOutcome }
+                  : null,
               error: null,
             };
           },
@@ -416,6 +424,40 @@ describe("persistElevenLabsPostCallEvent", () => {
     });
   });
 
+  it("preserves order_completed when post-call transcription arrives after finalize", async () => {
+    const supabase = persistSupabase({
+      existingOutcome: "order_completed",
+      existingRef: {
+        current: {
+          event_type: "conversation_init",
+          order_finalized_at: "2026-05-30T18:02:00.000Z",
+        },
+      },
+    });
+    vi.mocked(getServiceRoleSupabase).mockReturnValue(supabase as never);
+
+    await persistElevenLabsPostCallEvent({
+      type: "post_call_transcription",
+      data: {
+        conversation_id: "conv_finalize_first",
+        metadata: { restaurant_id: RESTAURANT_ID },
+        transcript: [{ role: "agent", message: "Thanks for calling." }],
+        analysis: {
+          call_successful: "success",
+          transcript_summary: "Guest ordered pickup.",
+        },
+      },
+    });
+
+    expect(supabase.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        outcome: "order_completed",
+        status: "ended",
+      }),
+      expect.any(Object)
+    );
+  });
+
   it("merges recording URL on a duplicate webhook without dropping transcript", async () => {
     const supabase = persistSupabase({
       existingRef: {
@@ -466,6 +508,20 @@ describe("persistElevenLabsPostCallEvent", () => {
 
     expect(result).toEqual({ stored: false, reason: "unresolved_event" });
     expect(emitPostCallFollowUpNotifications).not.toHaveBeenCalled();
+  });
+});
+
+describe("resolvePostCallPersistedOutcome", () => {
+  it("keeps order_completed over webhook no_order", () => {
+    expect(resolvePostCallPersistedOutcome("order_completed", "no_order")).toBe(
+      "order_completed"
+    );
+  });
+
+  it("uses webhook outcome when prior is not order_completed", () => {
+    expect(resolvePostCallPersistedOutcome("in_progress", "no_order")).toBe(
+      "no_order"
+    );
   });
 });
 

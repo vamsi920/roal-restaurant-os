@@ -94,6 +94,10 @@ export const ENV_HINTS: Record<string, string> = {
     "Optional: require Authorization Bearer on POST /api/integrations/elevenlabs/sync-roal-tools",
   RESTAURANT_AGENT_TIMEZONE:
     "IANA timezone for the voice agent, e.g. America/Chicago",
+  GOOGLE_PLACES_API_KEY:
+    "Google Cloud → Places API (New) key for restaurant lookup (server only)",
+  ELEVENLABS_AGENT_PHONE_NUMBER_ID:
+    "Optional ElevenLabs phone number id for outbound owner test calls",
   NEXT_PUBLIC_APP_URL:
     "Public site origin without trailing slash, e.g. https://getroal.com (local: http://localhost:3000)",
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:

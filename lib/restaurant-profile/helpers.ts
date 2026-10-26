@@ -70,6 +70,10 @@ export function defaultRestaurantProfile(
     closed_hours_message: null,
     temporarily_closed: false,
     temporarily_closed_reason: null,
+    agent_display_name: null,
+    agent_voice_id: null,
+    agent_voice_label: null,
+    agent_greeting: null,
     elevenlabs_agent_id: null,
     elevenlabs_provision_status: null,
     elevenlabs_provision_error: null,
@@ -133,6 +137,12 @@ function mapRow(row: Record<string, unknown>): RestaurantProfile {
       row.temporarily_closed_reason != null
         ? String(row.temporarily_closed_reason)
         : null,
+    agent_display_name:
+      row.agent_display_name != null ? String(row.agent_display_name) : null,
+    agent_voice_id: row.agent_voice_id != null ? String(row.agent_voice_id) : null,
+    agent_voice_label:
+      row.agent_voice_label != null ? String(row.agent_voice_label) : null,
+    agent_greeting: row.agent_greeting != null ? String(row.agent_greeting) : null,
     elevenlabs_agent_id:
       row.elevenlabs_agent_id != null ? String(row.elevenlabs_agent_id) : null,
     elevenlabs_provision_status: parseProvisionStatus(

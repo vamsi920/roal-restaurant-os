@@ -7,8 +7,8 @@ import {
   retryRestaurantVoiceAgentProvisionAction,
   syncRestaurantVoiceAgentOnboardingAction,
 } from "@/app/dashboard/onboarding/actions";
+import { StatusChip } from "@/components/dashboard/page-primitives";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
-import { RESTAURANT_MENU_AGENT_LABEL } from "@/lib/dashboard-restaurant-labels";
 import type { OnboardingRestaurantVoiceProvision } from "@/lib/onboarding/restaurant-voice-provision";
 import { restaurantVoiceAgentHref } from "@/lib/voice-agent/provision-display";
 
@@ -18,8 +18,10 @@ type Props = {
   organizationId: string;
   voice: OnboardingRestaurantVoiceProvision;
   pending: boolean;
-  onContinue: () => void;
-  onSkipManual: () => void;
+  /** Called once the host is provisioned and tools are synced. */
+  onReady?: () => void;
+  /** Mark the step skipped (connect manually later from the workspace). */
+  onSkipManual?: () => void;
 };
 
 function formatSyncTime(iso: string | null): string | null {
@@ -32,13 +34,17 @@ function formatSyncTime(iso: string | null): string | null {
   }).format(new Date(iso));
 }
 
+/**
+ * Phone host card for the Go live checklist: provision, sync, retry.
+ * The in-browser test call is the next checklist step (OnboardingTryCall).
+ */
 export function OnboardingVoiceAgentStep({
   restaurantId,
   restaurantName,
   organizationId,
   voice,
   pending,
-  onContinue,
+  onReady,
   onSkipManual,
 }: Props) {
   const router = useRouter();
@@ -58,16 +64,11 @@ export function OnboardingVoiceAgentStep({
     setLocalError(null);
     setRetrying(true);
     try {
-      await retryRestaurantVoiceAgentProvisionAction({
-        restaurantId,
-        organizationId,
-      });
+      await retryRestaurantVoiceAgentProvisionAction({ restaurantId, organizationId });
       router.refresh();
     } catch (e) {
       setLocalError(
-        formatSupabaseClientError(
-          e instanceof Error ? e.message : "Could not provision voice agent."
-        )
+        formatSupabaseClientError(e instanceof Error ? e.message : "Could not provision the host.")
       );
     } finally {
       setRetrying(false);
@@ -78,16 +79,11 @@ export function OnboardingVoiceAgentStep({
     setLocalError(null);
     setSyncing(true);
     try {
-      await syncRestaurantVoiceAgentOnboardingAction({
-        restaurantId,
-        organizationId,
-      });
+      await syncRestaurantVoiceAgentOnboardingAction({ restaurantId, organizationId });
       router.refresh();
     } catch (e) {
       setLocalError(
-        formatSupabaseClientError(
-          e instanceof Error ? e.message : "Could not sync voice agent."
-        )
+        formatSupabaseClientError(e instanceof Error ? e.message : "Could not sync the host.")
       );
     } finally {
       setSyncing(false);
@@ -100,178 +96,113 @@ export function OnboardingVoiceAgentStep({
     voice.provisionError ||
     (voice.uiState === "needs_attention" ? voice.lastSyncError : null);
 
-  const syncStatus = voice.toolsSynced
-    ? lastSyncLabel
-      ? `Last synced ${lastSyncLabel}`
-      : "Tools synced"
-    : voice.lastSyncError
-      ? `Sync error: ${voice.lastSyncError}`
-      : voice.agentId
-        ? "Agent linked — sync tools before taking calls"
-        : null;
-
-  if (voice.uiState === "ready" && voice.toolsSynced) {
-    return (
-      <div className="space-y-4 max-w-lg">
-        <p className="text-sm text-success">
-          Dedicated voice agent is ready for{" "}
-          <span className="font-medium text-ink">{restaurantName}</span>.
-          {voice.agentId ? (
-            <span className="mt-1 block text-xs text-muted break-all">
-              Agent id: {voice.agentId}
-            </span>
-          ) : null}
-        </p>
-        {syncStatus ? (
-          <p className="text-xs text-muted">{syncStatus}</p>
-        ) : null}
-        <p className="text-sm text-muted">
-          Forward your public phone line to the agent when you are ready for live
-          guest traffic. Phone forwarding details are on Live Agent.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            className="btn-primary"
-            disabled={busy}
-            onClick={onContinue}
-          >
-            Continue to test call
-          </button>
-          <Link href={agentHref} className="btn-ghost inline-flex items-center">
-            Open Live Agent
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  if (voice.uiState === "ready" && !voice.toolsSynced) {
-    return (
-      <div className="space-y-4 max-w-lg">
-        <p className="text-sm text-muted">
-          Agent is linked for{" "}
-          <span className="font-medium text-ink">{restaurantName}</span>. Sync
-          menu tools before taking guest calls.
-        </p>
-        {syncStatus ? (
-          <p className="text-xs text-muted [overflow-wrap:anywhere]">{syncStatus}</p>
-        ) : null}
-        {displayError ? (
-          <p
-            className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
-            role="alert"
-          >
-            {displayError}
-          </p>
-        ) : null}
-        <div className="flex flex-wrap gap-2">
-          <button type="button" className="btn-primary" disabled={busy} onClick={runSync}>
-            {syncing ? "Syncing…" : "Sync agent tools"}
-          </button>
-          <Link href={agentHref} className="btn-ghost inline-flex items-center">
-            Open Live Agent
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  if (voice.uiState === "in_progress") {
-    return (
-      <div className="space-y-4 max-w-lg">
-        <p className="text-sm text-muted">
-          Setting up the dedicated ElevenLabs agent for{" "}
-          <span className="font-medium text-ink">{restaurantName}</span>. This
-          usually takes under a minute.
-        </p>
-        <p className="flex items-center gap-2 text-sm text-muted" aria-live="polite">
-          <span className="h-4 w-4 rounded-full border-2 border-accent border-t-transparent animate-spin" />
-          Provisioning in progress…
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            className="btn-ghost"
-            disabled={busy}
-            onClick={() => router.refresh()}
-          >
-            Refresh status
-          </button>
-          <button type="button" className="btn-primary" disabled={busy} onClick={runRetry}>
-            {retrying ? "Retrying…" : "Retry setup"}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (voice.uiState === "needs_attention") {
-    return (
-      <div className="space-y-4 max-w-lg">
-        <p className="text-sm text-muted">
-          Voice agent setup did not finish for{" "}
-          <span className="font-medium text-ink">{restaurantName}</span>. Retry
-          here or open Live Agent for details.
-        </p>
-        {syncStatus ? (
-          <p className="text-xs text-muted [overflow-wrap:anywhere]">{syncStatus}</p>
-        ) : null}
-        {displayError ? (
-          <p
-            className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
-            role="alert"
-          >
-            {displayError}
-          </p>
-        ) : null}
-        <div className="flex flex-wrap gap-2">
-          <button type="button" className="btn-primary" disabled={busy} onClick={runRetry}>
-            {retrying ? "Retrying…" : "Retry voice agent setup"}
-          </button>
-          {voice.agentId ? (
-            <button type="button" className="btn-ghost" disabled={busy} onClick={runSync}>
-              {syncing ? "Syncing…" : "Sync tools"}
-            </button>
-          ) : null}
-          <Link href={agentHref} className="btn-ghost inline-flex items-center">
-            Open Live Agent
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const ready = voice.uiState === "ready" && voice.toolsSynced;
 
   return (
-    <div className="space-y-4 max-w-lg">
-      <p className="text-sm text-muted">
-        Start dedicated agent provisioning for{" "}
-        <span className="font-medium text-ink">{restaurantName}</span>. ROAL
-        creates the agent and syncs menu tools automatically.
-      </p>
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="min-w-0">
+          <p className="text-[14px] font-semibold text-ink">Phone host</p>
+          <p className="mt-0.5 text-[13px] text-muted">
+            A dedicated ElevenLabs agent for {restaurantName}, with your live menu as its tools.
+          </p>
+        </div>
+        <StatusChip
+          tone={
+            ready
+              ? "ok"
+              : voice.uiState === "needs_attention"
+                ? "bad"
+                : voice.uiState === "in_progress"
+                  ? "warn"
+                  : "neutral"
+          }
+        >
+          {ready
+            ? "Ready"
+            : voice.uiState === "ready"
+              ? "Linked, tools not synced"
+              : voice.uiState === "in_progress"
+                ? "Setting up"
+                : voice.uiState === "needs_attention"
+                  ? "Needs attention"
+                  : "Not set up"}
+        </StatusChip>
+      </div>
+
+      {voice.agentId ? (
+        <p className="font-mono text-[12px] text-subtle [overflow-wrap:anywhere]">
+          agent {voice.agentId}
+          {lastSyncLabel ? ` · synced ${lastSyncLabel}` : ""}
+        </p>
+      ) : null}
+
+      {voice.uiState === "in_progress" ? (
+        <p className="flex items-center gap-2 text-[13px] text-muted" aria-live="polite">
+          <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-ink border-t-transparent motion-reduce:animate-none" />
+          Building the host — usually under a minute.
+        </p>
+      ) : null}
+
       {displayError ? (
         <p
-          className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
+          className="rounded-md border border-danger/25 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {displayError}
         </p>
       ) : null}
+
       <div className="flex flex-wrap gap-2">
-        <button type="button" className="btn-primary" disabled={busy} onClick={runRetry}>
-          {retrying ? "Setting up…" : "Set up voice agent"}
-        </button>
-        <Link href={agentHref} className="btn-ghost inline-flex items-center">
-          Open Live Agent
+        {ready ? (
+          <>
+            {onReady ? (
+              <button type="button" className="btn-primary" disabled={busy} onClick={onReady}>
+                Continue to test call
+              </button>
+            ) : null}
+            <button type="button" className="btn-ghost" disabled={busy} onClick={runSync}>
+              {syncing ? "Syncing…" : "Re-sync menu tools"}
+            </button>
+          </>
+        ) : voice.uiState === "ready" ? (
+          <button type="button" className="btn-primary" disabled={busy} onClick={runSync}>
+            {syncing ? "Syncing…" : "Sync menu tools"}
+          </button>
+        ) : voice.uiState === "in_progress" ? (
+          <>
+            <button type="button" className="btn-ghost" disabled={busy} onClick={() => router.refresh()}>
+              Refresh status
+            </button>
+            <button type="button" className="btn-ghost" disabled={busy} onClick={runRetry}>
+              {retrying ? "Retrying…" : "Retry setup"}
+            </button>
+          </>
+        ) : (
+          <>
+            <button type="button" className="btn-primary" disabled={busy} onClick={runRetry}>
+              {retrying
+                ? "Setting up…"
+                : voice.uiState === "needs_attention"
+                  ? "Retry host setup"
+                  : "Set up phone host"}
+            </button>
+            {voice.agentId ? (
+              <button type="button" className="btn-ghost" disabled={busy} onClick={runSync}>
+                {syncing ? "Syncing…" : "Sync tools"}
+              </button>
+            ) : null}
+            {onSkipManual && voice.uiState === "not_started" ? (
+              <button type="button" className="btn-ghost" disabled={busy} onClick={onSkipManual}>
+                Connect manually later
+              </button>
+            ) : null}
+          </>
+        )}
+        <Link href={agentHref} className="btn-ghost">
+          Open host workspace
         </Link>
-        <button type="button" className="btn-ghost" disabled={busy} onClick={onSkipManual}>
-          Connect manually later
-        </button>
       </div>
-      <p className="text-xs text-subtle">
-        Manual connect is available in Live Agent if auto-setup is unavailable
-        ({RESTAURANT_MENU_AGENT_LABEL} → agent tools).
-      </p>
     </div>
   );
 }

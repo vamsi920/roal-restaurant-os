@@ -15,8 +15,16 @@ import {
   getElevenLabsAgentId,
   getElevenLabsConversationInitSecret,
 } from "../lib/env.server";
-import { absoluteUrl, getSiteOrigin } from "../lib/site-url";
+import {
+  conversationInitAbsoluteUrl,
+  ELEVENLABS_CONVERSATION_INIT_PATH,
+  getSiteOrigin,
+  parseUrlHost,
+  resolveLocalDevOrigin,
+  webhookHostMatchesAppOrigin,
+} from "../lib/site-url";
 import { ROAL_RESTAURANT_ID_HEADER } from "../lib/sync-elevenlabs-roal-tools";
+import { getServiceRoleSupabase } from "../lib/supabase/server";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
@@ -30,7 +38,12 @@ const TOOL_NAMES = [
   "get_order_status",
 ] as const;
 
-type Check = { name: string; ok: boolean; detail?: string };
+type Check = { name: string; ok: boolean; detail?: string; url?: string };
+
+function formatProbeFailure(label: string, url: string, status: number, error?: string): string {
+  const suffix = error ? ` (${error})` : "";
+  return `${label} ${redactUrl(url)} -> HTTP ${status}${suffix}`;
+}
 
 function redactUrl(u: string): string {
   try {
@@ -67,6 +80,32 @@ async function httpProbe(url: string, init?: RequestInit): Promise<{ ok: boolean
   }
 }
 
+async function resolveDedicatedInitAgentId(
+  templateAgentId: string
+): Promise<{ agentId: string; source: string }> {
+  const override =
+    process.env.QA_DEDICATED_AGENT_ID?.trim() ||
+    process.env.QA_ELEVENLABS_AGENT_ID?.trim();
+  if (override) {
+    return { agentId: override, source: "QA_DEDICATED_AGENT_ID" };
+  }
+
+  const supabase = getServiceRoleSupabase();
+  if (supabase) {
+    const { data } = await supabase
+      .from("restaurant_profiles")
+      .select("elevenlabs_agent_id")
+      .eq("restaurant_id", RESTAURANT_ID)
+      .maybeSingle();
+    const dedicated = data?.elevenlabs_agent_id?.trim();
+    if (dedicated && dedicated !== templateAgentId) {
+      return { agentId: dedicated, source: "restaurant_profiles.elevenlabs_agent_id" };
+    }
+  }
+
+  return { agentId: templateAgentId, source: "ELEVENLABS_AGENT_ID (template)" };
+}
+
 async function fetchSyncedTool(name: (typeof TOOL_NAMES)[number]) {
   const agentId = getElevenLabsAgentId();
   if (!agentId) throw new Error("ELEVENLABS_AGENT_ID required");
@@ -93,8 +132,8 @@ async function fetchSyncedTool(name: (typeof TOOL_NAMES)[number]) {
 void (async () => {
   const checks: Check[] = [];
   const origin = getSiteOrigin();
-  const expectedInitPath = "/api/integrations/elevenlabs/conversation-init";
-  const expectedInitBase = absoluteUrl(expectedInitPath);
+  const expectedInitPath = ELEVENLABS_CONVERSATION_INIT_PATH;
+  const expectedInitBase = conversationInitAbsoluteUrl();
   const agentId = getElevenLabsAgentId() ?? "";
   const pub = getPublicEnv();
   const expectedRef = refFromUrl(pub.NEXT_PUBLIC_SUPABASE_URL ?? "");
@@ -103,7 +142,9 @@ void (async () => {
   checks.push({
     name: "app URL configured (NEXT_PUBLIC_APP_URL or VERCEL_URL)",
     ok: Boolean(origin),
-    detail: origin ? redactUrl(origin) : "unset",
+    detail: origin
+      ? redactUrl(origin)
+      : "unset — set NEXT_PUBLIC_APP_URL on production host",
   });
 
   // 2. DNS for configured production host
@@ -145,21 +186,29 @@ void (async () => {
   // 4. ElevenLabs phone personalization webhook
   if (agentId) {
     const phone = await readElevenLabsPhonePersonalizationWebhook(agentId);
-    const hookHost = phone.url ? new URL(phone.url).hostname : null;
-    const expectedHost = origin ? new URL(origin).hostname : null;
+    const expectedHost = parseUrlHost(origin ?? null);
+    const hookHost = parseUrlHost(phone.url);
+    const alignment = webhookHostMatchesAppOrigin({
+      webhookUrl: phone.url,
+      appOrigin: origin ?? null,
+    });
     checks.push({
       name: "ElevenLabs personalization webhook enabled",
       ok: phone.enabled === true,
     });
     checks.push({
-      name: "personalization webhook URL host matches app URL",
+      name: "personalization webhook URL host matches NEXT_PUBLIC_APP_URL",
       ok: Boolean(
         phone.url &&
-          expectedHost &&
-          hookHost === expectedHost &&
-          phone.url.includes(expectedInitPath)
+          phone.url.includes(expectedInitPath) &&
+          alignment.aligned
       ),
-      detail: phone.url ? redactUrl(phone.url) : "no url on agent",
+      detail: phone.url
+        ? alignment.aligned
+          ? redactUrl(phone.url)
+          : `webhook host ${hookHost ?? "?"} != app host ${expectedHost ?? "?"} (expected ${origin ? redactUrl(conversationInitAbsoluteUrl() ?? origin) : "NEXT_PUBLIC_APP_URL"})`
+        : "no url on agent — re-sync dedicated agent",
+      url: phone.url ? redactUrl(phone.url) : undefined,
     });
   }
 
@@ -224,23 +273,45 @@ void (async () => {
 
   // 7. conversation-init route (local fallback when prod DNS fails)
   const initSecret = getElevenLabsConversationInitSecret();
+  const { agentId: initAgentId, source: initAgentSource } =
+    await resolveDedicatedInitAgentId(agentId);
+
+  if (initAgentId === agentId && agentId) {
+    checks.push({
+      name: "conversation-init probe uses dedicated agent id",
+      ok: false,
+      detail:
+        "ELEVENLABS_AGENT_ID is the shared template — provision or set QA_DEDICATED_AGENT_ID / restaurant_profiles.elevenlabs_agent_id",
+    });
+  } else {
+    checks.push({
+      name: "conversation-init probe uses dedicated agent id",
+      ok: true,
+      detail: initAgentSource,
+    });
+  }
+
   const initTargets: { label: string; base: string }[] = [];
   if (origin && prodDnsOk && expectedInitBase) {
     initTargets.push({ label: "production", base: expectedInitBase });
   }
   initTargets.push({
     label: "local-dev",
-    base: `http://localhost:3020${expectedInitPath}`,
+    base: conversationInitAbsoluteUrl(resolveLocalDevOrigin()) ?? `${resolveLocalDevOrigin()}${expectedInitPath}`,
   });
 
   let initPass = false;
   let initDetail = "no target responded";
+  const initAttempts: string[] = [];
   for (const target of initTargets) {
     const u = new URL(target.base);
     if (initSecret) u.searchParams.set("secret", initSecret);
-    u.searchParams.set("agent_id", agentId);
+    u.searchParams.set("agent_id", initAgentId);
     const probe = await httpProbe(u.toString());
-    if (!probe.ok && probe.status === 0) continue;
+    if (!probe.ok && probe.status === 0) {
+      initAttempts.push(formatProbeFailure(target.label, u.toString(), 0, "unreachable"));
+      continue;
+    }
 
     const res = await fetch(u.toString(), { signal: AbortSignal.timeout(15000) });
     const body = (await res.json().catch(() => ({}))) as {
@@ -255,10 +326,17 @@ void (async () => {
       vars.restaurant_id === RESTAURANT_ID;
     if (ok) {
       initPass = true;
-      initDetail = `${target.label} HTTP 200, restaurant_id match`;
+      initDetail = `${target.label} ${redactUrl(u.toString())} -> HTTP 200, restaurant_id match`;
       break;
     }
-    initDetail = `${target.label} HTTP ${res.status}${body.error ? ` (${body.error})` : ""}`;
+    initAttempts.push(
+      formatProbeFailure(target.label, u.toString(), res.status, body.error)
+    );
+    initDetail = initAttempts[initAttempts.length - 1] ?? initDetail;
+  }
+
+  if (!initPass && initAttempts.length > 1) {
+    initDetail = initAttempts.join(" | ");
   }
 
   checks.push({
@@ -272,7 +350,8 @@ void (async () => {
   for (const c of checks) {
     const mark = c.ok ? "PASS" : "FAIL";
     if (c.ok) pass += 1;
-    console.log(`[${mark}] ${c.name}${c.detail ? `: ${c.detail}` : ""}`);
+    const urlSuffix = c.url && !c.detail?.includes(c.url) ? ` url=${c.url}` : "";
+    console.log(`[${mark}] ${c.name}${c.detail ? `: ${c.detail}` : ""}${urlSuffix}`);
   }
 
   const automatedOk = checks
@@ -301,6 +380,10 @@ void (async () => {
       {
         automated_layers: automatedOk ? "pass" : "partial",
         prod_dns: prodDnsOk,
+        expected_conversation_init_url: expectedInitBase
+          ? redactUrl(expectedInitBase)
+          : null,
+        local_dev_origin: resolveLocalDevOrigin(),
         get_menu_simulation: menuRes.status,
         categories: catCount,
         lb01_closeable: automatedOk && prodDnsOk,

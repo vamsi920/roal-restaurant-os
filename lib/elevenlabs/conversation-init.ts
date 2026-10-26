@@ -247,7 +247,11 @@ async function resolveRestaurantBySavedAgentId(
       ? profile.elevenlabs_agent_id.trim()
       : aid;
 
-  return { restaurantId, restaurantName, linkedAgentId };
+  return {
+    restaurantId,
+    restaurantName,
+    linkedAgentId,
+  };
 }
 
 /** Resolve restaurant by inbound Twilio number matching `restaurant_profiles.phone`. */
@@ -286,7 +290,11 @@ export async function lookupRestaurantByCalledNumber(
       ? match.elevenlabs_agent_id.trim()
       : "";
 
-  return { restaurantId, restaurantName, linkedAgentId };
+  return {
+    restaurantId,
+    restaurantName,
+    linkedAgentId,
+  };
 }
 
 /**
@@ -310,16 +318,38 @@ export async function resolveRestaurantForElevenLabsConversationInit(input: {
     const byPhone = await lookupRestaurantByCalledNumber(calledNumber);
     if (byPhone) {
       const linkedAgentId = byPhone.linkedAgentId || agentId;
-      if (!linkedAgentId) return null;
+      const templateAgentId = getElevenLabsAgentId()?.trim();
+      if (
+        !linkedAgentId ||
+        (templateAgentId && linkedAgentId.trim() === templateAgentId)
+      ) {
+        return null;
+      }
       return {
         ...byPhone,
-        linkedAgentId,
+        linkedAgentId: linkedAgentId.trim(),
         resolvedVia: "called_number",
       };
     }
   }
 
   return null;
+}
+
+export function pickConversationInitEffectiveAgentId(
+  requestAgentId: string,
+  linkedAgentId: string
+): string {
+  const templateAgentId = getElevenLabsAgentId()?.trim() || null;
+  const linked = linkedAgentId.trim();
+  if (linked && (!templateAgentId || linked !== templateAgentId)) {
+    return linked;
+  }
+  const requested = requestAgentId.trim();
+  if (requested && (!templateAgentId || requested !== templateAgentId)) {
+    return requested;
+  }
+  return "";
 }
 
 export type PersistConversationStartedInput = {

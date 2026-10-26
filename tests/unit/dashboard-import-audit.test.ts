@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { DASHBOARD_NAV } from "@/lib/dashboard-nav";
 
 const REPO = join(import.meta.dirname, "../..");
 
@@ -30,8 +31,9 @@ describe("dashboard import audit (prompt 30)", () => {
   it("nav uses owner-facing location copy not admin ops terms", () => {
     const nav = readFileSync(join(REPO, "lib/dashboard-nav.ts"), "utf8");
     expect(nav).toContain("RESTAURANT_LIST_NAV_LABEL");
-    expect(nav).not.toContain("/dashboard/analytics");
-    expect(nav).not.toContain("/dashboard/billing");
+    const navHrefs = DASHBOARD_NAV.flatMap((group) => group.items.map((item) => item.href));
+    expect(navHrefs).not.toContain("/dashboard/analytics");
+    expect(navHrefs).not.toContain("/dashboard/billing");
     expect(nav).not.toContain("Admin / Ops");
     expect(nav).not.toContain('badge: "Staff"');
     expect(nav).not.toMatch(/KDS orders/);

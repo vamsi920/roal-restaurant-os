@@ -1,28 +1,42 @@
 "use client";
 
+import { LOGIN_PAGE_COPY } from "@/lib/auth/login-page-copy";
 import { AuthForm } from "./auth-form";
-import { LoginValueAside } from "./login-value-aside";
 
 export function LoginPageEntry() {
+  const { entry, highlights } = LOGIN_PAGE_COPY;
   return (
-    <div className="public-login-entry min-w-0 overflow-x-clip">
-      <div className="public-signup-entry__grid w-full min-w-0">
-        <LoginValueAside />
-        <div className="public-signup-entry__form w-full min-w-0">
-          <AuthForm mode="sign_in" />
-        </div>
+    <>
+      <aside className="auth-aside">
+        <p className="eyebrow">{entry.eyebrow}</p>
+        <h2 className="h2 mt-3">{entry.title}</h2>
+        <p className="lead mt-3">{entry.description}</p>
+        <ul className="auth-aside__list">
+          {highlights.map((item, i) => (
+            <li key={item.title}>
+              <span className="auth-aside__num" aria-hidden>
+                {i + 1}
+              </span>
+              <div className="min-w-0">
+                <strong>{item.title}</strong>
+                <span>{item.tag}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </aside>
+      <div className="w-full min-w-0">
+        <AuthForm mode="sign_in" />
       </div>
-    </div>
+    </>
   );
 }
 
 export function LoginPageSkeleton() {
   return (
-    <div className="public-login-entry min-w-0" aria-hidden>
-      <div className="public-signup-entry__grid">
-        <div className="public-signup-aside public-signup-entry__aside public-login-entry__aside public-auth-panel--skeleton min-h-[18rem]" />
-        <div className="public-auth-panel public-auth-panel--skeleton min-h-[18rem] w-full" />
-      </div>
-    </div>
+    <>
+      <div className="auth-aside auth-panel auth-panel--skeleton min-h-[16rem]" aria-hidden />
+      <div className="auth-panel auth-panel--skeleton min-h-[18rem] w-full" aria-hidden />
+    </>
   );
 }

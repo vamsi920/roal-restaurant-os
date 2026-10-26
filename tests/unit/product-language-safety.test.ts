@@ -1,7 +1,6 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
-import { HOME_HERO } from "@/lib/landing/home-theme";
 import {
   BANNED_PRODUCT_CLAIMS,
   PRODUCT_LANGUAGE_NEGATION_PREFIXES,
@@ -68,11 +67,5 @@ describe("product language safety", () => {
       if (hits.length) violations.push({ file, hits });
     }
     expect(violations).toEqual([]);
-  });
-
-  it("home hero lead stays short and names the kitchen", () => {
-    const words = HOME_HERO.lead.trim().split(/\s+/);
-    expect(words.length).toBeLessThanOrEqual(22);
-    expect(HOME_HERO.lead.toLowerCase()).toContain("kitchen");
   });
 });

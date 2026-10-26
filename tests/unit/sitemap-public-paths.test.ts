@@ -6,7 +6,7 @@ const REQUIRED = [
   "/pricing",
   "/blog",
   "/about",
-  "/demo",
+  "/try",
   "/contact",
   "/security",
   "/privacy",

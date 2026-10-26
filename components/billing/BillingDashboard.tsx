@@ -1,4 +1,12 @@
 import Link from "next/link";
+import {
+  InlineLink,
+  PageHeader,
+  Panel,
+  StatTile,
+  StatusChip,
+  type Tone,
+} from "@/components/dashboard/page-primitives";
 import { cn } from "@/lib/cn";
 import { BILLING_PLANS, statusLabel } from "@/lib/billing";
 import { BILLING_LAUNCH_POSTURE } from "@/lib/billing/launch-posture";
@@ -24,109 +32,80 @@ function formatLimit(limit: number): string {
   return limit.toLocaleString();
 }
 
-function statusTone(
-  status: BillingSnapshot["effectiveStatus"]
-): string {
+function statusTone(status: BillingSnapshot["effectiveStatus"]): Tone {
   switch (status) {
     case "active":
     case "dev":
-      return "bg-success/10 text-success";
+      return "ok";
     case "trialing":
-      return "bg-accent/12 text-accent";
+      return "accent";
     case "past_due":
-      return "bg-warning/12 text-warning";
-    case "canceled":
-    case "paused":
-      return "bg-muted/20 text-muted";
+      return "warn";
     default:
-      return "bg-elev text-muted";
+      return "neutral";
   }
 }
 
 function meterTone(level: "ok" | "warning" | "exceeded"): string {
   if (level === "exceeded") return "bg-danger";
   if (level === "warning") return "bg-warning";
-  return "bg-accent";
+  return "bg-ink";
 }
 
 export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
   const { plan, effectiveLimits } = snapshot;
   const isRestaurantScope = snapshot.scope === "restaurant";
+  const pilot = snapshot.providerMode === "dev";
   const usageTotal =
-    snapshot.usage.menuScans +
-    snapshot.usage.billablePhoneOrders +
-    snapshot.usage.toolCalls;
+    snapshot.usage.menuScans + snapshot.usage.billablePhoneOrders + snapshot.usage.toolCalls;
   const organizationBillingHref = orgBillingHref ?? "/dashboard/billing";
+  const noOrders = isRestaurantScope
+    ? usageTotal === 0
+    : snapshot.usage.billablePhoneOrders === 0;
 
   return (
-    <div className="billing-dashboard dashboard-page dashboard-page--wide min-w-0 max-w-full space-y-6 overflow-x-hidden sm:space-y-8">
-      <header className="billing-dashboard__header dashboard-page__header min-w-0">
-        <p className="dashboard-page__eyebrow">
-          Billing
-          {isRestaurantScope && snapshot.restaurantName
-            ? ` · ${snapshot.restaurantName}`
-            : null}
-        </p>
-        <h1 className="dashboard-page__title">
-          {isRestaurantScope ? "Plan & location usage" : "Plan & usage"}
-        </h1>
-        <p className="dashboard-page__lead">
-          {isRestaurantScope ? (
-            <>
-              Organization plan for {snapshot.organizationName}. Usage below is
-              for this location only — {formatDate(snapshot.periodStart)} through{" "}
-              {formatDate(snapshot.periodEnd)}.
-            </>
-          ) : (
-            <>
-              {snapshot.organizationName} — {formatDate(snapshot.periodStart)}{" "}
-              through {formatDate(snapshot.periodEnd)}.
-            </>
-          )}
-        </p>
-        {isRestaurantScope ? (
-          <p className="mt-2 text-sm text-muted">
-            Subscription and invoices are managed at the organization level.{" "}
-            <Link
-              href={organizationBillingHref}
-              className="font-medium text-accent underline-offset-2 hover:underline"
-            >
-              View organization billing
+    <div className="billing-dashboard dashboard-page dashboard-page--wide min-w-0 space-y-5 overflow-x-hidden">
+      <PageHeader
+        className="billing-dashboard__header"
+        eyebrow={
+          isRestaurantScope && snapshot.restaurantName
+            ? `Billing · ${snapshot.restaurantName}`
+            : "Billing"
+        }
+        title={isRestaurantScope ? "Plan & location usage" : "Plan & usage"}
+        lead={
+          isRestaurantScope
+            ? `Organization plan for ${snapshot.organizationName}. Usage below is this location only — ${formatDate(snapshot.periodStart)} to ${formatDate(snapshot.periodEnd)}.`
+            : `${snapshot.organizationName} · ${formatDate(snapshot.periodStart)} to ${formatDate(snapshot.periodEnd)}.`
+        }
+        actions={
+          isRestaurantScope ? (
+            <Link href={organizationBillingHref} className="btn-ghost">
+              Organization billing
             </Link>
-          </p>
-        ) : null}
-      </header>
+          ) : undefined
+        }
+      />
 
-      {snapshot.providerMode === "dev" ? (
+      {pilot ? (
         <div
-          className="billing-dashboard__notice billing-dashboard__notice--pilot dashboard-panel border-dashed border-accent/40 bg-accent/5 text-sm text-muted"
+          className="billing-dashboard__notice billing-dashboard__notice--pilot dashboard-panel border-accent/30 bg-accent-soft/60 text-[13px] text-muted"
           role="status"
         >
           <p className="font-medium text-ink">Pilot billing mode</p>
           <p className="mt-1 text-pretty">
-            {BILLING_LAUNCH_POSTURE.devMode} Public pricing is{" "}
-            {BILLING_LAUNCH_POSTURE.pilotRate} ({BILLING_LAUNCH_POSTURE.model}).
-            {BILLING_LAUNCH_POSTURE.selfServeCheckout}{" "}
+            {BILLING_LAUNCH_POSTURE.devMode} Public pricing is {BILLING_LAUNCH_POSTURE.pilotRate}{" "}
+            ({BILLING_LAUNCH_POSTURE.model}). {BILLING_LAUNCH_POSTURE.selfServeCheckout}{" "}
             {BILLING_LAUNCH_POSTURE.pilotBilling}
           </p>
-          <p className="billing-dashboard__notice-links mt-2 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-3">
-            <Link
-              href={BILLING_LAUNCH_POSTURE.publicPricingPath}
-              className="font-medium text-accent underline-offset-2 hover:underline"
-            >
-              Public pricing
-            </Link>
-            <Link
-              href={BILLING_LAUNCH_POSTURE.contactPath}
-              className="font-medium text-accent underline-offset-2 hover:underline"
-            >
-              Contact for pilot terms
-            </Link>
+          <p className="billing-dashboard__notice-links mt-2 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-4">
+            <InlineLink href={BILLING_LAUNCH_POSTURE.publicPricingPath}>Public pricing</InlineLink>
+            <InlineLink href={BILLING_LAUNCH_POSTURE.contactPath}>Contact for pilot terms</InlineLink>
           </p>
         </div>
       ) : !snapshot.checkoutEnabled ? (
         <div
-          className="billing-dashboard__notice billing-dashboard__notice--stripe dashboard-panel border-dashed border-warning/35 bg-warning/5 text-sm text-muted"
+          className="billing-dashboard__notice billing-dashboard__notice--stripe dashboard-panel border-warning/35 bg-warning/5 text-[13px] text-muted"
           role="status"
         >
           <p className="font-medium text-ink">Stripe keys detected — checkout not live</p>
@@ -137,51 +116,43 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         </div>
       ) : null}
 
-      <div className="billing-dashboard__plan-grid grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <section className="billing-dashboard__plan dashboard-panel min-w-0">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <p className="dashboard-page__kicker">
-                {isRestaurantScope ? "Organization plan" : "Current plan"}
-              </p>
-              <h2 className="mt-1 text-xl font-semibold text-ink">{plan.name}</h2>
-              <p className="mt-2 max-w-md text-sm text-muted">{plan.description}</p>
-            </div>
-            <span
-              className={cn(
-                "inline-flex rounded-full px-3 py-1 text-xs font-medium",
-                statusTone(snapshot.effectiveStatus)
-              )}
-            >
-              {statusLabel(snapshot.effectiveStatus)}
-            </span>
-          </div>
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <StatTile
+          label="Completed orders"
+          value={snapshot.usage.billablePhoneOrders.toLocaleString()}
+          hint="Receipt-backed phone orders this period"
+        />
+        <StatTile
+          label="Estimated charge"
+          value={`$${snapshot.usage.estimatedBillableChargeUsd.toFixed(2)}`}
+          hint={BILLING_LAUNCH_POSTURE.pilotRate}
+        />
+        <StatTile label="Menu scans" value={snapshot.usage.menuScans.toLocaleString()} />
+        <StatTile label="Tool calls" value={snapshot.usage.toolCalls.toLocaleString()} />
+      </div>
 
-          <p className="mt-4 text-sm text-muted">
-            {snapshot.providerMode === "dev" ? (
-              <>
-                <span className="text-2xl font-semibold text-ink">
-                  {BILLING_LAUNCH_POSTURE.pilotRate}
-                </span>
-                <span className="mt-1 block text-xs text-subtle">
-                  {BILLING_LAUNCH_POSTURE.pilotRateDetail} Dashboard tier limits
-                  below are for future self-serve plans—not pilot invoicing.
-                </span>
-              </>
-            ) : plan.monthlyPriceUsd != null ? (
-              <>
-                <span className="text-2xl font-semibold text-ink">
-                  ${plan.monthlyPriceUsd}
-                </span>
-                <span className="ml-1">/ month</span>
-              </>
-            ) : (
-              <span className="font-medium text-ink">Custom pricing</span>
-            )}
+      <div className="billing-dashboard__plan-grid grid min-w-0 gap-3 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+        <Panel
+          className="billing-dashboard__plan"
+          title={isRestaurantScope ? "Organization plan" : "Current plan"}
+          aside={<StatusChip tone={statusTone(snapshot.effectiveStatus)}>{statusLabel(snapshot.effectiveStatus)}</StatusChip>}
+        >
+          <div className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <p className="font-display text-[22px] font-semibold tracking-tight text-ink">
+              {pilot
+                ? BILLING_LAUNCH_POSTURE.pilotRate
+                : plan.monthlyPriceUsd != null
+                  ? `$${plan.monthlyPriceUsd} / month`
+                  : "Custom pricing"}
+            </p>
+            <p className="text-[13px] text-muted">{plan.name}</p>
+          </div>
+          <p className="mt-1.5 max-w-md text-[13px] text-muted">
+            {pilot ? BILLING_LAUNCH_POSTURE.pilotRateDetail : plan.description}
           </p>
 
           {snapshot.isTrialActive ? (
-            <p className="mt-3 rounded-lg bg-elev px-3 py-2 text-sm text-muted">
+            <p className="mt-3 rounded-md bg-elev px-3 py-2 text-[13px] text-muted">
               Trial ends {formatDate(snapshot.trialEndsAt)}
               {snapshot.trialDaysRemaining != null ? (
                 <>
@@ -195,55 +166,43 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
               ) : null}
             </p>
           ) : snapshot.subscriptionStatus === "trialing" ? (
-            <p className="mt-3 text-sm text-warning">
+            <p className="mt-3 text-[13px] text-warning">
               Trial ended.{" "}
-              <Link href={BILLING_LAUNCH_POSTURE.contactPath} className="underline">
-                Contact sales
-              </Link>{" "}
-              for pilot terms—self-serve checkout is not live yet.
+              <InlineLink href={BILLING_LAUNCH_POSTURE.contactPath}>Contact sales</InlineLink> for
+              pilot terms — self-serve checkout is not live yet.
             </p>
           ) : null}
 
           {snapshot.canManageBilling ? (
             snapshot.checkoutEnabled ? (
               <BillingCheckoutButtons snapshot={snapshot} />
-            ) : snapshot.providerMode === "dev" ? (
-              <p className="mt-4 text-sm text-muted">
-                No self-serve checkout in pilot mode. Usage meters track activity;
-                billing is agreed manually via{" "}
-                <Link
-                  href={BILLING_LAUNCH_POSTURE.contactPath}
-                  className="text-accent underline-offset-2 hover:underline"
-                >
-                  contact sales
-                </Link>
-                .
+            ) : pilot ? (
+              <p className="mt-3 text-[13px] text-muted">
+                No self-serve checkout in pilot mode. Usage is tracked here; billing is agreed via{" "}
+                <InlineLink href={BILLING_LAUNCH_POSTURE.contactPath}>contact sales</InlineLink>.
               </p>
             ) : (
-              <p className="mt-4 text-sm text-muted">
-                Upgrade and payment buttons will appear when Stripe Checkout is
-                enabled. Until then, contact sales for plan changes.
+              <p className="mt-3 text-[13px] text-muted">
+                Upgrade and payment buttons appear when Stripe Checkout is enabled. Until then,
+                contact sales for plan changes.
               </p>
             )
           ) : (
-            <p className="mt-4 text-sm text-muted">
+            <p className="mt-3 text-[13px] text-muted">
               Ask an organization admin to change plans or payment methods.
             </p>
           )}
-        </section>
+        </Panel>
 
-        <section className="billing-dashboard__subscription dashboard-panel min-w-0">
-          <h2 className="dashboard-page__section-title">Subscription</h2>
-          <dl className="billing-dashboard__meta mt-4 space-y-3 text-sm">
-            <div className="billing-dashboard__meta-row flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4">
-              <dt className="text-muted">Status</dt>
-              <dd className="font-medium text-ink sm:text-right">
-                {statusLabel(snapshot.effectiveStatus)}
-              </dd>
+        <Panel className="billing-dashboard__subscription" title="Subscription">
+          <dl className="dashboard-kv billing-dashboard__meta mt-3">
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Status</dt>
+              <dd>{statusLabel(snapshot.effectiveStatus)}</dd>
             </div>
-            <div className="billing-dashboard__meta-row flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4">
-              <dt className="text-muted">Provider</dt>
-              <dd className="font-medium text-ink sm:text-right">
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Provider</dt>
+              <dd>
                 {snapshot.providerMode === "stripe"
                   ? snapshot.checkoutEnabled
                     ? "Stripe"
@@ -251,75 +210,58 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
                   : "Development"}
               </dd>
             </div>
-            <div className="billing-dashboard__meta-row flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4">
-              <dt className="text-muted">Stripe customer</dt>
-              <dd className="font-mono text-xs text-muted sm:text-right [overflow-wrap:anywhere]">
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Stripe customer</dt>
+              <dd className="font-mono text-[12px] font-normal text-muted">
                 {snapshot.stripeCustomerLinked ? "Linked" : "—"}
               </dd>
             </div>
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Period</dt>
+              <dd>
+                {formatDate(snapshot.periodStart)} – {formatDate(snapshot.periodEnd)}
+              </dd>
+            </div>
           </dl>
-          <p className="mt-4 text-xs text-subtle [overflow-wrap:anywhere]">
+          <p className="mt-3 text-[12px] text-subtle [overflow-wrap:anywhere]">
             {snapshot.checkoutEnabled
               ? "Invoices and payment methods appear here once billing is active."
               : "Invoices and payment methods appear here after Stripe Checkout and Customer Portal are enabled."}
           </p>
-        </section>
+        </Panel>
       </div>
 
-      <section className="billing-dashboard__usage min-w-0">
-        <h2 className="dashboard-page__section-title">
-          {isRestaurantScope ? "This location — usage this period" : "Usage this period"}
-        </h2>
-        <p className="mt-1 text-sm text-muted">
-          {isRestaurantScope
-            ? "Billable successful phone orders for this location. Only receipt-backed orders count toward pilot charges."
-            : "Billable successful phone orders across accessible locations. Only receipt-backed orders count toward pilot charges."}
-        </p>
-        <p className="mt-2 text-sm text-muted">
-          {BILLING_LAUNCH_POSTURE.pilotRate}. {BILLING_LAUNCH_POSTURE.pilotRateDetail}
-        </p>
-        {snapshot.usage.billablePhoneOrders > 0 ? (
-          <p className="mt-2 text-sm text-ink">
-            Estimated pilot charge this period:{" "}
-            <span className="font-semibold">
-              ${snapshot.usage.estimatedBillableChargeUsd.toFixed(2)}
-            </span>{" "}
-            ({snapshot.usage.billablePhoneOrders.toLocaleString()} successful phone{" "}
-            {snapshot.usage.billablePhoneOrders === 1 ? "order" : "orders"})
-          </p>
-        ) : null}
-        {isRestaurantScope && usageTotal === 0 ? (
+      <Panel
+        className="billing-dashboard__usage"
+        title={isRestaurantScope ? "This location — usage this period" : "Usage this period"}
+        hint={
+          isRestaurantScope
+            ? "Only receipt-backed phone orders for this location count toward pilot charges."
+            : "Only receipt-backed phone orders across accessible locations count toward pilot charges."
+        }
+      >
+        {noOrders ? (
           <p
-            className="mt-3 rounded-lg border border-dashed border-line bg-elev px-4 py-3 text-sm text-muted"
+            className="mt-3 rounded-md border border-dashed border-line-strong bg-elev px-3 py-2.5 text-[13px] text-muted"
             role="status"
           >
-            No billable phone orders for this location in the current billing period.
-            Missed and no-order calls are not charged.
-          </p>
-        ) : !isRestaurantScope && snapshot.usage.billablePhoneOrders === 0 ? (
-          <p
-            className="mt-3 rounded-lg border border-dashed border-line bg-elev px-4 py-3 text-sm text-muted"
-            role="status"
-          >
-            No billable phone orders yet this period. Missed and no-order calls are
-            not charged.
+            No billable phone orders yet this period. Missed and no-order calls are not charged.
           </p>
         ) : null}
-        <ul className="billing-dashboard__meters mt-4 grid gap-3 sm:grid-cols-2">
+        <ul className="billing-dashboard__meters mt-3 grid gap-3 sm:grid-cols-2">
           {snapshot.limitChecks.map((check) => (
             <li
               key={check.key}
-              className="billing-dashboard__meter min-w-0 rounded-xl border border-line bg-elev px-4 py-3"
+              className="billing-dashboard__meter min-w-0 rounded-md border border-line bg-elev px-3 py-2.5"
             >
-              <div className="billing-dashboard__meter-head flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+              <div className="billing-dashboard__meter-head flex flex-col gap-0.5 text-[13px] sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                 <span className="font-medium text-ink">{check.label}</span>
-                <span className="text-muted sm:text-right">
-                  {check.used.toLocaleString()} / {formatLimit(check.limit)}{" "}
-                  {check.unitLabel}
+                <span className="tabular-nums text-muted sm:text-right">
+                  {check.used.toLocaleString()} / {formatLimit(check.limit)} {check.unitLabel}
                 </span>
               </div>
               <div
-                className="billing-dashboard__meter-track mt-2 h-2 overflow-hidden rounded-full bg-line"
+                className="billing-dashboard__meter-track mt-2 h-1.5 overflow-hidden rounded-full bg-line"
                 role="meter"
                 aria-valuenow={check.percent}
                 aria-valuemin={0}
@@ -327,17 +269,14 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
                 aria-label={`${check.label} usage`}
               >
                 <div
-                  className={cn(
-                    "h-full rounded-full transition-all",
-                    meterTone(check.level)
-                  )}
+                  className={cn("h-full rounded-full transition-all", meterTone(check.level))}
                   style={{ width: `${Math.max(check.percent, check.used > 0 ? 4 : 0)}%` }}
                 />
               </div>
               {check.level !== "ok" ? (
                 <p
                   className={cn(
-                    "mt-2 text-xs",
+                    "mt-1.5 text-[12px]",
                     check.level === "exceeded" ? "text-danger" : "text-warning"
                   )}
                 >
@@ -349,31 +288,29 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             </li>
           ))}
         </ul>
-        {snapshot.providerMode === "dev" ? (
-          <p className="mt-3 text-xs text-subtle">
-            Dev mode caps: {formatLimit(effectiveLimits.max_active_locations)}{" "}
-            locations; other meters are effectively unlimited.
+        {pilot ? (
+          <p className="mt-3 text-[12px] text-subtle">
+            Dev mode caps: {formatLimit(effectiveLimits.max_active_locations)} locations; other
+            meters are effectively unlimited. Tier limits are for future self-serve plans, not pilot
+            invoicing.
           </p>
         ) : null}
-      </section>
+      </Panel>
 
-      <section className="billing-dashboard__features min-w-0">
-        <h2 className="dashboard-page__section-title">Plan features</h2>
-        <ul className="billing-dashboard__feature-list mt-3 grid gap-2 sm:grid-cols-2">
+      <Panel className="billing-dashboard__features" title="Plan features">
+        <ul className="billing-dashboard__feature-list mt-3 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
           {snapshot.features.map((feature) => (
             <li
               key={feature.key}
               className={cn(
-                "flex items-center gap-2 rounded-lg border px-3 py-2 text-sm",
-                feature.enabled
-                  ? "border-line bg-card text-ink"
-                  : "border-line/60 bg-surface/40 text-muted"
+                "flex items-center gap-2 py-1 text-[13px]",
+                feature.enabled ? "text-ink" : "text-subtle"
               )}
             >
               <span
                 className={cn(
-                  "h-2 w-2 shrink-0 rounded-full",
-                  feature.enabled ? "bg-accent" : "bg-line"
+                  "h-1.5 w-1.5 shrink-0 rounded-full",
+                  feature.enabled ? "bg-success" : "bg-line-strong"
                 )}
                 aria-hidden
               />
@@ -381,22 +318,23 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             </li>
           ))}
         </ul>
-      </section>
+      </Panel>
 
       {snapshot.upgradePlanIds.length > 0 ? (
-        <section className="billing-dashboard__compare min-w-0">
-          <h2 className="dashboard-page__section-title">
-            {snapshot.providerMode === "dev" || !snapshot.checkoutEnabled
+        <Panel
+          className="billing-dashboard__compare"
+          title={
+            pilot || !snapshot.checkoutEnabled
               ? "Future self-serve tiers (not active)"
-              : "Compare plans"}
-          </h2>
-          {snapshot.providerMode === "dev" || !snapshot.checkoutEnabled ? (
-            <p className="mt-1 text-sm text-muted">
-              Monthly SaaS tiers below are placeholders for a future Stripe
-              checkout release. Pilots use {BILLING_LAUNCH_POSTURE.pilotRate}.
-            </p>
-          ) : null}
-          <ul className="billing-dashboard__tier-grid mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              : "Compare plans"
+          }
+          hint={
+            pilot || !snapshot.checkoutEnabled
+              ? `Monthly SaaS tiers are placeholders for a future Stripe checkout release. Pilots use ${BILLING_LAUNCH_POSTURE.pilotRate}.`
+              : undefined
+          }
+        >
+          <ul className="billing-dashboard__tier-grid mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {(["starter", "growth", "enterprise"] as const).map((id) => {
               const p = BILLING_PLANS[id];
               const current = id === plan.id;
@@ -404,73 +342,63 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
                 <li
                   key={id}
                   className={cn(
-                    "billing-dashboard__tier flex min-w-0 flex-col rounded-xl border p-4",
-                    current
-                      ? "border-accent bg-accent/5"
-                      : "border-line bg-card"
+                    "billing-dashboard__tier flex min-w-0 flex-col rounded-md border p-3.5",
+                    current ? "border-ink" : "border-line bg-elev"
                   )}
                 >
                   <p className="dashboard-page__kicker">
                     {p.name}
                     {current ? " · Current" : null}
                   </p>
-                  <p className="mt-2 text-lg font-semibold text-ink">
-                    {p.monthlyPriceUsd != null
-                      ? `$${p.monthlyPriceUsd}/mo`
-                      : "Contact us"}
+                  <p className="mt-1.5 text-[17px] font-semibold tracking-tight text-ink">
+                    {p.monthlyPriceUsd != null ? `$${p.monthlyPriceUsd}/mo` : "Contact us"}
                   </p>
-                  <p className="mt-2 flex-1 text-sm text-muted">
-                    {p.description}
-                  </p>
-                  <p className="mt-3 text-xs text-muted">
+                  <p className="mt-1.5 flex-1 text-[13px] text-muted">{p.description}</p>
+                  <p className="mt-2 text-[12px] text-subtle">
                     Up to {formatLimit(p.limits.max_active_locations)} locations
                   </p>
                 </li>
               );
             })}
           </ul>
-        </section>
+        </Panel>
       ) : null}
 
-      <section className="billing-dashboard__invoices dashboard-panel min-w-0 border-dashed">
-        <h2 className="dashboard-page__section-title">
-          {isRestaurantScope ? "Organization invoices" : "Invoices"}
-        </h2>
-        <p className="mt-2 text-sm text-muted [overflow-wrap:anywhere]">
-          {snapshot.checkoutEnabled
-            ? "Invoice history and PDF downloads will list here once billing is active."
-            : snapshot.providerMode === "dev"
-              ? "Pilot invoices are handled manually—no Stripe invoices in this mode."
-              : "Invoice history appears here after Stripe Checkout ships. Until then, contact sales for pilot billing."}
-        </p>
-        <div className="billing-dashboard__invoice-table dashboard-table mt-4 min-w-0 overflow-hidden rounded-lg border border-line">
-          <table className="w-full min-w-0 text-left text-sm">
-            <thead className="bg-elev text-xs font-medium text-subtle">
+      <Panel
+        className="billing-dashboard__invoices"
+        flush
+        title={isRestaurantScope ? "Organization invoices" : "Invoices"}
+        hint={
+          snapshot.checkoutEnabled
+            ? "Invoice history and PDF downloads list here once billing is active."
+            : pilot
+              ? "Pilot invoices are handled manually — no Stripe invoices in this mode."
+              : "Invoice history appears here after Stripe Checkout ships."
+        }
+      >
+        <div className="billing-dashboard__invoice-table dashboard-table min-w-0">
+          <table>
+            <thead>
               <tr>
-                <th className="px-4 py-2 font-medium">Date</th>
-                <th className="px-4 py-2 font-medium">Amount</th>
-                <th className="px-4 py-2 font-medium">Status</th>
+                <th>Date</th>
+                <th className="is-num">Amount</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-t border-line text-muted">
-                <td className="px-4 py-3" colSpan={3}>
+              <tr>
+                <td colSpan={3} className="text-muted">
                   No invoices yet
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-      </section>
+      </Panel>
 
-      <p className="billing-dashboard__footer text-sm text-muted [overflow-wrap:anywhere]">
-        <Link href="/pricing" className="text-accent underline-offset-2 hover:underline">
-          Public pricing
-        </Link>{" "}
-        · Questions?{" "}
-        <Link href="/contact" className="text-accent underline-offset-2 hover:underline">
-          Contact sales
-        </Link>
+      <p className="billing-dashboard__footer text-[13px] text-muted [overflow-wrap:anywhere]">
+        <InlineLink href="/pricing">Public pricing</InlineLink> · Questions?{" "}
+        <InlineLink href="/contact">Contact sales</InlineLink>
       </p>
     </div>
   );

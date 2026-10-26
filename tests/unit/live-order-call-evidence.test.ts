@@ -79,6 +79,7 @@ describe("live order call evidence", () => {
     expect(panel).toContain('table: "agent_call_events"');
     expect(panel).toContain("setCallEvidenceBySession");
     expect(panel).toContain("setActiveCalls");
+    expect(panel).toContain("kdsCallEvidenceCapabilityCopy");
 
     const migration = readFileSync(
       join(REPO, "supabase/migrations/026_agent_call_events.sql"),

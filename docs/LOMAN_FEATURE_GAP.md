@@ -184,7 +184,8 @@ Loman positions a **24/7 restaurant voice AI** with a single **command center**:
 - **Controlled upsell experiment assignment exists** via `upsell_experiment_variant` in ElevenLabs conversation-init dynamic variables. Calls with a stable session/call id are deterministically split into treatment/control; control calls suppress proactive configured upsells while still allowing guest-requested add-ons.
 - **Upsell analytics exist** for attach rate, estimated attributed offer revenue, observed ticket lift from completed order line items, and deterministic treatment-vs-control ticket lift.
 - **Attach-rate analytics exists** by matching completed order line items against configured trigger/offer text.
-- Remaining gap: no operator-facing experiment toggle, statistical confidence interval, or significance testing yet.
+- **Operator upsell experiment control exists** in Restaurant profile: `split` (deterministic treatment/control) or `always_treatment` (configured upsells on every eligible call). Conversation-init reads `restaurant_profiles.upsell_experiment_mode`.
+- Remaining gap: statistical confidence interval or significance testing for upsell lift yet.
 - No **POS-combo** sync (excluded with POS anyway).
 
 ---
@@ -328,7 +329,7 @@ Reference exclusions in: `lib/elevenlabs/agent-prompt.ts` (payments copy), `lib/
 3. **Handoff v2** — staff notifications with draft cart summary; optional transfer when EL supports; ROAL-hosted voicemail inbox if needed.
 4. **Command center UX** — unify orders, calls, outcomes, recordings, and order-status lookups on `agent/page.tsx` or dedicated `/calls`.
 5. **Multi-location** — field-level diff visibility exists for customized inherited menus; add operator approval for individual inherited field updates and regional routing.
-6. **Upsell lift metrics** — attach-rate, attributed revenue, observed lift, and deterministic treatment/control lift exist; add confidence intervals and an operator-facing experiment control.
+6. **Upsell lift metrics** — attach-rate, attributed revenue, observed lift, deterministic treatment/control lift, and operator experiment mode control exist; add confidence intervals and significance testing.
 
 ---
 

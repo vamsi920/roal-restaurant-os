@@ -16,7 +16,7 @@ export function AnalyticsRangePicker({ active }: { active: AnalyticsRangeKey }) 
 
   return (
     <div
-      className="analytics-range-picker flex w-full rounded-lg border border-line bg-elev p-0.5 sm:inline-flex sm:w-auto"
+      className="analytics-range-picker flex w-full rounded-md border border-line bg-elev p-0.5 sm:inline-flex sm:w-auto"
       role="group"
       aria-label="Date range"
     >
@@ -24,11 +24,10 @@ export function AnalyticsRangePicker({ active }: { active: AnalyticsRangeKey }) 
         <Link
           key={opt.key}
           href={`${pathname}?range=${opt.key}`}
+          aria-current={active === opt.key ? "true" : undefined}
           className={cn(
-            "inline-flex min-h-11 flex-1 items-center justify-center rounded-md px-3 py-1.5 text-xs font-medium transition-colors sm:flex-initial",
-            active === opt.key
-              ? "bg-card text-ink shadow-sm"
-              : "text-muted hover:text-ink"
+            "inline-flex min-h-11 flex-1 items-center justify-center rounded px-3 text-[13px] font-medium transition-colors sm:min-h-8 sm:flex-initial",
+            active === opt.key ? "bg-card text-ink shadow-sm" : "text-muted hover:text-ink"
           )}
         >
           {opt.label}

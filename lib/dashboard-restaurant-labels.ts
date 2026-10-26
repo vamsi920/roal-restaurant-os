@@ -41,7 +41,7 @@ export function isRestaurantMenuAgentPath(pathname: string): boolean {
 
 /** Mobile shell title for restaurant detail or menu routes. */
 export function restaurantWorkspaceMobileTitle(pathname: string): string | null {
-  if (LIVE_AGENT_PATH.test(pathname)) return "Live Agent";
+  if (LIVE_AGENT_PATH.test(pathname)) return "Phone host";
   if (RESTAURANT_ANALYTICS_PATH.test(pathname)) return "Analytics";
   if (RESTAURANT_BILLING_PATH.test(pathname)) return "Billing";
   if (isRestaurantMenuAgentPath(pathname)) return RESTAURANT_MENU_SETUP_TITLE;
@@ -52,7 +52,7 @@ export function restaurantWorkspaceMobileTitle(pathname: string): string | null 
 /** Mobile shell subtitle for restaurant detail or menu routes. */
 export function restaurantWorkspaceMobileSubtitle(pathname: string): string | null {
   if (LIVE_AGENT_PATH.test(pathname)) {
-    return "Voice agent for this location";
+    return "Test, tune, and teach your host";
   }
   if (RESTAURANT_ANALYTICS_PATH.test(pathname)) {
     return "Calls and orders for this location";
@@ -64,7 +64,7 @@ export function restaurantWorkspaceMobileSubtitle(pathname: string): string | nu
     return "Menu upload and live menu";
   }
   if (isRestaurantKdsPath(pathname)) {
-    return "Live phone orders";
+    return "Tickets, live calls, outcomes";
   }
   return null;
 }

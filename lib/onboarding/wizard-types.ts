@@ -43,6 +43,15 @@ export type OnboardingWizardState = {
   activeStep: OnboardingStepKey;
   launchChecklist: RestaurantLaunchChecklistSnapshot | null;
   readiness: OnboardingReadinessSnapshot | null;
+  pendingLookup: {
+    placeId: string;
+    name: string;
+    city: string;
+    address: string | null;
+    phone: string | null;
+    website: string | null;
+  } | null;
+  outboundCallConfigured: boolean;
   supabaseRef: string | null;
   edgeBase: string | null;
 };

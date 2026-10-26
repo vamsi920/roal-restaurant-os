@@ -49,9 +49,16 @@ vi.mock("@/lib/voice-agent/test-harness/build-get-menu", () => ({
   buildGetMenuHarnessResponse: vi.fn(),
 }));
 
+vi.mock("@/lib/restaurant-profile/helpers", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("@/lib/restaurant-profile/helpers")>();
+  return { ...actual, getRestaurantProfile: vi.fn() };
+});
+
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
 import { buildGetMenuHarnessResponse } from "@/lib/voice-agent/test-harness/build-get-menu";
+import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 
 const supabaseStub = {} as SupabaseClient;
 
@@ -87,6 +94,7 @@ function menuResponse(operations: Record<string, unknown> = {}) {
         })),
       },
     ],
+    service_modes: { pickup: true, delivery: false },
     operations: {
       ordering_allowed: true,
       message: "Open now.",
@@ -124,6 +132,11 @@ function mockClosedHours() {
 }
 
 beforeEach(() => {
+  vi.mocked(getRestaurantProfile).mockResolvedValue({
+    restaurant_id: RESTAURANT_ID,
+    allows_pickup: true,
+    allows_delivery: false,
+  } as never);
   vi.mocked(loadRestaurantMenu).mockResolvedValue({
     categories: [],
     items: menuItems,

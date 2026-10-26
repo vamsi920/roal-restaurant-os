@@ -1,56 +1,48 @@
-import type { ReactNode } from "react";
+import { Panel, StatusChip, formatWhen, type Tone } from "@/components/dashboard/page-primitives";
 import type { NotificationDeliveryRow } from "@/lib/notifications/types";
 import { NOTIFICATION_EVENT_LABELS } from "@/lib/notifications/types";
-import { cn } from "@/lib/cn";
 
 type Props = {
   deliveries: NotificationDeliveryRow[];
 };
 
+function statusTone(status: NotificationDeliveryRow["status"]): Tone {
+  if (status === "sent") return "ok";
+  if (status === "failed") return "bad";
+  return "neutral";
+}
+
 export function NotificationDeliveryLog({ deliveries }: Props) {
   return (
-    <section className="notification-delivery-log dashboard-panel min-w-0">
-      <h2 className="dashboard-page__section-title">Recent deliveries</h2>
-      <p className="mt-1 text-xs text-muted">
-        Dev console and production channel attempts (newest first).
-      </p>
+    <Panel
+      className="notification-delivery-log"
+      title="Recent deliveries"
+      hint="Dev console and production channel attempts, newest first."
+    >
       {deliveries.length === 0 ? (
-        <p className="mt-6 text-sm text-muted">No notifications yet.</p>
+        <p className="mt-4 text-[13px] text-muted">No notifications yet.</p>
       ) : (
-        <ul className="notification-delivery-log__list mt-4 max-h-[28rem] space-y-2 overflow-y-auto overscroll-y-contain">
+        <ul className="notification-delivery-log__list mt-3 max-h-[28rem] divide-y divide-line/70 overflow-y-auto overscroll-y-contain">
           {deliveries.map((row) => (
-            <li
-              key={row.id}
-              className="notification-delivery-log__row min-w-0 rounded-lg border border-line bg-elev px-3 py-2.5 text-sm"
-            >
-              <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
-                <span className="font-medium text-ink [overflow-wrap:anywhere]">
+            <li key={row.id} className="notification-delivery-log__row min-w-0 py-2.5 first:pt-0">
+              <div className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                <span className="text-[13px] font-medium text-ink [overflow-wrap:anywhere]">
                   {row.title}
                 </span>
-                <span className="text-xs text-subtle tabular-nums">
+                <span className="text-[12px] tabular-nums text-subtle">
                   {formatWhen(row.created_at)}
                 </span>
               </div>
-              <p className="mt-1 text-pretty text-xs text-muted [overflow-wrap:anywhere]">
+              <p className="mt-0.5 text-pretty text-[12px] text-muted [overflow-wrap:anywhere]">
                 {row.body}
               </p>
-              <div className="mt-2 flex flex-wrap gap-2 text-xs font-medium text-subtle">
-                <Badge>
-                  {NOTIFICATION_EVENT_LABELS[row.event_type] ?? row.event_type}
-                </Badge>
-                <Badge>{row.channel}</Badge>
-                <Badge
-                  className={cn(
-                    row.status === "sent" && "text-success",
-                    row.status === "failed" && "text-danger",
-                    row.status === "skipped" && "text-muted"
-                  )}
-                >
-                  {row.status}
-                </Badge>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                <StatusChip>{NOTIFICATION_EVENT_LABELS[row.event_type] ?? row.event_type}</StatusChip>
+                <StatusChip>{row.channel}</StatusChip>
+                <StatusChip tone={statusTone(row.status)}>{row.status}</StatusChip>
               </div>
               {row.error_message ? (
-                <p className="mt-1 text-xs text-subtle [overflow-wrap:anywhere]">
+                <p className="mt-1 text-[12px] text-danger [overflow-wrap:anywhere]">
                   {row.error_message}
                 </p>
               ) : null}
@@ -58,34 +50,6 @@ export function NotificationDeliveryLog({ deliveries }: Props) {
           ))}
         </ul>
       )}
-    </section>
+    </Panel>
   );
-}
-
-function Badge({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <span
-      className={cn(
-        "rounded-md border border-line bg-card px-1.5 py-0.5 text-subtle",
-        className
-      )}
-    >
-      {children}
-    </span>
-  );
-}
-
-function formatWhen(iso: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(iso));
 }

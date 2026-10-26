@@ -3,113 +3,144 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
-import { OnboardingVoiceAgentStep } from "@/components/onboarding/onboarding-voice-agent-step";
+import { setWizardStepStatusAction } from "@/app/dashboard/onboarding/actions";
+import { Panel, StatusChip } from "@/components/dashboard/page-primitives";
 import { OnboardingReadinessPanel } from "@/components/onboarding/OnboardingReadinessPanel";
-import { RestaurantLaunchChecklist } from "@/components/restaurant-launch/RestaurantLaunchChecklist";
-import { MenuScanner } from "@/app/dashboard/restaurants/[id]/MenuScanner";
-import {
-  completeAccountStepAction,
-  completeMenuImportStepAction,
-  createOrganizationAction,
-  createRestaurantWizardAction,
-  saveRestaurantProfileAction,
-  setWizardStepStatusAction,
-} from "@/app/dashboard/onboarding/actions";
-import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
+import { OnboardingTryCall } from "@/components/onboarding/onboarding-try-call";
+import { OnboardingVoiceAgentStep } from "@/components/onboarding/onboarding-voice-agent-step";
+import { LaunchCheckMark } from "@/components/restaurant-launch/RestaurantLaunchChecklist";
 import { cn } from "@/lib/cn";
+import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import {
   RESTAURANT_LIVE_ORDERS_LABEL,
   RESTAURANT_MENU_SETUP_TITLE,
 } from "@/lib/dashboard-restaurant-labels";
+import { CONTACT_PILOT_EMAIL, buildPilotMailto } from "@/lib/landing/contact-mailto";
+import type { OnboardingStepStatus } from "@/lib/onboarding/types";
+import type { OnboardingWizardState } from "@/lib/onboarding/wizard-types";
 import {
+  restaurantLiveOrdersHref,
   restaurantMenuSetupHref,
   restaurantVoiceAgentHref,
 } from "@/lib/voice-agent/provision-display";
-import {
-  ONBOARDING_LAUNCH_STEPS,
-  ONBOARDING_STEP_DESCRIPTIONS,
-  ONBOARDING_STEP_LABELS,
-  type OnboardingStepKey,
-} from "@/lib/onboarding/steps";
-import { isOnboardingStepNavDisabled } from "@/lib/onboarding/nav";
-import {
-  WIZARD_STEP_ORDER,
-  type OnboardingWizardState,
-} from "@/lib/onboarding/wizard-types";
-import type { OnboardingStepStatus } from "@/lib/onboarding/types";
 
 type Props = {
   initialState: OnboardingWizardState;
 };
 
-function stepRequiresRestaurant(key: OnboardingStepKey): boolean {
-  return key !== "account" && key !== "restaurant_profile";
-}
+type GoLiveStepId = "menu" | "hours" | "host" | "test_call" | "forward";
 
-function stepStatus(
+type GoLiveStep = {
+  id: GoLiveStepId;
+  label: string;
+  detail: string;
+  done: boolean;
+  error?: boolean;
+  /** External link for steps that live in the workspace. */
+  href?: string;
+  hrefLabel?: string;
+};
+
+function restaurantStepStatus(
   state: OnboardingWizardState,
-  key: OnboardingStepKey
+  key: "voice_agent" | "test_call" | "go_live"
 ): OnboardingStepStatus {
-  if (key === "account") {
-    return state.organizationOnboarding?.steps.account?.status ?? "pending";
-  }
-  return (
-    state.restaurantOnboarding?.steps[
-      key as keyof typeof state.restaurantOnboarding.steps
-    ]?.status ?? "pending"
-  );
+  return state.restaurantOnboarding?.steps[key]?.status ?? "pending";
 }
 
-function StepIcon({ status }: { status: OnboardingStepStatus }) {
-  if (status === "completed" || status === "skipped") {
-    return (
-      <span className="grid h-6 w-6 place-items-center rounded-full bg-success/15 text-success">
-        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <path d="M5 12l5 5L20 7" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </span>
-    );
-  }
-  if (status === "in_progress") {
-    return <span className="h-6 w-6 rounded-full border-2 border-accent border-t-transparent animate-spin" />;
-  }
-  return <span className="h-6 w-6 rounded-full border-2 border-line" />;
+function buildSteps(state: OnboardingWizardState): GoLiveStep[] {
+  const restaurant = state.activeRestaurant;
+  if (!restaurant) return [];
+  const menuHref = restaurantMenuSetupHref(restaurant.id);
+  const voice = state.activeRestaurantVoice;
+  const hostReady = Boolean(voice && voice.uiState === "ready" && voice.toolsSynced);
+  const hostError = voice?.uiState === "needs_attention";
+  const checklistTestCall = state.launchChecklist?.items.find((i) => i.id === "test_call_passed");
+  const testCallStatus = restaurantStepStatus(state, "test_call");
+  const testCallDone =
+    checklistTestCall?.status === "ok" ||
+    testCallStatus === "completed" ||
+    testCallStatus === "skipped";
+  const forwarded = restaurantStepStatus(state, "go_live") === "completed";
+
+  return [
+    {
+      id: "menu",
+      label: "Menu loaded",
+      detail:
+        state.menuItemCount > 0
+          ? `${state.menuItemCount} item${state.menuItemCount === 1 ? "" : "s"} in ${state.menuCategoryCount} categor${state.menuCategoryCount === 1 ? "y" : "ies"}`
+          : "Scan a menu photo or paste a link so the host knows what to sell.",
+      done: state.menuItemCount > 0,
+      href: menuHref,
+      hrefLabel: RESTAURANT_MENU_SETUP_TITLE,
+    },
+    {
+      id: "hours",
+      label: "Hours set",
+      detail: state.hoursConfigured
+        ? "Weekly hours saved — the host tells callers when you're closed."
+        : "Add weekly hours so the host never takes an order you can't make.",
+      done: state.hoursConfigured,
+      href: menuHref,
+      hrefLabel: "Set hours",
+    },
+    {
+      id: "host",
+      label: "Phone host provisioned",
+      detail: hostReady
+        ? "Dedicated agent is live with your menu tools."
+        : hostError
+          ? voice?.provisionError ?? voice?.lastSyncError ?? "Setup did not finish."
+          : voice?.uiState === "in_progress"
+            ? "Building the agent now."
+            : voice?.agentId
+              ? "Agent linked — sync the menu tools."
+              : "ROAL builds a dedicated ElevenLabs agent for this location.",
+      done: hostReady,
+      error: hostError,
+    },
+    {
+      id: "test_call",
+      label: "Test call passed",
+      detail: testCallDone
+        ? testCallStatus === "skipped"
+          ? "Skipped — you can still test any time."
+          : "Order placed and seen on Live orders."
+        : "Call the host from your browser and place a sample order.",
+      done: testCallDone,
+    },
+    {
+      id: "forward",
+      label: "Forward your number",
+      detail: forwarded
+        ? "Guests who call the restaurant reach the host."
+        : "Point your existing phone line at the host. Takes one minute with your carrier.",
+      done: forwarded,
+    },
+  ];
 }
 
 export function OnboardingWizard({ initialState }: Props) {
   const router = useRouter();
   const [state, setState] = useState(initialState);
-  const [activeStep, setActiveStep] = useState<OnboardingStepKey>(
-    initialState.activeStep
-  );
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [focused, setFocused] = useState<GoLiveStepId | null>(null);
 
   useEffect(() => {
     setState(initialState);
-    setActiveStep(initialState.activeStep);
   }, [initialState]);
 
   const orgId = state.organization?.id ?? null;
   const restaurant = state.activeRestaurant;
   const restaurantId = restaurant?.id ?? null;
-  const resumeStep = state.activeStep;
 
-  const navStepStatus = useCallback(
-    (key: OnboardingStepKey) => stepStatus(state, key),
-    [state]
-  );
-
-  const overallPercent = useMemo(() => {
-    const orgDone = state.orgProgress.completed;
-    const restDone = state.restaurantProgress.completed;
-    const total = WIZARD_STEP_ORDER.length;
-    return Math.round(((orgDone + restDone) / total) * 100);
-  }, [state.orgProgress.completed, state.restaurantProgress.completed]);
-
-  const refresh = useCallback(() => {
-    router.refresh();
-  }, [router]);
+  const steps = useMemo(() => buildSteps(state), [state]);
+  const doneCount = steps.filter((s) => s.done).length;
+  const nextStep = steps.find((s) => !s.done) ?? null;
+  const allDone = steps.length > 0 && !nextStep;
+  const activeId: GoLiveStepId | null = focused ?? nextStep?.id ?? null;
 
   const run = useCallback(
     (fn: () => Promise<void>) => {
@@ -117,829 +148,380 @@ export function OnboardingWizard({ initialState }: Props) {
       startTransition(async () => {
         try {
           await fn();
-          refresh();
+          router.refresh();
         } catch (e) {
           setError(
-            formatSupabaseClientError(
-              e instanceof Error ? e.message : "Something went wrong"
-            )
+            formatSupabaseClientError(e instanceof Error ? e.message : "Something went wrong.")
           );
         }
       });
     },
-    [refresh]
+    [router]
   );
 
-  const profileDefaults = state.activeRestaurantProfile;
+  const setStep = useCallback(
+    (step: "voice_agent" | "test_call" | "go_live", status: OnboardingStepStatus) => {
+      if (!orgId || !restaurantId) return;
+      run(async () => {
+        await setWizardStepStatusAction({
+          scope: "restaurant",
+          organizationId: orgId,
+          restaurantId,
+          step,
+          status,
+        });
+        setFocused(null);
+      });
+    },
+    [orgId, restaurantId, run]
+  );
+
+  if (!restaurant || !restaurantId || !orgId) {
+    return (
+      <div className="onboarding-page dashboard-page dashboard-page--narrow">
+        <Panel title="No location selected">
+          <p className="mt-2 text-[13px] text-muted">
+            Pick a location to see its go-live checklist.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link href="/dashboard/restaurants" className="btn-primary">
+              Locations
+            </Link>
+            <Link href="/dashboard/onboarding?new=1" className="btn-ghost">
+              Add location
+            </Link>
+          </div>
+        </Panel>
+      </div>
+    );
+  }
+
+  const ordersHref = restaurantLiveOrdersHref(restaurantId);
+  const menuHref = restaurantMenuSetupHref(restaurantId);
+  const hostHref = restaurantVoiceAgentHref(restaurantId);
 
   return (
-    <div className="onboarding-page mx-auto max-w-5xl min-w-0 overflow-x-hidden">
-      <header className="onboarding-page__header mb-6 sm:mb-8">
-        <p className="text-xs font-medium text-subtle">Setup</p>
-        <h1 className="mt-2 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          First store setup
-        </h1>
-        <p className="mt-2 max-w-xl text-pretty text-sm leading-relaxed text-muted">
-          {ONBOARDING_LAUNCH_STEPS.join(" → ")}. Resume anytime.
-        </p>
-        <ol className="onboarding-roadmap mt-4 grid list-none grid-cols-1 gap-2 p-0 min-[380px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-          {ONBOARDING_LAUNCH_STEPS.map((label, i) => (
-            <li
-              key={label}
-              className="rounded-lg border border-line bg-card px-2.5 py-2 text-center text-xs font-medium text-ink sm:px-3 sm:py-2.5 sm:text-[0.8125rem]"
-            >
-              <span className="text-subtle tabular-nums">{i + 1}.</span> {label}
-            </li>
-          ))}
-        </ol>
-        <div className="mt-4 h-2 overflow-hidden rounded-full bg-elev">
-          <div
-            className="h-full rounded-full bg-accent transition-all duration-500"
-            style={{ width: `${overallPercent}%` }}
-          />
-        </div>
-        <p className="mt-1.5 text-xs text-subtle tabular-nums">{overallPercent}% complete</p>
-        {state.restaurants.length === 0 && orgId ? (
-          <p className="mt-3 text-sm text-muted">
-            No locations yet.{" "}
-            <Link href="/dashboard/restaurants" className="font-medium text-accent hover:underline">
-              Create a location
-            </Link>{" "}
-            or add one in the store profile step below.
+    <div className="onboarding-page dashboard-page dashboard-page--wide min-w-0 space-y-5 overflow-x-hidden">
+      <header className="dashboard-page__header">
+        <div className="min-w-0">
+          {state.restaurants.length > 1 ? (
+            <label className="dashboard-page__eyebrow flex items-center gap-1.5">
+              <span>Location</span>
+              <select
+                className="input-base h-7 w-auto max-w-[16rem] py-0 pl-2 pr-7 text-[12px] font-semibold uppercase tracking-wider"
+                value={restaurantId}
+                onChange={(e) => router.push(`/dashboard/onboarding?restaurant=${e.target.value}`)}
+                aria-label="Switch location"
+              >
+                {state.restaurants.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : (
+            <p className="dashboard-page__eyebrow">{restaurant.name}</p>
+          )}
+          <h1 className="dashboard-page__title">{allDone ? "You're live" : "Go live"}</h1>
+          <p className="dashboard-page__lead">
+            {allDone
+              ? `Guests who call ${restaurant.name} reach your ROAL host. Watch tickets arrive on ${RESTAURANT_LIVE_ORDERS_LABEL}.`
+              : "Five real checks, one at a time. Nothing here is simulated."}
           </p>
-        ) : null}
-        {state.restaurants.length > 1 ? (
-          <label className="mt-4 block max-w-md">
-            <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-              Location
-            </span>
-            <select
-              className="input-base mt-1.5 w-full"
-              value={restaurantId ?? ""}
-              disabled={pending}
-              onChange={(e) => {
-                const id = e.target.value;
-                if (id) router.push(`/dashboard/onboarding?restaurant=${id}`);
-              }}
-            >
-              <option value="" disabled>
-                Select a location
-              </option>
-              {state.restaurants.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        ) : null}
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <StatusChip tone={allDone ? "ok" : "neutral"}>
+            {doneCount}/{steps.length} done
+          </StatusChip>
+          <Link href={ordersHref} className={allDone ? "btn-primary" : "btn-ghost"}>
+            {RESTAURANT_LIVE_ORDERS_LABEL}
+          </Link>
+        </div>
       </header>
 
       {error ? (
         <p
-          className="onboarding-page__error mb-4 rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
+          className="rounded-md border border-danger/25 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {error}
         </p>
       ) : null}
 
-      {pending ? (
-        <p className="mb-4 text-sm text-muted" aria-live="polite">
-          Saving…
-        </p>
-      ) : null}
-
-      <div className="onboarding-page__body grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,13.5rem)_1fr]">
-        <nav className="onboarding-page__nav glass-card p-2.5 sm:p-3" aria-label="Onboarding steps">
-          <ul className="space-y-0.5">
-            {WIZARD_STEP_ORDER.map((key) => {
-              const status = stepStatus(state, key);
-              const disabled = isOnboardingStepNavDisabled(key, {
-                orgId,
-                restaurantId,
-                resumeStep,
-                stepStatus: navStepStatus,
-                readiness: state.readiness,
-                menuItemCount: state.menuItemCount,
-              });
-              return (
-                <li key={key}>
-                  <button
-                    type="button"
-                    disabled={disabled || pending}
-                    onClick={() => setActiveStep(key)}
+      <div className="onboarding-page__body grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_17rem]">
+        <div className="min-w-0 space-y-4">
+          <Panel title="Get started">
+            <div className="dashboard-progress mt-3" aria-hidden>
+              <div
+                className={cn("dashboard-progress__bar", allDone && "dashboard-progress__bar--ok")}
+                style={{ width: `${Math.round((doneCount / Math.max(1, steps.length)) * 100)}%` }}
+              />
+            </div>
+            <ol className="dashboard-checklist mt-2">
+              {steps.map((step) => {
+                const isNext = nextStep?.id === step.id;
+                const isActive = activeId === step.id;
+                return (
+                  <li
+                    key={step.id}
                     className={cn(
-                      "flex min-h-11 w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors",
-                      activeStep === key
-                        ? "bg-accent-soft ring-1 ring-accent/20"
-                        : "hover:bg-elev",
-                      disabled && "cursor-not-allowed opacity-50"
+                      "dashboard-checklist__item",
+                      step.done && "dashboard-checklist__item--done",
+                      isNext && !focused && "dashboard-checklist__item--next"
                     )}
+                    aria-current={isActive ? "step" : undefined}
                   >
-                    <StepIcon status={status} />
-                    <span className="min-w-0">
-                      <span className="block text-sm font-medium leading-snug text-ink">
-                        {ONBOARDING_STEP_LABELS[key]}
-                      </span>
-                      <span className="block text-xs capitalize text-subtle">
-                        {status.replace("_", " ")}
-                      </span>
+                    <LaunchCheckMark
+                      status={step.done ? "done" : step.error ? "error" : "pending"}
+                      active={isNext}
+                    />
+                    <button
+                      type="button"
+                      className="min-w-0 text-left"
+                      onClick={() => setFocused(step.id)}
+                    >
+                      <span className="dashboard-checklist__label block">{step.label}</span>
+                      <span className="dashboard-checklist__detail block">{step.detail}</span>
+                    </button>
+                    <span className="dashboard-checklist__action">
+                      {step.href ? (
+                        <Link
+                          href={step.href}
+                          className={cn(isNext ? "btn-primary btn-sm" : "btn-ghost btn-sm")}
+                        >
+                          {step.done ? "Edit" : step.hrefLabel ?? "Open"}
+                        </Link>
+                      ) : !step.done ? (
+                        <button
+                          type="button"
+                          className={cn(isNext ? "btn-primary btn-sm" : "btn-ghost btn-sm")}
+                          onClick={() => setFocused(step.id)}
+                        >
+                          {step.error ? "Fix" : "Start"}
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn-ghost btn-sm"
+                          onClick={() => setFocused(step.id)}
+                        >
+                          View
+                        </button>
+                      )}
                     </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          {state.readiness ? (
-            <div className="mt-4 border-t border-line pt-4">
-              <OnboardingReadinessPanel readiness={state.readiness} compact />
-            </div>
-          ) : null}
-          {state.launchChecklist ? (
-            <div className="mt-4 border-t border-line pt-4">
-              <RestaurantLaunchChecklist
-                snapshot={state.launchChecklist}
-                compact
-              />
-            </div>
-          ) : null}
-        </nav>
+                  </li>
+                );
+              })}
+            </ol>
+          </Panel>
 
-        <div className="onboarding-page__panel glass-card min-w-0 p-4 sm:p-6">
-          <h2 className="text-base font-semibold text-ink sm:text-lg">
-            {ONBOARDING_STEP_LABELS[activeStep]}
-          </h2>
-          <p className="mt-1 text-sm leading-relaxed text-muted">
-            {ONBOARDING_STEP_DESCRIPTIONS[activeStep]}
-          </p>
-
-          <div className="mt-6">
-            {activeStep === "account" && (
-              <AccountStep
-                state={state}
-                pending={pending}
-                onCreateOrg={(name) =>
-                  run(async () => {
-                    await createOrganizationAction({ name });
-                  })
-                }
-                onContinue={(organizationId) =>
-                  run(async () => {
-                    await completeAccountStepAction(organizationId);
-                  })
-                }
-                onGoToRestaurant={() => setActiveStep("restaurant_profile")}
-              />
-            )}
-
-            {activeStep === "restaurant_profile" && orgId && (
-              <ProfileStep
-                key={restaurantId ?? "new"}
-                restaurant={restaurant}
-                pending={pending}
-                hoursConfigured={state.hoursConfigured}
-                initialPhone={profileDefaults?.phone ?? ""}
-                initialTimezone={profileDefaults?.timezone ?? ""}
-                initialAddress={profileDefaults?.address_line1 ?? ""}
-                onCreate={(name) =>
-                  run(async () => {
-                    const { restaurantId: id } = await createRestaurantWizardAction({
-                      name,
-                      organizationId: orgId,
-                    });
-                    router.push(`/dashboard/onboarding?restaurant=${id}`);
-                  })
-                }
-                onSave={(fields) =>
-                  run(async () => {
-                    if (!restaurantId) throw new Error("Create a restaurant first.");
-                    await saveRestaurantProfileAction({
-                      restaurantId,
-                      organizationId: orgId,
-                      ...fields,
-                    });
-                    setActiveStep("menu_import");
-                  })
-                }
-              />
-            )}
-
-            {activeStep === "menu_import" && restaurantId && orgId && (
-              <MenuStep
-                restaurantId={restaurantId}
-                restaurantName={restaurant?.name ?? "Restaurant"}
-                menuItemCount={state.menuItemCount}
-                categoryCount={state.menuCategoryCount}
-                hoursConfigured={state.hoursConfigured}
-                pending={pending}
-                onContinue={() =>
-                  run(async () => {
-                    await completeMenuImportStepAction({
-                      restaurantId,
-                      organizationId: orgId,
-                    });
-                    setActiveStep("voice_agent");
-                  })
-                }
-                onSkip={() =>
-                  run(async () => {
-                    await setWizardStepStatusAction({
-                      scope: "restaurant",
-                      organizationId: orgId,
-                      restaurantId,
-                      step: "menu_import",
-                      status: "skipped",
-                    });
-                    setActiveStep("voice_agent");
-                  })
-                }
-                onScanned={refresh}
-              />
-            )}
-
-            {activeStep === "voice_agent" && restaurant && orgId && state.activeRestaurantVoice && (
+          {activeId === "host" ? (
+            <Panel>
               <OnboardingVoiceAgentStep
-                restaurantId={restaurant.id}
+                restaurantId={restaurantId}
                 restaurantName={restaurant.name}
                 organizationId={orgId}
-                voice={state.activeRestaurantVoice}
+                voice={
+                  state.activeRestaurantVoice ?? {
+                    uiState: "not_started",
+                    agentId: null,
+                    provisionError: null,
+                    lastSyncError: null,
+                    lastSyncAt: null,
+                    toolsSynced: false,
+                  }
+                }
                 pending={pending}
-                onContinue={() =>
-                  run(async () => {
-                    await setWizardStepStatusAction({
-                      scope: "restaurant",
-                      organizationId: orgId,
-                      restaurantId: restaurant.id,
-                      step: "voice_agent",
-                      status: "completed",
-                    });
-                    setActiveStep("test_call");
-                  })
-                }
-                onSkipManual={() =>
-                  run(async () => {
-                    await setWizardStepStatusAction({
-                      scope: "restaurant",
-                      organizationId: orgId,
-                      restaurantId: restaurant.id,
-                      step: "voice_agent",
-                      status: "skipped",
-                    });
-                    setActiveStep("test_call");
-                  })
-                }
+                onReady={() => setFocused("test_call")}
+                onSkipManual={() => setStep("voice_agent", "skipped")}
               />
-            )}
+            </Panel>
+          ) : null}
 
-            {activeStep === "voice_agent" && restaurant && orgId && !state.activeRestaurantVoice && (
-              <p className="text-sm text-muted">
-                Save the store profile first so ROAL can provision a voice agent for this
-                location.
-              </p>
-            )}
-
-            {activeStep === "test_call" && restaurantId && orgId && (
-              <TestCallStep
-                restaurantId={restaurantId}
-                restaurantName={restaurant?.name ?? "Restaurant"}
-                pending={pending}
-                onComplete={() =>
-                  run(async () => {
-                    await setWizardStepStatusAction({
-                      scope: "restaurant",
-                      organizationId: orgId,
-                      restaurantId,
-                      step: "test_call",
-                      status: "completed",
-                    });
-                    setActiveStep("go_live");
-                  })
-                }
-                onSkip={() =>
-                  run(async () => {
-                    await setWizardStepStatusAction({
-                      scope: "restaurant",
-                      organizationId: orgId,
-                      restaurantId,
-                      step: "test_call",
-                      status: "skipped",
-                    });
-                    setActiveStep("go_live");
-                  })
-                }
-              />
-            )}
-
-            {activeStep === "go_live" && restaurantId && orgId && (
-              <GoLiveStep
-                restaurantId={restaurantId}
-                restaurantName={restaurant?.name ?? "Restaurant"}
-                launchChecklist={state.launchChecklist}
-                pending={pending}
-                isComplete={state.restaurantProgress.isComplete}
-                onLaunch={() =>
-                  run(async () => {
-                    await setWizardStepStatusAction({
-                      scope: "restaurant",
-                      organizationId: orgId,
-                      restaurantId,
-                      step: "go_live",
-                      status: "completed",
-                    });
-                  })
-                }
-              />
-            )}
-
-            {activeStep !== "account" && !orgId && (
-              <p className="text-sm text-muted">Complete account setup first.</p>
-            )}
-
-            {orgId &&
-              stepRequiresRestaurant(activeStep) &&
-              !restaurantId && (
-                <p className="text-sm text-muted">
-                  Add a restaurant before this step.
+          {activeId === "test_call" ? (
+            <Panel>
+              {state.activeRestaurantVoice?.agentId ? (
+                <OnboardingTryCall
+                  restaurantId={restaurantId}
+                  organizationId={orgId}
+                  restaurantName={restaurant.name}
+                  restaurantPhone={state.activeRestaurantProfile?.phone ?? null}
+                  outboundCallConfigured={state.outboundCallConfigured}
+                />
+              ) : (
+                <p className="text-[13px] text-muted">
+                  Set up the phone host first, then come back to test it.
                 </p>
               )}
-          </div>
-        </div>
-      </div>
-
-      {state.restaurants.length > 1 && restaurantId ? (
-        <p className="mt-4 text-xs text-subtle">
-          Setting up: <span className="font-medium text-ink">{restaurant?.name}</span>
-          {" · "}
-          <Link href="/dashboard/restaurants" className="text-accent hover:underline">
-            All locations
-          </Link>
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-function AccountStep({
-  state,
-  pending,
-  onCreateOrg,
-  onContinue,
-  onGoToRestaurant,
-}: {
-  state: OnboardingWizardState;
-  pending: boolean;
-  onCreateOrg: (name: string) => void;
-  onContinue: (organizationId: string) => void;
-  onGoToRestaurant: () => void;
-}) {
-  const [orgName, setOrgName] = useState("");
-  const hasOrg = Boolean(state.organization);
-  const accountDone =
-    state.organizationOnboarding?.steps.account?.status === "completed";
-
-  if (hasOrg) {
-    return (
-      <div className="space-y-4">
-        <p className="text-sm text-muted">
-          Signed in as <span className="font-medium text-ink">{state.userEmail}</span>
-          {state.organization ? (
-            <>
-              {" "}
-              · Organization:{" "}
-              <span className="font-medium text-ink">{state.organization.name}</span>
-            </>
+              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-3">
+                <button
+                  type="button"
+                  className="btn-primary"
+                  disabled={pending || !state.activeRestaurantVoice?.agentId}
+                  onClick={() => setStep("test_call", "completed")}
+                >
+                  I saw the order on {RESTAURANT_LIVE_ORDERS_LABEL}
+                </button>
+                <Link href={ordersHref} className="btn-ghost">
+                  Open {RESTAURANT_LIVE_ORDERS_LABEL}
+                </Link>
+                <button
+                  type="button"
+                  className="btn-ghost"
+                  disabled={pending}
+                  onClick={() => setStep("test_call", "skipped")}
+                >
+                  Skip for now
+                </button>
+              </div>
+            </Panel>
           ) : null}
-        </p>
-        {!accountDone && state.organization ? (
-          <button
-            type="button"
-            className="btn-primary"
-            disabled={pending}
-            onClick={() => onContinue(state.organization!.id)}
-          >
-            Confirm account & continue
-          </button>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-sm text-success">Account step complete.</p>
-            <button
-              type="button"
-              className="btn-primary"
-              disabled={pending}
-              onClick={onGoToRestaurant}
+
+          {activeId === "forward" ? (
+            <ForwardNumberCard
+              restaurantName={restaurant.name}
+              restaurantPhone={state.activeRestaurantProfile?.phone ?? null}
+              agentId={state.activeRestaurantVoice?.agentId ?? null}
+              done={steps.find((s) => s.id === "forward")?.done ?? false}
+              pending={pending}
+              onForwarded={() => setStep("go_live", "completed")}
+              ordersHref={ordersHref}
+            />
+          ) : null}
+
+          {activeId === "menu" || activeId === "hours" ? (
+            <Panel
+              title={activeId === "menu" ? "Menu" : "Hours"}
+              hint={
+                activeId === "menu"
+                  ? "Scan a photo, paste a link, or add items by hand. The host sells exactly what's here."
+                  : "Weekly hours and holiday closures live in Menu setup next to the menu."
+              }
             >
-              Continue to add restaurant
-            </button>
-          </div>
-        )}
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Link href={menuHref} className="btn-primary">
+                  Open {RESTAURANT_MENU_SETUP_TITLE}
+                </Link>
+              </div>
+            </Panel>
+          ) : null}
+        </div>
+
+        <aside className="min-w-0 space-y-4">
+          {state.readiness ? (
+            <OnboardingReadinessPanel readiness={state.readiness} compact />
+          ) : null}
+          <Panel title="This location" muted>
+            <ul className="mt-2 grid gap-0.5 text-[13px] min-[380px]:grid-cols-2 lg:grid-cols-1">
+              <WorkspaceLink href={ordersHref} label={RESTAURANT_LIVE_ORDERS_LABEL} />
+              <WorkspaceLink href={menuHref} label={RESTAURANT_MENU_SETUP_TITLE} />
+              <WorkspaceLink href={hostHref} label="Phone host" />
+            </ul>
+          </Panel>
+        </aside>
       </div>
-    );
-  }
-
-  return (
-    <form
-      className="space-y-4 max-w-md"
-      onSubmit={(e) => {
-        e.preventDefault();
-        onCreateOrg(orgName);
-      }}
-    >
-      <p className="text-sm text-muted">Name your organization. You will be the owner.</p>
-      <label className="block">
-        <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-          Organization name
-        </span>
-        <input
-          className="input-base mt-1.5"
-          value={orgName}
-          onChange={(e) => setOrgName(e.target.value)}
-          placeholder="e.g. Joe's Restaurant Group"
-          required
-          disabled={pending}
-        />
-      </label>
-      <button type="submit" className="btn-primary" disabled={pending || !orgName.trim()}>
-        Create organization
-      </button>
-    </form>
+    </div>
   );
 }
 
-function ProfileStep({
-  restaurant,
-  pending,
-  hoursConfigured,
-  initialPhone,
-  initialTimezone,
-  initialAddress,
-  onCreate,
-  onSave,
-}: {
-  restaurant: OnboardingWizardState["activeRestaurant"];
-  pending: boolean;
-  hoursConfigured: boolean;
-  initialPhone: string;
-  initialTimezone: string;
-  initialAddress: string;
-  onCreate: (name: string) => void;
-  onSave: (fields: {
-    name: string;
-    phone?: string;
-    timezone?: string;
-    address?: string;
-  }) => void;
-}) {
-  const [name, setName] = useState(restaurant?.name ?? "");
-  const [phone, setPhone] = useState(initialPhone);
-  const [timezone, setTimezone] = useState(initialTimezone || "America/Chicago");
-  const [address, setAddress] = useState(initialAddress);
-
-  useEffect(() => {
-    setName(restaurant?.name ?? "");
-    setPhone(initialPhone);
-    setTimezone(initialTimezone || "America/Chicago");
-    setAddress(initialAddress);
-  }, [restaurant?.id, restaurant?.name, initialPhone, initialTimezone, initialAddress]);
-
-  if (!restaurant) {
-    return (
-      <form
-        className="space-y-4 max-w-md"
-        onSubmit={(e) => {
-          e.preventDefault();
-          onCreate(name);
-        }}
+function WorkspaceLink({ href, label }: { href: string; label: string }) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="-mx-1 flex min-h-11 items-center justify-between gap-2 rounded px-1 py-1.5 font-medium text-ink hover:bg-card lg:min-h-9"
       >
-        <label className="block">
-          <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-            Restaurant name
-          </span>
-          <input
-            className="input-base mt-1.5"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Lupa Trattoria"
-            required
-            disabled={pending}
-          />
-        </label>
-        <button type="submit" className="btn-primary" disabled={pending || !name.trim()}>
-          Create location
-        </button>
-      </form>
-    );
-  }
-
-  return (
-    <form
-      className="space-y-4 max-w-lg"
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSave({ name, phone, timezone, address });
-      }}
-    >
-      <label className="block">
-        <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-          Restaurant name
-        </span>
-        <input
-          className="input-base mt-1.5"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          disabled={pending}
-        />
-      </label>
-      <label className="block">
-        <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-          Phone line (for voice orders)
-        </span>
-        <input
-          className="input-base mt-1.5"
-          type="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="+1 555 0100"
-          disabled={pending}
-        />
-      </label>
-      <label className="block">
-        <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-          Timezone
-        </span>
-        <input
-          className="input-base mt-1.5"
-          value={timezone}
-          onChange={(e) => setTimezone(e.target.value)}
-          placeholder="America/Chicago"
-          disabled={pending}
-        />
-      </label>
-      <label className="block">
-        <span className="text-xs font-medium uppercase tracking-wide text-subtle">
-          Address
-        </span>
-        <input
-          className="input-base mt-1.5"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="123 Main St"
-          required
-          disabled={pending}
-        />
-      </label>
-      <p className="text-xs text-muted">
-        Guest phone line above is what callers use for pickup orders. Forward your
-        public restaurant line to the agent after sync on the voice agent step.
-      </p>
-      {restaurant ? (
-        <p className="text-xs text-muted">
-          Hours:{" "}
-          {hoursConfigured ? (
-            <span className="text-success">Configured</span>
-          ) : (
-            <>
-              <span className="text-warning">Not set yet</span>
-              {" · "}
-              <Link
-                href={restaurantMenuSetupHref(restaurant.id)}
-                className="font-medium text-accent hover:underline"
-              >
-                Set hours in {RESTAURANT_MENU_SETUP_TITLE}
-              </Link>
-            </>
-          )}
-        </p>
-      ) : null}
-      <p className="text-xs text-muted">
-        After you save, continue to menu import and voice setup for this location.
-      </p>
-      <button type="submit" className="btn-primary" disabled={pending || !name.trim()}>
-        Save & continue
-      </button>
-    </form>
-  );
-}
-
-function MenuStep({
-  restaurantId,
-  restaurantName,
-  menuItemCount,
-  categoryCount,
-  hoursConfigured,
-  pending,
-  onContinue,
-  onSkip,
-  onScanned,
-}: {
-  restaurantId: string;
-  restaurantName: string;
-  menuItemCount: number;
-  categoryCount: number;
-  hoursConfigured: boolean;
-  pending: boolean;
-  onContinue: () => void;
-  onSkip: () => void;
-  onScanned: () => void;
-}) {
-  const hasMenu = menuItemCount > 0;
-  const menuHref = restaurantMenuSetupHref(restaurantId);
-
-  return (
-    <div className="space-y-4">
-      <p className="text-sm text-muted">
-        Build and review the menu for{" "}
-        <span className="font-medium text-ink">{restaurantName}</span> before the
-        voice agent takes orders.
-      </p>
-      {!hoursConfigured ? (
-        <p className="rounded-lg border border-dashed border-warning/35 bg-warning/5 px-3 py-2 text-sm text-muted">
-          Set weekly hours in{" "}
-          <Link href={menuHref} className="font-medium text-accent hover:underline">
-            {RESTAURANT_MENU_SETUP_TITLE}
-          </Link>{" "}
-          before syncing the agent.
-        </p>
-      ) : null}
-      {hasMenu ? (
-        <p className="text-sm text-success">
-          {menuItemCount} menu item{menuItemCount === 1 ? "" : "s"}
-          {categoryCount > 0
-            ? ` across ${categoryCount} categor${categoryCount === 1 ? "y" : "ies"}`
-            : ""}
-          . Review names and prices before continuing.
-        </p>
-      ) : (
-        <p className="text-sm text-muted">
-          Scan a menu photo below or add items in {RESTAURANT_MENU_SETUP_TITLE}. No
-          demo menu is loaded — add your real items.
-        </p>
-      )}
-      <MenuScanner
-        restaurantId={restaurantId}
-        compact
-        onScanComplete={onScanned}
-      />
-      <Link href={menuHref} className="text-sm font-medium text-accent hover:underline">
-        {hasMenu
-          ? `Review and edit menu in ${RESTAURANT_MENU_SETUP_TITLE}`
-          : `Open ${RESTAURANT_MENU_SETUP_TITLE} for this location`}
+        {label}
+        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-subtle" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M9 6l6 6-6 6" />
+        </svg>
       </Link>
-      <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          className="btn-primary"
-          disabled={pending || !hasMenu || !hoursConfigured}
-          onClick={onContinue}
-        >
-          Continue to voice agent
-        </button>
-        <button
-          type="button"
-          className="btn-ghost"
-          disabled={pending}
-          onClick={onSkip}
-        >
-          Skip for now
-        </button>
-      </div>
-      {!hasMenu ? (
-        <p className="text-xs text-subtle">
-          Voice agent sync stays blocked until at least one menu item exists.
-        </p>
-      ) : !hoursConfigured ? (
-        <p className="text-xs text-subtle">
-          Voice agent sync stays blocked until weekly hours are configured.
-        </p>
-      ) : null}
-    </div>
+    </li>
   );
 }
 
-function TestCallStep({
-  restaurantId,
+function ForwardNumberCard({
   restaurantName,
+  restaurantPhone,
+  agentId,
+  done,
   pending,
-  onComplete,
-  onSkip,
+  onForwarded,
+  ordersHref,
 }: {
-  restaurantId: string;
   restaurantName: string;
+  restaurantPhone: string | null;
+  agentId: string | null;
+  done: boolean;
   pending: boolean;
-  onComplete: () => void;
-  onSkip: () => void;
+  onForwarded: () => void;
+  ordersHref: string;
 }) {
-  const [confirmed, setConfirmed] = useState(false);
-  const agentHref = restaurantVoiceAgentHref(restaurantId);
-  const ordersHref = `/dashboard/restaurants/${restaurantId}`;
+  const mailto = buildPilotMailto({
+    subject: `Host phone number for ${restaurantName}`,
+    body: [
+      `Restaurant: ${restaurantName}`,
+      restaurantPhone ? `Restaurant line: ${restaurantPhone}` : null,
+      agentId ? `Agent: ${agentId}` : null,
+      "",
+      "Please send the phone number my ROAL host answers on so I can set up call forwarding.",
+    ]
+      .filter((line): line is string => line !== null)
+      .join("\n"),
+  });
 
   return (
-    <div className="space-y-4 max-w-lg">
-      <p className="text-sm text-muted">
-        Run one test order for{" "}
-        <span className="font-medium text-ink">{restaurantName}</span> and confirm the
-        ticket appears in {RESTAURANT_LIVE_ORDERS_LABEL}.
-      </p>
-      <ul className="list-inside list-disc space-y-1 text-sm text-muted">
-        <li>Use the test call panel on Live Agent for this location.</li>
-        <li>Place a sample order and confirm it on the kitchen screen.</li>
-      </ul>
-      <p className="text-xs text-subtle">
-        <Link href={agentHref} className="text-accent hover:underline">
-          Open Live Agent (test call)
-        </Link>
-        {" · "}
-        <Link href={ordersHref} className="text-accent hover:underline">
-          Open {RESTAURANT_LIVE_ORDERS_LABEL}
-        </Link>
-      </p>
-      <label className="flex items-start gap-2 text-sm">
-        <input
-          type="checkbox"
-          className="mt-1"
-          checked={confirmed}
-          onChange={(e) => setConfirmed(e.target.checked)}
-          disabled={pending}
-        />
-        <span>I completed a test call and saw the order in Live orders.</span>
-      </label>
-      <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          className="btn-primary"
-          disabled={pending || !confirmed}
-          onClick={onComplete}
-        >
-          Mark test call complete
-        </button>
-        <button
-          type="button"
-          className="btn-ghost"
-          disabled={pending}
-          onClick={onSkip}
-        >
-          Skip for now
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function GoLiveStep({
-  restaurantId,
-  restaurantName,
-  launchChecklist,
-  pending,
-  isComplete,
-  onLaunch,
-}: {
-  restaurantId: string;
-  restaurantName: string;
-  launchChecklist: OnboardingWizardState["launchChecklist"];
-  pending: boolean;
-  isComplete: boolean;
-  onLaunch: () => void;
-}) {
-  if (isComplete) {
-    return (
-      <div className="space-y-4">
-        {launchChecklist ? (
-          <RestaurantLaunchChecklist snapshot={launchChecklist} />
-        ) : null}
-        <p className="text-sm text-success">
-          {restaurantName} is ready. Open {RESTAURANT_LIVE_ORDERS_LABEL} for phone pickup.
+    <Panel
+      title="Forward your number"
+      hint="Keep your existing number. Your carrier sends calls to the host; you can turn it off any time."
+      aside={done ? <StatusChip tone="ok">Forwarded</StatusChip> : null}
+    >
+      <div className="mt-3 rounded-md border border-dashed border-line-strong bg-elev px-3 py-2.5">
+        <p className="dashboard-page__kicker">Your host&apos;s phone number</p>
+        <p className="mt-1 text-[13px] text-muted">
+          We text you the number once the host is provisioned. Don&apos;t have it yet?{" "}
+          <a href={mailto} className="font-medium text-ink underline underline-offset-2">
+            Email {CONTACT_PILOT_EMAIL}
+          </a>
+          .
         </p>
-        <Link href={`/dashboard/restaurants/${restaurantId}`} className="btn-primary inline-flex">
-          {RESTAURANT_LIVE_ORDERS_LABEL}
-        </Link>
-        <Link href="/dashboard/restaurants" className="btn-ghost ml-2 inline-flex">
-          All locations
-        </Link>
       </div>
-    );
-  }
 
-  return (
-    <div className="space-y-4 max-w-lg">
-      {launchChecklist ? (
-        <RestaurantLaunchChecklist snapshot={launchChecklist} />
-      ) : null}
-      <p className="text-sm text-muted">
-        {launchChecklist && !launchChecklist.isLaunchReady
-          ? "Complete the launch checklist, then open live orders."
-          : `Finish setup, then open ${RESTAURANT_LIVE_ORDERS_LABEL} for guest calls.`}
-      </p>
-      <button
-        type="button"
-        className="btn-primary"
-        disabled={
-          pending || Boolean(launchChecklist && !launchChecklist.isLaunchReady)
-        }
-        onClick={onLaunch}
-      >
-        Finish & open live orders
-      </button>
-    </div>
+      <ol className="onboarding-page__forwarding-steps mt-4">
+        <li>
+          <span>
+            From the restaurant phone{restaurantPhone ? ` (${restaurantPhone})` : ""}, dial your
+            carrier&apos;s forwarding code followed by the host number. Most US carriers use{" "}
+            <span className="font-mono text-ink">*72</span> to start forwarding and{" "}
+            <span className="font-mono text-ink">*73</span> to stop; codes vary, so check with your
+            carrier if those don&apos;t work.
+          </span>
+        </li>
+        <li>
+          <span>
+            Call the restaurant from a cell phone. The host should pick up within two rings.
+          </span>
+        </li>
+        <li>
+          <span>Place a small order and watch it land on {RESTAURANT_LIVE_ORDERS_LABEL}.</span>
+        </li>
+      </ol>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-3">
+        {done ? (
+          <Link href={ordersHref} className="btn-primary">
+            Open {RESTAURANT_LIVE_ORDERS_LABEL}
+          </Link>
+        ) : (
+          <button type="button" className="btn-primary" disabled={pending} onClick={onForwarded}>
+            I forwarded my number
+          </button>
+        )}
+        <a href={mailto} className="btn-ghost">
+          Need help forwarding?
+        </a>
+      </div>
+    </Panel>
   );
 }

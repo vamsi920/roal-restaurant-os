@@ -10,17 +10,10 @@ export const metadata: Metadata = {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense
-      fallback={
-        <div
-          className="public-auth-panel public-auth-panel--skeleton min-h-[14rem]"
-          aria-hidden
-        />
-      }
-    >
-      <div className="public-reset-password-entry min-w-0 overflow-x-clip">
+    <div className="mx-auto w-full max-w-md min-w-0 md:col-span-2">
+      <Suspense fallback={<div className="auth-panel auth-panel--skeleton min-h-[14rem]" aria-hidden />}>
         <ResetPasswordForm />
-      </div>
-    </Suspense>
+      </Suspense>
+    </div>
   );
 }

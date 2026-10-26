@@ -9,7 +9,10 @@ export type RestaurantWorkspaceDestinationId =
   | "billing"
   | "settings";
 
-export const RESTAURANT_CALLS_FOLLOWUPS_LABEL = "Calls / Follow-ups";
+export const RESTAURANT_CALLS_FOLLOWUPS_LABEL = "Calls";
+
+/** Owner-facing name for the per-location voice agent surface. */
+export const RESTAURANT_PHONE_HOST_LABEL = "Phone host";
 
 export type RestaurantWorkspaceDestination = {
   id: RestaurantWorkspaceDestinationId;
@@ -26,7 +29,7 @@ export type RestaurantWorkspaceNavOptions = {
 
 /**
  * Selected-location workspace navigation model.
- * Routes are generated from the current restaurant id and feature flags.
+ * Order mirrors the owner's day: tickets first, then calls, menu, the host, numbers, settings.
  */
 export function buildRestaurantWorkspaceNav(
   options: RestaurantWorkspaceNavOptions
@@ -59,6 +62,11 @@ export function buildRestaurantWorkspaceNav(
       label: RESTAURANT_LIVE_ORDERS_LABEL,
     },
     {
+      id: "calls",
+      href: `${base}/calls`,
+      label: RESTAURANT_CALLS_FOLLOWUPS_LABEL,
+    },
+    {
       id: "menu",
       href: `${base}/menu`,
       label: RESTAURANT_MENU_AGENT_LABEL,
@@ -66,12 +74,7 @@ export function buildRestaurantWorkspaceNav(
     {
       id: "liveAgent",
       href: liveAgentHref,
-      label: "Live Agent",
-    },
-    {
-      id: "calls",
-      href: `${base}/calls`,
-      label: RESTAURANT_CALLS_FOLLOWUPS_LABEL,
+      label: RESTAURANT_PHONE_HOST_LABEL,
     },
     {
       id: "analytics",
@@ -153,4 +156,3 @@ export function isRestaurantWorkspaceNavActive(
       return false;
   }
 }
-

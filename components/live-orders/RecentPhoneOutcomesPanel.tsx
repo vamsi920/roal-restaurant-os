@@ -1,5 +1,10 @@
 import { KdsEmptyStatePanel } from "@/components/dashboard/kds-workspace-states";
 import type { LiveOrdersRecentOutcome } from "@/lib/live-orders/build-recent-outcomes";
+import {
+  kdsPeakCallContextCopy,
+  type KdsPeakCallContext,
+} from "@/lib/live-orders/peak-call-context";
+import Link from "next/link";
 
 function formatWhen(iso: string): string {
   const ms = new Date(iso).getTime();
@@ -33,11 +38,17 @@ export function RecentPhoneOutcomesPanel({
   rangeSince,
   rangeUntil,
   empty,
+  peakCallContext,
+  actionNeededCount = 0,
+  callsHref,
 }: {
   outcomes: LiveOrdersRecentOutcome[];
   rangeSince: string;
   rangeUntil: string;
   empty: boolean;
+  peakCallContext: KdsPeakCallContext;
+  actionNeededCount?: number;
+  callsHref: string;
 }) {
   return (
     <aside
@@ -58,6 +69,22 @@ export function RecentPhoneOutcomesPanel({
         </div>
       </header>
       <div className="kds-outcomes-panel__body p-3 sm:p-4">
+        <div
+          className="mb-3 rounded-lg border border-line bg-elev/40 px-3 py-2 text-xs"
+          aria-label="Peak call hour from recorded calls"
+        >
+          <p className="font-semibold text-ink">Peak call hour</p>
+          <p className="mt-0.5 text-muted">{kdsPeakCallContextCopy(peakCallContext)}</p>
+        </div>
+
+        {actionNeededCount > 0 ? (
+          <p className="mb-3 text-xs font-medium text-amber-900">
+            {actionNeededCount} call{actionNeededCount === 1 ? "" : "s"} need follow-up.{" "}
+            <Link href={callsHref} className="underline underline-offset-2">
+              Open calls
+            </Link>
+          </p>
+        ) : null}
         {empty ? (
           <KdsEmptyStatePanel
             tone="calm"

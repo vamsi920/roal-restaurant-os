@@ -1,4 +1,5 @@
 import type { AgentCallOutcome, AgentCallStatus } from "@/lib/agent-calls/types";
+import type { KdsPeakCallContext } from "@/lib/live-orders/peak-call-context";
 
 export type CommandCenterCallRow = {
   sessionId: string;
@@ -42,6 +43,7 @@ export type RestaurantCommandCenterSnapshot = {
   handoffCalls: CommandCenterCallRow[];
   unknownCalls: CommandCenterCallRow[];
   counts: CommandCenterCounts;
+  peakCallContext: KdsPeakCallContext;
   /** True when every bucket is empty (no operational activity in range). */
   isEmpty: boolean;
 };

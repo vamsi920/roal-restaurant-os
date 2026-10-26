@@ -9,6 +9,11 @@ import {
 } from "@/lib/sync-elevenlabs-roal-tools";
 import { getServiceRoleSupabase } from "@/lib/supabase/server";
 
+import { VOICE_AGENT_BACKFILL_ACTOR_USER_ID } from "@/lib/voice-agent/backfill-voice-agents";
+
+export const DEFAULT_QA_RESTAURANT_ID =
+  "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
+
 export const ROAL_QA_TOOL_NAMES = [
   "get_menu_items",
   "get_restaurant_info",
@@ -64,7 +69,8 @@ export function requireServiceRoleSupabase(): SupabaseClient {
 export async function resolveQaRestaurant(
   supabase: SupabaseClient
 ): Promise<QaRestaurantContext> {
-  const existingId = process.env.QA_RESTAURANT_ID?.trim();
+  const existingId =
+    process.env.QA_RESTAURANT_ID?.trim() || DEFAULT_QA_RESTAURANT_ID;
   if (existingId) {
     const { data, error } = await supabase
       .from("restaurants")
@@ -122,7 +128,8 @@ export async function resolveQaRestaurant(
 }
 
 export function resolveQaUserId(): string {
-  const id = process.env.QA_USER_ID?.trim();
+  const id =
+    process.env.QA_USER_ID?.trim() || VOICE_AGENT_BACKFILL_ACTOR_USER_ID;
   if (!id) {
     throw new Error(
       "QA_USER_ID is required for provision (audit log user id, e.g. owner fixture)"

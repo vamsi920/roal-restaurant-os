@@ -3,18 +3,18 @@ import { buildPublicPageMetadata } from "@/lib/seo/public-open-graph";
 
 export function buildPrivacyPageMetadata(): Metadata {
   return buildPublicPageMetadata({
-    title: "Privacy policy (draft) — ROAL",
+    title: "Privacy policy — ROAL",
     description:
-      "Draft privacy placeholder for ROAL pilots: guest data scoped per restaurant, no resale. Full policy coming before general launch.",
+      "What ROAL collects from callers and restaurants, how it is used, and how to reach us. Caller name and phone are used for the pickup order only.",
     canonicalPath: "/privacy",
   });
 }
 
 export function buildTermsPageMetadata(): Metadata {
   return buildPublicPageMetadata({
-    title: "Terms of service (draft) — ROAL",
+    title: "Terms of service — ROAL",
     description:
-      "Draft terms placeholder for ROAL pilots. Written pilot agreements define pricing, success fees, and support before live guest calls.",
+      "Terms for using ROAL: $0.90 per completed phone order, no contract, cancel any time.",
     canonicalPath: "/terms",
   });
 }

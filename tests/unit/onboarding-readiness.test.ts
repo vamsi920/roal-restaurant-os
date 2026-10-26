@@ -41,7 +41,8 @@ function baseProfile(
       first_message_updated: true,
       restaurant_tools_baked: true,
       knowledge_base_doc_attached: true,
-      phone_personalization_webhook: "https://app.example/api/init",
+      phone_personalization_webhook:
+        "https://app.example/api/integrations/elevenlabs/conversation-init",
     },
     elevenlabs_menu_auto_sync_status: null,
     elevenlabs_menu_auto_sync_error: null,
@@ -202,34 +203,29 @@ describe("onboarding wizard wiring (pass 67)", () => {
     ).toBe(true);
   });
 
-  it("new users get restaurant create/list paths", () => {
-    const wizard = readFileSync(
-      join(REPO, "components/onboarding/onboarding-wizard.tsx"),
+  it("first-run users get the magic link-to-call builder, not a form", () => {
+    const page = readFileSync(join(REPO, "app/dashboard/onboarding/page.tsx"), "utf8");
+    expect(page).toContain("MagicOnboarding");
+    expect(page).toContain("ClaimTrialPanel");
+    expect(page).toContain("state.restaurants.length === 0");
+    const magic = readFileSync(
+      join(REPO, "components/onboarding/magic-onboarding.tsx"),
       "utf8"
     );
-    expect(wizard).toContain("/dashboard/restaurants");
-    expect(wizard).toContain("Create a location");
-    expect(wizard).toContain("createRestaurantWizardAction");
+    expect(magic).toContain("startDashboardTrialAction");
+    expect(magic).toContain("claimTrialAction");
   });
 
-  it("profile step covers basics, hours link, and phone forwarding copy", () => {
+  it("go-live checklist covers menu, hours, host, test call, and forwarding", () => {
     const wizard = readFileSync(
       join(REPO, "components/onboarding/onboarding-wizard.tsx"),
       "utf8"
     );
     expect(wizard).toContain("hoursConfigured");
     expect(wizard).toContain("Forward your");
-    expect(wizard).toContain("saveRestaurantProfileAction");
-  });
-
-  it("menu step leads to review before agent sync", () => {
-    const wizard = readFileSync(
-      join(REPO, "components/onboarding/onboarding-wizard.tsx"),
-      "utf8"
-    );
-    expect(wizard).toContain("Review and edit menu");
-    expect(wizard).toContain("demo menu is loaded");
-    expect(wizard).toContain("completeMenuImportStepAction");
+    expect(wizard).toContain("restaurantMenuSetupHref");
+    expect(wizard).toContain('setStep("test_call", "completed")');
+    expect(wizard).toContain('setStep("go_live", "completed")');
   });
 
   it("voice agent step uses real sync path and shows sync status", () => {
@@ -238,8 +234,9 @@ describe("onboarding wizard wiring (pass 67)", () => {
       "utf8"
     );
     expect(voice).toContain("syncRestaurantVoiceAgentOnboardingAction");
-    expect(voice).toContain("Last synced");
-    expect(voice).toContain("Sync error");
+    expect(voice).toContain("retryRestaurantVoiceAgentProvisionAction");
+    expect(voice).toContain("lastSyncError");
+    expect(voice).toMatch(/synced \$\{lastSyncLabel\}/);
 
     const actions = readFileSync(
       join(REPO, "app/dashboard/onboarding/actions.ts"),
@@ -272,7 +269,6 @@ describe("onboarding wizard wiring (pass 67)", () => {
       "utf8"
     );
     expect(wizard).toContain("OnboardingReadinessPanel");
-    expect(wizard).toContain("No locations yet");
     expect(wizard).not.toMatch(/sample restaurant|fabricated/i);
   });
 });

@@ -1,3 +1,7 @@
+import {
+  mineKnowledgeSuggestionsFromTranscript,
+  transcriptTurnsFromRows,
+} from "@/lib/knowledge-suggestions/helpers";
 import crypto from "crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getServiceRoleSupabase } from "@/lib/supabase/server";
@@ -244,6 +248,14 @@ function buildTranscriptMetadata(event: ElevenLabsPostCallEvent): JsonRecord {
   };
 }
 
+/** Finalize marks order_completed before post-call webhooks arrive. */
+export function resolvePostCallPersistedOutcome(
+  priorOutcome: string | null,
+  incoming: AgentCallOutcome
+): AgentCallOutcome {
+  return priorOutcome === "order_completed" ? "order_completed" : incoming;
+}
+
 function mergePostCallTranscriptMetadata(
   existing: JsonRecord,
   incoming: JsonRecord
@@ -417,10 +429,15 @@ export async function persistElevenLabsPostCallEvent(
   const handoffReason = staffHandoffReasonFromTranscriptMetadata(transcriptMetadata);
   const reasonChanged =
     Boolean(handoffReason) && handoffReason !== priorHandoffReason;
+  const persistedOutcome = resolvePostCallPersistedOutcome(
+    priorOutcome,
+    parsed.outcome
+  );
   const needsReview =
     !handoffReason &&
-    (parsed.outcome === "abandoned" || event.type === "call_initiation_failure") &&
-    (!existing || priorOutcome !== parsed.outcome);
+    (persistedOutcome === "abandoned" ||
+      event.type === "call_initiation_failure") &&
+    (!existing || priorOutcome !== persistedOutcome);
 
   const { error } = await supabase.from("agent_call_events").upsert(
     {
@@ -430,7 +447,7 @@ export async function persistElevenLabsPostCallEvent(
       session_id: parsed.sessionId,
       caller_phone: parsed.callerPhone,
       status: parsed.status,
-      outcome: parsed.outcome,
+      outcome: persistedOutcome,
       started_at: parsed.startedAt,
       ended_at: parsed.endedAt,
       transcript_metadata: transcriptMetadata,
@@ -440,6 +457,10 @@ export async function persistElevenLabsPostCallEvent(
   );
 
   if (error) throw new Error(error.message);
+
+  if (event.type === "post_call_transcription") {
+    void mineSuggestionsBestEffort(supabase, parsed.restaurantId, parsed.sessionId, transcriptMetadata);
+  }
 
   if (reasonChanged || needsReview) {
     await emitPostCallFollowUpNotifications(supabase, {
@@ -458,4 +479,33 @@ export async function persistElevenLabsPostCallEvent(
     stored: true,
     parsed: { ...parsed, transcriptMetadata },
   };
+}
+
+
+async function mineSuggestionsBestEffort(
+  supabase: ReturnType<typeof getServiceRoleSupabase>,
+  restaurantId: string,
+  sessionId: string,
+  transcriptMetadata: JsonRecord
+): Promise<void> {
+  if (!supabase) return;
+  try {
+    const turns = transcriptTurnsFromRows(transcriptMetadata.transcript);
+    if (turns.length === 0) return;
+    const { data: restaurant } = await supabase
+      .from("restaurants")
+      .select("organization_id")
+      .eq("id", restaurantId)
+      .maybeSingle();
+    const organizationId = asString(restaurant?.organization_id);
+    if (!organizationId) return;
+    await mineKnowledgeSuggestionsFromTranscript(supabase, {
+      restaurantId,
+      organizationId,
+      sessionId,
+      turns,
+    });
+  } catch (e) {
+    console.error("[post-call suggestions]", e instanceof Error ? e.message : e);
+  }
 }

@@ -1,19 +1,15 @@
 import { cn } from "@/lib/cn";
 
 const PATHS: Record<string, string> = {
-  overview:
-    "M4 5a2 2 0 012-2h3l2-2h4l2 2h3a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5z",
-  restaurants:
-    "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
-  onboarding: "M12 3v4M12 17v4M5 12H3M21 12h-2M7 7l-2-2M19 19l-2-2M7 17l-2 2M19 5l-2 2",
-  analytics:
-    "M4 18V8M9 18V4M14 18v-6M19 18v-10",
-  settings: "M12 8a4 4 0 110 8 4 4 0 010-8zM4 12a8 8 0 0116 0",
-  billing: "M4 7h16M4 11h16M4 15h10M6 19h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z",
-  support:
-    "M8 10h.01M12 10h.01M16 10h.01M21 16a9 9 0 11-18 0 9 9 0 0118 0z",
-  admin:
-    "M12 3l8 4v6c0 3.5-2.8 6.5-8 8-5.2-1.5-8-4.5-8-8V7l8-4z",
+  overview: "M4 5h16v4H4zM4 13h7v6H4zM15 13h5v6h-5z",
+  restaurants: "M3 10l9-7 9 7M5 9v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V9",
+  onboarding: "M5 12l4 4L19 6",
+  analytics: "M4 19V9M10 19V4M16 19v-6M22 19H2",
+  settings:
+    "M12 9a3 3 0 100 6 3 3 0 000-6zM19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z",
+  billing: "M3 7h18v10H3zM3 11h18M7 15h3",
+  support: "M12 21a9 9 0 100-18 9 9 0 000 18zM9.5 9.5a2.5 2.5 0 015 0c0 1.5-2.5 2-2.5 3.5M12 17h.01",
+  admin: "M12 3l8 3.5v5.5c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6.5L12 3z",
 };
 
 function iconKey(href: string): string {
@@ -33,7 +29,7 @@ export function NavIcon({ href, className }: { href: string; className?: string 
   return (
     <svg
       viewBox="0 0 24 24"
-      className={cn("h-[18px] w-[18px] shrink-0", className)}
+      className={cn("h-4 w-4 shrink-0", className)}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.75"

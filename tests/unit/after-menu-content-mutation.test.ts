@@ -19,7 +19,10 @@ vi.mock("@/lib/menu-editor/copy-menu", () => ({
 }));
 vi.mock("@/lib/voice-agent/sync-restaurant-agent-after-content-change", () => ({
   syncRestaurantAgentAfterContentChange,
-  VOICE_AGENT_CONTENT_SYNC_TRIGGERS: { menu: "menu" },
+  VOICE_AGENT_CONTENT_SYNC_TRIGGERS: {
+    menu: "menu",
+    scanner_commit: "scanner_commit",
+  },
 }));
 
 import {
@@ -95,6 +98,30 @@ describe("afterMenuContentMutation", () => {
 
     expect(createServerSupabase).not.toHaveBeenCalled();
     expect(markRestaurantMenuTemplateLocalOverride).not.toHaveBeenCalled();
+  });
+
+  it("uses scanner_commit trigger when requested", async () => {
+    syncRestaurantAgentAfterContentChange.mockResolvedValue({
+      ok: true,
+      skipped: false,
+      skipReason: null,
+      agentId: "agent_1",
+      error: null,
+      trigger: "scanner_commit",
+      summary: null,
+    });
+
+    afterMenuContentMutation(RESTAURANT_ID, {
+      userId: "user_1",
+      trigger: "scanner_commit",
+    });
+
+    expect(syncRestaurantAgentAfterContentChange).toHaveBeenCalledWith({
+      restaurantId: RESTAURANT_ID,
+      trigger: "scanner_commit",
+      userId: "user_1",
+      restaurantName: undefined,
+    });
   });
 
   it("revalidates again when sync rejects (helper should not reject; guard UI)", async () => {

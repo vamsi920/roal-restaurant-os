@@ -9,6 +9,7 @@ import {
 import { loadRestaurantBilling } from "@/lib/billing/load-billing";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
+import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
 
 export const metadata: Metadata = {
   title: "Billing — ROAL",
@@ -33,12 +34,15 @@ export default async function RestaurantBillingPage({
 
   const { restaurant, role } = access;
   const supabase = await createServerSupabase();
-  const snapshot = await loadRestaurantBilling(supabase, {
-    organizationId: restaurant.organization_id,
-    membershipRole: role,
-    restaurantId: restaurant.id,
-    restaurantName: restaurant.name,
-  });
+  const [snapshot, suggestionCount] = await Promise.all([
+    loadRestaurantBilling(supabase, {
+      organizationId: restaurant.organization_id,
+      membershipRole: role,
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+    }),
+    countPendingKnowledgeSuggestions(supabase, restaurant.id),
+  ]);
 
   if (!snapshot) {
     redirect("/dashboard/onboarding");
@@ -50,6 +54,7 @@ export default async function RestaurantBillingPage({
       restaurantName={restaurant.name}
       hasRestaurantAnalytics
       hasRestaurantBilling
+      suggestionCount={suggestionCount}
     >
       <BillingDashboard
         snapshot={snapshot}

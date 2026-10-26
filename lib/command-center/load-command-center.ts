@@ -53,6 +53,12 @@ export async function loadRestaurantCommandCenter(
       handoff: 0,
       unknown: 0,
     },
+    peakCallContext: {
+      topHourLabel: null,
+      topHourCallCount: 0,
+      totalCallsInRange: 0,
+      hasData: false,
+    },
     isEmpty: true,
   });
 

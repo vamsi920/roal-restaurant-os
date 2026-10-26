@@ -1,9 +1,14 @@
 import { describe, expect, it, vi } from "vitest";
+import { getElevenLabsAgentId } from "@/lib/env.server";
 import {
   loadVoiceAgentBackfillCandidates,
   parseBackfillVoiceAgentArgv,
   runVoiceAgentBackfill,
 } from "@/lib/voice-agent/backfill-voice-agents";
+
+vi.mock("@/lib/env.server", () => ({
+  getElevenLabsAgentId: vi.fn(() => null),
+}));
 
 describe("parseBackfillVoiceAgentArgv", () => {
   it("parses dry-run, force, and limit", () => {
@@ -28,36 +33,34 @@ describe("parseBackfillVoiceAgentArgv", () => {
 });
 
 describe("loadVoiceAgentBackfillCandidates", () => {
-  it("excludes rows with agent id unless force", async () => {
+  it("excludes rows with dedicated agent id unless force", async () => {
     const supabase = {
       from: vi.fn((table: string) => {
         if (table !== "restaurant_profiles") throw new Error(table);
         return {
           select: vi.fn(() => ({
-            order: vi.fn(() => ({
-              or: vi.fn(() =>
-                Promise.resolve({
-                  data: [
-                    {
-                      restaurant_id: "a",
-                      organization_id: "o1",
-                      elevenlabs_agent_id: null,
-                    },
-                    {
-                      restaurant_id: "b",
-                      organization_id: "o1",
-                      elevenlabs_agent_id: "agent_existing",
-                    },
-                    {
-                      restaurant_id: "c",
-                      organization_id: "o1",
-                      elevenlabs_agent_id: "  ",
-                    },
-                  ],
-                  error: null,
-                })
-              ),
-            })),
+            order: vi.fn(() =>
+              Promise.resolve({
+                data: [
+                  {
+                    restaurant_id: "a",
+                    organization_id: "o1",
+                    elevenlabs_agent_id: null,
+                  },
+                  {
+                    restaurant_id: "b",
+                    organization_id: "o1",
+                    elevenlabs_agent_id: "agent_existing",
+                  },
+                  {
+                    restaurant_id: "c",
+                    organization_id: "o1",
+                    elevenlabs_agent_id: "  ",
+                  },
+                ],
+                error: null,
+              })
+            ),
           })),
         };
       }),
@@ -94,6 +97,59 @@ describe("loadVoiceAgentBackfillCandidates", () => {
     );
 
     expect(candidates.map((c) => c.restaurantId).sort()).toEqual(["a", "c"]);
+  });
+
+  it("includes template-linked profiles for reprovision", async () => {
+    vi.mocked(getElevenLabsAgentId).mockReturnValue("template_shared");
+
+    const chain = {
+      select: vi.fn(() => ({
+        order: vi.fn(() =>
+          Promise.resolve({
+            data: [
+              {
+                restaurant_id: "t",
+                organization_id: "o1",
+                elevenlabs_agent_id: "template_shared",
+              },
+              {
+                restaurant_id: "d",
+                organization_id: "o1",
+                elevenlabs_agent_id: "agent_dedicated",
+              },
+            ],
+            error: null,
+          })
+        ),
+      })),
+    };
+
+    const supabase = {
+      from: vi.fn((table: string) => {
+        if (table === "restaurant_profiles") return chain;
+        if (table === "restaurants") {
+          return {
+            select: vi.fn(() => ({
+              in: vi.fn(() =>
+                Promise.resolve({
+                  data: [{ id: "t", name: "Template Linked" }],
+                  error: null,
+                })
+              ),
+            })),
+          };
+        }
+        throw new Error(table);
+      }),
+    };
+
+    const candidates = await loadVoiceAgentBackfillCandidates(
+      supabase as never,
+      { force: false, limit: null }
+    );
+
+    expect(candidates.map((c) => c.restaurantId)).toEqual(["t"]);
+    vi.mocked(getElevenLabsAgentId).mockReturnValue(null);
   });
 
   it("includes rows with agent id when force", async () => {
@@ -149,20 +205,18 @@ describe("runVoiceAgentBackfill", () => {
     const supabase = {
       from: vi.fn(() => ({
         select: vi.fn(() => ({
-          order: vi.fn(() => ({
-            or: vi.fn(() =>
-              Promise.resolve({
-                data: [
-                  {
-                    restaurant_id: "a",
-                    organization_id: "o1",
-                    elevenlabs_agent_id: null,
-                  },
-                ],
-                error: null,
-              })
-            ),
-          })),
+          order: vi.fn(() =>
+            Promise.resolve({
+              data: [
+                {
+                  restaurant_id: "a",
+                  organization_id: "o1",
+                  elevenlabs_agent_id: null,
+                },
+              ],
+              error: null,
+            })
+          ),
         })),
       })),
     };

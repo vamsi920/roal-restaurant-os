@@ -6,10 +6,10 @@ import { getSiteOrigin } from "@/lib/site-url";
 /** Launch public pages (prompt 74). Blog slugs added separately. */
 export const SITEMAP_PUBLIC_PATHS = [
   "",
+  "/try",
   "/pricing",
   "/blog",
   "/about",
-  "/demo",
   "/contact",
   "/security",
   "/privacy",
@@ -26,7 +26,8 @@ function changeFrequency(path: (typeof ALL_STATIC_PATHS)[number]): MetadataRoute
 function priority(path: (typeof ALL_STATIC_PATHS)[number]): number {
   if (path === "") return 1;
   if (path === "/blog") return 0.9;
-  if (path === "/pricing" || path === "/demo" || path === "/contact") return 0.85;
+  if (path === "/pricing" || path === "/try") return 0.9;
+  if (path === "/contact") return 0.7;
   if (path === "/about" || path === "/security") return 0.8;
   if (path === "/privacy" || path === "/terms") return 0.55;
   return 0.7;

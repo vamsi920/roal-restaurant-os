@@ -14,7 +14,10 @@ describe("LB-01 phone stack QA (launch 16)", () => {
     expect(script).toContain("readElevenLabsPhonePersonalizationWebhook");
     expect(script).toContain("conversation-init returns restaurant vars");
     expect(script).toContain("remaining_human_steps");
-    expect(script).toContain("redactUrl");
+    expect(script).toContain("resolveLocalDevOrigin");
+    expect(script).toContain("expected_conversation_init_url");
+    expect(script).toContain("QA_DEDICATED_AGENT_ID");
+    expect(script).toContain("resolveDedicatedInitAgentId");
   });
 
   it("documents LB-01 close criteria in blockers doc", () => {

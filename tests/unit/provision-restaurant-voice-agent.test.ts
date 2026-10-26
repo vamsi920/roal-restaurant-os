@@ -96,6 +96,7 @@ describe("tryProvisionVoiceAgentForNewRestaurant", () => {
 describe("provisionRestaurantVoiceAgent", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(getElevenLabsAgentId).mockReturnValue("agent_template");
   });
 
   it("persists ready + summary on full success", async () => {
@@ -224,5 +225,78 @@ describe("provisionRestaurantVoiceAgent", () => {
           u.elevenlabs_menu_auto_sync_status === "failed"
       )
     ).toBe(true);
+  });
+
+  it("reuses existing dedicated agent and skips clone (sync-only)", async () => {
+    const updates: Record<string, unknown>[] = [];
+    const chain = {
+      update: vi.fn((patch: Record<string, unknown>) => {
+        updates.push(patch);
+        return chain;
+      }),
+      eq: vi.fn(() => chain),
+      select: vi.fn(() => chain),
+      maybeSingle: vi
+        .fn()
+        .mockResolvedValueOnce({
+          data: { elevenlabs_agent_id: "agent_existing_dedicated" },
+          error: null,
+        })
+        .mockResolvedValue({
+          data: {
+            elevenlabs_provision_status: null,
+            elevenlabs_menu_auto_sync_status: null,
+          },
+          error: null,
+        }),
+      insert: vi.fn().mockResolvedValue({ error: null }),
+    };
+    const client = {
+      from: vi.fn(() => chain),
+    } as unknown as import("@supabase/supabase-js").SupabaseClient;
+
+    const provisionConvaiAgent = vi.fn();
+    const runSync = vi.fn().mockResolvedValue({
+      sync: { ok: true, agent_id: "agent_existing_dedicated", tools: [] },
+      profile: {
+        ok: true,
+        agent_id: "agent_existing_dedicated",
+        knowledge_base_doc_attached: true,
+        restaurant_placeholders_updated: true,
+        patched_keys: [],
+      },
+      summary: {
+        tools: [],
+        tool_ids_on_agent: ["t1"],
+        restaurant_placeholders_updated: true,
+        first_message_updated: true,
+        restaurant_tools_baked: true,
+        knowledge_base_doc_attached: true,
+        phone_personalization_webhook: null,
+      },
+    });
+
+    const result = await provisionRestaurantVoiceAgent(
+      RESTAURANT_ID,
+      "Reuse Kitchen",
+      ORG_ID,
+      USER_ID,
+      {
+        getSupabase: async () => client,
+        provisionConvaiAgent,
+        runSync,
+      }
+    );
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.agentId).toBe("agent_existing_dedicated");
+    expect(result.provisionMethod).toBe("reuse");
+    expect(provisionConvaiAgent).not.toHaveBeenCalled();
+    expect(runSync).toHaveBeenCalledWith({
+      agentId: "agent_existing_dedicated",
+      restaurantId: RESTAURANT_ID,
+      restaurantName: "Reuse Kitchen",
+    });
   });
 });
