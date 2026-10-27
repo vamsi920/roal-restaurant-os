@@ -40,8 +40,24 @@ export function isFirestoreConfigured(): boolean {
   return Boolean(process.env.FIREBASE_SERVICE_ACCOUNT?.trim() || process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim());
 }
 
+/**
+ * In production, refuse to fall back to the in-memory demo store: it loses all data on
+ * every restart. Demo mode in production needs an explicit ROAL_DEMO_MODE=1.
+ */
+export function assertDurableStoreAllowed(env: NodeJS.ProcessEnv = process.env): void {
+  const configured = Boolean(env.FIREBASE_SERVICE_ACCOUNT?.trim() || env.GOOGLE_APPLICATION_CREDENTIALS?.trim());
+  if (configured) return;
+  if (env.NODE_ENV !== "production") return;
+  if (env.NEXT_PHASE === "phase-production-build") return;
+  if (env.ROAL_DEMO_MODE === "1" || env.VITEST) return;
+  throw new Error(
+    "Firestore is not configured: set FIREBASE_SERVICE_ACCOUNT (or ROAL_DEMO_MODE=1 for a throwaway demo)."
+  );
+}
+
 export function getDb(): Db {
   if (cached) return cached;
+  assertDurableStoreAllowed();
   if (isFirestoreConfigured() && !process.env.VITEST) {
     cached = makeDb(createFirestoreStore());
   } else {

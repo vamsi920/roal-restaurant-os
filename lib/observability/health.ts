@@ -119,9 +119,9 @@ export async function runHealthChecks(): Promise<HealthReport> {
     }
   }
 
-  const db = getDb();
   const start = Date.now();
   try {
+    const db = getDb();
     const { error } = await db.from("organizations").select("id").limit(1);
     const latency_ms = Date.now() - start;
     checks.database = {

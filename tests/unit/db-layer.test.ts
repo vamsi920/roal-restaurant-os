@@ -128,3 +128,18 @@ describe("db layer safety", () => {
     expect(res.error?.message).toMatch(/Unsupported filter operator/);
   });
 });
+
+import { assertDurableStoreAllowed } from "@/lib/db";
+
+describe("production safety", () => {
+  it("refuses the in-memory store in production without credentials", () => {
+    expect(() => assertDurableStoreAllowed({ NODE_ENV: "production" } as NodeJS.ProcessEnv)).toThrow(/Firestore is not configured/);
+  });
+  it("allows it with credentials, in dev, during build, or when demo is explicit", () => {
+    const base = { NODE_ENV: "production" } as Record<string, string>;
+    expect(() => assertDurableStoreAllowed({ ...base, FIREBASE_SERVICE_ACCOUNT: "{}" } as NodeJS.ProcessEnv)).not.toThrow();
+    expect(() => assertDurableStoreAllowed({ NODE_ENV: "development" } as NodeJS.ProcessEnv)).not.toThrow();
+    expect(() => assertDurableStoreAllowed({ ...base, NEXT_PHASE: "phase-production-build" } as NodeJS.ProcessEnv)).not.toThrow();
+    expect(() => assertDurableStoreAllowed({ ...base, ROAL_DEMO_MODE: "1" } as NodeJS.ProcessEnv)).not.toThrow();
+  });
+});
