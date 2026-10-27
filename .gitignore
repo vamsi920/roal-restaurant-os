@@ -56,3 +56,6 @@ next-env.d.ts
 firebase-debug.log
 firestore-debug.log
 .data/
+
+# local one-off scripts
+scripts-tmp-*
