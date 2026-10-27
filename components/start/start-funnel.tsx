@@ -248,7 +248,8 @@ export function StartFunnel({
   const index = Math.max(0, flow.indexOf(step));
   const progress = step === "link" ? 0.04 : (index + 1) / flow.length;
   const name = trial?.restaurantName ?? trial?.profile?.name ?? "your restaurant";
-  const agentName = trial?.persona.agentName ?? "Addy";
+  // The host's name follows the cuisine's voice, so it is only known once the site is read.
+  const agentName = trial?.profile ? trial.persona.agentName : "your host";
   const estimate = useMemo(() => estimateMissedRevenue(missed, ticket), [missed, ticket]);
 
   const motionProps = reduce

@@ -86,7 +86,7 @@ export default async function RestaurantCallHistoryPage({
     }),
     countPendingKnowledgeSuggestions(supabase, restaurant.id),
   ]);
-  const hostName = profile.agent_display_name?.trim() || defaultAgentName();
+  const hostName = profile.agent_display_name?.trim() || defaultAgentName(profile.agent_voice_id);
   const orderItemsBySession = await loadOrderItemsBySession(
     supabase,
     restaurant.id,

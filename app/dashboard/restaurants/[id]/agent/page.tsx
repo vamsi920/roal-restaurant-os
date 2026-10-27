@@ -108,7 +108,7 @@ export default async function RestaurantPhoneHostPage({
   const profile = setup.profile;
   const menuSync = center.menuAutoSync;
   const storePhone = profile.phone?.trim() || null;
-  const hostName = profile.agent_display_name?.trim() || defaultAgentName();
+  const hostName = profile.agent_display_name?.trim() || defaultAgentName(profile.agent_voice_id);
   const voiceLabel =
     profile.agent_voice_label?.trim() || findTrialVoice(profile.agent_voice_id)?.label || null;
   const scorecard = parseScorecard(scorecardRow?.data?.trial_scorecard);

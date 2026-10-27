@@ -119,7 +119,7 @@ const DONE_RECEIPT_VISIBLE = 5;
 type Props = {
   restaurantId: string;
   restaurantName: string;
-  /** Owner-facing host name ("Addy"); used in header and empty copy. */
+  /** Owner-facing host name (e.g. "Anika"); used in header and empty copy. */
   hostName?: string;
   /** Optional callout under the page header (e.g. launch readiness). */
   notice?: ReactNode;

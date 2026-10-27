@@ -14,10 +14,9 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
   if (!auth.ok) return auth.response;
 
   try {
-    let trial = auth.trial as typeof auth.trial | Awaited<ReturnType<typeof composeTrialAgent>>;
-    if (trial.status !== "ready" || !trial.prompt || !trial.greeting) {
-      trial = await composeTrialAgent(auth.trial.id);
-    }
+    // Recompose on every call: keeps "open now" hours current and picks up host-name changes.
+    // Claimed trials keep their status; composing would flip them back to "ready".
+    const trial = auth.trial.status === "claimed" ? auth.trial : await composeTrialAgent(auth.trial.id);
     if (trial.status !== "ready" || !trial.prompt || !trial.greeting) {
       return NextResponse.json({ error: "Finish building the agent first." }, { status: 409 });
     }

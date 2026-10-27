@@ -121,7 +121,7 @@ export async function loadRestaurantOverview(
     restaurantId,
     restaurantName: input.restaurantName,
     timezone,
-    hostName: input.profile.agent_display_name?.trim() || defaultAgentName(),
+    hostName: input.profile.agent_display_name?.trim() || defaultAgentName(input.profile.agent_voice_id),
     monthLabel: formatMonthLabel(now, timezone),
     month: computeMonthStats(raw, monthStart, now),
     series: computeOverviewSeries(raw, dayKeys, timezone),

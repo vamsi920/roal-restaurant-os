@@ -89,7 +89,7 @@ export function HostPersonaCard({
               className="input-base max-sm:h-11"
               value={name}
               maxLength={40}
-              placeholder="Addy"
+              placeholder={findTrialVoice(voiceId)?.label ?? DEFAULT_TRIAL_VOICE.label}
               autoComplete="off"
               disabled={pending}
               onChange={(e) => setName(e.target.value)}

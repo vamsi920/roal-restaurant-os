@@ -81,7 +81,7 @@ export default async function RestaurantKDSPage({
   }
 
   const pricingSettings = orderPricingFromProfile(profile);
-  const hostName = profile.agent_display_name?.trim() || defaultAgentName();
+  const hostName = profile.agent_display_name?.trim() || defaultAgentName(profile.agent_voice_id);
 
   return (
     <RestaurantWorkspaceRail

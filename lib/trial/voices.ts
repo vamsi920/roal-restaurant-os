@@ -237,8 +237,12 @@ export function findTrialVoice(voiceId: string | null | undefined): TrialVoiceOp
   return TRIAL_VOICE_OPTIONS.find((v) => v.id === id) ?? null;
 }
 
-export function defaultAgentName(): string {
-  return "Addy";
+/**
+ * The host is named after its voice (Anika for an Indian kitchen, Leo for a taqueria),
+ * never after the restaurant or another product. Owners can still rename it.
+ */
+export function defaultAgentName(voiceId?: string | null): string {
+  return (findTrialVoice(voiceId) ?? DEFAULT_TRIAL_VOICE).label;
 }
 
 /** An owner-picked voice wins; otherwise the cuisine's accent voice; otherwise the default. */
@@ -250,7 +254,7 @@ export function resolveTrialPersona(
   const voice =
     findTrialVoice(persona?.voiceId) ?? voiceForCuisine(cuisine, restaurantName) ?? DEFAULT_TRIAL_VOICE;
   return {
-    agentName: persona?.agentName?.trim() || defaultAgentName(),
+    agentName: persona?.agentName?.trim() || voice.label,
     voiceId: voice.id,
     voiceLabel: voice.label,
     language: persona?.language?.trim() || "en",
