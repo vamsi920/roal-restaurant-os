@@ -9,7 +9,7 @@ export type RestaurantWorkspaceDestinationId =
   | "billing"
   | "settings";
 
-export const RESTAURANT_CALLS_FOLLOWUPS_LABEL = "Calls";
+export const RESTAURANT_CALLS_FOLLOWUPS_LABEL = "Calls & Orders";
 
 /** Owner-facing name for the per-location voice agent surface. */
 export const RESTAURANT_PHONE_HOST_LABEL = "Phone host";
@@ -29,7 +29,7 @@ export type RestaurantWorkspaceNavOptions = {
 
 /**
  * Selected-location workspace navigation model.
- * Order mirrors the owner's day: tickets first, then calls, menu, the host, numbers, settings.
+ * Order mirrors the owner's day: calls & orders, the kitchen board, menu, the host, reports, billing, settings.
  */
 export function buildRestaurantWorkspaceNav(
   options: RestaurantWorkspaceNavOptions
@@ -57,14 +57,14 @@ export function buildRestaurantWorkspaceNav(
 
   const destinations: RestaurantWorkspaceDestination[] = [
     {
-      id: "orders",
-      href: base,
-      label: RESTAURANT_LIVE_ORDERS_LABEL,
-    },
-    {
       id: "calls",
       href: `${base}/calls`,
       label: RESTAURANT_CALLS_FOLLOWUPS_LABEL,
+    },
+    {
+      id: "orders",
+      href: base,
+      label: RESTAURANT_LIVE_ORDERS_LABEL,
     },
     {
       id: "menu",
@@ -79,7 +79,7 @@ export function buildRestaurantWorkspaceNav(
     {
       id: "analytics",
       href: analyticsHref,
-      label: "Analytics",
+      label: "Reports",
     },
     {
       id: "billing",
@@ -102,17 +102,17 @@ export function restaurantWorkspaceMobileNavLabel(
 ): string {
   switch (id) {
     case "orders":
-      return "Orders";
+      return "Kitchen";
     case "menu":
       return "Menu";
     case "liveAgent":
-      return "Agent";
+      return "Host";
     case "calls":
       return "Calls";
     case "analytics":
-      return "Stats";
+      return "Reports";
     case "billing":
-      return "Plan";
+      return "Billing";
     case "settings":
       return "Settings";
     default:

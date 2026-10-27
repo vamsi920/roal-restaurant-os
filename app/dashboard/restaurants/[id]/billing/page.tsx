@@ -7,7 +7,7 @@ import {
   getRestaurantAccessForPage,
 } from "@/lib/auth/context-server";
 import { loadRestaurantBilling } from "@/lib/billing/load-billing";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
 import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
 
@@ -33,7 +33,7 @@ export default async function RestaurantBillingPage({
   }
 
   const { restaurant, role } = access;
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const [snapshot, suggestionCount] = await Promise.all([
     loadRestaurantBilling(supabase, {
       organizationId: restaurant.organization_id,

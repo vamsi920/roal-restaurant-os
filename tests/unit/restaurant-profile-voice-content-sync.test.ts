@@ -111,8 +111,8 @@ vi.mock("@/lib/elevenlabs", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  getServiceRoleSupabase: vi.fn(() => ({})),
-  createServerSupabase: vi.fn(async () => ({})),
+  getDb: vi.fn(() => ({})),
+  getDb: vi.fn(async () => ({})),
 }));
 
 vi.mock("@/lib/restaurant-profile/helpers", async (importOriginal) => {

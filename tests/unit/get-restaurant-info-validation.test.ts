@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { simulateHarnessTool } from "@/lib/voice-agent/test-harness/simulate-tool";
 import { RESTAURANT_ID } from "../fixtures/menu";
 import type { RestaurantHoursBundle } from "@/lib/restaurant-hours/types";
@@ -131,7 +131,7 @@ describe("get_restaurant_info harness", () => {
     );
 
     const result = await simulateHarnessTool({
-      supabase: restaurantSupabase("Test Bistro") as unknown as SupabaseClient,
+      supabase: restaurantSupabase("Test Bistro") as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_restaurant_info",
       body: { restaurant_id: RESTAURANT_ID },
@@ -191,7 +191,7 @@ describe("get_restaurant_info harness", () => {
     );
 
     const result = await simulateHarnessTool({
-      supabase: restaurantSupabase("Test Bistro") as unknown as SupabaseClient,
+      supabase: restaurantSupabase("Test Bistro") as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_restaurant_info",
       body: {},
@@ -211,7 +211,7 @@ describe("get_restaurant_info harness", () => {
     vi.mocked(loadRestaurantHoursBundle).mockResolvedValue(null);
 
     const result = await simulateHarnessTool({
-      supabase: restaurantSupabase("Test Bistro") as unknown as SupabaseClient,
+      supabase: restaurantSupabase("Test Bistro") as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_restaurant_info",
       body: {},
@@ -276,7 +276,7 @@ describe("get_restaurant_info harness", () => {
     ]);
 
     const result = await simulateHarnessTool({
-      supabase: restaurantSupabase("Test Bistro") as unknown as SupabaseClient,
+      supabase: restaurantSupabase("Test Bistro") as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_restaurant_info",
       body: {},
@@ -315,7 +315,7 @@ describe("get_restaurant_info harness", () => {
     vi.mocked(loadRestaurantKnowledgeEntries).mockResolvedValue([]);
 
     const result = await simulateHarnessTool({
-      supabase: restaurantSupabase("Test Bistro") as unknown as SupabaseClient,
+      supabase: restaurantSupabase("Test Bistro") as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_restaurant_info",
       body: {},
@@ -348,7 +348,7 @@ describe("get_restaurant_info harness", () => {
     ]);
 
     await simulateHarnessTool({
-      supabase: restaurantSupabase("Test Bistro") as unknown as SupabaseClient,
+      supabase: restaurantSupabase("Test Bistro") as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_restaurant_info",
       body: {},
@@ -364,7 +364,7 @@ describe("get_restaurant_info harness", () => {
 
   it("blocks restaurant_id mismatch", async () => {
     const result = await simulateHarnessTool({
-      supabase: restaurantSupabase("Test Bistro") as unknown as SupabaseClient,
+      supabase: restaurantSupabase("Test Bistro") as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_restaurant_info",
       body: { restaurant_id: REST_B },

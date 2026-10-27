@@ -1,58 +1,77 @@
 import Link from "next/link";
+import { ArrowRight, Check, CircleSlash, Mail } from "lucide-react";
+import { buildPilotMailto } from "@/lib/landing/contact-mailto";
 import {
   PRICING_NO_ORDER_LINE,
   PRICING_ORDER_EXPLAINER,
   PRICING_RATE_AMOUNT,
-  PRICING_VALUE_HEADLINE,
 } from "@/lib/landing/pricing-core";
 
-const INCLUDED = [
-  { text: "No per-minute phone fees", no: true },
-  { text: "No monthly fee, no setup fee", no: true },
-  { text: "No contracts. Stop by pointing your number back.", no: true },
-  { text: "Unlimited calls, questions, and test calls", no: false },
-  { text: "Live menu, hours, FAQs, and kitchen tickets included", no: false },
+const MAIN_POINTS = [
+  "No monthly fee, no setup fee",
+  "No per-minute phone fees",
+  "No contracts. Stop by pointing your number back.",
+  "Unlimited calls, questions, and test calls",
 ] as const;
 
-function Check({ muted }: { muted?: boolean }) {
+const VOLUME_POINTS = [
+  "Each location gets its own host and phone line",
+  "Menus and hours per location",
+  "Ask about a volume rate before you go live",
+] as const;
+
+function Checklist({ items }: { items: readonly string[] }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      {muted ? <path d="M6 12h12" /> : <path d="M5 12.5l4 4L19 7" />}
-    </svg>
+    <ul className="checklist">
+      {items.map((item) => (
+        <li key={item}>
+          <span className="checklist__icon">
+            <Check className="h-3 w-3" strokeWidth={3} aria-hidden />
+          </span>
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 }
 
-/** Headline price card. Shared by the homepage pricing section and /pricing. */
-export function PricingCard({ showCta = true }: { showCta?: boolean }) {
+/** Headline price card + multi-location card. Used by /pricing. */
+export function PricingPlans() {
   return (
-    <div className="price-card">
-      <div className="min-w-0">
-        <p className="eyebrow">Pricing</p>
-        <h3 className="h2 mt-3">{PRICING_VALUE_HEADLINE}</h3>
-        <div className="price-card__amount mt-6">
+    <div className="plans">
+      <div className="plan plan--main">
+        <div className="plan__head">
+          <p className="plan__name">Pay per order</p>
+          <span className="badge badge--live">Everything included</span>
+        </div>
+        <p className="plan__for">For any restaurant that takes orders by phone.</p>
+        <p className="price-hero__amount mt-6">
           <strong>{PRICING_RATE_AMOUNT}</strong>
           <span>per completed phone order</span>
+        </p>
+        <p className="price-hero__note">{PRICING_NO_ORDER_LINE}</p>
+        <Checklist items={MAIN_POINTS} />
+        <div className="plan__actions">
+          <Link href="/try" className="btn-primary btn-lg">
+            Try it free <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
-        <p className="lead mt-4 max-w-md">{PRICING_NO_ORDER_LINE}</p>
-        {showCta ? (
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/try" className="btn-primary btn-lg">
-              Try it free
-            </Link>
-            <Link href="/pricing" className="btn-ghost btn-lg">
-              Pricing details
-            </Link>
-          </div>
-        ) : null}
       </div>
-      <ul className="price-card__list">
-        {INCLUDED.map((item) => (
-          <li key={item.text} data-no={item.no ? "true" : undefined}>
-            <Check muted={item.no} />
-            <span>{item.text}</span>
-          </li>
-        ))}
-      </ul>
+
+      <div className="plan">
+        <div className="plan__head">
+          <p className="plan__name">Several locations?</p>
+        </div>
+        <p className="plan__for">For groups and busy phone counters.</p>
+        <p className="plan__big">Let&apos;s talk</p>
+        <p className="price-hero__note">Same product, same per-order model. We set up each location with you.</p>
+        <Checklist items={VOLUME_POINTS} />
+        <div className="plan__actions">
+          <a href={buildPilotMailto({ subject: "ROAL — multiple locations" })} className="btn-ghost btn-lg">
+            <Mail className="h-4 w-4" /> Talk to us
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
@@ -61,27 +80,37 @@ export function PricingCard({ showCta = true }: { showCta?: boolean }) {
 export function PricingSplit() {
   const ex = PRICING_ORDER_EXPLAINER;
   return (
-    <div className="price-split" aria-labelledby={ex.titleId}>
-      <h3 id={ex.titleId} className="sr-only">
-        {ex.title}
-      </h3>
+    <div className="price-split">
       <div className="price-split__col price-split__col--pay">
-        <h3>You pay {PRICING_RATE_AMOUNT}</h3>
+        <h3>
+          <span className="icon-tile icon-tile--orange" aria-hidden>
+            <Check className="h-4 w-4" strokeWidth={2.5} />
+          </span>
+          You pay {PRICING_RATE_AMOUNT}
+        </h3>
         <ul>
-          <li>{ex.payLine}</li>
-          {ex.payExamples.map((e) => (
-            <li key={e}>{e}</li>
+          {[ex.payLine, ...ex.payExamples].map((e) => (
+            <li key={e}>
+              <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden />
+              {e}
+            </li>
           ))}
         </ul>
       </div>
       <div className="price-split__col price-split__col--free">
-        <h3>You pay nothing</h3>
+        <h3>
+          <span className="icon-tile icon-tile--green" aria-hidden>
+            <CircleSlash className="h-4 w-4" strokeWidth={2.5} />
+          </span>
+          You pay nothing
+        </h3>
         <ul>
-          <li>{ex.noPayLine}</li>
-          {ex.noPayExamples.map((e) => (
-            <li key={e}>{e}</li>
+          {[ex.noPayLine, ...ex.noPayExamples, "Questions about hours, menu, or directions"].map((e) => (
+            <li key={e}>
+              <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden />
+              {e}
+            </li>
           ))}
-          <li>Questions about hours, menu, or directions</li>
         </ul>
       </div>
     </div>

@@ -1,48 +1,52 @@
 import Link from "next/link";
+import { ArrowRight, CircleCheck, TriangleAlert } from "lucide-react";
+import { Badge, type Tone } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import type { LaunchGatePhase, LaunchGateSnapshot } from "@/lib/restaurant-launch/types";
 
-const PHASE_TONE: Record<LaunchGatePhase, string> = {
-  ready: "bg-success/15 text-success",
-  almost_ready: "bg-warning/15 text-amber-900",
-  blocked: "bg-danger/10 text-danger",
+const PHASE_TONE: Record<LaunchGatePhase, Tone> = {
+  ready: "ok",
+  almost_ready: "warn",
+  blocked: "bad",
 };
 
+/** One-line go-live status: phase badge, the top blocker, and the one next step. */
 export function PhoneAgentReadinessStrip({
   launchGate,
 }: {
   restaurantId: string;
   launchGate: LaunchGateSnapshot;
 }) {
+  const ready = launchGate.phase === "ready";
+  const Icon = ready ? CircleCheck : TriangleAlert;
   return (
     <div
-      className="kds-readiness-strip flex min-w-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center"
+      className={cn(
+        "flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2 rounded-[14px] border bg-card px-4 py-3",
+        ready ? "border-line" : "border-warning/30"
+      )}
       role="region"
       aria-label="Launch readiness"
     >
-      <span
-        className={cn(
-          "rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-          PHASE_TONE[launchGate.phase]
+      <Icon
+        size={16}
+        aria-hidden
+        className={cn("shrink-0", ready ? "text-success" : "text-[rgb(var(--tile-amber-ink))]")}
+      />
+      <Badge tone={PHASE_TONE[launchGate.phase]}>{launchGate.phaseLabel}</Badge>
+      <p className="min-w-0 flex-1 text-[13px] text-muted [overflow-wrap:anywhere]">
+        {launchGate.topBlockerLabel ? (
+          <>
+            <span className="font-medium text-ink">{launchGate.topBlockerLabel}</span>
+            {launchGate.topBlockerDetail ? ` — ${launchGate.topBlockerDetail}` : ""}
+          </>
+        ) : (
+          "This location can take live phone orders now."
         )}
-      >
-        {launchGate.phaseLabel}
-      </span>
-      {launchGate.topBlockerLabel ? (
-        <span className="min-w-0 text-xs text-muted [overflow-wrap:anywhere]">
-          {launchGate.topBlockerLabel}
-          {launchGate.topBlockerDetail ? ` — ${launchGate.topBlockerDetail}` : ""}
-        </span>
-      ) : (
-        <span className="text-xs text-success">
-          This location can take live phone orders now.
-        </span>
-      )}
-      <Link
-        href={launchGate.primaryAction.href}
-        className="sm:ml-auto text-xs font-semibold text-accent hover:underline"
-      >
+      </p>
+      <Link href={launchGate.primaryAction.href} className="btn-ghost btn-sm shrink-0">
         {launchGate.primaryAction.label}
+        <ArrowRight size={13} aria-hidden />
       </Link>
     </div>
   );

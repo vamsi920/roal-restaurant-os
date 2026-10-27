@@ -1,8 +1,8 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { dispatchNotification } from "@/lib/notifications/dispatch";
 
 export async function notifyOrderCompleted(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantId: string;
@@ -29,7 +29,7 @@ export async function notifyOrderCompleted(
 }
 
 export async function notifyScanFailure(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantId: string;
@@ -51,7 +51,7 @@ export async function notifyScanFailure(
 }
 
 export async function notifySyncFailure(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantId: string;

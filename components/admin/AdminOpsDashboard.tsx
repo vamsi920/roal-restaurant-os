@@ -1,12 +1,21 @@
 import Link from "next/link";
 import {
+  Building2,
+  CheckCircle2,
+  ScanLine,
+  ShoppingBag,
+  Store,
+  Wrench,
+  PhoneCall,
+} from "lucide-react";
+import {
   PageHeader,
   Panel,
-  StatTile,
   StatusChip,
   formatWhen,
   type Tone,
 } from "@/components/dashboard/page-primitives";
+import { EmptyState, IconTile, StatCard } from "@/components/ui";
 import type { AdminOpsSnapshot, OpsErrorRow } from "@/lib/admin/types";
 import { formatMembershipRole } from "@/lib/auth/roles";
 import type { MembershipRole } from "@/lib/types";
@@ -18,7 +27,7 @@ type Props = {
 
 export function AdminOpsDashboard({ snapshot }: Props) {
   return (
-    <div className="admin-ops-dashboard dashboard-page dashboard-page--wide min-w-0 space-y-6 overflow-x-hidden">
+    <div className="admin-ops-dashboard org-page org-page--wide min-w-0 space-y-8 overflow-x-hidden">
       <PageHeader
         className="admin-ops-dashboard__header"
         eyebrow="Platform support"
@@ -27,7 +36,7 @@ export function AdminOpsDashboard({ snapshot }: Props) {
           <>
             Internal ROAL view of customer orgs, integrations, and recent failures.{" "}
             No API keys or secrets are shown here. Snapshot {formatWhen(snapshot.generatedAt)} ·{" "}
-            <Link href="/api/health" className="font-mono text-ink underline underline-offset-2">
+            <Link href="/api/health" className="org-link font-mono text-ink underline underline-offset-2">
               /api/health
             </Link>
           </>
@@ -41,7 +50,9 @@ export function AdminOpsDashboard({ snapshot }: Props) {
       ))}
 
       {snapshot.organizations.length === 0 ? (
-        <p className="text-[13px] text-muted">No organizations in this snapshot.</p>
+        <div className="panel">
+          <EmptyState icon={Building2} title="No organizations in this snapshot." />
+        </div>
       ) : null}
     </div>
   );
@@ -75,7 +86,7 @@ function HealthSection({
         </StatusChip>
       }
     >
-      <div className="admin-ops-dashboard__health-grid mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="admin-ops-dashboard__health-grid grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(health.checks).map(([key, check]) => (
           <HealthCheckCard key={key} name={key} check={check} />
         ))}
@@ -98,9 +109,11 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
 
   return (
     <section className="admin-ops-dashboard__org min-w-0 space-y-3" aria-labelledby={`admin-org-${org.id}`}>
-      <div className="flex min-w-0 flex-wrap items-end justify-between gap-2 border-b border-line pb-2">
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
+        <IconTile icon={Building2} color="ink" />
         <div className="min-w-0">
-          <h2 id={`admin-org-${org.id}`} className="text-[15px] font-semibold tracking-tight text-ink">
+          <h2 id={`admin-org-${org.id}`} className="truncate text-[15px] font-semibold tracking-tight text-ink">
             {org.name}
           </h2>
           <p className="text-[12px] text-muted">
@@ -109,25 +122,46 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
             {org.subscriptionStatus ? ` · ${org.subscriptionStatus}` : ""}
           </p>
         </div>
+        </div>
         <Link href="/dashboard/billing" className="btn-ghost btn-sm">
           Billing
         </Link>
       </div>
 
-      <div className="admin-ops-dashboard__stats grid grid-cols-2 gap-3 lg:grid-cols-5">
-        <StatTile label="Locations" value={org.restaurants.length} />
-        <StatTile label="Voice orders (30d)" value={usageMap.get("voice_order") ?? 0} />
-        <StatTile label="Completed (30d)" value={usageMap.get("order_completed") ?? 0} />
-        <StatTile label="Menu scans (30d)" value={usageMap.get("menu_scan") ?? 0} />
-        <StatTile label="Tool calls (30d)" value={usageMap.get("tool_call") ?? 0} />
+      <div className="admin-ops-dashboard__stats grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-5">
+        <StatCard label="Locations" value={org.restaurants.length} icon={Store} color="ink" />
+        <StatCard
+          label="Voice orders (30d)"
+          value={usageMap.get("voice_order") ?? 0}
+          icon={PhoneCall}
+          color="orange"
+        />
+        <StatCard
+          label="Completed (30d)"
+          value={usageMap.get("order_completed") ?? 0}
+          icon={ShoppingBag}
+          color="green"
+        />
+        <StatCard
+          label="Menu scans (30d)"
+          value={usageMap.get("menu_scan") ?? 0}
+          icon={ScanLine}
+          color="blue"
+        />
+        <StatCard
+          label="Tool calls (30d)"
+          value={usageMap.get("tool_call") ?? 0}
+          icon={Wrench}
+          color="amber"
+        />
       </div>
 
       <div className="admin-ops-dashboard__panels grid min-w-0 gap-3 lg:grid-cols-2">
         <Panel className="admin-ops-dashboard__restaurants" flush title="Restaurants & sync">
           {org.restaurants.length === 0 ? (
-            <p className="p-4 text-[13px] text-muted">No restaurants.</p>
+            <EmptyState icon={Store} title="No restaurants." />
           ) : (
-            <div className="admin-ops-dashboard__restaurant-table dashboard-table min-w-0">
+            <div className="admin-ops-dashboard__restaurant-table org-table min-w-0">
               <table className="xl:min-w-[520px]">
                 <thead>
                   <tr>
@@ -143,7 +177,7 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
                       <td data-label="Location">
                         <Link
                           href={`/dashboard/restaurants/${r.id}`}
-                          className="font-medium text-ink hover:underline"
+                          className="org-link font-medium text-ink hover:underline"
                         >
                           {r.name}
                         </Link>
@@ -155,12 +189,14 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
                         <SyncPill status={r.sync.status} />
                       </td>
                       <td data-label="Last sync" className="text-[12px]">
-                        {r.sync.lastSyncAt ? formatWhen(r.sync.lastSyncAt) : "—"}
-                        {r.sync.lastSyncError ? (
-                          <p className="mt-0.5 text-danger [overflow-wrap:anywhere]">
-                            {r.sync.lastSyncError}
-                          </p>
-                        ) : null}
+                        <div className="min-w-0">
+                          {r.sync.lastSyncAt ? formatWhen(r.sync.lastSyncAt) : "—"}
+                          {r.sync.lastSyncError ? (
+                            <p className="mt-0.5 text-danger [overflow-wrap:anywhere]">
+                              {r.sync.lastSyncError}
+                            </p>
+                          ) : null}
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -170,11 +206,11 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
           )}
         </Panel>
 
-        <Panel className="admin-ops-dashboard__errors" title="Recent errors (14d)">
+        <Panel className="admin-ops-dashboard__errors" title="Recent errors (14d)" flush>
           {org.recentErrors.length === 0 ? (
-            <p className="mt-3 text-[13px] text-muted">No recent failures logged.</p>
+            <EmptyState icon={CheckCircle2} title="No recent failures logged." />
           ) : (
-            <ul className="admin-ops-dashboard__error-list mt-3 max-h-80 divide-y divide-line/70 overflow-y-auto overscroll-y-contain">
+            <ul className="admin-ops-dashboard__error-list max-h-80 overflow-y-auto overscroll-y-contain">
               {org.recentErrors.map((row) => (
                 <ErrorRowItem key={row.id} row={row} />
               ))}
@@ -188,12 +224,10 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
 
 function ErrorRowItem({ row }: { row: OpsErrorRow }) {
   return (
-    <li className="admin-ops-dashboard__error-row min-w-0 py-2.5 text-[13px] first:pt-0">
+    <li className="admin-ops-dashboard__error-row min-w-0 border-b border-line/70 px-[1.125rem] py-3 text-[13px] last:border-b-0">
       <div className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
         <span className="font-medium text-ink [overflow-wrap:anywhere]">{row.title}</span>
-        <span className="text-[11px] uppercase tracking-wider text-subtle">
-          {row.source.replace("_", " ")}
-        </span>
+        <StatusChip>{row.source.replace("_", " ")}</StatusChip>
       </div>
       <p className="mt-0.5 text-[12px] text-muted [overflow-wrap:anywhere]">{row.detail}</p>
       <p className="mt-0.5 text-[11px] text-subtle">
@@ -207,8 +241,8 @@ function ErrorRowItem({ row }: { row: OpsErrorRow }) {
 function HealthCheckCard({ name, check }: { name: string; check: HealthCheckResult }) {
   const tone: Tone = check.status === "pass" ? "ok" : check.status === "warn" ? "warn" : "bad";
   return (
-    <div className="admin-ops-dashboard__health-check min-w-0 rounded-md border border-line bg-elev px-3 py-2">
-      <p className="dashboard-page__kicker">{name.replace(/_/g, " ")}</p>
+    <div className="admin-ops-dashboard__health-check min-w-0 rounded-[12px] border border-line bg-elev px-3.5 py-3">
+      <p className="org-kicker">{name.replace(/_/g, " ")}</p>
       <div className="mt-1 flex items-center gap-2">
         <StatusChip tone={tone}>{check.status}</StatusChip>
         {check.latency_ms != null ? (

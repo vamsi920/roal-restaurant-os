@@ -60,28 +60,73 @@ export function WelcomeGoLiveCard({
     `Hi ROAL,\n\nPlease attach a phone number for ${restaurantName} so we can forward our line to ${hostName}.\n\nRestaurant id: ${restaurantId}\n`
   )}`;
 
+  const steps = [
+    {
+      title: "Make a test call",
+      body: `Talk to ${hostName} from your browser. Order something, ask about hours, ask for a manager.`,
+      action: (
+        <Link href={`${base}/agent#test-call`} className="btn-primary btn-sm">
+          Test call
+        </Link>
+      ),
+    },
+    {
+      title: "Review your menu",
+      body: `Check prices and switch off anything that is 86'd. ${hostName} only sells what is live here.`,
+      action: (
+        <Link href={`${base}/menu`} className="btn-ghost btn-sm">
+          Open menu
+        </Link>
+      ),
+    },
+    {
+      title: "Forward your number",
+      body: forwardingNumber ? (
+        <>
+          From your phone provider, forward the restaurant line to{" "}
+          <code className="rounded bg-elev px-1 font-mono text-[12.5px] text-ink">{forwardingNumber}</code>. Start with
+          “forward when busy / no answer” so staff still pick up first.
+        </>
+      ) : (
+        "Forward the restaurant line to the number we attach for you. We set it up and send the forwarding steps for your carrier."
+      ),
+      action: forwardingNumber ? (
+        <a href={`tel:${forwardingNumber.replace(/[^+\d]/g, "")}`} className="btn-ghost btn-sm">
+          Call the number
+        </a>
+      ) : (
+        <a href={mailto} className="btn-ghost btn-sm">
+          Contact us to attach your number
+        </a>
+      ),
+    },
+  ];
+
   return (
     <section
-      className="welcome-card card card--raised min-w-0"
+      className="panel min-w-0 overflow-hidden"
       aria-labelledby="welcome-card-title"
       data-testid="welcome-go-live-card"
     >
-      <div className="welcome-card__head">
+      <div className="flex items-start justify-between gap-3 border-b border-line px-[1.125rem] py-4">
         <div className="min-w-0">
-          <p className="welcome-card__eyebrow">
-            <span className="pulse-dot" aria-hidden /> Live for testing
-          </p>
-          <h2 id="welcome-card-title" className="welcome-card__title">
+          <span className="badge badge--live">
+            <span className="h-1.5 w-1.5 rounded-full bg-current motion-safe:animate-pulse" aria-hidden />
+            Live for testing
+          </span>
+          <h2
+            id="welcome-card-title"
+            className="mt-2 font-display text-[20px] font-bold leading-tight tracking-[-0.01em] text-ink"
+          >
             {hostName} is live for testing
           </h2>
-          <p className="welcome-card__lead">
-            Your menu, hours, and FAQ are loaded. Three steps and {hostName} is
-            answering your real line.
+          <p className="mt-1 text-[13.5px] text-muted">
+            Your menu, hours, and FAQ are loaded. Three steps and {hostName} is answering your real line.
           </p>
         </div>
         <button
           type="button"
-          className="btn-ghost btn-sm welcome-card__dismiss"
+          className="btn-ghost btn-sm shrink-0"
           onClick={dismiss}
           aria-label="Dismiss welcome card"
         >
@@ -89,64 +134,22 @@ export function WelcomeGoLiveCard({
         </button>
       </div>
 
-      <ol className="welcome-card__steps">
-        <li className="welcome-card__step">
-          <span className="welcome-card__num" aria-hidden>1</span>
-          <div className="min-w-0">
-            <p className="welcome-card__step-title">Make a test call</p>
-            <p className="welcome-card__step-body">
-              Talk to {hostName} from your browser. Order something, ask about hours,
-              ask for a manager.
-            </p>
-            <Link href={`${base}/agent#test-call`} className="btn-primary btn-sm mt-2">
-              Test call
-            </Link>
-          </div>
-        </li>
-        <li className="welcome-card__step">
-          <span className="welcome-card__num" aria-hidden>2</span>
-          <div className="min-w-0">
-            <p className="welcome-card__step-title">Review your menu</p>
-            <p className="welcome-card__step-body">
-              Check prices and mark anything that is 86&apos;d. {hostName} only sells
-              what is live here.
-            </p>
-            <Link href={`${base}/menu`} className="btn-ghost btn-sm mt-2">
-              Open menu
-            </Link>
-          </div>
-        </li>
-        <li className="welcome-card__step">
-          <span className="welcome-card__num" aria-hidden>3</span>
-          <div className="min-w-0">
-            <p className="welcome-card__step-title">Forward your number</p>
-            {forwardingNumber ? (
-              <>
-                <p className="welcome-card__step-body">
-                  From your phone provider, forward the restaurant line to{" "}
-                  <code className="welcome-card__number">{forwardingNumber}</code>.
-                  Start with “forward when busy / no answer” so staff still pick up first.
-                </p>
-                <a
-                  href={`tel:${forwardingNumber.replace(/[^+\d]/g, "")}`}
-                  className="btn-ghost btn-sm mt-2"
-                >
-                  Call the number
-                </a>
-              </>
-            ) : (
-              <>
-                <p className="welcome-card__step-body">
-                  Forward the restaurant line to the ElevenLabs number we attach for
-                  you. We set it up and send the forwarding steps for your carrier.
-                </p>
-                <a href={mailto} className="btn-ghost btn-sm mt-2">
-                  Contact us to attach your number
-                </a>
-              </>
-            )}
-          </div>
-        </li>
+      <ol className="grid gap-px bg-line sm:grid-cols-3">
+        {steps.map((step, i) => (
+          <li key={step.title} className="flex min-w-0 gap-3 bg-card px-[1.125rem] py-4">
+            <span
+              className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-[12px] font-bold text-white"
+              aria-hidden
+            >
+              {i + 1}
+            </span>
+            <div className="min-w-0">
+              <p className="text-[14px] font-semibold text-ink">{step.title}</p>
+              <p className="mt-0.5 text-[13px] text-muted [overflow-wrap:anywhere]">{step.body}</p>
+              <div className="mt-2.5">{step.action}</div>
+            </div>
+          </li>
+        ))}
       </ol>
     </section>
   );

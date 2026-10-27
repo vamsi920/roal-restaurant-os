@@ -28,20 +28,35 @@ describe("menu setup rendering (workspace)", () => {
     expect(src).toContain("hidePanelHeader");
   });
 
-  it("renders live menu panel with realtime call indicator", () => {
+  it("renders the live menu board with realtime call indicator", () => {
     const src = workspace();
-    expect(src).toContain("<LiveMenuSidebar");
+    const editor = readFileSync(
+      join(REPO, "app/dashboard/restaurants/[id]/menu/MenuEditor.tsx"),
+      "utf8"
+    );
+    const sidebar = readFileSync(
+      join(REPO, "app/dashboard/restaurants/[id]/LiveMenuSidebar.tsx"),
+      "utf8"
+    );
+    expect(src).toContain("<MenuEditor");
+    expect(src).toContain("initial={menu}");
+    expect(src).toContain('id="menu-live"');
     expect(src).toContain("<MenuSetupCallIndicator");
-    expect(src).toContain('id="menu-setup-live-heading"');
-    expect(src).toContain("Live menu");
-    expect(src).toContain("initialCategories={menu.categories}");
     expect(src).not.toContain("<VoiceAgentPanel");
+    // Board reads from the realtime hook that backs LiveMenuSidebar.
+    expect(editor).toContain("useLiveMenu(");
+    expect(sidebar).toContain("export function useLiveMenu");
+    expect(sidebar).toContain("postgres_changes");
   });
 
-  it("links to live agent and orders instead of embedding agent UI", () => {
+  it("uses PageHeader and no internal navigation chrome", () => {
     const src = workspace();
-    expect(src).toContain("RESTAURANT_LIVE_ORDERS_LABEL");
-    expect(src).toMatch(/href=\{`\/dashboard\/restaurants\/\$\{restaurant\.id\}\/agent`\}/);
+    expect(src).toContain("<PageHeader");
+    expect(src).toContain('title="Menu"');
+    expect(src).not.toContain("menu-setup-crumb");
+    expect(src).not.toContain("Phone operations views");
+    expect(src).not.toContain("RESTAURANT_LIVE_ORDERS_LABEL");
+    expect(src).not.toMatch(/href=\{`\/dashboard\/restaurants\/\$\{restaurant\.id\}\/agent`\}/);
     expect(src).not.toContain("<LiveOrdersPanel");
     expect(src).not.toContain("<VoiceAgentTestHarness");
   });

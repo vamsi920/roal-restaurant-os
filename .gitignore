@@ -44,3 +44,8 @@ supabase/.temp/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tool state
+.DS_Store
+.neodevex/
+.playwright-cli/

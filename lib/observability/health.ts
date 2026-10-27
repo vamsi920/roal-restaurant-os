@@ -1,6 +1,6 @@
 import { getEnvStatus, getServerEnv } from "@/lib/env.server";
 import { getPublicEnv } from "@/lib/env.public";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export type HealthCheckResult = {
   ok: boolean;
@@ -210,7 +210,7 @@ export async function runHealthChecks(): Promise<HealthReport> {
     };
   }
 
-  const supabase = getServiceRoleSupabase();
+  const supabase = getDb();
   if (!supabase) {
     checks.supabase_db = {
       ok: false,

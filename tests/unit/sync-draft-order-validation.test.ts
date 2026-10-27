@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { simulateHarnessTool } from "@/lib/voice-agent/test-harness/simulate-tool";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
@@ -108,7 +108,7 @@ describe("sync_draft_order harness (KDS draft_orders upsert)", () => {
   it("creates a draft order row on first sync", async () => {
     const supabase = buildSupabaseWithDraftUpsert();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 1 }]),
@@ -134,7 +134,7 @@ describe("sync_draft_order harness (KDS draft_orders upsert)", () => {
     const supabase = buildSupabaseWithDraftUpsert();
 
     await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 1 }]),
@@ -142,7 +142,7 @@ describe("sync_draft_order harness (KDS draft_orders upsert)", () => {
     });
 
     const update = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 3 }]),
@@ -159,7 +159,7 @@ describe("sync_draft_order validation gates", () => {
   it("rejects stale menu item_id", async () => {
     const supabase = buildSupabaseWithDraftUpsert();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([
@@ -179,7 +179,7 @@ describe("sync_draft_order validation gates", () => {
   it("rejects unknown modifier names", async () => {
     const supabase = buildSupabaseWithDraftUpsert();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([
@@ -201,7 +201,7 @@ describe("sync_draft_order validation gates", () => {
   it("rejects unavailable items", async () => {
     const supabase = buildSupabaseWithDraftUpsert();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([{ item_id: ITEM_SOLD_OUT_ID, quantity: 1 }]),
@@ -237,7 +237,7 @@ describe("sync_draft_order validation gates", () => {
 
     const supabase = buildSupabaseWithDraftUpsert();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 1 }]),
@@ -255,7 +255,7 @@ describe("sync_draft_order validation gates", () => {
   it("rejects delivery sync when allows_delivery is false", async () => {
     const supabase = buildSupabaseWithDraftUpsert();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 1 }], {
@@ -278,7 +278,7 @@ describe("sync_draft_order validation gates", () => {
 
     const supabase = buildSupabaseWithDraftUpsert();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: syncBody([{ item_id: ITEM_BURGER_ID, quantity: 1 }], {

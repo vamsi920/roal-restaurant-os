@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { Headset, PhoneOutgoing, PlugZap } from "lucide-react";
 import { TrialCall } from "@/components/try/trial-call";
 import { TrialScorecardPanel } from "@/components/try/trial-scorecard";
+import { Badge, EmptyState, IconTile, type Tone } from "@/components/ui";
+import { Notice } from "@/components/live-orders/workspace-ui";
 import { scoreTranscript } from "@/lib/trial/scorecard";
 import type { TrialScorecard, TrialTranscriptTurn } from "@/lib/trial/types";
 import {
   createVoiceAgentBrowserCallAction,
   startVoiceAgentOutboundCallAction,
 } from "@/app/dashboard/onboarding/actions";
+import { AdvancedLink } from "./phone-host-ui";
 import "@/components/try/trial.css";
 
 type Props = {
@@ -16,6 +20,10 @@ type Props = {
   organizationId: string;
   restaurantName: string;
   hostName: string;
+  /** Voice label shown under the host name ("Warm" voice). */
+  voiceLabel?: string | null;
+  /** Connection status pill for the hero. */
+  status?: { label: string; tone: Tone };
   /** Agent is linked; browser call can start. */
   agentReady: boolean;
   /** `ELEVENLABS_AGENT_PHONE_NUMBER_ID` is set and the profile has a dialable phone. */
@@ -24,11 +32,14 @@ type Props = {
   initialScorecard: TrialScorecard;
 };
 
+/** Phone host hero: who answers, their status, and a live test call. */
 export function PhoneHostTestCall({
   restaurantId,
   organizationId,
   restaurantName,
   hostName,
+  voiceLabel,
+  status,
   agentReady,
   outboundAvailable,
   restaurantPhone,
@@ -37,8 +48,6 @@ export function PhoneHostTestCall({
   const [scorecard, setScorecard] = useState<TrialScorecard>(initialScorecard);
   const [outbound, setOutbound] = useState<"idle" | "calling" | "placed" | "error">("idle");
   const [outboundMessage, setOutboundMessage] = useState<string | null>(null);
-
-  const hasScorecard = Object.keys(scorecard).length > 0;
 
   async function callMyPhone() {
     setOutbound("calling");
@@ -58,18 +67,25 @@ export function PhoneHostTestCall({
   }
 
   return (
-    <section id="test-call" className="phone-host-test card min-w-0" aria-labelledby="test-call-title">
-      <header className="phone-host-test__head">
-        <div className="min-w-0">
-          <h2 id="test-call-title" className="phone-host-test__title">
-            Test call
-          </h2>
-          <p className="phone-host-test__lead">
-            Talk to {hostName} right here. Nothing is charged for test calls.
+    <section id="test-call" className="panel min-w-0 scroll-mt-24" aria-labelledby="test-call-title">
+      <header className="flex min-w-0 flex-wrap items-center gap-3 border-b border-line px-4 py-4 sm:px-5">
+        <IconTile icon={Headset} color="ink" size="lg" />
+        <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <h2
+              id="test-call-title"
+              className="min-w-0 truncate font-display text-[20px] font-bold leading-tight tracking-[-0.02em] text-ink"
+            >
+              {hostName}
+            </h2>
+            {status ? <Badge tone={status.tone}>{status.label}</Badge> : null}
+          </div>
+          <p className="mt-0.5 text-[13px] text-subtle">
+            {voiceLabel ? `${voiceLabel} voice` : "Default voice"} · Test calls are free
           </p>
         </div>
         {outboundAvailable ? (
-          <div className="phone-host-test__outbound">
+          <div className="flex w-full flex-col items-stretch gap-1 sm:w-auto sm:items-end">
             <button
               type="button"
               className="btn-ghost"
@@ -77,31 +93,27 @@ export function PhoneHostTestCall({
               disabled={outbound === "calling"}
               aria-busy={outbound === "calling"}
             >
+              <PhoneOutgoing size={15} aria-hidden />
               {outbound === "calling" ? "Calling…" : "Call my phone"}
             </button>
             {restaurantPhone ? (
-              <span className="phone-host-test__outbound-hint">{restaurantPhone}</span>
+              <span className="text-center text-[12px] tabular-nums text-subtle sm:text-right">
+                Rings {restaurantPhone}
+              </span>
             ) : null}
           </div>
         ) : null}
       </header>
 
       {outboundMessage ? (
-        <p
-          className={
-            outbound === "error"
-              ? "phone-host-test__notice phone-host-test__notice--error"
-              : "phone-host-test__notice"
-          }
-          role={outbound === "error" ? "alert" : "status"}
-        >
-          {outboundMessage}
-        </p>
+        <div className="px-4 pt-4 sm:px-5">
+          <Notice tone={outbound === "error" ? "bad" : "ok"}>{outboundMessage}</Notice>
+        </div>
       ) : null}
 
-      <div className="phone-host-test__grid">
-        <div className="min-w-0">
-          {agentReady ? (
+      {agentReady ? (
+        <div className="grid min-w-0 gap-5 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_18rem]">
+          <div className="min-w-0">
             <TrialCall
               trialId={restaurantId}
               persistTranscript={false}
@@ -116,22 +128,29 @@ export function PhoneHostTestCall({
                 return { signedUrl: r.signedUrl };
               }}
             />
-          ) : (
-            <div className="empty-state">
-              <p className="text-sm font-semibold text-ink">Host not connected yet</p>
-              <p className="text-sm">
-                Connect the agent below, then come back here to call {hostName}.
-              </p>
-            </div>
-          )}
-        </div>
-        {hasScorecard ? (
-          <aside className="min-w-0" aria-label="What you tested">
-            <p className="phone-host-test__aside-title">What you tested</p>
+          </div>
+          <aside
+            className="min-w-0 rounded-[12px] border border-line bg-elev p-4"
+            aria-label="What you tested"
+          >
+            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.04em] text-subtle">
+              What you tested
+            </p>
             <TrialScorecardPanel scorecard={scorecard} compact />
           </aside>
-        ) : null}
-      </div>
+        </div>
+      ) : (
+        <EmptyState
+          icon={PlugZap}
+          title={`${hostName} isn't connected yet`}
+          body={`Link the voice agent for ${restaurantName}, then come back here to call ${hostName} from your browser.`}
+          action={
+            <AdvancedLink section="connection" className="btn-primary">
+              Open connection settings
+            </AdvancedLink>
+          }
+        />
+      )}
     </section>
   );
 }

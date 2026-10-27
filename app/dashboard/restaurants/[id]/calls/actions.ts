@@ -6,7 +6,7 @@ import {
   isReservationOwnerUpdateStatus,
   type ReservationOwnerUpdateStatus,
 } from "@/lib/restaurant-reservations/schema";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export async function updateReservationRequestStatusAction(
   restaurantId: string,
@@ -27,7 +27,7 @@ export async function updateReservationRequestStatusAction(
     throw new Error("You do not have access to update this reservation.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data, error } = await supabase
     .from("restaurant_reservation_requests")
     .update({ status, updated_at: new Date().toISOString() })

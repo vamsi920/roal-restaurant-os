@@ -4,7 +4,7 @@
  * Usage: npx tsx --env-file=.env --env-file=.env.local scripts/qa-tenant-isolation-live.ts
  */
 import { execSync } from "node:child_process";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 
 const ORG_A = "b1111111-1111-4111-8111-111111111111";
 const ORG_B = "ac88ceed-96d4-4a91-b474-49f5a3ee011d";
@@ -64,7 +64,7 @@ void (async () => {
     });
   }
 
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (!sb) {
     checks.push({
       name: "SUPABASE_SERVICE_ROLE_KEY",

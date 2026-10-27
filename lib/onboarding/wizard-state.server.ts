@@ -28,7 +28,7 @@ import { loadRestaurantLaunchChecklist } from "@/lib/restaurant-launch/load-chec
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { readPendingRestaurantLookup } from "@/lib/restaurant-lookup/pending";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import type { Restaurant } from "@/lib/types";
 
@@ -63,7 +63,7 @@ export async function loadOnboardingWizardState(
   const context = await getAuthContext();
   if (!context) return null;
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const primary = context.primaryMembership;
   const organization = primary?.organization ?? null;
 

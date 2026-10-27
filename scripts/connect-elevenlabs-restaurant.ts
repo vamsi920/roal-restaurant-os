@@ -15,7 +15,7 @@ import { getConvaiAgent } from "../lib/elevenlabs";
 import { getElevenLabsAgentId, getElevenLabsConversationInitSecret } from "../lib/env.server";
 import { getSiteOrigin } from "../lib/site-url";
 import { syncRoalElevenLabsTools } from "../lib/sync-elevenlabs-roal-tools";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 
 function ensureEnvLocal(keys: Record<string, string>) {
   const path = resolve(process.cwd(), ".env.local");
@@ -86,7 +86,7 @@ void (async () => {
     });
   }
 
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (sb) {
     const summary = {
       tools: tools.tools,

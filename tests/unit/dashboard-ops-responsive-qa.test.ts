@@ -17,7 +17,7 @@ describe("Dashboard ops pages responsive (prompt 38)", () => {
     );
     expect(read("components/dashboard/support-hub.tsx")).toContain("support-hub__cards");
     expect(read("components/admin/AdminOpsDashboard.tsx")).toContain(
-      "admin-ops-dashboard__restaurant-table dashboard-table"
+      "admin-ops-dashboard__restaurant-table org-table"
     );
     expect(read("components/notifications/NotificationSettingsForm.tsx")).toContain(
       "notification-settings__event"

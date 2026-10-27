@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { menuContextFromGetMenuResponse } from "@/lib/voice-agent/test-harness/menu-context";
 import { getHarnessScenario } from "@/lib/voice-agent/test-harness/scenarios";
 import {
@@ -84,7 +84,7 @@ function stepExpectsFailure(
 }
 
 export async function runHarnessScenario(input: {
-  supabase: SupabaseClient;
+  supabase: Db;
   restaurantId: string;
   restaurantName: string;
   scenarioId: string;

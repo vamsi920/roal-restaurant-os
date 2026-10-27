@@ -4,7 +4,7 @@ import {
   resolveOrganizationId,
 } from "@/lib/auth/context-server";
 import { loadOrganizationGateVerdicts } from "@/lib/billing/assert-gate";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const runtime = "nodejs";
 
@@ -26,7 +26,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const gates = await loadOrganizationGateVerdicts(supabase, {
     organizationId: resolved.organizationId,
     membershipRole: membership.role,

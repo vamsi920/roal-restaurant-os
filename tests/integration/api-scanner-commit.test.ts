@@ -62,7 +62,7 @@ vi.mock("@/lib/scanner/menu-import-audit", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/usage/record", () => ({
@@ -79,7 +79,7 @@ import {
   getMenuImportForRestaurant,
   recordMenuImportCommitted,
 } from "@/lib/scanner/menu-import-audit";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { recordRestaurantUsage } from "@/lib/usage/record";
 import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 import { VOICE_AGENT_CONTENT_SYNC_TRIGGERS } from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
@@ -97,7 +97,7 @@ function commitRequest(body: Record<string, unknown>) {
 describe("POST /api/scanner/commit", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(createServerSupabase).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockResolvedValue({} as never);
   });
 
   it("returns 401 when unauthenticated", async () => {

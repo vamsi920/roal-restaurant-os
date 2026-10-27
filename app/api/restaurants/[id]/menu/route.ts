@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import {
-  createServerSupabase,
-  getServiceRoleSupabase,
-} from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 
 export const runtime = "nodejs";
@@ -30,7 +27,7 @@ export async function DELETE(
     const access = await requireRestaurantAccess(restaurantId);
     if (access.errorResponse) return access.errorResponse;
 
-    const admin = getServiceRoleSupabase();
+    const admin = getDb();
     if (admin) {
       const { data: deletedRows, error } = await admin
         .from("categories")
@@ -54,7 +51,7 @@ export async function DELETE(
       });
     }
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const { data: deletedCount, error } = await supabase.rpc(
       "clear_restaurant_menu",
       { p_restaurant_id: restaurantId }

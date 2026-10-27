@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { simulateHarnessTool } from "@/lib/voice-agent/test-harness/simulate-tool";
 import { RESTAURANT_ID } from "../fixtures/menu";
 
@@ -91,7 +91,7 @@ describe("submit_reservation_request harness", () => {
 
   it("saves a valid reservation request with session and callback links", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body: validBody,
@@ -134,7 +134,7 @@ describe("submit_reservation_request harness", () => {
 
   it("rejects placeholder callback phones", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body: {
@@ -152,7 +152,7 @@ describe("submit_reservation_request harness", () => {
 
   it("rejects missing party size, date, or time", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body: {
@@ -174,7 +174,7 @@ describe("submit_reservation_request harness", () => {
 
   it("blocks restaurant_id mismatch before insert", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body: {
@@ -192,7 +192,7 @@ describe("submit_reservation_request harness", () => {
 
   it("uses request-received wording and never implies confirmation", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body: {
@@ -288,14 +288,14 @@ describe("submit_reservation_request harness", () => {
 
     const body = { ...validBody, idempotency_key: "res-key" };
     const first = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body,
       dryRun: false,
     });
     const second = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body,

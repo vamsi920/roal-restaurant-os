@@ -5,42 +5,36 @@ import { describe, expect, it } from "vitest";
 const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
-describe("KDS tablet responsive (prompt 25)", () => {
-  it("uses two-column order grids on tablet widths", () => {
+describe("Kitchen board on tablets (v3)", () => {
+  it("lays out New / Preparing / Ready lanes with a container query", () => {
     const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
 
-    expect(css).toContain("KDS tablet / iPad layout (prompt 25)");
+    expect(css).toContain("container-type: inline-size");
     expect(css).toMatch(
-      /@media \(min-width: 768px\) and \(max-width: 1023px\)[\s\S]*\.kds-order-list[\s\S]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/
+      /@container kds-board \(min-width: 720px\)[\s\S]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/
     );
-    expect(css).toMatch(
-      /@media \(min-width: 768px\) and \(max-width: 1023px\)[\s\S]*\.kds-order-list--live[\s\S]*grid-template-columns:\s*repeat\(2/
-    );
+    expect(css).toMatch(/\.kds-board__lane\[data-active="false"\]\s*\{\s*display:\s*none/);
   });
 
-  it("segments tabs without horizontal scroll on tablet", () => {
-    const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
+  it("uses a lane picker on narrow boards and lane sections on wide ones", () => {
     const panel = read("app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx");
+    const lane = read("app/dashboard/restaurants/[id]/KdsQueueSection.tsx");
 
-    expect(css).toMatch(
-      /@media \(min-width: 768px\) and \(max-width: 1023px\)[\s\S]*\.kds-order-tabs[\s\S]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/
-    );
-    expect(css).toMatch(
-      /@media \(min-width: 768px\) and \(max-width: 1023px\)[\s\S]*\.kds-order-tabs[\s\S]*overflow-x:\s*visible/
-    );
-    expect(panel).toContain("kds-order-tab");
-    expect(panel).not.toContain("sm:min-w-[7rem]");
-    expect(panel).toContain("lg:min-w-[7rem]");
+    expect(panel).toContain("kds-board__picker");
+    expect(panel).toContain('title="New"');
+    expect(panel).toContain('title="Preparing"');
+    expect(panel).toContain('title="Ready"');
+    expect(lane).toContain("data-active");
+    expect(lane).toContain("kds-lane__empty");
   });
 
-  it("keeps orders canvas full width in workspace main", () => {
+  it("keeps the board full width in the workspace main column", () => {
     const page = read("app/dashboard/restaurants/[id]/page.tsx");
     const panel = read("app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx");
 
-    expect(page).toContain("kds-workspace--orders");
+    expect(page).toContain("kds-workspace--kitchen");
     expect(page).toContain("min-w-0 w-full");
-    expect(panel).toContain("kds-orders-canvas");
-    expect(panel).toContain("overflow-hidden");
+    expect(panel).toContain("kds-board");
     expect(panel).toContain("KitchenOrderCard");
   });
 });

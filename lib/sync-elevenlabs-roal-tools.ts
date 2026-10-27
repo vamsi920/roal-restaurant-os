@@ -18,7 +18,7 @@ import {
   readAgentDynamicPlaceholders,
 } from "@/lib/elevenlabs-placeholders";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 /** Sent on every webhook call when tools are baked to a restaurant (Twilio cannot resolve conv dynamic vars). */
 export const ROAL_RESTAURANT_ID_HEADER = "x-roal-restaurant-id";
@@ -701,7 +701,7 @@ export async function syncRoalElevenLabsTools(options?: {
 
     let profile = null;
     try {
-      const supabase = getServiceRoleSupabase();
+      const supabase = getDb();
       if (supabase) {
         profile = await getRestaurantProfile(supabase, rid);
       }

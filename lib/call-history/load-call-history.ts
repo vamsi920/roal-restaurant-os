@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { loadRestaurantAgentCallSessions } from "@/lib/agent-calls/load-call-sessions";
 import {
   buildCallHistoryRows,
@@ -32,7 +32,7 @@ export type LoadRestaurantCallHistoryInput = {
 };
 
 export async function loadRestaurantCallHistory(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: LoadRestaurantCallHistoryInput
 ): Promise<CallHistorySnapshot> {
   const restaurantId = input.restaurantId.trim();

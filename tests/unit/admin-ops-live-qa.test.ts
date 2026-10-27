@@ -25,8 +25,11 @@ describe("admin ops live posture (launch 24)", () => {
       join(REPO, "components/dashboard/app-shell.tsx"),
       "utf8"
     );
-    expect(shell).toContain("platformOnly");
     expect(shell).toContain("showAdminNav");
+    expect(shell).toContain("visibleOrgNav({ showAdminNav, showOrgAdminNav })");
+    const nav = readFileSync(join(REPO, "lib/dashboard-nav.ts"), "utf8");
+    expect(nav).toContain("platformOnly");
+    expect(nav).toContain("!item.platformOnly || options.showAdminNav");
   });
 
   it("admin dashboard uses platform support copy", () => {

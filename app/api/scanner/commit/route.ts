@@ -10,7 +10,7 @@ import {
   recordMenuImportCommitFailed,
   recordMenuImportCommitted,
 } from "@/lib/scanner/menu-import-audit";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { recordRestaurantUsage } from "@/lib/usage/record";
 import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 import { VOICE_AGENT_CONTENT_SYNC_TRIGGERS } from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
 
     if (importId) {
       const row = await getMenuImportForRestaurant(
@@ -124,7 +124,7 @@ export async function POST(req: Request) {
 
     if (importId && restaurantId) {
       try {
-        const supabase = await createServerSupabase();
+        const supabase = getDb();
         await recordMenuImportCommitFailed(supabase, importId, message);
         const access = await requireRestaurantAccess(restaurantId);
         if (!access.errorResponse) {

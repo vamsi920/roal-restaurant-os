@@ -8,7 +8,7 @@ const REPO = join(import.meta.dirname, "../..");
 
 const AUTH_FORM = join(REPO, "components/auth/auth-form.tsx");
 const LOGIN_PAGE = join(REPO, "app/(auth)/login/page.tsx");
-const SIGNUP_ENTRY = join(REPO, "components/auth/signup-page-entry.tsx");
+const SIGNUP_PAGE = join(REPO, "app/(auth)/signup/page.tsx");
 const AUTH_SMOKE_SCRIPT = join(REPO, "scripts/auth-smoke.mjs");
 const E2E_SMOKE_SCRIPT = join(REPO, "scripts/e2e-smoke.mjs");
 const SMOKE_LIB = join(REPO, "scripts/playwright-smoke-lib.mjs");
@@ -19,23 +19,21 @@ const FAKE_EMAIL = "smoke-test@example.invalid";
 describe("auth flow smoke (static)", () => {
   const form = readFileSync(AUTH_FORM, "utf8");
   const loginPage = readFileSync(LOGIN_PAGE, "utf8");
-  const signupEntry = readFileSync(SIGNUP_ENTRY, "utf8");
+  const signupPage = readFileSync(SIGNUP_PAGE, "utf8");
   const smokeScript = readFileSync(AUTH_SMOKE_SCRIPT, "utf8");
   const e2eScript = readFileSync(E2E_SMOKE_SCRIPT, "utf8");
   const smokeLib = readFileSync(SMOKE_LIB, "utf8");
 
-  it("signup entry resolves default onboarding next path", () => {
-    expect(signupEntry).toContain("defaultAuthNextPath");
-    expect(signupEntry).toContain("@/lib/auth/auth-next-url");
-    expect(signupEntry).toContain("safeNextPath");
+  it("form resolves next via safeNextPath and mode defaults", () => {
+    expect(form).toContain("defaultAuthNextPath");
+    expect(form).toContain("safeNextPath");
+    expect(form).toContain("SIGNUP_ONBOARDING_NEXT");
   });
 
-  it("login and signup pages mount auth entry with correct modes", () => {
-    expect(loginPage).toContain("LoginPageEntry");
-    expect(readFileSync(join(REPO, "components/auth/login-page-entry.tsx"), "utf8")).toContain(
-      '<AuthForm mode="sign_in"'
-    );
-    expect(signupEntry).toContain('<AuthForm mode="sign_up"');
+  it("login and signup pages mount AuthForm with correct modes", () => {
+    expect(loginPage).toContain("<AuthForm");
+    expect(loginPage).toContain('searchParams.mode === "signup"');
+    expect(signupPage).toContain('<AuthForm mode="sign_up"');
   });
 
   it("form exposes email/password field types and submit handler", () => {
@@ -45,12 +43,12 @@ describe("auth flow smoke (static)", () => {
     expect(form).toContain('name="password"');
     expect(form).toContain("onSubmit={onSubmit}");
     expect(form).toContain('method="post"');
-    expect(form).toContain("autoComplete=\"email\"");
+    expect(form).toContain('autoComplete="email"');
     expect(form).toContain('autoComplete={isSignUp ? "new-password" : "current-password"}');
     expect(form).toContain('type="submit"');
   });
 
-  it("submit path calls existing Supabase auth handlers", () => {
+  it("submit path calls Supabase auth handlers", () => {
     expect(form).toContain("signInWithPassword");
     expect(form).toContain("auth.signUp");
     expect(form).toContain("e.preventDefault()");
@@ -60,8 +58,6 @@ describe("auth flow smoke (static)", () => {
   it("copy drives titles and submit labels", () => {
     expect(form).toContain("copy.form.title");
     expect(form).toContain("copy.form.submitLabel");
-    expect(LOGIN_PAGE_COPY.form.title).toBe("Welcome back");
-    expect(SIGNUP_PAGE_COPY.form.title).toBe("Start free");
     expect(LOGIN_PAGE_COPY.form.submitLabel).toBe("Sign in");
     expect(SIGNUP_PAGE_COPY.form.submitLabel).toBe("Create account");
   });

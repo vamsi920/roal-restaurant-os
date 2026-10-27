@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { markRestaurantMenuTemplateLocalOverride } from "@/lib/menu-editor/copy-menu";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import {
   syncRestaurantAgentAfterContentChange,
   VOICE_AGENT_CONTENT_SYNC_TRIGGERS,
@@ -38,7 +38,7 @@ export function afterMenuContentMutation(
 ): void {
   revalidateMenuContentSurfaces(restaurantId);
   if (options?.trackTemplateOverride !== false) {
-    void createServerSupabase()
+    void getDb()
       .then((supabase) =>
         markRestaurantMenuTemplateLocalOverride(supabase, restaurantId)
       )

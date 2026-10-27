@@ -5,42 +5,33 @@ import { describe, expect, it } from "vitest";
 const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
-describe("KDS orders responsive (prompt 23)", () => {
-  it("keeps tab counts visible and labels tabs for screen readers", () => {
+describe("Kitchen board views (v3)", () => {
+  it("labels Board / Done tabs with counts for screen readers", () => {
     const panel = read("app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx");
-    const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
 
-    expect(panel).toContain("kds-order-tab__count");
+    expect(panel).toContain('role="tablist"');
+    expect(panel).toContain('role="tab"');
     expect(panel).toContain("aria-label={`${label}, ${count} orders`}");
-    expect(css).toContain("KDS orders responsive (prompt 23)");
-    expect(css).not.toMatch(
-      /\.kds-order-tab\[aria-selected="true"\][\s\S]*> span:last-child[\s\S]*display:\s*none/
-    );
-    expect(css).toContain(".kds-order-tab__count");
+    expect(panel).toContain('label="Board"');
+    expect(panel).toContain('label="Done"');
   });
 
-  it("stacks sync banners and uses formatted client errors", () => {
+  it("shows sync problems as notices with a refresh, using formatted errors", () => {
     const panel = read("app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx");
-    const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
 
     expect(panel).toContain("formatSupabaseClientError");
-    expect(css).toMatch(
-      /@media \(max-width: 639px\)[\s\S]*\.kds-orders-sync-alert[\s\S]*flex-direction:\s*column/
-    );
-    expect(css).toMatch(
-      /@media \(max-width: 639px\)[\s\S]*\.kds-recovery-btn[\s\S]*width:\s*100%/
-    );
+    expect(panel).toContain("<Notice");
+    expect(panel).toContain("Live updates paused.");
+    expect(panel).toContain("<RefreshButton");
   });
 
-  it("styles scrollable tabs and compact call strip on phone", () => {
-    const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
+  it("puts a one-line live call strip at the top of the board", () => {
     const strip = read("app/dashboard/restaurants/[id]/CallStatusStrip.tsx");
+    const indicator = read("app/dashboard/restaurants/[id]/LiveCallIndicator.tsx");
 
-    expect(css).toMatch(/\.kds-order-tabs[\s\S]*scroll-snap-type/);
-    expect(css).toMatch(
-      /@media \(max-width: 639px\)[\s\S]*\.kds-order-tab[\s\S]*min-width:\s*5\.75rem/
-    );
-    expect(strip).toContain("kds-call-status__updated");
+    expect(strip).toContain("Waiting for calls");
     expect(strip).toContain("truncate");
+    expect(strip).toContain("kds-live-dot");
+    expect(indicator).toContain("taking an order");
   });
 });

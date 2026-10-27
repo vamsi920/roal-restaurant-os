@@ -1,6 +1,6 @@
 /** Canonical public routes + homepage hash anchors. */
 
-export const PUBLIC_HOME_HASH_IDS = ["how", "pricing", "faq", "try"] as const;
+export const PUBLIC_HOME_HASH_IDS = ["features", "how", "command-center", "pricing", "faq", "try"] as const;
 
 export type PublicHomeHashId = (typeof PUBLIC_HOME_HASH_IDS)[number];
 

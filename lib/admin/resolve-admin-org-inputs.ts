@@ -1,9 +1,9 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
 import { isOrgAdmin } from "@/lib/auth/roles";
 import type { AuthContext } from "@/lib/auth/types";
 import type { MembershipRole } from "@/lib/types";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export type AdminOrgInput = {
   organizationId: string;
@@ -19,7 +19,7 @@ export async function resolveAdminOrgInputs(
     return [];
   }
 
-  const service = getServiceRoleSupabase();
+  const service = getDb();
   if (service) {
     const { data: orgs, error } = await service
       .from("organizations")
@@ -48,10 +48,10 @@ export async function resolveAdminOrgInputs(
 
 export function adminSnapshotSupabase(
   context: AuthContext,
-  sessionClient: SupabaseClient
-): SupabaseClient {
+  sessionClient: Db
+): Db {
   if (isPlatformAdminEmail(context.user.email)) {
-    return getServiceRoleSupabase() ?? sessionClient;
+    return getDb() ?? sessionClient;
   }
   return sessionClient;
 }

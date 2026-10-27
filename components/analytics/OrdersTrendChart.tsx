@@ -6,8 +6,8 @@ type Props = {
 };
 
 const SERIES = [
-  { key: "orderSessions", label: "Order sessions", className: "bg-ink/70" },
-  { key: "completed", label: "Completed", className: "bg-success/80" },
+  { key: "orderSessions", label: "Order sessions", className: "bg-accent/30" },
+  { key: "completed", label: "Completed", className: "bg-accent" },
   { key: "canceled", label: "Canceled", className: "bg-line-strong" },
 ] as const;
 
@@ -29,7 +29,7 @@ export function OrdersTrendChart({ points }: Props) {
       </div>
 
       {points.length === 0 ? (
-        <p className="py-8 text-center text-[13px] text-muted">No daily data in this range yet.</p>
+        <p className="py-10 text-center text-[13px] text-subtle">No daily data in this range yet.</p>
       ) : (
         <div
           className="orders-trend-chart__scroll flex min-w-0 items-end gap-1 overflow-x-auto overscroll-x-contain pb-1 sm:gap-1.5"
@@ -43,7 +43,7 @@ export function OrdersTrendChart({ points }: Props) {
               className="orders-trend-chart__day flex min-w-[2.25rem] shrink-0 flex-col items-center gap-1 sm:min-w-[28px] sm:flex-1"
               title={`${formatShortDate(point.date)}: ${point.orderSessions} sessions, ${point.completed} completed, ${point.canceled} canceled`}
             >
-              <div className="flex h-24 w-full items-end justify-center gap-0.5 border-b border-line">
+              <div className="flex h-28 w-full items-end justify-center gap-0.5 border-b border-line">
                 <Bar value={point.orderSessions} max={max} className={SERIES[0].className} />
                 <Bar value={point.completed} max={max} className={SERIES[1].className} />
                 <Bar value={point.canceled} max={max} className={SERIES[2].className} />
@@ -58,10 +58,10 @@ export function OrdersTrendChart({ points }: Props) {
 }
 
 function Bar({ value, max, className }: { value: number; max: number; className: string }) {
-  const height = value > 0 ? Math.max(6, Math.round((value / max) * 92)) : 0;
+  const height = value > 0 ? Math.max(6, Math.round((value / max) * 108)) : 0;
   return (
     <div
-      className={`w-1.5 rounded-t-sm sm:w-2 ${className}`}
+      className={`w-1.5 rounded-t-[3px] sm:w-2 ${className}`}
       style={{ height: `${height}px` }}
       aria-hidden
     />

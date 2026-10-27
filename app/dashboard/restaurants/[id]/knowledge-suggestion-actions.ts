@@ -1,7 +1,7 @@
 "use server";
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import {
   RestaurantKnowledgeCategorySchema,
   type RestaurantKnowledgeCategory,
@@ -42,7 +42,7 @@ export async function acceptKnowledgeSuggestionAction(
   if (!question) throw new Error("Add the question your host should recognize.");
   if (!answer) throw new Error("Add the answer your host should give.");
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const organizationId = access.access.restaurant.organization_id;
 
   const { data: suggestion, error: loadError } = await supabase
@@ -106,7 +106,7 @@ export async function dismissKnowledgeSuggestionAction(
   const access = await requireRestaurantAccess(restaurantId);
   if (access.errorResponse) accessError(access.errorResponse.status);
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { error } = await supabase
     .from("restaurant_knowledge_suggestions")
     .update({ status: "dismissed", updated_at: new Date().toISOString() })

@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   buildRestaurantConvaiAgentName,
   provisionRestaurantConvaiAgent,
@@ -13,7 +13,7 @@ import {
   emitProvisionFailureIfTransition,
 } from "@/lib/notifications/operational-events";
 import { ensureRestaurantProfile } from "@/lib/restaurant-profile/helpers";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import type { ElevenLabsMenuAutoSyncStatus, ElevenLabsProvisionStatus } from "@/lib/types";
 import {
   runRestaurantVoiceAgentSync,
@@ -70,14 +70,14 @@ export type VoiceAgentProvisionApiResult =
     };
 
 export type ProvisionRestaurantVoiceAgentDeps = {
-  getSupabase: () => Promise<SupabaseClient>;
+  getSupabase: () => Promise<Db>;
   provisionConvaiAgent: typeof provisionRestaurantConvaiAgent;
   runSync: typeof runRestaurantVoiceAgentSync;
 };
 
 export const defaultProvisionRestaurantVoiceAgentDeps =
   (): ProvisionRestaurantVoiceAgentDeps => ({
-    getSupabase: createServerSupabase,
+    getSupabase: getDb,
     provisionConvaiAgent: provisionRestaurantConvaiAgent,
     runSync: runRestaurantVoiceAgentSync,
   });
@@ -93,7 +93,7 @@ function safeErrorMessage(error: unknown): string {
 }
 
 async function patchProfileLifecycle(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   patch: Record<string, unknown>
 ): Promise<void> {
@@ -109,7 +109,7 @@ async function patchProfileLifecycle(
 }
 
 async function markProvisionPhase(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   status: ElevenLabsProvisionStatus
 ): Promise<void> {
@@ -122,7 +122,7 @@ async function markProvisionPhase(
 }
 
 async function loadProfileOperationalSnapshot(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<{
   provisionStatus: ElevenLabsProvisionStatus | null;
@@ -147,7 +147,7 @@ async function loadProfileOperationalSnapshot(
 }
 
 async function persistProvisionFailure(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     restaurantName: string;
@@ -208,7 +208,7 @@ async function persistProvisionFailure(
 }
 
 async function persistProvisionSuccess(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     organizationId: string;
@@ -248,7 +248,7 @@ async function persistProvisionSuccess(
 }
 
 async function persistProvisionSkippedState(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   message: string
 ): Promise<void> {
@@ -261,7 +261,7 @@ async function persistProvisionSkippedState(
 }
 
 async function persistUnexpectedProvisionFailure(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   message: string
 ): Promise<void> {
@@ -277,7 +277,7 @@ export type ProvisionRestaurantVoiceAgentOptions = {
 };
 
 async function loadProfileAgentId(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<string | null> {
   const { data, error } = await supabase
@@ -295,7 +295,7 @@ async function loadProfileAgentId(
 }
 
 async function finalizeProvisionSync(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     restaurantName: string;

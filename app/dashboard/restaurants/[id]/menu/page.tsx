@@ -6,10 +6,9 @@ import {
   getRestaurantAccessForPage,
 } from "@/lib/auth/context-server";
 import { loadRestaurantMenuSetupPageData } from "@/lib/restaurant-menu-setup/load-page-data";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { RESTAURANT_MENU_SETUP_TITLE } from "@/lib/dashboard-restaurant-labels";
 import { MenuSetupWorkspace } from "./MenuSetupWorkspace";
-import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
 import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
 
@@ -33,7 +32,7 @@ export default async function RestaurantMenuSetupPage({
   }
 
   const { restaurant, role } = access;
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const [setup, suggestionCount] = await Promise.all([
     loadRestaurantMenuSetupPageData(supabase, {
       restaurant,

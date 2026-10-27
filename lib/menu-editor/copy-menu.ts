@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import type { RestaurantMenuSnapshot } from "@/lib/menu-editor/load-menu";
 import { MenuSchema, type DbItem, type Menu } from "@/lib/types";
@@ -333,7 +333,7 @@ export function buildTemplateAdditionsPayload(
 }
 
 export async function copyRestaurantMenu(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     sourceRestaurantId: string;
     targetRestaurantId: string;
@@ -384,7 +384,7 @@ export async function copyRestaurantMenu(
 }
 
 export async function listOrganizationMenuTemplates(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string
 ): Promise<OrganizationMenuTemplate[]> {
   const orgId = organizationId.trim();
@@ -415,7 +415,7 @@ export async function listOrganizationMenuTemplates(
 }
 
 export async function saveRestaurantMenuAsTemplate(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     organizationId: string;
@@ -483,7 +483,7 @@ export async function saveRestaurantMenuAsTemplate(
 }
 
 export async function setDefaultOrganizationMenuTemplate(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     templateId: string;
@@ -521,7 +521,7 @@ export async function setDefaultOrganizationMenuTemplate(
 }
 
 export async function loadOrganizationMenuTemplatePayload(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     templateId: string;
@@ -543,7 +543,7 @@ export async function loadOrganizationMenuTemplatePayload(
 }
 
 export async function applyOrganizationMenuTemplateAdditions(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     templateId: string;
@@ -589,7 +589,7 @@ export async function applyOrganizationMenuTemplateAdditions(
 }
 
 export async function applyOrganizationMenuTemplate(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     templateId: string;
@@ -640,7 +640,7 @@ export async function applyOrganizationMenuTemplate(
 }
 
 export async function applyOrganizationMenuTemplateToInheritedRestaurants(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     templateId: string;
@@ -770,7 +770,7 @@ export type ApplyDefaultMenuTemplateResult =
     };
 
 export async function applyDefaultOrganizationMenuTemplate(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     targetRestaurantId: string;
@@ -825,7 +825,7 @@ export async function applyDefaultOrganizationMenuTemplate(
 }
 
 async function recordRestaurantMenuTemplateInheritance(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     targetRestaurantId: string;
     templateId: string;
@@ -848,7 +848,7 @@ async function recordRestaurantMenuTemplateInheritance(
 }
 
 async function clearRestaurantMenuTemplateInheritance(
-  supabase: SupabaseClient,
+  supabase: Db,
   targetRestaurantId: string
 ) {
   const { error } = await supabase
@@ -868,7 +868,7 @@ async function clearRestaurantMenuTemplateInheritance(
 }
 
 export async function markRestaurantMenuTemplateLocalOverride(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<MarkMenuTemplateOverrideResult> {
   const targetRestaurantId = restaurantId.trim();
@@ -930,7 +930,7 @@ export type ApplyTemplateFieldUpdatesResult = {
 };
 
 export async function applyOrganizationMenuTemplateFieldUpdates(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     templateId: string;

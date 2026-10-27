@@ -9,7 +9,7 @@ import { writeAuditLog } from "@/lib/observability/audit";
 import { getRouteObservability, jsonResponse } from "@/lib/observability/route-context";
 import { notifyOrderCompleted } from "@/lib/notifications/helpers";
 import { recordRestaurantUsage } from "@/lib/usage/record";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import type { DraftOrderRow } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -60,7 +60,7 @@ export async function PATCH(
       );
     }
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const { data: order, error: loadErr } = await supabase
       .from("draft_orders")
       .select("*")

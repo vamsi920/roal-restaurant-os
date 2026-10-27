@@ -1,7 +1,7 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import { isSharedTemplateAgentLinked } from "@/lib/restaurant-launch/server-env";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import {
   defaultProvisionRestaurantVoiceAgentDeps,
   provisionRestaurantVoiceAgent,
@@ -52,7 +52,7 @@ export function parseBackfillVoiceAgentArgv(argv: string[]): BackfillVoiceAgentA
 }
 
 export async function loadVoiceAgentBackfillCandidates(
-  supabase: SupabaseClient,
+  supabase: Db,
   options: { force: boolean; limit: number | null }
 ): Promise<BackfillVoiceAgentCandidate[]> {
   const templateAgentId = getElevenLabsAgentId();
@@ -107,7 +107,7 @@ export async function loadVoiceAgentBackfillCandidates(
 
 export async function runVoiceAgentBackfill(
   options: BackfillVoiceAgentArgv & {
-    supabase?: SupabaseClient;
+    supabase?: Db;
     provision?: typeof provisionRestaurantVoiceAgent;
     actorUserId?: string;
   }
@@ -115,7 +115,7 @@ export async function runVoiceAgentBackfill(
   candidates: BackfillVoiceAgentCandidate[];
   results: BackfillVoiceAgentRowResult[];
 }> {
-  const supabase = options.supabase ?? getServiceRoleSupabase();
+  const supabase = options.supabase ?? getDb();
   if (!supabase) {
     throw new Error("SUPABASE_SERVICE_ROLE_KEY required for voice agent backfill");
   }

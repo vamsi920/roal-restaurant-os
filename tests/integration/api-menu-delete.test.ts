@@ -8,8 +8,8 @@ vi.mock("@/lib/auth/context-server", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
-  getServiceRoleSupabase: vi.fn(),
+  getDb: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/voice-agent/after-menu-content-mutation", () => ({
@@ -17,10 +17,7 @@ vi.mock("@/lib/voice-agent/after-menu-content-mutation", () => ({
 }));
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import {
-  createServerSupabase,
-  getServiceRoleSupabase,
-} from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 
 function accessOk() {
@@ -44,7 +41,7 @@ function accessOk() {
 describe("DELETE /api/restaurants/[id]/menu", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(getServiceRoleSupabase).mockReturnValue(null);
+    vi.mocked(getDb).mockReturnValue(null);
   });
 
   it("returns 401 when unauthenticated", async () => {
@@ -58,7 +55,7 @@ describe("DELETE /api/restaurants/[id]/menu", () => {
       params: { id: RESTAURANT_ID },
     });
     expect(res.status).toBe(401);
-    expect(createServerSupabase).not.toHaveBeenCalled();
+    expect(getDb).not.toHaveBeenCalled();
   });
 
   it("returns 400 when restaurant id missing", async () => {
@@ -75,7 +72,7 @@ describe("DELETE /api/restaurants/[id]/menu", () => {
   it("clears menu via clear_restaurant_menu RPC", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
     const rpc = vi.fn().mockResolvedValue({ data: 3, error: null });
-    vi.mocked(createServerSupabase).mockResolvedValue({ rpc } as never);
+    vi.mocked(getDb).mockResolvedValue({ rpc } as never);
 
     const res = await DELETE(new Request("http://localhost/api"), {
       params: { id: RESTAURANT_ID },
@@ -104,7 +101,7 @@ describe("DELETE /api/restaurants/[id]/menu", () => {
     });
     const eq = vi.fn().mockReturnValue({ select });
     const deleteFn = vi.fn().mockReturnValue({ eq });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn().mockReturnValue({ delete: deleteFn }),
     } as never);
 
@@ -118,12 +115,12 @@ describe("DELETE /api/restaurants/[id]/menu", () => {
       deleted_categories: 2,
       via: "service_role",
     });
-    expect(createServerSupabase).not.toHaveBeenCalled();
+    expect(getDb).not.toHaveBeenCalled();
   });
 
   it("returns 500 when RPC fails", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       rpc: vi.fn().mockResolvedValue({
         data: null,
         error: { message: "permission denied" },

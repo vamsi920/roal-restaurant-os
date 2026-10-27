@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { BillingDashboard } from "@/components/billing/BillingDashboard";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { loadOrganizationBilling } from "@/lib/billing/load-billing";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,7 @@ export default async function BillingPage() {
     redirect("/dashboard/onboarding");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: accessibleRestaurants } = await supabase
     .from("restaurants")
     .select("id")

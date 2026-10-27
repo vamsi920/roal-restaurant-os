@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type {
   ElevenLabsMenuAutoSyncStatus,
   ElevenLabsProvisionStatus,
@@ -78,7 +78,7 @@ function countOrdersByRestaurant(
 }
 
 async function menuItemCountsByRestaurant(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantIds: string[]
 ): Promise<Map<string, number>> {
   const counts = new Map<string, number>();
@@ -115,7 +115,7 @@ async function menuItemCountsByRestaurant(
 }
 
 async function hoursConfiguredByRestaurant(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantIds: string[]
 ): Promise<Map<string, boolean>> {
   const map = new Map<string, boolean>();
@@ -135,7 +135,7 @@ async function hoursConfiguredByRestaurant(
 }
 
 export async function loadOrganizationOverview(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: { organizationId: string; organizationName: string; role: MembershipRole }
 ): Promise<OrganizationOverviewSnapshot> {
   const { data: restaurants, error: restErr } = await supabase
@@ -253,7 +253,7 @@ export async function loadOrganizationOverview(
 }
 
 export async function loadOrgOverviewPage(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizations: Array<{
     organizationId: string;
     organizationName: string;

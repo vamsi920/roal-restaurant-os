@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 
 export type AuditOutcome = "success" | "failure" | "denied";
 
@@ -15,7 +15,7 @@ export type WriteAuditLogInput = {
 };
 
 export async function writeAuditLog(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: WriteAuditLogInput
 ): Promise<void> {
   const { error } = await supabase.from("audit_logs").insert({

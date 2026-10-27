@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
 import { evaluateRestaurantHours } from "@/lib/restaurant-hours/core";
@@ -8,7 +8,7 @@ import {
 } from "@/lib/restaurant-profile/helpers";
 
 export async function buildGetMenuHarnessResponse(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   restaurantNameHint?: string | null
 ): Promise<{ body: Record<string, unknown>; httpStatus: number }> {

@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { activeProvidersForSettings } from "@/lib/notifications/providers";
 import { loadNotificationSettings } from "@/lib/notifications/settings";
 import type { ProviderSendResult } from "@/lib/notifications/providers/types";
@@ -10,7 +10,7 @@ function deliveryLogErrorMessage(result: ProviderSendResult): string | null {
 }
 
 export async function dispatchNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: DispatchNotificationInput
 ): Promise<boolean> {
   const settings = await loadNotificationSettings(supabase, input.organizationId);

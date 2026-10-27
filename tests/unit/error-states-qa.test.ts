@@ -55,7 +55,8 @@ describe("error-state wiring (launch 30)", () => {
       "utf8"
     );
     expect(panel).toContain("formatSupabaseClientError");
-    expect(panel).toContain("KdsEmptyStatePanel");
+    expect(panel).toContain("EmptyState");
+    expect(panel).toContain("Couldn't load orders");
   });
 
   it("menu import history avoids Unknown error", () => {
@@ -65,7 +66,7 @@ describe("error-state wiring (launch 30)", () => {
     );
     expect(hist).toContain("formatApiRouteError");
     expect(hist).not.toContain('"Unknown error"');
-    expect(hist).toContain("KdsEmptyStatePanel");
+    expect(hist).toContain("EmptyState");
     expect(hist).toContain("Import history unavailable");
   });
 

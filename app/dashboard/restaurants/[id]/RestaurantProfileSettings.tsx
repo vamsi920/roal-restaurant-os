@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, type ReactNode } from "react";
+import { MessageCircleQuestion, PhoneForwarded, Sparkles, Store } from "lucide-react";
 import { saveRestaurantProfileSettingsAction } from "./profile-actions";
-import { cn } from "@/lib/cn";
+import { SaveRow } from "@/components/live-orders/workspace-ui";
+import { CheckRow, Field, SettingsPanel, SubHeading } from "./menu/menu-ui";
 import {
   UNAVAILABLE_ITEM_BEHAVIOR_LABEL,
   UNAVAILABLE_ITEM_BEHAVIORS,
@@ -27,7 +29,11 @@ type Props = {
   upsellRules?: RestaurantUpsellRule[];
   upsellRulesText?: string;
   menu?: Pick<RestaurantMenuSnapshot, "categories" | "items" | "modifiers">;
+  /** Rendered between Business info and FAQs (the Hours panel on the Menu page). */
+  hoursSlot?: ReactNode;
 };
+
+type SectionKey = "business" | "handoff" | "faqs" | "upsells";
 
 function toKnowledgeFormEntries(
   entries: RestaurantKnowledgeEntry[]
@@ -89,8 +95,8 @@ export function RestaurantProfileSettings({
   knowledgeEntries = [],
   upsellRules = [],
   menu,
+  hoursSlot,
 }: Props) {
-  const [open, setOpen] = useState(true);
   const [form, setForm] = useState(() => toFormState(restaurant, profile));
   const [knowledgeFormEntries, setKnowledgeFormEntries] = useState(() =>
     toKnowledgeFormEntries(knowledgeEntries)
@@ -100,16 +106,27 @@ export function RestaurantProfileSettings({
   );
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
+  const [activeSection, setActiveSection] = useState<SectionKey | null>(null);
+  const [dirty, setDirty] = useState<Set<SectionKey>>(new Set());
   const [pending, startTransition] = useTransition();
 
-  function setField<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
+  function markDirty(section: SectionKey) {
     setSaved(false);
+    setDirty((prev) => (prev.has(section) ? prev : new Set(prev).add(section)));
+  }
+
+  function setField<K extends keyof typeof form>(
+    key: K,
+    value: (typeof form)[K],
+    section: SectionKey = "business"
+  ) {
+    markDirty(section);
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function submit(section: SectionKey) {
     setError(null);
+    setActiveSection(section);
 
     const payload = {
       name: form.name.trim(),
@@ -146,410 +163,421 @@ export function RestaurantProfileSettings({
       return;
     }
 
+    // One action saves the whole location profile (details, handoff, FAQs, upsells),
+    // so every section's Save button persists all pending edits together.
     startTransition(async () => {
       try {
         await saveRestaurantProfileSettingsAction(restaurant.id, parsed.data);
         setSaved(true);
+        setDirty(new Set());
       } catch (err) {
         setError(err instanceof Error ? err.message : "Save failed");
       }
     });
   }
 
-  return (
-    <section className="glass-card overflow-hidden">
-      <div className="flex w-full items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-5">
-        <div className="min-w-0 flex-1">
-          <h2 id="restaurant-profile-heading" className="text-sm font-semibold text-ink">
-            Location settings
-          </h2>
-          <p className="mt-0.5 text-xs text-muted">
-            Profile, ordering, taxes, and handoff rules synced to the voice agent.
-          </p>
-        </div>
+  function onSubmit(section: SectionKey) {
+    return (e: React.FormEvent) => {
+      e.preventDefault();
+      submit(section);
+    };
+  }
+
+  function footer(section: SectionKey, label: string) {
+    const isActive = activeSection === section;
+    const otherDirty = [...dirty].some((k) => k !== section);
+    let message: ReactNode = null;
+    let tone: "ok" | "bad" | "muted" = "muted";
+    if (isActive && error) {
+      message = error;
+      tone = "bad";
+    } else if (isActive && saved && !pending) {
+      message = "Saved. The phone host picks this up on its next sync.";
+      tone = "ok";
+    } else if (dirty.has(section)) {
+      message = otherDirty
+        ? "Unsaved changes here and in other sections — saving keeps them all."
+        : "Unsaved changes";
+    }
+    return (
+      <SaveRow message={message} tone={tone} className="mt-5">
         <button
-          type="button"
-          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-subtle hover:bg-elev hover:text-ink"
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-controls="restaurant-profile-panel"
-          aria-labelledby="restaurant-profile-heading"
+          type="submit"
+          className="btn-primary w-full sm:w-auto"
+          disabled={pending}
+          aria-busy={pending && isActive}
         >
-          <svg
-            viewBox="0 0 24 24"
-            className={cn("h-5 w-5 transition-transform", open && "rotate-180")}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            aria-hidden
-          >
-            <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="sr-only">{open ? "Collapse" : "Expand"} location settings</span>
+          {pending && isActive ? "Saving…" : label}
         </button>
-      </div>
+      </SaveRow>
+    );
+  }
 
-      {open ? (
-        <form
-          id="restaurant-profile-panel"
-          onSubmit={onSubmit}
-          className="space-y-6 p-4 sm:p-5"
+  return (
+    <div className="space-y-4">
+      <form onSubmit={onSubmit("business")}>
+        <SettingsPanel
+          id="restaurant-business-info"
+          icon={Store}
+          color="blue"
+          title="Business info"
+          titleId="restaurant-profile-heading"
+          description="Name, address, ordering, taxes and fees the phone host quotes to guests."
         >
-          {error ? (
-            <p className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger">
-              {error}
-            </p>
-          ) : null}
-          {saved && !pending ? (
-            <p className="rounded-lg border border-success/25 bg-success/5 px-3 py-2 text-sm text-success">
-              Settings saved.
-            </p>
-          ) : null}
+          <div className="space-y-6">
+            <FieldGroup title="Basics">
+              <Field label="Restaurant name" required>
+                <input
+                  className="input-base"
+                  value={form.name}
+                  onChange={(e) => setField("name", e.target.value)}
+                  required
+                  autoComplete="organization"
+                  disabled={pending}
+                />
+              </Field>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Phone">
+                  <input
+                    className="input-base"
+                    type="tel"
+                    inputMode="tel"
+                    value={form.phone}
+                    onChange={(e) => setField("phone", e.target.value)}
+                    placeholder="+1 555 0100"
+                    disabled={pending}
+                  />
+                </Field>
+                <Field label="Cuisine">
+                  <input
+                    className="input-base"
+                    value={form.cuisine}
+                    onChange={(e) => setField("cuisine", e.target.value)}
+                    placeholder="Italian, Pizza, …"
+                    disabled={pending}
+                  />
+                </Field>
+              </div>
+              <Field label="Website">
+                <input
+                  className="input-base"
+                  type="url"
+                  inputMode="url"
+                  value={form.website}
+                  onChange={(e) => setField("website", e.target.value)}
+                  placeholder="https://"
+                  disabled={pending}
+                />
+              </Field>
+            </FieldGroup>
 
-          <FieldGroup title="Basics">
-            <Field label="Restaurant name" required>
-              <input
-                className="input-base"
-                value={form.name}
-                onChange={(e) => setField("name", e.target.value)}
-                required
-                disabled={pending}
-              />
-            </Field>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Phone">
+            <FieldGroup title="Address">
+              <Field label="Street">
                 <input
                   className="input-base"
-                  type="tel"
-                  value={form.phone}
-                  onChange={(e) => setField("phone", e.target.value)}
-                  placeholder="+1 555 0100"
+                  value={form.address_line1}
+                  onChange={(e) => setField("address_line1", e.target.value)}
+                  autoComplete="address-line1"
                   disabled={pending}
                 />
               </Field>
-              <Field label="Cuisine">
+              <Field label="Suite / unit">
                 <input
                   className="input-base"
-                  value={form.cuisine}
-                  onChange={(e) => setField("cuisine", e.target.value)}
-                  placeholder="Italian, Pizza, …"
+                  value={form.address_line2}
+                  onChange={(e) => setField("address_line2", e.target.value)}
+                  autoComplete="address-line2"
                   disabled={pending}
                 />
               </Field>
-            </div>
-            <Field label="Website">
-              <input
-                className="input-base"
-                type="url"
-                value={form.website}
-                onChange={(e) => setField("website", e.target.value)}
-                placeholder="https://"
-                disabled={pending}
-              />
-            </Field>
-          </FieldGroup>
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Field label="City">
+                  <input
+                    className="input-base"
+                    value={form.city}
+                    onChange={(e) => setField("city", e.target.value)}
+                    autoComplete="address-level2"
+                    disabled={pending}
+                  />
+                </Field>
+                <Field label="State / region">
+                  <input
+                    className="input-base"
+                    value={form.region}
+                    onChange={(e) => setField("region", e.target.value)}
+                    autoComplete="address-level1"
+                    disabled={pending}
+                  />
+                </Field>
+                <Field label="Postal code">
+                  <input
+                    className="input-base"
+                    value={form.postal_code}
+                    onChange={(e) => setField("postal_code", e.target.value)}
+                    autoComplete="postal-code"
+                    disabled={pending}
+                  />
+                </Field>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Country" hint="Two-letter code, e.g. US">
+                  <input
+                    className="input-base"
+                    value={form.country}
+                    onChange={(e) => setField("country", e.target.value.toUpperCase())}
+                    maxLength={2}
+                    disabled={pending}
+                  />
+                </Field>
+                <Field label="Timezone (IANA)" required>
+                  <input
+                    className="input-base"
+                    value={form.timezone}
+                    onChange={(e) => setField("timezone", e.target.value)}
+                    placeholder="America/Chicago"
+                    required
+                    disabled={pending}
+                  />
+                </Field>
+              </div>
+            </FieldGroup>
 
-          <FieldGroup title="Address">
-            <Field label="Street">
-              <input
-                className="input-base"
-                value={form.address_line1}
-                onChange={(e) => setField("address_line1", e.target.value)}
-                disabled={pending}
-              />
-            </Field>
-            <Field label="Suite / unit">
-              <input
-                className="input-base"
-                value={form.address_line2}
-                onChange={(e) => setField("address_line2", e.target.value)}
-                disabled={pending}
-              />
-            </Field>
-            <div className="grid gap-4 sm:grid-cols-3">
-              <Field label="City">
-                <input
-                  className="input-base"
-                  value={form.city}
-                  onChange={(e) => setField("city", e.target.value)}
+            <FieldGroup title="Ordering">
+              <div className="flex flex-wrap gap-x-6">
+                <CheckRow
+                  checked={form.allows_pickup}
+                  onChange={(v) => setField("allows_pickup", v)}
+                  label="Pickup"
                   disabled={pending}
                 />
-              </Field>
-              <Field label="State / region">
-                <input
-                  className="input-base"
-                  value={form.region}
-                  onChange={(e) => setField("region", e.target.value)}
+                <CheckRow
+                  checked={form.allows_delivery}
+                  onChange={(v) => setField("allows_delivery", v)}
+                  label="Delivery"
                   disabled={pending}
                 />
-              </Field>
-              <Field label="Postal code">
+              </div>
+              <Field label="Avg prep time (minutes)" required className="max-w-[12rem]">
                 <input
-                  className="input-base"
-                  value={form.postal_code}
-                  onChange={(e) => setField("postal_code", e.target.value)}
-                  disabled={pending}
-                />
-              </Field>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Country">
-                <input
-                  className="input-base"
-                  value={form.country}
-                  onChange={(e) => setField("country", e.target.value.toUpperCase())}
-                  maxLength={2}
-                  disabled={pending}
-                />
-              </Field>
-              <Field label="Timezone (IANA)" required>
-                <input
-                  className="input-base"
-                  value={form.timezone}
-                  onChange={(e) => setField("timezone", e.target.value)}
-                  placeholder="America/Chicago"
+                  className="input-base tabular-nums"
+                  type="number"
+                  min={5}
+                  max={240}
+                  value={form.prep_time_minutes}
+                  onChange={(e) => setField("prep_time_minutes", e.target.value)}
                   required
                   disabled={pending}
                 />
               </Field>
-            </div>
-          </FieldGroup>
+            </FieldGroup>
 
-          <FieldGroup title="Ordering">
-            <div className="flex flex-wrap gap-4">
-              <label className="flex items-center gap-2 text-sm text-ink">
-                <input
-                  type="checkbox"
-                  checked={form.allows_pickup}
-                  onChange={(e) => setField("allows_pickup", e.target.checked)}
-                  disabled={pending}
-                />
-                Pickup
-              </label>
-              <label className="flex items-center gap-2 text-sm text-ink">
-                <input
-                  type="checkbox"
-                  checked={form.allows_delivery}
-                  onChange={(e) => setField("allows_delivery", e.target.checked)}
-                  disabled={pending}
-                />
-                Delivery
-              </label>
-            </div>
-            <Field label="Avg prep time (minutes)" required>
-              <input
-                className="input-base max-w-[8rem]"
-                type="number"
-                min={5}
-                max={240}
-                value={form.prep_time_minutes}
-                onChange={(e) => setField("prep_time_minutes", e.target.value)}
-                required
-                disabled={pending}
-              />
-            </Field>
-          </FieldGroup>
-
-          <FieldGroup title="Taxes & fees">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Sales tax (%)">
-                <input
-                  className="input-base"
-                  type="number"
-                  min={0}
-                  max={100}
-                  step="0.01"
-                  value={form.tax_rate_percent}
-                  onChange={(e) => setField("tax_rate_percent", e.target.value)}
-                  disabled={pending}
-                />
-              </Field>
-              <Field label="Service fee (%)">
-                <input
-                  className="input-base"
-                  type="number"
-                  min={0}
-                  max={100}
-                  step="0.01"
-                  value={form.service_fee_percent}
-                  onChange={(e) => setField("service_fee_percent", e.target.value)}
-                  disabled={pending}
-                />
-              </Field>
-            </div>
-          </FieldGroup>
-
-          <FieldGroup title="Handoff &amp; escalation">
-            <p className="-mt-2 text-xs text-muted">
-              Routes catering, complaints, sold-out items, and after-hours calls.
-              Synced to the voice agent on save.
-            </p>
-
-            <div className="rounded-xl border border-line bg-elev/40 p-3 sm:p-4">
-              <p className="text-xs font-medium text-ink">Manager contact</p>
-              <p className="mt-0.5 text-xs text-muted">
-                Phone or email for staff callback when the agent escalates.
-              </p>
-              <div className="mt-3 space-y-3">
-                <Field label="Manager name">
+            <FieldGroup title="Taxes & fees">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Sales tax (%)">
                   <input
-                    className="input-base min-h-11"
-                    value={form.escalation_name}
-                    onChange={(e) =>
-                      setField("escalation_name", e.target.value)
-                    }
-                    autoComplete="name"
+                    className="input-base tabular-nums"
+                    type="number"
+                    min={0}
+                    max={100}
+                    step="0.01"
+                    inputMode="decimal"
+                    value={form.tax_rate_percent}
+                    onChange={(e) => setField("tax_rate_percent", e.target.value)}
                     disabled={pending}
                   />
                 </Field>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label="Manager phone">
-                    <input
-                      className="input-base min-h-11"
-                      type="tel"
-                      inputMode="tel"
-                      value={form.escalation_phone}
-                      onChange={(e) =>
-                        setField("escalation_phone", e.target.value)
-                      }
-                      placeholder="+1 555 0100"
-                      autoComplete="tel"
-                      disabled={pending}
-                    />
-                  </Field>
-                  <Field label="Manager email">
-                    <input
-                      className="input-base min-h-11"
-                      type="email"
-                      inputMode="email"
-                      value={form.escalation_email}
-                      onChange={(e) =>
-                        setField("escalation_email", e.target.value)
-                      }
-                      placeholder="manager@restaurant.com"
-                      autoComplete="email"
-                      disabled={pending}
-                    />
-                  </Field>
-                </div>
+                <Field label="Service fee (%)">
+                  <input
+                    className="input-base tabular-nums"
+                    type="number"
+                    min={0}
+                    max={100}
+                    step="0.01"
+                    inputMode="decimal"
+                    value={form.service_fee_percent}
+                    onChange={(e) => setField("service_fee_percent", e.target.value)}
+                    disabled={pending}
+                  />
+                </Field>
               </div>
-            </div>
+            </FieldGroup>
+          </div>
+          {footer("business", "Save business info")}
+        </SettingsPanel>
+      </form>
 
-            <Field label="Catering route">
-              <textarea
-                className="input-base min-h-[5.5rem] resize-y"
-                rows={3}
-                value={form.handoff_catering_route}
-                onChange={(e) =>
-                  setField("handoff_catering_route", e.target.value)
-                }
-                placeholder="e.g. Take party size and date, offer manager callback within one business day. Do not quote catering pricing."
-                disabled={pending}
-              />
-            </Field>
+      {hoursSlot}
 
-            <Field label="Complaint route">
-              <textarea
-                className="input-base min-h-[5.5rem] resize-y"
-                rows={3}
-                value={form.handoff_complaint_route}
-                onChange={(e) =>
-                  setField("handoff_complaint_route", e.target.value)
-                }
-                placeholder="e.g. Apologize, capture order number if any, offer manager callback—do not offer refunds on the call."
-                disabled={pending}
-              />
-            </Field>
+      <form onSubmit={onSubmit("faqs")}>
+        <SettingsPanel
+          id="restaurant-faqs"
+          icon={MessageCircleQuestion}
+          color="green"
+          title="FAQs"
+          titleId="restaurant-faqs-heading"
+          description="Approved answers for parking, allergens, catering, refunds and more."
+        >
+          <RestaurantKnowledgeEditor
+            entries={knowledgeFormEntries}
+            onChange={(entries) => {
+              markDirty("faqs");
+              setKnowledgeFormEntries(entries);
+            }}
+            disabled={pending}
+          />
+          {footer("faqs", "Save FAQs")}
+        </SettingsPanel>
+      </form>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Unavailable item behavior">
-                <select
-                  className="input-base min-h-11"
-                  value={form.handoff_unavailable_item_behavior}
-                  onChange={(e) =>
-                    setField(
-                      "handoff_unavailable_item_behavior",
-                      e.target.value
-                    )
-                  }
-                  disabled={pending}
-                >
-                  <option value="">Default (suggest alternative)</option>
-                  {UNAVAILABLE_ITEM_BEHAVIORS.map((value) => (
-                    <option key={value} value={value}>
-                      {UNAVAILABLE_ITEM_BEHAVIOR_LABEL[value]}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <Field label="Extra note (optional)">
-                <input
-                  className="input-base min-h-11"
-                  value={form.handoff_unavailable_item_notes}
-                  onChange={(e) =>
-                    setField("handoff_unavailable_item_notes", e.target.value)
-                  }
-                  placeholder="Short script for sold-out items"
-                  disabled={pending}
-                />
-              </Field>
-            </div>
-
-            <Field label="Closed-hours message">
-              <textarea
-                className="input-base min-h-[5.5rem] resize-y"
-                rows={3}
-                value={form.closed_hours_message}
-                onChange={(e) =>
-                  setField("closed_hours_message", e.target.value)
-                }
-                placeholder="What to say when the guest calls outside your regular open hours (see Hours below)."
-                disabled={pending}
-              />
-            </Field>
-          </FieldGroup>
-
-          <FieldGroup title="Guest knowledge &amp; FAQs">
-            <RestaurantKnowledgeEditor
-              entries={knowledgeFormEntries}
+      <form onSubmit={onSubmit("upsells")}>
+        <SettingsPanel
+          id="restaurant-upsells"
+          icon={Sparkles}
+          color="orange"
+          title="Upsells"
+          titleId="restaurant-upsells-heading"
+          description="One short add-on offer while a guest is ordering — only for items in stock."
+        >
+          {menu ? (
+            <RestaurantUpsellEditor
+              entries={upsellFormEntries}
+              menu={menu}
               onChange={(entries) => {
-                setSaved(false);
-                setKnowledgeFormEntries(entries);
+                markDirty("upsells");
+                setUpsellFormEntries(entries);
               }}
               disabled={pending}
             />
-          </FieldGroup>
+          ) : (
+            <p className="text-[13px] text-subtle">
+              Load the menu workspace to configure upsell rules against live items.
+            </p>
+          )}
+          {footer("upsells", "Save upsells")}
+        </SettingsPanel>
+      </form>
 
-          <FieldGroup title="Smart upsells">
-            {menu ? (
-              <RestaurantUpsellEditor
-                entries={upsellFormEntries}
-                menu={menu}
-                onChange={(entries) => {
-                  setSaved(false);
-                  setUpsellFormEntries(entries);
-                }}
-                disabled={pending}
-              />
-            ) : (
-              <p className="text-xs text-muted">
-                Load the menu workspace to configure upsell rules against live items.
+      <form onSubmit={onSubmit("handoff")}>
+        <SettingsPanel
+          id="restaurant-handoff"
+          icon={PhoneForwarded}
+          color="rose"
+          title="Handoff"
+          titleId="restaurant-handoff-heading"
+          description="Who the phone host escalates to, and how it handles catering, complaints, sold-out items and after-hours calls."
+        >
+          <div className="space-y-6">
+            <FieldGroup title="Manager contact">
+              <p className="-mt-1 text-[12.5px] text-subtle">
+                Phone or email for staff callback when the host escalates.
               </p>
-            )}
-          </FieldGroup>
+              <Field label="Manager name">
+                <input
+                  className="input-base"
+                  value={form.escalation_name}
+                  onChange={(e) => setField("escalation_name", e.target.value, "handoff")}
+                  autoComplete="name"
+                  disabled={pending}
+                />
+              </Field>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Manager phone">
+                  <input
+                    className="input-base"
+                    type="tel"
+                    inputMode="tel"
+                    value={form.escalation_phone}
+                    onChange={(e) => setField("escalation_phone", e.target.value, "handoff")}
+                    placeholder="+1 555 0100"
+                    autoComplete="tel"
+                    disabled={pending}
+                  />
+                </Field>
+                <Field label="Manager email">
+                  <input
+                    className="input-base"
+                    type="email"
+                    inputMode="email"
+                    value={form.escalation_email}
+                    onChange={(e) => setField("escalation_email", e.target.value, "handoff")}
+                    placeholder="manager@restaurant.com"
+                    autoComplete="email"
+                    disabled={pending}
+                  />
+                </Field>
+              </div>
+            </FieldGroup>
 
-          <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
-            <button
-              type="submit"
-              className="btn-primary kds-thumb-btn min-h-11 w-full sm:w-auto"
-              disabled={pending}
-            >
-              {pending ? "Saving…" : "Save settings"}
-            </button>
+            <FieldGroup title="Routing rules">
+              <Field label="Catering route">
+                <textarea
+                  className="input-base resize-y"
+                  rows={3}
+                  value={form.handoff_catering_route}
+                  onChange={(e) => setField("handoff_catering_route", e.target.value, "handoff")}
+                  placeholder="e.g. Take party size and date, offer manager callback within one business day. Do not quote catering pricing."
+                  disabled={pending}
+                />
+              </Field>
+
+              <Field label="Complaint route">
+                <textarea
+                  className="input-base resize-y"
+                  rows={3}
+                  value={form.handoff_complaint_route}
+                  onChange={(e) => setField("handoff_complaint_route", e.target.value, "handoff")}
+                  placeholder="e.g. Apologize, capture order number if any, offer manager callback—do not offer refunds on the call."
+                  disabled={pending}
+                />
+              </Field>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Unavailable item behavior">
+                  <select
+                    className="input-base"
+                    value={form.handoff_unavailable_item_behavior}
+                    onChange={(e) =>
+                      setField("handoff_unavailable_item_behavior", e.target.value, "handoff")
+                    }
+                    disabled={pending}
+                  >
+                    <option value="">Default (suggest alternative)</option>
+                    {UNAVAILABLE_ITEM_BEHAVIORS.map((value) => (
+                      <option key={value} value={value}>
+                        {UNAVAILABLE_ITEM_BEHAVIOR_LABEL[value]}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="Extra note (optional)">
+                  <input
+                    className="input-base"
+                    value={form.handoff_unavailable_item_notes}
+                    onChange={(e) =>
+                      setField("handoff_unavailable_item_notes", e.target.value, "handoff")
+                    }
+                    placeholder="Short script for sold-out items"
+                    disabled={pending}
+                  />
+                </Field>
+              </div>
+
+              <Field label="Closed-hours message">
+                <textarea
+                  className="input-base resize-y"
+                  rows={3}
+                  value={form.closed_hours_message}
+                  onChange={(e) => setField("closed_hours_message", e.target.value, "handoff")}
+                  placeholder="What to say when the guest calls outside your regular open hours (see Hours above)."
+                  disabled={pending}
+                />
+              </Field>
+            </FieldGroup>
           </div>
-        </form>
-      ) : null}
-    </section>
+          {footer("handoff", "Save handoff")}
+        </SettingsPanel>
+      </form>
+    </div>
   );
 }
 
@@ -561,31 +589,11 @@ function FieldGroup({
   children: React.ReactNode;
 }) {
   return (
-    <fieldset className="space-y-3">
-      <legend className="text-xs font-medium uppercase tracking-[0.14em] text-subtle">
-        {title}
+    <fieldset className="min-w-0 space-y-3">
+      <legend className="mb-3 w-full">
+        <SubHeading>{title}</SubHeading>
       </legend>
       {children}
     </fieldset>
-  );
-}
-
-function Field({
-  label,
-  required,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block">
-      <span className="mb-1.5 block text-xs font-medium text-muted">
-        {label}
-        {required ? <span className="text-danger"> *</span> : null}
-      </span>
-      {children}
-    </label>
   );
 }

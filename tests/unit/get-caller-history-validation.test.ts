@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { CallerHistorySummarySchema } from "@/lib/agent-tools/schemas";
 import { simulateHarnessTool } from "@/lib/voice-agent/test-harness/simulate-tool";
 import { RESTAURANT_ID } from "../fixtures/menu";
@@ -128,7 +128,7 @@ describe("get_caller_history harness", () => {
 
   it("matches local 10-digit phone against stored E.164", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_caller_history",
       body: {
@@ -147,7 +147,7 @@ describe("get_caller_history harness", () => {
 
   it("returns new-guest message when no history matches", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_caller_history",
       body: {
@@ -178,7 +178,7 @@ describe("get_caller_history harness", () => {
 
   it("does not leak receipts from another restaurant", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_caller_history",
       body: {
@@ -209,7 +209,7 @@ describe("get_caller_history harness", () => {
 
   it("summarizes favorites from same-restaurant completed receipts only", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_caller_history",
       body: {
@@ -240,7 +240,7 @@ describe("get_caller_history harness", () => {
 
   it("returns a caller-safe response shape", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_caller_history",
       body: {

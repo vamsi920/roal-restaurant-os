@@ -36,12 +36,12 @@ import {
   type CategoryInput,
   type ItemInput,
 } from "@/lib/menu-editor/validation";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import type { DbCategory, DbItem, DbModifier } from "@/lib/types";
 import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 
 async function nextItemSortOrder(
-  supabase: Awaited<ReturnType<typeof createServerSupabase>>,
+  supabase: Awaited<ReturnType<typeof getDb>>,
   categoryId: string
 ): Promise<number> {
   const { data: maxRow } = await supabase
@@ -69,7 +69,7 @@ export async function saveCategoryAction(
     throw new Error(firstZodMessage(parsed.error));
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const input = parsed.data;
   const now = new Date().toISOString();
 
@@ -130,7 +130,7 @@ export async function reorderCategoriesAction(
     throw new Error(firstZodMessage(parsed.error));
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const now = new Date().toISOString();
 
   for (const row of parsed.data.order) {
@@ -157,7 +157,7 @@ export async function deleteCategoryAction(
     throw new Error("You do not have access to this restaurant.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await assertCategoryInRestaurant(supabase, restaurantId, categoryId);
 
   const { error } = await supabase
@@ -182,7 +182,7 @@ export async function saveItemAction(restaurantId: string, raw: ItemInput) {
     throw new Error(firstZodMessage(parsed.error));
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const input = parsed.data;
   const now = new Date().toISOString();
 
@@ -263,7 +263,7 @@ export async function reorderItemsAction(
     throw new Error(firstZodMessage(parsed.error));
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await assertCategoryInRestaurant(
     supabase,
     restaurantId,
@@ -296,7 +296,7 @@ export async function deleteItemAction(restaurantId: string, itemId: string) {
     throw new Error("You do not have access to this restaurant.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await assertItemInRestaurant(supabase, restaurantId, itemId);
 
   const { error } = await supabase.from("items").delete().eq("id", itemId);
@@ -326,7 +326,7 @@ export async function copyMenuFromRestaurantAction(
     throw new Error("Source and target restaurants must be in the same organization.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const stats = await copyRestaurantMenu(supabase, {
     sourceRestaurantId,
     targetRestaurantId,
@@ -350,7 +350,7 @@ export async function saveMenuTemplateAction(
   }
 
   const name = raw.name?.trim() ?? "";
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const template = await saveRestaurantMenuAsTemplate(supabase, {
     restaurantId,
     organizationId: access.access.restaurant.organization_id,
@@ -371,7 +371,7 @@ export async function setDefaultMenuTemplateAction(
     throw new Error("You do not have access to this restaurant.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const template = await setDefaultOrganizationMenuTemplate(supabase, {
     organizationId: access.access.restaurant.organization_id,
     templateId,
@@ -389,7 +389,7 @@ export async function applyMenuTemplateAction(
     throw new Error("You do not have access to this restaurant.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const stats = await applyOrganizationMenuTemplate(supabase, {
     organizationId: access.access.restaurant.organization_id,
     templateId,
@@ -414,7 +414,7 @@ export async function applyTemplateToInheritedLocationsAction(
     throw new Error("You do not have access to this restaurant.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const result = await applyOrganizationMenuTemplateToInheritedRestaurants(supabase, {
     organizationId: access.access.restaurant.organization_id,
     templateId,
@@ -473,7 +473,7 @@ export async function saveModifierGroupAction(
     throw new Error(firstZodMessage(parsed.error));
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const input = parsed.data;
 
   await assertItemInRestaurant(supabase, restaurantId, input.item_id);
@@ -547,7 +547,7 @@ export async function deleteModifierGroupAction(
     throw new Error("You do not have access to this restaurant.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await assertItemInRestaurant(supabase, restaurantId, itemId);
 
   const { data: existing, error: loadErr } = await supabase
@@ -583,7 +583,7 @@ export async function reorderModifierGroupsAction(
     throw new Error(firstZodMessage(parsed.error));
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await assertItemInRestaurant(supabase, restaurantId, parsed.data.item_id);
 
   const { data: existing, error: loadErr } = await supabase
@@ -621,7 +621,7 @@ export async function deleteModifierAction(
   restaurantId: string,
   modifierId: string
 ) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: mod } = await supabase
     .from("modifiers")
     .select("item_id, group_name")

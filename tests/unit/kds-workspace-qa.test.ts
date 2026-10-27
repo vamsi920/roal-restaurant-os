@@ -53,36 +53,29 @@ describe("KDS workspace UX", () => {
     expect(page).not.toContain("RestaurantHoursSettings");
   });
 
-  it("exposes mobile landmarks for live orders page", () => {
+  it("exposes landmarks and a page header for the Kitchen board", () => {
     const panel = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    const rail = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/RestaurantWorkspaceRail.tsx"),
-      "utf8"
-    );
-    expect(rail).toContain('aria-label="Location workspace"');
-    expect(rail).toContain('aria-label="Restaurant workspace"');
-    expect(panel).toContain('id="kds-page-heading"');
-    expect(panel).toContain("kds-orders-head");
+    expect(panel).toContain("<PageHeader");
     expect(panel).toContain("kds-order-panel-heading");
     expect(panel).toContain('role="tablist"');
+    expect(panel).toContain('role="tabpanel"');
   });
 
-  it("uses a compact orders-only KDS header", () => {
+  it("uses a compact Kitchen header with a realtime badge", () => {
     const page = readFileSync(KDS_PAGE, "utf8");
     const panel = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
     expect(panel).toContain("RESTAURANT_LIVE_ORDERS_LABEL");
-    expect(panel).toContain("kds-orders-head");
-    expect(panel).toContain("KdsRealtimeIndicator");
+    expect(panel).toContain("<RealtimeBadge state={realtimeUi} />");
     expect(panel).not.toContain("RESTAURANT_MENU_AGENT_LABEL");
-    expect(panel).not.toContain("pulse-dot");
     expect(panel).not.toContain("KdsStatusBanner");
-    expect(page).not.toContain("Realtime synced");
+    expect(page).not.toContain("Phone operations");
+    expect(page).not.toContain("ws-page-head");
     expect(page).not.toContain("RESTAURANT_KDS_LABEL");
   });
 
@@ -91,92 +84,68 @@ describe("KDS workspace UX", () => {
       join(REPO, "app/dashboard/restaurants/[id]/RestaurantProfileSettings.tsx"),
       "utf8"
     );
-    expect(profile).toMatch(/const \[open, setOpen\] = useState\((true|false)\)/);
+    // Settings are always-open panels so /menu#restaurant-settings lands on visible forms.
+    expect(profile).not.toMatch(/const \[open, setOpen\] = useState/);
+    expect(profile).toContain("SettingsPanel");
+    expect(profile).toContain("SaveRow");
   });
 
-  it("uses owner-facing order tabs without realtime jargon", () => {
+  it("uses owner-facing lanes without realtime jargon", () => {
     const panel = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    expect(panel).toContain("KdsEmptyStatePanel");
-    expect(panel).toContain('label="Incoming"');
-    expect(panel).toContain('label="Kitchen"');
-    expect(panel).toContain('useState<Tab>("incoming")');
+    expect(panel).toContain('title="New"');
+    expect(panel).toContain('title="Preparing"');
+    expect(panel).toContain('title="Ready"');
+    expect(panel).toContain('useState<Tab>("board")');
     expect(panel).not.toMatch(/>\s*Realtime\s*</);
-    expect(panel).toContain("KdsRealtimeIndicator");
-    expect(panel).toContain('state={realtimeUi}');
-    expect(panel).not.toContain("KdsStatusBanner");
     expect(panel).not.toContain("polling every");
-    expect(panel).not.toContain("Kitchen queue");
     expect(panel).not.toContain("Live carts");
     expect(panel).toContain("LiveCallIndicator");
-    expect(panel).toContain("kds-panel-sticky-head");
-    expect(panel).toContain("kds-orders-canvas");
     expect(panel).not.toContain("glass-card");
   });
 
-  it("defines mobile-first KDS layout in CSS", () => {
+  it("keeps the workspace CSS small and kitchen-specific", () => {
     const css = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/kds-workspace.css"),
       "utf8"
     );
-    expect(css).toContain("kds-orders-head");
-    expect(css).toContain("kds-sync-indicator");
-    expect(css).toContain("kds-thumb-btn");
-    expect(css).toContain("overflow-x: auto");
-    expect(css).toContain("kds-order-list");
-    expect(css).toContain("kds-orders-canvas");
-    expect(css).toContain("kds-order-card[data-order-status");
-    expect(css).toContain("kds-done-history");
-    expect(css).toContain(".kds-workspace.menu-setup .kds-live-menu");
-    expect(css).toContain("menu-setup-flow");
-    expect(css).toContain("menu-setup-step__card");
-    expect(css).toContain(".kds-workspace:not(.menu-setup)");
-    expect(css).not.toMatch(/\.kds-workspace \.kds-live-menu[^\-]/);
+    expect(css).toContain(".kds-board");
+    expect(css).toContain(".kds-ticket");
+    expect(css).toContain("prefers-reduced-motion: reduce");
+    expect(css).not.toContain("menu-setup");
+    expect(css).not.toContain("ws-page-head");
+    expect(css.split("\n").length).toBeLessThan(400);
   });
 
-  it("polishes KDS loading, error, and disconnected states (prompt 18)", () => {
+  it("polishes Kitchen loading, error, and disconnected states", () => {
     const panel = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    const states = readFileSync(
-      join(REPO, "components/dashboard/kds-workspace-states.tsx"),
-      "utf8"
-    );
-    expect(panel).toContain("KdsLoadingPanel");
-    expect(panel).toContain('rows={3}');
+    expect(panel).toContain("<LoadingRows");
+    expect(panel).toContain("rows={3}");
     expect(panel).toContain("ordersReady");
-    expect(panel).toContain("KdsDisconnectedNotice");
-    expect(panel).toContain("KdsSyncErrorNotice");
-    expect(panel).toContain("KdsRecoveryButton");
+    expect(panel).toContain("Live updates paused.");
+    expect(panel).toContain("Couldn't refresh orders.");
     expect(panel).toContain("Couldn't load orders");
     expect(panel).not.toContain("Try again");
-    expect(states).toContain("kds-orders-disconnected");
-    expect(states).toContain("kds-recovery-btn");
+    expect(panel).not.toContain("kds-workspace-states");
   });
 
-  it("shows calm global empty state without menu or agent CTAs", () => {
+  it("shows an intentional empty board with one next step", () => {
     const panel = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
-      "utf8"
-    );
-    const states = readFileSync(
-      join(REPO, "components/dashboard/kds-workspace-states.tsx"),
       "utf8"
     );
     expect(panel).toContain("No phone orders yet");
-    expect(panel).toContain("KdsRecoveryButton");
-    expect(states).toContain("kds-empty-state--title-only");
-    expect(panel).toContain("KdsEmptyStatePanel");
+    expect(panel).toContain("<EmptyState");
+    expect(panel).toContain("Place a test order");
+    expect(panel).toContain("emptyTitle=");
   });
 
   it("uses shared workspace loading and empty state components", () => {
-    const states = readFileSync(
-      join(REPO, "components/dashboard/kds-workspace-states.tsx"),
-      "utf8"
-    );
     const panel = readFileSync(
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
@@ -193,15 +162,13 @@ describe("KDS workspace UX", () => {
       join(REPO, "app/dashboard/restaurants/[id]/kds-workspace.css"),
       "utf8"
     );
-    expect(states).toContain("kds-empty-state");
-    expect(states).toContain("KdsRealtimeIndicator");
-    expect(states).toContain("kds-sync-indicator");
-    expect(states).toContain("kds-loading-panel");
-    expect(panel).toContain("kds-workspace-states");
-    expect(menu).toContain("KdsEmptyStatePanel");
-    expect(imports).toContain("KdsLoadingPanel");
+    expect(panel).toContain("@/components/live-orders/workspace-ui");
+    expect(menu).toContain("EmptyState");
+    expect(menu).not.toContain("kds-workspace-states");
+    expect(imports).toContain("LoadingRows");
+    expect(imports).not.toContain("kds-workspace-states");
     expect(imports).toContain("No menu imports yet");
-    expect(css).toContain("kds-workspace-state__banner");
+    expect(css).toContain(".kds-lane__empty");
   });
 
   it("hides session IDs on order cards (modal only)", () => {

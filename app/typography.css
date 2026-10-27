@@ -1,10 +1,10 @@
 /**
- * ROAL typography — Inter (body) + Inter Tight (display) + JetBrains Mono.
+ * ROAL typography — Inter (body) + Bricolage Grotesque (display) + JetBrains Mono.
  */
 
 :root {
   --type-body: var(--font-body), "Inter", system-ui, sans-serif;
-  --type-display: var(--font-display), "Inter Tight", var(--font-body), system-ui, sans-serif;
+  --type-display: var(--font-display), "Bricolage Grotesque", var(--font-body), system-ui, sans-serif;
   --type-mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Responsive scale — tuned for 320 / 390 / 768 / 1024 / 1440 */

@@ -1,9 +1,22 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PageHeader, Panel, StatusChip } from "@/components/dashboard/page-primitives";
+import {
+  BarChart3,
+  Bell,
+  BookOpen,
+  ChevronRight,
+  CreditCard,
+  Headphones,
+  LifeBuoy,
+  Plus,
+  Store,
+  type LucideIcon,
+} from "lucide-react";
+import { Panel, StatusChip } from "@/components/dashboard/page-primitives";
+import { EmptyState, IconTile, PageHeader, type TileColor } from "@/components/ui";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { formatMembershipRole, isOrgAdmin } from "@/lib/auth/roles";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +29,7 @@ export default async function SettingsPage() {
   let locations: { id: string; name: string }[] = [];
 
   if (orgId) {
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const { data } = await supabase
       .from("restaurants")
       .select("id, name")
@@ -29,14 +42,15 @@ export default async function SettingsPage() {
   const admin = Boolean(membership && isOrgAdmin(membership.role));
 
   return (
-    <div className="settings-page dashboard-page dashboard-page--medium min-w-0 space-y-5 overflow-x-hidden">
+    <div className="settings-page org-page org-page--medium min-w-0 space-y-5 overflow-x-hidden">
       <PageHeader
+        className="!mb-0"
         title="Settings"
-        lead="Organization-wide preferences. Store hours, taxes and ordering options live inside each location."
+        subtitle="Organization-wide preferences. Store hours, taxes and ordering options live inside each location."
       />
 
       <Panel title="Organization">
-        <dl className="dashboard-kv mt-3">
+        <dl className="org-kv">
           <div>
             <dt>Name</dt>
             <dd>{membership?.organization.name ?? "No organization"}</dd>
@@ -65,57 +79,78 @@ export default async function SettingsPage() {
           href="/dashboard/settings/notifications"
           title="Notifications"
           detail="Completed orders, sync failures, stuck tickets."
+          icon={Bell}
+          color="amber"
         />
         <SettingsLink
           href="/dashboard/billing"
           title="Billing"
           detail="$0.90 per completed order. Usage and invoices."
+          icon={CreditCard}
+          color="orange"
         />
         <SettingsLink
           href="/dashboard/analytics"
           title="Analytics"
           detail="Calls, orders and conversion across locations."
+          icon={BarChart3}
+          color="blue"
         />
         <SettingsLink
           href="/dashboard/support"
           title="Support"
           detail="Runbooks and how to reach us."
+          icon={LifeBuoy}
+          color="green"
         />
       </div>
 
       <Panel
         title="Locations"
         hint="Per-location settings open inside the workspace."
+        flush
         aside={
           <Link href="/dashboard/onboarding?new=1" className="btn-ghost btn-sm">
+            <Plus size={14} strokeWidth={2.25} aria-hidden />
             Add location
           </Link>
         }
       >
         {locations.length === 0 ? (
-          <p className="mt-3 text-[13px] text-muted">
-            No locations yet.{" "}
-            <Link href="/dashboard/onboarding" className="font-medium text-ink underline underline-offset-2">
-              Set up your first location
-            </Link>
-            .
-          </p>
+          <EmptyState
+            icon={Store}
+            title="No locations yet"
+            body="Set up your first location to manage its menu, hours and phone host."
+            action={
+              <Link href="/dashboard/onboarding" className="btn-primary">
+                Set up your first location
+              </Link>
+            }
+          />
         ) : (
-          <ul className="mt-3 divide-y divide-line/70">
+          <ul>
             {locations.map((location) => (
-              <li key={location.id} className="flex items-center justify-between gap-3 py-2 first:pt-0 last:pb-0">
-                <span className="truncate text-[13px] font-medium text-ink">{location.name}</span>
+              <li key={location.id} className="list-row flex-wrap">
+                <IconTile icon={Store} color="orange" />
+                <Link
+                  href={`/dashboard/restaurants/${location.id}/overview`}
+                  className="org-link min-w-0 flex-1 truncate text-[13.5px] font-medium text-ink hover:underline"
+                >
+                  {location.name}
+                </Link>
                 <span className="flex shrink-0 gap-1">
                   <Link
                     href={`/dashboard/restaurants/${location.id}/menu`}
                     className="btn-ghost btn-sm"
                   >
+                    <BookOpen size={13} strokeWidth={2} aria-hidden />
                     Menu
                   </Link>
                   <Link
                     href={`/dashboard/restaurants/${location.id}/agent`}
                     className="btn-ghost btn-sm"
                   >
+                    <Headphones size={13} strokeWidth={2} aria-hidden />
                     Host
                   </Link>
                 </span>
@@ -132,23 +167,26 @@ function SettingsLink({
   href,
   title,
   detail,
+  icon,
+  color,
 }: {
   href: string;
   title: string;
   detail: string;
+  icon: LucideIcon;
+  color: TileColor;
 }) {
   return (
     <Link
       href={href}
-      className="card flex min-h-11 items-center justify-between gap-3 px-4 py-3 transition-colors hover:border-line-strong"
+      className="org-link-card panel flex min-h-11 items-center gap-3 px-4 py-3.5"
     >
-      <span className="min-w-0">
-        <span className="block text-[13px] font-semibold text-ink">{title}</span>
-        <span className="block text-[12px] text-muted">{detail}</span>
+      <IconTile icon={icon} color={color} />
+      <span className="min-w-0 flex-1">
+        <span className="block text-[13.5px] font-semibold text-ink">{title}</span>
+        <span className="block text-[12.5px] text-subtle">{detail}</span>
       </span>
-      <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-subtle" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M9 6l6 6-6 6" />
-      </svg>
+      <ChevronRight size={16} strokeWidth={2} className="shrink-0 text-subtle" aria-hidden />
     </Link>
   );
 }

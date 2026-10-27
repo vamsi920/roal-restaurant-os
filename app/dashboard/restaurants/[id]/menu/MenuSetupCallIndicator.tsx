@@ -65,30 +65,31 @@ export function MenuSetupCallIndicator({ restaurantId }: { restaurantId: string 
         : "No active call";
   const liveCount = activeCallCount > 0 ? activeCallCount : syncingUpdateCount;
 
-  return (
-    <div
-      className={cn(
-        "menu-setup-call-indicator",
-        live && "menu-setup-call-indicator--live"
-      )}
-      role="status"
-      aria-live="polite"
-    >
-      <span
-        className={cn(
-          "menu-setup-call-indicator__dot",
-          live && "menu-setup-call-indicator__dot--live"
-        )}
-        aria-hidden
-      />
-      <span className="menu-setup-call-indicator__label">
+  if (!live) {
+    return (
+      <span className="sr-only" role="status" aria-live="polite">
         {liveLabel}
       </span>
-      {live ? (
-        <span className="menu-setup-call-indicator__count tabular-nums">
-          {liveCount}
-        </span>
-      ) : null}
-    </div>
+    );
+  }
+
+  return (
+    <span
+      className={cn("badge", activeCallCount > 0 ? "badge--live" : "badge--info")}
+      role="status"
+      aria-live="polite"
+      title={
+        activeCallCount > 0
+          ? "A guest is on the phone with your host right now"
+          : "Order updates are syncing from a recent call"
+      }
+    >
+      <span
+        className="h-1.5 w-1.5 rounded-full bg-current motion-safe:animate-pulse"
+        aria-hidden
+      />
+      {liveLabel}
+      {liveCount > 1 ? <span className="tabular-nums">· {liveCount}</span> : null}
+    </span>
   );
 }

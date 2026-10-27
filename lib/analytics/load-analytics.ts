@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   aggregateMenuScans,
   aggregateCallOutcomes,
@@ -53,7 +53,7 @@ import type {
 } from "@/lib/types";
 
 export async function loadRestaurantAnalytics(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     organizationName: string;
@@ -72,7 +72,7 @@ export async function loadRestaurantAnalytics(
 }
 
 export async function loadOrganizationAnalytics(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     organizationName: string;

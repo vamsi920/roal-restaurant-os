@@ -1,5 +1,5 @@
 import { markAgentCallOrderCompleted } from "@/lib/agent-calls/mark-call-order-completed";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   assertRestaurantIdMatches,
   FinalizeOrderRequestSchema,
@@ -210,7 +210,7 @@ function callerHistorySummary(rows: Record<string, unknown>[]) {
 }
 
 async function lookupHarnessCallerHistory(input: {
-  supabase: SupabaseClient;
+  supabase: Db;
   restaurantId: string;
   body: Record<string, unknown>;
 }): Promise<SimulateHarnessToolResult> {
@@ -291,7 +291,7 @@ async function lookupHarnessCallerHistory(input: {
 }
 
 async function submitHarnessReservationRequest(input: {
-  supabase: SupabaseClient;
+  supabase: Db;
   restaurantId: string;
   body: Record<string, unknown>;
   dryRun: boolean;
@@ -447,7 +447,7 @@ async function submitHarnessReservationRequest(input: {
 }
 
 async function lookupHarnessOrderStatus(input: {
-  supabase: SupabaseClient;
+  supabase: Db;
   restaurantId: string;
   body: Record<string, unknown>;
 }): Promise<SimulateHarnessToolResult> {
@@ -540,7 +540,7 @@ async function lookupHarnessOrderStatus(input: {
 }
 
 async function hoursOrderingAllowed(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<{ allowed: boolean; message: string }> {
   try {
@@ -558,7 +558,7 @@ async function hoursOrderingAllowed(
 }
 
 export async function simulateHarnessTool(input: {
-  supabase: SupabaseClient;
+  supabase: Db;
   restaurantId: string;
   restaurantName?: string;
   tool: HarnessToolName;

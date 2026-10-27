@@ -1,0 +1,332 @@
+/* Org-level dashboard pages (v3). Self-contained so these screens do not depend on
+   app/dashboard-theme.css. Uses the tokens from app/globals.css. */
+
+/* — Page widths — */
+.org-page {
+  width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+}
+.org-page--narrow { max-width: 40rem; }
+.org-page--medium { max-width: 54rem; }
+.org-page--wide { max-width: 76rem; }
+
+/* — Panel hint under the title — */
+.org-panel__hint {
+  margin-top: 0.125rem;
+  font-size: 12.5px;
+  line-height: 1.45;
+  font-weight: 400;
+  color: rgb(var(--text-muted));
+  text-wrap: pretty;
+}
+.panel--muted {
+  background: rgb(var(--bg-elev));
+  box-shadow: none;
+}
+
+/* — Small uppercase label — */
+.org-kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgb(var(--text-muted));
+}
+
+/* — Accent badge (ember) — */
+.badge--accent {
+  color: rgb(var(--tile-orange-ink));
+  background: rgb(var(--accent-soft));
+  border-color: rgb(var(--accent) / 0.2);
+}
+
+/* — Key / value list — */
+.org-kv {
+  display: grid;
+  font-size: 13px;
+}
+.org-kv > div {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgb(var(--border) / 0.7);
+}
+.org-kv > div:first-child { padding-top: 0; }
+.org-kv > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.org-kv dt { color: rgb(var(--text-muted)); }
+.org-kv dd {
+  min-width: 0;
+  text-align: right;
+  font-weight: 500;
+  color: rgb(var(--text-primary));
+  overflow-wrap: anywhere;
+}
+
+/* — Tables: quiet rules on desktop, stacked cards on phones — */
+.org-table {
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.org-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.org-table thead th {
+  padding: 0.5rem 1.125rem;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(var(--text-muted));
+  white-space: nowrap;
+  background: rgb(var(--bg-elev));
+  border-bottom: 1px solid rgb(var(--border));
+}
+.org-table tbody td {
+  padding: 0.75rem 1.125rem;
+  vertical-align: top;
+  border-bottom: 1px solid rgb(var(--border) / 0.7);
+  color: rgb(var(--text-secondary));
+}
+.org-table tbody tr:last-child td { border-bottom: 0; }
+.org-table tbody tr:hover td { background: rgb(var(--bg-elev) / 0.7); }
+.org-table .is-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .org-table { overflow: visible; }
+  .org-table table,
+  .org-table tbody { display: block; width: 100%; }
+  .org-table thead { display: none; }
+  .org-table tbody tr {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgb(var(--border) / 0.7);
+  }
+  .org-table tbody tr:last-child { border-bottom: 0; }
+  .org-table tbody tr:hover td { background: transparent; }
+  .org-table tbody td {
+    display: flex;
+    min-width: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.25rem 0;
+    border: 0;
+    text-align: right;
+  }
+  .org-table tbody td > * { min-width: 0; }
+  .org-table tbody td[data-label]::before {
+    content: attr(data-label);
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(var(--text-muted));
+    text-align: left;
+  }
+  .org-table tbody td:first-child {
+    padding-top: 0;
+  }
+  .org-table tbody td[colspan] {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* — Progress bar — */
+.org-progress {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(var(--bg-elev));
+  border: 1px solid rgb(var(--border));
+}
+.org-progress__bar {
+  height: 100%;
+  border-radius: 999px;
+  background: rgb(var(--bg-ink));
+  transition: width var(--dur-slow) var(--ease-out);
+}
+.org-progress__bar--ok { background: rgb(var(--success)); }
+
+/* — Checklist (go live, launch checks) — */
+.org-checklist {
+  display: grid;
+}
+.org-checklist__item {
+  display: grid;
+  grid-template-columns: 1.375rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgb(var(--border) / 0.7);
+  min-width: 0;
+}
+.org-checklist__item:first-child { border-top: 0; }
+.org-checklist__item--next {
+  margin-inline: -1.125rem;
+  padding-inline: 1.125rem;
+  background: linear-gradient(90deg, rgb(var(--accent-soft) / 0.6), transparent 75%);
+}
+.org-checklist__mark {
+  display: grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 999px;
+  border: 1.5px solid rgb(var(--border-strong));
+  background: rgb(var(--bg-card));
+  color: #fff;
+}
+.org-checklist__mark--done {
+  border-color: rgb(var(--success));
+  background: rgb(var(--success));
+}
+.org-checklist__mark--error {
+  border-color: rgb(var(--danger));
+  background: rgb(var(--danger));
+}
+.org-checklist__mark--active {
+  border-color: rgb(var(--bg-ink));
+  box-shadow: 0 0 0 3px rgb(var(--bg-ink) / 0.08);
+}
+.org-checklist__label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgb(var(--text-primary));
+}
+.org-checklist__item--done .org-checklist__label {
+  color: rgb(var(--text-muted));
+  font-weight: 400;
+}
+.org-checklist__detail {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgb(var(--text-muted));
+  overflow-wrap: anywhere;
+}
+.org-checklist__action {
+  display: flex;
+  justify-content: flex-end;
+}
+@media (max-width: 639px) {
+  .org-checklist__item { grid-template-columns: 1.375rem minmax(0, 1fr); }
+  .org-checklist__action {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+}
+
+/* — Numbered steps (forwarding instructions, runbooks) — */
+.org-steps {
+  counter-reset: org-step;
+  display: grid;
+  gap: 0.625rem;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgb(var(--text-secondary));
+}
+.org-steps > li {
+  counter-increment: org-step;
+  display: grid;
+  grid-template-columns: 1.375rem minmax(0, 1fr);
+  gap: 0.625rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.org-steps > li::before {
+  content: counter(org-step);
+  display: grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgb(var(--text-secondary));
+  background: rgb(var(--bg-elev));
+  border: 1px solid rgb(var(--border));
+}
+
+/* — Location cards — */
+.org-location-card {
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur) ease;
+}
+.org-location-card:hover {
+  border-color: rgb(var(--border-strong));
+  box-shadow: var(--shadow-md);
+}
+.org-location-card__title-link:focus-visible,
+.org-link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.org-fast-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgb(var(--text-secondary));
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.org-fast-link:hover {
+  background: rgb(var(--bg-elev));
+  border-color: rgb(var(--border));
+  color: rgb(var(--text-primary));
+}
+.org-fast-link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+@media (max-width: 1023px) {
+  .org-fast-link { min-height: var(--tap-target-min); }
+}
+
+/* — Link rows (settings, resources) — */
+.org-link-card {
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur) ease;
+}
+.org-link-card:hover {
+  border-color: rgb(var(--border-strong));
+  box-shadow: var(--shadow-md);
+}
+.org-link-card:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* — Entrance — */
+.org-rise {
+  animation: org-rise var(--dur-slow) var(--ease-out) both;
+}
+@keyframes org-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .org-rise { animation: none; }
+  .org-progress__bar,
+  .org-location-card,
+  .org-link-card,
+  .org-fast-link { transition: none; }
+}

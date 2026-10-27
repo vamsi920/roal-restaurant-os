@@ -36,7 +36,7 @@ import {
   buildAgentHoursPromptFromBundle,
   loadRestaurantHoursBundle,
 } from "@/lib/restaurant-hours/helpers";
-import { createServerSupabase, getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 /** Default prompt when no restaurant context is loaded (scripts/tests). */
 export const RESTAURANT_ORDER_AGENT_PROMPT = buildRestaurantOrderAgentPrompt({
@@ -191,7 +191,7 @@ export async function applyRestaurantOrderAgentProfile(options?: {
   if (rid) {
     try {
       const supabase =
-        getServiceRoleSupabase() ?? (await createServerSupabase());
+        getDb() ?? (getDb());
       profile = await getRestaurantProfile(supabase, rid);
       try {
         const hoursBundle = await loadRestaurantHoursBundle(supabase, rid);

@@ -9,7 +9,7 @@ import {
 } from "@/lib/dashboard-restaurant-labels";
 
 describe("dashboard restaurant labels", () => {
-  it("uses Live orders and Menu & agent setup for workspace titles", () => {
+  it("uses Kitchen and Menu for workspace titles", () => {
     expect(
       restaurantWorkspaceMobileTitle("/dashboard/restaurants/abc-123")
     ).toBe(RESTAURANT_LIVE_ORDERS_LABEL);
@@ -20,9 +20,9 @@ describe("dashboard restaurant labels", () => {
   });
 
   it("exports owner-facing labels used in nav and CTAs", () => {
-    expect(RESTAURANT_LIVE_ORDERS_LABEL).toBe("Live orders");
+    expect(RESTAURANT_LIVE_ORDERS_LABEL).toBe("Kitchen");
     expect(RESTAURANT_MENU_AGENT_LABEL).toBe("Menu");
-    expect(RESTAURANT_MENU_SETUP_TITLE).toBe("Menu setup");
+    expect(RESTAURANT_MENU_SETUP_TITLE).toBe("Menu");
   });
 
   it("classifies detail vs menu paths", () => {

@@ -10,7 +10,7 @@ import { isOrgAdmin } from "../lib/auth/roles";
 import { getEnvStatus } from "../lib/env.server";
 import { sanitizeHealthReportForPublic, runHealthChecks } from "../lib/observability/health";
 import type { AuthContext } from "../lib/auth/types";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 
 const LEGACY_ORG =
   process.env.QA_ADMIN_ORG_ID?.trim() ||
@@ -182,7 +182,7 @@ void (async () => {
       !sanitizedErr.includes("eyJhbGci"),
   });
 
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (!sb) {
     checks.push({
       name: "SUPABASE_SERVICE_ROLE_KEY",

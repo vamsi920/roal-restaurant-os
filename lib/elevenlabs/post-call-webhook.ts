@@ -3,8 +3,8 @@ import {
   transcriptTurnsFromRows,
 } from "@/lib/knowledge-suggestions/helpers";
 import crypto from "crypto";
-import type { SupabaseClient } from "@supabase/supabase-js";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import type { Db } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import {
   lookupRestaurantByCalledNumber,
   lookupRestaurantForElevenLabsAgent,
@@ -330,7 +330,7 @@ export function verifyElevenLabsWebhookSignature(input: {
 }
 
 async function resolveRestaurantId(input: {
-  supabase: SupabaseClient;
+  supabase: Db;
   data: JsonRecord;
   agentId: string;
 }): Promise<string | null> {
@@ -364,7 +364,7 @@ async function resolveRestaurantId(input: {
 
 export async function parseElevenLabsPostCallEvent(
   event: ElevenLabsPostCallEvent,
-  supabase: SupabaseClient
+  supabase: Db
 ): Promise<ParsedElevenLabsCallEvent | null> {
   const data = asRecord(event.data);
   const agentId = firstString(data.agent_id, data.agentId) || "";
@@ -405,7 +405,7 @@ export async function parseElevenLabsPostCallEvent(
 export async function persistElevenLabsPostCallEvent(
   event: ElevenLabsPostCallEvent
 ): Promise<{ stored: boolean; reason?: string; parsed?: ParsedElevenLabsCallEvent }> {
-  const supabase = getServiceRoleSupabase();
+  const supabase = getDb();
   if (!supabase) return { stored: false, reason: "missing_service_role" };
 
   const parsed = await parseElevenLabsPostCallEvent(event, supabase);
@@ -483,7 +483,7 @@ export async function persistElevenLabsPostCallEvent(
 
 
 async function mineSuggestionsBestEffort(
-  supabase: ReturnType<typeof getServiceRoleSupabase>,
+  supabase: ReturnType<typeof getDb>,
   restaurantId: string,
   sessionId: string,
   transcriptMetadata: JsonRecord

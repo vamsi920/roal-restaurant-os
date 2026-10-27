@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { listRecentMenuImports } from "@/lib/scanner/menu-import-audit";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const runtime = "nodejs";
 
@@ -14,7 +14,7 @@ export async function GET(
     const access = await requireRestaurantAccess(restaurantId);
     if (access.errorResponse) return access.errorResponse;
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const imports = await listRecentMenuImports(supabase, restaurantId, 25);
 
     return NextResponse.json({ ok: true, imports });

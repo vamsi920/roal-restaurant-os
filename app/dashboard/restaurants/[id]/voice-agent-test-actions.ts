@@ -13,13 +13,10 @@ import type {
   HarnessRunResult,
   HarnessToolName,
 } from "@/lib/voice-agent/test-harness/types";
-import {
-  createServerSupabase,
-  getServiceRoleSupabase,
-} from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 async function harnessSupabase() {
-  return getServiceRoleSupabase() ?? (await createServerSupabase());
+  return getDb() ?? (getDb());
 }
 
 export async function runVoiceAgentHarnessScenarioAction(

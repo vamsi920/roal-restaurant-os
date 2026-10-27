@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { simulateHarnessTool } from "@/lib/voice-agent/test-harness/simulate-tool";
 import { buildCallerOrderStatusTimeline } from "@/lib/orders/status-history";
 import { RESTAURANT_ID } from "../fixtures/menu";
@@ -132,7 +132,7 @@ describe("get_order_status harness", () => {
 
   it("finds order by session_id with ready message and timeline", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_order_status",
       body: {
@@ -161,7 +161,7 @@ describe("get_order_status harness", () => {
 
   it("falls back to phone digits when session is unknown", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_order_status",
       body: {
@@ -180,7 +180,7 @@ describe("get_order_status harness", () => {
 
   it("falls back to guest name", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_order_status",
       body: {
@@ -199,7 +199,7 @@ describe("get_order_status harness", () => {
 
   it("returns unknown order when nothing matches", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_order_status",
       body: {
@@ -222,7 +222,7 @@ describe("get_order_status harness", () => {
 
   it("does not leak orders from another restaurant", async () => {
     const result = await simulateHarnessTool({
-      supabase: store.supabase as unknown as SupabaseClient,
+      supabase: store.supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "get_order_status",
       body: {

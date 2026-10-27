@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { isTestHarnessBillingSession } from "@/lib/billing/billable-orders";
 import { emitStuckActiveCallNotification } from "@/lib/notifications/call-follow-up-events";
 import { loadNotificationSettings } from "@/lib/notifications/settings";
@@ -22,7 +22,7 @@ function isHarnessRow(row: StuckActiveCallRow): boolean {
 }
 
 export async function notifyStuckActiveCallsForOrganization(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantNames: Map<string, string>;

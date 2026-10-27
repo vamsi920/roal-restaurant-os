@@ -1,17 +1,27 @@
 import { FaqList } from "@/components/landing/faq-list";
+import { CONTACT_PILOT_EMAIL } from "@/lib/landing/contact-mailto";
 import { HOME_FAQ } from "@/lib/landing/launch-faq";
 
 export function HomeFaq() {
   return (
     <section className="section" id="faq" aria-labelledby={HOME_FAQ.titleId}>
       <div className="wrap">
-        <div className="grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-12">
+        <div className="faq-layout">
           <div className="reveal min-w-0">
-            <p className="eyebrow">FAQ</p>
-            <h2 id={HOME_FAQ.titleId} className="h2 mt-3">
-              {HOME_FAQ.title}
+            <p className="pill">
+              <span className="pill__dot" aria-hidden />
+              FAQ
+            </p>
+            <h2 id={HOME_FAQ.titleId} className="h2 mt-5">
+              <span className="tone-muted">Frequently asked</span> questions
             </h2>
-            <p className="lead mt-4">Short answers. If yours is not here, email us and a person replies.</p>
+            <p className="lead mt-4">
+              Short answers. If yours isn&apos;t here, email{" "}
+              <a className="link" href={`mailto:${CONTACT_PILOT_EMAIL}`}>
+                {CONTACT_PILOT_EMAIL}
+              </a>{" "}
+              and a person replies.
+            </p>
           </div>
           <div className="reveal min-w-0">
             <FaqList items={HOME_FAQ.items} />

@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { deriveAgentCallSessions } from "@/lib/agent-calls/derive-call-sessions";
 import type {
   AgentCallSession,
@@ -24,7 +24,7 @@ export type LoadRestaurantAgentCallSessionsResult = {
 };
 
 export async function loadRestaurantAgentCallSessions(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: LoadRestaurantAgentCallSessionsInput
 ): Promise<LoadRestaurantAgentCallSessionsResult> {
   const restaurantId = input.restaurantId.trim();

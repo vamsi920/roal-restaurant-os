@@ -7,7 +7,7 @@ import {
 import { dispatchNotification } from "@/lib/notifications/dispatch";
 import type { NotificationEventType } from "@/lib/notifications/types";
 import { NOTIFICATION_EVENT_TYPES } from "@/lib/notifications/types";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const runtime = "nodejs";
 
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   const body = parsed.data;
 
   if (body.restaurant_id) {
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const { data: restaurant } = await supabase
       .from("restaurants")
       .select("organization_id")
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await dispatchNotification(supabase, {
     organizationId: resolved.organizationId,
     restaurantId: body.restaurant_id ?? null,

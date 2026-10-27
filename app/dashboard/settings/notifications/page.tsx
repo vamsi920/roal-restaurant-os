@@ -11,7 +11,7 @@ import {
 import { ensureNotificationSettings } from "@/lib/notifications/settings";
 import type { NotificationDeliveryRow } from "@/lib/notifications/types";
 import { NOTIFICATION_PROVIDER_POSTURE } from "@/lib/notifications/provider-posture";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +22,7 @@ export default async function NotificationSettingsPage() {
   const membership = context.primaryMembership;
   if (!membership) redirect("/dashboard/onboarding");
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const canEdit = isOrgAdmin(membership.role);
 
   const settings = notificationSettingsForViewer(
@@ -58,7 +58,7 @@ export default async function NotificationSettingsPage() {
   );
 
   return (
-    <div className="notification-settings-page dashboard-page dashboard-page--medium dashboard-page__stack min-w-0 space-y-5 overflow-x-hidden">
+    <div className="notification-settings-page org-page org-page--medium min-w-0 space-y-5 overflow-x-hidden">
       <PageHeader
         backHref="/dashboard/settings"
         backLabel="Settings"
@@ -68,7 +68,7 @@ export default async function NotificationSettingsPage() {
 
       <NotificationSettingsForm settings={settings} canEdit={canEdit} />
       {!canEdit ? (
-        <p className="text-[13px] text-muted">{NOTIFICATION_PROVIDER_POSTURE.memberReadOnly}</p>
+        <p className="text-[13px] text-subtle">{NOTIFICATION_PROVIDER_POSTURE.memberReadOnly}</p>
       ) : null}
       <NotificationDeliveryLog deliveries={rows} />
     </div>

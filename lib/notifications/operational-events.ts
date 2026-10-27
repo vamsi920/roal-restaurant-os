@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { writeAuditLog } from "@/lib/observability/audit";
 import { dispatchNotification } from "@/lib/notifications/dispatch";
 import { shouldSkipProductionOwnerNotification } from "@/lib/notifications/session-guard";
@@ -20,7 +20,7 @@ type RestaurantOperationalContext = {
 };
 
 async function loadRestaurantOperationalContext(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   restaurantNameHint?: string
 ): Promise<RestaurantOperationalContext | null> {
@@ -42,7 +42,7 @@ async function loadRestaurantOperationalContext(
 }
 
 async function emitOperationalNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     ctx: RestaurantOperationalContext;
     userId?: string | null;
@@ -86,7 +86,7 @@ async function emitOperationalNotification(
 }
 
 export async function emitProvisionFailureIfTransition(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     restaurantName?: string;
@@ -139,7 +139,7 @@ export async function emitProvisionFailureIfTransition(
 }
 
 export async function emitMenuAutoSyncFailureIfTransition(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     restaurantName?: string;
@@ -189,7 +189,7 @@ export async function emitMenuAutoSyncFailureIfTransition(
 }
 
 export async function emitGoLiveIfTransition(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     organizationId: string;
@@ -237,7 +237,7 @@ export async function emitGoLiveIfTransition(
 }
 
 export async function emitOrderStuckIfTransition(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantId: string;
@@ -286,7 +286,7 @@ export async function emitOrderStuckIfTransition(
 }
 
 export async function emitStaffHandoffRequested(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     sessionId: string;

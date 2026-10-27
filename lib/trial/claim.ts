@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { commitMenuToRestaurant } from "@/lib/scanner/commit-menu";
 import {
   completeOrganizationAccountStep,
@@ -44,7 +44,7 @@ function slugify(name: string): string {
 }
 
 async function createOrganizationForTrial(
-  supabase: SupabaseClient,
+  supabase: Db,
   userId: string,
   restaurantName: string
 ): Promise<string> {
@@ -74,7 +74,7 @@ async function createOrganizationForTrial(
  * `supabase` must be the signed-in user's client (RLS), with a profile row ensured.
  */
 export async function claimTrial(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: ClaimTrialInput
 ): Promise<ClaimTrialResult> {
   const trial = await getTrial(input.trialId);

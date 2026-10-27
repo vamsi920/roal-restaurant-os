@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   filterBillablePhoneOrderReceipts,
   type BillableReceiptRow,
@@ -21,7 +21,7 @@ import type {
 } from "@/lib/restaurant-launch/types";
 
 async function menuItemCount(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<number> {
   const stats = await loadRestaurantCardStats(supabase, [restaurantId], {});
@@ -29,7 +29,7 @@ async function menuItemCount(
 }
 
 async function hoursConfigured(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<boolean> {
   const { data, error } = await supabase
@@ -42,7 +42,7 @@ async function hoursConfigured(
 }
 
 async function testCallPassed(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<{ passed: boolean; detail: string }> {
   const onboarding = await getRestaurantOnboarding(supabase, restaurantId);
@@ -66,7 +66,7 @@ async function testCallPassed(
 }
 
 export async function loadRestaurantLaunchChecklist(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     restaurantName: string;
@@ -78,7 +78,7 @@ export async function loadRestaurantLaunchChecklist(
 }
 
 export async function loadRestaurantLaunchGate(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     restaurantName: string;

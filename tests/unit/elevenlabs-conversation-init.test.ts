@@ -17,14 +17,14 @@ import {
 import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 
 vi.mock("@/lib/supabase/server", () => ({
-  getServiceRoleSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/env.server", () => ({
   getElevenLabsAgentId: vi.fn(() => "agent_template_global"),
 }));
 
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 describe("readElevenLabsConversationInitAgentId", () => {
   it("prefers query agent_id over body", () => {
@@ -243,7 +243,7 @@ describe("resolveRestaurantForElevenLabsConversationInit", () => {
       [RESTAURANT_ID, { name: "Egg Mania" }],
     ]);
 
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn((table: string) => {
         if (table === "restaurant_profiles") {
           return {
@@ -312,7 +312,7 @@ describe("resolveRestaurantForElevenLabsConversationInit", () => {
     const PHONE_A = "+15551111111";
     const PHONE_B = "+15552222222";
 
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn((table: string) => {
         if (table === "restaurant_profiles") {
           return {
@@ -502,7 +502,7 @@ describe("persistElevenLabsConversationStarted", () => {
 
   it("upserts an active agent_call_events row keyed by restaurant and session", async () => {
     const upsert = vi.fn().mockResolvedValue({ error: null });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn(() => ({ upsert })),
     } as never);
 
@@ -563,7 +563,7 @@ describe("lookupRestaurantByCalledNumber", () => {
       [RESTAURANT_B, { name: "South Location" }],
     ]);
 
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn((table: string) => {
         if (table === "restaurant_profiles") {
           return {
@@ -637,7 +637,7 @@ describe("lookupRestaurantByCalledNumber", () => {
 
   it("matches profile phone by last 10 digits", async () => {
     const RESTAURANT_ID = "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn((table: string) => {
         if (table === "restaurant_profiles") {
           return {

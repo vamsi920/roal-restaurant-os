@@ -1,7 +1,6 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MenuImportReview } from "@/components/menu-import/MenuImportReview";
@@ -15,6 +14,9 @@ import { PlanLimitNotice } from "@/components/billing/PlanLimitNotice";
 import { notifyMenuChanged } from "@/lib/menu-editor/notify-menu-changed";
 import type { SerializableGateVerdict } from "@/lib/billing/gates";
 import { cn } from "@/lib/cn";
+import { Check, ImagePlus, Loader2, ScanLine, Trash2, X } from "lucide-react";
+import { Badge, type Tone } from "@/components/ui";
+import { Notice } from "@/components/live-orders/workspace-ui";
 
 type Status =
   | "idle"
@@ -40,13 +42,22 @@ const STEP_ORDER: Status[] = [
 ];
 
 const STEP_LABELS: Record<Status, string> = {
-  idle: "Idle",
-  uploading: "Uploading image",
-  scanning: "Scanning with Gemini Vision",
-  review: "Review & correct",
-  committing: "Saving to database",
-  done: "Synced",
-  error: "Error",
+  idle: "Ready",
+  uploading: "Uploading photo",
+  scanning: "Reading your menu",
+  review: "Review & fix",
+  committing: "Adding to your menu",
+  done: "Added to menu",
+  error: "Needs attention",
+};
+
+const STATUS_TONE: Partial<Record<Status, Tone>> = {
+  uploading: "info",
+  scanning: "info",
+  committing: "info",
+  review: "warn",
+  done: "ok",
+  error: "bad",
 };
 
 export function MenuScanner({
@@ -278,94 +289,83 @@ export function MenuScanner({
     }
   }
 
-  return (
-    <section className="menu-scanner kds-panel glass-card overflow-hidden">
+  const clearButton = !compact ? (
+    <button
+      type="button"
+      onClick={() => {
+        setClearError(null);
+        setClearOpen(true);
+      }}
+      disabled={isWorking}
+      className="btn-danger btn-sm"
+    >
+      <Trash2 size={13} aria-hidden /> Clear menu
+    </button>
+  ) : null;
+
+  const body = (
+    <>
       {!hidePanelHeader ? (
-        <div className="kds-panel__header">
+        <div className="panel__head">
           <div className="min-w-0 flex-1">
-            <h2 className="kds-panel__title">Scan menu photo</h2>
-            <p className="kds-panel__lead">
-              Drop a photo of your printed menu. Gemini reads items and prices—you
-              review, then save to merge into your live menu (update existing,
-              add new). Use Clear menu to start over.
+            <h2 className="panel__title">Scan a menu photo</h2>
+            <p className="text-[12.5px] text-subtle">
+              Upload a photo of your printed menu. We read items and prices, you
+              review, then it merges into your live menu.
             </p>
           </div>
-          {!compact ? (
-            <div className="flex w-full shrink-0 sm:w-auto sm:justify-end">
-              <button
-                type="button"
-                onClick={() => {
-                  setClearError(null);
-                  setClearOpen(true);
-                }}
-                disabled={isWorking}
-                className="kds-thumb-btn min-h-11 w-full rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2.5 text-xs font-medium text-danger transition-colors hover:bg-danger/[0.08] disabled:opacity-50 sm:min-h-0 sm:w-auto sm:py-1.5"
-              >
-                Clear menu
-              </button>
-            </div>
-          ) : null}
+          {clearButton}
         </div>
       ) : null}
 
-      {hidePanelHeader && !compact ? (
-        <div className="flex justify-end border-b border-line px-4 py-2 sm:px-5">
-          <button
-            type="button"
-            onClick={() => {
-              setClearError(null);
-              setClearOpen(true);
-            }}
-            disabled={isWorking}
-            className="kds-thumb-btn min-h-11 rounded-lg border border-danger/35 bg-danger/[0.04] px-3 py-2 text-xs font-medium text-danger hover:bg-danger/[0.08] disabled:opacity-50 sm:min-h-0"
-          >
-            Clear menu
-          </button>
-        </div>
-      ) : null}
-
-      <PlanLimitNotice verdict={menuScanGate} className="mx-4 sm:mx-6" />
+      <PlanLimitNotice
+        verdict={menuScanGate}
+        className={hidePanelHeader ? "mb-3" : "mx-[1.125rem] mt-3"}
+      />
 
       <Transition appear show={clearOpen} as={Fragment}>
-        <Dialog as="div" className="kds-modal-layer" onClose={() => !clearPending && setClearOpen(false)}>
+        <Dialog as="div" className="relative z-50" onClose={() => !clearPending && setClearOpen(false)}>
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-200"
+            enter="ease-out duration-200 motion-reduce:duration-0"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in duration-150"
+            leave="ease-in duration-150 motion-reduce:duration-0"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-ink/25 backdrop-blur-sm" />
+            <div className="fixed inset-0 bg-ink/30" aria-hidden />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
               <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-200"
-                enterFrom="opacity-0 translate-y-2 scale-[0.98]"
-                enterTo="opacity-100 translate-y-0 scale-100"
-                leave="ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0 scale-100"
-                leaveTo="opacity-0 translate-y-2 scale-[0.98]"
+                enter="ease-out duration-200 motion-reduce:duration-0"
+                enterFrom="opacity-0 translate-y-2"
+                enterTo="opacity-100 translate-y-0"
+                leave="ease-in duration-150 motion-reduce:duration-0"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-2"
               >
-                <Dialog.Panel className="menu-scanner__clear-dialog glass-card w-full max-w-md p-5 shadow-lg sm:p-6">
-                  <Dialog.Title className="text-base font-semibold tracking-tight">
+                <Dialog.Panel className="panel w-full max-w-md p-5 shadow-lg sm:p-6">
+                  <Dialog.Title className="font-display text-[18px] font-bold tracking-[-0.01em] text-ink">
                     Clear entire menu?
                   </Dialog.Title>
-                  <p className="mt-2 text-sm text-muted">
+                  <p className="mt-2 text-[13.5px] text-muted">
                     This removes all categories, items, and modifiers for this
-                    restaurant. You can scan a menu again afterward.
+                    restaurant. The phone host will have nothing to sell until you
+                    add a menu again.
                   </p>
-                  {clearError && (
-                    <p className="mt-3 text-xs text-danger">{clearError}</p>
-                  )}
-                  <div className="menu-scanner__clear-dialog-actions mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                  {clearError ? (
+                    <Notice tone="bad" className="mt-3">
+                      {clearError}
+                    </Notice>
+                  ) : null}
+                  <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                     <button
                       type="button"
-                      className="btn-ghost min-h-11 w-full sm:min-h-0 sm:w-auto"
+                      className="btn-ghost w-full sm:w-auto"
                       disabled={clearPending}
                       onClick={() => setClearOpen(false)}
                     >
@@ -373,14 +373,14 @@ export function MenuScanner({
                     </button>
                     <button
                       type="button"
-                      className="min-h-11 w-full rounded-lg border border-danger/40 bg-danger/10 px-4 py-2 text-sm font-semibold text-danger transition-colors hover:bg-danger/15 disabled:opacity-60 sm:min-h-0 sm:w-auto"
+                      className="btn-danger w-full sm:w-auto"
                       disabled={clearPending}
                       onClick={() => void clearMenu()}
                     >
                       {clearPending ? (
-                        <span className="inline-flex items-center gap-2">
+                        <>
                           <Spinner /> Clearing…
-                        </span>
+                        </>
                       ) : (
                         "Yes, clear menu"
                       )}
@@ -395,8 +395,9 @@ export function MenuScanner({
 
       <div
         className={cn(
-          "menu-scanner__layout grid grid-cols-1 gap-5 p-4 sm:gap-6 sm:p-6",
-          !reviewMenu && "lg:grid-cols-[1.1fr_1fr]"
+          "menu-scanner__layout grid min-w-0 grid-cols-1 gap-4",
+          !reviewMenu && "lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]",
+          !hidePanelHeader && "p-[1.125rem]"
         )}
       >
         <div className="menu-scanner__upload-col min-w-0">
@@ -414,10 +415,11 @@ export function MenuScanner({
               if (f) onFile(f);
             }}
             className={cn(
-              "menu-scanner__upload group relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed transition-all max-sm:min-h-[220px] max-sm:aspect-[3/4] sm:aspect-[4/3]",
+              "menu-scanner__upload group relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[12px] border border-dashed text-center transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink/75 motion-reduce:transition-none",
+              reviewMenu ? "sm:min-h-[160px]" : "sm:aspect-[16/10]",
               isDragging
-                ? "border-accent bg-accent-soft/80"
-                : "border-line-strong bg-elev hover:border-line-strong hover:bg-card",
+                ? "border-accent bg-accent-soft"
+                : "border-line-strong bg-elev hover:bg-card",
               preview && "border-solid border-line"
             )}
           >
@@ -437,33 +439,29 @@ export function MenuScanner({
                 <img
                   src={preview}
                   alt="Menu preview"
-                  className="h-full w-full object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
-                {isWorking && (
-                  <div className="scan-overlay absolute inset-0 bg-card/55 backdrop-blur-[2px]" />
-                )}
+                {isWorking ? (
+                  <div className="scan-overlay absolute inset-0 bg-card/60" aria-hidden />
+                ) : null}
               </>
             ) : (
               <>
-                <div className="pointer-events-none absolute inset-0 bg-grid opacity-50" />
-                <div className="relative grid h-12 w-12 place-items-center rounded-xl border border-line bg-card shadow-sm">
-                  <svg viewBox="0 0 24 24" className="h-6 w-6 text-accent" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 7a2 2 0 012-2h3l2-2h4l2 2h3a2 2 0 012 2v11a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
-                    <circle cx="12" cy="13" r="4" />
-                  </svg>
-                </div>
-                <p className="relative mt-4 text-sm font-medium">
-                  Drop image, or click to browse
+                <span className="icon-tile icon-tile--lg icon-tile--orange" aria-hidden>
+                  <ImagePlus size={20} />
+                </span>
+                <p className="mt-3 px-4 text-[14px] font-semibold text-ink">
+                  Drop a menu photo, or click to browse
                 </p>
-                <p className="relative mt-1 text-xs text-muted">
+                <p className="mt-1 px-4 text-[12.5px] text-subtle">
                   PNG, JPG, WebP — max {(MENU_IMAGE_MAX_BYTES / (1024 * 1024)).toFixed(0)} MB
                 </p>
               </>
             )}
           </label>
 
-          <div className="menu-scanner__actions mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0 text-xs text-muted sm:flex-1">
+          <div className="menu-scanner__actions mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="min-w-0 text-[12.5px] text-subtle sm:flex-1">
               {file ? (
                 <span className="block [overflow-wrap:anywhere] sm:truncate">
                   {file.name} · {(file.size / 1024).toFixed(0)} KB
@@ -471,13 +469,13 @@ export function MenuScanner({
               ) : (
                 "No file selected"
               )}
-            </div>
+            </p>
             <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
-              {file && !isWorking && status !== "review" && (
+              {file && !isWorking && status !== "review" ? (
                 <button type="button" onClick={reset} className="btn-ghost min-h-11 w-full sm:min-h-0 sm:w-auto">
                   Reset
                 </button>
-              )}
+              ) : null}
               <button
                 type="button"
                 onClick={process}
@@ -487,20 +485,18 @@ export function MenuScanner({
                   status === "review" ||
                   menuScanGate?.hardBlocked
                 }
-                className="btn-primary min-h-11 w-full justify-center sm:min-h-0 sm:w-auto"
+                aria-busy={isWorking}
+                className="btn-primary min-h-11 w-full sm:min-h-0 sm:w-auto"
               >
                 {isWorking ? (
                   <>
-                    <Spinner /> Processing
+                    <Spinner /> Reading menu…
                   </>
                 ) : status === "review" ? (
-                  "Extracted — review below"
+                  "Review below"
                 ) : (
                   <>
-                    Scan menu
-                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14M13 5l7 7-7 7" />
-                    </svg>
+                    <ScanLine size={15} aria-hidden /> Scan menu
                   </>
                 )}
               </button>
@@ -508,31 +504,14 @@ export function MenuScanner({
           </div>
         </div>
 
-        <div
-          className={cn(
-            "menu-scanner__status-col flex min-w-0 flex-col",
-            reviewMenu && "lg:max-w-sm"
-          )}
-        >
-          <div className="menu-scanner__pipeline rounded-xl border border-line bg-elev p-4 shadow-sm sm:p-5">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
-                Pipeline
-              </h3>
-              <span
-                className={cn(
-                  "text-caption font-medium uppercase tracking-wider",
-                  status === "done" && "text-success",
-                  status === "error" && "text-danger",
-                  isWorking && "text-accent",
-                  status === "idle" && "text-subtle"
-                )}
-              >
-                {STEP_LABELS[status]}
-              </span>
+        <div className={cn("menu-scanner__status-col flex min-w-0 flex-col gap-3", reviewMenu && "hidden")}>
+          <div className="menu-scanner__pipeline rounded-[12px] border border-line bg-elev/60 p-4">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-[13px] font-semibold text-ink">Progress</h3>
+              <Badge tone={STATUS_TONE[status] ?? "neutral"}>{STEP_LABELS[status]}</Badge>
             </div>
 
-            <ol className="mt-4 space-y-2.5">
+            <ol className="mt-3 space-y-2" aria-label="Scan progress">
               {STEP_ORDER.map((step, idx) => {
                 const currentIdx =
                   status === "error"
@@ -544,7 +523,11 @@ export function MenuScanner({
                   status === "done" ||
                   (currentIdx > -1 && idx < currentIdx);
                 return (
-                  <li key={step} className="flex items-center gap-3">
+                  <li
+                    key={step}
+                    className="flex items-center gap-2.5"
+                    aria-current={isActive ? "step" : undefined}
+                  >
                     <StepDot
                       active={isActive}
                       complete={isComplete}
@@ -553,8 +536,8 @@ export function MenuScanner({
                     <span
                       className={cn(
                         "text-[13px]",
-                        isActive && "text-ink",
-                        isComplete && "text-muted line-through decoration-line",
+                        isActive && "font-medium text-ink",
+                        isComplete && "text-muted",
                         !isActive && !isComplete && "text-subtle"
                       )}
                     >
@@ -565,93 +548,66 @@ export function MenuScanner({
               })}
             </ol>
 
-            {isWorking && (
-              <div className="mt-5 space-y-2.5">
+            {isWorking ? (
+              <div className="mt-4 space-y-2" aria-hidden>
                 <SkeletonRow />
                 <SkeletonRow />
                 <SkeletonRow short />
               </div>
-            )}
+            ) : null}
 
-            <AnimatePresence>
-              {stats && status === "done" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="mt-5 grid grid-cols-3 gap-2 border-t border-line pt-4"
-                >
-                  <StatCell label="Categories" value={stats.categories} />
-                  <StatCell label="Items" value={stats.items} />
-                  <StatCell label="Modifiers" value={stats.modifiers} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {error && (
-              <div
-                role="alert"
-                className="menu-scanner__error mt-4 rounded-lg border border-danger/30 bg-danger/[0.06] p-3 text-sm text-danger"
-              >
-                <p className="[overflow-wrap:anywhere]">{error}</p>
-                {importId && status === "error" ? (
-                  <button
-                    type="button"
-                    className="btn-ghost kds-thumb-btn mt-3 min-h-11 w-full text-sm sm:mt-2 sm:min-h-9 sm:w-auto"
-                    disabled={isWorking}
-                    onClick={() => void discardReview()}
-                  >
-                    Discard failed import
-                  </button>
-                ) : null}
-                {status === "error" && !reviewMenu ? (
-                  <p className="mt-2 text-caption text-danger/80">
-                    Try a sharper photo with the full menu visible, or use Reset to
-                    choose another file.
-                  </p>
-                ) : null}
+            {stats && status === "done" ? (
+              <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line pt-3">
+                <StatCell label="Categories" value={stats.categories} />
+                <StatCell label="Items" value={stats.items} />
+                <StatCell label="Modifiers" value={stats.modifiers} />
               </div>
-            )}
+            ) : null}
           </div>
 
-          <details className="menu-scanner__import-flow mt-4 rounded-xl border border-line bg-elev shadow-sm sm:hidden">
-            <summary className="cursor-pointer px-4 py-3 text-xs font-semibold uppercase tracking-wider text-muted">
+          {error ? (
+            <div
+              role="alert"
+              className="menu-scanner__error rounded-[10px] border border-danger/25 bg-danger/[0.05] p-3 text-[13px] text-danger"
+            >
+              <p className="[overflow-wrap:anywhere]">{error}</p>
+              {status === "error" && !reviewMenu ? (
+                <p className="mt-1 text-[12.5px] text-danger/80">
+                  Try a sharper photo with the full menu visible, or use Reset to
+                  choose another file.
+                </p>
+              ) : null}
+              {importId && status === "error" ? (
+                <button
+                  type="button"
+                  className="btn-ghost btn-sm mt-2 min-h-11 w-full sm:min-h-0 sm:w-auto"
+                  disabled={isWorking}
+                  onClick={() => void discardReview()}
+                >
+                  Discard failed import
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+
+          <details className="menu-scanner__import-flow rounded-[10px] border border-line sm:hidden">
+            <summary className="flex min-h-11 cursor-pointer items-center px-3 text-[13px] font-medium text-muted">
               How import works
             </summary>
-            <ul className="space-y-2 px-4 pb-4 text-sm text-muted">
-              <li className="flex gap-2">
-                <BulletDot /> Gemini extracts structure with confidence hints.
-              </li>
-              <li className="flex gap-2">
-                <BulletDot /> You review and fix flagged fields before save.
-              </li>
-              <li className="flex gap-2">
-                <BulletDot /> Commit merges in one Postgres transaction.
-              </li>
-            </ul>
+            <ImportSteps className="px-3 pb-3" />
           </details>
-
-          <div className="menu-scanner__import-flow-desktop mt-4 hidden rounded-xl border border-line bg-elev p-5 shadow-sm sm:block">
-            <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
-              Import flow
-            </h3>
-            <ul className="mt-3 space-y-2 text-sm text-muted">
-              <li className="flex gap-2">
-                <BulletDot /> Gemini extracts structure with confidence hints.
-              </li>
-              <li className="flex gap-2">
-                <BulletDot /> You review and fix flagged fields before save.
-              </li>
-              <li className="flex gap-2">
-                <BulletDot /> Commit merges in one Postgres transaction.
-              </li>
-            </ul>
+          <div className="menu-scanner__import-flow-desktop hidden sm:block">
+            <ImportSteps />
           </div>
         </div>
 
         {reviewMenu ? (
-          <div className="menu-scanner__review min-w-0 lg:col-span-2">
+          <div className="menu-scanner__review min-w-0">
+            {error ? (
+              <Notice tone="bad" className="mb-3">
+                {error}
+              </Notice>
+            ) : null}
             <MenuImportReview
               menu={reviewMenu}
               pending={status === "committing"}
@@ -662,7 +618,37 @@ export function MenuScanner({
           </div>
         ) : null}
       </div>
-    </section>
+
+      {hidePanelHeader && clearButton ? (
+        <div className="mt-4 flex flex-col gap-2 border-t border-line pt-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[12.5px] text-subtle">
+            Starting over? Clear the menu, then scan a new photo.
+          </p>
+          {clearButton}
+        </div>
+      ) : null}
+    </>
+  );
+
+  if (hidePanelHeader) {
+    return <div className="menu-scanner min-w-0">{body}</div>;
+  }
+  return <section className="menu-scanner panel min-w-0 overflow-hidden">{body}</section>;
+}
+
+function ImportSteps({ className }: { className?: string }) {
+  return (
+    <ul className={cn("space-y-1.5 text-[12.5px] text-subtle", className)}>
+      <li className="flex gap-2">
+        <BulletDot /> We read categories, items, prices, and options from the photo.
+      </li>
+      <li className="flex gap-2">
+        <BulletDot /> You fix anything flagged before it goes live.
+      </li>
+      <li className="flex gap-2">
+        <BulletDot /> Saving merges into your menu — existing items update, new ones are added.
+      </li>
+    </ul>
   );
 }
 
@@ -677,31 +663,27 @@ function StepDot({
 }) {
   if (errored) {
     return (
-      <span className="grid h-5 w-5 place-items-center rounded-full border border-danger/40 bg-danger/10 text-danger">
-        <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
+      <span className="grid h-5 w-5 place-items-center rounded-full bg-danger/10 text-danger" aria-hidden>
+        <X size={12} strokeWidth={3} />
       </span>
     );
   }
   if (complete) {
     return (
-      <span className="grid h-5 w-5 place-items-center rounded-full border border-success/40 bg-success/10 text-success">
-        <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 12l5 5L20 7" />
-        </svg>
+      <span className="grid h-5 w-5 place-items-center rounded-full bg-success/10 text-success" aria-hidden>
+        <Check size={12} strokeWidth={3} />
       </span>
     );
   }
   if (active) {
     return (
-      <span className="grid h-5 w-5 place-items-center rounded-full border border-accent/40 bg-accent/10">
-        <span className="block h-2 w-2 animate-pulse rounded-full bg-accent" />
+      <span className="grid h-5 w-5 place-items-center rounded-full bg-ink/10" aria-hidden>
+        <span className="block h-2 w-2 rounded-full bg-ink motion-safe:animate-pulse" />
       </span>
     );
   }
   return (
-    <span className="grid h-5 w-5 place-items-center rounded-full border border-line bg-elev">
+    <span className="grid h-5 w-5 place-items-center rounded-full border border-line bg-card" aria-hidden>
       <span className="block h-1.5 w-1.5 rounded-full bg-subtle/50" />
     </span>
   );
@@ -709,13 +691,9 @@ function StepDot({
 
 function StatCell({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-line bg-card p-3 shadow-sm">
-      <div className="text-micro font-medium uppercase tracking-wider text-subtle">
-        {label}
-      </div>
-      <div className="type-numeric mt-1 text-ink">
-        {value}
-      </div>
+    <div className="rounded-[10px] border border-line bg-card px-3 py-2">
+      <div className="text-[11.5px] font-medium text-subtle">{label}</div>
+      <div className="mt-0.5 font-display text-[18px] font-bold tabular-nums text-ink">{value}</div>
     </div>
   );
 }
@@ -731,15 +709,10 @@ function SkeletonRow({ short }: { short?: boolean }) {
 
 function BulletDot() {
   return (
-    <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-accent" />
+    <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-subtle" aria-hidden />
   );
 }
 
 function Spinner() {
-  return (
-    <svg className="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.25" strokeWidth="3" />
-      <path d="M21 12a9 9 0 00-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
+  return <Loader2 size={14} className="motion-safe:animate-spin" aria-hidden />;
 }

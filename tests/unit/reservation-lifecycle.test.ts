@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { buildCallHistoryRows } from "@/lib/call-history/build-call-history-rows";
 import {
   buildReservationBySessionMap,
@@ -28,11 +28,11 @@ vi.mock("@/lib/auth/context-server", () => ({
   requireRestaurantAccess: vi.fn(),
 }));
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { updateReservationRequestStatusAction } from "@/app/dashboard/restaurants/[id]/calls/actions";
 
 describe("reservation status schema", () => {
@@ -67,7 +67,7 @@ describe("updateReservationRequestStatusAction", () => {
     const eqRestaurant = vi.fn(() => ({ select }));
     const eqId = vi.fn(() => ({ eq: eqRestaurant }));
     const update = vi.fn(() => ({ eq: eqId }));
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       from: vi.fn(() => ({ update })),
     } as never);
     return { update, eqId, eqRestaurant };
@@ -196,8 +196,9 @@ describe("Calls/Follow-ups reservation inbox UI", () => {
     expect(src).toContain("reservationNextOwnerAction");
     expect(src).toContain('"contacted"');
     expect(src).toContain("Confirm table");
-    expect(src).toContain("Close / cancel");
-    expect(src).toContain("grid gap-2 md:grid-cols-2");
+    expect(src).toContain("updateReservationRequestStatusAction");
+    expect(src).toContain('"declined"');
+    expect(src).toContain('"canceled"');
     expect(src).not.toMatch(
       /rows\.filter\(\(row\) => row\.status === "requested"\)/
     );
@@ -286,7 +287,7 @@ describe("submit_reservation_request idempotency", () => {
     };
 
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "submit_reservation_request",
       body: {

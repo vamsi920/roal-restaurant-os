@@ -1,4 +1,4 @@
-import { getServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import {
   LANDING_DEMO,
   type LandingCategory,
@@ -30,7 +30,7 @@ function parseOrderLines(items: unknown): LandingOrderLine[] {
 
 export async function getLandingPreview(): Promise<LandingPreviewData> {
   try {
-    const supabase = await getServerSupabase();
+    const supabase = await getDb();
     const { data: restaurants, error: rErr } = await supabase
       .from("restaurants")
       .select("id, name")

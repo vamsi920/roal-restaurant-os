@@ -6,7 +6,7 @@ import {
   type RestaurantHoursInput,
 } from "@/lib/restaurant-hours/schema";
 import { afterHoursSettingsMutation } from "@/lib/voice-agent/after-restaurant-settings-mutation";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export async function saveRestaurantHoursAction(
   restaurantId: string,
@@ -26,7 +26,7 @@ export async function saveRestaurantHoursAction(
     throw new Error(msg);
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const input = parsed.data;
 
   const { error: profileErr } = await supabase

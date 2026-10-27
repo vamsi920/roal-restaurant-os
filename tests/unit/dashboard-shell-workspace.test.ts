@@ -9,14 +9,15 @@ import {
 const REPO = join(import.meta.dirname, "../..");
 
 describe("dashboard shell workspace flow (prompt 21)", () => {
-  it("sidebar favors locations then workspace rail", () => {
+  it("sidebar is scoped to the current location; org pages stay in their own group", () => {
     const nav = readFileSync(join(REPO, "lib/dashboard-nav.ts"), "utf8");
     const shell = readFileSync(join(REPO, "components/dashboard/app-shell.tsx"), "utf8");
     expect(nav).not.toContain('href: "/dashboard/analytics"');
     expect(nav).not.toContain('href: "/dashboard/billing"');
     expect(nav).not.toContain('href: "/dashboard"');
-    expect(shell).toContain('href="/dashboard/restaurants"');
-    expect(shell).toContain("restaurantWorkspaceMobileTitle");
+    expect(shell).toContain("buildLocationNav(current.id");
+    expect(shell).toContain("resolveCurrentRestaurantId");
+    expect(shell).toContain("LocationSwitcher");
   });
 
   it("layout shows platform nav only for platform staff", () => {
@@ -32,6 +33,6 @@ describe("dashboard shell workspace flow (prompt 21)", () => {
     );
     expect(
       restaurantWorkspaceMobileTitle(`/dashboard/restaurants/${id}/analytics`)
-    ).toBe("Analytics");
+    ).toBe("Reports");
   });
 });

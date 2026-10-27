@@ -1,5 +1,5 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import type { Db } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import type {
   TrialPublicView,
   TrialRecord,
@@ -16,8 +16,8 @@ export class TrialStoreUnavailableError extends Error {
   }
 }
 
-export function requireTrialDb(): SupabaseClient {
-  const db = getServiceRoleSupabase();
+export function requireTrialDb(): Db {
+  const db = getDb();
   if (!db) throw new TrialStoreUnavailableError();
   return db;
 }
@@ -62,7 +62,7 @@ function asRecord(row: Record<string, unknown>): TrialRecord {
 let lastSweepAt = 0;
 
 /** Best-effort cleanup of expired, unclaimed trials (at most once per hour per process). */
-async function sweepExpiredTrials(db: SupabaseClient): Promise<void> {
+async function sweepExpiredTrials(db: Db): Promise<void> {
   const now = Date.now();
   if (now - lastSweepAt < 60 * 60 * 1000) return;
   lastSweepAt = now;

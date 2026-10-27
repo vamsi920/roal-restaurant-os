@@ -1,10 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
-import { StatTile, StatusChip, type Tone } from "@/components/dashboard/page-primitives";
-import { VoiceProvisionStatusBadge } from "@/components/dashboard/voice-provision-status-badge";
+import {
+  AlertTriangle,
+  ArrowRight,
+  BookOpen,
+  ChefHat,
+  Headphones,
+  MapPin,
+  MessageSquareText,
+  PhoneCall,
+  Radio,
+  ShoppingBag,
+  Store,
+} from "lucide-react";
+import "@/components/dashboard/org-pages.css";
+import {
+  Badge,
+  EmptyState as UiEmptyState,
+  IconTile,
+  PageHeader,
+  StatCard,
+  type Tone,
+} from "@/components/ui";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { buildPortfolioSummary } from "@/lib/restaurant-list/portfolio-summary";
@@ -21,9 +41,11 @@ import {
   restaurantLiveOrdersHref,
   restaurantMenuSetupHref,
   restaurantVoiceAgentHref,
+  voiceProvisionBadgeTitle,
   voiceProvisionUiStateFromProfile,
+  type VoiceProvisionUiState,
 } from "@/lib/voice-agent/provision-display";
-import { CreateRestaurantButton } from "./CreateRestaurantButton";
+import { ADD_LOCATION_HREF, CreateRestaurantButton } from "./CreateRestaurantButton";
 
 const REALTIME_RELOAD_MS = 450;
 
@@ -209,8 +231,22 @@ export default function RestaurantsPage() {
     [statsByRestaurantId]
   );
 
+  const count = restaurants.length;
+
   return (
-    <div className="locations-page dashboard-page dashboard-page--wide min-w-0 space-y-5 overflow-x-clip">
+    <div className="locations-page org-page org-page--wide min-w-0 space-y-5 overflow-x-clip">
+      <PageHeader
+        className="!mb-0"
+        title="All locations"
+        subtitle={
+          loading || error
+            ? "Every restaurant in your organization, updated live."
+            : count === 0
+              ? "No locations yet. Add one to get a phone host answering calls."
+              : `${count} location${count === 1 ? "" : "s"} · status and orders update live.`
+        }
+        actions={<CreateRestaurantButton href={ADD_LOCATION_HREF} />}
+      />
       {loading ? (
         <LoadingState aria-busy="true" />
       ) : error ? (
@@ -240,6 +276,8 @@ export default function RestaurantsPage() {
 }
 
 function PortfolioSummaryStrip({ summary }: { summary: PortfolioSummary }) {
+  const allLive =
+    summary.totalLocations > 0 && summary.locationsReadyForCalls === summary.totalLocations;
   return (
     <section
       className="locations-portfolio min-w-0"
@@ -248,30 +286,67 @@ function PortfolioSummaryStrip({ summary }: { summary: PortfolioSummary }) {
       <h2 id="locations-portfolio-heading" className="sr-only">
         Organization portfolio
       </h2>
-      <dl className="locations-portfolio__grid grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6 lg:gap-3">
-        <StatTile label="Locations" value={summary.totalLocations} />
-        <StatTile
-          label="Ready for calls"
+      <div className="locations-portfolio__grid grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 xl:grid-cols-6">
+        <StatCard label="Locations" value={summary.totalLocations} icon={Store} color="ink" />
+        <StatCard
+          label="Live"
           value={summary.locationsReadyForCalls}
-          tone={
-            summary.totalLocations > 0 &&
-            summary.locationsReadyForCalls === summary.totalLocations
-              ? "ok"
-              : "neutral"
-          }
+          hint={allLive ? "All answering calls" : `of ${summary.totalLocations} ready for calls`}
+          icon={Radio}
+          color="green"
         />
-        <StatTile label="Active calls" value={summary.activeCallsNow} />
-        <StatTile label="Orders (24h)" value={summary.successfulOrdersInPeriod} />
-        <StatTile label="Follow-ups" value={summary.openFollowUps} />
-        <StatTile
+        <StatCard label="On calls now" value={summary.activeCallsNow} icon={PhoneCall} color="amber" />
+        <StatCard
+          label="Orders (24h)"
+          value={summary.successfulOrdersInPeriod}
+          icon={ShoppingBag}
+          color="orange"
+        />
+        <StatCard
+          label="Follow-ups"
+          value={summary.openFollowUps}
+          icon={MessageSquareText}
+          color="blue"
+        />
+        <StatCard
           label="Needs attention"
           value={summary.locationsNeedingAttention}
-          tone={summary.locationsNeedingAttention > 0 ? "warn" : "neutral"}
+          hint={summary.locationsNeedingAttention > 0 ? "Open a location to fix" : "Nothing blocking"}
+          icon={AlertTriangle}
+          color="rose"
         />
-      </dl>
+      </div>
     </section>
   );
 }
+
+type LocationStatus = { label: string; tone: Tone };
+
+function locationStatus(
+  provisionState: VoiceProvisionUiState,
+  stats: RestaurantCardStats | null,
+  isReady: boolean
+): LocationStatus {
+  if (isReady) return { label: "Live", tone: "live" };
+  if (provisionState === "needs_attention" || stats?.syncError) {
+    return { label: "Needs attention", tone: "bad" };
+  }
+  return { label: "Setting up", tone: "warn" };
+}
+
+const HOST_LABEL: Record<VoiceProvisionUiState, string> = {
+  ready: "Host ready",
+  in_progress: "Host setting up",
+  needs_attention: "Host needs attention",
+  not_started: "Host not set up",
+};
+
+const HOST_TONE: Record<VoiceProvisionUiState, Tone> = {
+  ready: "ok",
+  in_progress: "warn",
+  needs_attention: "bad",
+  not_started: "neutral",
+};
 
 function RestaurantCard({
   restaurant,
@@ -287,66 +362,71 @@ function RestaurantCard({
   flashed: boolean;
 }) {
   const provisionState = voiceProvisionUiStateFromProfile(profile);
-  const ordersHref = restaurantLiveOrdersHref(restaurant.id);
+  const overviewHref = `/dashboard/restaurants/${restaurant.id}/overview`;
+  const callsHref = `/dashboard/restaurants/${restaurant.id}/calls`;
+  const kitchenHref = restaurantLiveOrdersHref(restaurant.id);
   const menuHref = restaurantMenuSetupHref(restaurant.id);
   const agentHref = restaurantVoiceAgentHref(restaurant.id);
-  const nextAction = stats?.nextBestAction ?? {
-    label: "Open orders",
-    href: ordersHref,
-  };
   const place = profile?.address_line1?.trim() || null;
   const isReady = stats?.readyForCalls ?? provisionState === "ready";
+  const status = locationStatus(provisionState, stats, isReady);
+  const nextAction = !isReady ? stats?.nextBestAction ?? null : null;
 
   return (
     <article
       className={cn(
-        "locations-card card dashboard-stagger flex h-full min-w-0 flex-col p-4",
+        "locations-card org-location-card org-rise panel flex h-full min-w-0 flex-col",
         flashed && "flash-row"
       )}
       style={{ animationDelay: `${Math.min(index, 8) * 40}ms` }}
     >
-      <div className="flex min-w-0 items-start justify-between gap-3">
+      <div className="flex min-w-0 items-start gap-3 px-4 pt-4">
+        <IconTile icon={Store} color={isReady ? "green" : "orange"} />
         <div className="min-w-0 flex-1">
           <h2 className="locations-card__title min-w-0">
             <Link
-              href={ordersHref}
-              className="locations-card__title-link block truncate text-[15px] font-semibold tracking-tight text-ink hover:underline"
+              href={overviewHref}
+              className="locations-card__title-link org-location-card__title-link block truncate text-[15px] font-semibold tracking-tight text-ink hover:underline"
               title={restaurant.name}
               aria-label={`Open ${restaurant.name}`}
             >
               {restaurant.name}
             </Link>
           </h2>
-          <p className="mt-0.5 truncate text-[12px] text-subtle">
-            {place ?? `Added ${formatDate(restaurant.created_at)}`}
+          <p className="mt-0.5 flex min-w-0 items-center gap-1 text-[12.5px] text-subtle">
+            {place ? <MapPin size={12} strokeWidth={2} className="shrink-0" aria-hidden /> : null}
+            <span className="truncate">{place ?? `Added ${formatDate(restaurant.created_at)}`}</span>
           </p>
         </div>
-        {stats && stats.activeCallCount > 0 ? (
-          <span className="chip chip--accent shrink-0" title="Calls in progress">
-            <span className="pulse-dot pulse-dot--accent" aria-hidden />
-            {stats.activeCallCount} on call
-          </span>
-        ) : null}
+        <Badge tone={status.tone} className="shrink-0">
+          {status.label}
+        </Badge>
       </div>
 
-      <div className="locations-card__meta mt-3">
-        {provisionState === "not_started" ? (
-          <StatusChip tone="neutral">Host not set up</StatusChip>
-        ) : (
-          <VoiceProvisionStatusBadge state={provisionState} profile={profile} compact />
-        )}
+      <div className="locations-card__meta mt-3 flex min-w-0 flex-wrap gap-1.5 px-4">
+        <Badge tone={HOST_TONE[provisionState]} title={voiceProvisionBadgeTitle(provisionState, profile)}>
+          {HOST_LABEL[provisionState]}
+        </Badge>
         {stats ? (
-          <StatusChip tone={menuSyncTone(stats.menuSyncPhase)}>
+          <Badge tone={menuSyncTone(stats.menuSyncPhase)}>
             Menu {menuSyncLabel(stats.menuSyncPhase)}
-          </StatusChip>
+          </Badge>
+        ) : null}
+        {stats && stats.activeCallCount > 0 ? (
+          <Badge tone="live" title="Calls in progress">
+            {stats.activeCallCount} on call
+          </Badge>
         ) : null}
       </div>
 
-      <dl className="locations-card__stats mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+      <dl className="locations-card__stats mx-4 mt-3 grid grid-cols-3 overflow-hidden rounded-[10px] border border-line bg-line gap-px">
         <StatItem
           label="Orders (24h)"
           value={stats ? String(stats.successfulOrdersInPeriod) : "—"}
+          strong
         />
+        <StatItem label="Calls now" value={stats ? String(stats.activeCallCount) : "—"} />
+        <StatItem label="Last order" value={formatLastOrderAt(stats?.lastOrderAt ?? null)} />
         <StatItem
           label="Follow-ups"
           value={stats ? String(stats.openFollowUpCount) : "—"}
@@ -356,34 +436,38 @@ function RestaurantCard({
           value={stats ? String(stats.openReservationCount) : "—"}
         />
         <StatItem label="Menu items" value={stats ? String(stats.menuItemCount) : "—"} />
-        <StatItem label="Last order" value={formatLastOrderAt(stats?.lastOrderAt ?? null)} />
-        <StatItem label="Calls now" value={stats ? String(stats.activeCallCount) : "—"} />
       </dl>
 
       {stats?.syncError ? (
         <p
-          className="locations-card__sync-error mt-3 rounded-md border border-danger/25 bg-danger/5 px-2.5 py-1.5 text-[12px] text-danger [overflow-wrap:anywhere]"
+          className="locations-card__sync-error mx-4 mt-3 rounded-lg border border-danger/20 bg-danger/5 px-2.5 py-1.5 text-[12px] text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {stats.syncError}
         </p>
       ) : null}
 
-      <div className="locations-card__actions mt-4 flex flex-col gap-2 border-t border-line pt-3">
-        <Link
-          href={nextAction.href}
-          className={cn(
-            "inline-flex items-center justify-center px-3 text-center",
-            isReady ? "btn-ghost" : "btn-primary"
-          )}
-        >
-          {nextAction.label}
-        </Link>
-        <div className="grid grid-cols-3 gap-1.5">
-          <FastPathLink href={ordersHref}>Orders</FastPathLink>
-          <FastPathLink href={menuHref}>Menu</FastPathLink>
-          <FastPathLink href={agentHref}>Agent</FastPathLink>
+      <div className="locations-card__actions mt-auto px-4 pb-4 pt-4">
+        <div className="flex min-w-0 flex-wrap gap-2">
+          <Link href={overviewHref} className="btn-primary min-w-0 flex-1">
+            Open
+            <ArrowRight size={14} strokeWidth={2.25} aria-hidden />
+          </Link>
+          {nextAction ? (
+            <Link href={nextAction.href} className="btn-ghost min-w-0 max-w-full flex-1 truncate">
+              {nextAction.label}
+            </Link>
+          ) : null}
         </div>
+        <nav
+          className="mt-2 grid grid-cols-2 gap-1 border-t border-line pt-2"
+          aria-label={`${restaurant.name} shortcuts`}
+        >
+          <FastPathLink href={callsHref} icon={PhoneCall}>Calls &amp; Orders</FastPathLink>
+          <FastPathLink href={kitchenHref} icon={ChefHat}>Kitchen</FastPathLink>
+          <FastPathLink href={menuHref} icon={BookOpen}>Menu</FastPathLink>
+          <FastPathLink href={agentHref} icon={Headphones}>Phone host</FastPathLink>
+        </nav>
       </div>
     </article>
   );
@@ -417,26 +501,35 @@ function menuSyncTone(phase: MenuAutoSyncUiPhase): Tone {
   }
 }
 
-function StatItem({ label, value }: { label: string; value: string }) {
+function StatItem({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
   return (
-    <div className="locations-card__stat min-w-0">
-      <dt className="truncate text-[11px] font-semibold uppercase tracking-wider text-subtle">
-        {label}
-      </dt>
-      <dd className="mt-0.5 truncate text-[13px] font-medium tabular-nums text-ink">
+    <div className="locations-card__stat min-w-0 bg-card px-2.5 py-2">
+      <dt className="truncate text-[11.5px] text-subtle">{label}</dt>
+      <dd
+        className={cn(
+          "mt-0.5 truncate text-[13.5px] font-semibold tabular-nums",
+          strong ? "text-money" : "text-ink"
+        )}
+      >
         {value}
       </dd>
     </div>
   );
 }
 
-function FastPathLink({ href, children }: { href: string; children: string }) {
+function FastPathLink({
+  href,
+  icon: Icon,
+  children,
+}: {
+  href: string;
+  icon: typeof PhoneCall;
+  children: ReactNode;
+}) {
   return (
-    <Link
-      href={href}
-      className="inline-flex min-h-11 items-center justify-center rounded-md px-2 text-center text-[12px] font-medium text-muted hover:bg-elev hover:text-ink lg:min-h-8"
-    >
-      {children}
+    <Link href={href} className="org-fast-link justify-start">
+      <Icon size={14} strokeWidth={2} className="shrink-0 text-subtle" aria-hidden />
+      <span className="truncate">{children}</span>
     </Link>
   );
 }
@@ -444,9 +537,12 @@ function FastPathLink({ href, children }: { href: string; children: string }) {
 function LoadingState({ "aria-busy": ariaBusy }: { "aria-busy"?: "true" }) {
   return (
     <>
-      <div className="locations-portfolio-skeleton grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6 lg:gap-3">
+      <div className="locations-portfolio-skeleton grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 xl:grid-cols-6">
         {Array.from({ length: 6 }).map((_, idx) => (
-          <div key={idx} className="skeleton h-16 rounded-xl" />
+          <div key={idx} className="stat-card">
+            <div className="skeleton h-3 w-2/3 rounded" />
+            <div className="skeleton mt-1 h-6 w-1/3 rounded" />
+          </div>
         ))}
       </div>
       <div
@@ -457,27 +553,24 @@ function LoadingState({ "aria-busy": ariaBusy }: { "aria-busy"?: "true" }) {
         aria-label="Loading restaurants"
       >
         {Array.from({ length: 4 }).map((_, idx) => (
-          <div key={idx} className="locations-card-skeleton card flex min-w-0 flex-col p-4">
-            <div className="space-y-2">
-              <div className="skeleton h-4 w-2/3 max-w-full" />
-              <div className="skeleton h-3 w-1/3 max-w-full" />
-            </div>
-            <div className="mt-3 flex gap-2">
-              <div className="skeleton h-5 w-20 rounded-full" />
-              <div className="skeleton h-5 w-16 rounded-full" />
-            </div>
-            <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {Array.from({ length: 6 }).map((__, statIdx) => (
-                <div key={statIdx} className="skeleton h-9 rounded-md" />
-              ))}
-            </div>
-            <div className="mt-4 space-y-2 border-t border-line pt-3">
-              <div className="skeleton h-9 rounded-lg" />
-              <div className="grid grid-cols-3 gap-1.5">
-                <div className="skeleton h-8 rounded-md" />
-                <div className="skeleton h-8 rounded-md" />
-                <div className="skeleton h-8 rounded-md" />
+          <div key={idx} className="locations-card-skeleton panel flex min-w-0 flex-col p-4">
+            <div className="flex items-start gap-3">
+              <div className="skeleton h-8 w-8 shrink-0 rounded-[9px]" />
+              <div className="min-w-0 flex-1 space-y-2">
+                <div className="skeleton h-4 w-2/3 max-w-full rounded" />
+                <div className="skeleton h-3 w-1/3 max-w-full rounded" />
               </div>
+            </div>
+            <div className="mt-3 flex gap-1.5">
+              <div className="skeleton h-5 w-20 rounded-md" />
+              <div className="skeleton h-5 w-16 rounded-md" />
+            </div>
+            <div className="skeleton mt-3 h-[104px] rounded-[10px]" />
+            <div className="skeleton mt-4 h-9 rounded-[10px]" />
+            <div className="mt-2 grid grid-cols-2 gap-1 border-t border-line pt-2">
+              {Array.from({ length: 4 }).map((__, linkIdx) => (
+                <div key={linkIdx} className="skeleton h-8 rounded-md" />
+              ))}
             </div>
           </div>
         ))}
@@ -497,50 +590,50 @@ function ErrorState({
   const [retrying, setRetrying] = useState(false);
 
   return (
-    <div className="locations-page__state locations-page__state--error card min-w-0 p-5 sm:p-6">
-      <h3 className="text-[15px] font-semibold text-ink">Could not load locations</h3>
-      <p className="locations-page__error-text mt-1 text-[13px] text-danger" role="alert">
-        {error}
-      </p>
-      <button
-        type="button"
-        className="btn-primary locations-page__retry mt-4"
-        disabled={retrying}
-        aria-busy={retrying}
-        onClick={() => {
-          setRetrying(true);
-          void onRetry().finally(() => setRetrying(false));
-        }}
-      >
-        {retrying ? "Retrying…" : "Retry"}
-      </button>
+    <div className="locations-page__state locations-page__state--error panel min-w-0">
+      <div className="flex min-w-0 items-start gap-3 p-5">
+        <IconTile icon={AlertTriangle} color="rose" />
+        <div className="min-w-0 flex-1">
+          <h3 className="text-[14px] font-semibold text-ink">Could not load locations</h3>
+          <p
+            className="locations-page__error-text mt-1 text-[13px] text-danger [overflow-wrap:anywhere]"
+            role="alert"
+          >
+            {error}
+          </p>
+          <button
+            type="button"
+            className="btn-primary locations-page__retry mt-4"
+            disabled={retrying}
+            aria-busy={retrying}
+            onClick={() => {
+              setRetrying(true);
+              void onRetry().finally(() => setRetrying(false));
+            }}
+          >
+            {retrying ? "Retrying…" : "Retry"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
 
 function EmptyState() {
   return (
-    <div className="locations-page__state locations-page__state--empty card card--raised mx-auto max-w-xl min-w-0 p-6 text-center sm:p-10">
-      <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-ink text-base">
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.8 2.1Z" />
-        </svg>
-      </div>
-      <h3 className="mt-4 font-display text-[20px] font-semibold tracking-tight text-ink">
-        Set up your first location
-      </h3>
-      <p className="mx-auto mt-2 max-w-sm text-pretty text-[13px] leading-relaxed text-muted">
-        Paste your menu link. ROAL builds a phone host that answers calls, takes pickup
-        orders, and sends tickets to the kitchen. About two minutes.
-      </p>
-      <div className="mt-5 flex justify-center">
-        <CreateRestaurantButton
-          label="Set up a location"
-          className="btn-lg"
-          href="/dashboard/onboarding"
-        />
-      </div>
-      <p className="mt-3 text-[12px] text-subtle">$0.90 per completed order. No monthly fee.</p>
+    <div className="locations-page__state locations-page__state--empty panel mx-auto max-w-xl min-w-0">
+      <UiEmptyState
+        icon={Store}
+        className="py-12"
+        title="Set up your first location"
+        body="Paste your menu link. ROAL builds a phone host that answers calls, takes pickup orders, and sends tickets to the kitchen. About two minutes."
+        action={
+          <div className="flex flex-col items-center gap-2">
+            <CreateRestaurantButton label="Set up a location" href="/dashboard/onboarding" />
+            <p className="text-[12px] text-subtle">$0.90 per completed order. No monthly fee.</p>
+          </div>
+        }
+      />
     </div>
   );
 }

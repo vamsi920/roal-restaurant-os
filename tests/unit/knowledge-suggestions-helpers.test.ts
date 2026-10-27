@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/gemini", () => ({
@@ -112,7 +112,7 @@ function fakeSupabase(rows: PendingRow[], options: { insertError?: { message: st
     expect(table).toBe("restaurant_knowledge_suggestions");
     return { select, update, insert };
   });
-  return { client: { from } as unknown as SupabaseClient, from, select, update, updateEq, insert, selectFilters };
+  return { client: { from } as unknown as Db, from, select, update, updateEq, insert, selectFilters };
 }
 
 const baseInput = {

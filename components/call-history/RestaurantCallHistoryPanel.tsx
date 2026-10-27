@@ -1,63 +1,101 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { KdsEmptyStatePanel } from "@/components/dashboard/kds-workspace-states";
+import {
+  CalendarClock,
+  CheckCircle2,
+  Clock,
+  Phone,
+  PhoneCall,
+  PhoneForwarded,
+  PhoneMissed,
+  Play,
+  ShoppingBag,
+  Timer,
+  Undo2,
+  Voicemail,
+  type LucideIcon,
+} from "lucide-react";
 import { updateReservationRequestStatusAction } from "@/app/dashboard/restaurants/[id]/calls/actions";
-import { filterCallHistoryRows } from "@/lib/call-history/build-call-history-rows";
+import {
+  Badge,
+  EmptyState,
+  IconTile,
+  Panel,
+  StatCard,
+  formatRelative,
+  type TileColor,
+  type Tone,
+} from "@/components/ui";
+import { Notice, RefreshButton } from "@/components/live-orders/workspace-ui";
+import { DrawerSection, SideDrawer } from "@/components/live-orders/SideDrawer";
+import { TranscriptBubbles } from "@/components/call-history/TranscriptBubbles";
 import { CALL_HISTORY_DEFAULT_RANGE_DAYS } from "@/lib/call-history/load-call-history";
 import type {
-  CallHistoryOutcomeFilter,
+  CallHistoryRow,
   CallHistorySnapshot,
+  ReservationRequestRow,
 } from "@/lib/call-history/types";
+import { parseOrderLineItems } from "@/lib/orders/line-items";
 import {
   isOpenReservationStatus,
+  normalizeReservationStatus,
   reservationNextOwnerAction,
-  reservationStatusChipClass,
   reservationStatusLabel,
   type ReservationOwnerUpdateStatus,
 } from "@/lib/restaurant-reservations/schema";
 import { cn } from "@/lib/cn";
 
-const FILTERS: { id: CallHistoryOutcomeFilter; label: string }[] = [
+/* -------------------------------------------------------------------------- */
+/* Filters                                                                    */
+/* -------------------------------------------------------------------------- */
+
+type CallsFilter = "all" | "orders" | "follow_ups" | "voicemail" | "reservations";
+
+const FILTERS: { id: CallsFilter; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "completed", label: "Completed" },
-  { id: "active", label: "Active" },
-  { id: "needs_action", label: "Needs action" },
+  { id: "orders", label: "Orders" },
+  { id: "follow_ups", label: "Follow-ups" },
   { id: "voicemail", label: "Voicemail" },
   { id: "reservations", label: "Reservations" },
-  { id: "failed", label: "Failed" },
-  { id: "other", label: "Other" },
 ];
+
+function isLive(row: CallHistoryRow): boolean {
+  return row.status === "active" || row.outcome === "in_progress";
+}
+
+function isOrderRow(row: CallHistoryRow): boolean {
+  return row.outcome === "order_completed" || row.intent === "order";
+}
+
+function needsFollowUp(row: CallHistoryRow): boolean {
+  return (row.needsStaffFollowUp || row.isActionable) && !isLive(row);
+}
+
+function matchesFilter(row: CallHistoryRow, filter: CallsFilter, handled: Set<string>): boolean {
+  switch (filter) {
+    case "orders":
+      return isOrderRow(row);
+    case "follow_ups":
+      return needsFollowUp(row) && !handled.has(row.sessionId);
+    case "voicemail":
+      return row.intent === "voicemail";
+    case "reservations":
+      return row.intent === "reservation";
+    default:
+      return true;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Formatting                                                                 */
+/* -------------------------------------------------------------------------- */
 
 function formatWhen(iso: string): string {
   const ms = new Date(iso).getTime();
   if (Number.isNaN(ms)) return "—";
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "short",
-    timeStyle: "short",
-  }).format(ms);
-}
-
-function formatCaller(
-  phone: string | null,
-  name: string | null
-): { primary: string; secondary: string | null } {
-  if (name?.trim()) {
-    return {
-      primary: name.trim(),
-      secondary: phone?.trim() || null,
-    };
-  }
-  if (phone?.trim()) {
-    return { primary: phone.trim(), secondary: null };
-  }
-  return { primary: "—", secondary: null };
-}
-
-function truncateSessionId(sessionId: string): string {
-  if (sessionId.length <= 14) return sessionId;
-  return `${sessionId.slice(0, 8)}…${sessionId.slice(-4)}`;
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(ms);
 }
 
 function formatDuration(seconds: number | null): string | null {
@@ -69,654 +107,639 @@ function formatDuration(seconds: number | null): string | null {
   return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
-function formatPercent(value: number | null): string {
-  return value == null ? "—" : `${value}%`;
+function callerLabel(row: { callerName: string | null; callerPhone: string | null }) {
+  const name = row.callerName?.trim();
+  const phone = row.callerPhone?.trim() || null;
+  if (name) return { primary: name, secondary: phone };
+  if (phone) return { primary: phone, secondary: null };
+  return { primary: "Unknown caller", secondary: null };
 }
 
-function CommandCenterSummary({ snapshot }: { snapshot: CallHistorySnapshot }) {
+function dialHref(phone: string | null | undefined): string | null {
+  const digits = phone?.replace(/[^\d+]/g, "") ?? "";
+  return digits.length >= 7 ? `tel:${digits}` : null;
+}
+
+function isSameLocalDay(iso: string, now: Date): boolean {
+  const d = new Date(iso);
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate()
+  );
+}
+
+type RowLook = { icon: LucideIcon; tile: TileColor };
+
+function rowLook(row: CallHistoryRow): RowLook {
+  if (isLive(row)) return { icon: PhoneCall, tile: "amber" };
+  if (isOrderRow(row)) return { icon: ShoppingBag, tile: "green" };
+  if (row.intent === "voicemail") return { icon: Voicemail, tile: "blue" };
+  if (row.intent === "reservation") return { icon: CalendarClock, tile: "orange" };
+  if (row.intent === "handoff") return { icon: PhoneForwarded, tile: "rose" };
+  if (row.outcome === "abandoned" || row.outcome === "canceled") return { icon: PhoneMissed, tile: "rose" };
+  return { icon: Phone, tile: "blue" };
+}
+
+function outcomeBadge(row: CallHistoryRow, handled: boolean): { tone: Tone; label: string } {
+  if (isLive(row)) return { tone: "live", label: "Live" };
+  if (row.outcome === "order_completed") return { tone: "ok", label: "Confirmed" };
+  if (needsFollowUp(row)) return handled ? { tone: "neutral", label: "Handled" } : { tone: "warn", label: "Follow up" };
+  if (row.outcome === "canceled" || row.outcome === "abandoned") return { tone: "bad", label: row.outcomeLabel };
+  if (row.intent === "voicemail") return { tone: "info", label: "Voicemail" };
+  return { tone: "neutral", label: row.intent === "faq" ? "Answered" : row.outcomeLabel };
+}
+
+function rowSublabel(row: CallHistoryRow): string {
+  const parts = [row.intentLabel];
+  if (row.fulfillmentLabel) parts.push(row.fulfillmentLabel);
+  if (row.lineCount > 0) parts.push(`${row.lineCount} item${row.lineCount === 1 ? "" : "s"}`);
+  const duration = formatDuration(row.durationSeconds);
+  if (duration) parts.push(duration);
+  if (row.callerLanguageLabel) parts.push(row.callerLanguageLabel);
+  if (row.isTestHarness) parts.push("Test call");
+  return parts.join(" · ");
+}
+
+/* -------------------------------------------------------------------------- */
+/* "Handled" marks (per device)                                               */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Follow-ups have no server-side "handled" column yet, so the mark lives in this
+ * browser. It only hides the call from the Follow-ups filter and stat.
+ */
+function useHandledCalls(restaurantId: string) {
+  const key = `roal:handled-calls:${restaurantId}`;
+  const [handled, setHandled] = useState<Set<string>>(() => new Set());
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(key);
+      const ids = raw ? (JSON.parse(raw) as unknown) : [];
+      if (Array.isArray(ids)) setHandled(new Set(ids.filter((v): v is string => typeof v === "string")));
+    } catch {
+      // Storage blocked or corrupt: start empty.
+    }
+  }, [key]);
+
+  const toggle = useCallback(
+    (sessionId: string) => {
+      setHandled((prev) => {
+        const next = new Set(prev);
+        if (next.has(sessionId)) next.delete(sessionId);
+        else next.add(sessionId);
+        try {
+          window.localStorage.setItem(key, JSON.stringify([...next].slice(-500)));
+        } catch {
+          // Non-fatal: the mark still applies for this visit.
+        }
+        return next;
+      });
+    },
+    [key]
+  );
+
+  return { handled, toggle };
+}
+
+/* -------------------------------------------------------------------------- */
+/* Summary                                                                    */
+/* -------------------------------------------------------------------------- */
+
+function CallsSummary({
+  snapshot,
+  followUpCount,
+}: {
+  snapshot: CallHistorySnapshot;
+  followUpCount: number;
+}) {
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => setNow(new Date()), []);
+
+  const callsToday = now ? snapshot.rows.filter((row) => isSameLocalDay(row.occurredAt, now)).length : null;
+  const durations = snapshot.rows
+    .map((row) => row.durationSeconds)
+    .filter((s): s is number => s != null && Number.isFinite(s) && s > 0);
+  const avgSeconds = durations.length > 0 ? durations.reduce((a, b) => a + b, 0) / durations.length : null;
   const { summary } = snapshot;
-  const cards = [
-    {
-      label: "Active now",
-      value: String(summary.activeCalls),
-      note: "Calls still in progress",
-      tone: summary.activeCalls > 0 ? "live" : "default",
-    },
-    {
-      label: "Orders won",
-      value: String(summary.completedOrders),
-      note: `${formatPercent(summary.orderConversionPercent)} call-to-order`,
-      tone: "success",
-    },
-    {
-      label: "Needs action",
-      value: String(summary.staffFollowUps + summary.openReservationRequests),
-      note:
-        summary.voicemailCalls > 0
-          ? `${summary.voicemailCalls} voicemail${summary.voicemailCalls === 1 ? "" : "s"}`
-          : "Callbacks, handoffs, tables",
-      tone: summary.staffFollowUps + summary.openReservationRequests > 0 ? "warning" : "default",
-    },
-    {
-      label: "Call evidence",
-      value: `${summary.transcriptsAvailable}/${summary.totalCalls}`,
-      note:
-        summary.recordingsAvailable > 0
-          ? `${summary.recordingsAvailable} recordings`
-          : "Transcripts and summaries",
-      tone: "default",
-    },
-  ];
 
   return (
-    <div
-      className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-4"
-      aria-label="Phone command center summary"
-    >
-      {cards.map((card) => (
-        <div
-          key={card.label}
-          className={cn(
-            "rounded-xl border px-3 py-3",
-            card.tone === "live" &&
-              "border-warning/30 bg-warning/10 text-amber-950",
-            card.tone === "success" &&
-              "border-success/20 bg-success/10 text-emerald-950",
-            card.tone === "warning" &&
-              "border-warning/30 bg-warning/10 text-amber-950",
-            card.tone === "default" && "border-line bg-elev text-ink"
-          )}
-        >
-          <p className="text-[0.68rem] font-semibold uppercase tracking-wide text-muted">
-            {card.label}
-          </p>
-          <p className="mt-1 text-2xl font-semibold tracking-tight">{card.value}</p>
-          <p className="mt-0.5 text-xs text-muted">{card.note}</p>
-        </div>
-      ))}
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label="Calls summary">
+      <StatCard
+        label="Calls today"
+        value={callsToday ?? "—"}
+        hint={`${summary.totalCalls} in the last ${CALL_HISTORY_DEFAULT_RANGE_DAYS} days`}
+        icon={Phone}
+        color="blue"
+      />
+      <StatCard
+        label="Orders"
+        value={summary.completedOrders}
+        hint={
+          summary.orderConversionPercent != null
+            ? `${summary.orderConversionPercent}% of calls ordered`
+            : "Completed phone orders"
+        }
+        icon={ShoppingBag}
+        color="green"
+      />
+      <StatCard
+        label="Needs follow-up"
+        value={followUpCount}
+        hint={
+          summary.openReservationRequests > 0
+            ? `${summary.openReservationRequests} table request${summary.openReservationRequests === 1 ? "" : "s"} open`
+            : "Callbacks and handoffs"
+        }
+        icon={PhoneForwarded}
+        color={followUpCount > 0 ? "amber" : "orange"}
+      />
+      <StatCard
+        label="Avg call length"
+        value={formatDuration(avgSeconds) ?? "—"}
+        hint={durations.length > 0 ? `Across ${durations.length} timed call${durations.length === 1 ? "" : "s"}` : "No timed calls yet"}
+        icon={Timer}
+        color="orange"
+      />
     </div>
   );
 }
 
-function TranscriptPreview({
-  row,
-}: {
-  row: CallHistorySnapshot["rows"][number];
-}) {
-  if (row.transcriptLines.length === 0 && !row.transcriptSummary) {
-    return <span className="text-subtle">—</span>;
-  }
+/* -------------------------------------------------------------------------- */
+/* Reservations                                                               */
+/* -------------------------------------------------------------------------- */
 
-  return (
-    <details className="max-w-[22rem]">
-      <summary className="cursor-pointer text-xs font-medium text-accent underline-offset-2 hover:underline">
-        {row.transcriptLines.length > 0
-          ? `${row.transcriptLines.length} lines`
-          : "Summary"}
-      </summary>
-      <div className="mt-2 max-h-56 space-y-2 overflow-y-auto rounded-lg border border-line bg-elev p-2 text-xs">
-        {row.transcriptSummary ? (
-          <p className="border-b border-line/60 pb-2 text-muted [overflow-wrap:anywhere]">
-            {row.transcriptSummary}
-          </p>
-        ) : null}
-        {row.transcriptLines.map((line, index) => (
-          <p key={`${line.speaker}-${index}`} className="[overflow-wrap:anywhere]">
-            <span className="font-semibold text-ink">{line.speaker}: </span>
-            <span className="text-muted">{line.text}</span>
-          </p>
-        ))}
-      </div>
-    </details>
-  );
-}
+const RESERVATION_TONE: Record<string, Tone> = {
+  requested: "info",
+  contacted: "warn",
+  confirmed: "ok",
+  declined: "bad",
+  canceled: "neutral",
+};
 
-function FollowUpInbox({
-  rows,
-}: {
-  rows: CallHistorySnapshot["rows"];
-}) {
-  const followUps = rows
-    .filter((row) => row.needsStaffFollowUp && row.intent !== "voicemail")
-    .slice(0, 5);
-  if (followUps.length === 0) return null;
-
-  return (
-    <section
-      className="border-b border-line bg-warning/5 px-4 py-4 sm:px-5"
-      aria-labelledby="staff-follow-up-heading"
-    >
-      <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-        <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wide text-amber-900">
-            Follow-up inbox
-          </p>
-          <h3
-            id="staff-follow-up-heading"
-            className="mt-1 text-base font-semibold text-ink"
-          >
-            What to do next for callbacks, handoffs, and complaints
-          </h3>
-        </div>
-        <p className="text-xs text-muted">
-          {followUps.length} recent {followUps.length === 1 ? "call" : "calls"}
-        </p>
-      </div>
-
-      <ul className="mt-3 grid gap-2">
-        {followUps.map((row) => {
-          const caller = formatCaller(row.callerPhone, row.callerName);
-          return (
-            <li
-              key={row.sessionId}
-              className="rounded-xl border border-warning/20 bg-elev px-3 py-2.5"
-            >
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-ink">
-                    {row.followUpReason ?? "Staff follow-up"}
-                  </p>
-                  <p className="mt-0.5 text-xs text-muted">
-                    {caller.primary}
-                    {caller.secondary ? ` · ${caller.secondary}` : ""} ·{" "}
-                    {formatWhen(row.occurredAt)}
-                  </p>
-                </div>
-                <span
-                  className={cn(
-                    "inline-flex w-fit rounded px-1.5 py-0.5 text-micro font-semibold uppercase",
-                    OUTCOME_TONE[row.outcome] ?? OUTCOME_TONE.unknown
-                  )}
-                >
-                  {row.outcomeLabel}
-                </span>
-              </div>
-              {row.transcriptSummary ? (
-                <p className="mt-2 text-sm text-muted [overflow-wrap:anywhere]">
-                  {row.transcriptSummary}
-                </p>
-              ) : null}
-              <div className="mt-2 flex flex-wrap items-center gap-2 text-[0.7rem] text-subtle">
-                <span className="font-mono">{truncateSessionId(row.sessionId)}</span>
-                {row.recordingUrl ? (
-                  <a
-                    href={row.recordingUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-medium text-accent underline-offset-2 hover:underline"
-                  >
-                    Recording{formatDuration(row.durationSeconds) ? ` · ${formatDuration(row.durationSeconds)}` : ""}
-                  </a>
-                ) : null}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
-}
-
-function VoicemailInbox({
-  rows,
-}: {
-  rows: CallHistorySnapshot["rows"];
-}) {
-  const voicemails = rows.filter((row) => row.intent === "voicemail").slice(0, 5);
-  if (voicemails.length === 0) return null;
-
-  return (
-    <section
-      className="border-b border-line bg-elev px-4 py-4 sm:px-5"
-      aria-labelledby="voicemail-inbox-heading"
-    >
-      <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-        <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-            Voicemail inbox
-          </p>
-          <h3
-            id="voicemail-inbox-heading"
-            className="mt-1 text-base font-semibold text-ink"
-          >
-            Messages that need a callback
-          </h3>
-        </div>
-        <p className="text-xs text-muted">
-          {voicemails.length} recent {voicemails.length === 1 ? "message" : "messages"}
-        </p>
-      </div>
-
-      <ul className="mt-3 grid gap-2">
-        {voicemails.map((row) => {
-          const caller = formatCaller(row.callerPhone, row.callerName);
-          return (
-            <li
-              key={row.sessionId}
-              className="rounded-xl border border-accent/20 bg-card px-3 py-2.5"
-            >
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-ink">
-                    {caller.primary}
-                    {caller.secondary ? (
-                      <span className="font-normal text-muted"> · {caller.secondary}</span>
-                    ) : null}
-                  </p>
-                  <p className="mt-0.5 text-xs text-muted">
-                    {formatWhen(row.occurredAt)} · {row.ownerActionLabel}
-                  </p>
-                </div>
-                {row.recordingUrl ? (
-                  <a
-                    href={row.recordingUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex w-fit rounded-lg border border-accent/20 bg-accent-soft px-2.5 py-1.5 text-xs font-semibold text-accent underline-offset-2 hover:underline"
-                  >
-                    Play recording
-                    {formatDuration(row.durationSeconds)
-                      ? ` · ${formatDuration(row.durationSeconds)}`
-                      : ""}
-                  </a>
-                ) : (
-                  <span className="inline-flex w-fit rounded-lg border border-line bg-elev px-2.5 py-1.5 text-xs font-semibold text-muted">
-                    Transcript only
-                  </span>
-                )}
-              </div>
-              {row.transcriptSummary ? (
-                <p className="mt-2 text-sm text-muted [overflow-wrap:anywhere]">
-                  {row.transcriptSummary}
-                </p>
-              ) : null}
-              <div className="mt-2 flex flex-wrap items-center gap-2 text-[0.7rem] text-subtle">
-                <span className="font-mono">{truncateSessionId(row.sessionId)}</span>
-                <span>{row.outcomeLabel}</span>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
-}
-
-function ReservationInbox({
+function ReservationRequests({
   restaurantId,
   rows,
 }: {
   restaurantId: string;
-  rows: CallHistorySnapshot["reservationRequests"];
+  rows: ReservationRequestRow[];
 }) {
   const router = useRouter();
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const recent = rows.slice(0, 20);
   const openCount = rows.filter((row) => isOpenReservationStatus(row.status)).length;
-  if (recent.length === 0) return null;
 
-  async function updateStatus(
-    requestId: string,
-    status: ReservationOwnerUpdateStatus
-  ) {
+  async function updateStatus(requestId: string, status: ReservationOwnerUpdateStatus) {
     setError(null);
     setPendingId(requestId);
     try {
       await updateReservationRequestStatusAction(restaurantId, requestId, status);
       router.refresh();
     } catch (e) {
-      setError(
-        e instanceof Error
-          ? e.message
-          : "Could not update reservation request."
-      );
+      setError(e instanceof Error ? e.message : "Could not update reservation request.");
     } finally {
       setPendingId(null);
     }
   }
 
   return (
-    <section
-      className="border-b border-line bg-accent-soft/40 px-4 py-4 sm:px-5"
-      aria-labelledby="reservation-requests-heading"
+    <Panel
+      flush
+      title="Table requests"
+      action={<span className="text-[12.5px] text-subtle">{openCount} open · {recent.length} recent</span>}
     >
-      <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-        <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-            Reservation requests
-          </p>
-          <h3
-            id="reservation-requests-heading"
-            className="mt-1 text-base font-semibold text-ink"
-          >
-            Table requests from phone calls
-          </h3>
-        </div>
-        <p className="text-xs text-muted">
-          {openCount} open · {recent.length} recent
-        </p>
-      </div>
-      {error ? (
-        <p className="mt-2 rounded-lg border border-danger/20 bg-danger/10 px-3 py-2 text-xs font-medium text-danger">
-          {error}
-        </p>
-      ) : null}
-
-      <ul className="mt-3 grid gap-2 md:grid-cols-2">
-        {recent.map((row) => {
-          const open = isOpenReservationStatus(row.status);
-          return (
-            <li
-              key={row.id}
-              className="rounded-xl border border-accent/20 bg-card px-3 py-2.5"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-ink">
-                    Party of {row.partySize} · {row.requestedTime}
+      {error ? <Notice tone="bad" className="mx-4 mt-3">{error}</Notice> : null}
+      {recent.length === 0 ? (
+        <EmptyState
+          icon={CalendarClock}
+          title="No table requests"
+          body="When a caller asks for a table, the request lands here for you to confirm."
+        />
+      ) : (
+        <ul>
+          {recent.map((row) => {
+            const open = isOpenReservationStatus(row.status);
+            const busy = pendingId === row.id;
+            const tel = dialHref(row.customerPhone);
+            return (
+              <li key={row.id} className="list-row flex-wrap items-start sm:flex-nowrap">
+                <IconTile icon={CalendarClock} color="orange" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-[14px] font-semibold text-ink">
+                    Party of {row.partySize} · {row.requestedDate} at {row.requestedTime}
                   </p>
-                  <p className="mt-0.5 text-xs text-muted">
-                    {row.requestedDate} · {row.customerName} · {row.customerPhone}
+                  <p className="truncate text-[12.5px] text-subtle">
+                    {row.customerName || "Guest"}
+                    {row.customerPhone ? ` · ${row.customerPhone}` : ""} · {formatRelative(row.createdAt)}
                   </p>
-                </div>
-                <span
-                  className={cn(
-                    "shrink-0 rounded px-1.5 py-0.5 text-micro font-semibold uppercase",
-                    reservationStatusChipClass(row.status)
-                  )}
-                >
-                  {reservationStatusLabel(row.status)}
-                </span>
-              </div>
-              {row.notes ? (
-                <p className="mt-2 text-xs text-muted [overflow-wrap:anywhere]">
-                  {row.notes}
-                </p>
-              ) : null}
-              <p className="mt-2 text-[0.7rem] font-medium text-ink">
-                Next: {reservationNextOwnerAction(row.status)}
-              </p>
-              <p className="mt-1 text-[0.7rem] text-subtle">
-                Created {formatWhen(row.createdAt)}
-                {row.sessionId ? ` · ${truncateSessionId(row.sessionId)}` : ""}
-              </p>
-              {open ? (
-                <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                  {row.status === "requested" ? (
-                    <button
-                      type="button"
-                      onClick={() => void updateStatus(row.id, "contacted")}
-                      disabled={pendingId === row.id}
-                      className="kds-thumb-btn min-h-10 rounded-lg border border-warning/30 bg-warning/10 px-3 text-xs font-semibold text-amber-900 hover:bg-warning/15 disabled:cursor-wait disabled:opacity-60"
-                    >
-                      {pendingId === row.id ? "Updating..." : "Mark contacted"}
-                    </button>
+                  {row.notes ? (
+                    <p className="mt-1 text-[13px] text-muted [overflow-wrap:anywhere]">{row.notes}</p>
                   ) : null}
-                  <button
-                    type="button"
-                    onClick={() => void updateStatus(row.id, "confirmed")}
-                    disabled={pendingId === row.id}
-                    className="kds-thumb-btn min-h-10 rounded-lg border border-success/30 bg-success/10 px-3 text-xs font-semibold text-success hover:bg-success/15 disabled:cursor-wait disabled:opacity-60"
-                  >
-                    {pendingId === row.id ? "Updating..." : "Confirm table"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void updateStatus(row.id, "declined")}
-                    disabled={pendingId === row.id}
-                    className="kds-thumb-btn min-h-10 rounded-lg border border-line bg-elev px-3 text-xs font-semibold text-muted hover:text-ink disabled:cursor-wait disabled:opacity-60"
-                  >
-                    Decline
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void updateStatus(row.id, "canceled")}
-                    disabled={pendingId === row.id}
-                    className="kds-thumb-btn min-h-10 rounded-lg border border-line bg-elev px-3 text-xs font-semibold text-muted hover:text-ink disabled:cursor-wait disabled:opacity-60"
-                  >
-                    Close / cancel
-                  </button>
+                  <p className="mt-1 text-[12.5px] font-medium text-muted">
+                    Next: {reservationNextOwnerAction(row.status)}
+                  </p>
+                  {open ? (
+                    <div className="mt-2.5 flex flex-wrap gap-2">
+                      {tel ? (
+                        <a href={tel} className="btn-ghost btn-sm">
+                          <Phone size={13} aria-hidden />
+                          Call guest
+                        </a>
+                      ) : null}
+                      {normalizeReservationStatus(row.status) === "requested" ? (
+                        <button
+                          type="button"
+                          onClick={() => void updateStatus(row.id, "contacted")}
+                          disabled={busy}
+                          className="btn-ghost btn-sm"
+                        >
+                          Mark contacted
+                        </button>
+                      ) : null}
+                      <button
+                        type="button"
+                        onClick={() => void updateStatus(row.id, "confirmed")}
+                        disabled={busy}
+                        className="btn-primary btn-sm"
+                      >
+                        {busy ? "Updating…" : "Confirm table"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void updateStatus(row.id, "declined")}
+                        disabled={busy}
+                        className="btn-ghost btn-sm text-muted"
+                      >
+                        Decline
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void updateStatus(row.id, "canceled")}
+                        disabled={busy}
+                        className="btn-ghost btn-sm text-muted"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
-            </li>
-          );
-        })}
-      </ul>
-    </section>
+                <Badge tone={RESERVATION_TONE[normalizeReservationStatus(row.status)] ?? "neutral"}>
+                  {reservationStatusLabel(row.status)}
+                </Badge>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Panel>
   );
 }
 
-const OUTCOME_TONE: Record<string, string> = {
-  order_completed: "bg-success/15 text-success",
-  in_progress: "bg-warning/15 text-amber-900",
-  canceled: "bg-danger/10 text-danger",
-  abandoned: "bg-danger/10 text-danger",
-  no_order: "bg-elev text-muted",
-  unknown: "bg-elev text-muted",
-};
+/* -------------------------------------------------------------------------- */
+/* Call row + drawer                                                          */
+/* -------------------------------------------------------------------------- */
+
+function CallRow({
+  row,
+  handled,
+  onOpen,
+}: {
+  row: CallHistoryRow;
+  handled: boolean;
+  onOpen: () => void;
+}) {
+  const caller = callerLabel(row);
+  const look = rowLook(row);
+  const badge = outcomeBadge(row, handled);
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="list-row w-full text-left focus-visible:-outline-offset-2"
+        aria-haspopup="dialog"
+      >
+        <IconTile icon={look.icon} color={look.tile} />
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[14px] font-semibold text-ink">{caller.primary}</span>
+          <span className="block truncate text-[12.5px] text-subtle">
+            {rowSublabel(row)}
+            {row.transcriptSummary ? ` — ${row.transcriptSummary}` : ""}
+          </span>
+        </span>
+        <span className="flex shrink-0 flex-col items-end gap-1">
+          <span className="flex items-center gap-1.5">
+            {row.totalLabel && row.outcome === "order_completed" ? (
+              <span className="font-mono text-[13.5px] font-semibold tabular-nums text-ink">{row.totalLabel}</span>
+            ) : null}
+            <Badge tone={badge.tone}>{badge.label}</Badge>
+          </span>
+          <time className="text-[12px] tabular-nums text-subtle" dateTime={row.occurredAt}>
+            {isLive(row) ? "now" : formatRelative(row.occurredAt)}
+          </time>
+        </span>
+      </button>
+    </li>
+  );
+}
+
+function CallDrawer({
+  row,
+  hostName,
+  items,
+  handled,
+  onToggleHandled,
+  onClose,
+}: {
+  row: CallHistoryRow | null;
+  hostName: string;
+  items: unknown;
+  handled: boolean;
+  onToggleHandled: () => void;
+  onClose: () => void;
+}) {
+  const caller = row ? callerLabel(row) : null;
+  const tel = row ? dialHref(row.callerPhone) : null;
+  const lines = useMemo(() => (items == null ? [] : parseOrderLineItems(items)), [items]);
+  const badge = row ? outcomeBadge(row, handled) : null;
+  const followUp = row ? needsFollowUp(row) : false;
+
+  return (
+    <SideDrawer
+      open={!!row}
+      onClose={onClose}
+      titleId="call-drawer-title"
+      closeLabel="Close call details"
+      title={caller?.primary ?? "Call"}
+      subtitle={
+        row
+          ? [caller?.secondary, formatWhen(row.occurredAt), formatDuration(row.durationSeconds)]
+              .filter(Boolean)
+              .join(" · ")
+          : null
+      }
+      badge={badge ? <Badge tone={badge.tone}>{badge.label}</Badge> : null}
+      footer={
+        row && (followUp || tel) ? (
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+            {followUp ? (
+              <button type="button" onClick={onToggleHandled} className="btn-ghost w-full sm:w-auto">
+                {handled ? <Undo2 size={15} aria-hidden /> : <CheckCircle2 size={15} aria-hidden />}
+                {handled ? "Mark not handled" : "Mark handled"}
+              </button>
+            ) : null}
+            {tel ? (
+              <a href={tel} className="btn-primary w-full sm:w-auto">
+                <Phone size={15} aria-hidden />
+                Call back
+              </a>
+            ) : null}
+          </div>
+        ) : null
+      }
+    >
+      {row ? (
+        <>
+          {followUp ? (
+            <Notice tone={handled ? "ok" : "warn"} className="mb-5">
+              <span className="font-semibold">{row.followUpReason ?? row.ownerActionLabel}</span>
+              {handled ? " · marked handled on this device" : null}
+            </Notice>
+          ) : null}
+
+          <DrawerSection title="Summary">
+            {row.transcriptSummary ? (
+              <p className="text-[14px] leading-relaxed text-ink [overflow-wrap:anywhere]">{row.transcriptSummary}</p>
+            ) : (
+              <p className="text-[13px] text-subtle">No summary for this call.</p>
+            )}
+            <dl className="mt-3 grid grid-cols-2 gap-2 text-[12.5px]">
+              <div className="rounded-[10px] bg-elev px-3 py-2">
+                <dt className="text-subtle">Intent</dt>
+                <dd className="font-semibold text-ink">{row.intentLabel}</dd>
+              </div>
+              <div className="rounded-[10px] bg-elev px-3 py-2">
+                <dt className="text-subtle">Outcome</dt>
+                <dd className="font-semibold text-ink">{row.outcomeLabel}</dd>
+              </div>
+              {!followUp ? (
+                <div className="col-span-2 rounded-[10px] bg-elev px-3 py-2">
+                  <dt className="text-subtle">Next step</dt>
+                  <dd className="font-semibold text-ink">{row.ownerActionLabel}</dd>
+                </div>
+              ) : null}
+            </dl>
+          </DrawerSection>
+
+          {row.lineCount > 0 || lines.length > 0 ? (
+            <DrawerSection
+              title={`Order${row.fulfillmentLabel ? ` · ${row.fulfillmentLabel}` : ""}`}
+              action={
+                row.totalLabel ? (
+                  <span className="font-mono text-[14px] font-bold tabular-nums text-ink">{row.totalLabel}</span>
+                ) : null
+              }
+            >
+              {lines.length > 0 ? (
+                <ul className="divide-y divide-line rounded-[12px] border border-line">
+                  {lines.map((line, i) => (
+                    <li key={i} className="flex gap-2.5 px-3 py-2">
+                      <span className="w-6 shrink-0 font-mono text-[13.5px] font-bold tabular-nums">{line.quantity}×</span>
+                      <span className="min-w-0">
+                        <span className="block text-[13.5px] font-semibold text-ink [overflow-wrap:anywhere]">{line.name}</span>
+                        {line.customizations.length > 0 ? (
+                          <span className="block text-[12.5px] text-muted">{line.customizations.join(" · ")}</span>
+                        ) : null}
+                        {line.notes ? <span className="kds-ticket__note mt-1 block">{line.notes}</span> : null}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-[13px] text-subtle">
+                  {row.lineCount} item{row.lineCount === 1 ? "" : "s"} on this order. Open the Kitchen board for the ticket.
+                </p>
+              )}
+            </DrawerSection>
+          ) : null}
+
+          <DrawerSection
+            title="Transcript"
+            action={
+              row.recordingUrl ? (
+                <a href={row.recordingUrl} target="_blank" rel="noreferrer" className="btn-ghost btn-sm">
+                  <Play size={13} aria-hidden />
+                  Recording
+                  {formatDuration(row.durationSeconds) ? ` · ${formatDuration(row.durationSeconds)}` : ""}
+                </a>
+              ) : null
+            }
+          >
+            {row.transcriptLines.length > 0 ? (
+              <TranscriptBubbles lines={row.transcriptLines} hostName={hostName} />
+            ) : (
+              <p className="text-[13px] text-subtle">
+                {isLive(row) ? "The call is still going — the transcript arrives when it ends." : "No transcript was saved for this call."}
+              </p>
+            )}
+          </DrawerSection>
+
+          <details className="mt-6 rounded-[10px] border border-line px-3 py-2">
+            <summary className="cursor-pointer text-[12.5px] font-medium text-subtle">Call reference</summary>
+            <p className="mt-2 break-all font-mono text-[12px] text-subtle">{row.sessionId}</p>
+          </details>
+        </>
+      ) : null}
+    </SideDrawer>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Panel                                                                      */
+/* -------------------------------------------------------------------------- */
 
 export function RestaurantCallHistoryPanel({
   snapshot,
+  hostName = "Your host",
+  orderItemsBySession = {},
 }: {
   snapshot: CallHistorySnapshot;
+  hostName?: string;
+  orderItemsBySession?: Record<string, unknown>;
 }) {
-  const [filter, setFilter] = useState<CallHistoryOutcomeFilter>("all");
+  const router = useRouter();
+  const [refreshing, startRefresh] = useTransition();
+  const [filter, setFilter] = useState<CallsFilter>("all");
+  const [openId, setOpenId] = useState<string | null>(null);
+  const { handled, toggle } = useHandledCalls(snapshot.restaurantId);
 
-  const filtered = useMemo(
-    () => filterCallHistoryRows(snapshot.rows, filter),
-    [snapshot.rows, filter]
+  const sorted = useMemo(
+    () =>
+      [...snapshot.rows].sort((a, b) => {
+        const live = Number(isLive(b)) - Number(isLive(a));
+        if (live !== 0) return live;
+        return new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime();
+      }),
+    [snapshot.rows]
   );
 
-  const rangeLabel = `${formatWhen(snapshot.rangeSince)} – ${formatWhen(snapshot.rangeUntil)}`;
+  const counts = useMemo(() => {
+    const out: Record<CallsFilter, number> = { all: 0, orders: 0, follow_ups: 0, voicemail: 0, reservations: 0 };
+    for (const row of sorted) {
+      for (const f of FILTERS) if (matchesFilter(row, f.id, handled)) out[f.id] += 1;
+    }
+    return out;
+  }, [sorted, handled]);
+
+  const filtered = useMemo(
+    () => sorted.filter((row) => matchesFilter(row, filter, handled)),
+    [sorted, filter, handled]
+  );
+
+  const openRow = openId ? snapshot.rows.find((row) => row.sessionId === openId) ?? null : null;
+  const openReservations = snapshot.reservationRequests.filter((r) => isOpenReservationStatus(r.status)).length;
+  const followUpCount = counts.follow_ups;
 
   return (
-    <section
-      className="call-history min-w-0 rounded-2xl border border-line bg-card shadow-sm"
-      aria-labelledby="call-history-heading"
-    >
-      <header className="border-b border-line px-4 py-4 sm:px-5">
-        <h2
-          id="call-history-heading"
-          className="text-lg font-semibold tracking-tight text-ink"
-        >
-          Calls &amp; follow-ups
-        </h2>
-        <p className="mt-1 text-sm text-muted">
-          Active calls, completed orders, voicemail, reservations, transcripts, recordings,
-          and staff follow-up. Last {CALL_HISTORY_DEFAULT_RANGE_DAYS} days ({rangeLabel}).
-        </p>
-        <CommandCenterSummary snapshot={snapshot} />
+    <div className="space-y-5">
+      <CallsSummary snapshot={snapshot} followUpCount={followUpCount} />
 
-        <div
-          className="mt-3 flex flex-wrap gap-2"
-          role="group"
-          aria-label="Filter by outcome"
-        >
-          {FILTERS.map((f) => (
-            <button
-              key={f.id}
-              type="button"
-              aria-pressed={filter === f.id}
-              onClick={() => setFilter(f.id)}
-              className={cn(
-                "kds-thumb-btn min-h-10 rounded-lg border px-3 text-xs font-medium transition-colors",
-                filter === f.id
-                  ? "border-accent bg-accent-soft text-accent"
-                  : "border-line bg-elev text-muted hover:text-ink"
-              )}
-            >
-              {f.label}
+      {filter !== "reservations" && openReservations > 0 ? (
+        <Notice
+          tone="warn"
+          title={`${openReservations} table request${openReservations === 1 ? "" : "s"} waiting.`}
+          action={
+            <button type="button" className="btn-ghost btn-sm" onClick={() => setFilter("reservations")}>
+              Review
             </button>
-          ))}
-        </div>
-      </header>
-      <ReservationInbox
-        restaurantId={snapshot.restaurantId}
-        rows={snapshot.reservationRequests}
-      />
-      <VoicemailInbox rows={snapshot.rows} />
-      <FollowUpInbox rows={snapshot.rows} />
+          }
+        >
+          Confirm or decline so guests aren&apos;t left guessing.
+        </Notice>
+      ) : null}
 
-      <div className="min-w-0 p-3 sm:p-4">
+      {filter === "reservations" ? (
+        <ReservationRequests restaurantId={snapshot.restaurantId} rows={snapshot.reservationRequests} />
+      ) : null}
+
+      <Panel
+        flush
+        className="call-history"
+        title={
+          <span id="call-history-heading">
+            {filter === "reservations" ? "Reservation calls" : "Calls"}
+          </span>
+        }
+        action={
+          <RefreshButton
+            onClick={() => startRefresh(() => router.refresh())}
+            busy={refreshing}
+            label="Refresh calls"
+          />
+        }
+      >
+        <div className="overflow-x-auto border-b border-line px-[1.125rem] py-2.5 [scrollbar-width:none]">
+          <div className="seg" role="group" aria-label="Filter calls">
+            {FILTERS.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                aria-pressed={filter === f.id}
+                onClick={() => setFilter(f.id)}
+                className="min-h-8 shrink-0 gap-1.5 whitespace-nowrap"
+              >
+                {f.label}
+                {counts[f.id] > 0 ? <span className="tabular-nums text-subtle">{counts[f.id]}</span> : null}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {snapshot.isEmpty ? (
-          <KdsEmptyStatePanel tone="calm" icon="orders" title="No calls yet">
-            History appears when guests call and tool or order activity is
-            recorded.
-          </KdsEmptyStatePanel>
+          <EmptyState
+            icon={PhoneCall}
+            title="No calls yet"
+            body={`When ${hostName} answers a call, it shows up here with the summary, transcript, and any order.`}
+          />
         ) : filtered.length === 0 ? (
-          <KdsEmptyStatePanel tone="tab" title="No calls in this filter">
-            Try another outcome filter or check back after the next call.
-          </KdsEmptyStatePanel>
+          <EmptyState
+            icon={filter === "follow_ups" ? CheckCircle2 : Clock}
+            title={filter === "follow_ups" ? "You're all caught up" : "Nothing in this view"}
+            body={
+              filter === "follow_ups"
+                ? "No callbacks or handoffs waiting on you."
+                : `No ${FILTERS.find((f) => f.id === filter)?.label.toLowerCase()} calls in the last ${CALL_HISTORY_DEFAULT_RANGE_DAYS} days.`
+            }
+          />
         ) : (
-          <>
-            <p className="mb-3 text-caption text-subtle" role="status">
-              Showing {filtered.length} of {snapshot.rows.length} sessions
-            </p>
-            <div className="call-history__table-wrap min-w-0 overflow-x-auto">
-              <table className="call-history__table w-full min-w-[60rem] text-left text-sm">
-                <caption className="sr-only">
-                  Phone call sessions and outcomes
-                </caption>
-                <thead>
-                  <tr className="border-b border-line text-xs font-semibold uppercase tracking-wider text-subtle">
-                    <th scope="col" className="px-2 py-2">
-                      Time
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Caller
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Intent
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Fulfillment
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Session
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Recording
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Transcript
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Outcome
-                    </th>
-                    <th scope="col" className="px-2 py-2">
-                      Owner action
-                    </th>
-                    <th scope="col" className="px-2 py-2 text-right">
-                      Items
-                    </th>
-                    <th scope="col" className="px-2 py-2 text-right">
-                      Total
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((row) => {
-                    const caller = formatCaller(row.callerPhone, row.callerName);
-                    return (
-                      <tr
-                        key={row.sessionId}
-                        className="border-b border-line/60 last:border-0"
-                      >
-                        <td className="whitespace-nowrap px-2 py-2.5 align-top">
-                          <time dateTime={row.occurredAt}>
-                            {formatWhen(row.occurredAt)}
-                          </time>
-                        </td>
-                        <td className="min-w-[7rem] px-2 py-2.5 align-top">
-                          <span className="font-medium text-ink">
-                            {caller.primary}
-                          </span>
-                          {caller.secondary ? (
-                            <span className="mt-0.5 block text-xs text-muted">
-                              {caller.secondary}
-                            </span>
-                          ) : null}
-                        </td>
-                        <td className="px-2 py-2.5 align-top">
-                          <span className="inline-flex rounded bg-accent-soft px-1.5 py-0.5 text-micro font-semibold uppercase text-accent">
-                            {row.intentLabel}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 align-top text-xs text-muted">
-                          {row.fulfillmentLabel ?? "—"}
-                        </td>
-                        <td className="px-2 py-2.5 align-top font-mono text-xs text-muted">
-                          <span title={row.sessionId}>
-                            {truncateSessionId(row.sessionId)}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 align-top text-xs">
-                          {row.recordingUrl ? (
-                            <a
-                              href={row.recordingUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="font-medium text-accent underline-offset-2 hover:underline"
-                            >
-                              Recording
-                              {formatDuration(row.durationSeconds)
-                                ? ` · ${formatDuration(row.durationSeconds)}`
-                                : ""}
-                            </a>
-                          ) : (
-                            <span className="text-subtle">—</span>
-                          )}
-                        </td>
-                        <td className="px-2 py-2.5 align-top">
-                          <TranscriptPreview row={row} />
-                        </td>
-                        <td className="px-2 py-2.5 align-top">
-                          <div className="flex flex-col items-start gap-1">
-                            <span
-                              className={cn(
-                                "inline-block rounded px-1.5 py-0.5 text-micro font-semibold uppercase",
-                                OUTCOME_TONE[row.outcome] ?? OUTCOME_TONE.unknown
-                              )}
-                            >
-                              {row.outcomeLabel}
-                            </span>
-                            {row.isTestHarness ? (
-                              <span className="rounded bg-elev px-1.5 py-0.5 text-micro font-semibold uppercase text-muted">
-                                Test call
-                              </span>
-                            ) : null}
-                            {row.needsStaffFollowUp ? (
-                              <span className="rounded bg-warning/15 px-1.5 py-0.5 text-micro font-semibold uppercase text-amber-900">
-                                Follow up
-                              </span>
-                            ) : null}
-                          </div>
-                        </td>
-                        <td className="max-w-[12rem] px-2 py-2.5 align-top text-xs text-muted">
-                          <span
-                            className={cn(
-                              row.isActionable && "font-semibold text-ink"
-                            )}
-                          >
-                            {row.ownerActionLabel}
-                          </span>
-                        </td>
-                        <td className="px-2 py-2.5 text-right align-top tabular-nums text-ink">
-                          {row.lineCount > 0 ? row.lineCount : "—"}
-                        </td>
-                        <td className="px-2 py-2.5 text-right align-top tabular-nums text-ink">
-                          {row.totalLabel ?? "—"}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </>
+          <ul className="divide-y divide-line/70" aria-labelledby="call-history-heading">
+            {filtered.map((row) => (
+              <CallRow
+                key={row.sessionId}
+                row={row}
+                handled={handled.has(row.sessionId)}
+                onOpen={() => setOpenId(row.sessionId)}
+              />
+            ))}
+          </ul>
         )}
-      </div>
-    </section>
+        {!snapshot.isEmpty && filtered.length > 0 ? (
+          <p className={cn("border-t border-line px-[1.125rem] py-2 text-[12px] text-subtle")} role="status">
+            Showing {filtered.length} of {snapshot.rows.length} calls
+          </p>
+        ) : null}
+      </Panel>
+
+      <CallDrawer
+        row={openRow}
+        hostName={hostName}
+        items={openRow ? orderItemsBySession[openRow.sessionId] ?? null : null}
+        handled={openRow ? handled.has(openRow.sessionId) : false}
+        onToggleHandled={() => openRow && toggle(openRow.sessionId)}
+        onClose={() => setOpenId(null)}
+      />
+    </div>
   );
 }

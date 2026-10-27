@@ -1,8 +1,8 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type { DbCategory, DbItem } from "@/lib/types";
 
 export async function assertCategoryInRestaurant(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   categoryId: string
 ): Promise<DbCategory> {
@@ -21,7 +21,7 @@ export async function assertCategoryInRestaurant(
 }
 
 export async function assertItemInRestaurant(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   itemId: string
 ): Promise<DbItem> {

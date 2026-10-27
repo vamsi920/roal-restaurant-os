@@ -6,31 +6,32 @@ const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
 describe("menu setup responsive (prompt 27)", () => {
-  it("structures guided upload and live menu with progress", () => {
+  it("structures board, import tools and settings sections", () => {
     const workspace = read("app/dashboard/restaurants/[id]/menu/MenuSetupWorkspace.tsx");
 
-    expect(workspace).toContain("menu-setup-progress");
-    expect(workspace).toContain("menu-setup-primary__grid");
     expect(workspace).toContain('id="menu-scan"');
     expect(workspace).toContain('id="menu-live"');
-    expect(workspace).toContain("Step 1");
-    expect(workspace).toContain("Step 2");
-    expect(workspace).toContain("menu-setup-crumb hidden");
+    expect(workspace).toContain('id="restaurant-settings"');
+    expect(workspace).toContain("Upload menu photo");
     expect(workspace).toContain("<MenuSetupCallIndicator");
     expect(workspace).toContain("<MenuImportHistory");
+    expect(workspace).toContain("<MenuCopyFromLocation");
+    // Collapsed import tools open from the header action / URL hash.
+    expect(workspace).toContain("<MenuHashOpener");
+    expect(workspace).toContain('<MenuJumpLink target="menu-scan"');
   });
 
-  it("styles tablet grid and phone-friendly menu panels", () => {
-    const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
+  it("keeps the menu board phone-safe without horizontal page scroll", () => {
+    const editor = read("app/dashboard/restaurants/[id]/menu/MenuEditor.tsx");
+    const workspace = read("app/dashboard/restaurants/[id]/menu/MenuSetupWorkspace.tsx");
 
-    expect(css).toContain("Menu setup responsive (prompt 27)");
-    expect(css).toMatch(
-      /@media \(min-width: 768px\)[\s\S]*\.menu-setup-primary__grid[\s\S]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/
-    );
-    expect(css).toMatch(
-      /@media \(max-width: 639px\)[\s\S]*\.kds-live-menu[\s\S]*max-height:\s*min\(44svh,\s*340px\)/
-    );
-    expect(css).toContain(".menu-import-history__file");
+    expect(workspace).toContain("min-w-0");
+    // Category chips scroll inside their own container on phones.
+    expect(editor).toContain("overflow-x-auto");
+    expect(editor).toContain("lg:flex-col");
+    // Item rows stack on phones and become a grid from sm up.
+    expect(editor).toContain("sm:grid sm:grid-cols-");
+    expect(editor).toContain("basis-full");
   });
 
   it("styles upsell editor for phone and tablet layouts", () => {

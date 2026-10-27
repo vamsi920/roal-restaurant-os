@@ -20,12 +20,12 @@ import {
 } from "@/lib/voice-agent/sync-restaurant-agent-after-content-change";
 import { writeAuditLog } from "@/lib/observability/audit";
 import { notifySyncFailure } from "@/lib/notifications/helpers";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import type { RestaurantProfile } from "@/lib/types";
 
 async function loadProfile(restaurantId: string) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data, error } = await supabase
     .from("restaurant_profiles")
     .select("*")
@@ -44,7 +44,7 @@ async function saveSyncSuccess(
   agentId: string,
   summary: VoiceAgentSyncSummary
 ) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const now = new Date().toISOString();
   const { error } = await supabase
     .from("restaurant_profiles")
@@ -85,7 +85,7 @@ async function saveSyncFailure(
 ) {
   const safeMessage =
     sanitizeVoiceAgentDisplayError(message) ?? "Sync failed";
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const profile = await loadProfile(restaurantId);
   const previousError = profile.elevenlabs_last_sync_error?.trim() || null;
 

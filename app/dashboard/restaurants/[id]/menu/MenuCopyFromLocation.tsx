@@ -10,6 +10,9 @@ import {
   setDefaultMenuTemplateAction,
 } from "./menu-actions";
 import type { OrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
+import { Badge } from "@/components/ui";
+import { Notice } from "@/components/live-orders/workspace-ui";
+import { SubHeading } from "./menu-ui";
 
 type MenuCopySource = {
   id: string;
@@ -213,16 +216,17 @@ export function MenuCopyFromLocation({
 
   return (
     <div className="space-y-3">
-      <p className="text-sm text-muted">
+      <p className="text-[13px] text-muted">
         Save one brand menu as a reusable template, then apply it to new locations.
-        ROAL re-syncs the live agent after every applied menu change.
+        ROAL re-syncs the phone host after every applied menu change.
       </p>
       {templates.length > 0 ? (
-        <div className="rounded-xl border border-line bg-elev/60 p-3">
+        <div className="rounded-[12px] border border-line p-4">
+          <SubHeading className="mb-3">Shared templates</SubHeading>
           {inheritedTemplate ? (
-            <div className="mb-3 rounded-lg border border-accent/20 bg-accent/10 p-3">
+            <div className="mb-3 rounded-[10px] border border-line bg-elev/60 p-3">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm font-medium text-ink">
+                <p className="text-[13.5px] font-medium text-ink">
                   This location inherited “{inheritedTemplate.name}”
                   {inheritedAppliedLabel ? ` on ${inheritedAppliedLabel}` : ""}.
                 </p>
@@ -230,17 +234,17 @@ export function MenuCopyFromLocation({
                   type="button"
                   onClick={reapplyInheritedTemplate}
                   disabled={pending}
-                  className="btn-ghost kds-thumb-btn min-h-10 w-full px-3 text-sm sm:w-auto"
+                  className="btn-ghost btn-sm w-full sm:w-auto"
                 >
                   {pending ? "Applying..." : "Re-apply inherited"}
                 </button>
               </div>
-              <p className="mt-1 text-xs text-muted">
+              <p className="mt-1 text-[12.5px] text-subtle">
                 Use this when the brand menu changed and this store should match
                 the latest shared template.
               </p>
               {inheritedTemplateOverrideCount > 0 ? (
-                <p className="mt-2 rounded-md border border-warning/20 bg-warning/10 px-2 py-1 text-xs font-medium text-warning">
+                <p className="mt-2 rounded-[8px] border border-warning/25 bg-[rgb(var(--tile-amber)/0.45)] px-2.5 py-1.5 text-[12.5px] font-medium text-[rgb(var(--tile-amber-ink))]">
                   This location has {inheritedTemplateOverrideCount} local menu edit
                   {inheritedTemplateOverrideCount === 1 ? "" : "s"}
                   {inheritedLocalEditLabel ? ` since ${inheritedLocalEditLabel}` : ""}.
@@ -250,13 +254,13 @@ export function MenuCopyFromLocation({
               ) : null}
             </div>
           ) : null}
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-            <label className="min-w-0 flex-1 text-sm font-medium text-ink">
-              Shared menu template
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end">
+            <label className="block min-w-0 flex-1 sm:min-w-[12rem]">
+              <span className="field-label">Template</span>
               <select
                 value={templateId}
                 onChange={(event) => setTemplateId(event.target.value)}
-                className="mt-1 min-h-11 w-full rounded-lg border border-line bg-card px-3 text-sm text-ink"
+                className="input-base"
                 disabled={pending}
               >
                 {templates.map((template) => (
@@ -270,7 +274,7 @@ export function MenuCopyFromLocation({
               type="button"
               onClick={applyTemplate}
               disabled={pending || !selectedTemplate}
-              className="btn-primary kds-thumb-btn min-h-11 w-full px-4 text-sm sm:w-auto"
+              className="btn-primary w-full sm:w-auto"
             >
               {pending ? "Applying..." : "Apply template"}
             </button>
@@ -278,7 +282,7 @@ export function MenuCopyFromLocation({
               type="button"
               onClick={makeSelectedDefault}
               disabled={pending || !selectedTemplate || selectedTemplate.is_default}
-              className="btn-ghost kds-thumb-btn min-h-11 w-full px-4 text-sm sm:w-auto"
+              className="btn-ghost w-full sm:w-auto"
             >
               {selectedTemplate?.is_default ? "Default" : "Use for new locations"}
             </button>
@@ -286,13 +290,14 @@ export function MenuCopyFromLocation({
               type="button"
               onClick={updateInheritedLocations}
               disabled={pending || !selectedTemplate}
-              className="btn-ghost kds-thumb-btn min-h-11 w-full px-4 text-sm sm:w-auto"
+              className="btn-ghost w-full sm:w-auto"
             >
               {pending ? "Updating..." : "Update inherited locations"}
             </button>
           </div>
           {selectedTemplate ? (
-            <p className="mt-2 text-xs text-subtle">
+            <p className="mt-2 text-[12.5px] text-subtle">
+              {selectedTemplate.is_default ? <Badge tone="info" className="mr-1.5">Default</Badge> : null}
               {selectedTemplate.category_count} categories ·{" "}
               {selectedTemplate.item_count} items ·{" "}
               {selectedTemplate.modifier_count} modifiers
@@ -307,14 +312,15 @@ export function MenuCopyFromLocation({
         </div>
       ) : null}
 
-      <div className="rounded-xl border border-line bg-elev/60 p-3">
+      <div className="rounded-[12px] border border-line p-4">
+        <SubHeading className="mb-3">Save this menu as a template</SubHeading>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-          <label className="min-w-0 flex-1 text-sm font-medium text-ink">
-            Save current menu as template
+          <label className="block min-w-0 flex-1">
+            <span className="field-label">Template name</span>
             <input
               value={templateName}
               onChange={(event) => setTemplateName(event.target.value)}
-              className="mt-1 min-h-11 w-full rounded-lg border border-line bg-card px-3 text-sm text-ink"
+              className="input-base"
               disabled={pending}
               placeholder="Main menu"
             />
@@ -323,38 +329,39 @@ export function MenuCopyFromLocation({
             type="button"
             onClick={saveTemplate}
             disabled={pending || templateName.trim().length < 2}
-            className="btn-ghost kds-thumb-btn min-h-11 w-full px-4 text-sm sm:w-auto"
+            className="btn-ghost w-full sm:w-auto"
           >
             {pending ? "Saving..." : "Save template"}
           </button>
         </div>
-        <label className="mt-3 flex items-start gap-2 text-xs text-muted">
+        <label className="mt-3 flex min-h-11 cursor-pointer items-start gap-2.5 text-[12.5px] text-muted lg:min-h-0">
           <input
             type="checkbox"
             checked={makeDefault}
             onChange={(event) => setMakeDefault(event.target.checked)}
             disabled={pending}
-            className="mt-0.5 h-4 w-4 rounded border-line"
+            className="mt-0.5 h-4 w-4 shrink-0 accent-ink"
           />
           <span>
             Use this as the default menu for new locations. New restaurants will
             inherit it before their ElevenLabs agent is provisioned.
           </span>
         </label>
-        <p className="mt-2 text-xs text-subtle">
+        <p className="mt-1 text-[12.5px] text-subtle">
           Use this for a brand menu you want to apply to future locations.
         </p>
       </div>
 
       {sources.length > 0 ? (
-        <div className="rounded-xl border border-line bg-elev/60 p-3">
+        <div className="rounded-[12px] border border-line p-4">
+          <SubHeading className="mb-3">Copy from another location</SubHeading>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-            <label className="min-w-0 flex-1 text-sm font-medium text-ink">
-              Source location
+            <label className="block min-w-0 flex-1">
+              <span className="field-label">Source location</span>
               <select
                 value={sourceId}
                 onChange={(event) => setSourceId(event.target.value)}
-                className="mt-1 min-h-11 w-full rounded-lg border border-line bg-card px-3 text-sm text-ink"
+                className="input-base"
                 disabled={pending}
               >
                 {sources.map((source) => (
@@ -368,21 +375,21 @@ export function MenuCopyFromLocation({
               type="button"
               onClick={copyMenu}
               disabled={pending || !selectedSource}
-              className="btn-ghost kds-thumb-btn min-h-11 w-full px-4 text-sm sm:w-auto"
+              className="btn-ghost w-full sm:w-auto"
             >
               {pending ? "Copying..." : "Copy once"}
             </button>
           </div>
           {selectedSource ? (
-            <p className="mt-2 text-xs text-subtle">
+            <p className="mt-2 text-[12.5px] text-subtle">
               This replaces the current menu with {selectedSource.name}&apos;s
               categories, items, modifiers, prices, and availability.
             </p>
           ) : null}
         </div>
       ) : null}
-      {notice ? <p className="text-sm font-medium text-success">{notice}</p> : null}
-      {error ? <p className="text-sm font-medium text-danger">{error}</p> : null}
+      {notice ? <Notice tone="ok">{notice}</Notice> : null}
+      {error ? <Notice tone="bad">{error}</Notice> : null}
     </div>
   );
 }

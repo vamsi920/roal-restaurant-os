@@ -28,7 +28,7 @@ import {
   syncRoalElevenLabsTools,
   ROAL_RESTAURANT_ID_HEADER,
 } from "../lib/sync-elevenlabs-roal-tools";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 
 const TOOL_NAMES = [
   "get_menu_items",
@@ -68,7 +68,7 @@ function redactHeaderValue(v: unknown): { present: boolean; baked?: boolean } {
 }
 
 async function listConfigured(): Promise<RestaurantRow[]> {
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (!sb) throw new Error("SUPABASE_SERVICE_ROLE_KEY required");
 
   const { data: profiles, error } = await sb
@@ -135,7 +135,7 @@ async function resyncRestaurant(row: RestaurantRow) {
     phone_personalization_webhook: phoneWebhook,
   };
 
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (!sb) throw new Error("SUPABASE_SERVICE_ROLE_KEY required");
 
   const { error } = await sb

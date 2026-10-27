@@ -8,7 +8,7 @@ import { ensureRestaurantOnboarding } from "@/lib/onboarding/helpers";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
 import { planLimitJsonResponse } from "@/lib/billing/gate-http";
 import { applyDefaultOrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { tryProvisionVoiceAgentForNewRestaurant } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 
 export const runtime = "nodejs";
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const locationGate = await assertOrganizationBillingGate(supabase, {
       organizationId: resolved.organizationId,
       membershipRole: membership.role,

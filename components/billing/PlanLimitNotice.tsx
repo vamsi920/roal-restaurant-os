@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AlertTriangle, Info } from "lucide-react";
 import { cn } from "@/lib/cn";
 import type { SerializableGateVerdict } from "@/lib/billing/gates";
 
@@ -17,13 +18,19 @@ export function PlanLimitNotice({ verdict, className }: Props) {
   return (
     <div
       className={cn(
-        "rounded-md border px-3 py-2.5 text-[13px]",
-        blocked ? "border-warning/30 bg-warning/5 text-ink" : "border-line bg-elev text-muted",
+        "flex min-w-0 items-start gap-2.5 rounded-[12px] border px-3.5 py-3 text-[13px]",
+        blocked ? "border-warning/30 bg-warning/5 text-ink" : "border-line bg-card text-muted",
         className
       )}
       role="status"
     >
-      <p className="font-medium text-ink">{verdict.title}</p>
+      {blocked ? (
+        <AlertTriangle size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-warning" aria-hidden />
+      ) : (
+        <Info size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-subtle" aria-hidden />
+      )}
+      <div className="min-w-0 flex-1">
+      <p className="font-semibold text-ink">{verdict.title}</p>
       <p className="mt-0.5 text-pretty leading-relaxed">{verdict.message}</p>
       {verdict.showUpgrade ? (
         <p className="mt-1.5">
@@ -35,6 +42,7 @@ export function PlanLimitNotice({ verdict, className }: Props) {
           </Link>
         </p>
       ) : null}
+      </div>
     </div>
   );
 }

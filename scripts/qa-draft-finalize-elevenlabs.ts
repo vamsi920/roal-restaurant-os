@@ -11,7 +11,7 @@ import { mintAgentToolToken } from "../lib/agent-tools/token";
 import { getElevenLabsAgentId } from "../lib/env.server";
 import { getPublicEnv } from "../lib/env.public";
 import { ROAL_IDEMPOTENCY_HEADER } from "../lib/agent-tools/headers";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 import { ensureQaOrderingOpen } from "./lib/qa-ensure-ordering-open.mjs";
 
 const RESTAURANT_ID =
@@ -31,7 +31,7 @@ function asDraft(json: unknown): DraftResponse {
 }
 
 void (async () => {
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (!sb) throw new Error("SUPABASE_SERVICE_ROLE_KEY required");
 
   const { data: profile } = await sb

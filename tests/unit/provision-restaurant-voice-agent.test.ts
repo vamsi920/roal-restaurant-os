@@ -32,7 +32,7 @@ function mockSupabase() {
   return {
     client: {
       from: vi.fn(() => chain),
-    } as unknown as import("@supabase/supabase-js").SupabaseClient,
+    } as unknown as import("@supabase/supabase-js").Db,
     updates,
     chain,
   };
@@ -253,7 +253,7 @@ describe("provisionRestaurantVoiceAgent", () => {
     };
     const client = {
       from: vi.fn(() => chain),
-    } as unknown as import("@supabase/supabase-js").SupabaseClient;
+    } as unknown as import("@supabase/supabase-js").Db;
 
     const provisionConvaiAgent = vi.fn();
     const runSync = vi.fn().mockResolvedValue({

@@ -15,7 +15,7 @@ function localDateInTimeZone(timeZone) {
 }
 
 /**
- * @param {import("@supabase/supabase-js").SupabaseClient} sb
+ * @param {import("@supabase/supabase-js").Db} sb
  * @param {string} restaurantId
  * @returns {Promise<{ opened: boolean; detail: string }>}
  */

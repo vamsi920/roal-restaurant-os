@@ -4,8 +4,8 @@ import { toPublicView, upsertStep } from "@/lib/trial/store";
 import type { TrialRecord, TrialStepLogEntry } from "@/lib/trial/types";
 
 vi.mock("@/lib/supabase/server", () => ({
-  getServiceRoleSupabase: vi.fn(() => null),
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(() => null),
+  getDb: vi.fn(),
 }));
 
 function baseTrial(overrides: Partial<TrialRecord> = {}): TrialRecord {

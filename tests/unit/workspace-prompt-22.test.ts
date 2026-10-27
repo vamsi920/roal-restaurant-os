@@ -29,7 +29,7 @@ describe("workspace prompt 22 targeted checks", () => {
     expect(panel).toContain("postgres_changes");
     expect(panel).toContain("draft_orders");
     expect(panel).toContain("setRealtimeUi");
-    expect(panel).toContain("KdsRealtimeIndicator");
+    expect(panel).toContain("RealtimeBadge");
     expect(panel).not.toMatch(/example order|fake.*order|seed.*order/i);
   });
 

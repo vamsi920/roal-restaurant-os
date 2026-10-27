@@ -2,14 +2,18 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
+import { Send } from "lucide-react";
 import { PlanLimitNotice } from "@/components/billing/PlanLimitNotice";
+import { Badge, formatRelative, type Tone } from "@/components/ui";
+import { MetaList, Notice } from "@/components/live-orders/workspace-ui";
 import type { SerializableGateVerdict } from "@/lib/billing/gates";
 import { cn } from "@/lib/cn";
 import type { MenuAutoSyncSnapshot } from "@/lib/voice-agent/control-center-types";
 import {
   resolveMenuAutoSyncDisplay,
   formatMenuAutoSyncWhen,
+  type MenuAutoSyncUiPhase,
 } from "@/lib/voice-agent/menu-auto-sync-display";
 import { publishRestaurantVoiceContentAction } from "@/app/dashboard/restaurants/[id]/voice-agent-actions";
 
@@ -18,9 +22,28 @@ type Props = {
   restaurantName: string;
   initial: MenuAutoSyncSnapshot;
   voiceOrderGate?: SerializableGateVerdict | null;
-  variant?: "card" | "hero" | "inline";
+  /**
+   * card   – full panel (status, last synced, publish button)
+   * hero   – badge + one line (Phone host hero)
+   * inline – badge + summary + small publish button
+   * header – page-header action: primary "Publish to phone host" only when there
+   *          are unsynced changes, otherwise a calm "Synced …" badge
+   */
+  variant?: "card" | "hero" | "inline" | "header";
   className?: string;
 };
+
+const PHASE_TONE: Record<MenuAutoSyncUiPhase, Tone> = {
+  syncing: "info",
+  no_agent: "neutral",
+  failed: "bad",
+  succeeded: "ok",
+  idle: "warn",
+};
+
+function snapshotKey(s: MenuAutoSyncSnapshot): string {
+  return [s.agentLinked ? 1 : 0, s.status ?? "", s.error ?? "", s.lastSyncedAt ?? ""].join("|");
+}
 
 export function MenuAutoSyncStatusPanel({
   restaurantId,
@@ -36,6 +59,13 @@ export function MenuAutoSyncStatusPanel({
   const [pending, startTransition] = useTransition();
   const voiceBlocked = voiceOrderGate?.hardBlocked === true;
 
+  // Pick up fresh server state after router.refresh() (auto-sync after saves).
+  const initialKey = snapshotKey(initial);
+  useEffect(() => {
+    setSnapshot(initial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialKey]);
+
   const display = useMemo(
     () =>
       resolveMenuAutoSyncDisplay(snapshot, {
@@ -46,6 +76,8 @@ export function MenuAutoSyncStatusPanel({
 
   const resyncDisabled =
     display.resyncDisabled || pending || voiceBlocked;
+  const tone = PHASE_TONE[display.phase];
+  const errorText = actionError ?? display.errorMessage;
 
   function onResync() {
     setActionError(null);
@@ -70,33 +102,99 @@ export function MenuAutoSyncStatusPanel({
 
   const agentHref = `/dashboard/restaurants/${restaurantId}/agent`;
 
+  if (variant === "header") {
+    if (display.phase === "succeeded" && !actionError) {
+      return (
+        <Badge
+          tone="ok"
+          className={cn("h-7 px-2.5 text-[12px]", className)}
+          title={
+            display.lastSyncedAt
+              ? `Phone host has your latest menu · ${formatMenuAutoSyncWhen(display.lastSyncedAt)}`
+              : "Phone host has your latest menu"
+          }
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
+          <span suppressHydrationWarning>
+            {display.lastSyncedAt
+              ? `Synced ${formatRelative(display.lastSyncedAt)}`
+              : "Synced"}
+          </span>
+        </Badge>
+      );
+    }
+    if (display.phase === "syncing") {
+      return (
+        <Badge tone="info" className={cn("h-7 px-2.5 text-[12px]", className)}>
+          <span className="h-1.5 w-1.5 rounded-full bg-current motion-safe:animate-pulse" aria-hidden />
+          Publishing…
+        </Badge>
+      );
+    }
+    if (display.phase === "no_agent") {
+      return (
+        <Link
+          href={agentHref}
+          className={cn("btn-ghost", className)}
+          title="Connect a phone host before your menu can be published"
+        >
+          Connect phone host
+        </Link>
+      );
+    }
+    return (
+      <span className={cn("inline-flex min-w-0 flex-col items-stretch gap-1 sm:items-end", className)}>
+        <button
+          type="button"
+          className="btn-primary"
+          disabled={resyncDisabled}
+          aria-busy={pending}
+          onClick={onResync}
+          title={display.summary}
+        >
+          <Send size={15} aria-hidden />
+          {pending ? "Publishing…" : "Publish to phone host"}
+        </button>
+        {errorText ? (
+          <span
+            className="max-w-[18rem] text-[12px] text-danger [overflow-wrap:anywhere] sm:text-right"
+            role="alert"
+          >
+            {errorText}
+          </span>
+        ) : (
+          <span className="text-[12px] text-subtle sm:text-right">
+            {voiceBlocked
+              ? "Phone orders are paused on your plan."
+              : display.phase === "failed"
+                ? "Last publish failed"
+                : "Unpublished changes"}
+          </span>
+        )}
+      </span>
+    );
+  }
+
   if (variant === "hero") {
     return (
       <div className={cn("menu-auto-sync menu-auto-sync--hero", className)}>
-        <span
-          className={cn(
-            "menu-auto-sync__badge rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-            display.badgeClassName
-          )}
-        >
-          {display.badgeLabel}
-        </span>
+        <Badge tone={tone}>{display.badgeLabel}</Badge>
         {display.phase === "no_agent" ? (
-          <p className="live-agent-page__hero-line mt-2 text-sm leading-snug text-muted">
-            <Link href={agentHref} className="font-medium text-accent underline-offset-2 hover:underline">
+          <p className="mt-2 text-[13px] leading-snug text-muted">
+            <Link href={agentHref} className="font-medium text-ink underline underline-offset-2">
               Connect an agent
             </Link>{" "}
             to sync menu and settings.
           </p>
         ) : display.errorMessage ? (
           <p
-            className="live-agent-page__hero-line mt-2 text-sm leading-snug text-danger [overflow-wrap:anywhere]"
+            className="mt-2 text-[13px] leading-snug text-danger [overflow-wrap:anywhere]"
             role="alert"
           >
             {display.errorMessage}
           </p>
         ) : (
-          <p className="live-agent-page__hero-line mt-2 text-sm leading-snug text-muted">
+          <p className="mt-2 text-[13px] leading-snug text-muted">
             {display.summary}
           </p>
         )}
@@ -108,122 +206,92 @@ export function MenuAutoSyncStatusPanel({
     return (
       <div
         className={cn(
-          "menu-auto-sync menu-auto-sync--inline flex flex-wrap items-center gap-2",
+          "menu-auto-sync menu-auto-sync--inline flex min-w-0 flex-wrap items-center gap-2",
           className
         )}
       >
-        <span
-          className={cn(
-            "menu-auto-sync__badge rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-            display.badgeClassName
-          )}
-        >
-          {display.badgeLabel}
+        <Badge tone={tone}>{display.badgeLabel}</Badge>
+        <span className="min-w-0 text-[12.5px] text-subtle [overflow-wrap:anywhere]">
+          {display.summary}
         </span>
-        <span className="text-xs text-muted">{display.summary}</span>
         <button
           type="button"
-          className="btn-ghost kds-thumb-btn min-h-10 px-3 text-xs"
+          className="btn-ghost btn-sm"
           disabled={resyncDisabled}
           aria-busy={pending}
           onClick={onResync}
         >
           {pending ? "Publishing…" : "Publish to voice"}
         </button>
+        {actionError ? (
+          <span className="basis-full text-[12px] text-danger" role="alert">
+            {actionError}
+          </span>
+        ) : null}
       </div>
     );
   }
 
   return (
     <section
-      className={cn(
-        "menu-auto-sync menu-auto-sync--card kds-panel glass-card overflow-hidden",
-        className
-      )}
+      className={cn("menu-auto-sync menu-auto-sync--card panel", className)}
       aria-labelledby={`menu-auto-sync-heading-${restaurantId}`}
     >
-      <div className="kds-panel__header">
+      <div className="panel__head">
         <div className="min-w-0">
-          <h2
-            id={`menu-auto-sync-heading-${restaurantId}`}
-            className="kds-panel__title"
-          >
+          <h2 id={`menu-auto-sync-heading-${restaurantId}`} className="panel__title">
             Publish to voice
           </h2>
-          <p className="kds-panel__lead">
+          <p className="text-[12.5px] text-subtle">
             Push your current menu, hours, FAQ, policies, and tool URLs to the linked
             ElevenLabs agent before taking calls.
           </p>
         </div>
-        <span
-          className={cn(
-            "menu-auto-sync__badge shrink-0 rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-            display.badgeClassName
-          )}
-        >
+        <Badge tone={tone} className="shrink-0">
           {display.badgeLabel}
-        </span>
+        </Badge>
       </div>
 
-      <div className="space-y-3 p-4 sm:p-5">
+      <div className="panel__body space-y-3">
         <PlanLimitNotice verdict={voiceOrderGate} />
 
-        <dl className="menu-auto-sync__meta grid gap-2 text-sm sm:grid-cols-2">
-          <div className="min-w-0 rounded-lg border border-line bg-elev/40 px-3 py-2">
-            <dt className="text-micro font-semibold uppercase tracking-wider text-subtle">
-              Status
-            </dt>
-            <dd className="mt-1 font-medium text-ink">{display.badgeLabel}</dd>
-          </div>
-          <div className="min-w-0 rounded-lg border border-line bg-elev/40 px-3 py-2">
-            <dt className="text-micro font-semibold uppercase tracking-wider text-subtle">
-              Last synced
-            </dt>
-            <dd className="mt-1 font-medium text-ink [overflow-wrap:anywhere]">
-              {display.lastSyncedAt && display.phase === "succeeded"
-                ? formatMenuAutoSyncWhen(display.lastSyncedAt)
-                : "—"}
-            </dd>
-          </div>
-        </dl>
+        <MetaList
+          items={[
+            { label: "Status", value: display.badgeLabel },
+            {
+              label: "Last synced",
+              value:
+                display.lastSyncedAt && display.phase === "succeeded"
+                  ? formatMenuAutoSyncWhen(display.lastSyncedAt)
+                  : "—",
+            },
+          ]}
+        />
 
-        <p className="text-sm text-muted [overflow-wrap:anywhere]">{display.summary}</p>
+        <p className="text-[13px] text-muted [overflow-wrap:anywhere]">{display.summary}</p>
 
         {display.phase === "no_agent" ? (
-          <p className="text-sm text-muted">
-            <Link
-              href={agentHref}
-              className="font-medium text-accent underline-offset-2 hover:underline"
-            >
+          <p className="text-[13px] text-muted">
+            <Link href={agentHref} className="font-medium text-ink underline underline-offset-2">
               Open Live Agent
             </Link>{" "}
             to connect ElevenLabs first.
           </p>
         ) : null}
 
-        {display.errorMessage || actionError ? (
-          <p
-            className="rounded-lg border border-danger/30 bg-danger/[0.06] px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
-            role="alert"
-          >
-            {actionError ?? display.errorMessage}
-          </p>
-        ) : null}
+        {errorText ? <Notice tone="bad">{errorText}</Notice> : null}
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <button
             type="button"
-            className="btn-primary kds-thumb-btn min-h-11 w-full sm:w-auto"
+            className="btn-primary w-full sm:w-auto"
             disabled={resyncDisabled}
             aria-busy={pending}
             onClick={onResync}
           >
             {pending ? "Publishing…" : "Publish to voice"}
           </button>
-          <Link
-            href={agentHref}
-            className="btn-ghost kds-thumb-btn min-h-11 w-full text-center text-sm sm:w-auto"
-          >
+          <Link href={agentHref} className="btn-ghost w-full sm:w-auto">
             Live Agent settings
           </Link>
         </div>

@@ -4,7 +4,7 @@ import { OrgOverviewDashboard } from "@/components/org-overview/OrgOverviewDashb
 import { getAuthContext } from "@/lib/auth/context-server";
 import { isOrgAdmin } from "@/lib/auth/roles";
 import { loadOrgOverviewPage } from "@/lib/org-overview/load-org-overview";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Operations overview — ROAL",
@@ -25,7 +25,7 @@ export default async function OrgOverviewPage() {
     redirect("/dashboard/restaurants");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const snapshot = await loadOrgOverviewPage(
     supabase,
     adminMemberships.map((m) => ({

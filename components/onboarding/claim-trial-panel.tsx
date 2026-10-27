@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { claimTrialAction } from "@/app/dashboard/onboarding/actions";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import type { TrialPublicView } from "@/lib/trial/types";
+import { Badge } from "@/components/ui";
 import "@/components/try/trial.css";
 
 type Props = { trial: TrialPublicView };
@@ -42,7 +43,7 @@ export function ClaimTrialPanel({ trial }: Props) {
       clearTimeout(ticker2);
       setStep(3, "running");
       setSteps((prev) => prev.map((s, i) => (i < 3 ? { ...s, status: "done" } : s)));
-      router.replace(`/dashboard/restaurants/${result.restaurantId}?welcome=1`);
+      router.replace(`/dashboard/restaurants/${result.restaurantId}/overview?welcome=1`);
     } catch (e) {
       clearTimeout(ticker);
       clearTimeout(ticker2);
@@ -59,13 +60,13 @@ export function ClaimTrialPanel({ trial }: Props) {
   }, [run]);
 
   return (
-    <div className="mx-auto max-w-xl">
-      <div className="trial-building">
-        <p className="chip chip--accent">Almost there</p>
-        <h1 className="mt-3 font-display text-2xl font-bold tracking-tight text-ink">
+    <div className="mx-auto w-full min-w-0 max-w-xl">
+      <div className="trial-building" aria-live="polite">
+        <Badge tone="new">Almost there</Badge>
+        <h1 className="mt-3 font-display text-[24px] font-bold leading-tight tracking-[-0.02em] text-ink [overflow-wrap:anywhere]">
           Setting up {trial.restaurantName ?? "your restaurant"}
         </h1>
-        <p className="mt-1.5 text-sm text-muted">
+        <p className="mt-1.5 text-[13.5px] text-subtle">
           Everything {trial.persona.agentName} learned during your test call carries over.
         </p>
         <ol className="trial-steps">

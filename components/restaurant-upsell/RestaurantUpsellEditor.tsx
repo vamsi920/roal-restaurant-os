@@ -10,6 +10,8 @@ import {
   type RestaurantUpsellFormEntry,
 } from "@/lib/restaurant-upsell/schema";
 import type { RestaurantMenuSnapshot } from "@/lib/menu-editor/load-menu";
+import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
+import { Badge, type Tone } from "@/components/ui";
 import { cn } from "@/lib/cn";
 
 type Props = {
@@ -29,16 +31,29 @@ function emptyEntry(
   };
 }
 
-function auditBadgeClass(status: ReturnType<typeof auditUpsellRuleAgainstMenu>["status"]) {
+function auditTone(status: ReturnType<typeof auditUpsellRuleAgainstMenu>["status"]): Tone {
   switch (status) {
     case "ready":
-      return "border-success/30 bg-success/10 text-success";
+      return "ok";
     case "inactive":
-      return "border-line bg-elev text-muted";
+      return "neutral";
     case "unavailable":
-      return "border-warning/30 bg-warning/10 text-warning";
+      return "warn";
     default:
-      return "border-danger/30 bg-danger/10 text-danger";
+      return "bad";
+  }
+}
+
+function auditLabel(status: ReturnType<typeof auditUpsellRuleAgainstMenu>["status"]): string {
+  switch (status) {
+    case "ready":
+      return "Ready";
+    case "inactive":
+      return "Off";
+    case "unavailable":
+      return "Item unavailable";
+    default:
+      return "Needs fix";
   }
 }
 
@@ -87,49 +102,25 @@ export function RestaurantUpsellEditor({
     ]);
   }
 
+  const atLimit = entries.length >= 20;
+
   return (
-    <div className="space-y-3" aria-labelledby="upsell-rules-heading">
-      <div className="min-w-0">
-        <h3 id="upsell-rules-heading" className="text-sm font-semibold text-ink">
-          Smart upsell rules
-        </h3>
-        <p className="mt-1 text-xs text-muted">
-          One short add-on offer while the guest is actively ordering. ROAL checks
-          your live menu — only available items reach the phone agent. Skip angry,
-          rushed, FAQ, reservation, voicemail, callback, handoff, and no-order calls.
-        </p>
-      </div>
+    <div className="space-y-3" aria-label="Smart upsell rules">
+      <p className="text-[12.5px] text-subtle">
+        ROAL checks your live menu — only available items reach the phone host. It
+        skips angry, rushed, FAQ, reservation, voicemail, callback, handoff, and
+        no-order calls.
+      </p>
 
       {entries.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-line bg-elev px-4 py-4">
-          <p className="text-sm font-medium text-ink">
-            No upsell rules yet — add one when you have a real menu add-on to offer.
+        <div className="rounded-[12px] border border-dashed border-line px-4 py-5 text-center">
+          <p className="text-[13.5px] font-medium text-ink">
+            No upsell rules yet — add one when you have a real add-on to offer.
           </p>
-          <p className="mt-1 text-xs text-muted">
+          <p className="mt-1 text-[12.5px] text-subtle">
             Example: when a guest orders biryani, offer mango lassi if it is on your
             menu and in stock.
           </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {UPSSELL_RULE_EXAMPLES.map((example) => (
-              <button
-                key={example.trigger_text}
-                type="button"
-                className="rounded-md border border-line bg-surface px-2.5 py-1.5 text-xs font-medium text-ink hover:bg-elev disabled:opacity-50"
-                disabled={disabled}
-                onClick={() => addExample(example)}
-              >
-                Use example: {example.trigger_text}
-              </button>
-            ))}
-            <button
-              type="button"
-              className="rounded-md border border-accent/30 bg-accent-soft px-2.5 py-1.5 text-xs font-medium text-accent hover:bg-accent/10 disabled:opacity-50"
-              disabled={disabled}
-              onClick={() => onChange([emptyEntry()])}
-            >
-              Add blank rule
-            </button>
-          </div>
         </div>
       ) : (
         <ul className="space-y-3">
@@ -138,17 +129,23 @@ export function RestaurantUpsellEditor({
             return (
               <li
                 key={`upsell-${index}`}
-                className="rounded-xl border border-line bg-surface p-3 sm:p-4"
+                className={cn(
+                  "rounded-[12px] border border-line p-3 sm:p-4",
+                  !entry.is_active && "bg-elev/60"
+                )}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-xs font-medium uppercase tracking-[0.12em] text-subtle">
-                    Rule {index + 1}
-                  </span>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <label className="inline-flex items-center gap-2 text-xs text-muted">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[13px] font-semibold text-ink">
+                      Rule {index + 1}
+                    </span>
+                    <Badge tone={auditTone(audit.status)}>{auditLabel(audit.status)}</Badge>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <label className="mr-1 inline-flex min-h-11 cursor-pointer items-center gap-2 text-[12.5px] text-muted lg:min-h-0">
                       <input
                         type="checkbox"
-                        className="rounded border-line"
+                        className="h-4 w-4 accent-ink"
                         checked={entry.is_active}
                         disabled={disabled}
                         onChange={(e) =>
@@ -159,38 +156,39 @@ export function RestaurantUpsellEditor({
                     </label>
                     <button
                       type="button"
-                      className="text-xs text-muted hover:text-ink disabled:opacity-40"
+                      className="btn-ghost btn-sm w-[1.875rem] px-0"
+                      aria-label={`Move rule ${index + 1} up`}
                       disabled={disabled || index === 0}
                       onClick={() => moveEntry(index, -1)}
                     >
-                      Move up
+                      <ChevronUp size={15} aria-hidden />
                     </button>
                     <button
                       type="button"
-                      className="text-xs text-muted hover:text-ink disabled:opacity-40"
+                      className="btn-ghost btn-sm w-[1.875rem] px-0"
+                      aria-label={`Move rule ${index + 1} down`}
                       disabled={disabled || index === entries.length - 1}
                       onClick={() => moveEntry(index, 1)}
                     >
-                      Move down
+                      <ChevronDown size={15} aria-hidden />
                     </button>
                     <button
                       type="button"
-                      className="text-xs text-danger hover:underline disabled:opacity-40"
+                      className="btn-ghost btn-sm w-[1.875rem] px-0 text-muted hover:text-danger"
+                      aria-label={`Remove rule ${index + 1}`}
                       disabled={disabled}
                       onClick={() => removeEntry(index)}
                     >
-                      Remove
+                      <Trash2 size={14} aria-hidden />
                     </button>
                   </div>
                 </div>
 
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  <label className="block min-w-0 space-y-1">
-                    <span className="text-xs font-medium text-muted">
-                      When guest orders / mentions
-                    </span>
+                  <label className="block min-w-0">
+                    <span className="field-label">When guest orders / mentions</span>
                     <input
-                      className="input-base w-full min-h-11"
+                      className="input-base"
                       value={entry.trigger_text}
                       disabled={disabled}
                       placeholder="Biryani order"
@@ -199,12 +197,10 @@ export function RestaurantUpsellEditor({
                       }
                     />
                   </label>
-                  <label className="block min-w-0 space-y-1">
-                    <span className="text-xs font-medium text-muted">
-                      Offer this add-on (exact menu name)
-                    </span>
+                  <label className="block min-w-0">
+                    <span className="field-label">Offer this add-on (exact menu name)</span>
                     <input
-                      className="input-base w-full min-h-11"
+                      className="input-base"
                       value={entry.offer_text}
                       disabled={disabled}
                       placeholder="House salad if available"
@@ -217,8 +213,14 @@ export function RestaurantUpsellEditor({
 
                 <p
                   className={cn(
-                    "mt-3 rounded-md border px-2.5 py-2 text-xs",
-                    auditBadgeClass(audit.status)
+                    "mt-2 text-[12.5px] [overflow-wrap:anywhere]",
+                    audit.status === "ready" && "text-success",
+                    audit.status === "inactive" && "text-subtle",
+                    audit.status === "unavailable" && "text-[rgb(var(--tile-amber-ink))]",
+                    audit.status !== "ready" &&
+                      audit.status !== "inactive" &&
+                      audit.status !== "unavailable" &&
+                      "text-danger"
                   )}
                   role="status"
                 >
@@ -230,29 +232,32 @@ export function RestaurantUpsellEditor({
         </ul>
       )}
 
-      {entries.length > 0 ? (
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            className="rounded-md border border-accent/30 bg-accent-soft px-2.5 py-1.5 text-xs font-medium text-accent hover:bg-accent/10 disabled:opacity-50"
-            disabled={disabled || entries.length >= 20}
-            onClick={() => onChange([...entries, emptyEntry()])}
-          >
-            Add rule
-          </button>
-          {UPSSELL_RULE_EXAMPLES.map((example) => (
-            <button
-              key={example.trigger_text}
-              type="button"
-              className="rounded-md border border-line bg-elev px-2.5 py-1.5 text-xs text-muted hover:text-ink disabled:opacity-50"
-              disabled={disabled || entries.length >= 20}
-              onClick={() => addExample(example)}
-            >
-              Example: {example.trigger_text}
-            </button>
-          ))}
+      <div className="flex flex-col gap-3 rounded-[12px] bg-elev/60 p-3 sm:flex-row sm:items-start">
+        <button
+          type="button"
+          className="btn-ghost shrink-0"
+          disabled={disabled || atLimit}
+          onClick={() => onChange([...entries, emptyEntry()])}
+        >
+          <Plus size={15} aria-hidden /> {entries.length === 0 ? "Add blank rule" : "Add rule"}
+        </button>
+        <div className="min-w-0">
+          <p className="text-[12px] font-medium text-subtle">Or start from an example</p>
+          <div className="mt-1.5 flex flex-wrap gap-1.5">
+            {UPSSELL_RULE_EXAMPLES.map((example) => (
+              <button
+                key={example.trigger_text}
+                type="button"
+                className="inline-flex min-h-11 items-center rounded-full border border-line bg-card px-3 text-[12.5px] font-medium text-muted transition-colors hover:border-line-strong hover:text-ink disabled:opacity-50 motion-reduce:transition-none lg:min-h-8"
+                disabled={disabled || atLimit}
+                onClick={() => addExample(example)}
+              >
+                {example.trigger_text}
+              </button>
+            ))}
+          </div>
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }

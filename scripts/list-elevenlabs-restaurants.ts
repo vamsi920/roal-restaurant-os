@@ -1,8 +1,8 @@
 import { getElevenLabsAgentId } from "../lib/env.server";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 
 void (async () => {
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (!sb) {
     console.error("SUPABASE_SERVICE_ROLE_KEY required");
     process.exit(1);

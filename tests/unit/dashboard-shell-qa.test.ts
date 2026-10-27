@@ -17,7 +17,7 @@ describe("dashboard shell UX", () => {
 
   it("does not show org-level fake live badge in header", () => {
     const shell = readFileSync(join(REPO, "components/dashboard/app-shell.tsx"), "utf8");
-    expect(shell).toContain("restaurantWorkspaceMobileTitle");
+    expect(shell).toContain("LocationSwitcher");
     expect(shell).not.toContain("showLiveBadge");
     expect(shell).not.toContain("app-shell-header-badge");
     expect(shell).not.toContain("pulse-dot");
@@ -26,7 +26,8 @@ describe("dashboard shell UX", () => {
   it("has route-level loading skeleton", () => {
     const loading = readFileSync(join(REPO, "app/dashboard/loading.tsx"), "utf8");
     expect(loading).toContain('role="status"');
-    expect(loading).toContain("glass-card");
+    expect(loading).toContain("stat-card");
+    expect(loading).toContain("panel__head");
   });
 
   it("restaurant list avoids hardcoded black title", () => {

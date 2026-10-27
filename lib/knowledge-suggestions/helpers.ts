@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { extractCallInsightsFromTranscript } from "@/lib/gemini";
 
 export type KnowledgeSuggestionStatus = "pending" | "accepted" | "dismissed";
@@ -38,7 +38,7 @@ function mapRow(row: Record<string, unknown>): KnowledgeSuggestion {
 }
 
 export async function loadKnowledgeSuggestions(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   options: { status?: KnowledgeSuggestionStatus; limit?: number } = {}
 ): Promise<KnowledgeSuggestion[]> {
@@ -92,7 +92,7 @@ export function transcriptTurnsFromRows(rows: unknown): TranscriptTurnLike[] {
  * as pending suggestions (merged with similar pending rows). Best-effort.
  */
 export async function mineKnowledgeSuggestionsFromTranscript(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     organizationId: string;
@@ -149,7 +149,7 @@ export async function mineKnowledgeSuggestionsFromTranscript(
 
 /** Cheap head-count of pending suggestions for rail badges. Never throws. */
 export async function countPendingKnowledgeSuggestions(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<number> {
   try {

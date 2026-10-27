@@ -1,7 +1,7 @@
 "use server";
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { findTrialVoice } from "@/lib/trial/voices";
 import { afterProfileSettingsMutation } from "@/lib/voice-agent/after-restaurant-settings-mutation";
 
@@ -46,7 +46,7 @@ export async function saveHostPersonaAction(
 
   const greeting = raw.agentGreeting.trim().slice(0, 400) || null;
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { error } = await supabase
     .from("restaurant_profiles")
     .update({

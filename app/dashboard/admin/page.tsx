@@ -7,7 +7,7 @@ import {
 } from "@/lib/admin/resolve-admin-org-inputs";
 import { loadAdminOpsSnapshot } from "@/lib/admin/load-ops-snapshot";
 import { getAuthContext, hasOrgAdminAccess } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Platform support — ROAL",
@@ -25,7 +25,7 @@ export default async function AdminOpsPage() {
   }
 
   const adminOrgs = await resolveAdminOrgInputs(context);
-  const sessionClient = await createServerSupabase();
+  const sessionClient = getDb();
   const supabase = adminSnapshotSupabase(context, sessionClient);
   const snapshot = await loadAdminOpsSnapshot(supabase, adminOrgs);
 

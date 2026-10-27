@@ -1,12 +1,22 @@
 import Link from "next/link";
 import {
+  AlertTriangle,
+  Check,
+  DollarSign,
+  FileText,
+  ReceiptText,
+  ScanLine,
+  Sparkles,
+  Wrench,
+} from "lucide-react";
+import {
   InlineLink,
   PageHeader,
   Panel,
-  StatTile,
   StatusChip,
   type Tone,
 } from "@/components/dashboard/page-primitives";
+import { EmptyState, IconTile, StatCard, formatMoney } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { BILLING_PLANS, statusLabel } from "@/lib/billing";
 import { BILLING_LAUNCH_POSTURE } from "@/lib/billing/launch-posture";
@@ -64,7 +74,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
     : snapshot.usage.billablePhoneOrders === 0;
 
   return (
-    <div className="billing-dashboard dashboard-page dashboard-page--wide min-w-0 space-y-5 overflow-x-hidden">
+    <div className="billing-dashboard org-page org-page--wide min-w-0 space-y-5 overflow-x-hidden">
       <PageHeader
         className="billing-dashboard__header"
         eyebrow={
@@ -89,10 +99,12 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
 
       {pilot ? (
         <div
-          className="billing-dashboard__notice billing-dashboard__notice--pilot dashboard-panel border-accent/30 bg-accent-soft/60 text-[13px] text-muted"
+          className="billing-dashboard__notice billing-dashboard__notice--pilot panel flex min-w-0 items-start gap-3 border-accent/25 bg-accent-soft/50 p-4 text-[13px] text-muted"
           role="status"
         >
-          <p className="font-medium text-ink">Pilot billing mode</p>
+          <IconTile icon={Sparkles} color="orange" />
+          <div className="min-w-0 flex-1">
+          <p className="font-semibold text-ink">Pilot billing mode</p>
           <p className="mt-1 text-pretty">
             {BILLING_LAUNCH_POSTURE.devMode} Public pricing is {BILLING_LAUNCH_POSTURE.pilotRate}{" "}
             ({BILLING_LAUNCH_POSTURE.model}). {BILLING_LAUNCH_POSTURE.selfServeCheckout}{" "}
@@ -102,33 +114,55 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             <InlineLink href={BILLING_LAUNCH_POSTURE.publicPricingPath}>Public pricing</InlineLink>
             <InlineLink href={BILLING_LAUNCH_POSTURE.contactPath}>Contact for pilot terms</InlineLink>
           </p>
+          </div>
         </div>
       ) : !snapshot.checkoutEnabled ? (
         <div
-          className="billing-dashboard__notice billing-dashboard__notice--stripe dashboard-panel border-warning/35 bg-warning/5 text-[13px] text-muted"
+          className="billing-dashboard__notice billing-dashboard__notice--stripe panel flex min-w-0 items-start gap-3 border-warning/30 bg-warning/5 p-4 text-[13px] text-muted"
           role="status"
         >
-          <p className="font-medium text-ink">Stripe keys detected — checkout not live</p>
-          <p className="mt-1 text-pretty">
-            API keys are configured, but {BILLING_LAUNCH_POSTURE.selfServeCheckout.toLowerCase()}{" "}
-            {BILLING_LAUNCH_POSTURE.pilotBilling}
-          </p>
+          <IconTile icon={AlertTriangle} color="amber" />
+          <div className="min-w-0 flex-1">
+            <p className="font-semibold text-ink">Stripe keys detected — checkout not live</p>
+            <p className="mt-1 text-pretty">
+              API keys are configured, but {BILLING_LAUNCH_POSTURE.selfServeCheckout.toLowerCase()}{" "}
+              {BILLING_LAUNCH_POSTURE.pilotBilling}
+            </p>
+          </div>
         </div>
       ) : null}
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile
+      <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
+        <StatCard
           label="Completed orders"
           value={snapshot.usage.billablePhoneOrders.toLocaleString()}
           hint="Receipt-backed phone orders this period"
+          icon={ReceiptText}
+          color="green"
         />
-        <StatTile
+        <StatCard
           label="Estimated charge"
-          value={`$${snapshot.usage.estimatedBillableChargeUsd.toFixed(2)}`}
+          value={
+            <span className="text-money">
+              {formatMoney(snapshot.usage.estimatedBillableChargeUsd)}
+            </span>
+          }
           hint={BILLING_LAUNCH_POSTURE.pilotRate}
+          icon={DollarSign}
+          color="orange"
         />
-        <StatTile label="Menu scans" value={snapshot.usage.menuScans.toLocaleString()} />
-        <StatTile label="Tool calls" value={snapshot.usage.toolCalls.toLocaleString()} />
+        <StatCard
+          label="Menu scans"
+          value={snapshot.usage.menuScans.toLocaleString()}
+          icon={ScanLine}
+          color="blue"
+        />
+        <StatCard
+          label="Tool calls"
+          value={snapshot.usage.toolCalls.toLocaleString()}
+          icon={Wrench}
+          color="amber"
+        />
       </div>
 
       <div className="billing-dashboard__plan-grid grid min-w-0 gap-3 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
@@ -137,8 +171,8 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
           title={isRestaurantScope ? "Organization plan" : "Current plan"}
           aside={<StatusChip tone={statusTone(snapshot.effectiveStatus)}>{statusLabel(snapshot.effectiveStatus)}</StatusChip>}
         >
-          <div className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <p className="font-display text-[22px] font-semibold tracking-tight text-ink">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <p className="font-display text-[24px] font-bold tracking-[-0.02em] text-ink">
               {pilot
                 ? BILLING_LAUNCH_POSTURE.pilotRate
                 : plan.monthlyPriceUsd != null
@@ -152,7 +186,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
           </p>
 
           {snapshot.isTrialActive ? (
-            <p className="mt-3 rounded-md bg-elev px-3 py-2 text-[13px] text-muted">
+            <p className="mt-3 rounded-[10px] border border-line bg-elev px-3 py-2 text-[13px] text-muted">
               Trial ends {formatDate(snapshot.trialEndsAt)}
               {snapshot.trialDaysRemaining != null ? (
                 <>
@@ -195,7 +229,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         </Panel>
 
         <Panel className="billing-dashboard__subscription" title="Subscription">
-          <dl className="dashboard-kv billing-dashboard__meta mt-3">
+          <dl className="org-kv billing-dashboard__meta">
             <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
               <dt>Status</dt>
               <dd>{statusLabel(snapshot.effectiveStatus)}</dd>
@@ -242,17 +276,17 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
       >
         {noOrders ? (
           <p
-            className="mt-3 rounded-md border border-dashed border-line-strong bg-elev px-3 py-2.5 text-[13px] text-muted"
+            className="mb-3 rounded-[10px] border border-dashed border-line-strong bg-elev px-3 py-2.5 text-[13px] text-muted"
             role="status"
           >
             No billable phone orders yet this period. Missed and no-order calls are not charged.
           </p>
         ) : null}
-        <ul className="billing-dashboard__meters mt-3 grid gap-3 sm:grid-cols-2">
+        <ul className="billing-dashboard__meters grid gap-3 sm:grid-cols-2">
           {snapshot.limitChecks.map((check) => (
             <li
               key={check.key}
-              className="billing-dashboard__meter min-w-0 rounded-md border border-line bg-elev px-3 py-2.5"
+              className="billing-dashboard__meter min-w-0 rounded-[10px] border border-line bg-card px-3.5 py-3"
             >
               <div className="billing-dashboard__meter-head flex flex-col gap-0.5 text-[13px] sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                 <span className="font-medium text-ink">{check.label}</span>
@@ -261,7 +295,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
                 </span>
               </div>
               <div
-                className="billing-dashboard__meter-track mt-2 h-1.5 overflow-hidden rounded-full bg-line"
+                className="billing-dashboard__meter-track mt-2.5 h-1.5 overflow-hidden rounded-full bg-elev ring-1 ring-inset ring-line"
                 role="meter"
                 aria-valuenow={check.percent}
                 aria-valuemin={0}
@@ -269,7 +303,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
                 aria-label={`${check.label} usage`}
               >
                 <div
-                  className={cn("h-full rounded-full transition-all", meterTone(check.level))}
+                  className={cn("h-full rounded-full transition-all motion-reduce:transition-none", meterTone(check.level))}
                   style={{ width: `${Math.max(check.percent, check.used > 0 ? 4 : 0)}%` }}
                 />
               </div>
@@ -298,7 +332,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
       </Panel>
 
       <Panel className="billing-dashboard__features" title="Plan features">
-        <ul className="billing-dashboard__feature-list mt-3 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+        <ul className="billing-dashboard__feature-list grid gap-x-6 gap-y-1 sm:grid-cols-2">
           {snapshot.features.map((feature) => (
             <li
               key={feature.key}
@@ -309,11 +343,13 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             >
               <span
                 className={cn(
-                  "h-1.5 w-1.5 shrink-0 rounded-full",
-                  feature.enabled ? "bg-success" : "bg-line-strong"
+                  "grid h-4 w-4 shrink-0 place-items-center rounded-full",
+                  feature.enabled ? "bg-success/10 text-success" : "bg-elev text-subtle"
                 )}
                 aria-hidden
-              />
+              >
+                {feature.enabled ? <Check size={11} strokeWidth={3} /> : <span className="h-1 w-1 rounded-full bg-current" />}
+              </span>
               {feature.label}
             </li>
           ))}
@@ -334,7 +370,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
               : undefined
           }
         >
-          <ul className="billing-dashboard__tier-grid mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="billing-dashboard__tier-grid grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {(["starter", "growth", "enterprise"] as const).map((id) => {
               const p = BILLING_PLANS[id];
               const current = id === plan.id;
@@ -342,11 +378,11 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
                 <li
                   key={id}
                   className={cn(
-                    "billing-dashboard__tier flex min-w-0 flex-col rounded-md border p-3.5",
-                    current ? "border-ink" : "border-line bg-elev"
+                    "billing-dashboard__tier flex min-w-0 flex-col rounded-[12px] border p-4",
+                    current ? "border-ink bg-card shadow-[0_0_0_3px_rgb(17_17_17/0.05)]" : "border-line bg-elev"
                   )}
                 >
-                  <p className="dashboard-page__kicker">
+                  <p className="org-kicker">
                     {p.name}
                     {current ? " · Current" : null}
                   </p>
@@ -376,7 +412,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
               : "Invoice history appears here after Stripe Checkout ships."
         }
       >
-        <div className="billing-dashboard__invoice-table dashboard-table min-w-0">
+        <div className="billing-dashboard__invoice-table org-table min-w-0">
           <table>
             <thead>
               <tr>
@@ -387,8 +423,13 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             </thead>
             <tbody>
               <tr>
-                <td colSpan={3} className="text-muted">
-                  No invoices yet
+                <td colSpan={3} className="!p-0">
+                  <EmptyState
+                    icon={FileText}
+                    className="w-full py-8"
+                    title="No invoices yet"
+                    body="Completed orders are billed at $0.90 each. Invoices list here once one is issued."
+                  />
                 </td>
               </tr>
             </tbody>
@@ -396,7 +437,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         </div>
       </Panel>
 
-      <p className="billing-dashboard__footer text-[13px] text-muted [overflow-wrap:anywhere]">
+      <p className="billing-dashboard__footer text-[13px] text-subtle [overflow-wrap:anywhere]">
         <InlineLink href="/pricing">Public pricing</InlineLink> · Questions?{" "}
         <InlineLink href="/contact">Contact sales</InlineLink>
       </p>

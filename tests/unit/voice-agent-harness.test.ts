@@ -20,7 +20,7 @@ import {
   validateCartForSync,
   validateCustomerForFinalize,
 } from "@/lib/orders/validate-cart";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 
 const burgerWithRequiredSize = [
   ...menuModifiers,
@@ -60,7 +60,7 @@ import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
 import { buildGetMenuHarnessResponse } from "@/lib/voice-agent/test-harness/build-get-menu";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 
-const supabaseStub = {} as SupabaseClient;
+const supabaseStub = {} as Db;
 
 function menuResponse(operations: Record<string, unknown> = {}) {
   const categoryId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";

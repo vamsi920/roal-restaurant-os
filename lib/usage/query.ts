@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type { UsageEventType } from "@/lib/usage/types";
 
 export type UsageSummaryRow = {
@@ -17,7 +17,7 @@ export type UsageSummary = {
 
 /** Aggregate event counts for billing dashboards (RLS-scoped client). */
 export async function getUsageSummary(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantId?: string | null;

@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   buildHoursPromptSection,
   DAY_LABELS,
@@ -39,7 +39,7 @@ function mapException(row: Record<string, unknown>): RestaurantHoursException {
 }
 
 export async function loadRestaurantHoursBundle(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<RestaurantHoursBundle | null> {
   const { data: profile, error: pErr } = await supabase
@@ -118,7 +118,7 @@ export async function loadRestaurantHoursBundle(
 }
 
 export async function evaluateRestaurantOrdering(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ) {
   const bundle = await loadRestaurantHoursBundle(supabase, restaurantId);

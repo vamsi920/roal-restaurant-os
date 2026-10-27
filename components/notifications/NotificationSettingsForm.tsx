@@ -33,7 +33,7 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
         title="Delivery mode"
         hint="Dev console logs to the server and the history below. Production enables webhooks; email and SMS stay human-setup until providers are wired."
       >
-        <div className="notification-settings__mode-options mt-3 grid gap-2 sm:grid-cols-2">
+        <div className="notification-settings__mode-options grid gap-2 sm:grid-cols-2">
           <ModeOption
             value="dev_console"
             label="Development console"
@@ -52,10 +52,10 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
       </Panel>
 
       <Panel className="notification-settings__events" title="Events">
-        <ul className="mt-3 divide-y divide-line/70">
+        <ul className="-my-1 divide-y divide-line/70">
           {NOTIFICATION_EVENT_TYPES.map((event) => (
             <li key={event}>
-              <label className="notification-settings__event flex min-h-11 items-start gap-3 py-2.5 first:pt-0">
+              <label className="notification-settings__event flex min-h-11 cursor-pointer items-start gap-3 py-2.5">
                 <input
                   type="checkbox"
                   name={`event_${event}`}
@@ -101,11 +101,11 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
         hint={NOTIFICATION_PROVIDER_POSTURE.emailSmsHumanOnly}
       >
         {production ? (
-          <p className="mt-3 rounded-md border border-line bg-elev px-3 py-2 text-[12px] text-muted">
+          <p className="rounded-[10px] border border-line bg-elev px-3 py-2 text-[12.5px] text-muted">
             {NOTIFICATION_PROVIDER_POSTURE.webhookLive}
           </p>
         ) : null}
-        <ul className="mt-3 grid gap-1 sm:grid-cols-2">
+        <ul className="mt-3 grid gap-1 first:mt-0 sm:grid-cols-2">
           <ChannelToggle
             name="channel_dev_console"
             label="Dev console"
@@ -180,7 +180,7 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
 
       {state.error ? (
         <p
-          className="notification-settings__error rounded-md border border-danger/25 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
+          className="notification-settings__error rounded-[10px] border border-danger/25 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {state.error}
@@ -221,7 +221,7 @@ function ModeOption({
   disabled: boolean;
 }) {
   return (
-    <label className="notification-settings__radio flex min-h-11 items-start gap-3 rounded-md border border-line bg-card px-3 py-2.5 has-[:checked]:border-ink">
+    <label className="notification-settings__radio flex min-h-11 cursor-pointer items-start gap-3 rounded-[10px] border border-line bg-card px-3 py-2.5 transition-colors hover:border-line-strong has-[:checked]:border-ink has-[:checked]:shadow-[0_0_0_3px_rgb(17_17_17/0.06)] has-[:disabled]:cursor-not-allowed">
       <input
         type="radio"
         name="provider_mode"
@@ -251,7 +251,7 @@ function ChannelToggle({
 }) {
   return (
     <li>
-      <label className="notification-settings__channel flex min-h-11 items-center gap-2.5 rounded-md px-2 text-[13px] text-ink hover:bg-elev lg:min-h-9">
+      <label className="notification-settings__channel flex min-h-11 cursor-pointer items-center gap-2.5 rounded-lg px-2 text-[13px] text-ink hover:bg-elev lg:min-h-9">
         <input
           type="checkbox"
           name={name}

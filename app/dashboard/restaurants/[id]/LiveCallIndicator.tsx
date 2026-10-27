@@ -5,31 +5,30 @@ import { CallStatusStrip } from "./CallStatusStrip";
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
 import type { DraftOrderRow } from "@/lib/types";
 import { isVoiceCartStatus } from "@/lib/order-status";
+import { parseOrderLineItems } from "@/lib/orders/line-items";
 
 type Props = {
   initialActiveCalls: CommandCenterCallRow[];
   liveCarts: DraftOrderRow[];
   draftRows: DraftOrderRow[];
+  hostName?: string;
 };
 
-export function LiveCallIndicator({
-  initialActiveCalls,
-  liveCarts,
-  draftRows,
-}: Props) {
-  const liveCartSessions = useMemo(
-    () => new Set(liveCarts.map((o) => o.session_id)),
-    [liveCarts]
-  );
+export function LiveCallIndicator({ initialActiveCalls, liveCarts, draftRows, hostName }: Props) {
+  const liveCartSessions = useMemo(() => new Set(liveCarts.map((o) => o.session_id)), [liveCarts]);
 
   const supplementalCount = useMemo(
-    () =>
-      initialActiveCalls.filter((call) => !liveCartSessions.has(call.sessionId))
-        .length,
+    () => initialActiveCalls.filter((call) => !liveCartSessions.has(call.sessionId)).length,
     [initialActiveCalls, liveCartSessions]
   );
 
   const liveCount = liveCarts.length + supplementalCount;
+
+  const activity = useMemo(() => {
+    if (liveCount === 0) return null;
+    const building = liveCarts.some((o) => parseOrderLineItems(o.items).length > 0);
+    return building ? "taking an order" : "on the phone";
+  }, [liveCarts, liveCount]);
 
   const lastUpdatedAt = useMemo(() => {
     if (liveCarts.length > 0) return liveCarts[0]?.updated_at ?? null;
@@ -60,6 +59,8 @@ export function LiveCallIndicator({
       liveCount={liveCount}
       lastUpdatedAt={lastUpdatedAt}
       supplementalCalls={supplementalCount}
+      activity={activity}
+      hostName={hostName}
     />
   );
 }

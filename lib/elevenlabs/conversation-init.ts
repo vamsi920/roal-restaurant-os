@@ -7,7 +7,7 @@ import {
   mergeRestaurantPlaceholders,
   readAgentDynamicPlaceholders,
 } from "@/lib/elevenlabs-placeholders";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const ELEVENLABS_CONVERSATION_INIT_SECRET_HEADER =
   "x-roal-conversation-init-secret";
@@ -189,7 +189,7 @@ export type ConversationInitRestaurantContext = {
 };
 
 async function loadRestaurantName(
-  supabase: NonNullable<ReturnType<typeof getServiceRoleSupabase>>,
+  supabase: NonNullable<ReturnType<typeof getDb>>,
   restaurantId: string
 ): Promise<string> {
   const { data: restaurant, error } = await supabase
@@ -228,7 +228,7 @@ async function resolveRestaurantBySavedAgentId(
     return null;
   }
 
-  const supabase = getServiceRoleSupabase();
+  const supabase = getDb();
   if (!supabase) return null;
 
   const { data: profile, error: profileErr } = await supabase
@@ -261,7 +261,7 @@ export async function lookupRestaurantByCalledNumber(
   const key = phoneLookupKey(calledNumber);
   if (!key) return null;
 
-  const supabase = getServiceRoleSupabase();
+  const supabase = getDb();
   if (!supabase) return null;
 
   const { data: profiles, error } = await supabase
@@ -376,7 +376,7 @@ export async function persistElevenLabsConversationStarted(
     return { stored: false, reason: "missing_restaurant_or_session" };
   }
 
-  const supabase = getServiceRoleSupabase();
+  const supabase = getDb();
   if (!supabase) return { stored: false, reason: "missing_service_role" };
 
   const now = new Date().toISOString();

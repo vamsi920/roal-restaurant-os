@@ -24,7 +24,7 @@ import {
   webhookHostMatchesAppOrigin,
 } from "../lib/site-url";
 import { ROAL_RESTAURANT_ID_HEADER } from "../lib/sync-elevenlabs-roal-tools";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
@@ -90,7 +90,7 @@ async function resolveDedicatedInitAgentId(
     return { agentId: override, source: "QA_DEDICATED_AGENT_ID" };
   }
 
-  const supabase = getServiceRoleSupabase();
+  const supabase = getDb();
   if (supabase) {
     const { data } = await supabase
       .from("restaurant_profiles")

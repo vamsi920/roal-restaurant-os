@@ -17,11 +17,11 @@ vi.mock("@/lib/auth/context-server", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 function accessOk() {
   return {
@@ -46,7 +46,7 @@ function mockMenuSupabase(options?: {
   modifiers?: DbModifier[];
 }) {
   const categoryId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
-  vi.mocked(createServerSupabase).mockResolvedValue({
+  vi.mocked(getDb).mockResolvedValue({
     from: vi.fn((table: string) => {
       if (table === "restaurant_profiles") {
         return {

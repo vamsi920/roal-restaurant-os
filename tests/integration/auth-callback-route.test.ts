@@ -74,4 +74,38 @@ describe("GET /auth/callback", () => {
       "http://localhost:3000/dashboard/restaurants"
     );
   });
+  it("passes OAuth provider errors back to login", async () => {
+    const res = await GET(
+      callbackRequest("?error=access_denied&error_description=Unsupported%20provider%3A%20provider%20is%20not%20enabled")
+    );
+    const location = new URL(res.headers.get("location") ?? "");
+    expect(location.pathname).toBe("/login");
+    expect(location.searchParams.get("error")).toBe("Unsupported provider: provider is not enabled");
+    expect(exchangeCodeForSession).not.toHaveBeenCalled();
+  });
+
+  it("keeps a non-default next on the login retry link", async () => {
+    exchangeCodeForSession.mockResolvedValue({ error: { message: "Invalid or expired code" } });
+    const res = await GET(callbackRequest("?code=bad&next=%2Fdashboard%2Fonboarding"));
+    const location = new URL(res.headers.get("location") ?? "");
+    expect(location.pathname).toBe("/login");
+    expect(location.searchParams.get("next")).toBe("/dashboard/onboarding");
+  });
+
+  it("sends failed recovery links back to the reset page", async () => {
+    exchangeCodeForSession.mockResolvedValue({ error: { message: "Email link is invalid or has expired" } });
+    const res = await GET(
+      callbackRequest(`?code=bad&next=${encodeURIComponent("/reset-password?mode=update")}`)
+    );
+    const location = new URL(res.headers.get("location") ?? "");
+    expect(location.pathname).toBe("/reset-password");
+    expect(location.searchParams.get("error")).toContain("expired");
+  });
+
+  it("lands recovery links on the update step", async () => {
+    const res = await GET(
+      callbackRequest(`?code=good&next=${encodeURIComponent("/reset-password?mode=update")}`)
+    );
+    expect(res.headers.get("location")).toBe("http://localhost:3000/reset-password?mode=update");
+  });
 });

@@ -6,7 +6,7 @@ import {
   getRestaurantAccessForPage,
 } from "@/lib/auth/context-server";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
-import { createServerSupabase, getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { LiveOrdersPanel } from "./LiveOrdersPanel";
 import { RestaurantWorkspaceRail } from "./RestaurantWorkspaceRail";
 import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
@@ -17,15 +17,8 @@ import { notifyStuckActiveCallsForOrganization } from "@/lib/notifications/stuck
 import { RESTAURANT_LIVE_ORDERS_LABEL } from "@/lib/dashboard-restaurant-labels";
 import { loadLiveOrdersPageData } from "@/lib/live-orders/load-live-orders-page";
 import { PhoneAgentReadinessStrip } from "@/components/live-orders/PhoneAgentReadinessStrip";
-import { RecentPhoneOutcomesPanel } from "@/components/live-orders/RecentPhoneOutcomesPanel";
-import { WelcomeGoLiveCard } from "@/components/live-orders/WelcomeGoLiveCard";
 import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
-import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
-import { getPublicEnv } from "@/lib/env.public";
-import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
-import { CONTACT_PILOT_EMAIL } from "@/lib/landing/contact-mailto";
 import { defaultAgentName } from "@/lib/trial/voices";
-import type { RestaurantProfile } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: `${RESTAURANT_LIVE_ORDERS_LABEL} — ROAL`,
@@ -33,43 +26,10 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-const PHONE_PATTERN = /\+?1?[ (]?\d{3}[) .-]?\d{3}[ .-]?\d{4}\b/;
-
-/**
- * The ElevenLabs number is not stored in the DB. When the control-center
- * snapshot's checklist mentions one, surface it; otherwise fall back to mailto.
- */
-async function loadForwardingNumber(
-  restaurantId: string,
-  restaurantName: string,
-  profile: RestaurantProfile
-): Promise<string | null> {
-  try {
-    const supabaseUrl = getPublicEnv().NEXT_PUBLIC_SUPABASE_URL;
-    const center = await loadVoiceAgentControlCenter({
-      restaurantId,
-      restaurantName,
-      edgeBase: supabaseUrl.replace(/\/$/, ""),
-      supabaseRef: supabaseProjectRefFromUrl(supabaseUrl),
-      profile,
-    });
-    for (const item of center.checklist) {
-      if (!/phone|number|twilio/i.test(item.label)) continue;
-      const match = `${item.label} ${item.detail ?? ""}`.match(PHONE_PATTERN);
-      if (match) return match[0].trim();
-    }
-  } catch {
-    // Snapshot is optional for the welcome card.
-  }
-  return null;
-}
-
 export default async function RestaurantKDSPage({
   params,
-  searchParams,
 }: {
   params: { id: string };
-  searchParams?: { welcome?: string };
 }) {
   noStore();
   const access = await getRestaurantAccessForPage(params.id);
@@ -79,7 +39,7 @@ export default async function RestaurantKDSPage({
     notFound();
   }
   const { restaurant } = access;
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
 
   const { data: orgRestaurants } = await supabase
     .from("restaurants")
@@ -103,12 +63,10 @@ export default async function RestaurantKDSPage({
     restaurant.organization_id
   );
 
-  const showWelcome = searchParams?.welcome === "1";
-
   const menu = await loadRestaurantMenu(supabase, params.id);
-  const ordersDb = getServiceRoleSupabase() ?? supabase;
+  const ordersDb = getDb() ?? supabase;
 
-  const [pageData, suggestionCount, forwardingNumber] = await Promise.all([
+  const [pageData, suggestionCount] = await Promise.all([
     loadLiveOrdersPageData(supabase, {
       restaurantId: restaurant.id,
       restaurantName: restaurant.name,
@@ -116,9 +74,6 @@ export default async function RestaurantKDSPage({
       ordersDb,
     }),
     countPendingKnowledgeSuggestions(supabase, restaurant.id),
-    showWelcome
-      ? loadForwardingNumber(restaurant.id, restaurant.name, profile)
-      : Promise.resolve<string | null>(null),
   ]);
 
   if (pageData.ordersLoadError) {
@@ -134,57 +89,28 @@ export default async function RestaurantKDSPage({
       restaurantName={restaurant.name}
       suggestionCount={suggestionCount}
     >
-      <div className="kds-workspace kds-workspace--orders min-w-0 w-full max-w-full space-y-4">
-        {showWelcome ? (
-          <WelcomeGoLiveCard
-            restaurantId={restaurant.id}
-            restaurantName={restaurant.name}
-            hostName={hostName}
-            forwardingNumber={forwardingNumber}
-            supportEmail={CONTACT_PILOT_EMAIL}
-          />
-        ) : null}
-
-        <header className="ws-page-head min-w-0">
-          <div className="ws-page-head__row">
-            <div className="min-w-0">
-              <h1 className="ws-page-head__title">{RESTAURANT_LIVE_ORDERS_LABEL}</h1>
-              <p className="ws-page-head__sub">
-                Tickets from {hostName}, live calls, and anything that needs a human.
-              </p>
-            </div>
-          </div>
-          <PhoneAgentReadinessStrip
-            restaurantId={restaurant.id}
-            launchGate={pageData.launchGate}
-          />
-        </header>
-
-        <div className="kds-ops-layout min-w-0">
-          <div className="kds-ops-main min-w-0">
-            <LiveOrdersPanel
-              restaurantId={restaurant.id}
-              restaurantName={restaurant.name}
-              menuItems={menu.items}
-              menuModifiers={menu.modifiers}
-              pricingSettings={pricingSettings}
-              initialDraftOrders={pageData.initialDraftOrders}
-              initialReceipts={pageData.initialReceipts}
-              initialLoadError={pageData.ordersLoadError}
-              initialActiveCalls={pageData.activeCalls}
-              initialCallEvidenceBySession={pageData.initialCallEvidenceBySession}
-            />
-          </div>
-          <RecentPhoneOutcomesPanel
-            outcomes={pageData.recentOutcomes}
-            rangeSince={pageData.rangeSince}
-            rangeUntil={pageData.rangeUntil}
-            empty={pageData.outcomesEmpty}
-            peakCallContext={pageData.peakCallContext}
-            actionNeededCount={pageData.actionNeededCount}
-            callsHref={`/dashboard/restaurants/${restaurant.id}/calls`}
-          />
-        </div>
+      <div className="kds-workspace kds-workspace--kitchen min-w-0 w-full max-w-full space-y-4">
+        <LiveOrdersPanel
+          notice={
+            pageData.launchGate.phase !== "ready" ? (
+              <PhoneAgentReadinessStrip
+                restaurantId={restaurant.id}
+                launchGate={pageData.launchGate}
+              />
+            ) : null
+          }
+          restaurantId={restaurant.id}
+          restaurantName={restaurant.name}
+          hostName={hostName}
+          menuItems={menu.items}
+          menuModifiers={menu.modifiers}
+          pricingSettings={pricingSettings}
+          initialDraftOrders={pageData.initialDraftOrders}
+          initialReceipts={pageData.initialReceipts}
+          initialLoadError={pageData.ordersLoadError}
+          initialActiveCalls={pageData.activeCalls}
+          initialCallEvidenceBySession={pageData.initialCallEvidenceBySession}
+        />
       </div>
     </RestaurantWorkspaceRail>
   );

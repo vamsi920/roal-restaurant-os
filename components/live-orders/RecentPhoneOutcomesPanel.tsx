@@ -1,38 +1,29 @@
-import { KdsEmptyStatePanel } from "@/components/dashboard/kds-workspace-states";
+import Link from "next/link";
+import { PhoneForwarded, PhoneMissed, PhoneOff, Voicemail } from "lucide-react";
+import { Badge, EmptyState, IconTile, Panel, formatRelative, type TileColor, type Tone } from "@/components/ui";
 import type { LiveOrdersRecentOutcome } from "@/lib/live-orders/build-recent-outcomes";
 import {
   kdsPeakCallContextCopy,
   type KdsPeakCallContext,
 } from "@/lib/live-orders/peak-call-context";
-import Link from "next/link";
 
 function formatWhen(iso: string): string {
   const ms = new Date(iso).getTime();
   if (Number.isNaN(ms)) return "—";
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "short",
-    timeStyle: "short",
-  }).format(ms);
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "short", timeStyle: "short" }).format(ms);
 }
 
-function formatCaller(phone: string | null): string {
-  return phone?.trim() || "Unknown caller";
-}
-
-const KIND_LABEL: Record<LiveOrdersRecentOutcome["kind"], string> = {
-  failed: "Failed",
-  handoff: "Handoff",
-  voicemail: "Voicemail",
-  unknown: "Unknown",
+const KIND: Record<
+  LiveOrdersRecentOutcome["kind"],
+  { label: string; tone: Tone; tile: TileColor; icon: typeof PhoneMissed }
+> = {
+  failed: { label: "Failed", tone: "bad", tile: "rose", icon: PhoneOff },
+  handoff: { label: "Handoff", tone: "warn", tile: "amber", icon: PhoneForwarded },
+  voicemail: { label: "Voicemail", tone: "info", tile: "blue", icon: Voicemail },
+  unknown: { label: "Unclear", tone: "neutral", tile: "orange", icon: PhoneMissed },
 };
 
-const KIND_CLASS: Record<LiveOrdersRecentOutcome["kind"], string> = {
-  failed: "bg-danger/10 text-danger",
-  handoff: "bg-warning/15 text-amber-900",
-  voicemail: "bg-warning/10 text-amber-950",
-  unknown: "bg-elev text-muted",
-};
-
+/** Failed calls, handoffs, voicemail and unclear endings from the last 48 hours. */
 export function RecentPhoneOutcomesPanel({
   outcomes,
   rangeSince,
@@ -51,78 +42,53 @@ export function RecentPhoneOutcomesPanel({
   callsHref: string;
 }) {
   return (
-    <aside
-      className="kds-outcomes-panel kds-panel min-w-0 max-w-full"
-      aria-labelledby="kds-outcomes-heading"
+    <Panel
+      flush
+      title="Recent outcomes"
+      action={
+        actionNeededCount > 0 ? (
+          <Link href={callsHref} className="btn-ghost btn-sm">
+            {actionNeededCount} need follow-up
+          </Link>
+        ) : null
+      }
     >
-      <header className="kds-panel__header border-b border-line px-4 py-3 sm:px-5">
-        <div className="min-w-0">
-          <h2
-            id="kds-outcomes-heading"
-            className="kds-panel__title text-sm font-semibold text-ink"
-          >
-            Recent outcomes
-          </h2>
-          <p className="kds-panel__lead mt-1">
-            Failed calls, handoffs, and unclear endings from the last 48 hours.
-          </p>
-        </div>
-      </header>
-      <div className="kds-outcomes-panel__body p-3 sm:p-4">
-        <div
-          className="mb-3 rounded-lg border border-line bg-elev/40 px-3 py-2 text-xs"
-          aria-label="Peak call hour from recorded calls"
-        >
-          <p className="font-semibold text-ink">Peak call hour</p>
-          <p className="mt-0.5 text-muted">{kdsPeakCallContextCopy(peakCallContext)}</p>
-        </div>
-
-        {actionNeededCount > 0 ? (
-          <p className="mb-3 text-xs font-medium text-amber-900">
-            {actionNeededCount} call{actionNeededCount === 1 ? "" : "s"} need follow-up.{" "}
-            <Link href={callsHref} className="underline underline-offset-2">
-              Open calls
-            </Link>
-          </p>
-        ) : null}
-        {empty ? (
-          <KdsEmptyStatePanel
-            tone="calm"
-            icon="orders"
-            title="No recent outcomes"
-          >
-            Nothing to review in this window yet.
-          </KdsEmptyStatePanel>
-        ) : (
-          <ul className="space-y-2">
-            {outcomes.map((row) => (
-              <li
-                key={`${row.kind}-${row.sessionId}`}
-                className="rounded-lg border border-line bg-elev/30 px-3 py-2 text-sm"
-              >
-                <div className="flex flex-wrap items-center gap-2">
-                  <span
-                    className={`rounded px-1.5 py-0.5 text-micro font-semibold uppercase ${KIND_CLASS[row.kind]}`}
-                  >
-                    {KIND_LABEL[row.kind]}
-                  </span>
-                  <time className="text-xs text-muted" dateTime={row.occurredAt}>
-                    {formatWhen(row.occurredAt)}
+      <div className="border-b border-line px-[1.125rem] py-2.5 text-[12.5px]" aria-label="Peak call hour from recorded calls">
+        <span className="font-semibold text-ink">Peak call hour</span>{" "}
+        <span className="text-muted">{kdsPeakCallContextCopy(peakCallContext)}</span>
+      </div>
+      {empty ? (
+        <EmptyState icon={PhoneMissed} title="No recent outcomes" body="Nothing to review in the last 48 hours." />
+      ) : (
+        <ul>
+          {outcomes.map((row) => {
+            const kind = KIND[row.kind];
+            return (
+              <li key={`${row.kind}-${row.sessionId}`} className="list-row">
+                <IconTile icon={kind.icon} color={kind.tile} />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[14px] font-semibold text-ink">
+                    {row.callerPhone?.trim() || "Unknown caller"}
+                  </p>
+                  <p className="truncate text-[12.5px] text-subtle">
+                    {row.headline}
+                    {row.detail ? ` · ${row.detail}` : ""}
+                  </p>
+                </div>
+                <div className="flex shrink-0 flex-col items-end gap-1">
+                  <Badge tone={kind.tone}>{kind.label}</Badge>
+                  <time className="text-[12px] text-subtle" dateTime={row.occurredAt}>
+                    {formatRelative(row.occurredAt)}
                   </time>
                 </div>
-                <p className="mt-1 font-medium text-ink">{row.headline}</p>
-                <p className="text-xs text-muted">{formatCaller(row.callerPhone)}</p>
-                {row.detail ? (
-                  <p className="mt-1 text-xs text-subtle">{row.detail}</p>
-                ) : null}
               </li>
-            ))}
-          </ul>
-        )}
-        <p className="mt-3 text-caption text-subtle">
-          {formatWhen(rangeSince)} – {formatWhen(rangeUntil)}
-        </p>
-      </div>
-    </aside>
+            );
+          })}
+        </ul>
+      )}
+      <p className="border-t border-line px-[1.125rem] py-2 text-[12px] text-subtle">
+        {formatWhen(rangeSince)} – {formatWhen(rangeUntil)}
+      </p>
+    </Panel>
   );
 }

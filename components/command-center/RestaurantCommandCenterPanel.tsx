@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { KdsEmptyStatePanel } from "@/components/dashboard/kds-workspace-states";
+import { ReceiptText } from "lucide-react";
+import { EmptyState } from "@/components/ui";
 import type {
   CommandCenterCallRow,
   CommandCenterCompletedOrder,
@@ -23,7 +24,7 @@ function formatCaller(phone: string | null, name: string | null): string {
 
 function CallRow({ row }: { row: CommandCenterCallRow }) {
   return (
-    <li className="rounded-lg border border-line bg-elev/30 px-3 py-2 text-sm">
+    <li className="rounded-[10px] border border-line bg-elev px-3 py-2 text-[13px]">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <span className="font-medium text-ink">
           {formatCaller(row.callerPhone, null)}
@@ -40,7 +41,7 @@ function CallRow({ row }: { row: CommandCenterCallRow }) {
           : null}
       </p>
       {row.handoffSignals.length > 0 ? (
-        <p className="mt-1 text-xs text-amber-900">
+        <p className="mt-1 text-xs text-warning">
           Handoff: {row.handoffSignals.join(", ")}
         </p>
       ) : null}
@@ -50,7 +51,7 @@ function CallRow({ row }: { row: CommandCenterCallRow }) {
 
 function CompletedOrderRow({ order }: { order: CommandCenterCompletedOrder }) {
   return (
-    <li className="rounded-lg border border-line bg-elev/30 px-3 py-2 text-sm">
+    <li className="rounded-[10px] border border-line bg-elev px-3 py-2 text-[13px]">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <span className="font-medium text-ink">
           {formatCaller(order.callerPhone, order.customerName)}
@@ -84,7 +85,7 @@ function Bucket({
   children: ReactNode;
 }) {
   return (
-    <section className="min-w-0 rounded-2xl border border-line bg-card p-4 shadow-sm">
+    <section className="panel min-w-0 p-4">
       <header className="mb-3">
         <h3 className="text-sm font-semibold text-ink">
           {title}
@@ -93,9 +94,7 @@ function Bucket({
         <p className="mt-1 text-xs text-muted">{description}</p>
       </header>
       {count === 0 ? (
-        <KdsEmptyStatePanel title={emptyTitle} tone="calm" icon="orders">
-          {emptyBody}
-        </KdsEmptyStatePanel>
+        <EmptyState icon={ReceiptText} title={emptyTitle} body={emptyBody} className="py-6" />
       ) : (
         <ul className="space-y-2">{children}</ul>
       )}
@@ -146,10 +145,12 @@ function CompactOutcomesList({
 
   if (rows.length === 0) {
     return (
-      <KdsEmptyStatePanel title="No recent outcomes" tone="calm" icon="orders">
-        Calls and completed phone orders appear here from real draft and receipt
-        data.
-      </KdsEmptyStatePanel>
+      <EmptyState
+        icon={ReceiptText}
+        title="No recent outcomes"
+        body="Calls and completed phone orders appear here from real draft and receipt data."
+        className="py-6"
+      />
     );
   }
 
@@ -158,7 +159,7 @@ function CompactOutcomesList({
       {rows.map((row) => (
         <li
           key={row.key}
-          className="command-center__compact-row rounded-lg border border-line bg-elev/30 px-3 py-2 text-sm"
+          className="command-center__compact-row rounded-[10px] border border-line bg-elev px-3 py-2 text-[13px]"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <span className="font-medium text-ink">{row.label}</span>
@@ -188,7 +189,7 @@ export function RestaurantCommandCenterPanel({
     const { counts } = snapshot;
     return (
       <section
-        className="command-center command-center--compact min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm"
+        className="command-center command-center--compact panel min-w-0 p-4"
         aria-labelledby="command-center-heading"
       >
         <header>

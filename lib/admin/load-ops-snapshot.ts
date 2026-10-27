@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type {
   AdminEnvFlags,
   AdminOpsSnapshot,
@@ -37,7 +37,7 @@ function syncStatus(
 }
 
 async function loadRecentErrors(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string,
   restaurantNames: Map<string, string>
 ): Promise<OpsErrorRow[]> {
@@ -140,7 +140,7 @@ async function loadRecentErrors(
 }
 
 async function loadOrganizationOps(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: AdminOrgInput
 ): Promise<AdminOrganizationOps> {
   const [orgRow, restaurantsResult, usage] = await Promise.all([
@@ -253,7 +253,7 @@ async function loadOrganizationOps(
 }
 
 export async function loadAdminOpsSnapshot(
-  supabase: SupabaseClient,
+  supabase: Db,
   adminOrgs: AdminOrgInput[]
 ): Promise<AdminOpsSnapshot> {
   const [rawHealth, organizations] = await Promise.all([

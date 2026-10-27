@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
+import { Settings2 } from "lucide-react";
 import { unstable_noStore as noStore } from "next/cache";
 import {
   getAuthContext,
   getRestaurantAccessForPage,
 } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
-import { RestaurantCommandCenterPanel } from "@/components/command-center/RestaurantCommandCenterPanel";
-import { loadRestaurantCommandCenter } from "@/lib/command-center/load-command-center";
+import { getDb } from "@/lib/db";
 import { loadRestaurantLaunchGate } from "@/lib/restaurant-launch/load-checklist";
 import { RestaurantLaunchGateCard } from "@/components/restaurant-launch/RestaurantLaunchGateCard";
 import { loadRestaurantMenuSetupPageData } from "@/lib/restaurant-menu-setup/load-page-data";
@@ -20,11 +19,17 @@ import { getElevenLabsAgentPhoneNumberId } from "@/lib/env.server";
 import { defaultAgentName, findTrialVoice } from "@/lib/trial/voices";
 import type { TrialScorecard } from "@/lib/trial/types";
 import { RESTAURANT_PHONE_HOST_LABEL } from "@/lib/restaurant-workspace-nav";
-import { cn } from "@/lib/cn";
+import { Badge, PageHeader, formatRelative, type Tone } from "@/components/ui";
+import { CollapsiblePanel, MetaList } from "@/components/live-orders/workspace-ui";
+import {
+  AdvancedLink,
+  AdvancedSection,
+  PhoneHostHashOpener,
+} from "@/components/voice-agent/phone-host-ui";
+import { PHONE_HOST_ADVANCED_ID } from "@/components/voice-agent/phone-host-ids";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
 import { VoiceAgentPanel } from "../VoiceAgentPanel";
 import { VoiceAgentTestHarness } from "../VoiceAgentTestHarness";
-import "@/app/dashboard/restaurants/[id]/kds-workspace.css";
 
 export const metadata: Metadata = {
   title: `${RESTAURANT_PHONE_HOST_LABEL} — ROAL`,
@@ -39,11 +44,11 @@ const STATUS_LABEL: Record<string, string> = {
   disconnected: "Not connected",
 };
 
-const STATUS_CHIP: Record<string, string> = {
-  connected: "chip--success",
-  misconfigured: "chip--warning",
-  unreachable: "chip--danger",
-  disconnected: "",
+const STATUS_TONE: Record<string, Tone> = {
+  connected: "ok",
+  misconfigured: "warn",
+  unreachable: "bad",
+  disconnected: "neutral",
 };
 
 function dialable(value: string | null | undefined): boolean {
@@ -63,18 +68,6 @@ function parseScorecard(value: unknown): TrialScorecard {
   return out;
 }
 
-function formatWhen(iso: string | null): string {
-  if (!iso) return "—";
-  try {
-    return new Intl.DateTimeFormat(undefined, {
-      dateStyle: "medium",
-      timeStyle: "short",
-    }).format(new Date(iso));
-  } catch {
-    return "—";
-  }
-}
-
 export default async function RestaurantPhoneHostPage({
   params,
 }: {
@@ -89,17 +82,13 @@ export default async function RestaurantPhoneHostPage({
   }
 
   const { restaurant, role } = access;
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const setup = await loadRestaurantMenuSetupPageData(supabase, {
     restaurant,
     organizationId: restaurant.organization_id,
     membershipRole: role,
   });
-  const [commandCenter, launchGate, suggestions, scorecardRow] = await Promise.all([
-    loadRestaurantCommandCenter(supabase, {
-      restaurantId: restaurant.id,
-      restaurantName: restaurant.name,
-    }),
+  const [launchGate, suggestions, scorecardRow] = await Promise.all([
     loadRestaurantLaunchGate(supabase, {
       restaurantId: restaurant.id,
       restaurantName: restaurant.name,
@@ -128,30 +117,31 @@ export default async function RestaurantPhoneHostPage({
   const voiceOrderGate = setup.billingGates?.voice_order ?? null;
   const statusKey = center.connectionStatus;
 
+  const status = {
+    label: STATUS_LABEL[statusKey] ?? STATUS_LABEL.disconnected,
+    tone: STATUS_TONE[statusKey] ?? "neutral",
+  };
+  const syncedRelative = center.lastSyncAt ? formatRelative(center.lastSyncAt) : "";
+  const subtitle = [
+    `${hostName} answers ${restaurant.name}`,
+    voiceLabel ? `${voiceLabel} voice` : null,
+    syncedRelative ? `synced ${syncedRelative}` : "not synced yet",
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
     <RestaurantWorkspaceRail
       restaurantId={restaurant.id}
       restaurantName={restaurant.name}
       suggestionCount={suggestions.length}
     >
-      <div className="kds-workspace kds-workspace--agent phone-host min-w-0 max-w-full space-y-4 overflow-x-hidden sm:space-y-5">
-        <header className="ws-page-head live-agent-page__header min-w-0">
-          <div className="ws-page-head__row">
-            <div className="min-w-0">
-              <p className="ws-page-head__eyebrow">{RESTAURANT_PHONE_HOST_LABEL}</p>
-              <h1 className="ws-page-head__title">
-                {hostName}
-                <span className={cn("chip ml-2 align-middle", STATUS_CHIP[statusKey] ?? "")}>
-                  {STATUS_LABEL[statusKey] ?? STATUS_LABEL.disconnected}
-                </span>
-              </h1>
-              <p className="ws-page-head__sub">
-                Answers for {restaurant.name}
-                {voiceLabel ? ` · ${voiceLabel} voice` : ""}
-                {center.lastSyncAt ? ` · synced ${formatWhen(center.lastSyncAt)}` : ""}
-              </p>
-            </div>
-            <div className="ws-page-head__tools">
+      <div className="phone-host mx-auto w-full min-w-0 max-w-[1120px] space-y-4 sm:space-y-5">
+        <PageHeader
+          title={RESTAURANT_PHONE_HOST_LABEL}
+          subtitle={subtitle}
+          actions={
+            <>
               <MenuAutoSyncStatusPanel
                 restaurantId={restaurant.id}
                 restaurantName={restaurant.name}
@@ -159,23 +149,13 @@ export default async function RestaurantPhoneHostPage({
                 voiceOrderGate={voiceOrderGate}
                 variant="inline"
               />
-            </div>
-          </div>
-          <dl className="live-agent-page__inline-meta ws-page-head__meta">
-            <div>
-              <dt>Store phone</dt>
-              <dd>{storePhone ?? "—"}</dd>
-            </div>
-            <div>
-              <dt>Agent</dt>
-              <dd>{center.agentId ? "Linked" : "Not linked"}</dd>
-            </div>
-            <div>
-              <dt>Phone webhook</dt>
-              <dd>{center.lastSyncPhoneWebhook ? "Configured" : "—"}</dd>
-            </div>
-          </dl>
-        </header>
+              <AdvancedLink className="btn-ghost btn-sm">
+                <Settings2 size={14} aria-hidden />
+                Advanced
+              </AdvancedLink>
+            </>
+          }
+        />
 
         {launchGate.phase !== "ready" ? (
           <RestaurantLaunchGateCard gate={launchGate} compact />
@@ -186,13 +166,15 @@ export default async function RestaurantPhoneHostPage({
           organizationId={restaurant.organization_id}
           restaurantName={restaurant.name}
           hostName={hostName}
+          voiceLabel={voiceLabel}
+          status={status}
           agentReady={agentReady}
           outboundAvailable={outboundAvailable}
           restaurantPhone={storePhone}
           initialScorecard={scorecard}
         />
 
-        <div className="phone-host__grid">
+        <div className="grid min-w-0 items-start gap-4 sm:gap-5 lg:grid-cols-2">
           <KnowledgeSuggestionsInbox
             restaurantId={restaurant.id}
             hostName={hostName}
@@ -207,37 +189,55 @@ export default async function RestaurantPhoneHostPage({
           />
         </div>
 
-        <RestaurantCommandCenterPanel snapshot={commandCenter} compact />
+        <PhoneHostHashOpener />
+        <CollapsiblePanel
+          id={PHONE_HOST_ADVANCED_ID}
+          title="Advanced"
+          hint="Connection, diagnostics, and tool scenarios"
+          bodyClassName="space-y-6"
+        >
+          <VoiceAgentPanel
+            embedded
+            initialCenter={center}
+            restaurantId={restaurant.id}
+            restaurantName={restaurant.name}
+            voiceOrderGate={voiceOrderGate}
+            summary={
+              <div className="rounded-[12px] border border-line bg-elev px-3.5 py-3">
+                <MetaList
+                  items={[
+                    { label: "Store phone", value: storePhone ?? "Not set" },
+                    {
+                      label: "Agent",
+                      value: (
+                        <Badge tone={center.agentId ? "ok" : "neutral"}>
+                          {center.agentId ? "Linked" : "Not linked"}
+                        </Badge>
+                      ),
+                    },
+                    {
+                      label: "Phone webhook",
+                      value: (
+                        <Badge tone={center.lastSyncPhoneWebhook ? "ok" : "neutral"}>
+                          {center.lastSyncPhoneWebhook ? "Configured" : "Not configured"}
+                        </Badge>
+                      ),
+                    },
+                  ]}
+                />
+              </div>
+            }
+          />
 
-        <details className="phone-host__details card">
-          <summary className="phone-host__summary">
-            <span>Connection &amp; diagnostics</span>
-            <span className="phone-host__summary-hint">
-              Agent ID, sync, secrets, webhook URLs
-            </span>
-          </summary>
-          <div className="phone-host__details-body">
-            <VoiceAgentPanel
-              embedded
-              initialCenter={center}
-              restaurantId={restaurant.id}
-              restaurantName={restaurant.name}
-              voiceOrderGate={voiceOrderGate}
-            />
-          </div>
-        </details>
-
-        <details className="phone-host__details card">
-          <summary className="phone-host__summary">
-            <span>Tool scenarios</span>
-            <span className="phone-host__summary-hint">
-              Dry-run the order tools without a call
-            </span>
-          </summary>
-          <div className="phone-host__details-body">
+          <AdvancedSection
+            id="tool-scenarios"
+            title="Tool scenarios"
+            hint="Dry-run the order tools without a call."
+            className="border-t border-line pt-5"
+          >
             <VoiceAgentTestHarness restaurantId={restaurant.id} variant="test-call" flowStep />
-          </div>
-        </details>
+          </AdvancedSection>
+        </CollapsiblePanel>
       </div>
     </RestaurantWorkspaceRail>
   );

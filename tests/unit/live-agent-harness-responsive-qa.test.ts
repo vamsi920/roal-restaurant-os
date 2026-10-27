@@ -6,26 +6,25 @@ const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
 describe("Voice test harness responsive (prompt 35)", () => {
-  it("keeps harness optional and collapsed in details on agent route", () => {
+  it("keeps harness inside the collapsed Advanced panel on the agent route", () => {
     const harness = read("app/dashboard/restaurants/[id]/VoiceAgentTestHarness.tsx");
     const page = read("app/dashboard/restaurants/[id]/agent/page.tsx");
-    const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
 
     expect(page).toContain('variant="test-call"');
-    expect(harness).toContain("voice-agent-harness-shell--optional");
+    expect(page).toContain('id="tool-scenarios"');
+    expect(page).toMatch(/<CollapsiblePanel[\s\S]*<VoiceAgentTestHarness[\s\S]*<\/CollapsiblePanel>/);
     expect(harness).toContain("<details");
     expect(harness).not.toContain("<details open");
-    expect(css).toContain("Voice test harness responsive (prompt 35)");
   });
 
   it("structures scenarios, session, results logs, and scroll areas", () => {
     const harness = read("app/dashboard/restaurants/[id]/VoiceAgentTestHarness.tsx");
 
-    expect(harness).toContain("voice-agent-harness__scenarios");
-    expect(harness).toContain("voice-agent-harness__results");
-    expect(harness).toContain("voice-agent-harness__step-log");
-    expect(harness).toContain("voice-agent-harness__step-toggle");
-    expect(harness).toContain("kds-thumb-btn min-h-11 w-full");
+    expect(harness).toContain("Run scenario");
+    expect(harness).toContain('aria-label="Scenario steps"');
+    expect(harness).toContain("aria-expanded={expanded}");
+    expect(harness).toContain("overflow-auto overscroll-contain");
+    expect(harness).toContain("btn-primary max-sm:w-full");
     expect(harness).toContain("useState(true)");
     expect(harness).toContain("roal-harness-");
   });

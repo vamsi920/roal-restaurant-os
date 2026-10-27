@@ -14,7 +14,7 @@ import {
   patchMenuImportStatus,
   uploadMenuImportFile,
 } from "@/lib/scanner/menu-import-audit";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { writeAuditLog } from "@/lib/observability/audit";
 import { getRouteObservability } from "@/lib/observability/route-context";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   const { requestId, log } = getRouteObservability(req, "api.scanner.extract");
   let importId: string | null = null;
   let usageScope: {
-    supabase: Awaited<ReturnType<typeof createServerSupabase>>;
+    supabase: Awaited<ReturnType<typeof getDb>>;
     organizationId: string;
     restaurantId: string;
     userId: string;
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: message }, { status: 400 });
     }
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const { restaurant, role } = access.access;
     const userId = access.context.user.id;
 

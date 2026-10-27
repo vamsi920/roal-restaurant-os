@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type {
   RestaurantUpsellFormEntry,
   RestaurantUpsellRule,
@@ -20,7 +20,7 @@ function mapRow(row: Record<string, unknown>): RestaurantUpsellRule {
 }
 
 export async function loadRestaurantUpsellRules(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   options: { activeOnly?: boolean; limit?: number } = {}
 ): Promise<RestaurantUpsellRule[]> {
@@ -48,7 +48,7 @@ export type RestaurantUpsellRuleSaveInput = RestaurantUpsellRuleInput &
   };
 
 export async function replaceRestaurantUpsellRules(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     organizationId: string;

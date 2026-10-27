@@ -7,9 +7,11 @@ import {
   useMemo,
   useRef,
   useState,
+  type Dispatch,
+  type SetStateAction,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
+import { UtensilsCrossed } from "lucide-react";
 import { getBrowserSupabase } from "@/lib/supabase/client";
 import { aggregateModifierGroups } from "@/lib/menu-editor/modifier-groups";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
@@ -19,7 +21,13 @@ import {
 } from "@/lib/menu-editor/live-menu-scope";
 import type { DbCategory, DbItem, DbModifier } from "@/lib/types";
 import { cn } from "@/lib/cn";
-import { KdsEmptyStatePanel } from "@/components/dashboard/kds-workspace-states";
+import { Badge, EmptyState } from "@/components/ui";
+import {
+  Notice,
+  RealtimeBadge,
+  type RealtimeState,
+} from "@/components/live-orders/workspace-ui";
+import { formatMenuPrice } from "./menu/menu-ui";
 
 type Props = {
   restaurantId: string;
@@ -43,21 +51,38 @@ function serverMenuKey(
   return `${restaurantId}|${c}|${i}|${m}`;
 }
 
-export function LiveMenuSidebar({
-  restaurantId,
-  initialCategories,
-  initialItems,
-  initialModifiers,
-  hidePanelHeader = false,
-}: Props) {
+export type LiveMenuState = {
+  categories: DbCategory[];
+  items: DbItem[];
+  modifiers: DbModifier[];
+  setCategories: Dispatch<SetStateAction<DbCategory[]>>;
+  setItems: Dispatch<SetStateAction<DbItem[]>>;
+  setModifiers: Dispatch<SetStateAction<DbModifier[]>>;
+  /** Items/categories scoped to this restaurant's categories. */
+  scopedItems: DbItem[];
+  scopedModifiers: DbModifier[];
+  flashedIds: Set<string>;
+  menuRealtime: RealtimeState;
+  menuUpdatedVisible: boolean;
+};
+
+/**
+ * Live menu rows for one restaurant: seeded from the server snapshot, kept current
+ * by Supabase realtime (categories, items, modifiers), with a polling fallback
+ * when the channel degrades and a resync on `roal:menu-changed`.
+ */
+export function useLiveMenu(
+  restaurantId: string,
+  initialCategories: DbCategory[],
+  initialItems: DbItem[],
+  initialModifiers: DbModifier[]
+): LiveMenuState {
   const [categories, setCategories] = useState<DbCategory[]>(initialCategories);
   const [items, setItems] = useState<DbItem[]>(initialItems);
   const [modifiers, setModifiers] = useState<DbModifier[]>(initialModifiers);
   const [flashedIds, setFlashedIds] = useState<Set<string>>(new Set());
   const [menuUpdatedVisible, setMenuUpdatedVisible] = useState(false);
-  const [menuRealtime, setMenuRealtime] = useState<
-    "connecting" | "live" | "degraded"
-  >("connecting");
+  const [menuRealtime, setMenuRealtime] = useState<RealtimeState>("connecting");
   const flashTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const menuUpdatedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scopeRef = useRef({
@@ -333,6 +358,42 @@ export function LiveMenuSidebar({
     [modifiers, scopedItems]
   );
 
+  return {
+    categories,
+    items,
+    modifiers,
+    setCategories,
+    setItems,
+    setModifiers,
+    scopedItems,
+    scopedModifiers,
+    flashedIds,
+    menuRealtime,
+    menuUpdatedVisible,
+  };
+}
+
+/**
+ * Compact, read-only live menu list (categories → items) backed by useLiveMenu.
+ * The Menu page uses MenuEditor (same hook) for the editable board; this list is
+ * kept for narrow read-only surfaces.
+ */
+export function LiveMenuSidebar({
+  restaurantId,
+  initialCategories,
+  initialItems,
+  initialModifiers,
+  hidePanelHeader = false,
+}: Props) {
+  const {
+    categories,
+    scopedItems,
+    scopedModifiers,
+    flashedIds,
+    menuRealtime,
+    menuUpdatedVisible,
+  } = useLiveMenu(restaurantId, initialCategories, initialItems, initialModifiers);
+
   const grouped = useMemo(() => {
     const itemsByCat = new Map<string, DbItem[]>();
     for (const it of scopedItems) {
@@ -357,181 +418,91 @@ export function LiveMenuSidebar({
     return { categories: sorted, itemsByCat, modifiersByItem };
   }, [categories, scopedItems, scopedModifiers]);
 
-  const totalItems = scopedItems.length;
-
   return (
-    <aside className="kds-live-menu min-w-0 max-w-full glass-card kds-panel overflow-hidden">
-      {!hidePanelHeader ? (
-        <div className="kds-panel__header">
+    <aside className="panel min-w-0 max-w-full overflow-hidden" aria-label="Live menu">
+      <div className="panel__head">
+        {!hidePanelHeader ? (
           <div className="min-w-0">
-            <h2 className="kds-panel__title">Live menu</h2>
-            <p className="kds-panel__lead">
-              {grouped.categories.length} categories · {totalItems} items
-              {menuRealtime === "degraded" ? (
-                <span className="text-warning"> · syncing periodically</span>
-              ) : null}
+            <h2 className="panel__title">Live menu</h2>
+            <p className="text-[12.5px] text-subtle">
+              {grouped.categories.length} categories · {scopedItems.length} items
             </p>
           </div>
-          <MenuRealtimeBadge state={menuRealtime} />
-        </div>
-      ) : (
-        <div className="flex items-center justify-end gap-2 border-b border-line px-3 py-2 sm:px-4">
-          <MenuRealtimeBadge state={menuRealtime} />
-        </div>
-      )}
+        ) : (
+          <span className="text-[12.5px] text-subtle">
+            {grouped.categories.length} categories · {scopedItems.length} items
+          </span>
+        )}
+        <RealtimeBadge state={menuRealtime} />
+      </div>
 
       {menuUpdatedVisible ? (
-        <p className="menu-setup-menu-changed" role="status">
-          Menu updated — the phone agent uses your latest items.
-        </p>
+        <Notice tone="ok" className="mx-4 mt-3">
+          Menu updated — the phone host uses your latest items.
+        </Notice>
       ) : null}
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-3">
-        {grouped.categories.length === 0 ? (
-          <EmptyMenu />
-        ) : (
-          <div className="space-y-1">
-            <AnimatePresence initial={false}>
-              {grouped.categories.map((cat) => {
-                const catItems = grouped.itemsByCat.get(cat.id) ?? [];
-                return (
-                  <motion.div
-                    key={cat.id}
-                    layout
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.22 }}
-                    className="px-1 pb-2"
-                  >
-                    <div
-                      className={cn(
-                        "kds-live-menu__category flex min-w-0 items-center justify-between gap-2 rounded-md px-3 py-2 transition-colors",
-                        flashedIds.has(cat.id) && "flash-row"
-                      )}
-                    >
-                      <div className="flex min-w-0 flex-1 items-center gap-2">
-                        <span className="shrink-0 text-micro font-mono-tabular text-subtle">
-                          {String(cat.sort_order).padStart(2, "0")}
+      {grouped.categories.length === 0 ? (
+        <EmptyState
+          icon={UtensilsCrossed}
+          title="Menu is empty"
+          body="Scan a menu photo or add a category. Items appear here as you save."
+        />
+      ) : (
+        <div className="max-h-[min(70vh,560px)] overflow-y-auto overscroll-contain py-2">
+          {grouped.categories.map((cat) => {
+            const catItems = grouped.itemsByCat.get(cat.id) ?? [];
+            return (
+              <div key={cat.id} className="pb-2">
+                <div
+                  className={cn(
+                    "flex min-w-0 items-center justify-between gap-2 px-[1.125rem] py-1.5",
+                    flashedIds.has(cat.id) && "flash-row"
+                  )}
+                >
+                  <h3 className="min-w-0 truncate text-[12.5px] font-semibold text-muted">
+                    {cat.name}
+                  </h3>
+                  <span className="text-[12px] tabular-nums text-subtle">{catItems.length}</span>
+                </div>
+                <ul>
+                  {catItems.map((item) => {
+                    const modGroups = aggregateModifierGroups(
+                      grouped.modifiersByItem.get(item.id) ?? []
+                    );
+                    return (
+                      <li
+                        key={item.id}
+                        className={cn("list-row py-2", flashedIds.has(item.id) && "flash-row")}
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p
+                            className={cn(
+                              "truncate text-[13.5px] font-medium",
+                              item.is_available ? "text-ink" : "text-subtle line-through"
+                            )}
+                          >
+                            {item.name}
+                          </p>
+                          {modGroups.length > 0 ? (
+                            <p className="truncate text-[12px] text-subtle">
+                              {modGroups.map((g) => g.group_name).join(" · ")}
+                            </p>
+                          ) : null}
+                        </div>
+                        {!item.is_available ? <Badge tone="warn">Sold out</Badge> : null}
+                        <span className="shrink-0 text-[13px] tabular-nums text-muted">
+                          {formatMenuPrice(item.price)}
                         </span>
-                        <h3 className="kds-live-menu__cat-name min-w-0 text-[13px] font-semibold uppercase tracking-wider text-ink">
-                          {cat.name}
-                        </h3>
-                      </div>
-                      <span className="text-caption font-mono-tabular text-subtle">
-                        {catItems.length}
-                      </span>
-                    </div>
-
-                    <ul className="mt-1 space-y-0.5">
-                      <AnimatePresence initial={false}>
-                        {catItems.map((item) => {
-                          const modRows = grouped.modifiersByItem.get(item.id) ?? [];
-                          const modGroups = aggregateModifierGroups(modRows);
-                          return (
-                            <motion.li
-                              key={item.id}
-                              layout
-                              initial={{ opacity: 0, x: -4 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className={cn(
-                                "group relative rounded-md px-3 py-2 hover:bg-accent-soft/40",
-                                flashedIds.has(item.id) && "flash-row"
-                              )}
-                            >
-                              <div className="kds-live-menu__item-row flex min-w-0 items-baseline justify-between gap-2">
-                                <div className="min-w-0 flex-1">
-                                  <div className="flex min-w-0 items-center gap-2">
-                                    <span
-                                      className={cn(
-                                        "block h-1.5 w-1.5 shrink-0 rounded-full",
-                                        item.is_available ? "bg-success" : "bg-subtle"
-                                      )}
-                                    />
-                                    <span
-                                      className={cn(
-                                        "kds-live-menu__item-name min-w-0 text-[13px] max-sm:[overflow-wrap:anywhere] sm:truncate",
-                                        item.is_available ? "text-ink" : "text-subtle"
-                                      )}
-                                    >
-                                      {item.name}
-                                    </span>
-                                  </div>
-                                  {item.description && (
-                                    <p className="mt-0.5 line-clamp-1 pl-3.5 text-caption text-subtle">
-                                      {item.description}
-                                    </p>
-                                  )}
-                                  {modGroups.length > 0 && (
-                                    <p className="mt-1 pl-3.5 text-micro font-medium uppercase tracking-wider text-subtle">
-                                      {modGroups.length} group
-                                      {modGroups.length === 1 ? "" : "s"}
-                                      {modGroups.length === 1
-                                        ? ` · ${modGroups[0].group_name}`
-                                        : ""}
-                                    </p>
-                                  )}
-                                </div>
-                                <span className="kds-live-menu__item-price shrink-0 font-mono-tabular text-[13px] text-muted">
-                                  {formatPrice(item.price)}
-                                </span>
-                              </div>
-                            </motion.li>
-                          );
-                        })}
-                      </AnimatePresence>
-                    </ul>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
-        )}
-      </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </aside>
   );
-}
-
-function MenuRealtimeBadge({
-  state,
-}: {
-  state: "connecting" | "live" | "degraded";
-}) {
-  const label =
-    state === "live" ? "Live" : state === "degraded" ? "Sync" : "Connecting…";
-  return (
-    <div
-      className="flex items-center gap-1.5 rounded-md border border-line bg-elev px-2 py-1"
-      role="status"
-      aria-live="polite"
-    >
-      <span
-        className={cn(
-          "inline-block h-2 w-2 shrink-0 rounded-full",
-          state === "live" && "pulse-dot",
-          state === "degraded" && "bg-warning",
-          state === "connecting" && "bg-subtle"
-        )}
-        aria-hidden
-      />
-      <span className="text-micro font-medium uppercase tracking-wider text-muted">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-function EmptyMenu() {
-  return (
-    <KdsEmptyStatePanel tone="calm" icon="menu" title="Menu is empty">
-      Scan a menu photo in step 1. Items and categories appear here as you save.
-    </KdsEmptyStatePanel>
-  );
-}
-
-function formatPrice(value: number | null): string {
-  if (value == null) return "—";
-  return `$${value.toFixed(2)}`;
 }

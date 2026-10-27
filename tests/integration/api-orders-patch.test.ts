@@ -75,7 +75,7 @@ vi.mock("@/lib/auth/context-server", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/notifications/helpers", () => ({
@@ -91,7 +91,7 @@ vi.mock("@/lib/observability/audit", () => ({
 }));
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { recordRestaurantUsage } from "@/lib/usage/record";
 
 describe("PATCH /api/restaurants/[id]/orders/[orderId]", () => {
@@ -133,12 +133,12 @@ describe("PATCH /api/restaurants/[id]/orders/[orderId]", () => {
     });
 
     expect(res.status).toBe(403);
-    expect(vi.mocked(createServerSupabase)).not.toHaveBeenCalled();
+    expect(vi.mocked(getDb)).not.toHaveBeenCalled();
   });
 
   it("returns 404 when order is missing for restaurant", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       mockSupabaseForOrder(null) as never
     );
 
@@ -159,7 +159,7 @@ describe("PATCH /api/restaurants/[id]/orders/[orderId]", () => {
   it("returns 400 for invalid action before database access", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
 
-    const createServerSupabaseMock = vi.mocked(createServerSupabase);
+    const createServerSupabaseMock = vi.mocked(getDb);
     createServerSupabaseMock.mockRejectedValue(
       new Error("should not reach database")
     );
@@ -189,7 +189,7 @@ describe("PATCH /api/restaurants/[id]/orders/[orderId]", () => {
       accepted_at: acceptedAt,
       updated_at: acceptedAt,
     };
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       mockSupabaseForOrder(loaded, updated) as never
     );
 
@@ -220,7 +220,7 @@ describe("PATCH /api/restaurants/[id]/orders/[orderId]", () => {
       completed_at: completedAt,
       updated_at: completedAt,
     };
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       mockSupabaseForOrder(loaded, updated) as never
     );
 
@@ -255,7 +255,7 @@ describe("PATCH /api/restaurants/[id]/orders/[orderId]", () => {
       canceled_at: canceledAt,
       updated_at: canceledAt,
     };
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       mockSupabaseForOrder(loaded, updated) as never
     );
 
@@ -276,7 +276,7 @@ describe("PATCH /api/restaurants/[id]/orders/[orderId]", () => {
 
   it("returns 409 when transition is invalid", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       mockSupabaseForOrder({
         ...draftOrderRow("completed"),
         completed_at: new Date().toISOString(),

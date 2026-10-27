@@ -6,12 +6,12 @@ import { SiteNav } from "@/components/landing/site-nav";
 import { RevealObserver } from "@/components/landing/reveal";
 
 /**
- * Public page shell: floating nav + paper canvas + giant-wordmark footer.
+ * Public page shell: floating pill nav + grid-paper canvas + footer.
  * `.landing-story.public-theme` stays on the wrapper because the blog theme is scoped to it.
  */
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
-    <div className="landing-story public-theme min-w-0 overflow-x-clip text-ink">
+    <div className="landing-story public-theme site-canvas min-w-0 overflow-x-clip text-ink">
       <a href="#main" className="skip-link">
         Skip to content
       </a>

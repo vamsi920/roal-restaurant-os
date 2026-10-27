@@ -3,17 +3,17 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 const {
   revalidatePath,
   syncRestaurantAgentAfterContentChange,
-  createServerSupabase,
+  getDb,
   markRestaurantMenuTemplateLocalOverride,
 } = vi.hoisted(() => ({
     revalidatePath: vi.fn(),
     syncRestaurantAgentAfterContentChange: vi.fn(),
-    createServerSupabase: vi.fn(),
+    getDb: vi.fn(),
     markRestaurantMenuTemplateLocalOverride: vi.fn(),
   }));
 
 vi.mock("next/cache", () => ({ revalidatePath }));
-vi.mock("@/lib/supabase/server", () => ({ createServerSupabase }));
+vi.mock("@/lib/supabase/server", () => ({ getDb }));
 vi.mock("@/lib/menu-editor/copy-menu", () => ({
   markRestaurantMenuTemplateLocalOverride,
 }));
@@ -35,7 +35,7 @@ const RESTAURANT_ID = "00000000-0000-4000-8000-000000000088";
 describe("afterMenuContentMutation", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    createServerSupabase.mockResolvedValue({ from: vi.fn() });
+    getDb.mockResolvedValue({ from: vi.fn() });
     markRestaurantMenuTemplateLocalOverride.mockResolvedValue({
       marked: false,
       reason: "not_inherited",
@@ -96,7 +96,7 @@ describe("afterMenuContentMutation", () => {
       trackTemplateOverride: false,
     });
 
-    expect(createServerSupabase).not.toHaveBeenCalled();
+    expect(getDb).not.toHaveBeenCalled();
     expect(markRestaurantMenuTemplateLocalOverride).not.toHaveBeenCalled();
   });
 

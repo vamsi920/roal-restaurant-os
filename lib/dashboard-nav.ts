@@ -1,8 +1,125 @@
-import {
-  RESTAURANT_LIST_NAV_LABEL,
-  restaurantWorkspaceMobileSubtitle,
-  restaurantWorkspaceMobileTitle,
-} from "@/lib/dashboard-restaurant-labels";
+/**
+ * App shell navigation (v3). The sidebar is scoped to the CURRENT location;
+ * org-level pages live in a small "Organization" group for owners/managers.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Location modules                                                    */
+/* ------------------------------------------------------------------ */
+
+export type LocationNavKey =
+  | "overview"
+  | "calls"
+  | "kitchen"
+  | "menu"
+  | "host"
+  | "reports"
+  | "billing"
+  | "settings";
+
+export type LocationNavItem = {
+  key: LocationNavKey;
+  href: string;
+  label: string;
+  description: string;
+  /** Count badge (e.g. unanswered caller questions on Phone host). */
+  count?: number;
+};
+
+export function restaurantBasePath(restaurantId: string): string {
+  return `/dashboard/restaurants/${restaurantId}`;
+}
+
+export function restaurantOverviewHref(restaurantId: string): string {
+  return `${restaurantBasePath(restaurantId)}/overview`;
+}
+
+export function buildLocationNav(
+  restaurantId: string,
+  options: { pendingQuestions?: number } = {}
+): LocationNavItem[] {
+  const base = restaurantBasePath(restaurantId);
+  return [
+    { key: "overview", href: `${base}/overview`, label: "Overview", description: "Your month at a glance" },
+    { key: "calls", href: `${base}/calls`, label: "Calls & Orders", description: "Every call, transcript and order" },
+    { key: "kitchen", href: base, label: "Kitchen", description: "Live ticket board for the kitchen tablet" },
+    { key: "menu", href: `${base}/menu`, label: "Menu", description: "Menu items, prices and photos" },
+    {
+      key: "host",
+      href: `${base}/agent`,
+      label: "Phone host",
+      description: "Test call, voice and unanswered questions",
+      count: options.pendingQuestions && options.pendingQuestions > 0 ? options.pendingQuestions : undefined,
+    },
+    { key: "reports", href: `${base}/analytics`, label: "Reports", description: "Calls, orders, revenue and peak hours" },
+    { key: "billing", href: `${base}/billing`, label: "Billing", description: "Completed orders and invoices" },
+    {
+      key: "settings",
+      href: `${base}/menu#restaurant-settings`,
+      label: "Settings",
+      description: "Business info, hours, FAQs and handoff",
+    },
+  ];
+}
+
+/** `/dashboard/restaurants/{id}/...` → id (null on the list page or org routes). */
+export function restaurantIdFromPath(pathname: string | null | undefined): string | null {
+  const match = /^\/dashboard\/restaurants\/([^/?#]+)/.exec(pathname ?? "");
+  if (!match) return null;
+  const id = decodeURIComponent(match[1]);
+  return id && id !== "new" ? id : null;
+}
+
+/** Path after `/dashboard/restaurants/{id}` ("" for the kitchen board). */
+export function restaurantSubpath(pathname: string, restaurantId: string): string {
+  const base = restaurantBasePath(restaurantId);
+  if (!pathname.startsWith(base)) return "";
+  return pathname.slice(base.length).replace(/\/$/, "");
+}
+
+/** Where to go when switching location: same module on the new location, else its overview. */
+export function switchLocationHref(pathname: string, fromId: string | null, toId: string): string {
+  if (fromId && restaurantIdFromPath(pathname) === fromId) {
+    const sub = restaurantSubpath(pathname, fromId);
+    return `${restaurantBasePath(toId)}${sub}`;
+  }
+  return restaurantOverviewHref(toId);
+}
+
+export function isLocationNavActive(
+  key: LocationNavKey,
+  pathname: string,
+  restaurantId: string,
+  hash = ""
+): boolean {
+  if (restaurantIdFromPath(pathname) !== restaurantId) return false;
+  const sub = restaurantSubpath(pathname, restaurantId);
+  const onSettings = sub.startsWith("/menu") && hash === "#restaurant-settings";
+  switch (key) {
+    case "overview":
+      return sub.startsWith("/overview");
+    case "calls":
+      return sub.startsWith("/calls");
+    case "kitchen":
+      return sub === "";
+    case "menu":
+      return sub.startsWith("/menu") && !onSettings;
+    case "host":
+      return sub.startsWith("/agent");
+    case "reports":
+      return sub.startsWith("/analytics");
+    case "billing":
+      return sub.startsWith("/billing");
+    case "settings":
+      return onSettings || sub.startsWith("/settings");
+    default:
+      return false;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Organization group                                                  */
+/* ------------------------------------------------------------------ */
 
 export type DashboardNavItem = {
   href: string;
@@ -20,31 +137,27 @@ export type DashboardNavGroup = {
   items: DashboardNavItem[];
 };
 
-/** Sidebar nav — location picker + org account; per-location ops live in workspace rail. */
 export const DASHBOARD_NAV: DashboardNavGroup[] = [
   {
-    label: "Work",
+    label: "Organization",
     items: [
       {
-        href: "/dashboard/overview",
-        label: "Overview",
-        description: "All locations, phone hosts, and live orders",
+        href: "/dashboard/restaurants",
+        label: "All locations",
+        description: "Every location and its live status",
         orgAdminOnly: true,
       },
       {
-        href: "/dashboard/restaurants",
-        label: RESTAURANT_LIST_NAV_LABEL,
-        description: "Pick a location to open its workspace",
+        href: "/dashboard/overview",
+        label: "Organization overview",
+        description: "Calls and orders across all locations",
+        orgAdminOnly: true,
       },
-    ],
-  },
-  {
-    label: "Account",
-    items: [
       {
         href: "/dashboard/settings",
-        label: "Settings",
-        description: "Organization, alerts, and billing",
+        label: "Team & settings",
+        description: "Organization, team and alerts",
+        orgAdminOnly: true,
       },
     ],
   },
@@ -63,81 +176,50 @@ export const DASHBOARD_NAV: DashboardNavGroup[] = [
 
 export const DASHBOARD_NAV_HREFS = DASHBOARD_NAV.flatMap((g) => g.items.map((i) => i.href));
 
-/** Longest matching nav href wins (e.g. notifications under settings, not Settings). */
-export function isDashboardNavActive(href: string, pathname: string): boolean {
-  if (href === "/dashboard/overview") {
-    return pathname === "/dashboard/overview";
-  }
+export const SUPPORT_NAV_ITEM: DashboardNavItem = {
+  href: "/dashboard/support",
+  label: "Support",
+  description: "Help and contact",
+};
 
-  if (href === "/dashboard/restaurants") {
-    return (
-      pathname === "/dashboard/restaurants" ||
-      pathname.startsWith("/dashboard/restaurants/")
-    );
-  }
-
-  const matches = DASHBOARD_NAV_HREFS.filter(
-    (h) => pathname === h || pathname.startsWith(`${h}/`)
-  );
-  if (matches.length === 0) return false;
-
-  const best = matches.reduce((a, b) => (b.length > a.length ? b : a));
-  return best === href;
+export function visibleOrgNav(options: {
+  showAdminNav: boolean;
+  showOrgAdminNav: boolean;
+}): DashboardNavGroup[] {
+  return DASHBOARD_NAV.map((group) => ({
+    ...group,
+    items: group.items.filter(
+      (item) =>
+        (!item.platformOnly || options.showAdminNav) &&
+        (!item.orgAdminOnly || options.showOrgAdminNav)
+    ),
+  })).filter((group) => group.items.length > 0);
 }
 
-export type DashboardTopBarAction = { label: string; href: string };
+/** Org-level hrefs: exact match, or nested route (settings/notifications). */
+export function isDashboardNavActive(href: string, pathname: string): boolean {
+  if (href === "/dashboard/restaurants") {
+    return pathname === "/dashboard/restaurants";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
-export type DashboardPageMeta = {
-  title: string;
-  subtitle: string | null;
-  action: DashboardTopBarAction | null;
-};
+/* ------------------------------------------------------------------ */
+/* Last-used location                                                  */
+/* ------------------------------------------------------------------ */
 
-const ADD_LOCATION: DashboardTopBarAction = {
-  label: "Add location",
-  href: "/dashboard/onboarding?new=1",
-};
+export const LAST_RESTAURANT_COOKIE = "roal_last_restaurant";
+export const SIDEBAR_COLLAPSED_KEY = "roal_sidebar_collapsed";
 
-/** Title, subtitle and the single primary action shown in the 48px top bar. */
-export function dashboardPageMeta(pathname: string): DashboardPageMeta {
-  const workspaceTitle = restaurantWorkspaceMobileTitle(pathname);
-  if (workspaceTitle) {
-    return {
-      title: workspaceTitle,
-      subtitle: restaurantWorkspaceMobileSubtitle(pathname),
-      action: null,
-    };
-  }
-
-  if (pathname === "/dashboard/onboarding") {
-    return { title: "Go live", subtitle: "Finish setup for this location", action: null };
-  }
-  if (pathname === "/dashboard/settings/notifications") {
-    return { title: "Notifications", subtitle: "Alerts and delivery history", action: null };
-  }
-  if (pathname === "/dashboard/billing") {
-    return { title: "Billing", subtitle: "Plan and usage", action: null };
-  }
-  if (pathname === "/dashboard/analytics") {
-    return { title: "Analytics", subtitle: "Calls and orders across locations", action: null };
-  }
-  if (pathname === "/dashboard/support") {
-    return { title: "Support", subtitle: "Runbooks and contact", action: null };
-  }
-  if (pathname === "/dashboard/overview") {
-    return { title: "Overview", subtitle: "All locations", action: ADD_LOCATION };
-  }
-  if (pathname === "/dashboard/restaurants" || pathname.startsWith("/dashboard/restaurants/")) {
-    return { title: RESTAURANT_LIST_NAV_LABEL, subtitle: null, action: ADD_LOCATION };
-  }
-
-  for (const group of DASHBOARD_NAV) {
-    for (const item of group.items) {
-      if (isDashboardNavActive(item.href, pathname)) {
-        return { title: item.label, subtitle: item.description, action: null };
-      }
-    }
-  }
-
-  return { title: "Dashboard", subtitle: null, action: null };
+/** Path id → remembered id (if still accessible) → first location. */
+export function resolveCurrentRestaurantId(input: {
+  pathname: string | null | undefined;
+  remembered: string | null | undefined;
+  restaurantIds: string[];
+}): string | null {
+  const fromPath = restaurantIdFromPath(input.pathname);
+  // The page enforces access; trust the URL so the sidebar matches the page.
+  if (fromPath) return fromPath;
+  if (input.remembered && input.restaurantIds.includes(input.remembered)) return input.remembered;
+  return input.restaurantIds[0] ?? null;
 }

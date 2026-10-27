@@ -16,7 +16,7 @@ export function AnalyticsRangePicker({ active }: { active: AnalyticsRangeKey }) 
 
   return (
     <div
-      className="analytics-range-picker flex w-full rounded-md border border-line bg-elev p-0.5 sm:inline-flex sm:w-auto"
+      className="analytics-range-picker seg flex w-full sm:inline-flex sm:w-auto"
       role="group"
       aria-label="Date range"
     >
@@ -26,8 +26,8 @@ export function AnalyticsRangePicker({ active }: { active: AnalyticsRangeKey }) 
           href={`${pathname}?range=${opt.key}`}
           aria-current={active === opt.key ? "true" : undefined}
           className={cn(
-            "inline-flex min-h-11 flex-1 items-center justify-center rounded px-3 text-[13px] font-medium transition-colors sm:min-h-8 sm:flex-initial",
-            active === opt.key ? "bg-card text-ink shadow-sm" : "text-muted hover:text-ink"
+            "!h-auto min-h-11 flex-1 justify-center transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 sm:min-h-7 sm:flex-initial",
+            active === opt.key && "is-active"
           )}
         >
           {opt.label}

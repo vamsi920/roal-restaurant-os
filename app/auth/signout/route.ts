@@ -1,39 +1,25 @@
-import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { getPublicEnv } from "@/lib/env.public";
+import { DEMO_SESSION_COOKIE, SESSION_COOKIE } from "@/lib/auth/session-user";
+
+export const runtime = "nodejs";
 
 async function signOutAndRedirect(request: NextRequest) {
-  const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } =
-    getPublicEnv();
-
-  let response = NextResponse.redirect(new URL("/login", request.url), {
-    status: 303,
-  });
-
-  const supabase = createServerClient(
-    NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet: { name: string; value: string; options?: Record<string, unknown> }[]) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          );
-          response = NextResponse.redirect(new URL("/login", request.url), {
-            status: 303,
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
-        },
-      },
+  const token = request.cookies.get(SESSION_COOKIE)?.value;
+  if (token) {
+    try {
+      const { isFirebaseAuthConfigured } = await import("@/lib/auth/demo-mode");
+      if (isFirebaseAuthConfigured()) {
+        const { adminAuth } = await import("@/lib/firebase/admin");
+        const decoded = await adminAuth().verifySessionCookie(token, false);
+        await adminAuth().revokeRefreshTokens(decoded.sub);
+      }
+    } catch {
+      // Expired or invalid cookie: just clear it.
     }
-  );
-
-  await supabase.auth.signOut();
+  }
+  const response = NextResponse.redirect(new URL("/login", request.url), { status: 303 });
+  response.cookies.set(SESSION_COOKIE, "", { path: "/", maxAge: 0 });
+  response.cookies.set(DEMO_SESSION_COOKIE, "", { path: "/", maxAge: 0 });
   return response;
 }
 

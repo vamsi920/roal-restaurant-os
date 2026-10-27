@@ -1,12 +1,15 @@
 "use client";
 
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Phone, Play, Printer, UserRound } from "lucide-react";
+import { Badge, IconTile } from "@/components/ui";
+import { Notice } from "@/components/live-orders/workspace-ui";
+import { DrawerSection, SideDrawer } from "@/components/live-orders/SideDrawer";
+import { TranscriptBubbles } from "@/components/call-history/TranscriptBubbles";
 import {
   getOrderActionsForStatus,
   normalizeOrderStatus,
   ORDER_STATUS_LABELS,
-  STATUS_BADGE_CLASS,
   type OrderAction,
 } from "@/lib/order-status";
 import { OrderTotalsBreakdown, orderTotalsPrintRows } from "@/components/orders/OrderTotalsBreakdown";
@@ -30,7 +33,7 @@ import type {
   PhoneOrderReceiptRow,
 } from "@/lib/types";
 import { cn } from "@/lib/cn";
-import { OrderActionButton } from "./order-card-parts";
+import { OrderActionButton, formatTicketClock, ticketNumber } from "./order-card-parts";
 
 export type OrderDetailSelection =
   | { kind: "draft"; order: DraftOrderRow }
@@ -66,7 +69,6 @@ export function OrderDetailModal({
   onDismissError,
 }: Props) {
   const printRef = useRef<HTMLDivElement>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
   const [printError, setPrintError] = useState<string | null>(null);
 
   const menuCtx = useMemo(
@@ -88,7 +90,6 @@ export function OrderDetailModal({
         totals,
         status,
         statusLabel: ORDER_STATUS_LABELS[status],
-        badgeClass: STATUS_BADGE_CLASS[status] ?? "bg-elev text-muted",
         history: buildOrderStatusHistory(order),
         customerName: order.customer_name,
         customerPhone: order.customer_phone,
@@ -112,7 +113,6 @@ export function OrderDetailModal({
       totals,
       status: null,
       statusLabel: "Done",
-      badgeClass: "bg-elev text-muted",
         history: buildReceiptStatusHistory(receipt),
       customerName: receipt.customer_name,
       customerPhone: receipt.customer_phone,
@@ -127,22 +127,8 @@ export function OrderDetailModal({
   }, [selection, menuCtx, pricingSettings, callEvidence]);
 
   useEffect(() => {
-    if (!open) {
-      setPrintError(null);
-      return;
-    }
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    if (!open) setPrintError(null);
   }, [open]);
-
-  useEffect(() => {
-    if (!open || !detail) return;
-    const frame = requestAnimationFrame(() => closeRef.current?.focus());
-    return () => cancelAnimationFrame(frame);
-  }, [open, detail]);
 
   function handlePrint() {
     if (!printRef.current || !detail) return;
@@ -178,371 +164,261 @@ export function OrderDetailModal({
     win.print();
   }
 
-  return (
-    <Transition appear show={open && !!detail} as={Fragment}>
-      <Dialog
-        as="div"
-        className="kds-order-detail-dialog kds-modal-layer"
-        onClose={onClose}
-        aria-labelledby="kds-order-detail-title"
-      >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-200"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-ink/30 backdrop-blur-sm" />
-        </Transition.Child>
+  const statusTone =
+    detail?.status === "ready" || detail?.status === "completed" || detail?.kind === "receipt"
+      ? "ok"
+      : detail?.status === "canceled"
+        ? "bad"
+        : detail?.status === "draft"
+          ? "live"
+          : detail?.status === "new"
+            ? "info"
+            : "warn";
 
-        <div className="kds-order-detail-dialog__viewport fixed inset-0 overflow-y-auto overscroll-contain">
-          <div className="kds-order-detail-dialog__position flex min-h-full items-end justify-center sm:items-center sm:p-4">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-200"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-2 sm:scale-[0.98]"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-2 sm:scale-[0.98]"
-            >
-              <Dialog.Panel className="kds-order-detail-dialog__panel glass-card flex max-h-[min(92dvh,720px)] w-full max-w-full flex-col overflow-hidden rounded-t-2xl shadow-xl sm:max-h-[min(88dvh,680px)] sm:max-w-lg sm:rounded-2xl">
-                {detail ? (
-                  <>
-                    <div
-                      className="kds-order-detail-dialog__grabber sm:hidden"
+  const footer = detail ? (
+    <div className="flex flex-col gap-2">
+      {actionError ? (
+        <Notice
+          tone="bad"
+          role="alert"
+          action={
+            onDismissError ? (
+              <button type="button" className="font-semibold underline" onClick={onDismissError}>
+                Dismiss
+              </button>
+            ) : null
+          }
+        >
+          {actionError}
+        </Notice>
+      ) : null}
+
+      {detail.actions.length > 0 && onAction ? (
+        <div className="grid gap-2">
+          {detail.actions
+            .filter((a) => a !== "cancel")
+            .map((action) => (
+              <OrderActionButton
+                key={action}
+                action={action}
+                pending={pendingAction === action}
+                disabled={!!pendingAction}
+                onClick={() => onAction(action)}
+              />
+            ))}
+          {detail.actions.includes("cancel") ? (
+            <OrderActionButton
+              action="cancel"
+              variant="cancel"
+              pending={pendingAction === "cancel"}
+              disabled={!!pendingAction}
+              onClick={() => onAction("cancel")}
+            />
+          ) : null}
+        </div>
+      ) : null}
+
+      {printError ? (
+        <p className="text-[12.5px] text-[rgb(var(--tile-amber-ink))]" role="status">
+          {printError}
+        </p>
+      ) : null}
+      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+        <button type="button" onClick={onClose} className="btn-ghost w-full sm:w-auto">
+          Close
+        </button>
+        <button type="button" onClick={handlePrint} className="btn-ghost w-full sm:w-auto">
+          <Printer size={15} aria-hidden />
+          Print receipt
+        </button>
+      </div>
+    </div>
+  ) : null;
+
+  const placedAt = detail
+    ? detail.kind === "draft"
+      ? detail.order.created_at
+      : detail.receipt.created_at
+    : null;
+
+  return (
+    <SideDrawer
+      open={open && !!detail}
+      onClose={onClose}
+      titleId="kds-order-detail-title"
+      closeLabel="Close order summary"
+      title={
+        detail ? (
+          <span className="flex flex-wrap items-baseline gap-x-2">
+            <span>Order summary</span>
+            <span className="font-mono text-[14px] font-bold text-subtle">
+              {ticketNumber(detail.kind === "draft" ? detail.order.id : detail.receipt.id)}
+            </span>
+          </span>
+        ) : (
+          "Order summary"
+        )
+      }
+      subtitle={
+        detail
+          ? `${restaurantName} · ${detail.fulfillmentType === "delivery" ? "Delivery" : "Pickup"}${
+              placedAt ? ` · placed ${formatTicketClock(placedAt)}` : ""
+            }`
+          : null
+      }
+      badge={detail ? <Badge tone={statusTone}>{detail.statusLabel}</Badge> : null}
+      footer={footer}
+    >
+      {detail ? (
+        <>
+          <DrawerSection title="Guest">
+            <div className="flex items-center gap-3">
+              <IconTile icon={UserRound} color="green" />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[15px] font-semibold text-ink">
+                  {detail.customerName?.trim() || "Guest"}
+                </p>
+                {detail.customerPhone ? (
+                  <p className="text-[13px] text-muted">{detail.customerPhone}</p>
+                ) : (
+                  <p className="text-[13px] text-subtle">No phone on file</p>
+                )}
+              </div>
+              {detail.customerPhone ? (
+                <a
+                  href={`tel:${detail.customerPhone.replace(/[^\d+]/g, "")}`}
+                  className="btn-ghost btn-sm shrink-0"
+                >
+                  <Phone size={14} aria-hidden />
+                  Call
+                </a>
+              ) : null}
+            </div>
+            {detail.fulfillmentType === "delivery" ? (
+              <div className="mt-3 rounded-[10px] border border-line bg-elev px-3 py-2 text-[13px]">
+                <p className="font-semibold text-ink">Delivery</p>
+                <p className="mt-0.5 text-muted [overflow-wrap:anywhere]">
+                  {detail.deliveryAddress?.trim() || "No delivery address on file"}
+                </p>
+                {detail.deliveryInstructions?.trim() ? (
+                  <p className="kds-ticket__note mt-1.5 [overflow-wrap:anywhere]">
+                    {detail.deliveryInstructions}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+          </DrawerSection>
+
+          <DrawerSection title={`Items · ${detail.lineItems.length}`}>
+            {detail.lineItems.length === 0 ? (
+              <p className="text-[13px] text-subtle">No items yet</p>
+            ) : (
+              <ul className="divide-y divide-line rounded-[12px] border border-line">
+                {detail.lineItems.map((line, i) => {
+                  const est = detail.totals.lines[i];
+                  return (
+                    <li key={i} className="flex items-start justify-between gap-3 px-3 py-2.5">
+                      <div className="flex min-w-0 gap-2.5">
+                        <span className="w-6 shrink-0 font-mono text-[14px] font-bold tabular-nums text-ink">
+                          {line.quantity}×
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-[14px] font-semibold text-ink [overflow-wrap:anywhere]">
+                            {line.name}
+                          </p>
+                          {line.customizations.length > 0 ? (
+                            <p className="mt-0.5 text-[13px] text-muted [overflow-wrap:anywhere]">
+                              {line.customizations.join(" · ")}
+                            </p>
+                          ) : null}
+                          {line.notes ? (
+                            <p className="kds-ticket__note mt-1 [overflow-wrap:anywhere]">{line.notes}</p>
+                          ) : null}
+                        </div>
+                      </div>
+                      <p className="shrink-0 font-mono text-[13.5px] tabular-nums text-ink">
+                        {formatMoney(est?.lineTotal ?? null)}
+                      </p>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+            <div className="mt-3 rounded-[12px] bg-elev px-3 py-2">
+              <OrderTotalsBreakdown totals={detail.totals} className="space-y-1.5 text-[13.5px]" />
+            </div>
+          </DrawerSection>
+
+          {detail.history.length > 0 ? (
+            <DrawerSection title="Timeline">
+              <ol className="space-y-0 border-l border-line pl-4">
+                {detail.history.map((h, idx) => (
+                  <li key={`${h.iso}-${idx}`} className="relative pb-3.5 last:pb-0">
+                    <span
+                      className={cn(
+                        "absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-card",
+                        h.tone === "call" && "bg-warning",
+                        h.tone === "ticket" && "bg-accent",
+                        h.tone === "kitchen" && "bg-ink",
+                        h.tone === "done" && "bg-success",
+                        h.tone === "danger" && "bg-danger"
+                      )}
                       aria-hidden
                     />
-                    <div className="kds-order-detail-dialog__header flex shrink-0 items-start justify-between gap-3 border-b border-line px-4 pb-4 pt-3 sm:px-5 sm:py-4">
-                      <div className="min-w-0">
-                        <Dialog.Title
-                          id="kds-order-detail-title"
-                          className="text-lg font-semibold tracking-tight"
-                        >
-                          Order summary
-                        </Dialog.Title>
-                        <p className="mt-0.5 truncate text-sm text-muted">
-                          {restaurantName} ·{" "}
-                          {detail.fulfillmentType === "delivery"
-                            ? "Delivery"
-                            : "Pickup"}
-                        </p>
-                      </div>
-                      <div className="flex shrink-0 items-center gap-2">
-                        <span
-                          className={cn(
-                            "rounded-md px-2.5 py-1 text-xs font-semibold",
-                            detail.badgeClass
-                          )}
-                        >
-                          {detail.statusLabel}
-                        </span>
-                        <button
-                          ref={closeRef}
-                          type="button"
-                          onClick={onClose}
-                          className="kds-order-detail-dialog__close kds-thumb-btn grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-line bg-elev text-muted hover:text-ink"
-                          aria-label="Close order summary"
-                        >
-                          <svg
-                            viewBox="0 0 24 24"
-                            className="h-5 w-5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                          >
-                            <path d="M18 6L6 18M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
+                    <p className="text-[13.5px] font-semibold text-ink">
+                      {h.label}
+                      <span className="ml-2 font-normal tabular-nums text-subtle">{h.at}</span>
+                    </p>
+                    <p className="text-[12.5px] text-muted">{h.description}</p>
+                  </li>
+                ))}
+              </ol>
+            </DrawerSection>
+          ) : null}
 
-                    <div className="kds-order-detail-dialog__body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5">
-                      <section>
-                        <h3 className="text-sm font-semibold text-ink">Customer</h3>
-                        <p className="mt-2 text-base font-semibold text-ink">
-                          {detail.customerName?.trim() || "Guest"}
-                        </p>
-                        {detail.customerPhone ? (
-                          <a
-                            href={`tel:${detail.customerPhone.replace(/[^\d+]/g, "")}`}
-                            className="mt-1 inline-block text-base text-accent hover:underline"
-                          >
-                            {detail.customerPhone}
-                          </a>
-                        ) : (
-                          <p className="mt-1 text-sm text-muted">No phone on file</p>
-                        )}
-                      </section>
+          {detail.callEvidence ? (
+            <DrawerSection
+              title="The call"
+              action={
+                detail.callEvidence.recordingUrl ? (
+                  <a
+                    href={detail.callEvidence.recordingUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-ghost btn-sm"
+                  >
+                    <Play size={13} aria-hidden />
+                    Recording
+                  </a>
+                ) : null
+              }
+            >
+              {detail.callEvidence.transcriptSummary ? (
+                <p className="mb-3 rounded-[12px] border border-line bg-elev px-3 py-2 text-[13.5px] text-muted [overflow-wrap:anywhere]">
+                  {detail.callEvidence.transcriptSummary}
+                </p>
+              ) : null}
+              {detail.callEvidence.transcriptLines.length > 0 ? (
+                <TranscriptBubbles lines={detail.callEvidence.transcriptLines} />
+              ) : !detail.callEvidence.transcriptSummary ? (
+                <p className="text-[13px] text-subtle">The transcript hasn&apos;t arrived yet.</p>
+              ) : null}
+            </DrawerSection>
+          ) : null}
 
-                      <section className="mt-6">
-                        <h3 className="text-sm font-semibold text-ink">
-                          Fulfillment
-                        </h3>
-                        <p className="mt-2 text-sm font-medium text-ink">
-                          {detail.fulfillmentType === "delivery"
-                            ? "Delivery"
-                            : "Pickup"}
-                        </p>
-                        {detail.fulfillmentType === "delivery" ? (
-                          <>
-                            <p className="mt-1 text-sm text-muted [overflow-wrap:anywhere]">
-                              {detail.deliveryAddress?.trim() ||
-                                "No delivery address on file"}
-                            </p>
-                            {detail.deliveryInstructions?.trim() ? (
-                              <p className="mt-1 text-sm text-muted [overflow-wrap:anywhere]">
-                                Note: {detail.deliveryInstructions}
-                              </p>
-                            ) : null}
-                          </>
-                        ) : null}
-                      </section>
+          <details className="mt-6 rounded-[10px] border border-line px-3 py-2">
+            <summary className="cursor-pointer text-[12.5px] font-medium text-subtle">Call reference</summary>
+            <p className="mt-2 break-all font-mono text-[12px] text-subtle">{detail.sessionId}</p>
+          </details>
 
-                      <section className="mt-6">
-                        <h3 className="text-sm font-semibold text-ink">Items</h3>
-                        {detail.lineItems.length === 0 ? (
-                          <p className="mt-2 text-sm text-muted">No items yet</p>
-                        ) : (
-                          <ul className="mt-3 divide-y divide-line">
-                            {detail.lineItems.map((line, i) => {
-                              const est = detail.totals.lines[i];
-                              return (
-                                <li key={i} className="py-3 first:pt-0">
-                                  <div className="flex items-start justify-between gap-3">
-                                    <div className="kds-order-detail-dialog__line min-w-0">
-                                      <p className="text-sm font-medium text-ink [overflow-wrap:anywhere]">
-                                        {line.quantity}× {line.name}
-                                      </p>
-                                      {line.customizations.length > 0 ? (
-                                        <ul className="mt-1.5 space-y-0.5">
-                                          {line.customizations.map((c) => (
-                                            <li
-                                              key={c}
-                                              className="text-sm text-muted"
-                                            >
-                                              {c}
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      ) : null}
-                                      {line.notes ? (
-                                        <p className="mt-1 text-sm text-muted">
-                                          {line.notes}
-                                        </p>
-                                      ) : null}
-                                    </div>
-                                    <p className="type-numeric-sm shrink-0 text-ink">
-                                      {formatMoney(est?.lineTotal ?? null)}
-                                    </p>
-                                  </div>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        )}
-                      </section>
-
-                      <section className="mt-6 rounded-xl border border-line bg-elev p-4">
-                        <h3 className="text-sm font-semibold text-ink">Total</h3>
-                        <OrderTotalsBreakdown totals={detail.totals} className="mt-2" />
-                      </section>
-
-                      {detail.history.length > 0 ? (
-                        <section className="mt-6">
-                          <div className="flex items-end justify-between gap-3">
-                            <div>
-                              <h3 className="text-sm font-semibold text-ink">
-                                Phone order timeline
-                              </h3>
-                              <p className="mt-1 text-xs text-muted">
-                                Call, ticket, kitchen, and completion milestones.
-                              </p>
-                            </div>
-                            <span className="rounded bg-elev px-2 py-1 text-micro font-semibold uppercase text-subtle">
-                              {detail.history.length} step
-                              {detail.history.length === 1 ? "" : "s"}
-                            </span>
-                          </div>
-                          <ol className="mt-3 space-y-0 border-l border-line pl-4">
-                            {detail.history.map((h, idx) => (
-                              <li
-                                key={`${h.iso}-${idx}`}
-                                className="relative pb-4 last:pb-0"
-                              >
-                                <span
-                                  className={cn(
-                                    "absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-card",
-                                    h.tone === "call" && "bg-warning",
-                                    h.tone === "ticket" && "bg-accent",
-                                    h.tone === "kitchen" && "bg-ink",
-                                    h.tone === "done" && "bg-success",
-                                    h.tone === "danger" && "bg-danger"
-                                  )}
-                                />
-                                <p className="text-sm font-semibold text-ink">
-                                  {h.label}
-                                </p>
-                                <p className="mt-0.5 text-sm text-muted">
-                                  {h.description}
-                                </p>
-                                <p className="text-sm text-muted">{h.at}</p>
-                              </li>
-                            ))}
-                          </ol>
-                        </section>
-                      ) : null}
-
-                      {detail.callEvidence ? (
-                        <section className="mt-6 rounded-xl border border-line bg-elev/60 p-4">
-                          <div className="flex items-start justify-between gap-3">
-                            <div className="min-w-0">
-                              <h3 className="text-sm font-semibold text-ink">
-                                Call transcript evidence
-                              </h3>
-                              <p className="mt-1 text-xs text-muted">
-                                Saved from the voice agent session for this order.
-                              </p>
-                            </div>
-                            {detail.callEvidence.recordingUrl ? (
-                              <a
-                                href={detail.callEvidence.recordingUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="shrink-0 text-xs font-medium text-accent underline-offset-2 hover:underline"
-                              >
-                                Recording
-                              </a>
-                            ) : null}
-                          </div>
-                          {detail.callEvidence.transcriptSummary ? (
-                            <p className="mt-3 text-sm text-muted [overflow-wrap:anywhere]">
-                              {detail.callEvidence.transcriptSummary}
-                            </p>
-                          ) : null}
-                          {detail.callEvidence.transcriptLines.length > 0 ? (
-                            <ol className="mt-3 space-y-2">
-                              {detail.callEvidence.transcriptLines.map((line, idx) => (
-                                <li
-                                  key={`${line.speaker}-${idx}`}
-                                  className="rounded-lg border border-line/70 bg-card px-3 py-2"
-                                >
-                                  <p className="text-[0.68rem] font-semibold uppercase tracking-wide text-subtle">
-                                    {line.speaker}
-                                  </p>
-                                  <p className="mt-1 text-sm text-muted [overflow-wrap:anywhere]">
-                                    {line.text}
-                                  </p>
-                                </li>
-                              ))}
-                            </ol>
-                          ) : !detail.callEvidence.transcriptSummary ? (
-                            <p className="mt-3 text-sm text-muted">
-                              Transcript turns have not arrived yet.
-                            </p>
-                          ) : null}
-                        </section>
-                      ) : null}
-
-                      <details className="mt-6 rounded-lg border border-line/80 bg-elev/50 px-3 py-2">
-                        <summary className="cursor-pointer text-xs font-medium text-muted">
-                          Call reference
-                        </summary>
-                        <p className="mt-2 break-all text-xs text-subtle">
-                          {detail.sessionId}
-                        </p>
-                      </details>
-                    </div>
-
-                    <div className="kds-order-detail-dialog__footer flex shrink-0 flex-col gap-2 border-t border-line bg-card p-4 sm:px-5">
-                      {actionError ? (
-                        <div
-                          className="kds-order-detail-dialog__error flex items-start justify-between gap-2 rounded-lg border border-danger/30 bg-danger/[0.06] px-3 py-2 text-sm text-danger"
-                          role="alert"
-                        >
-                          <span className="min-w-0 [overflow-wrap:anywhere]">
-                            {actionError}
-                          </span>
-                          {onDismissError ? (
-                            <button
-                              type="button"
-                              className="shrink-0 font-medium underline"
-                              onClick={onDismissError}
-                            >
-                              Dismiss
-                            </button>
-                          ) : null}
-                        </div>
-                      ) : null}
-
-                      {detail.actions.length > 0 && onAction ? (
-                        <div className="kds-order-detail-dialog__actions flex flex-col gap-2">
-                          {detail.actions
-                            .filter((a) => a !== "cancel")
-                            .map((action) => (
-                              <OrderActionButton
-                                key={action}
-                                action={action}
-                                pending={pendingAction === action}
-                                disabled={!!pendingAction}
-                                onClick={() => onAction(action)}
-                              />
-                            ))}
-                          {detail.actions.includes("cancel") ? (
-                            <OrderActionButton
-                              action="cancel"
-                              variant="cancel"
-                              pending={pendingAction === "cancel"}
-                              disabled={!!pendingAction}
-                              onClick={() => onAction("cancel")}
-                            />
-                          ) : null}
-                        </div>
-                      ) : null}
-
-                      {printError ? (
-                        <p className="text-xs text-warning" role="status">
-                          {printError}
-                        </p>
-                      ) : null}
-                      <div className="kds-order-detail-dialog__footer-tools flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                        <button
-                          type="button"
-                          onClick={onClose}
-                          className="btn-ghost min-h-11 w-full sm:w-auto"
-                        >
-                          Close
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handlePrint}
-                          className="btn-primary min-h-11 w-full justify-center sm:w-auto"
-                        >
-                          Print receipt
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="sr-only" aria-hidden>
-                      <div ref={printRef}>
-                        <ReceiptPrintBody
-                          restaurantName={restaurantName}
-                          detail={detail}
-                        />
-                      </div>
-                    </div>
-                  </>
-                ) : null}
-              </Dialog.Panel>
-            </Transition.Child>
+          <div className="sr-only" aria-hidden>
+            <div ref={printRef}>
+              <ReceiptPrintBody restaurantName={restaurantName} detail={detail} />
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+        </>
+      ) : null}
+    </SideDrawer>
   );
 }
 

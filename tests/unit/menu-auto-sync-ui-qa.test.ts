@@ -53,7 +53,8 @@ describe("menu auto-sync UI (pass 12)", () => {
     );
     expect(settings).toContain("RestaurantKnowledgeEditor");
     expect(settings).toContain("knowledge_entries");
-    expect(editor).toContain("Add answers before ROAL can answer these guest questions");
+    expect(editor).toContain("No answers yet");
+    expect(editor).toContain("Add answer");
     expect(editor).not.toMatch(/demo FAQ|placeholder FAQ/i);
   });
 

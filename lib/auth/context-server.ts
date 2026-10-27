@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { tryClaimLegacyPocMembership } from "@/lib/auth/claim-legacy-org";
 import { ensureUserProfile } from "@/lib/auth/ensure-profile";
@@ -10,7 +10,7 @@ import {
   isOrgAdmin,
 } from "@/lib/auth/roles";
 import type { AuthContext, MembershipWithOrg, RestaurantAccess } from "@/lib/auth/types";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import type { Membership, Organization, Restaurant } from "@/lib/types";
 
 type MembershipRow = Membership & {
@@ -33,7 +33,7 @@ function normalizeMembership(row: MembershipRow): MembershipWithOrg | null {
 }
 
 export async function loadUserMemberships(
-  supabase: SupabaseClient,
+  supabase: Db,
   userId: string
 ): Promise<MembershipWithOrg[]> {
   const { data, error } = await supabase
@@ -70,7 +70,7 @@ export async function getAuthContext(): Promise<AuthContext | null> {
   const user = await getSessionUser();
   if (!user) return null;
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await ensureUserProfile(supabase, user);
   await tryClaimLegacyPocMembership(supabase, user.id);
   await ensurePlatformAdminMembership(user);
@@ -165,7 +165,7 @@ export async function requireRestaurantAccess(
     return { access: null, context: null, errorResponse: auth.errorResponse };
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: restaurant, error } = await supabase
     .from("restaurants")
     .select("*")
@@ -260,7 +260,7 @@ export async function getRestaurantAccessForPage(
   const context = await getAuthContext();
   if (!context) return null;
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: restaurant } = await supabase
     .from("restaurants")
     .select("*")

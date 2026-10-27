@@ -1,18 +1,37 @@
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getAuthContext } from "@/lib/auth/context-server";
-import { isOrgAdmin } from "@/lib/auth/roles";
+import { LAST_RESTAURANT_COOKIE } from "@/lib/dashboard-nav";
+import { getDb } from "@/lib/db";
 
-/** Dashboard home: org admins land on the overview, members on their locations. */
+/**
+ * Dashboard home: open the last-used (`roal_last_restaurant` cookie) or first
+ * location's Overview.
+ * No locations yet → onboarding.
+ */
 export default async function DashboardHomePage() {
   const context = await getAuthContext();
   if (!context) {
     redirect("/login?next=/dashboard");
   }
 
-  const isAdmin = context.memberships.some((m) => isOrgAdmin(m.role));
-  if (isAdmin) {
-    redirect("/dashboard/overview");
+  const orgIds = context.memberships.map((m) => m.organization_id);
+  let restaurantIds: string[] = [];
+  if (orgIds.length > 0) {
+    const supabase = getDb();
+    const { data } = await supabase
+      .from("restaurants")
+      .select("id")
+      .in("organization_id", orgIds)
+      .order("created_at", { ascending: true });
+    restaurantIds = (data ?? []).map((row) => row.id as string);
   }
 
-  redirect("/dashboard/restaurants");
+  if (restaurantIds.length === 0) {
+    redirect("/dashboard/onboarding");
+  }
+
+  const lastUsed = cookies().get(LAST_RESTAURANT_COOKIE)?.value;
+  const target = lastUsed && restaurantIds.includes(lastUsed) ? lastUsed : restaurantIds[0];
+  redirect(`/dashboard/restaurants/${target}/overview`);
 }

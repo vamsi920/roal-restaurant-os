@@ -1,12 +1,25 @@
 import Link from "next/link";
 import {
-  EmptyState,
+  AlertTriangle,
+  ArrowRight,
+  Building2,
+  Clock,
+  ShoppingBag,
+  Store,
+} from "lucide-react";
+import {
   Panel,
-  StatTile,
   StatusChip,
   formatWhen,
   type Tone,
 } from "@/components/dashboard/page-primitives";
+import {
+  Badge,
+  EmptyState,
+  IconTile,
+  PageHeader,
+  StatCard,
+} from "@/components/ui";
 import type {
   OrgOverviewPageSnapshot,
   OrgRestaurantOverviewRow,
@@ -31,11 +44,40 @@ export function OrgOverviewDashboard({ snapshot }: Props) {
   const multiOrg = snapshot.organizations.length > 1;
 
   return (
-    <div className="org-overview dashboard-page dashboard-page--wide min-w-0 space-y-6 overflow-x-hidden">
+    <div className="org-overview org-page org-page--wide min-w-0 space-y-8 overflow-x-hidden">
+      <PageHeader
+        className="!mb-0"
+        eyebrow="Organization"
+        title="Organization overview"
+        subtitle={`Every location at a glance. Updated ${formatWhen(snapshot.generatedAt)}.`}
+        actions={
+          <>
+            <Link href="/dashboard/restaurants" className="btn-ghost">
+              All locations
+            </Link>
+            <Link href="/dashboard/onboarding?new=1" className="btn-primary">
+              Add location
+            </Link>
+          </>
+        }
+      />
+      {snapshot.organizations.length === 0 ? (
+        <div className="panel">
+          <EmptyState
+            icon={Building2}
+            title="No organization yet"
+            body="Once you create a location, its organization shows up here."
+            action={
+              <Link href="/dashboard/onboarding" className="btn-primary">
+                Set up your first location
+              </Link>
+            }
+          />
+        </div>
+      ) : null}
       {snapshot.organizations.map((org) => (
         <OrganizationOverviewSection key={org.organizationId} org={org} showName={multiOrg} />
       ))}
-      <p className="text-[12px] text-subtle">Updated {formatWhen(snapshot.generatedAt)}</p>
     </div>
   );
 }
@@ -53,12 +95,17 @@ function OrganizationOverviewSection({
 
   return (
     <section className="min-w-0 space-y-4" aria-labelledby={`org-${org.organizationId}`}>
-      <div className="flex min-w-0 flex-wrap items-end justify-between gap-2">
+      <div className="flex min-w-0 flex-wrap items-center gap-3">
+        <IconTile icon={Building2} color="ink" />
         <div className="min-w-0">
-          <h2 id={`org-${org.organizationId}`} className="dashboard-page__title">
+          <h2
+            id={`org-${org.organizationId}`}
+            className={showName ? "text-[15px] font-semibold tracking-tight text-ink" : "sr-only"}
+          >
             {showName ? org.organizationName : "Overview"}
           </h2>
-          <p className="dashboard-page__lead">
+          <p className="text-[13px] text-subtle">
+            {showName ? null : <span className="font-medium text-ink">{org.organizationName} · </span>}
             {formatMembershipRole(org.role as MembershipRole)} ·{" "}
             {org.totals.locationCount === 1
               ? "1 location"
@@ -67,40 +114,53 @@ function OrganizationOverviewSection({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile label="Locations" value={org.totals.locationCount} />
-        <StatTile label="Active orders" value={org.totals.activeOrders} />
-        <StatTile
+      <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
+        <StatCard label="Locations" value={org.totals.locationCount} icon={Store} color="ink" />
+        <StatCard
+          label="Active orders"
+          value={org.totals.activeOrders}
+          icon={ShoppingBag}
+          color="orange"
+        />
+        <StatCard
           label="Stuck orders"
           value={org.totals.stuckOrders}
-          tone={org.totals.stuckOrders > 0 ? "warn" : "neutral"}
+          hint={org.totals.stuckOrders > 0 ? "Idle in the kitchen queue" : "Kitchen is moving"}
+          icon={Clock}
+          color="amber"
         />
-        <StatTile
+        <StatCard
           label="Needs attention"
           value={org.totals.needsAttentionCount}
-          tone={org.totals.needsAttentionCount > 0 ? "bad" : "ok"}
+          hint={org.totals.needsAttentionCount > 0 ? "Fix list below" : "All clear"}
+          icon={AlertTriangle}
+          color={org.totals.needsAttentionCount > 0 ? "rose" : "green"}
         />
       </div>
 
       {org.restaurants.length === 0 ? (
-        <EmptyState
-          title="No locations yet"
-          action={
-            <Link href="/dashboard/onboarding" className="btn-primary">
-              Set up your first location
-            </Link>
-          }
-        >
-          Paste a menu link and ROAL builds the phone host for you.
-        </EmptyState>
+        <div className="panel">
+          <EmptyState
+            icon={Store}
+            title="No locations yet"
+            body="Paste a menu link and ROAL builds the phone host for you."
+            action={
+              <Link href="/dashboard/onboarding" className="btn-primary">
+                Set up your first location
+              </Link>
+            }
+          />
+        </div>
       ) : (
         <>
           {attention.length > 0 ? (
             <Panel
               title="Fix before going live"
               hint="One click opens the right screen."
+              flush
+              aside={<Badge tone="warn">{attention.length} to fix</Badge>}
             >
-              <ul className="mt-3 divide-y divide-line/70">
+              <ul>
                 {attention.map((row) => (
                   <AttentionRow key={row.id} row={row} />
                 ))}
@@ -117,7 +177,7 @@ function OrganizationOverviewSection({
               </Link>
             }
           >
-            <div className="org-overview__table dashboard-table">
+            <div className="org-overview__table org-table">
               <table>
                 <thead>
                   <tr>
@@ -150,7 +210,8 @@ function AttentionRow({ row }: { row: OrgRestaurantOverviewRow }) {
   const extra = row.launchBlockers.length - 1 + (stuckMsg && first ? 1 : 0);
 
   return (
-    <li className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 py-2.5 first:pt-0 last:pb-0">
+    <li className="list-row flex-wrap">
+      <IconTile icon={AlertTriangle} color="amber" />
       <span className="min-w-0 flex-1">
         <span className="block truncate text-[13px] font-medium text-ink">{row.name}</span>
         <span className="block text-[12px] text-muted [overflow-wrap:anywhere]">
@@ -160,6 +221,7 @@ function AttentionRow({ row }: { row: OrgRestaurantOverviewRow }) {
       </span>
       <Link href={href} className="btn-ghost btn-sm shrink-0">
         Fix
+        <ArrowRight size={13} strokeWidth={2.25} aria-hidden />
       </Link>
     </li>
   );
@@ -175,49 +237,60 @@ function RestaurantOverviewRow({ row }: { row: OrgRestaurantOverviewRow }) {
   return (
     <tr>
       <td data-label="Location">
-        <Link href={row.links.liveOrders} className="font-medium text-ink hover:underline">
-          {row.name}
-        </Link>
-        {row.agentIdSuffix ? (
-          <p className="mt-0.5 font-mono text-[11px] text-subtle">agent …{row.agentIdSuffix}</p>
-        ) : null}
+        <div className="min-w-0">
+          <Link
+            href={`/dashboard/restaurants/${row.id}/overview`}
+            className="org-link font-medium text-ink hover:underline"
+          >
+            {row.name}
+          </Link>
+          {row.agentIdSuffix ? (
+            <p className="mt-0.5 font-mono text-[11px] text-subtle">agent …{row.agentIdSuffix}</p>
+          ) : null}
+        </div>
       </td>
       <td data-label="Phone host">
-        <StatusChip tone={voiceTone(row.voiceProvisionState)}>{voiceLabel}</StatusChip>
-        {row.lastVoiceSyncError ? (
-          <p className="mt-1 text-[12px] text-danger [overflow-wrap:anywhere]">
-            {row.lastVoiceSyncError}
-          </p>
-        ) : null}
+        <div className="min-w-0">
+          <StatusChip tone={voiceTone(row.voiceProvisionState)}>{voiceLabel}</StatusChip>
+          {row.lastVoiceSyncError ? (
+            <p className="mt-1 text-[12px] text-danger [overflow-wrap:anywhere]">
+              {row.lastVoiceSyncError}
+            </p>
+          ) : null}
+        </div>
       </td>
       <td data-label="Menu sync">
-        <StatusChip tone={menuSyncTone(row.menuSyncPhase)}>{row.menuSyncLabel}</StatusChip>
-        <p className="mt-1 text-[12px] text-subtle">
-          {row.lastMenuSyncAt ? formatWhen(row.lastMenuSyncAt) : "Never synced"}
-        </p>
+        <div className="min-w-0">
+          <StatusChip tone={menuSyncTone(row.menuSyncPhase)}>{row.menuSyncLabel}</StatusChip>
+          <p className="mt-1 text-[12px] text-subtle">
+            {row.lastMenuSyncAt ? formatWhen(row.lastMenuSyncAt) : "Never synced"}
+          </p>
+        </div>
       </td>
       <td data-label="Orders" className="is-num">
-        <span className="font-medium text-ink">{row.activeOrderCount}</span>
-        <span className="text-subtle"> active</span>
-        {row.stuckOrderCount > 0 ? (
-          <p className="mt-0.5 text-[12px] text-warning">{row.stuckOrderCount} stuck</p>
-        ) : null}
+        <div className="min-w-0">
+          <span className="font-medium text-ink">{row.activeOrderCount}</span>
+          <span className="text-subtle"> active</span>
+          {row.stuckOrderCount > 0 ? (
+            <p className="mt-0.5 text-[12px] text-warning">{row.stuckOrderCount} stuck</p>
+          ) : null}
+        </div>
       </td>
       <td data-label="Status">
         {ready ? (
           <StatusChip tone="ok">Ready</StatusChip>
         ) : (
-          <ul className="space-y-1 text-[12px]">
+          <ul className="space-y-1 text-[12.5px]">
             {row.launchBlockers.map((b) => (
               <li key={b.code}>
-                <Link href={b.href} className="text-warning hover:underline [overflow-wrap:anywhere]">
+                <Link href={b.href} className="org-link text-warning hover:underline [overflow-wrap:anywhere]">
                   {b.message}
                 </Link>
               </li>
             ))}
             {stuckMsg ? (
               <li>
-                <Link href={stuckOrdersHref(row.id)} className="text-warning hover:underline">
+                <Link href={stuckOrdersHref(row.id)} className="org-link text-warning hover:underline">
                   {stuckMsg}
                 </Link>
               </li>

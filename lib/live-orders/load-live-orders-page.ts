@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { loadRestaurantCommandCenter } from "@/lib/command-center/load-command-center";
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
 import { kdsActionNeededOutcomeCount } from "@/lib/live-orders/peak-call-context";
@@ -38,7 +38,7 @@ export type LiveOrdersPageSnapshot = {
 };
 
 export async function loadLiveOrdersPageData(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     restaurantName: string;
@@ -50,7 +50,7 @@ export async function loadLiveOrdersPageData(
       | "elevenlabs_menu_auto_sync_status"
       | "elevenlabs_menu_auto_sync_error"
     >;
-    ordersDb?: SupabaseClient;
+    ordersDb?: Db;
   }
 ): Promise<LiveOrdersPageSnapshot> {
   const restaurantId = input.restaurantId.trim();

@@ -13,7 +13,7 @@ vi.mock("@/lib/auth/context-server", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/notifications/dispatch", () => ({
@@ -32,7 +32,7 @@ import { requireAuthContext, resolveOrganizationId } from "@/lib/auth/context-se
 import { dispatchNotification } from "@/lib/notifications/dispatch";
 import { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
 import { notifyStuckActiveCallsForOrganization } from "@/lib/notifications/stuck-active-calls";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 function mockRestaurantLookup(organizationId: string | null) {
   const supabase = {
@@ -47,7 +47,7 @@ function mockRestaurantLookup(organizationId: string | null) {
       }),
     }),
   };
-  vi.mocked(createServerSupabase).mockResolvedValue(supabase as never);
+  vi.mocked(getDb).mockResolvedValue(supabase as never);
   return supabase;
 }
 
@@ -61,7 +61,7 @@ function mockCheckStuckRestaurants(
       }),
     }),
   };
-  vi.mocked(createServerSupabase).mockResolvedValue(supabase as never);
+  vi.mocked(getDb).mockResolvedValue(supabase as never);
   return supabase;
 }
 
@@ -77,7 +77,7 @@ describe("POST /api/notifications/events", () => {
       } as never,
       errorResponse: null,
     });
-    vi.mocked(createServerSupabase).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockResolvedValue({} as never);
     vi.mocked(dispatchNotification).mockResolvedValue(undefined);
   });
 

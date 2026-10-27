@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { FINALIZE_ORDER_STATUS } from "@/lib/order-status";
 import { buildOrderStatusHistory } from "@/lib/orders/status-history";
 import { simulateHarnessTool } from "@/lib/voice-agent/test-harness/simulate-tool";
@@ -137,7 +137,7 @@ describe("finalize_order harness (draft → kitchen ticket + receipt)", () => {
     const supabase = buildSupabaseForFinalizeFlow();
 
     const sync = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: {
@@ -151,7 +151,7 @@ describe("finalize_order harness (draft → kitchen ticket + receipt)", () => {
     expect(sync.ok).toBe(true);
 
     const fin = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody(),
@@ -182,7 +182,7 @@ describe("finalize_order harness (draft → kitchen ticket + receipt)", () => {
   it("writes phone_order_receipt when finalizing with inline items", async () => {
     const supabase = buildSupabaseForFinalizeFlow();
     const fin = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody({
@@ -201,7 +201,7 @@ describe("finalize_order validation gates", () => {
   it("rejects empty cart when draft has no line items", async () => {
     const supabase = buildSupabaseForFinalizeFlow();
     await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: {
@@ -214,7 +214,7 @@ describe("finalize_order validation gates", () => {
     });
 
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody(),
@@ -232,7 +232,7 @@ describe("finalize_order validation gates", () => {
   it("rejects unavailable items", async () => {
     const supabase = buildSupabaseForFinalizeFlow();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody({
@@ -251,7 +251,7 @@ describe("finalize_order validation gates", () => {
   it("rejects unknown modifiers", async () => {
     const supabase = buildSupabaseForFinalizeFlow();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody({
@@ -275,7 +275,7 @@ describe("finalize_order validation gates", () => {
   it("blocks finalize when ordering_allowed is false", async () => {
     const supabase = buildSupabaseForFinalizeFlow();
     await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: {
@@ -308,7 +308,7 @@ describe("finalize_order validation gates", () => {
     } as never);
 
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody(),
@@ -324,7 +324,7 @@ describe("finalize_order validation gates", () => {
   it("rejects delivery when profile allows_delivery is false", async () => {
     const supabase = buildSupabaseForFinalizeFlow();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody({
@@ -348,7 +348,7 @@ describe("finalize_order validation gates", () => {
 
     const supabase = buildSupabaseForFinalizeFlow();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody({
@@ -371,7 +371,7 @@ describe("finalize_order validation gates", () => {
 
     const supabase = buildSupabaseForFinalizeFlow();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody({
@@ -395,7 +395,7 @@ describe("finalize_order validation gates", () => {
 
     const supabase = buildSupabaseForFinalizeFlow();
     const result = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "finalize_order",
       body: finalizeBody({

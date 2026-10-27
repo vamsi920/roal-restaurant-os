@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   ORGANIZATION_ONBOARDING_STEPS,
   RESTAURANT_ONBOARDING_STEPS,
@@ -153,7 +153,7 @@ function allStepsTerminal(
 }
 
 export async function getOrganizationOnboarding(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string
 ): Promise<OrganizationOnboarding | null> {
   const { data, error } = await supabase
@@ -173,7 +173,7 @@ export async function getOrganizationOnboarding(
 }
 
 export async function getRestaurantOnboarding(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<RestaurantOnboarding | null> {
   const { data, error } = await supabase
@@ -193,7 +193,7 @@ export async function getRestaurantOnboarding(
 }
 
 export async function ensureOrganizationOnboarding(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string
 ): Promise<OrganizationOnboarding> {
   const existing = await getOrganizationOnboarding(supabase, organizationId);
@@ -219,7 +219,7 @@ export async function ensureOrganizationOnboarding(
 }
 
 export async function ensureRestaurantOnboarding(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   organizationId: string
 ): Promise<RestaurantOnboarding> {
@@ -247,7 +247,7 @@ export async function ensureRestaurantOnboarding(
 }
 
 export async function updateOrganizationOnboardingStep(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string,
   stepKey: OrganizationOnboardingStepKey,
   status: OnboardingStepStatus,
@@ -286,7 +286,7 @@ export async function updateOrganizationOnboardingStep(
 }
 
 export async function updateRestaurantOnboardingStep(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   organizationId: string,
   stepKey: RestaurantOnboardingStepKey,
@@ -331,7 +331,7 @@ export async function updateRestaurantOnboardingStep(
 
 /** Mark account step complete after auth + membership exist. */
 export async function completeOrganizationAccountStep(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string
 ): Promise<OrganizationOnboarding> {
   return updateOrganizationOnboardingStep(

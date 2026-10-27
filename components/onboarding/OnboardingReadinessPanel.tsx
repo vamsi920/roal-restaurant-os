@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Check } from "lucide-react";
 import { StatusChip } from "@/components/dashboard/page-primitives";
 import { cn } from "@/lib/cn";
 import type { OnboardingReadinessSnapshot } from "@/lib/onboarding/readiness";
@@ -12,9 +13,14 @@ type Props = {
 function StatusDot({ ok }: { ok: boolean }) {
   return (
     <span
-      className={cn("mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full", ok ? "bg-success" : "bg-line-strong")}
+      className={cn(
+        "mt-[3px] grid h-3.5 w-3.5 shrink-0 place-items-center rounded-full",
+        ok ? "bg-success text-white" : "border border-line-strong bg-card"
+      )}
       aria-hidden
-    />
+    >
+      {ok ? <Check size={9} strokeWidth={3.5} /> : null}
+    </span>
   );
 }
 
@@ -22,18 +28,18 @@ function StatusDot({ ok }: { ok: boolean }) {
 export function OnboardingReadinessPanel({ readiness, compact = false, className }: Props) {
   return (
     <section
-      className={cn("onboarding-readiness dashboard-panel", className)}
+      className={cn("onboarding-readiness panel", className)}
       aria-label="Setup readiness"
     >
-      <div className="dashboard-panel__head">
-        <h2 className="dashboard-page__section-title">Readiness</h2>
+      <div className="panel__head">
+        <h2 className="panel__title">Readiness</h2>
         <StatusChip
           tone={readiness.isPhoneAgentReady ? "ok" : readiness.isCoreReady ? "warn" : "neutral"}
         >
           {readiness.isPhoneAgentReady ? "Ready" : readiness.isCoreReady ? "Almost" : "In progress"}
         </StatusChip>
       </div>
-      <ul className="mt-2.5 space-y-1">
+      <ul className="space-y-0.5 px-3 py-2.5">
         {readiness.items.map((item) => {
           const body = (
             <>
@@ -55,12 +61,12 @@ export function OnboardingReadinessPanel({ readiness, compact = false, className
               {item.href && !item.ok ? (
                 <Link
                   href={item.href}
-                  className="-mx-1.5 flex gap-2 rounded-md px-1.5 py-1 hover:bg-elev"
+                  className="flex gap-2 rounded-lg px-1.5 py-1.5 hover:bg-elev focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1"
                 >
                   {body}
                 </Link>
               ) : (
-                <div className="flex gap-2 py-1">{body}</div>
+                <div className="flex gap-2 px-1.5 py-1.5">{body}</div>
               )}
             </li>
           );

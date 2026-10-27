@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   recordingUrlFromTranscriptMetadata,
   transcriptLinesFromMetadata,
@@ -58,7 +58,7 @@ export function indexOrderCallEvidence(
 }
 
 export async function loadOrderCallEvidenceBySession(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     sessionIds: string[];

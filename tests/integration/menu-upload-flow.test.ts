@@ -38,7 +38,7 @@ vi.mock("@/lib/scanner/menu-import-audit", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/usage/record", () => ({

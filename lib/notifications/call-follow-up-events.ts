@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type { AgentCallOutcome } from "@/lib/agent-calls/types";
 import {
   callerContactFromTranscriptMetadata,
@@ -20,7 +20,7 @@ type RestaurantContext = {
 };
 
 async function loadRestaurantContext(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<RestaurantContext | null> {
   const { data, error } = await supabase
@@ -62,7 +62,7 @@ function summaryFromMetadata(metadata: Record<string, unknown>): string | null {
 }
 
 async function emitPhoneFollowUp(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     ctx: RestaurantContext;
     eventType: NotificationEventType;
@@ -104,7 +104,7 @@ async function emitPhoneFollowUp(
 }
 
 export async function emitVoicemailCallbackNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     sessionId: string;
@@ -162,7 +162,7 @@ export async function emitVoicemailCallbackNotification(
 }
 
 export async function emitCateringInquiryNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     sessionId: string;
@@ -216,7 +216,7 @@ export async function emitCateringInquiryNotification(
 }
 
 export async function emitComplaintCallerNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     sessionId: string;
@@ -270,7 +270,7 @@ export async function emitComplaintCallerNotification(
 }
 
 export async function emitCallReviewNeededNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     sessionId: string;
@@ -321,7 +321,7 @@ export async function emitCallReviewNeededNotification(
 }
 
 export async function emitReservationRequestNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     reservationId: string;
@@ -369,7 +369,7 @@ export async function emitReservationRequestNotification(
 }
 
 export async function emitStuckActiveCallNotification(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantId: string;
@@ -438,7 +438,7 @@ function isComplaintReason(reason: string): boolean {
 }
 
 export async function emitPostCallFollowUpNotifications(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     sessionId: string;

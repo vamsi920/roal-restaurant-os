@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { ChevronRight, MapPin, PhoneForwarded, Plus } from "lucide-react";
 import { setWizardStepStatusAction } from "@/app/dashboard/onboarding/actions";
 import { Panel, StatusChip } from "@/components/dashboard/page-primitives";
+import { EmptyState, IconTile } from "@/components/ui";
 import { OnboardingReadinessPanel } from "@/components/onboarding/OnboardingReadinessPanel";
 import { OnboardingTryCall } from "@/components/onboarding/onboarding-try-call";
 import { OnboardingVoiceAgentStep } from "@/components/onboarding/onboarding-voice-agent-step";
@@ -178,20 +180,25 @@ export function OnboardingWizard({ initialState }: Props) {
 
   if (!restaurant || !restaurantId || !orgId) {
     return (
-      <div className="onboarding-page dashboard-page dashboard-page--narrow">
-        <Panel title="No location selected">
-          <p className="mt-2 text-[13px] text-muted">
-            Pick a location to see its go-live checklist.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <Link href="/dashboard/restaurants" className="btn-primary">
-              Locations
-            </Link>
-            <Link href="/dashboard/onboarding?new=1" className="btn-ghost">
-              Add location
-            </Link>
-          </div>
-        </Panel>
+      <div className="onboarding-page org-page org-page--narrow">
+        <div className="panel">
+          <EmptyState
+            icon={MapPin}
+            title="No location selected"
+            body="Pick a location to see its go-live checklist."
+            action={
+              <div className="flex flex-wrap justify-center gap-2">
+                <Link href="/dashboard/restaurants" className="btn-primary">
+                  Locations
+                </Link>
+                <Link href="/dashboard/onboarding?new=1" className="btn-ghost">
+                  <Plus size={14} strokeWidth={2.25} aria-hidden />
+                  Add location
+                </Link>
+              </div>
+            }
+          />
+        </div>
       </div>
     );
   }
@@ -201,14 +208,14 @@ export function OnboardingWizard({ initialState }: Props) {
   const hostHref = restaurantVoiceAgentHref(restaurantId);
 
   return (
-    <div className="onboarding-page dashboard-page dashboard-page--wide min-w-0 space-y-5 overflow-x-hidden">
-      <header className="dashboard-page__header">
+    <div className="onboarding-page org-page org-page--wide min-w-0 space-y-5 overflow-x-hidden">
+      <header className="flex min-w-0 flex-wrap items-end justify-between gap-3">
         <div className="min-w-0">
           {state.restaurants.length > 1 ? (
-            <label className="dashboard-page__eyebrow flex items-center gap-1.5">
+            <label className="mb-1.5 flex min-w-0 items-center gap-1.5 text-[12px] font-medium text-subtle">
               <span>Location</span>
               <select
-                className="input-base h-7 w-auto max-w-[16rem] py-0 pl-2 pr-7 text-[12px] font-semibold uppercase tracking-wider"
+                className="input-base h-7 w-auto min-w-0 max-w-[16rem] py-0 pl-2 pr-7 text-[12.5px] font-medium"
                 value={restaurantId}
                 onChange={(e) => router.push(`/dashboard/onboarding?restaurant=${e.target.value}`)}
                 aria-label="Switch location"
@@ -221,16 +228,18 @@ export function OnboardingWizard({ initialState }: Props) {
               </select>
             </label>
           ) : (
-            <p className="dashboard-page__eyebrow">{restaurant.name}</p>
+            <p className="mb-1 truncate text-[12px] font-medium text-subtle">{restaurant.name}</p>
           )}
-          <h1 className="dashboard-page__title">{allDone ? "You're live" : "Go live"}</h1>
-          <p className="dashboard-page__lead">
+          <h1 className="font-display text-[22px] font-bold leading-tight tracking-[-0.02em] text-ink sm:text-[24px]">
+            {allDone ? "You're live" : "Go live"}
+          </h1>
+          <p className="mt-1 max-w-xl text-[13.5px] text-subtle">
             {allDone
               ? `Guests who call ${restaurant.name} reach your ROAL host. Watch tickets arrive on ${RESTAURANT_LIVE_ORDERS_LABEL}.`
               : "Five real checks, one at a time. Nothing here is simulated."}
           </p>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <StatusChip tone={allDone ? "ok" : "neutral"}>
             {doneCount}/{steps.length} done
           </StatusChip>
@@ -242,7 +251,7 @@ export function OnboardingWizard({ initialState }: Props) {
 
       {error ? (
         <p
-          className="rounded-md border border-danger/25 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
+          className="rounded-[10px] border border-danger/20 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {error}
@@ -251,14 +260,17 @@ export function OnboardingWizard({ initialState }: Props) {
 
       <div className="onboarding-page__body grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_17rem]">
         <div className="min-w-0 space-y-4">
-          <Panel title="Get started">
-            <div className="dashboard-progress mt-3" aria-hidden>
+          <Panel
+            title="Get started"
+            hint={allDone ? "Every check passed." : `${steps.length - doneCount} step${steps.length - doneCount === 1 ? "" : "s"} left`}
+          >
+            <div className="org-progress" aria-hidden>
               <div
-                className={cn("dashboard-progress__bar", allDone && "dashboard-progress__bar--ok")}
+                className={cn("org-progress__bar", allDone && "org-progress__bar--ok")}
                 style={{ width: `${Math.round((doneCount / Math.max(1, steps.length)) * 100)}%` }}
               />
             </div>
-            <ol className="dashboard-checklist mt-2">
+            <ol className="org-checklist mt-2">
               {steps.map((step) => {
                 const isNext = nextStep?.id === step.id;
                 const isActive = activeId === step.id;
@@ -266,9 +278,9 @@ export function OnboardingWizard({ initialState }: Props) {
                   <li
                     key={step.id}
                     className={cn(
-                      "dashboard-checklist__item",
-                      step.done && "dashboard-checklist__item--done",
-                      isNext && !focused && "dashboard-checklist__item--next"
+                      "org-checklist__item",
+                      step.done && "org-checklist__item--done",
+                      isNext && !focused && "org-checklist__item--next"
                     )}
                     aria-current={isActive ? "step" : undefined}
                   >
@@ -278,13 +290,13 @@ export function OnboardingWizard({ initialState }: Props) {
                     />
                     <button
                       type="button"
-                      className="min-w-0 text-left"
+                      className="min-w-0 rounded-md text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       onClick={() => setFocused(step.id)}
                     >
-                      <span className="dashboard-checklist__label block">{step.label}</span>
-                      <span className="dashboard-checklist__detail block">{step.detail}</span>
+                      <span className="org-checklist__label">{step.label}</span>
+                      <span className="org-checklist__detail">{step.detail}</span>
                     </button>
-                    <span className="dashboard-checklist__action">
+                    <span className="org-checklist__action">
                       {step.href ? (
                         <Link
                           href={step.href}
@@ -399,7 +411,7 @@ export function OnboardingWizard({ initialState }: Props) {
                   : "Weekly hours and holiday closures live in Menu setup next to the menu."
               }
             >
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Link href={menuHref} className="btn-primary">
                   Open {RESTAURANT_MENU_SETUP_TITLE}
                 </Link>
@@ -412,8 +424,8 @@ export function OnboardingWizard({ initialState }: Props) {
           {state.readiness ? (
             <OnboardingReadinessPanel readiness={state.readiness} compact />
           ) : null}
-          <Panel title="This location" muted>
-            <ul className="mt-2 grid gap-0.5 text-[13px] min-[380px]:grid-cols-2 lg:grid-cols-1">
+          <Panel title="This location" flush>
+            <ul className="grid py-1 text-[13px] min-[380px]:grid-cols-2 lg:grid-cols-1">
               <WorkspaceLink href={ordersHref} label={RESTAURANT_LIVE_ORDERS_LABEL} />
               <WorkspaceLink href={menuHref} label={RESTAURANT_MENU_SETUP_TITLE} />
               <WorkspaceLink href={hostHref} label="Phone host" />
@@ -430,12 +442,10 @@ function WorkspaceLink({ href, label }: { href: string; label: string }) {
     <li>
       <Link
         href={href}
-        className="-mx-1 flex min-h-11 items-center justify-between gap-2 rounded px-1 py-1.5 font-medium text-ink hover:bg-card lg:min-h-9"
+        className="flex min-h-11 items-center justify-between gap-2 px-[1.125rem] py-1.5 font-medium text-ink hover:bg-elev focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 lg:min-h-9"
       >
-        {label}
-        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-subtle" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M9 6l6 6-6 6" />
-        </svg>
+        <span className="truncate">{label}</span>
+        <ChevronRight size={14} strokeWidth={2} className="shrink-0 text-subtle" aria-hidden />
       </Link>
     </li>
   );
@@ -477,8 +487,10 @@ function ForwardNumberCard({
       hint="Keep your existing number. Your carrier sends calls to the host; you can turn it off any time."
       aside={done ? <StatusChip tone="ok">Forwarded</StatusChip> : null}
     >
-      <div className="mt-3 rounded-md border border-dashed border-line-strong bg-elev px-3 py-2.5">
-        <p className="dashboard-page__kicker">Your host&apos;s phone number</p>
+      <div className="flex min-w-0 items-start gap-3 rounded-[12px] border border-dashed border-line-strong bg-elev px-3.5 py-3">
+        <IconTile icon={PhoneForwarded} color="blue" />
+        <div className="min-w-0">
+        <p className="org-kicker">Your host&apos;s phone number</p>
         <p className="mt-1 text-[13px] text-muted">
           We text you the number once the host is provisioned. Don&apos;t have it yet?{" "}
           <a href={mailto} className="font-medium text-ink underline underline-offset-2">
@@ -486,9 +498,10 @@ function ForwardNumberCard({
           </a>
           .
         </p>
+        </div>
       </div>
 
-      <ol className="onboarding-page__forwarding-steps mt-4">
+      <ol className="onboarding-page__forwarding-steps org-steps mt-4">
         <li>
           <span>
             From the restaurant phone{restaurantPhone ? ` (${restaurantPhone})` : ""}, dial your

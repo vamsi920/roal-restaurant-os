@@ -25,7 +25,7 @@ import {
 } from "@/lib/restaurant-profile/helpers";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { applyDefaultOrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import {
   provisionRestaurantVoiceAgent,
   tryProvisionVoiceAgentForNewRestaurant,
@@ -81,7 +81,7 @@ export async function createOrganizationAction(input: {
     throw new Error("Slug must be lowercase letters, numbers, and hyphens only.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await ensureUserProfile(supabase, context.user);
   const { data: org, error: orgErr } = await supabase
     .from("organizations")
@@ -108,7 +108,7 @@ export async function createOrganizationAction(input: {
 
 export async function completeAccountStepAction(organizationId: string) {
   await requireOrgMembership(organizationId);
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await completeOrganizationAccountStep(supabase, organizationId);
   revalidatePath("/dashboard/onboarding");
 }
@@ -121,7 +121,7 @@ export async function createRestaurantWizardAction(input: {
   const name = input.name.trim();
   if (!name) throw new Error("Restaurant name is required.");
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data, error } = await supabase
     .from("restaurants")
     .insert({ name, organization_id: input.organizationId })
@@ -185,7 +185,7 @@ export async function createRestaurantWizardAction(input: {
 }
 
 async function persistVoiceProvisionOnboarding(
-  supabase: Awaited<ReturnType<typeof createServerSupabase>>,
+  supabase: Awaited<ReturnType<typeof getDb>>,
   restaurantId: string,
   organizationId: string,
   provision: Awaited<ReturnType<typeof tryProvisionVoiceAgentForNewRestaurant>>,
@@ -243,7 +243,7 @@ export async function applyRestaurantLookupAction(input: {
     throw new Error("Could not reload that restaurant listing. Search again.");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   let restaurantId = input.restaurantId?.trim() || "";
   let created = false;
 
@@ -374,7 +374,7 @@ export async function createVoiceAgentBrowserCallAction(input: {
   organizationId: string;
 }) {
   await requireOrgMembership(input.organizationId);
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: restaurant, error } = await supabase
     .from("restaurants")
     .select("id, organization_id")
@@ -409,7 +409,7 @@ export async function startVoiceAgentOutboundCallAction(input: {
   if (!phoneNumberId) {
     throw new Error("Outbound test calls are not configured.");
   }
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: restaurant, error } = await supabase
     .from("restaurants")
     .select("id, organization_id")
@@ -441,7 +441,7 @@ export async function retryRestaurantVoiceAgentProvisionAction(input: {
   organizationId: string;
 }) {
   const { context } = await requireOrgMembership(input.organizationId);
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
 
   const { data: restaurant, error: restErr } = await supabase
     .from("restaurants")
@@ -516,7 +516,7 @@ export async function saveRestaurantProfileAction(input: {
   const timezone = input.timezone?.trim() || "America/Chicago";
   if (!timezone) throw new Error("Timezone is required.");
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const address = input.address?.trim() || null;
   await upsertRestaurantProfile(supabase, input.restaurantId, input.organizationId, {
     name,
@@ -570,7 +570,7 @@ export async function setWizardStepStatusAction(input: {
   metadata?: Record<string, unknown>;
 }) {
   const { context } = await requireOrgMembership(input.organizationId);
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
 
   if (input.scope === "organization") {
     await updateOrganizationOnboardingStep(
@@ -626,7 +626,7 @@ export async function completeMenuImportStepAction(input: {
   organizationId: string;
 }) {
   await requireOrgMembership(input.organizationId);
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const stats = await loadRestaurantCardStats(supabase, [input.restaurantId], {});
   const menuItemCount = stats[input.restaurantId]?.menuItemCount ?? 0;
 
@@ -651,7 +651,7 @@ export async function syncRestaurantVoiceAgentOnboardingAction(input: {
   organizationId: string;
 }) {
   await requireOrgMembership(input.organizationId);
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
 
   const { data: restaurant, error: restErr } = await supabase
     .from("restaurants")
@@ -735,7 +735,7 @@ export async function claimTrialAction(input: { trialId: string }) {
   }
 
   const { claimTrial } = await import("@/lib/trial/claim");
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   await ensureUserProfile(supabase, context.user);
 
   const result = await claimTrial(supabase, {

@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type {
   RestaurantKnowledgeEntry,
   RestaurantKnowledgeEntryInput,
@@ -20,7 +20,7 @@ function mapRow(row: Record<string, unknown>): RestaurantKnowledgeEntry {
 }
 
 export async function loadRestaurantKnowledgeEntries(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   options: { activeOnly?: boolean; limit?: number } = {}
 ): Promise<RestaurantKnowledgeEntry[]> {
@@ -43,7 +43,7 @@ export async function loadRestaurantKnowledgeEntries(
 }
 
 export async function replaceRestaurantKnowledgeEntries(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     organizationId: string;

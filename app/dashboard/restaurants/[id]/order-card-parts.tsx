@@ -1,30 +1,39 @@
+import { Bike, Loader2, ShoppingBag } from "lucide-react";
 import { parseOrderLineItems } from "@/lib/orders/line-items";
-import {
-  ORDER_ACTION_LABELS,
-  type OrderAction,
-} from "@/lib/order-status";
+import { ORDER_ACTION_LABELS, type OrderAction } from "@/lib/order-status";
 import { cn } from "@/lib/cn";
+
+/*
+ * Ticket building blocks for the Kitchen board and the order drawer.
+ * Kitchen tablets are read from arm's length: guest name 19px, items 15px,
+ * notes on an amber highlight, 44px status buttons.
+ */
+
+/** Short, kitchen-callable ticket number derived from the order id ("#4F2A"). */
+export function ticketNumber(id: string): string {
+  const compact = id.replace(/[^a-zA-Z0-9]/g, "");
+  return `#${compact.slice(-4).toUpperCase() || "----"}`;
+}
+
+export function formatTicketClock(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+}
 
 export function PickupStatusBadge({
   label,
   badgeClass,
 }: {
   label: string;
+  /** Badge tone classes, e.g. "badge--ok". */
   badgeClass: string;
 }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex rounded-md px-2.5 py-1 text-xs font-semibold",
-        badgeClass
-      )}
-    >
-      {label}
-    </span>
-  );
+  return <span className={cn("badge", badgeClass)}>{label}</span>;
 }
 
-/** @deprecated Use PickupStatusBadge — session IDs belong in the modal only. */
+/** @deprecated Use PickupStatusBadge — session IDs belong in the drawer only. */
 export function OrderCardHeader({
   badge,
   badgeClass,
@@ -45,16 +54,14 @@ export function CustomerLine({
 }) {
   const displayName = name?.trim() || "Guest";
   return (
-    <div className="kds-order-card__customer mt-3 min-w-0">
+    <div className="min-w-0">
       <p
-        className="kds-order-card__name text-lg font-semibold leading-snug tracking-tight text-ink sm:text-xl"
+        className="truncate font-display text-[19px] font-bold leading-tight tracking-[-0.01em] text-ink sm:text-[20px]"
         title={displayName}
       >
         {displayName}
       </p>
-      {phone ? (
-        <p className="kds-order-card__phone mt-0.5 text-sm text-muted">{phone}</p>
-      ) : null}
+      {phone ? <p className="mt-0.5 truncate text-[13px] text-muted">{phone}</p> : null}
     </div>
   );
 }
@@ -69,47 +76,31 @@ export function FulfillmentLine({
   instructions?: string | null;
 }) {
   const isDelivery = fulfillmentType === "delivery" || Boolean(address?.trim());
-  const label = isDelivery ? "Delivery" : "Pickup";
+  const Icon = isDelivery ? Bike : ShoppingBag;
   return (
-    <div className="kds-order-card__fulfillment mt-2 rounded-lg border border-line/70 bg-elev/70 px-3 py-2 text-sm">
-      <p className="font-semibold text-ink">{label}</p>
+    <div className="min-w-0 text-[13px]">
+      <p className="inline-flex items-center gap-1.5 font-semibold text-ink">
+        <Icon size={14} aria-hidden className="text-subtle" />
+        {isDelivery ? "Delivery" : "Pickup"}
+      </p>
       {isDelivery && address?.trim() ? (
         <p className="mt-0.5 text-muted [overflow-wrap:anywhere]">{address}</p>
       ) : null}
       {isDelivery && instructions?.trim() ? (
-        <p className="mt-1 text-xs text-subtle [overflow-wrap:anywhere]">
-          Note: {instructions}
-        </p>
+        <p className="kds-ticket__note mt-1.5 [overflow-wrap:anywhere]">{instructions}</p>
       ) : null}
     </div>
   );
 }
 
-function OrderActionSpinner() {
-  return (
-    <svg
-      className="h-4 w-4 shrink-0 animate-spin"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-    >
-      <circle
-        cx="12"
-        cy="12"
-        r="9"
-        stroke="currentColor"
-        strokeOpacity="0.25"
-        strokeWidth="3"
-      />
-      <path
-        d="M21 12a9 9 0 00-9-9"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+/** Kitchen verbs, a little more explicit than the API labels. */
+const KITCHEN_ACTION_LABEL: Record<OrderAction, string> = {
+  accept: `${ORDER_ACTION_LABELS.accept} ticket`,
+  start: `${ORDER_ACTION_LABELS.start} preparing`,
+  mark_ready: `Mark ${ORDER_ACTION_LABELS.mark_ready.toLowerCase()}`,
+  complete: `${ORDER_ACTION_LABELS.complete} pickup`,
+  cancel: `${ORDER_ACTION_LABELS.cancel} order`,
+};
 
 export function OrderActionButton({
   action,
@@ -124,7 +115,7 @@ export function OrderActionButton({
   onClick: () => void;
   variant?: "primary" | "cancel";
 }) {
-  const label = ORDER_ACTION_LABELS[action];
+  const label = KITCHEN_ACTION_LABEL[action];
 
   return (
     <button
@@ -133,27 +124,24 @@ export function OrderActionButton({
       onClick={onClick}
       aria-busy={pending}
       className={cn(
-        "kds-thumb-btn relative w-full overflow-hidden text-sm font-semibold disabled:cursor-not-allowed",
+        "relative w-full touch-manipulation",
         variant === "cancel"
-          ? "min-h-12 rounded-lg border border-line bg-elev text-muted transition-colors hover:bg-card disabled:opacity-50"
-          : "btn-primary min-h-12 disabled:opacity-50"
+          ? "btn-ghost btn-sm min-h-11 text-muted sm:min-h-9"
+          : action === "complete" || action === "mark_ready"
+            ? "btn-primary btn-lg min-h-11 !border-success !bg-success hover:!bg-success/90"
+            : "btn-primary btn-lg min-h-11"
       )}
     >
+      {/* Both layers stay mounted so the button keeps its width while pending. */}
       <span
-        className={cn(
-          "flex min-h-12 items-center justify-center gap-2 px-3",
-          !pending && "pointer-events-none invisible"
-        )}
+        className={cn("flex items-center justify-center gap-2", !pending && "invisible")}
         aria-hidden={!pending}
       >
-        <OrderActionSpinner />
+        <Loader2 size={16} className="motion-safe:animate-spin" aria-hidden />
         <span>{label}</span>
       </span>
       <span
-        className={cn(
-          "absolute inset-0 flex items-center justify-center px-3",
-          pending && "invisible"
-        )}
+        className={cn("absolute inset-0 flex items-center justify-center px-3", pending && "invisible")}
       >
         {label}
       </span>
@@ -166,35 +154,52 @@ export function OrderDetailsLink({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="kds-order-card__details-link mt-2 inline-flex min-h-11 items-center text-sm font-medium text-muted underline-offset-2 hover:text-ink hover:underline"
+      className="inline-flex min-h-11 items-center rounded-md px-1 text-[13px] font-semibold text-muted underline-offset-4 hover:text-ink hover:underline sm:min-h-8"
     >
       Order details
     </button>
   );
 }
 
-export function OrderItemsList({ items }: { items: unknown }) {
+export function OrderItemsList({ items, size = "ticket" }: { items: unknown; size?: "ticket" | "compact" }) {
   const lines = parseOrderLineItems(items);
   if (lines.length === 0) {
-    return <p className="mt-2 text-xs text-subtle">No line items</p>;
+    return <p className="text-[13px] text-subtle">No items yet</p>;
   }
+  const compact = size === "compact";
   return (
-    <ul className="kds-order-card__items mt-3 space-y-1.5 border-t border-line/60 pt-3">
+    <ul className={cn("min-w-0", compact ? "space-y-1" : "space-y-2.5")}>
       {lines.map((line, i) => (
-        <li key={i} className="kds-order-card__item text-sm leading-relaxed text-ink">
-          <span className="type-numeric-sm text-muted">{line.quantity}×</span>{" "}
-          <span className="kds-order-card__item-name">{line.name}</span>
-          {line.customizations.length > 0 ? (
-            <span className="kds-order-card__item-mods text-subtle">
-              {" "}
-              — {line.customizations.join(", ")}
-            </span>
-          ) : null}
-          {line.notes ? (
-            <span className="kds-order-card__note mt-1 block text-xs leading-snug text-subtle">
-              Note: {line.notes}
-            </span>
-          ) : null}
+        <li key={i} className="flex min-w-0 gap-2.5">
+          <span
+            className={cn(
+              "shrink-0 font-mono font-bold tabular-nums text-ink",
+              compact ? "w-6 text-[13px]" : "w-7 text-[15px]"
+            )}
+          >
+            {line.quantity}×
+          </span>
+          <div className="min-w-0 flex-1">
+            <p
+              className={cn(
+                "font-semibold leading-snug text-ink [overflow-wrap:anywhere]",
+                compact ? "text-[13.5px]" : "text-[15px]"
+              )}
+            >
+              {line.name}
+            </p>
+            {line.customizations.length > 0 ? (
+              <p className="mt-0.5 text-[13.5px] leading-snug text-muted [overflow-wrap:anywhere]">
+                {line.customizations.join(" · ")}
+              </p>
+            ) : null}
+            {line.notes ? (
+              <p className="kds-ticket__note mt-1 [overflow-wrap:anywhere]">
+                <span className="sr-only">Note: </span>
+                {line.notes}
+              </p>
+            ) : null}
+          </div>
         </li>
       ))}
     </ul>

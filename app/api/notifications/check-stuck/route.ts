@@ -5,7 +5,7 @@ import {
 } from "@/lib/auth/context-server";
 import { notifyStuckOrdersForOrganization } from "@/lib/notifications/stuck-orders";
 import { notifyStuckActiveCallsForOrganization } from "@/lib/notifications/stuck-active-calls";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const runtime = "nodejs";
 
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: resolved.error }, { status: 403 });
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: restaurants, error } = await supabase
     .from("restaurants")
     .select("id, name")

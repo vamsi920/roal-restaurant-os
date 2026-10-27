@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { loadRestaurantAgentCallSessions } from "@/lib/agent-calls/load-call-sessions";
 import {
   buildCompletedOrdersFromReceipts,
@@ -25,7 +25,7 @@ export type LoadRestaurantCommandCenterInput = {
 };
 
 export async function loadRestaurantCommandCenter(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: LoadRestaurantCommandCenterInput
 ): Promise<RestaurantCommandCenterSnapshot> {
   const restaurantId = input.restaurantId.trim();

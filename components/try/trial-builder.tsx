@@ -234,7 +234,7 @@ export function TrialBuilder({
               inputMode="url"
             />
             <button type="submit" className="btn-primary btn-lg trial-form__submit" disabled={busy || !input.trim()}>
-              {busy ? "Building…" : "Build my phone host"}
+              <span className="trial-form__submit-label">{busy ? "Building…" : "Build my phone host"}</span>
               {!busy ? <ArrowIcon /> : null}
             </button>
           </div>
@@ -280,10 +280,10 @@ export function TrialBuilder({
   return (
     <div className={cn("trial-builder trial-builder--ready", embedded && "trial-builder--embedded")} data-phase="ready">
       <div className="trial-ready">
-        <section className="trial-ready__call card card--raised" aria-label="Test call">
+        <section className="trial-ready__call panel" aria-label="Test call">
           <header className="trial-ready__head">
             <div className="min-w-0">
-              <p className="chip chip--success">
+              <p className="badge badge--ok trial-ready__badge">
                 <span className="pulse-dot" /> Live · {trial.restaurantName}
               </p>
               <h3 className="trial-ready__title">
@@ -307,7 +307,7 @@ export function TrialBuilder({
         </section>
 
         <aside className="trial-ready__side">
-          <div className="card trial-facts">
+          <div className="panel trial-facts">
             <p className="trial-facts__title">What {persona.agentName} knows</p>
             <ul className="trial-facts__list">
               <li>
@@ -405,7 +405,7 @@ export function TrialBuilder({
             ) : null}
           </div>
 
-          <div className="card trial-persona">
+          <div className="panel trial-persona">
             <div className="trial-persona__head">
               <p className="trial-facts__title">Voice &amp; name</p>
               <button type="button" className="trial-link" onClick={() => setEditingPersona((v) => !v)} disabled={busy}>

@@ -6,14 +6,14 @@ import {
 import { persistElevenLabsPostCallEvent } from "@/lib/elevenlabs/post-call-webhook";
 
 vi.mock("@/lib/supabase/server", () => ({
-  getServiceRoleSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/env.server", () => ({
   getElevenLabsAgentId: vi.fn(() => "agent_template_global"),
 }));
 
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 const RESTAURANT_ID = "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
 const DEDICATED_AGENT = "agent_dedicated_inbound";
@@ -31,7 +31,7 @@ function mockSupabaseProfiles(
     [RESTAURANT_ID, { name: "Test Bistro" }],
   ]);
 
-  vi.mocked(getServiceRoleSupabase).mockReturnValue({
+  vi.mocked(getDb).mockReturnValue({
     from: vi.fn((table: string) => {
       if (table === "restaurant_profiles") {
         return {
@@ -79,7 +79,7 @@ function mockMultiLocationProfiles(
     elevenlabs_agent_id: string | null;
   }[]
 ) {
-  vi.mocked(getServiceRoleSupabase).mockReturnValue({
+  vi.mocked(getDb).mockReturnValue({
     from: vi.fn((table: string) => {
       if (table === "restaurant_profiles") {
         return {
@@ -194,7 +194,7 @@ describe("inbound call routing", () => {
 
   it("post-call webhook does not write tenant data when routing fails", async () => {
     const upsert = vi.fn();
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn((table: string) => {
         if (table === "restaurant_profiles") {
           return {

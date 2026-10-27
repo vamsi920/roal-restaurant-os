@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { isTestHarnessBillingSession } from "@/lib/billing/billable-orders";
 
 export type MarkAgentCallOrderCompletedInput = {
@@ -50,7 +50,7 @@ export function buildOrderCompletedCallEventRow(
 
 /** Clear in-progress call state when an order is finalized with a receipt. */
 export async function markAgentCallOrderCompleted(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: MarkAgentCallOrderCompletedInput
 ): Promise<{ stored: boolean; reason?: string }> {
   const restaurantId = input.restaurantId.trim();

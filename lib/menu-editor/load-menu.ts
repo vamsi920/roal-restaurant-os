@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type { DbCategory, DbItem, DbModifier } from "@/lib/types";
 
 export type RestaurantMenuSnapshot = {
@@ -8,7 +8,7 @@ export type RestaurantMenuSnapshot = {
 };
 
 export async function loadRestaurantMenu(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<RestaurantMenuSnapshot> {
   const { data: categories, error: cErr } = await supabase

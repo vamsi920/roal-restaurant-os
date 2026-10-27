@@ -15,7 +15,7 @@ import type {
   NotificationProviderMode,
 } from "@/lib/notifications/types";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export type SaveNotificationsState = {
   error?: string;
@@ -73,7 +73,7 @@ export async function saveNotificationSettingsAction(
   const stuckRaw = Number(formData.get("order_stuck_minutes"));
 
   try {
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const existing = await loadNotificationSettings(
       supabase,
       membership.organization_id

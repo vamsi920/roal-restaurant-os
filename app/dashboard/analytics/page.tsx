@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { loadOrganizationAnalytics } from "@/lib/analytics/load-analytics";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ export default async function AnalyticsPage({
   const membership = context.primaryMembership;
   if (!membership) redirect("/dashboard/onboarding");
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const { data: accessibleRestaurants } = await supabase
     .from("restaurants")
     .select("id")

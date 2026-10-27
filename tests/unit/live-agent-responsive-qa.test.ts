@@ -6,31 +6,34 @@ const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
 describe("Live Agent responsive (prompt 31)", () => {
-  it("structures agent page header and embedded panel", () => {
+  it("structures the Phone host page: header, hero call, inbox, persona, collapsed Advanced", () => {
     const page = read("app/dashboard/restaurants/[id]/agent/page.tsx");
-    const panel = read("app/dashboard/restaurants/[id]/VoiceAgentPanel.tsx");
-    const css = read("app/dashboard/restaurants/[id]/kds-workspace.css");
 
     expect(page).toContain("RestaurantLaunchGateCard");
     expect(page).toContain("loadRestaurantLaunchGate");
-    expect(page).toContain("live-agent-page__header");
-    expect(page).toContain("live-agent-page__inline-meta");
-    expect(page).toContain("kds-workspace--agent");
-    expect(page).toContain("overflow-x-hidden");
-    expect(panel).toContain("voice-agent-panel");
-    expect(css).toContain("Live Agent page responsive (prompt 31)");
+    expect(page).toContain("<PageHeader");
+    expect(page).toContain("RESTAURANT_PHONE_HOST_LABEL");
+    expect(page).toContain("<PhoneHostTestCall");
+    expect(page).toContain("<KnowledgeSuggestionsInbox");
+    expect(page).toContain("<HostPersonaCard");
+    expect(page).toContain("<CollapsiblePanel");
+    expect(page).toContain('title="Advanced"');
+    expect(page).not.toContain("defaultOpen");
+    expect(page).toContain("<MetaList");
+    expect(page).toContain("Store phone");
+    // Old per-page chrome and the KDS stylesheet are gone.
+    expect(page).not.toContain("kds-workspace.css");
+    expect(page).not.toContain("ws-page-head");
   });
 
-  it("keeps connect controls and diagnostics collapsible with wrap", () => {
+  it("keeps long IDs and URLs contained on narrow screens", () => {
     const panel = read("app/dashboard/restaurants/[id]/VoiceAgentPanel.tsx");
     const harness = read("app/dashboard/restaurants/[id]/VoiceAgentTestHarness.tsx");
 
-    expect(panel).toContain("voice-agent-panel__controls");
-    expect(panel).toContain("kds-thumb-btn min-h-11 w-full");
-    expect(panel).toContain("voice-agent-panel__profile-table");
+    expect(panel).toContain("truncate font-mono");
     expect(panel).toContain("break-all");
-    expect(harness).toContain("voice-agent-harness");
-    expect(harness).toContain("voice-agent-harness__advanced");
+    expect(panel).toContain("overflow-x-auto");
+    expect(harness).toContain("overflow-auto overscroll-contain");
     expect(harness).not.toContain("min-w-[200px]");
     expect(harness).toContain('role="alert"');
   });

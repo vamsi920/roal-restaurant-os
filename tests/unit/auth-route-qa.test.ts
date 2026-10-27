@@ -76,8 +76,8 @@ describe("auth route QA", () => {
     const signup = readFileSync(signupPath, "utf8");
     const authLayout = readFileSync(authLayoutPath, "utf8");
 
-    expect(login).toContain("LoginPageEntry");
-    expect(signup).toContain("SignupPageEntry");
+    expect(login).toContain("AuthForm");
+    expect(signup).toContain("AuthForm");
     expect(authLayout).toContain("auth-page.css");
   });
 

@@ -9,7 +9,7 @@ import {
   parseAnalyticsRangeKey,
 } from "../lib/analytics/range";
 import { formatUsdFromCents } from "../components/analytics/format";
-import { getServiceRoleSupabase } from "../lib/supabase/server";
+import { getDb } from "../lib/supabase/server";
 
 const LEGACY_ORG =
   process.env.QA_ANALYTICS_ORG_ID?.trim() ||
@@ -33,7 +33,7 @@ function summarize(checks: Check[]) {
 }
 
 async function countUsage(
-  sb: NonNullable<ReturnType<typeof getServiceRoleSupabase>>,
+  sb: NonNullable<ReturnType<typeof getDb>>,
   orgId: string,
   sinceIso: string,
   untilIso: string,
@@ -52,7 +52,7 @@ async function countUsage(
 
 void (async () => {
   const checks: Check[] = [];
-  const sb = getServiceRoleSupabase();
+  const sb = getDb();
   if (!sb) {
     summarize([{ name: "SUPABASE_SERVICE_ROLE_KEY", ok: false, detail: "missing" }]);
     return;

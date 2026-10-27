@@ -20,7 +20,7 @@ vi.mock("@/lib/voice-agent/run-restaurant-voice-agent-sync", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/observability/audit", () => ({
@@ -33,7 +33,7 @@ vi.mock("@/lib/voice-agent/load-control-center", () => ({
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { getElevenLabsAgentId } from "@/lib/env.server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { connectVoiceAgentAction } from "@/app/dashboard/restaurants/[id]/voice-agent-actions";
 
 const TEMPLATE = "agent_template_shared";
@@ -84,7 +84,7 @@ describe("connectVoiceAgentAction dedicated agent guard", () => {
         error: null,
       }),
     };
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       from: vi.fn(() => chain),
     } as never);
 

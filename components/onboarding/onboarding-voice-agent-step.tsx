@@ -7,7 +7,9 @@ import {
   retryRestaurantVoiceAgentProvisionAction,
   syncRestaurantVoiceAgentOnboardingAction,
 } from "@/app/dashboard/onboarding/actions";
+import { Headphones } from "lucide-react";
 import { StatusChip } from "@/components/dashboard/page-primitives";
+import { IconTile } from "@/components/ui";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import type { OnboardingRestaurantVoiceProvision } from "@/lib/onboarding/restaurant-voice-provision";
 import { restaurantVoiceAgentHref } from "@/lib/voice-agent/provision-display";
@@ -100,12 +102,15 @@ export function OnboardingVoiceAgentStep({
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="min-w-0">
-          <p className="text-[14px] font-semibold text-ink">Phone host</p>
-          <p className="mt-0.5 text-[13px] text-muted">
-            A dedicated ElevenLabs agent for {restaurantName}, with your live menu as its tools.
-          </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex min-w-0 flex-1 items-start gap-3">
+          <IconTile icon={Headphones} color="blue" />
+          <div className="min-w-0">
+            <p className="text-[14px] font-semibold text-ink">Phone host</p>
+            <p className="mt-0.5 text-[13px] text-subtle">
+              A dedicated ElevenLabs agent for {restaurantName}, with your live menu as its tools.
+            </p>
+          </div>
         </div>
         <StatusChip
           tone={
@@ -146,7 +151,7 @@ export function OnboardingVoiceAgentStep({
 
       {displayError ? (
         <p
-          className="rounded-md border border-danger/25 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
+          className="rounded-[10px] border border-danger/20 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {displayError}

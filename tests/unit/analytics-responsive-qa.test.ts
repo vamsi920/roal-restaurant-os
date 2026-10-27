@@ -13,7 +13,7 @@ describe("Analytics responsive (prompt 36)", () => {
     expect(dash).toContain("analytics-dashboard");
     expect(dash).toContain("analytics-dashboard__stats");
     expect(dash).toContain("analytics-dashboard__chart-scroll");
-    expect(dash).toContain("analytics-dashboard__location-table dashboard-table");
+    expect(dash).toContain("analytics-dashboard__location-table org-table");
     expect(dash).toContain('data-label="Location"');
     expect(css).toContain("Analytics dashboard responsive (prompt 36)");
   });

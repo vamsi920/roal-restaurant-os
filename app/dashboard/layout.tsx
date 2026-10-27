@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import "@/app/dashboard-theme.css";
@@ -7,6 +8,9 @@ import { AppShell } from "@/components/dashboard/app-shell";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
 import { formatMembershipRole, isOrgAdmin } from "@/lib/auth/roles";
+import { LAST_RESTAURANT_COOKIE } from "@/lib/dashboard-nav";
+import { loadShellLocations } from "@/lib/dashboard/shell-data";
+import { getDb } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Dashboard — ROAL",
@@ -24,10 +28,18 @@ export default async function DashboardLayout({
   }
 
   const primary = context.primaryMembership;
+  const supabase = getDb();
+  const locations = await loadShellLocations(
+    supabase,
+    context.memberships.map((m) => ({ id: m.organization.id, name: m.organization.name }))
+  );
+  const lastRestaurantId = cookies().get(LAST_RESTAURANT_COOKIE)?.value ?? null;
+  const metadataName = context.user.user_metadata?.full_name;
 
   return (
     <AppShell
       userEmail={context.user.email ?? context.user.id}
+      userName={typeof metadataName === "string" ? metadataName : null}
       organizationName={primary?.organization.name ?? null}
       roleLabel={
         isPlatformAdminEmail(context.user.email)
@@ -36,6 +48,8 @@ export default async function DashboardLayout({
             ? formatMembershipRole(primary.role)
             : null
       }
+      locations={locations}
+      lastRestaurantId={lastRestaurantId}
       showAdminNav={isPlatformAdminEmail(context.user.email)}
       showOrgAdminNav={Boolean(primary && isOrgAdmin(primary.role))}
     >

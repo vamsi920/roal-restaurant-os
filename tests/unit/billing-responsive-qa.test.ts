@@ -14,7 +14,7 @@ describe("Billing responsive (prompt 37)", () => {
     expect(dash).toContain("billing-dashboard__notice--pilot");
     expect(dash).toContain("billing-dashboard__meters");
     expect(dash).toContain("billing-dashboard__meter-track");
-    expect(dash).toContain("billing-dashboard__invoice-table dashboard-table");
+    expect(dash).toContain("billing-dashboard__invoice-table org-table");
     expect(dash).toContain("billing-dashboard__feature-list");
     expect(css).toContain("Billing dashboard responsive (prompt 37)");
   });

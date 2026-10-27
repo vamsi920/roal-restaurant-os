@@ -14,20 +14,20 @@ import type {
   RestaurantOnboardingStepKey,
 } from "@/lib/onboarding/steps";
 import type { OnboardingStepStatus } from "@/lib/onboarding/types";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export async function getOrganizationOnboardingForOrg(organizationId: string) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   return getOrganizationOnboarding(supabase, organizationId);
 }
 
 export async function getRestaurantOnboardingForRestaurant(restaurantId: string) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   return getRestaurantOnboarding(supabase, restaurantId);
 }
 
 export async function ensureOrganizationOnboardingForOrg(organizationId: string) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   return ensureOrganizationOnboarding(supabase, organizationId);
 }
 
@@ -35,7 +35,7 @@ export async function ensureRestaurantOnboardingForRestaurant(
   restaurantId: string,
   organizationId: string
 ) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   return ensureRestaurantOnboarding(supabase, restaurantId, organizationId);
 }
 
@@ -45,7 +45,7 @@ export async function setOrganizationOnboardingStep(
   status: OnboardingStepStatus,
   metadata?: Record<string, unknown>
 ) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   return updateOrganizationOnboardingStep(
     supabase,
     organizationId,
@@ -62,7 +62,7 @@ export async function setRestaurantOnboardingStep(
   status: OnboardingStepStatus,
   metadata?: Record<string, unknown>
 ) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   return updateRestaurantOnboardingStep(
     supabase,
     restaurantId,
@@ -76,7 +76,7 @@ export async function setRestaurantOnboardingStep(
 export async function completeOrganizationAccountStepForOrg(
   organizationId: string
 ) {
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   return completeOrganizationAccountStep(supabase, organizationId);
 }
 

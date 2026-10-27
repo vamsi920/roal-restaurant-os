@@ -6,10 +6,10 @@ import {
 import { persistElevenLabsConversationStarted } from "@/lib/elevenlabs/conversation-init";
 
 vi.mock("@/lib/supabase/server", () => ({
-  getServiceRoleSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 const RESTAURANT_ID = "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
 const AGENT_ID = "agent_dedicated_01";
@@ -22,7 +22,7 @@ describe("active call lifecycle", () => {
 
   it("creates active in-progress call row on conversation start", async () => {
     const upsert = vi.fn().mockResolvedValue({ error: null });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn(() => ({ upsert })),
     } as never);
 
@@ -48,7 +48,7 @@ describe("active call lifecycle", () => {
 
   it("marks harness sessions as test data on conversation start", async () => {
     const upsert = vi.fn().mockResolvedValue({ error: null });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn(() => ({ upsert })),
     } as never);
 
@@ -80,7 +80,7 @@ describe("active call lifecycle", () => {
       },
       error: null,
     });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn(() => ({
         select: vi.fn(() => ({
           eq: vi.fn(() => ({
@@ -92,7 +92,7 @@ describe("active call lifecycle", () => {
     } as never);
 
     const result = await markAgentCallOrderCompleted(
-      getServiceRoleSupabase()!,
+      getDb()!,
       {
         restaurantId: RESTAURANT_ID,
         sessionId: SESSION_ID,

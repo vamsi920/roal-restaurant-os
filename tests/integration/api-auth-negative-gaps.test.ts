@@ -54,17 +54,17 @@ vi.mock("@/lib/scanner/extract-menu", async (importOriginal) => {
 });
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { extractMenuFromImage } from "@/lib/scanner/extract-menu";
 
 describe("API auth negative gaps", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(createServerSupabase).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockResolvedValue({} as never);
   });
 
   describe("POST /api/scanner/process (deprecated)", () => {
@@ -157,7 +157,7 @@ describe("API auth negative gaps", () => {
       const body = await res.json();
       expect(res.status).toBe(400);
       expect(body.error).toBe("Invalid JSON");
-      expect(createServerSupabase).not.toHaveBeenCalled();
+      expect(getDb).not.toHaveBeenCalled();
     });
 
     it("POST …/compute-totals returns 400 for malformed JSON", async () => {
@@ -184,7 +184,7 @@ describe("API auth negative gaps", () => {
         { params: { id: RESTAURANT_ID } }
       );
       expect(res.status).toBe(400);
-      expect(createServerSupabase).not.toHaveBeenCalled();
+      expect(getDb).not.toHaveBeenCalled();
     });
   });
 
@@ -198,7 +198,7 @@ describe("API auth negative gaps", () => {
         params: { id: RESTAURANT_ID },
       });
       expect(res.status).toBe(403);
-      expect(createServerSupabase).not.toHaveBeenCalled();
+      expect(getDb).not.toHaveBeenCalled();
     });
 
     it("GET /api/restaurants/[id]/menu-imports returns 401 when unauthenticated", async () => {
@@ -237,7 +237,7 @@ describe("API auth negative gaps", () => {
         { params: { id: RESTAURANT_ID } }
       );
       expect(res.status).toBe(403);
-      expect(createServerSupabase).not.toHaveBeenCalled();
+      expect(getDb).not.toHaveBeenCalled();
     });
 
     it("POST …/compute-totals returns 404 when restaurant missing", async () => {

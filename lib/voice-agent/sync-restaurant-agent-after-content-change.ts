@@ -1,7 +1,7 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import { EnvValidationError } from "@/lib/env.shared";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import type { ElevenLabsMenuAutoSyncStatus } from "@/lib/types";
 import {
   runRestaurantVoiceAgentSync,
@@ -44,13 +44,13 @@ export type SyncRestaurantAgentAfterContentChangeResult = {
 };
 
 export type SyncRestaurantAgentAfterContentChangeDeps = {
-  getSupabase: () => Promise<SupabaseClient>;
+  getSupabase: () => Promise<Db>;
   runSync: typeof runRestaurantVoiceAgentSync;
 };
 
 export const defaultSyncRestaurantAgentAfterContentChangeDeps =
   (): SyncRestaurantAgentAfterContentChangeDeps => ({
-    getSupabase: createServerSupabase,
+    getSupabase: getDb,
     runSync: runRestaurantVoiceAgentSync,
   });
 
@@ -72,7 +72,7 @@ function safeSyncError(error: unknown): string {
 }
 
 async function loadMenuAutoSyncStatus(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<ElevenLabsMenuAutoSyncStatus | null> {
   const { data, error } = await supabase
@@ -86,7 +86,7 @@ async function loadMenuAutoSyncStatus(
 }
 
 async function patchMenuAutoSyncStatus(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   patch: {
     status: ElevenLabsMenuAutoSyncStatus | null;
@@ -140,7 +140,7 @@ async function patchMenuAutoSyncStatus(
 }
 
 async function loadVoiceAgentSyncContext(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   restaurantNameHint?: string
 ): Promise<{ restaurantName: string; agentId: string | null }> {

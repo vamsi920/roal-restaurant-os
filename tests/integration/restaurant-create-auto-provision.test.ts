@@ -32,7 +32,7 @@ vi.mock("@/lib/onboarding/helpers", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/env.server", () => ({
@@ -96,7 +96,7 @@ import {
   patchConvaiAgent,
 } from "@/lib/elevenlabs";
 import { applyRestaurantOrderAgentProfile } from "@/lib/elevenlabs-restaurant-agent-profile";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { syncRoalElevenLabsTools } from "@/lib/sync-elevenlabs-roal-tools";
 
 function ownerContext() {
@@ -226,7 +226,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("returns 200 and creates restaurant when ElevenLabs provisioning fails", async () => {
     const restaurant = mockRestaurantRow("Fail Provision Kitchen");
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       buildSupabaseMock(restaurant) as never
     );
     vi.mocked(duplicateConvaiAgent).mockRejectedValue(
@@ -272,7 +272,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("saves cloned agent id on profile when provisioning succeeds", async () => {
     const restaurant = mockRestaurantRow("Success Kitchen");
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       buildSupabaseMock(restaurant) as never
     );
 
@@ -307,7 +307,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("never patches or syncs the global template agent id", async () => {
     const restaurant = mockRestaurantRow("Template Safe Kitchen");
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       buildSupabaseMock(restaurant) as never
     );
 
@@ -345,7 +345,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("does not return 500 when provisioning throws unexpectedly (still returns restaurant)", async () => {
     const restaurant = mockRestaurantRow("Throws Kitchen");
-    vi.mocked(createServerSupabase).mockResolvedValue(
+    vi.mocked(getDb).mockResolvedValue(
       buildSupabaseMock(restaurant) as never
     );
     vi.mocked(duplicateConvaiAgent).mockImplementation(() => {

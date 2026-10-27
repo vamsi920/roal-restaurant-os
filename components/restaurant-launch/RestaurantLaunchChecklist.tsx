@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { AlertCircle, Check } from "lucide-react";
 import { cn } from "@/lib/cn";
+import "@/components/dashboard/org-pages.css";
 import type {
   LaunchChecklistStatus,
   RestaurantLaunchChecklistSnapshot,
@@ -23,21 +25,17 @@ export function LaunchCheckMark({
   return (
     <span
       className={cn(
-        "dashboard-checklist__mark",
-        done && "dashboard-checklist__mark--done",
-        error && "dashboard-checklist__mark--error",
-        !done && !error && active && "dashboard-checklist__mark--active"
+        "org-checklist__mark",
+        done && "org-checklist__mark--done",
+        error && "org-checklist__mark--error",
+        !done && !error && active && "org-checklist__mark--active"
       )}
       aria-hidden
     >
       {done ? (
-        <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 12l5 5L20 7" />
-        </svg>
+        <Check size={12} strokeWidth={3} />
       ) : error ? (
-        <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-          <path d="M12 7v6M12 17h.01" />
-        </svg>
+        <AlertCircle size={13} strokeWidth={2.5} />
       ) : null}
     </span>
   );
@@ -50,64 +48,75 @@ export function RestaurantLaunchChecklist({ snapshot, compact = false, className
 
   return (
     <section
-      className={cn("restaurant-launch-checklist dashboard-panel", className)}
+      className={cn("restaurant-launch-checklist panel", className)}
       aria-labelledby="restaurant-launch-checklist-title"
     >
-      <div className="dashboard-panel__head">
+      <div className="panel__head">
         <div className="min-w-0">
-          <h2 id="restaurant-launch-checklist-title" className="dashboard-page__section-title">
+          <h2 id="restaurant-launch-checklist-title" className="panel__title">
             Launch checks
           </h2>
           {!compact ? (
-            <p className="dashboard-panel__hint">{snapshot.restaurantName} — real status, nothing simulated.</p>
+            <p className="org-panel__hint">{snapshot.restaurantName} — real status, nothing simulated.</p>
           ) : null}
         </div>
-        <p className="text-[12px] font-medium tabular-nums text-subtle">
+        <span
+          className={cn("badge shrink-0 tabular-nums", snapshot.isLaunchReady && "badge--ok")}
+        >
           {snapshot.completedCount}/{snapshot.totalCount}
+        </span>
+      </div>
+
+      <div className="panel__body">
+        <div
+          className="org-progress"
+          role="progressbar"
+          aria-label="Launch checks complete"
+          aria-valuenow={percent}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <div
+            className={cn("org-progress__bar", snapshot.isLaunchReady && "org-progress__bar--ok")}
+            style={{ width: `${percent}%` }}
+          />
+        </div>
+
+        <ul className="org-checklist mt-2">
+          {snapshot.items.map((item) => (
+            <li
+              key={item.id}
+              className={cn(
+                "org-checklist__item",
+                item.status === "ok" && "org-checklist__item--done",
+                compact && "py-2"
+              )}
+            >
+              <LaunchCheckMark status={item.status} active={item.id === nextId} />
+              <span className="min-w-0">
+                <span className="org-checklist__label">{item.label}</span>
+                {item.detail && (!compact || item.status !== "ok") ? (
+                  <span className="org-checklist__detail">{item.detail}</span>
+                ) : null}
+              </span>
+              <span className="org-checklist__action">
+                {item.status !== "ok" ? (
+                  <Link
+                    href={item.href}
+                    className={item.id === nextId ? "btn-primary btn-sm" : "btn-ghost btn-sm"}
+                  >
+                    {item.status === "error" ? "Fix" : "Open"}
+                  </Link>
+                ) : null}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <p className={cn("mt-2 text-[12.5px]", snapshot.isLaunchReady ? "font-medium text-success" : "text-subtle")}>
+          {snapshot.isLaunchReady ? "All launch checks passed." : "Open the next item to finish setup."}
         </p>
       </div>
-
-      <div className="dashboard-progress mt-3" aria-hidden>
-        <div
-          className={cn("dashboard-progress__bar", snapshot.isLaunchReady && "dashboard-progress__bar--ok")}
-          style={{ width: `${percent}%` }}
-        />
-      </div>
-
-      <ul className="dashboard-checklist mt-2">
-        {snapshot.items.map((item) => (
-          <li
-            key={item.id}
-            className={cn(
-              "dashboard-checklist__item",
-              item.status === "ok" && "dashboard-checklist__item--done",
-              compact && "py-2"
-            )}
-          >
-            <LaunchCheckMark status={item.status} active={item.id === nextId} />
-            <span className="min-w-0">
-              <span className="dashboard-checklist__label text-[13px]">{item.label}</span>
-              {item.detail && (!compact || item.status !== "ok") ? (
-                <span className="dashboard-checklist__detail block">{item.detail}</span>
-              ) : null}
-            </span>
-            <span className="dashboard-checklist__action">
-              {item.status !== "ok" ? (
-                <Link
-                  href={item.href}
-                  className={item.id === nextId ? "btn-primary btn-sm" : "btn-ghost btn-sm"}
-                >
-                  {item.status === "error" ? "Fix" : "Open"}
-                </Link>
-              ) : null}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <p className={cn("mt-2 text-[12px]", snapshot.isLaunchReady ? "font-medium text-success" : "text-muted")}>
-        {snapshot.isLaunchReady ? "All launch checks passed." : "Open the next item to finish setup."}
-      </p>
     </section>
   );
 }

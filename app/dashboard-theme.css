@@ -1,6 +1,7 @@
 /**
- * Dashboard shell — calm, compact app surface on the shared ROAL tokens.
- * Tokens, buttons, inputs, chips and cards live in app/globals.css.
+ * Dashboard shell (v3) — 232px white sidebar scoped to the current location,
+ * paper canvas, location pill top-right. Tokens, buttons, inputs, badges,
+ * panels and stat cards live in app/globals.css.
  */
 
 /* — Responsive foundations — */
@@ -40,9 +41,16 @@
 
 .app-shell-nav-link:focus-visible,
 .app-shell-menu-btn:focus-visible,
+.app-shell-collapse:focus-visible,
+.app-shell-brand:focus-visible,
 .app-shell-signout:focus-visible,
 .app-shell-org__summary:focus-visible,
+.app-shell-sidebar a:focus-visible,
+.app-shell-sidebar button:focus-visible,
 .app-shell-header a:focus-visible,
+.app-shell-header button:focus-visible,
+.app-popover a:focus-visible,
+.app-popover button:focus-visible,
 #app-main-content a:focus-visible,
 #app-main-content button:focus-visible,
 #app-main-content [role="tab"]:focus-visible {
@@ -52,12 +60,14 @@
 
 .app-shell-nav-link:focus-visible,
 .app-shell-org__summary:focus-visible,
+.app-shell-menu-btn:focus-visible,
+.app-shell-collapse:focus-visible,
 #app-main-content [role="tab"]:focus-visible {
   border-radius: 0.5rem;
 }
 
-.app-shell-menu-btn:focus-visible {
-  border-radius: 0.5rem;
+.location-pill:focus-visible {
+  border-radius: 999px;
 }
 
 #app-main-content a:focus-visible {
@@ -82,6 +92,49 @@
   color: rgb(var(--text-primary));
   font-weight: 600;
   box-shadow: inset 0 0 0 1px rgb(var(--border));
+}
+
+.app-shell-nav-link--active::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: rgb(var(--accent));
+}
+
+.app-shell-sidebar[data-collapsed="true"] .app-shell-nav-link--active::before {
+  left: -0.5rem;
+}
+
+.app-shell-nav-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: rgb(var(--accent));
+}
+
+/* Soft yellow promo card (Finish going live / Hear your host). */
+.app-promo {
+  background: rgb(var(--tile-amber) / 0.7);
+  border: 1px solid rgb(var(--warning) / 0.18);
+}
+
+.app-promo .btn-accent {
+  justify-content: center;
+}
+
+.app-popover {
+  animation: fade-in var(--dur-fast) ease-out;
 }
 
 .app-shell-skip {
@@ -142,7 +195,7 @@ html.app-shell-nav-open body {
 }
 
 .app-shell-sidebar__footer {
-  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
 }
 
 .app-shell-org__menu {
@@ -170,7 +223,7 @@ html.app-shell-nav-open body {
   }
 
   .app-shell-header {
-    min-height: calc(3rem + env(safe-area-inset-top, 0px));
+    min-height: calc(3.5rem + env(safe-area-inset-top, 0px));
     padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
     padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
     -webkit-backdrop-filter: blur(12px);
@@ -192,7 +245,10 @@ html.app-shell-nav-open body {
 @media (prefers-reduced-motion: reduce) {
   .app-shell-sidebar,
   .app-shell-org__menu,
-  .dashboard-stagger {
+  .app-popover,
+  .dashboard-stagger,
+  .switch,
+  .switch::after {
     transition: none !important;
     animation: none !important;
   }
@@ -219,7 +275,7 @@ html.app-shell-nav-open body {
   #app-main-content .btn-accent,
   #app-main-content .btn-danger,
   #app-main-content .kds-thumb-btn,
-  #app-main-content button[type="button"]:not(:disabled),
+  #app-main-content button[type="button"]:not(:disabled):not(.switch),
   #app-main-content button[type="submit"]:not(:disabled),
   #app-main-content summary,
   #app-main-content [role="tab"],

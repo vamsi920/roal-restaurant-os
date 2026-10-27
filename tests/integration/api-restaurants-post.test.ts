@@ -43,7 +43,7 @@ vi.mock("@/lib/onboarding/helpers", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/menu-editor/copy-menu", () => ({
@@ -60,7 +60,7 @@ import {
 } from "@/lib/auth/context-server";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
 import { applyDefaultOrganizationMenuTemplate } from "@/lib/menu-editor/copy-menu";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { tryProvisionVoiceAgentForNewRestaurant } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 
 describe("POST /api/restaurants", () => {
@@ -205,7 +205,7 @@ describe("POST /api/restaurants", () => {
     const insert = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({ single }),
     });
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       from: vi.fn().mockReturnValue({ insert }),
     } as never);
 
@@ -244,7 +244,7 @@ describe("POST /api/restaurants", () => {
     const insert = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({ single }),
     });
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       from: vi.fn().mockReturnValue({ insert }),
     } as never);
 
@@ -305,7 +305,7 @@ describe("POST /api/restaurants", () => {
       select: vi.fn().mockReturnValue({ single }),
     });
     vi.mocked(supabase.from).mockReturnValue({ insert });
-    vi.mocked(createServerSupabase).mockResolvedValue(supabase as never);
+    vi.mocked(getDb).mockResolvedValue(supabase as never);
 
     const res = await POST(
       new Request("http://localhost/api/restaurants", {
@@ -362,7 +362,7 @@ describe("POST /api/restaurants", () => {
     const insert = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({ single }),
     });
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       from: vi.fn().mockReturnValue({ insert }),
     } as never);
 

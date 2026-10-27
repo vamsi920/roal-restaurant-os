@@ -30,7 +30,7 @@ describe("dashboard import audit (prompt 30)", () => {
 
   it("nav uses owner-facing location copy not admin ops terms", () => {
     const nav = readFileSync(join(REPO, "lib/dashboard-nav.ts"), "utf8");
-    expect(nav).toContain("RESTAURANT_LIST_NAV_LABEL");
+    expect(nav).toContain('label: "All locations"');
     const navHrefs = DASHBOARD_NAV.flatMap((group) => group.items.map((item) => item.href));
     expect(navHrefs).not.toContain("/dashboard/analytics");
     expect(navHrefs).not.toContain("/dashboard/billing");

@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { elevenlabsFetch, getConvaiAgent, listAllConvaiTools } from "@/lib/elevenlabs";
 import { readAgentFirstMessage } from "@/lib/elevenlabs-placeholders";
 import { loadMenuPromptSnapshot } from "@/lib/elevenlabs/load-menu-prompt-snapshot";
@@ -7,7 +7,7 @@ import {
   ROAL_RESTAURANT_ID_HEADER,
   type SyncRoalElevenLabsToolsResult,
 } from "@/lib/sync-elevenlabs-roal-tools";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 import { VOICE_AGENT_BACKFILL_ACTOR_USER_ID } from "@/lib/voice-agent/backfill-voice-agents";
 
@@ -58,8 +58,8 @@ export function printQaChecks(checks: QaCheck[]): number {
   return pass;
 }
 
-export function requireServiceRoleSupabase(): SupabaseClient {
-  const sb = getServiceRoleSupabase();
+export function requireServiceRoleSupabase(): Db {
+  const sb = getDb();
   if (!sb) {
     throw new Error("SUPABASE_SERVICE_ROLE_KEY required for live QA scripts");
   }
@@ -67,7 +67,7 @@ export function requireServiceRoleSupabase(): SupabaseClient {
 }
 
 export async function resolveQaRestaurant(
-  supabase: SupabaseClient
+  supabase: Db
 ): Promise<QaRestaurantContext> {
   const existingId =
     process.env.QA_RESTAURANT_ID?.trim() || DEFAULT_QA_RESTAURANT_ID;
@@ -253,7 +253,7 @@ export async function verifyBakedToolsForRestaurant(input: {
 }
 
 export async function loadProfileVoiceState(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ) {
   const { data, error } = await supabase
@@ -303,7 +303,7 @@ export async function readAgentMenuSnapshot(agentId: string) {
 }
 
 export async function expectedMenuSnapshotFromDb(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ) {
   return loadMenuPromptSnapshot(supabase, restaurantId);

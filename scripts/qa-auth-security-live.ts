@@ -58,7 +58,7 @@ function clientFilesImportServerSecrets(): string[] {
   const bad: string[] = [];
   const forbidden = [
     /from ["']@\/lib\/env\.server["']/,
-    /getServiceRoleSupabase/,
+    /getDb/,
     /SUPABASE_SERVICE_ROLE_KEY/,
     /GEMINI_API_KEY/,
     /STRIPE_SECRET_KEY/,

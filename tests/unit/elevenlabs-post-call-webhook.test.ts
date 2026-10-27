@@ -19,7 +19,7 @@ vi.mock("@/lib/elevenlabs/conversation-init", async (importOriginal) => {
 });
 
 vi.mock("@/lib/supabase/server", () => ({
-  getServiceRoleSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/notifications/call-follow-up-events", () => ({
@@ -30,7 +30,7 @@ import {
   lookupRestaurantByCalledNumber,
   lookupRestaurantForElevenLabsAgent,
 } from "@/lib/elevenlabs/conversation-init";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { emitPostCallFollowUpNotifications } from "@/lib/notifications/call-follow-up-events";
 
 const RESTAURANT_ID = "11111111-1111-4111-8111-111111111111";
@@ -407,7 +407,7 @@ describe("persistElevenLabsPostCallEvent", () => {
   it("upserts idempotently and emits staff handoff only once per reason", async () => {
     const existingRef = { current: null as Record<string, unknown> | null };
     const supabase = persistSupabase({ existingRef });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue(supabase as never);
+    vi.mocked(getDb).mockReturnValue(supabase as never);
 
     const first = await persistElevenLabsPostCallEvent(handoffEvent);
     expect(first.stored).toBe(true);
@@ -434,7 +434,7 @@ describe("persistElevenLabsPostCallEvent", () => {
         },
       },
     });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue(supabase as never);
+    vi.mocked(getDb).mockReturnValue(supabase as never);
 
     await persistElevenLabsPostCallEvent({
       type: "post_call_transcription",
@@ -468,7 +468,7 @@ describe("persistElevenLabsPostCallEvent", () => {
         },
       },
     });
-    vi.mocked(getServiceRoleSupabase).mockReturnValue(supabase as never);
+    vi.mocked(getDb).mockReturnValue(supabase as never);
 
     await persistElevenLabsPostCallEvent({
       type: "post_call_transcription",
@@ -494,7 +494,7 @@ describe("persistElevenLabsPostCallEvent", () => {
   });
 
   it("returns unresolved when restaurant linkage cannot be established", async () => {
-    vi.mocked(getServiceRoleSupabase).mockReturnValue(
+    vi.mocked(getDb).mockReturnValue(
       persistSupabase({ validRestaurantIds: [RESTAURANT_ID] }) as never
     );
 

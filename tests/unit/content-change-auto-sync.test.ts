@@ -26,11 +26,11 @@ const afterProfileSettingsMutationSpy = vi.fn();
 const afterHoursSettingsMutationSpy = vi.fn();
 const afterRestaurantUpsellMutationSpy = vi.fn();
 const afterRestaurantKnowledgeMutationSpy = vi.fn();
-const createServerSupabase = vi.fn();
+const getDb = vi.fn();
 const markRestaurantMenuTemplateLocalOverride = vi.fn();
 
 vi.mock("next/cache", () => ({ revalidatePath }));
-vi.mock("@/lib/supabase/server", () => ({ createServerSupabase }));
+vi.mock("@/lib/supabase/server", () => ({ getDb }));
 vi.mock("@/lib/menu-editor/copy-menu", () => ({
   markRestaurantMenuTemplateLocalOverride,
 }));
@@ -72,7 +72,7 @@ describe("content-change auto-sync (pass 13)", () => {
     afterHoursSettingsMutationSpy.mockReset();
     afterRestaurantUpsellMutationSpy.mockReset();
     afterRestaurantKnowledgeMutationSpy.mockReset();
-    createServerSupabase.mockResolvedValue({ from: vi.fn() });
+    getDb.mockResolvedValue({ from: vi.fn() });
     markRestaurantMenuTemplateLocalOverride.mockResolvedValue({
       marked: false,
       reason: "not_inherited",
@@ -266,7 +266,7 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
     };
 
     vi.doMock("@/lib/supabase/server", () => ({
-      createServerSupabase: vi.fn().mockResolvedValue({
+      getDb: vi.fn().mockResolvedValue({
         from: vi.fn(() => ({
           update: vi.fn(() => ({
             eq: vi.fn(() => ({
@@ -332,7 +332,7 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
     };
 
     vi.doMock("@/lib/supabase/server", () => ({
-      createServerSupabase: vi.fn().mockResolvedValue({
+      getDb: vi.fn().mockResolvedValue({
         from: vi.fn(() => ({
           update: vi.fn(() => ({
             eq: vi.fn(() => ({
@@ -384,7 +384,7 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
       updateRestaurantOnboardingStep: vi.fn().mockResolvedValue(undefined),
     }));
     vi.doMock("@/lib/supabase/server", () => ({
-      createServerSupabase: vi.fn().mockResolvedValue({}),
+      getDb: vi.fn().mockResolvedValue({}),
     }));
     vi.doMock("@/lib/voice-agent/after-restaurant-settings-mutation", () => ({
       afterProfileSettingsMutation: afterProfileSettingsMutationSpy,
@@ -452,7 +452,7 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
       updateRestaurantOnboardingStep: vi.fn().mockResolvedValue(undefined),
     }));
     vi.doMock("@/lib/supabase/server", () => ({
-      createServerSupabase: vi.fn().mockResolvedValue({}),
+      getDb: vi.fn().mockResolvedValue({}),
     }));
     vi.doMock("@/lib/voice-agent/after-restaurant-settings-mutation", () => ({
       afterProfileSettingsMutation: afterProfileSettingsMutationSpy,
@@ -527,7 +527,7 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
       updateRestaurantOnboardingStep: vi.fn().mockResolvedValue(undefined),
     }));
     vi.doMock("@/lib/supabase/server", () => ({
-      createServerSupabase: vi.fn().mockResolvedValue({}),
+      getDb: vi.fn().mockResolvedValue({}),
     }));
     vi.doMock("@/lib/voice-agent/after-restaurant-settings-mutation", () => ({
       afterProfileSettingsMutation: afterProfileSettingsMutationSpy,
@@ -584,7 +584,7 @@ describe("menu/profile/hours server actions schedule auto-sync", () => {
     const upsert = vi.fn().mockResolvedValue({ error: null });
 
     vi.doMock("@/lib/supabase/server", () => ({
-      createServerSupabase: vi.fn().mockResolvedValue({
+      getDb: vi.fn().mockResolvedValue({
         from: vi.fn((table: string) => {
           if (table === "restaurant_profiles") {
             return {

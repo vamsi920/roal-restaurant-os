@@ -1,52 +1,41 @@
 import { TrialBuilder } from "@/components/try/trial-builder";
+import { PhoneStage } from "@/components/landing/home/phone-mock";
 import type { TrialPublicView } from "@/lib/trial/types";
 import { PRICING_RATE_AMOUNT } from "@/lib/landing/pricing-core";
 
-const FACTS = [
-  "No sign-up to try",
-  "Ready in about a minute",
-  `${PRICING_RATE_AMOUNT} per completed order, nothing otherwise`,
-] as const;
-
-function Check() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M5 12.5l4 4L19 7" />
-    </svg>
-  );
-}
+const TRUST = ["No sign-up", "Ready in about a minute", `${PRICING_RATE_AMOUNT} per completed order`] as const;
 
 export function HomeHero({ initialTrial }: { initialTrial: TrialPublicView | null }) {
   return (
     <section className="hero" id="try" aria-labelledby="hero-title">
-      <div className="hero__glow" aria-hidden />
       <div className="wrap hero__inner">
-        <div className="hero__copy">
-          <p className="chip chip--accent">AI phone host for restaurants</p>
-          <h1 id="hero-title" className="h1 hero__title">
-            Your phone, answered.
-            <br />
-            Every order, <em>on the ticket.</em>
-          </h1>
-          <p className="lead hero__lead">
-            ROAL picks up when your team can&apos;t, takes pickup orders from your live menu, answers
-            hours and menu questions, and sends the ticket to your kitchen.
-          </p>
-        </div>
+        <p className="pill hero__pill">
+          <span className="pill__dot" aria-hidden />
+          AI phone host for restaurants
+        </p>
+        <h1 id="hero-title" className="hero__title">
+          Never miss another order.
+          <br />
+          <span className="hero__title-soft">Your phone, answered </span>
+          <span className="text-money">24/7.</span>
+        </h1>
+        <p className="hero__lead">
+          Paste your website or Google Maps link. ROAL learns your menu and hours, then takes pickup
+          orders and answers questions while your team stays on the floor.
+        </p>
 
         <div className="hero__builder">
           <TrialBuilder mode="public" initialTrial={initialTrial} embedded autofocus />
         </div>
 
-        <ul className="hero__facts" aria-label="Quick facts">
-          {FACTS.map((fact) => (
-            <li key={fact}>
-              <Check />
-              {fact}
-            </li>
+        <ul className="hero__trust" aria-label="Quick facts">
+          {TRUST.map((fact) => (
+            <li key={fact}>{fact}</li>
           ))}
         </ul>
       </div>
+
+      <PhoneStage />
     </section>
   );
 }

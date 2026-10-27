@@ -5,7 +5,9 @@ import {
   createVoiceAgentBrowserCallAction,
   startVoiceAgentOutboundCallAction,
 } from "@/app/dashboard/onboarding/actions";
+import { PhoneCall } from "lucide-react";
 import { TrialCall } from "@/components/try/trial-call";
+import { IconTile } from "@/components/ui";
 import "@/components/try/trial.css";
 import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 
@@ -61,11 +63,14 @@ export function OnboardingTryCall({
 
   return (
     <div className="space-y-3">
-      <div>
-        <p className="text-[14px] font-semibold text-ink">Talk to your agent now</p>
-        <p className="mt-0.5 text-[13px] text-muted">
-          Order something off the menu. The ticket should land on Live orders within a few seconds.
-        </p>
+      <div className="flex min-w-0 items-start gap-3">
+        <IconTile icon={PhoneCall} color="green" />
+        <div className="min-w-0">
+          <p className="text-[14px] font-semibold text-ink">Talk to your agent now</p>
+          <p className="mt-0.5 text-[13px] text-subtle">
+            Order something off the menu. The ticket should land on Live orders within a few seconds.
+          </p>
+        </div>
       </div>
 
       <TrialCall
@@ -90,7 +95,7 @@ export function OnboardingTryCall({
 
       {error ? (
         <p
-          className="rounded-md border border-danger/25 bg-danger/5 px-3 py-2 text-[13px] text-danger"
+          className="rounded-[10px] border border-danger/20 bg-danger/5 px-3 py-2 text-[13px] text-danger [overflow-wrap:anywhere]"
           role="alert"
         >
           {error}

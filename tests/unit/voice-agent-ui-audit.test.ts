@@ -23,7 +23,7 @@ describe("ElevenLabs dashboard UI audit", () => {
     expect(workspace).not.toContain("VoiceAgentPanel");
     expect(agent).toContain("<VoiceAgentPanel");
     expect(agent).toContain("embedded");
-    expect(agent).toContain("kds-workspace--agent");
+    expect(agent).toContain("<PageHeader");
     expect(agent).toContain("loadRestaurantMenuSetupPageData");
     expect(
       readFileSync(

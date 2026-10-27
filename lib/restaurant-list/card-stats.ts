@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { sanitizeOpsErrorDetail } from "@/lib/admin/sanitize-ops-detail";
 import { filterBillablePhoneOrderReceipts } from "@/lib/billing/billable-orders";
 import { getElevenLabsAgentId } from "@/lib/env.server";
@@ -82,7 +82,7 @@ export function lastOrderAtByRestaurant(
 }
 
 async function menuItemCountsByRestaurant(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantIds: string[]
 ): Promise<Map<string, number>> {
   const counts = new Map<string, number>();
@@ -119,7 +119,7 @@ async function menuItemCountsByRestaurant(
 }
 
 async function hoursConfiguredByRestaurant(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantIds: string[]
 ): Promise<Map<string, boolean>> {
   const map = new Map<string, boolean>();
@@ -215,7 +215,7 @@ export function buildRestaurantCardStats(input: {
 }
 
 export async function loadRestaurantCardStats(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantIds: string[],
   profilesById: Record<string, RestaurantListProfile>,
   namesById?: Record<string, string>
@@ -348,7 +348,7 @@ export async function loadRestaurantCardStats(
 }
 
 async function buildLaunchGatesForRestaurants(input: {
-  supabase: SupabaseClient;
+  supabase: Db;
   restaurantIds: string[];
   profilesById: Record<string, RestaurantListProfile>;
   menuItemCounts: Map<string, number>;

@@ -4,7 +4,7 @@ import {
   getMenuImportForRestaurant,
   recordMenuImportDiscarded,
 } from "@/lib/scanner/menu-import-audit";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { recordRestaurantUsage } from "@/lib/usage/record";
 
 export const runtime = "nodejs";
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     const access = await requireRestaurantAccess(restaurantId);
     if (access.errorResponse) return access.errorResponse;
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
     const row = await getMenuImportForRestaurant(
       supabase,
       restaurantId,

@@ -2,17 +2,18 @@
 
 export const RESTAURANT_LIST_NAV_LABEL = "Locations";
 
-export const RESTAURANT_LIVE_ORDERS_LABEL = "Live orders";
+/** Kitchen ticket board (KDS) at /dashboard/restaurants/[id]. */
+export const RESTAURANT_LIVE_ORDERS_LABEL = "Kitchen";
 
 /** @deprecated Prefer RESTAURANT_LIVE_ORDERS_LABEL for owner-facing copy. */
 export const RESTAURANT_KDS_LABEL = RESTAURANT_LIVE_ORDERS_LABEL;
 
 export const RESTAURANT_MENU_AGENT_LABEL = "Menu";
 
-export const RESTAURANT_MENU_SETUP_TITLE = "Menu setup";
+export const RESTAURANT_MENU_SETUP_TITLE = "Menu";
 
 /** Owner-facing menu workspace title (builder + sync). */
-export const RESTAURANT_MENU_BUILDER_TITLE = "Menu builder";
+export const RESTAURANT_MENU_BUILDER_TITLE = "Menu";
 
 const KDS_PATH = /^\/dashboard\/restaurants\/[^/]+\/?$/;
 const MENU_AGENT_PATH = /^\/dashboard\/restaurants\/[^/]+\/menu\/?$/;
@@ -42,7 +43,7 @@ export function isRestaurantMenuAgentPath(pathname: string): boolean {
 /** Mobile shell title for restaurant detail or menu routes. */
 export function restaurantWorkspaceMobileTitle(pathname: string): string | null {
   if (LIVE_AGENT_PATH.test(pathname)) return "Phone host";
-  if (RESTAURANT_ANALYTICS_PATH.test(pathname)) return "Analytics";
+  if (RESTAURANT_ANALYTICS_PATH.test(pathname)) return "Reports";
   if (RESTAURANT_BILLING_PATH.test(pathname)) return "Billing";
   if (isRestaurantMenuAgentPath(pathname)) return RESTAURANT_MENU_SETUP_TITLE;
   if (isRestaurantKdsPath(pathname)) return RESTAURANT_LIVE_ORDERS_LABEL;
@@ -52,19 +53,19 @@ export function restaurantWorkspaceMobileTitle(pathname: string): string | null 
 /** Mobile shell subtitle for restaurant detail or menu routes. */
 export function restaurantWorkspaceMobileSubtitle(pathname: string): string | null {
   if (LIVE_AGENT_PATH.test(pathname)) {
-    return "Test, tune, and teach your host";
+    return "Test calls, voice, and unanswered questions";
   }
   if (RESTAURANT_ANALYTICS_PATH.test(pathname)) {
-    return "Calls and orders for this location";
+    return "Calls, conversion, and revenue";
   }
   if (RESTAURANT_BILLING_PATH.test(pathname)) {
     return "Plan and location usage";
   }
   if (isRestaurantMenuAgentPath(pathname)) {
-    return "Menu upload and live menu";
+    return "Items, prices, and settings";
   }
   if (isRestaurantKdsPath(pathname)) {
-    return "Tickets, live calls, outcomes";
+    return "Live tickets for the kitchen";
   }
   return null;
 }

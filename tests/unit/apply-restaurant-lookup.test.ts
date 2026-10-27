@@ -10,7 +10,7 @@ vi.mock("@/lib/auth/context-server", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/restaurant-lookup/pending", () => ({
@@ -54,7 +54,7 @@ vi.mock("@/lib/voice-agent/run-restaurant-voice-agent-sync", () => ({
 
 import { applyRestaurantLookupAction } from "@/app/dashboard/onboarding/actions";
 import { findMembershipForOrg, getAuthContext } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { readPendingRestaurantLookup } from "@/lib/restaurant-lookup/pending";
 import { loadPlaceSnapshot } from "@/lib/restaurant-lookup/places";
 import { importWebsiteMenuFromUrl } from "@/lib/restaurant-lookup/import-website-menu";
@@ -141,7 +141,7 @@ describe("applyRestaurantLookupAction", () => {
     vi.mocked(runRestaurantVoiceAgentSync).mockResolvedValue({ summary: {} } as never);
 
     const upsert = vi.fn().mockResolvedValue({ error: null });
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       from: vi.fn((table: string) => {
         if (table === "restaurants") {
           return {

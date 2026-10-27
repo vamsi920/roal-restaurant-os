@@ -3,7 +3,7 @@ import {
   generateRequestId,
   REQUEST_ID_HEADER,
 } from "@/lib/observability/request-id";
-import { updateSession } from "@/lib/supabase/middleware";
+import { routeBySession } from "@/lib/auth/middleware-session";
 
 export async function middleware(request: NextRequest) {
   const requestId =
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
     method: request.method,
   });
 
-  const response = await updateSession(modifiedRequest);
+  const response = routeBySession(modifiedRequest);
   response.headers.set(REQUEST_ID_HEADER, requestId);
   return response;
 }

@@ -51,7 +51,7 @@ vi.mock("@/lib/restaurant-profile/helpers", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  getServiceRoleSupabase: vi.fn().mockResolvedValue(null),
+  getDb: vi.fn().mockResolvedValue(null),
 }));
 
 import { syncRoalElevenLabsTools } from "@/lib/sync-elevenlabs-roal-tools";

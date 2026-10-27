@@ -15,7 +15,7 @@ vi.mock("@/lib/billing/assert-gate", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 import {
@@ -23,7 +23,7 @@ import {
   resolveOrganizationId,
 } from "@/lib/auth/context-server";
 import { loadOrganizationGateVerdicts } from "@/lib/billing/assert-gate";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 function ownerContext() {
   return {
@@ -99,7 +99,7 @@ const sampleGates = {
 describe("GET /api/billing/gates", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(createServerSupabase).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockResolvedValue({} as never);
   });
 
   it("returns 401 when unauthenticated", async () => {

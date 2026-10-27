@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type { RestaurantProfileInput } from "@/lib/restaurant-profile/schema";
 import type { PlaceSnapshot } from "@/lib/restaurant-lookup/types";
 import type { WeeklyHourInput } from "@/lib/restaurant-hours/core";
@@ -37,7 +37,7 @@ export function profileInputFromSnapshot(
 }
 
 export async function saveWeeklyHoursFromLookup(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   weekly: WeeklyHourInput[]
 ): Promise<void> {

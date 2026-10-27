@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type { ReviewHint } from "@/lib/menu-import/types";
 import type { ScannedMenu } from "@/lib/menu-import/types";
 import type {
@@ -24,7 +24,7 @@ export function buildStoragePath(
 }
 
 export async function createMenuImportRecord(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantId: string;
     organizationId: string;
@@ -63,7 +63,7 @@ export async function createMenuImportRecord(
 }
 
 export async function uploadMenuImportFile(
-  supabase: SupabaseClient,
+  supabase: Db,
   storagePath: string,
   fileBytes: ArrayBuffer,
   mimeType: string
@@ -79,7 +79,7 @@ export async function uploadMenuImportFile(
 }
 
 export async function patchMenuImportStatus(
-  supabase: SupabaseClient,
+  supabase: Db,
   importId: string,
   patch: Record<string, unknown>
 ): Promise<void> {
@@ -92,7 +92,7 @@ export async function patchMenuImportStatus(
 }
 
 export async function recordMenuImportExtracted(
-  supabase: SupabaseClient,
+  supabase: Db,
   importId: string,
   input: {
     modelUsed: string;
@@ -112,7 +112,7 @@ export async function recordMenuImportExtracted(
 }
 
 export async function recordMenuImportExtractionFailed(
-  supabase: SupabaseClient,
+  supabase: Db,
   importId: string,
   message: string
 ): Promise<void> {
@@ -123,7 +123,7 @@ export async function recordMenuImportExtractionFailed(
 }
 
 export async function recordMenuImportCommitted(
-  supabase: SupabaseClient,
+  supabase: Db,
   importId: string,
   mergeResult: MergeResultSummary
 ): Promise<void> {
@@ -136,7 +136,7 @@ export async function recordMenuImportCommitted(
 }
 
 export async function recordMenuImportCommitFailed(
-  supabase: SupabaseClient,
+  supabase: Db,
   importId: string,
   message: string
 ): Promise<void> {
@@ -147,7 +147,7 @@ export async function recordMenuImportCommitFailed(
 }
 
 export async function recordMenuImportDiscarded(
-  supabase: SupabaseClient,
+  supabase: Db,
   importId: string
 ): Promise<void> {
   await patchMenuImportStatus(supabase, importId, {
@@ -156,7 +156,7 @@ export async function recordMenuImportDiscarded(
 }
 
 export async function getMenuImportForRestaurant(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   importId: string
 ): Promise<MenuImportRow | null> {
@@ -172,7 +172,7 @@ export async function getMenuImportForRestaurant(
 }
 
 export async function listRecentMenuImports(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   limit = 20
 ): Promise<MenuImportListItem[]> {

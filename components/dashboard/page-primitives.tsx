@@ -1,18 +1,29 @@
 import Link from "next/link";
 import type { HTMLAttributes, ReactNode } from "react";
+import { ChevronLeft } from "lucide-react";
+import {
+  Badge,
+  EmptyState as UiEmptyState,
+  PageHeader as UiPageHeader,
+  type Tone as UiTone,
+} from "@/components/ui";
 import { cn } from "@/lib/cn";
+import "@/components/dashboard/org-pages.css";
 
-/* Small shared building blocks for org-level dashboard pages.
-   Compact, white-on-paper, one primary action per screen. */
+/* Compatibility layer for org-level dashboard pages.
+   Same export names and props as before, now rendered with the v3 primitives
+   (components/ui) and the classes in org-pages.css: white cards on paper,
+   1px borders, 14px radius, compact 13–14px type. Prefer components/ui directly
+   in new code; reach for these when you need a hint line, a back link, or the
+   older Tone names. */
 
 export type Tone = "neutral" | "ok" | "warn" | "bad" | "accent";
 
-const CHIP_TONE: Record<Tone, string> = {
-  neutral: "",
-  ok: "chip--success",
-  warn: "chip--warning",
-  bad: "chip--danger",
-  accent: "chip--accent",
+const BADGE_TONE: Record<Exclude<Tone, "accent">, UiTone> = {
+  neutral: "neutral",
+  ok: "ok",
+  warn: "warn",
+  bad: "bad",
 };
 
 export function StatusChip({
@@ -26,10 +37,17 @@ export function StatusChip({
   className?: string;
   title?: string;
 }) {
+  if (tone === "accent") {
+    return (
+      <Badge className={cn("badge--accent", className)} title={title}>
+        {children}
+      </Badge>
+    );
+  }
   return (
-    <span className={cn("chip", CHIP_TONE[tone], className)} title={title}>
+    <Badge tone={BADGE_TONE[tone]} className={className} title={title}>
       {children}
-    </span>
+    </Badge>
   );
 }
 
@@ -50,25 +68,25 @@ export function PageHeader({
   backLabel?: string;
   className?: string;
 }) {
+  const top = backHref ? (
+    <Link
+      href={backHref}
+      className="org-link inline-flex items-center gap-0.5 text-[12.5px] font-medium text-subtle hover:text-ink"
+    >
+      <ChevronLeft size={14} strokeWidth={2} aria-hidden />
+      {backLabel ?? "Back"}
+    </Link>
+  ) : (
+    eyebrow
+  );
   return (
-    <header className={cn("dashboard-page__header", className)}>
-      <div className="min-w-0">
-        {backHref ? (
-          <Link href={backHref} className="dashboard-page__back">
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-            {backLabel ?? "Back"}
-          </Link>
-        ) : null}
-        {eyebrow ? <p className="dashboard-page__eyebrow">{eyebrow}</p> : null}
-        <h1 className="dashboard-page__title">{title}</h1>
-        {lead ? <p className="dashboard-page__lead">{lead}</p> : null}
-      </div>
-      {actions ? (
-        <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>
-      ) : null}
-    </header>
+    <UiPageHeader
+      className={cn("!mb-0", className)}
+      eyebrow={top}
+      title={title}
+      subtitle={lead}
+      actions={actions}
+    />
   );
 }
 
@@ -93,25 +111,19 @@ export function Panel({
   as?: "section" | "div" | "article";
 } & Omit<HTMLAttributes<HTMLElement>, "title">) {
   return (
-    <Tag
-      className={cn(
-        "dashboard-panel",
-        flush && "dashboard-panel--flush",
-        muted && "dashboard-panel--muted",
-        className
-      )}
-      {...rest}
-    >
+    <Tag className={cn("panel", flush && "overflow-hidden", muted && "panel--muted", className)} {...rest}>
       {title || aside ? (
-        <div className="dashboard-panel__head">
-          <div className="min-w-0">
-            {title ? <h2 className="dashboard-page__section-title">{title}</h2> : null}
-            {hint ? <p className="dashboard-panel__hint">{hint}</p> : null}
+        <div className="panel__head flex-wrap">
+          <div className="min-w-0 flex-1">
+            {title ? <h2 className="panel__title">{title}</h2> : null}
+            {hint ? <p className="org-panel__hint">{hint}</p> : null}
           </div>
-          {aside ? <div className="shrink-0">{aside}</div> : null}
+          {aside ? <div className="flex shrink-0 items-center gap-2">{aside}</div> : null}
         </div>
       ) : null}
-      {children}
+      {children !== undefined && children !== null ? (
+        flush ? children : <div className="panel__body">{children}</div>
+      ) : null}
     </Tag>
   );
 }
@@ -130,21 +142,21 @@ export function StatTile({
   className?: string;
 }) {
   return (
-    <div className={cn("dashboard-stat", className)}>
-      <p className="dashboard-stat__label" title={label}>
+    <div className={cn("stat-card", className)}>
+      <p className="stat-card__label truncate" title={label}>
         {label}
       </p>
       <p
         className={cn(
-          "dashboard-stat__value",
-          tone === "ok" && "dashboard-stat__value--ok",
-          tone === "warn" && "dashboard-stat__value--warn",
-          tone === "bad" && "dashboard-stat__value--bad"
+          "stat-card__value !text-[22px]",
+          tone === "ok" && "!text-success",
+          tone === "warn" && "!text-warning",
+          tone === "bad" && "!text-danger"
         )}
       >
         {value}
       </p>
-      {hint ? <p className="dashboard-stat__hint">{hint}</p> : null}
+      {hint ? <p className="stat-card__hint [overflow-wrap:anywhere]">{hint}</p> : null}
     </div>
   );
 }
@@ -163,10 +175,8 @@ export function EmptyState({
   role?: "status" | "alert";
 }) {
   return (
-    <div className={cn("empty-state", className)} role={role}>
-      <p className="text-[14px] font-medium text-ink">{title}</p>
-      {children ? <p className="max-w-md text-[13px] text-muted">{children}</p> : null}
-      {action ? <div className="mt-2">{action}</div> : null}
+    <div className={cn("panel", className)} role={role}>
+      <UiEmptyState title={title} body={children} action={action} />
     </div>
   );
 }
@@ -184,7 +194,7 @@ export function InlineLink({
     <Link
       href={href}
       className={cn(
-        "font-medium text-ink underline decoration-line-strong underline-offset-2 hover:decoration-ink",
+        "org-link font-medium text-ink underline decoration-line-strong underline-offset-2 hover:decoration-ink",
         className
       )}
     >

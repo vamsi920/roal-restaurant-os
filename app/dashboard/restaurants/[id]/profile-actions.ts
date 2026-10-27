@@ -18,7 +18,7 @@ import {
   afterRestaurantKnowledgeMutation,
   afterRestaurantUpsellMutation,
 } from "@/lib/voice-agent/after-restaurant-settings-mutation";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export async function saveRestaurantProfileSettingsAction(
   restaurantId: string,
@@ -38,7 +38,7 @@ export async function saveRestaurantProfileSettingsAction(
     throw new Error(msg);
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const profile = await upsertRestaurantProfile(
     supabase,
     restaurantId,

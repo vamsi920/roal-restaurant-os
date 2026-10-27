@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { loadOrganizationGateVerdicts } from "@/lib/billing/assert-gate";
 import type { GateVerdict } from "@/lib/billing/gates";
 import type { BillingGateAction } from "@/lib/billing/gates";
@@ -45,7 +45,7 @@ export type RestaurantMenuSetupPageData = {
 };
 
 export async function loadRestaurantMenuSetupPageData(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurant: Restaurant;
     organizationId: string;

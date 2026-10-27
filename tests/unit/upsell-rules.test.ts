@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { buildRestaurantOrderAgentPrompt } from "@/lib/elevenlabs/agent-prompt";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
 import { loadRestaurantHoursBundle } from "@/lib/restaurant-hours/helpers";
@@ -333,7 +333,7 @@ describe("sync_draft_order upsell cart flow", () => {
   it("adds accepted upsell line items through the existing draft sync tool", async () => {
     const supabase = buildSupabaseWithDraftUpsert();
     await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: {
@@ -346,7 +346,7 @@ describe("sync_draft_order upsell cart flow", () => {
     });
 
     const accepted = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: {
@@ -373,7 +373,7 @@ describe("sync_draft_order upsell cart flow", () => {
   it("keeps the cart unchanged when an upsell is declined", async () => {
     const supabase = buildSupabaseWithDraftUpsert();
     await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: {
@@ -386,7 +386,7 @@ describe("sync_draft_order upsell cart flow", () => {
     });
 
     const declined = await simulateHarnessTool({
-      supabase: supabase as unknown as SupabaseClient,
+      supabase: supabase as unknown as Db,
       restaurantId: RESTAURANT_ID,
       tool: "sync_draft_order",
       body: {

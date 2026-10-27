@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Mic } from "lucide-react";
+import { IconTile } from "@/components/ui";
+import { SaveRow } from "@/components/live-orders/workspace-ui";
 import { TrialVoicePicker } from "@/components/try/trial-voice-picker";
 import { DEFAULT_TRIAL_VOICE, findTrialVoice } from "@/lib/trial/voices";
 import { saveHostPersonaAction } from "@/app/dashboard/restaurants/[id]/persona-actions";
@@ -62,86 +65,86 @@ export function HostPersonaCard({
   }
 
   return (
-    <section id="persona" className="host-persona card min-w-0" aria-labelledby="persona-title">
-      <header className="host-persona__head">
-        <div className="min-w-0">
-          <h2 id="persona-title" className="host-persona__title">
-            Persona
-          </h2>
-          <p className="host-persona__lead">
-            Name, voice, and how your host answers. Saving re-syncs the agent.
-          </p>
-        </div>
-      </header>
-
-      <div className="host-persona__grid">
-        <div className="min-w-0">
-          <label htmlFor={`host-name-${restaurantId}`} className="field-label">
-            Host name
-          </label>
-          <input
-            id={`host-name-${restaurantId}`}
-            className="input-base"
-            value={name}
-            maxLength={40}
-            placeholder="Addy"
-            autoComplete="off"
-            disabled={pending}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <p className="mt-1.5 text-xs text-subtle">
-            Callers hear this name in the greeting and when they ask who they are talking to.
-          </p>
-
-          <label htmlFor={`host-greeting-${restaurantId}`} className="field-label mt-4">
-            Custom greeting <span className="font-normal text-subtle">(optional)</span>
-          </label>
-          <textarea
-            id={`host-greeting-${restaurantId}`}
-            className="input-base"
-            rows={3}
-            maxLength={400}
-            placeholder={defaultGreeting}
-            disabled={pending}
-            value={greeting}
-            onChange={(e) => setGreeting(e.target.value)}
-          />
-          <p className="mt-1.5 text-xs text-subtle">
-            Leave blank to use the default above.
-          </p>
-        </div>
-
-        <div className="min-w-0">
-          <p className="field-label">Voice</p>
-          <TrialVoicePicker value={voiceId} disabled={pending} onChange={setVoiceId} />
+    <section id="persona" className="panel min-w-0 scroll-mt-24" aria-labelledby="persona-title">
+      <div className="panel__head">
+        <div className="flex min-w-0 items-center gap-3">
+          <IconTile icon={Mic} color="blue" />
+          <div className="min-w-0">
+            <h2 id="persona-title" className="panel__title">
+              Voice &amp; name
+            </h2>
+            <p className="text-[12.5px] text-subtle">How your host sounds and introduces itself.</p>
+          </div>
         </div>
       </div>
 
-      <footer className="host-persona__foot">
-        {message ? (
-          <p
-            className={
-              message.tone === "error"
-                ? "host-persona__msg host-persona__msg--error"
-                : "host-persona__msg"
-            }
-            role={message.tone === "error" ? "alert" : "status"}
-          >
-            {message.text}
+      <div className="panel__body space-y-5">
+        <div className="grid min-w-0 gap-4">
+          <div className="min-w-0">
+            <label htmlFor={`host-name-${restaurantId}`} className="field-label">
+              Host name
+            </label>
+            <input
+              id={`host-name-${restaurantId}`}
+              className="input-base max-sm:h-11"
+              value={name}
+              maxLength={40}
+              placeholder="Addy"
+              autoComplete="off"
+              disabled={pending}
+              onChange={(e) => setName(e.target.value)}
+              aria-describedby={`host-name-hint-${restaurantId}`}
+            />
+            <p id={`host-name-hint-${restaurantId}`} className="mt-1.5 text-[12px] text-subtle">
+              Callers hear this name in the greeting and when they ask who they&apos;re talking to.
+            </p>
+          </div>
+
+          <div className="min-w-0">
+            <label htmlFor={`host-greeting-${restaurantId}`} className="field-label">
+              Greeting <span className="font-normal text-subtle">(optional)</span>
+            </label>
+            <textarea
+              id={`host-greeting-${restaurantId}`}
+              className="input-base"
+              rows={3}
+              maxLength={400}
+              placeholder={defaultGreeting}
+              disabled={pending}
+              value={greeting}
+              onChange={(e) => setGreeting(e.target.value)}
+              aria-describedby={`host-greeting-hint-${restaurantId}`}
+            />
+            <p id={`host-greeting-hint-${restaurantId}`} className="mt-1.5 text-[12px] text-subtle">
+              Leave blank to use the default shown above.
+            </p>
+          </div>
+        </div>
+
+        <div className="min-w-0">
+          <p className="field-label" id={`host-voice-label-${restaurantId}`}>
+            Voice
           </p>
-        ) : (
-          <span />
-        )}
-        <button
-          type="button"
-          className="btn-primary"
-          onClick={save}
-          disabled={pending || !dirty || !name.trim()}
-          aria-busy={pending}
+          <div role="group" aria-labelledby={`host-voice-label-${restaurantId}`} className="min-w-0">
+            <TrialVoicePicker value={voiceId} disabled={pending} onChange={setVoiceId} />
+          </div>
+        </div>
+
+        <SaveRow
+          message={message?.text ?? (dirty ? "Unsaved changes" : "Saving re-syncs your host.")}
+          tone={message ? (message.tone === "error" ? "bad" : "ok") : "muted"}
         >
-          {pending ? "Saving…" : "Save persona"}
-        </button>
-      </footer>
+          <button
+            type="button"
+            className="btn-primary w-full sm:w-auto"
+            onClick={save}
+            disabled={pending || !dirty || !name.trim()}
+            aria-busy={pending}
+          >
+            {pending ? "Saving…" : "Save changes"}
+          </button>
+        </SaveRow>
+      </div>
     </section>
   );
 }

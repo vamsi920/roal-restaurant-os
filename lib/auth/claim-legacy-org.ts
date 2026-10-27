@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { LEGACY_POC_ORGANIZATION_ID } from "@/lib/types";
 
 /**
@@ -6,7 +6,7 @@ import { LEGACY_POC_ORGANIZATION_ID } from "@/lib/types";
  * when that org still has zero members (RLS bootstrap policy in migration 009/024).
  */
 export async function tryClaimLegacyPocMembership(
-  supabase: SupabaseClient,
+  supabase: Db,
   userId: string
 ): Promise<boolean> {
   const { data: existing, error: readErr } = await supabase

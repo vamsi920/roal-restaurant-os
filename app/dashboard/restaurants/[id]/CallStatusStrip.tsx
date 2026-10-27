@@ -1,4 +1,6 @@
+import { PhoneCall } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { formatTicketClock } from "./order-card-parts";
 
 type Props = {
   liveCount: number;
@@ -6,66 +8,72 @@ type Props = {
   compact?: boolean;
   /** Active calls without a linked draft cart yet. */
   supplementalCalls?: number;
+  /** What the host is doing right now, e.g. "taking an order". */
+  activity?: string | null;
+  hostName?: string;
 };
 
-function formatStripTime(iso: string | null): string {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "—";
-  return d.toLocaleString(undefined, {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
-
+/**
+ * One-line strip at the top of the Kitchen board:
+ * "● 1 call live — taking an order" while the host is on the phone,
+ * a quiet "Waiting for calls" otherwise.
+ */
 export function CallStatusStrip({
   liveCount,
   lastUpdatedAt,
   compact = false,
   supplementalCalls = 0,
+  activity = null,
+  hostName,
 }: Props) {
   const live = liveCount > 0;
+  const updated = formatTicketClock(lastUpdatedAt);
 
   return (
     <div
       className={cn(
-        "kds-call-status flex min-w-0 max-w-full flex-wrap items-center justify-between gap-2",
-        compact ? "kds-call-status--compact px-3 py-2 sm:px-4" : "px-3 py-3 sm:px-5",
-        live ? "bg-warning/[0.06]" : "bg-elev/80"
+        "flex min-w-0 max-w-full items-center gap-3 rounded-[14px] border",
+        compact ? "px-3.5 py-2.5" : "px-4 py-3",
+        live
+          ? "border-warning/30 bg-[rgb(var(--tile-amber)/0.5)]"
+          : "border-line bg-card"
       )}
       role="status"
       aria-live="polite"
     >
-      <div className="flex min-w-0 items-center gap-2">
-        <span
-          className={cn(
-            "h-2 w-2 shrink-0 rounded-full",
-            live ? "bg-warning animate-pulse" : "bg-subtle"
-          )}
-          aria-hidden
-        />
-        <span className="text-sm font-semibold text-ink">
-          {live ? "Call live" : "Waiting for calls"}
-        </span>
+      {live ? (
+        <span className="kds-live-dot" aria-hidden />
+      ) : (
+        <PhoneCall size={15} className="shrink-0 text-subtle" aria-hidden />
+      )}
+      <p className="min-w-0 flex-1 truncate text-[14px]">
         {live ? (
-          <span className="rounded-md bg-card px-1.5 py-0.5 text-caption font-semibold tabular-nums text-muted">
-            {liveCount}
+          <>
+            <span className="font-semibold text-ink">
+              {liveCount} call{liveCount === 1 ? "" : "s"} live
+            </span>
+            <span className="text-[rgb(var(--tile-amber-ink))]">
+              {" "}
+              — {activity ?? (hostName ? `${hostName} is on the phone` : "on the phone")}
+            </span>
+            {supplementalCalls > 0 && supplementalCalls < liveCount ? (
+              <span className="text-muted"> · {supplementalCalls} without items yet</span>
+            ) : null}
+            <span className="sr-only">Call live</span>
+          </>
+        ) : (
+          <span className="text-muted">
+            Waiting for calls
+            {hostName ? <span className="text-subtle"> · {hostName} picks up when the phone rings</span> : null}
           </span>
-        ) : null}
-        {supplementalCalls > 0 ? (
-          <span className="text-caption text-muted">
-            {supplementalCalls} without cart
-          </span>
-        ) : null}
-      </div>
-      {lastUpdatedAt ? (
+        )}
+      </p>
+      {lastUpdatedAt && updated ? (
         <p
-          className="kds-call-status__updated min-w-0 max-w-full truncate text-caption text-muted sm:whitespace-normal"
-          title={`Updated ${formatStripTime(lastUpdatedAt)}`}
+          className="hidden shrink-0 truncate text-[12px] tabular-nums text-subtle sm:block"
+          title={`Updated ${updated}`}
         >
-          Updated {formatStripTime(lastUpdatedAt)}
+          Updated {updated}
         </p>
       ) : null}
     </div>

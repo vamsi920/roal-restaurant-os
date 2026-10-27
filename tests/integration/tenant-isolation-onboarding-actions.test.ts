@@ -11,7 +11,7 @@ vi.mock("@/lib/auth/context-server", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/voice-agent/provision-restaurant-voice-agent", () => ({
@@ -29,7 +29,7 @@ vi.mock("@/lib/onboarding/helpers", async (importOriginal) => {
 });
 
 import { findMembershipForOrg, getAuthContext } from "@/lib/auth/context-server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { retryRestaurantVoiceAgentProvisionAction } from "@/app/dashboard/onboarding/actions";
 
 describe("onboarding voice provision actions tenant scope", () => {
@@ -43,7 +43,7 @@ describe("onboarding voice provision actions tenant scope", () => {
       organization_id: ORG_A,
       role: "owner",
     } as never);
-    vi.mocked(createServerSupabase).mockResolvedValue({
+    vi.mocked(getDb).mockResolvedValue({
       from: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({

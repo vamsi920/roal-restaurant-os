@@ -10,11 +10,13 @@ const RESTAURANT_ID = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const FOREIGN_ID = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
 
 describe("dashboard restaurant workspace (pass 65)", () => {
-  it("home routes org admins to overview and members to the locations list", () => {
+  it("home opens a location overview (last used via cookie) or onboarding with no locations", () => {
     const home = read("app/dashboard/page.tsx");
-    expect(home).toContain('redirect("/dashboard/overview")');
-    expect(home).toContain('redirect("/dashboard/restaurants")');
-    expect(home).toContain("isOrgAdmin");
+    expect(home).toContain("/overview");
+    expect(home).toContain("roal_last_restaurant");
+    expect(home).toContain('redirect("/dashboard/onboarding")');
+    expect(home).not.toContain('redirect("/dashboard/overview")');
+    expect(home).not.toContain('redirect("/dashboard/restaurants")');
   });
 
   it("locations page loads restaurants from the database only", () => {
@@ -39,7 +41,8 @@ describe("dashboard restaurant workspace (pass 65)", () => {
 
   it("location cards show operational labels and next action", () => {
     const page = read("app/dashboard/restaurants/page.tsx");
-    expect(page).toContain("Active calls");
+    expect(page).toContain("On calls now");
+    expect(page).toContain("Needs attention");
     expect(page).toContain("Follow-ups");
     expect(page).toContain("Reservations");
     expect(page).toContain("Orders (24h)");
@@ -62,8 +65,8 @@ describe("dashboard restaurant workspace (pass 65)", () => {
     });
 
     expect(nav.map((item) => item.id)).toEqual([
-      "orders",
       "calls",
+      "orders",
       "menu",
       "liveAgent",
       "analytics",
@@ -94,18 +97,15 @@ describe("dashboard restaurant workspace (pass 65)", () => {
 
   it("live agent page uses compact real-data sections", () => {
     const page = read("app/dashboard/restaurants/[id]/agent/page.tsx");
-    const panel = read("components/command-center/RestaurantCommandCenterPanel.tsx");
 
     expect(page).toContain("RestaurantLaunchGateCard");
     expect(page).toContain("loadRestaurantLaunchGate");
-    expect(page).toContain("RestaurantCommandCenterPanel");
     expect(page).toContain("compact");
     expect(page).toContain("voiceAgentCenter");
     expect(page).toContain('variant="inline"');
-    expect(page).toContain("live-agent-page__inline-meta");
+    expect(page).toContain("<MetaList");
     expect(page).not.toContain("RestaurantLaunchChecklist");
-    expect(page).not.toContain("live-agent-page__stats");
-    expect(panel).toContain("command-center--compact");
+    expect(page).not.toContain("RestaurantCommandCenterPanel");
     expect(page).not.toMatch(/demo|fake data|MOCK_/i);
   });
 
@@ -126,11 +126,13 @@ describe("dashboard restaurant workspace (pass 65)", () => {
     expect(menuWorkspace).not.toMatch(/staff roster|shift schedule/i);
   });
 
-  it("mobile workspace rail keeps bottom navigation usable", () => {
+  it("workspace rail is a passthrough; the app sidebar owns location navigation", () => {
     const rail = read("app/dashboard/restaurants/[id]/RestaurantWorkspaceRail.tsx");
-    expect(rail).toContain("workspace-rail-bottom");
-    expect(rail).toContain("gridTemplateColumns");
-    expect(rail).toContain("restaurantWorkspaceMobileNavLabel");
-    expect(rail).toContain("min-h-[3.5rem]");
+    const shell = read("components/dashboard/app-shell.tsx");
+    expect(rail).toContain("export function RestaurantWorkspaceRail");
+    expect(rail).toContain("suggestionCount?: number");
+    expect(rail).toContain("<>{children}</>");
+    expect(rail).not.toContain("workspace-rail-bottom");
+    expect(shell).toContain("buildLocationNav(current.id, { pendingQuestions: current.pendingQuestions })");
   });
 });

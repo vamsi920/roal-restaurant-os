@@ -11,7 +11,7 @@ import {
   formatCartValidationError,
   validateCartForFinalize,
 } from "@/lib/orders/validate-cart";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import type { DbItem, DbModifier, RestaurantProfile } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -46,7 +46,7 @@ export async function POST(
       );
     }
 
-    const supabase = await createServerSupabase();
+    const supabase = getDb();
 
     const { data: profile } = await supabase
       .from("restaurant_profiles")

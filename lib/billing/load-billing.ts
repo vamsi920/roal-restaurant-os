@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { isOrgAdmin } from "@/lib/auth/roles";
 import type { MembershipRole } from "@/lib/types";
 import {
@@ -40,7 +40,7 @@ function upgradePlanIds(current: BillingPlanId): BillingPlanId[] {
 }
 
 async function loadScopedRestaurantIds(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string,
   restaurantId?: string,
   accessibleRestaurantIds?: string[]
@@ -63,7 +63,7 @@ async function loadScopedRestaurantIds(
 }
 
 async function loadBillableReceiptsForPeriod(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     restaurantIds: string[];
     periodStart: Date;
@@ -84,7 +84,7 @@ async function loadBillableReceiptsForPeriod(
 }
 
 export async function loadRestaurantBilling(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     membershipRole: MembershipRole;
@@ -101,7 +101,7 @@ export async function loadRestaurantBilling(
 }
 
 export async function loadOrganizationBilling(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     membershipRole: MembershipRole;

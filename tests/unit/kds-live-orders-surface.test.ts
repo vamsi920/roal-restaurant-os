@@ -252,7 +252,7 @@ describe("menu builder separation", () => {
     );
     expect(page).toContain("PhoneAgentReadinessStrip");
     expect(page).toContain("launchGate={pageData.launchGate}");
-    expect(page).toContain("peakCallContext={pageData.peakCallContext}");
+    expect(page).toContain('launchGate.phase !== "ready"');
     expect(strip).toContain("launchGate.phaseLabel");
     expect(strip).toContain("launchGate.topBlockerLabel");
     expect(strip).toContain("launchGate.primaryAction");

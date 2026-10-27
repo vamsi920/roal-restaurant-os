@@ -1,7 +1,7 @@
 import type { User } from "@supabase/supabase-js";
 import { LEGACY_POC_ORGANIZATION_ID } from "@/lib/types";
 import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
-import { getServiceRoleSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 /** Ensures the platform admin user has at least one membership (service role). */
 export async function ensurePlatformAdminMembership(
@@ -9,7 +9,7 @@ export async function ensurePlatformAdminMembership(
 ): Promise<void> {
   if (!isPlatformAdminEmail(user.email)) return;
 
-  const service = getServiceRoleSupabase();
+  const service = getDb();
   if (!service) return;
 
   const { data: existing, error: readErr } = await service

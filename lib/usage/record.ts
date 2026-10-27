@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   sanitizeUsageMetadata,
   truncateSessionId,
@@ -6,7 +6,7 @@ import {
 import type { RecordUsageEventInput } from "@/lib/usage/types";
 
 export async function recordUsageEvent(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: RecordUsageEventInput
 ): Promise<void> {
   const organizationId = input.organizationId?.trim();
@@ -32,7 +32,7 @@ export async function recordUsageEvent(
 
 /** At most one active_location event per restaurant per UTC day. */
 export async function recordActiveLocation(
-  supabase: SupabaseClient,
+  supabase: Db,
   scope: {
     organizationId: string;
     restaurantId: string;
@@ -51,7 +51,7 @@ export async function recordActiveLocation(
 }
 
 export async function recordRestaurantUsage(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: RecordUsageEventInput
 ): Promise<void> {
   await recordUsageEvent(supabase, input);
@@ -65,7 +65,7 @@ export async function recordRestaurantUsage(
 }
 
 export async function resolveRestaurantOrganizationId(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<string | null> {
   const { data, error } = await supabase

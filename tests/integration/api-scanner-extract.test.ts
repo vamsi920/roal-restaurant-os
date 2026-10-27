@@ -41,7 +41,7 @@ vi.mock("@/lib/billing/assert-gate", () => ({
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
-  createServerSupabase: vi.fn(),
+  getDb: vi.fn(),
 }));
 
 vi.mock("@/lib/scanner/menu-import-audit", () => ({
@@ -75,7 +75,7 @@ vi.mock("@/lib/notifications/helpers", () => ({
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { assertOrganizationBillingGate } from "@/lib/billing/assert-gate";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { extractMenuFromImage } from "@/lib/scanner/extract-menu";
 
 function postExtract(form: FormData) {
@@ -128,7 +128,7 @@ describe("POST /api/scanner/extract", () => {
     expect(res.status).toBe(400);
     const body = await res.json();
     expect(body.error).toBe("image file is required");
-    expect(createServerSupabase).not.toHaveBeenCalled();
+    expect(getDb).not.toHaveBeenCalled();
   });
 
   it("returns 400 for non-image upload", async () => {
@@ -147,13 +147,13 @@ describe("POST /api/scanner/extract", () => {
     expect(res.status).toBe(400);
     const body = await res.json();
     expect(body.error).toMatch(/not an image/i);
-    expect(createServerSupabase).not.toHaveBeenCalled();
+    expect(getDb).not.toHaveBeenCalled();
   });
 
   it("returns 200 with menu shape when extraction succeeds", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
     vi.mocked(assertOrganizationBillingGate).mockResolvedValue({ ok: true });
-    vi.mocked(createServerSupabase).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockResolvedValue({} as never);
     vi.mocked(extractMenuFromImage).mockResolvedValue({
       menu: {
         categories: [

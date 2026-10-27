@@ -1,11 +1,12 @@
+import { Capabilities } from "@/components/landing/home/capabilities";
 import { ClosingCta } from "@/components/landing/home/closing-cta";
+import { CommandCenterSection } from "@/components/landing/home/command-center-section";
 import { HomeFaq } from "@/components/landing/home/faq-section";
 import { HomeHero } from "@/components/landing/home/hero";
 import { HomeFaqJsonLd } from "@/components/landing/home/home-faq-json-ld";
 import { HowItWorks } from "@/components/landing/home/how-it-works";
-import { InkSection } from "@/components/landing/home/ink-section";
+import { MissedCalls } from "@/components/landing/home/missed-calls";
 import { HomePricing } from "@/components/landing/home/pricing-section";
-import { HomeStrip } from "@/components/landing/home/strip";
 import { SiteShell } from "@/components/landing/site-shell";
 import { buildHomePageMetadata } from "@/lib/landing/home-metadata";
 import { readPendingTrialFromCookie } from "@/lib/trial/auth";
@@ -22,9 +23,10 @@ export default async function Home() {
     <SiteShell>
       <HomeFaqJsonLd />
       <HomeHero initialTrial={initialTrial} />
-      <HomeStrip />
+      <Capabilities />
       <HowItWorks />
-      <InkSection />
+      <CommandCenterSection />
+      <MissedCalls />
       <HomePricing />
       <HomeFaq />
       <ClosingCta />

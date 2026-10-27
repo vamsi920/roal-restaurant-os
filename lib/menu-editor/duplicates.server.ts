@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   duplicateCategoryMessage,
   duplicateItemMessage,
@@ -8,7 +8,7 @@ import {
 import { normalizeMenuName } from "@/lib/menu-editor/normalize";
 
 export async function assertCategoryNameAvailable(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   name: string,
   excludeId?: string
@@ -27,7 +27,7 @@ export async function assertCategoryNameAvailable(
 }
 
 export async function assertItemNameAvailable(
-  supabase: SupabaseClient,
+  supabase: Db,
   categoryId: string,
   name: string,
   excludeId?: string

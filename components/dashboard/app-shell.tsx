@@ -2,35 +2,88 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, type ReactNode } from "react";
-import { RoalMark } from "@/components/landing/roal-mark";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  ChevronsUpDown,
+  ExternalLink,
+  LifeBuoy,
+  LogOut,
+  Menu as MenuIcon,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Settings,
+  X,
+} from "lucide-react";
+import { RoalMark } from "@/components/brand/roal-mark";
 import { cn } from "@/lib/cn";
 import {
-  DASHBOARD_NAV,
-  dashboardPageMeta,
+  LAST_RESTAURANT_COOKIE,
+  SIDEBAR_COLLAPSED_KEY,
+  SUPPORT_NAV_ITEM,
+  buildLocationNav,
   isDashboardNavActive,
+  isLocationNavActive,
+  resolveCurrentRestaurantId,
+  restaurantIdFromPath,
+  restaurantOverviewHref,
+  visibleOrgNav,
   type DashboardNavItem,
+  type LocationNavItem,
 } from "@/lib/dashboard-nav";
-import { restaurantWorkspaceMobileTitle } from "@/lib/dashboard-restaurant-labels";
+import type { ShellLocation } from "@/lib/dashboard/shell-data";
 import { useAppShellNav } from "@/lib/dashboard/use-app-shell-nav";
-import { NavIcon } from "./nav-icon";
+import { usePopover } from "@/lib/dashboard/use-popover";
+import { LocationSwitcher } from "./location-switcher";
+import { NavIcon, navIconKeyForHref } from "./nav-icon";
+import { TakingOrdersCard } from "./taking-orders-card";
+
+function readStorage(key: string): string | null {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeStorage(key: string, value: string) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // Private mode: preference is per-view only.
+  }
+}
+
+function rememberRestaurant(id: string) {
+  writeStorage(LAST_RESTAURANT_COOKIE, id);
+  try {
+    document.cookie = `${LAST_RESTAURANT_COOKIE}=${encodeURIComponent(id)}; path=/; max-age=31536000; samesite=lax`;
+  } catch {
+    // Cookies disabled: localStorage fallback still works client-side.
+  }
+}
 
 export function AppShell({
   children,
   userEmail,
+  userName = null,
   organizationName,
   roleLabel,
+  locations = [],
+  lastRestaurantId = null,
   showAdminNav,
   showOrgAdminNav = false,
 }: {
   children: ReactNode;
   userEmail: string;
+  userName?: string | null;
   organizationName: string | null;
   roleLabel: string | null;
+  locations?: ShellLocation[];
+  lastRestaurantId?: string | null;
   showAdminNav: boolean;
   showOrgAdminNav?: boolean;
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "/dashboard";
   const {
     mobileOpen,
     closeMenu,
@@ -40,21 +93,74 @@ export function AppShell({
     onBackdropClose,
   } = useAppShellNav();
 
-  const navGroups = DASHBOARD_NAV.map((group) => ({
-    ...group,
-    items: group.items.filter(
-      (item) =>
-        (!item.platformOnly || showAdminNav) &&
-        (!item.orgAdminOnly || showOrgAdminNav)
-    ),
-  })).filter((group) => group.items.length > 0);
+  const [collapsed, setCollapsed] = useState(false);
+  const [remembered, setRemembered] = useState<string | null>(lastRestaurantId);
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    setCollapsed(readStorage(SIDEBAR_COLLAPSED_KEY) === "1");
+    if (!lastRestaurantId) setRemembered(readStorage(LAST_RESTAURANT_COOKIE));
+  }, [lastRestaurantId]);
 
   useEffect(() => {
     closeMenu();
   }, [pathname, closeMenu]);
 
-  const meta = useMemo(() => dashboardPageMeta(pathname), [pathname]);
-  const inWorkspace = Boolean(restaurantWorkspaceMobileTitle(pathname));
+  useEffect(() => {
+    const sync = () => setHash(window.location.hash);
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, [pathname]);
+
+  const restaurantIds = useMemo(() => locations.map((l) => l.id), [locations]);
+  const currentId = resolveCurrentRestaurantId({ pathname, remembered, restaurantIds });
+
+  useEffect(() => {
+    const fromPath = restaurantIdFromPath(pathname);
+    if (fromPath && fromPath !== remembered) {
+      rememberRestaurant(fromPath);
+      setRemembered(fromPath);
+    }
+  }, [pathname, remembered]);
+
+  const current: ShellLocation | null = useMemo(() => {
+    if (!currentId) return null;
+    return (
+      locations.find((l) => l.id === currentId) ?? {
+        id: currentId,
+        name: "This location",
+        organizationId: "",
+        organizationName,
+        agentDisplayName: null,
+        temporarilyClosed: false,
+        provisionStatus: null,
+        isLive: false,
+        pendingQuestions: 0,
+      }
+    );
+  }, [currentId, locations, organizationName]);
+
+  const locationNav = current
+    ? buildLocationNav(current.id, { pendingQuestions: current.pendingQuestions })
+    : [];
+  const orgNav = visibleOrgNav({ showAdminNav, showOrgAdminNav });
+
+  const toggleCollapsed = useCallback(() => {
+    setCollapsed((prev) => {
+      const next = !prev;
+      writeStorage(SIDEBAR_COLLAPSED_KEY, next ? "1" : "0");
+      return next;
+    });
+  }, []);
+
+  // The mobile drawer always shows labels.
+  const compact = collapsed && !mobileOpen;
+
+  const onSwitchLocation = useCallback((id: string) => {
+    rememberRestaurant(id);
+    setRemembered(id);
+  }, []);
 
   return (
     <div className="app-shell-root flex min-h-[100dvh] min-w-0 overflow-x-clip bg-base">
@@ -68,36 +174,92 @@ export function AppShell({
         role={mobileOpen ? "dialog" : undefined}
         aria-modal={mobileOpen ? true : undefined}
         aria-label="App navigation"
+        data-collapsed={compact ? "true" : undefined}
         className={cn(
-          "app-shell-sidebar fixed inset-y-0 left-0 z-50 flex w-[min(100vw-3rem,16rem)] flex-col border-r border-line bg-card pt-[env(safe-area-inset-top)] transition-transform duration-200 lg:static lg:z-auto lg:w-[220px] lg:translate-x-0 lg:shrink-0",
+          "app-shell-sidebar fixed inset-y-0 left-0 z-50 flex w-[min(100vw-3rem,17rem)] flex-col border-r border-line bg-card pt-[env(safe-area-inset-top)] transition-[transform,width] duration-200 lg:sticky lg:top-0 lg:z-auto lg:h-[100dvh] lg:translate-x-0 lg:shrink-0",
+          compact ? "lg:w-[68px]" : "lg:w-[232px]",
           mobileOpen ? "app-shell-sidebar--open translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex h-12 items-center border-b border-line px-3">
+        <div className={cn("flex h-14 shrink-0 items-center gap-2 px-3", compact && "lg:justify-center lg:px-2")}>
           <Link
-            href="/dashboard/restaurants"
-            className="flex min-h-11 min-w-0 items-center gap-2 rounded-md px-1 lg:min-h-9"
+            href={current ? restaurantOverviewHref(current.id) : "/dashboard"}
+            className={cn("app-shell-brand flex min-h-11 min-w-0 flex-1 items-center rounded-md px-1.5 lg:min-h-9", compact && "lg:hidden")}
             onClick={closeMenu}
+            aria-label="ROAL home"
           >
-            <span className="grid h-6 w-6 place-items-center rounded-md border border-line bg-elev">
-              <RoalMark className="h-3.5 w-3.5" />
-            </span>
-            <span className="font-display text-[15px] font-semibold tracking-tight text-ink">
-              ROAL
-            </span>
+            <Wordmark />
           </Link>
+          <button
+            type="button"
+            onClick={toggleCollapsed}
+            className="app-shell-collapse hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-subtle hover:bg-elev hover:text-ink lg:inline-flex"
+            aria-label={compact ? "Expand sidebar" : "Collapse sidebar"}
+            aria-pressed={compact}
+            title={compact ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {compact ? <PanelLeftOpen size={17} aria-hidden /> : <PanelLeftClose size={17} aria-hidden />}
+          </button>
+          <button
+            type="button"
+            onClick={onBackdropClose}
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-subtle hover:bg-elev hover:text-ink lg:hidden"
+            aria-label="Close navigation menu"
+          >
+            <X size={18} aria-hidden />
+          </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto overscroll-contain px-2 py-3" aria-label="Sections">
-          {navGroups.map((group) => (
-            <div key={group.label} className="mb-3 last:mb-0">
-              <p className="app-shell-nav-group-label px-2 pb-1">{group.label}</p>
-              <ul className="space-y-px">
+        <nav
+          className={cn("flex-1 overflow-y-auto overscroll-contain px-3 pb-3 pt-1", compact && "lg:px-2")}
+          aria-label="Sections"
+        >
+          {locationNav.length > 0 ? (
+            <ul className="space-y-0.5">
+              {locationNav.map((item) => (
+                <li key={item.key}>
+                  <NavLink
+                    item={item}
+                    active={isLocationNavActive(item.key, pathname, current!.id, hash)}
+                    compact={compact}
+                    onNavigate={closeMenu}
+                  />
+                </li>
+              ))}
+              <li>
+                <NavLink
+                  item={SUPPORT_NAV_ITEM}
+                  active={isDashboardNavActive(SUPPORT_NAV_ITEM.href, pathname)}
+                  compact={compact}
+                  onNavigate={closeMenu}
+                />
+              </li>
+            </ul>
+          ) : (
+            <ul className="space-y-0.5">
+              <li>
+                <NavLink
+                  item={SUPPORT_NAV_ITEM}
+                  active={isDashboardNavActive(SUPPORT_NAV_ITEM.href, pathname)}
+                  compact={compact}
+                  onNavigate={closeMenu}
+                />
+              </li>
+            </ul>
+          )}
+
+          {orgNav.map((group) => (
+            <div key={group.label} className="mt-5">
+              <p className={cn("app-shell-nav-group-label px-2.5 pb-1.5", compact && "lg:sr-only")}>
+                {group.label}
+              </p>
+              <ul className="space-y-0.5">
                 {group.items.map((item) => (
                   <li key={item.href}>
                     <NavLink
                       item={item}
                       active={isDashboardNavActive(item.href, pathname)}
+                      compact={compact}
                       onNavigate={closeMenu}
                     />
                   </li>
@@ -105,89 +267,23 @@ export function AppShell({
               </ul>
             </div>
           ))}
-          {showOrgAdminNav ? (
-            <div className="mt-3 border-t border-line pt-3">
-              <Link
-                href="/dashboard/onboarding?new=1"
-                onClick={closeMenu}
-                className="app-shell-nav-link flex min-h-11 items-center gap-2.5 rounded-md px-2 text-[13px] font-medium text-muted hover:bg-elev hover:text-ink lg:min-h-8"
-              >
-                <span className="grid h-4 w-4 place-items-center text-subtle" aria-hidden>
-                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
-                </span>
-                Add location
-              </Link>
-            </div>
-          ) : null}
         </nav>
 
-        <div className="app-shell-sidebar__footer border-t border-line p-2">
-          <details className="app-shell-org group">
-            <summary className="app-shell-org__summary flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-md px-2 py-1.5 hover:bg-elev lg:min-h-10 [&::-webkit-details-marker]:hidden">
-              <span
-                className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-ink text-[11px] font-semibold uppercase text-base"
-                aria-hidden
-              >
-                {initials(organizationName ?? userEmail)}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[13px] font-medium text-ink">
-                  {organizationName ?? "No organization"}
-                </span>
-                <span className="block truncate text-[11px] text-subtle" title={userEmail}>
-                  {roleLabel ?? userEmail}
-                </span>
-              </span>
-              <svg
-                viewBox="0 0 24 24"
-                className="h-3.5 w-3.5 shrink-0 text-subtle transition-transform group-open:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </summary>
-            <div className="app-shell-org__menu mt-1 rounded-md border border-line bg-card p-1 shadow-md">
-              <p className="truncate px-2 py-1.5 text-[11px] text-subtle" title={userEmail}>
-                {userEmail}
-              </p>
-              <Link
-                href="/dashboard/settings"
-                onClick={closeMenu}
-                className="flex min-h-11 items-center rounded px-2 text-[13px] text-muted hover:bg-elev hover:text-ink lg:min-h-8"
-              >
-                Settings
-              </Link>
-              <Link
-                href="/dashboard/support"
-                onClick={closeMenu}
-                className="flex min-h-11 items-center rounded px-2 text-[13px] text-muted hover:bg-elev hover:text-ink lg:min-h-8"
-              >
-                Support
-              </Link>
-              <Link
-                href="/"
-                onClick={closeMenu}
-                className="app-shell-marketing-link flex min-h-11 items-center rounded px-2 text-[13px] text-muted hover:bg-elev hover:text-ink lg:min-h-8"
-              >
-                Marketing site
-              </Link>
-              <form action="/auth/signout" method="post">
-                <button
-                  type="submit"
-                  className="app-shell-signout flex min-h-11 w-full items-center rounded px-2 text-left text-[13px] text-muted hover:bg-elev hover:text-ink lg:min-h-8"
-                >
-                  Sign out
-                </button>
-              </form>
-            </div>
-          </details>
+        <div className={cn("app-shell-sidebar__footer shrink-0 space-y-2.5 px-3 pt-2", compact && "lg:px-2")}>
+          <div className={cn(compact && "lg:hidden")}>
+            <PromoCard current={current} onNavigate={closeMenu} />
+          </div>
+          {current && current.organizationId ? (
+            <TakingOrdersCard location={current} collapsed={compact} />
+          ) : null}
+          <AccountCard
+            userEmail={userEmail}
+            userName={userName}
+            subtitle={current?.name ?? organizationName ?? roleLabel}
+            roleLabel={roleLabel}
+            compact={compact}
+            onNavigate={closeMenu}
+          />
         </div>
       </aside>
 
@@ -204,43 +300,39 @@ export function AppShell({
         className="app-shell-content flex min-w-0 flex-1 flex-col"
         {...(mobileOpen ? { inert: true as const } : {})}
       >
-        <header className="app-shell-header sticky top-0 z-30 flex h-12 min-h-12 items-center gap-2 border-b border-line bg-base/90 px-3 pt-[env(safe-area-inset-top)] backdrop-blur-md sm:px-5">
+        <header className="app-shell-header sticky top-0 z-30 flex h-14 min-h-14 items-center gap-2 border-b border-line bg-base/90 px-3 pt-[env(safe-area-inset-top)] backdrop-blur-md sm:px-6 lg:border-transparent lg:px-8">
           <button
             ref={menuButtonRef}
             type="button"
-            className="app-shell-menu-btn -ml-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-ink hover:bg-elev lg:hidden"
+            className="app-shell-menu-btn -ml-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-ink hover:bg-elev lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="app-sidebar"
             aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
             onClick={toggleMenu}
           >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
-              {mobileOpen ? (
-                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-              ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-              )}
-            </svg>
+            {mobileOpen ? <X size={20} aria-hidden /> : <MenuIcon size={20} aria-hidden />}
           </button>
-          <div className="flex min-w-0 flex-1 items-baseline gap-2">
-            <h1 className="truncate text-[15px] font-semibold tracking-tight text-ink">
-              {meta.title}
-            </h1>
-            {meta.subtitle && !inWorkspace ? (
-              <p className="hidden truncate text-[13px] text-subtle md:block">{meta.subtitle}</p>
-            ) : null}
-          </div>
-          {meta.action ? (
-            <Link href={meta.action.href} className="btn-primary btn-sm shrink-0">
-              {meta.action.label}
-            </Link>
-          ) : null}
+          <Link
+            href={current ? restaurantOverviewHref(current.id) : "/dashboard"}
+            className="flex min-h-11 items-center lg:hidden"
+            aria-label="ROAL home"
+          >
+            <Wordmark />
+          </Link>
+          <div className="min-w-0 flex-1" />
+          <LocationSwitcher
+            current={current?.organizationId ? current : null}
+            locations={locations}
+            pathname={pathname}
+            canManageLocations={showOrgAdminNav}
+            onNavigate={onSwitchLocation}
+          />
         </header>
 
         <main
           id="app-main-content"
           tabIndex={-1}
-          className="app-shell-main mx-auto w-full min-w-0 max-w-[1280px] flex-1 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-5 sm:px-6 sm:pb-10 sm:pt-6"
+          className="app-shell-main mx-auto w-full min-w-0 max-w-[1240px] flex-1 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:pb-10 lg:px-8 lg:pt-2"
         >
           {children}
         </main>
@@ -249,32 +341,193 @@ export function AppShell({
   );
 }
 
+function Wordmark() {
+  return (
+    <span className="inline-flex items-center gap-2 font-display text-[19px] font-extrabold leading-none tracking-[-0.04em] text-ink">
+      <RoalMark size={26} />
+      ROAL
+    </span>
+  );
+}
+
 function NavLink({
   item,
   active,
+  compact,
   onNavigate,
 }: {
-  item: DashboardNavItem;
+  item: LocationNavItem | DashboardNavItem;
   active: boolean;
+  compact: boolean;
   onNavigate: () => void;
 }) {
+  const iconName = "key" in item ? item.key : navIconKeyForHref(item.href);
+  const count = "count" in item ? item.count : undefined;
   return (
     <Link
       href={item.href}
-      title={item.description}
+      title={compact ? item.label : item.description}
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
+      aria-label={compact ? item.label : undefined}
       className={cn(
-        "app-shell-nav-link flex min-h-11 min-w-0 items-center gap-2.5 rounded-md px-2 text-[13px] font-medium transition-colors lg:min-h-8",
+        "app-shell-nav-link relative flex min-h-11 min-w-0 items-center gap-2.5 rounded-lg px-2.5 text-[13.5px] font-medium transition-colors lg:min-h-9",
+        compact && "lg:justify-center lg:px-0",
         active ? "app-shell-nav-link--active" : "text-muted hover:bg-elev hover:text-ink"
       )}
     >
-      <NavIcon href={item.href} className={active ? "text-ink" : "text-subtle"} />
-      <span className="min-w-0 flex-1 truncate">{item.label}</span>
-      {item.badge ? (
-        <span className="chip shrink-0 px-1.5 py-0 text-[9px]">{item.badge}</span>
+      <NavIcon name={iconName} className={active ? "text-ink" : "text-subtle"} />
+      <span className={cn("min-w-0 flex-1 truncate", compact && "lg:sr-only")}>{item.label}</span>
+      {count ? (
+        <span
+          className={cn("app-shell-nav-count", compact && "lg:absolute lg:right-1 lg:top-0.5")}
+          aria-label={`${count} unanswered question${count === 1 ? "" : "s"}`}
+        >
+          {count > 9 ? "9+" : count}
+        </span>
       ) : null}
     </Link>
+  );
+}
+
+function PromoCard({
+  current,
+  onNavigate,
+}: {
+  current: ShellLocation | null;
+  onNavigate: () => void;
+}) {
+  if (!current) {
+    return (
+      <div className="app-promo rounded-xl p-3">
+        <p className="text-[13px] font-semibold text-ink">Set up your first location</p>
+        <p className="mt-0.5 text-[12px] leading-snug text-muted">
+          Scan your menu and hear your host take an order in minutes.
+        </p>
+        <Link href="/dashboard/onboarding" onClick={onNavigate} className="btn-accent btn-sm mt-2.5 w-full">
+          Get started
+        </Link>
+      </div>
+    );
+  }
+  if (!current.isLive) {
+    return (
+      <div className="app-promo rounded-xl p-3">
+        <p className="text-[13px] font-semibold text-ink">Finish going live</p>
+        <p className="mt-0.5 text-[12px] leading-snug text-muted">
+          A few steps left before your host starts answering calls.
+        </p>
+        <Link
+          href={`/dashboard/onboarding?restaurant=${encodeURIComponent(current.id)}`}
+          onClick={onNavigate}
+          className="btn-accent btn-sm mt-2.5 w-full"
+        >
+          Continue setup
+        </Link>
+      </div>
+    );
+  }
+  const host = current.agentDisplayName ?? "your host";
+  return (
+    <div className="app-promo rounded-xl p-3">
+      <p className="text-[13px] font-semibold text-ink">Hear {host}</p>
+      <p className="mt-0.5 text-[12px] leading-snug text-muted">
+        Place a test order the way your callers do.
+      </p>
+      <Link
+        href={`/dashboard/restaurants/${current.id}/agent#test-call`}
+        onClick={onNavigate}
+        className="btn-accent btn-sm mt-2.5 w-full"
+      >
+        Make a test call
+      </Link>
+    </div>
+  );
+}
+
+function AccountCard({
+  userEmail,
+  userName,
+  subtitle,
+  roleLabel,
+  compact,
+  onNavigate,
+}: {
+  userEmail: string;
+  userName: string | null;
+  subtitle: string | null;
+  roleLabel: string | null;
+  compact: boolean;
+  onNavigate: () => void;
+}) {
+  const { open, toggle, close, rootRef, triggerRef } = usePopover<HTMLDivElement>();
+  const go = () => {
+    close();
+    onNavigate();
+  };
+  const itemCls =
+    "flex min-h-11 w-full items-center gap-2 rounded-lg px-2.5 text-left text-[13px] text-muted hover:bg-elev hover:text-ink lg:min-h-9";
+
+  return (
+    <div ref={rootRef} className="app-shell-org relative border-t border-line pt-2.5">
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={toggle}
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-controls="app-account-menu"
+        title={compact ? userEmail : undefined}
+        className={cn(
+          "app-shell-org__summary flex min-h-11 w-full items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-left hover:bg-elev lg:min-h-10",
+          compact && "lg:justify-center lg:px-0"
+        )}
+      >
+        <span
+          className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-ink text-[11.5px] font-semibold uppercase text-white"
+          aria-hidden
+        >
+          {initials(userName ?? userEmail)}
+        </span>
+        <span className={cn("min-w-0 flex-1", compact && "lg:sr-only")}>
+          <span className="block truncate text-[13px] font-medium text-ink" title={userEmail}>
+            {userEmail}
+          </span>
+          <span className="block truncate text-[11.5px] text-subtle">{subtitle ?? "Your account"}</span>
+        </span>
+        <ChevronsUpDown size={15} className={cn("shrink-0 text-subtle", compact && "lg:hidden")} aria-hidden />
+      </button>
+
+      {open ? (
+        <div
+          id="app-account-menu"
+          className="app-shell-org__menu app-popover absolute bottom-[calc(100%+6px)] left-0 z-50 w-[15rem] rounded-xl border border-line bg-card p-1.5 shadow-lg"
+        >
+          <div className="px-2.5 pb-1.5 pt-1">
+            <p className="truncate text-[12.5px] font-medium text-ink" title={userEmail}>
+              {userEmail}
+            </p>
+            {roleLabel ? <p className="truncate text-[11.5px] text-subtle">{roleLabel}</p> : null}
+          </div>
+          <div className="border-t border-line pt-1">
+            <Link href="/dashboard/settings" onClick={go} className={itemCls}>
+              <Settings size={15} className="text-subtle" aria-hidden /> Settings
+            </Link>
+            <Link href="/dashboard/support" onClick={go} className={itemCls}>
+              <LifeBuoy size={15} className="text-subtle" aria-hidden /> Support
+            </Link>
+            <Link href="/" onClick={go} className={cn("app-shell-marketing-link", itemCls)}>
+              <ExternalLink size={15} className="text-subtle" aria-hidden /> Marketing site
+            </Link>
+            <form action="/auth/signout" method="post">
+              <button type="submit" className={cn("app-shell-signout", itemCls)}>
+                <LogOut size={15} className="text-subtle" aria-hidden /> Sign out
+              </button>
+            </form>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 }
 

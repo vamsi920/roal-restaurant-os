@@ -7,6 +7,7 @@ import {
   startDashboardTrialAction,
 } from "@/app/dashboard/onboarding/actions";
 import { TrialBuilder } from "@/components/try/trial-builder";
+import { Badge } from "@/components/ui";
 import type { TrialPublicView } from "@/lib/trial/types";
 
 type Props = {
@@ -26,18 +27,20 @@ export function MagicOnboarding({ initialTrial, organizationName }: Props) {
   const onClaim = useCallback(
     async (trialId: string) => {
       const result = await claimTrialAction({ trialId });
-      router.replace(`/dashboard/restaurants/${result.restaurantId}?welcome=1`);
+      router.replace(`/dashboard/restaurants/${result.restaurantId}/overview?welcome=1`);
     },
     [router]
   );
 
   return (
-    <div className="mx-auto w-full max-w-5xl">
-      <div className="mb-6 text-center">
-        <p className="chip chip--accent">
-          {organizationName ? `Add a location to ${organizationName}` : "Welcome to ROAL"}
-        </p>
-      </div>
+    <div className="mx-auto w-full min-w-0 max-w-5xl">
+      <header className="mb-4 flex flex-col items-center text-center">
+        <Badge tone="new" className="max-w-full">
+          <span className="truncate">
+            {organizationName ? `Add a location to ${organizationName}` : "Welcome to ROAL"}
+          </span>
+        </Badge>
+      </header>
       <TrialBuilder mode="dashboard" initialTrial={initialTrial} startTrial={startTrial} onClaim={onClaim} autofocus />
     </div>
   );

@@ -1,11 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useState, type ReactNode } from "react";
+import {
+  AlertTriangle,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  Circle,
+  Copy,
+  XCircle,
+} from "lucide-react";
+import { Badge, Panel, type Tone } from "@/components/ui";
+import { Notice, RefreshButton } from "@/components/live-orders/workspace-ui";
+import { AdvancedSection } from "@/components/voice-agent/phone-host-ui";
 import { PlanLimitNotice } from "@/components/billing/PlanLimitNotice";
 import type { SerializableGateVerdict } from "@/lib/billing/gates";
 import type { VoiceAgentControlCenterSnapshot } from "@/lib/voice-agent/control-center-types";
-import { cn } from "@/lib/cn";
 import { sanitizeVoiceAgentDisplayError } from "@/lib/voice-agent/sanitize-display-error";
 import {
   connectVoiceAgentAction,
@@ -20,6 +31,8 @@ type Props = {
   voiceOrderGate?: SerializableGateVerdict | null;
   /** Agent route supplies the page header; hide duplicate panel chrome. */
   embedded?: boolean;
+  /** Optional summary block (store phone, agent linked, webhook) under the status row. */
+  summary?: ReactNode;
 };
 
 const STATUS_LABEL: Record<
@@ -30,16 +43,6 @@ const STATUS_LABEL: Record<
   connected: "Connected",
   misconfigured: "Needs sync",
   unreachable: "API error",
-};
-
-const STATUS_CLASS: Record<
-  VoiceAgentControlCenterSnapshot["connectionStatus"],
-  string
-> = {
-  disconnected: "bg-elev text-muted",
-  connected: "bg-success/15 text-success",
-  misconfigured: "bg-warning/15 text-amber-900",
-  unreachable: "bg-danger/10 text-danger",
 };
 
 function nextActionText(center: VoiceAgentControlCenterSnapshot): string {
@@ -56,6 +59,7 @@ export function VoiceAgentPanel({
   restaurantName,
   voiceOrderGate,
   embedded = false,
+  summary,
 }: Props) {
   const router = useRouter();
   const [center, setCenter] =
@@ -101,161 +105,37 @@ export function VoiceAgentPanel({
     }
   }
 
-  return (
-    <section
-      className={cn(
-        "voice-agent-panel kds-panel min-w-0 max-w-full overflow-hidden glass-card",
-        embedded && "kds-panel--embedded voice-agent-panel--embedded"
-      )}
-    >
-      {!embedded ? (
-        <div className="kds-panel__header">
-          <div className="min-w-0">
-            <h2 className="kds-panel__title">Voice agent</h2>
-            <p className="kds-panel__lead">Connect and keep the agent in sync.</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => void refresh()}
-            disabled={busy !== null}
-            aria-busy={busy === "refresh"}
-            className="voice-agent-panel__refresh btn-ghost kds-thumb-btn min-h-11 w-full text-xs sm:min-h-10 sm:w-auto"
-          >
-            {busy === "refresh" ? "Refreshing…" : "Refresh"}
-          </button>
-        </div>
+  const connectForm = (
+    <div className="voice-agent-panel__connect min-w-0 space-y-3">
+      {!center.envReady ? (
+        <Notice tone="warn" title="Connect is off.">
+          Connect is disabled until required server secrets are configured.
+        </Notice>
       ) : null}
 
-      <PlanLimitNotice
-        verdict={voiceOrderGate}
-        className={embedded ? "mx-4 mt-4 sm:mx-5" : "mx-4 sm:mx-5"}
-      />
-      <div className="voice-agent-panel__body min-w-0 space-y-5 p-4 sm:p-5">
-        {!embedded ? (
-          <>
-            <div className="flex flex-wrap items-center gap-2">
-              <span
-                className={cn(
-                  "rounded-md px-2 py-0.5 text-micro font-semibold uppercase tracking-wider",
-                  STATUS_CLASS[center.connectionStatus]
-                )}
-              >
-                {STATUS_LABEL[center.connectionStatus]}
-              </span>
-              {center.agentDisplayName ? (
-                <span className="text-xs text-muted">{center.agentDisplayName}</span>
-              ) : null}
-              {center.lastSyncAt ? (
-                <span className="text-xs text-subtle">
-                  Last sync {formatWhen(center.lastSyncAt)}
-                </span>
-              ) : null}
-            </div>
-
-            {center.lastSyncError ? (
-              <p
-                className="rounded-lg border border-danger/30 bg-danger/[0.06] px-3 py-2 text-sm text-danger [overflow-wrap:anywhere]"
-                role="alert"
-              >
-                Last sync error: {center.lastSyncError}
-              </p>
-            ) : null}
-          </>
-        ) : (
-          <div className="voice-agent-panel__embedded-refresh flex sm:hidden">
+      <div className="min-w-0">
+        <label htmlFor={`voice-agent-id-${restaurantId}`} className="field-label">
+          ElevenLabs agent ID
+        </label>
+        <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
+          <input
+            id={`voice-agent-id-${restaurantId}`}
+            type="text"
+            autoComplete="off"
+            spellCheck={false}
+            className="input-base min-w-0 flex-1 font-mono text-[13px] max-sm:h-11"
+            placeholder="Paste agent id"
+            value={agentIdInput}
+            onChange={(e) => setAgentIdInput(e.target.value)}
+            disabled={busy !== null || voiceBlocked}
+            aria-describedby={`voice-agent-connect-hint-${restaurantId}${
+              center.agentIdSource === "env_default" ? ` voice-agent-env-default-hint-${restaurantId}` : ""
+            }`}
+          />
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <button
               type="button"
-              onClick={() => void refresh()}
-              disabled={busy !== null}
-              aria-busy={busy === "refresh"}
-              className="voice-agent-panel__refresh btn-ghost kds-thumb-btn min-h-11 w-full text-xs"
-            >
-              {busy === "refresh" ? "Refreshing…" : "Refresh status"}
-            </button>
-          </div>
-        )}
-
-        {embedded ? (
-          <div className="voice-agent-panel__embedded-chrome hidden flex-wrap items-center justify-between gap-2 sm:flex">
-            <p className="text-xs text-muted">{nextActionText(center)}</p>
-            <button
-              type="button"
-              onClick={() => void refresh()}
-              disabled={busy !== null}
-              aria-busy={busy === "refresh"}
-              className="voice-agent-panel__refresh btn-ghost kds-thumb-btn min-h-11 w-full shrink-0 text-xs sm:min-h-10 sm:w-auto"
-            >
-              {busy === "refresh" ? "Refreshing…" : "Refresh status"}
-            </button>
-          </div>
-        ) : null}
-
-        <div className="voice-agent-panel__connect rounded-xl border border-line bg-elev p-4 shadow-sm max-sm:border-0 max-sm:bg-transparent max-sm:p-0 max-sm:shadow-none">
-          <h3 className="text-sm font-semibold text-ink sm:text-xs">
-            {embedded ? "Connect or update agent" : "Connect"}
-          </h3>
-          {!center.envReady ? (
-            <p
-              className="voice-agent-panel__env-notice mt-3 rounded-lg border border-warning/30 bg-warning/[0.06] px-3 py-2 text-sm text-amber-950 [overflow-wrap:anywhere] sm:text-xs"
-              role="status"
-            >
-              Connect is disabled until required server secrets are configured.
-            </p>
-          ) : null}
-          <div className="voice-agent-panel__controls mt-3 min-w-0">
-            <div className="voice-agent-panel__field min-w-0">
-              <label
-                htmlFor={`voice-agent-id-${restaurantId}`}
-                className="text-xs font-medium text-muted"
-              >
-                ElevenLabs agent ID
-              </label>
-              <input
-                id={`voice-agent-id-${restaurantId}`}
-                type="text"
-                autoComplete="off"
-                spellCheck={false}
-                className="voice-agent-panel__agent-id-input input-base mt-1.5 min-h-11 w-full min-w-0"
-                placeholder="Paste agent id"
-                value={agentIdInput}
-                onChange={(e) => setAgentIdInput(e.target.value)}
-                disabled={busy !== null || voiceBlocked}
-                aria-describedby={
-                  [
-                    connectDisabled && !voiceBlocked && !center.envReady
-                      ? `voice-agent-connect-hint-${restaurantId}`
-                      : null,
-                    center.agentIdSource === "env_default"
-                      ? `voice-agent-env-default-hint-${restaurantId}`
-                      : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" ") || undefined
-                }
-              />
-              {center.agentIdSource === "env_default" && center.agentId ? (
-                <p
-                  id={`voice-agent-env-default-hint-${restaurantId}`}
-                  className="mt-2 text-xs text-muted [overflow-wrap:anywhere]"
-                >
-                  Server default agent is available but not linked to this
-                  location. Paste an ID or{" "}
-                  <button
-                    type="button"
-                    className="font-medium text-accent underline-offset-2 hover:underline"
-                    onClick={() => setAgentIdInput(center.agentId ?? "")}
-                    disabled={busy !== null || voiceBlocked}
-                  >
-                    use server default
-                  </button>
-                  , then Connect &amp; sync.
-                </p>
-              ) : null}
-            </div>
-            <div className="voice-agent-panel__actions">
-            <button
-              type="button"
-              className="voice-agent-panel__btn voice-agent-panel__btn--connect btn-primary kds-thumb-btn min-h-11 w-full"
+              className="btn-primary max-sm:w-full"
               disabled={connectDisabled}
               aria-busy={busy === "connect"}
               onClick={async () => {
@@ -274,9 +154,7 @@ export function VoiceAgentPanel({
                   router.refresh();
                 } catch (e) {
                   const raw = e instanceof Error ? e.message : "Connect failed";
-                  setError(
-                    sanitizeVoiceAgentDisplayError(raw) ?? "Connect failed"
-                  );
+                  setError(sanitizeVoiceAgentDisplayError(raw) ?? "Connect failed");
                   await refresh();
                 } finally {
                   setBusy(null);
@@ -287,7 +165,7 @@ export function VoiceAgentPanel({
             </button>
             <button
               type="button"
-              className="voice-agent-panel__btn voice-agent-panel__btn--resync btn-ghost kds-thumb-btn min-h-11 w-full"
+              className="btn-ghost max-sm:w-full"
               disabled={resyncDisabled}
               aria-busy={busy === "resync"}
               onClick={async () => {
@@ -304,9 +182,7 @@ export function VoiceAgentPanel({
                   router.refresh();
                 } catch (e) {
                   const raw = e instanceof Error ? e.message : "Re-sync failed";
-                  setError(
-                    sanitizeVoiceAgentDisplayError(raw) ?? "Re-sync failed"
-                  );
+                  setError(sanitizeVoiceAgentDisplayError(raw) ?? "Re-sync failed");
                   await refresh();
                 } finally {
                   setBusy(null);
@@ -315,83 +191,190 @@ export function VoiceAgentPanel({
             >
               {busy === "resync" ? "Syncing…" : "Sync now"}
             </button>
-            </div>
           </div>
+        </div>
+        <p
+          id={`voice-agent-connect-hint-${restaurantId}`}
+          className="mt-1.5 text-[12px] text-subtle [overflow-wrap:anywhere]"
+        >
+          {voiceBlocked
+            ? "Voice ordering is blocked by plan."
+            : !center.envReady
+              ? "Server secrets are required before connect."
+              : nextActionText(center)}
+        </p>
+        {center.agentIdSource === "env_default" && center.agentId ? (
           <p
-            id={`voice-agent-connect-hint-${restaurantId}`}
-            className="voice-agent-panel__connect-hint mt-2 text-xs text-muted [overflow-wrap:anywhere] max-sm:sr-only sm:not-sr-only sm:block"
+            id={`voice-agent-env-default-hint-${restaurantId}`}
+            className="mt-1.5 text-[12px] text-subtle [overflow-wrap:anywhere]"
           >
-            {voiceBlocked
-              ? "Voice ordering is blocked by plan."
-              : !center.envReady
-                ? "Server secrets are required before connect."
-                : nextActionText(center)}
+            A server default agent exists but isn&apos;t linked to this location. Paste an ID or{" "}
+            <button
+              type="button"
+              className="rounded font-medium text-ink underline underline-offset-2 hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              onClick={() => setAgentIdInput(center.agentId ?? "")}
+              disabled={busy !== null || voiceBlocked}
+            >
+              use the server default
+            </button>
+            , then Connect &amp; sync.
           </p>
-          {center.agentId ? (
-            <p className="voice-agent-panel__agent-id-line mt-2 hidden break-all font-mono text-caption text-subtle sm:block">
-              Linked agent: {center.agentId}
-              {center.agentIdSource === "env_default"
-                ? " (from .env default)"
-                : ""}
-            </p>
+        ) : null}
+      </div>
+
+      {success || error ? (
+        <div className="min-w-0 space-y-2">
+          {success ? (
+            <Notice tone="ok" title={success} role="status">
+              {nextActionText(center)}
+            </Notice>
+          ) : null}
+          {error ? (
+            <Notice tone="bad" title={error} role="alert">
+              Check the status above, then retry connect or sync.
+            </Notice>
           ) : null}
         </div>
+      ) : null}
+    </div>
+  );
 
-        {success || error ? (
-          <div className="voice-agent-panel__feedback min-w-0 space-y-2">
-            {success ? (
-              <div
-                className="voice-agent-panel__success rounded-lg border border-success/25 bg-success/5 px-3 py-2.5 text-sm text-success [overflow-wrap:anywhere]"
-                role="status"
-                aria-live="polite"
-              >
-                <p className="font-medium">{success}</p>
-                <p className="voice-agent-panel__success-hint mt-1 hidden text-xs text-ink/80 sm:block">
-                  {nextActionText(center)}
-                </p>
-              </div>
-            ) : null}
-            {error ? (
-              <div
-                className="voice-agent-panel__error rounded-lg border border-danger/25 bg-danger/5 px-3 py-2.5 text-sm text-danger [overflow-wrap:anywhere]"
-                role="alert"
-                aria-live="assertive"
-              >
-                <p className="font-medium">{error}</p>
-                <p className="voice-agent-panel__error-hint mt-1 text-xs text-ink/80 max-sm:sr-only sm:not-sr-only">
-                  Review status above, then retry connect or sync.
-                </p>
-              </div>
-            ) : null}
-          </div>
-        ) : null}
-
-        <details className="voice-agent-panel__advanced rounded-xl border border-line bg-card p-4 shadow-sm">
-          <summary className="voice-agent-panel__advanced-summary cursor-pointer text-sm font-semibold text-ink">
-            Advanced diagnostics
-            <span className="voice-agent-panel__advanced-hint ml-1 font-normal text-muted sm:hidden">
-              (checklist, secrets, URLs)
-            </span>
-          </summary>
-          <div className="voice-agent-panel__advanced-body mt-4 min-w-0 space-y-4 overflow-hidden">
-            <SetupChecklist items={center.checklist} />
-            <EnvSecretsCard secrets={center.envSecrets} />
-            <ProfileVariablesCard rows={center.expectedPlaceholders} />
-            <ToolUrlsCard
-              tools={center.toolUrls}
-              copied={copied}
-              onCopy={copyText}
-            />
-            <p className="voice-agent-panel__advanced-footnote text-xs text-muted [overflow-wrap:anywhere]">
-              If the agent is misconfigured, use Re-sync. If server secrets were
-              missing, set them and restart the server before trying again.
-            </p>
-          </div>
-        </details>
+  const statusRow = (
+    <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
+      <div className="flex min-w-0 flex-wrap items-center gap-2">
+        <Badge tone={STATUS_TONE[center.connectionStatus]}>{STATUS_LABEL[center.connectionStatus]}</Badge>
+        <span className="text-[12.5px] text-subtle">
+          {center.lastSyncAt ? `Last sync ${formatWhen(center.lastSyncAt)}` : "Never synced"}
+        </span>
       </div>
-    </section>
+      <RefreshButton
+        onClick={() => void refresh()}
+        busy={busy === "refresh"}
+        label={busy === "refresh" ? "Refreshing" : "Refresh status"}
+        showLabel
+      />
+    </div>
+  );
+
+  const linkedAgent = center.agentId ? (
+    <div className="flex min-w-0 items-center gap-2 rounded-[10px] border border-line bg-elev px-3 py-2">
+      <div className="min-w-0 flex-1">
+        <p className="text-[12px] text-subtle">
+          Linked agent{center.agentIdSource === "env_default" ? " (from .env default)" : ""}
+        </p>
+        <p className="truncate font-mono text-[12.5px] text-ink" title={center.agentId}>
+          {center.agentId}
+        </p>
+      </div>
+      <CopyButton
+        label="Copy agent ID"
+        copied={copied === "agent-id"}
+        onClick={() => void copyText("agent-id", center.agentId ?? "")}
+      />
+    </div>
+  ) : null;
+
+  const okChecks = center.checklist.filter((c) => c.status === "ok").length;
+  const missingSecrets = center.envSecrets.filter((x) => x.required && !x.ok).length;
+  const mismatched = center.expectedPlaceholders.filter((r) => !r.matches).length;
+
+  const diagnostics = (
+    <div className="min-w-0 space-y-3">
+      <SetupChecklist items={center.checklist} />
+      <div className="overflow-hidden rounded-[12px] border border-line">
+        <DiagnosticDisclosure
+          title="Environment secrets"
+          badge={
+            missingSecrets > 0 ? (
+              <Badge tone="bad">{missingSecrets} missing</Badge>
+            ) : (
+              <Badge tone="ok">All set</Badge>
+            )
+          }
+        >
+          <EnvSecretsCard secrets={center.envSecrets} />
+        </DiagnosticDisclosure>
+        <DiagnosticDisclosure
+          title="Profile variables"
+          badge={
+            mismatched > 0 ? (
+              <Badge tone="warn">{mismatched} out of sync</Badge>
+            ) : (
+              <Badge tone="ok">Match</Badge>
+            )
+          }
+        >
+          <ProfileVariablesCard rows={center.expectedPlaceholders} />
+        </DiagnosticDisclosure>
+        <DiagnosticDisclosure
+          title="Webhook tool URLs"
+          badge={<Badge>{center.toolUrls.length}</Badge>}
+        >
+          <ToolUrlsCard tools={center.toolUrls} copied={copied} onCopy={copyText} />
+        </DiagnosticDisclosure>
+      </div>
+      <p className="text-[12px] text-subtle [overflow-wrap:anywhere]">
+        If the agent is misconfigured, use Sync now. If server secrets were missing, set them and
+        restart the server before trying again.
+      </p>
+    </div>
+  );
+
+  const body = (
+    <div className="voice-agent-panel min-w-0 max-w-full space-y-4">
+      <PlanLimitNotice verdict={voiceOrderGate} />
+      {statusRow}
+      {summary}
+      {center.lastSyncError ? (
+        <Notice tone="bad" title="Last sync error:">
+          {center.lastSyncError}
+        </Notice>
+      ) : null}
+      {linkedAgent}
+      {connectForm}
+    </div>
+  );
+
+  if (embedded) {
+    return (
+      <div className="min-w-0 space-y-6">
+        <AdvancedSection
+          id="connection"
+          title="Connection"
+          hint="Link the ElevenLabs agent and keep it in sync with this location."
+        >
+          {body}
+        </AdvancedSection>
+        <AdvancedSection
+          id="diagnostics"
+          title="Advanced diagnostics"
+          hint={`${okChecks} of ${center.checklist.length} setup checks passing`}
+          className="border-t border-line pt-5"
+        >
+          {diagnostics}
+        </AdvancedSection>
+      </div>
+    );
+  }
+
+  return (
+    <Panel title="Voice agent" className="min-w-0">
+      <div className="space-y-5">
+        {body}
+        <CollapsibleInline title="Advanced diagnostics" hint="Checklist, secrets, URLs">
+          {diagnostics}
+        </CollapsibleInline>
+      </div>
+    </Panel>
   );
 }
+
+const STATUS_TONE: Record<VoiceAgentControlCenterSnapshot["connectionStatus"], Tone> = {
+  disconnected: "neutral",
+  connected: "ok",
+  misconfigured: "warn",
+  unreachable: "bad",
+};
 
 function formatWhen(iso: string) {
   try {
@@ -404,60 +387,127 @@ function formatWhen(iso: string) {
   }
 }
 
+function CopyButton({
+  label,
+  copied,
+  onClick,
+}: {
+  label: string;
+  copied: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className="btn-ghost btn-sm shrink-0"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+    >
+      {copied ? <Check size={14} aria-hidden /> : <Copy size={14} aria-hidden />}
+      <span>{copied ? "Copied" : "Copy"}</span>
+    </button>
+  );
+}
+
+function DiagnosticDisclosure({
+  title,
+  badge,
+  children,
+}: {
+  title: string;
+  badge?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <details className="group border-b border-line/70 last:border-b-0">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-3.5 py-2.5 hover:bg-elev focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 [&::-webkit-details-marker]:hidden">
+        <span className="min-w-0 flex-1 text-[13px] font-medium text-ink">{title}</span>
+        {badge}
+        <ChevronDown
+          size={15}
+          className="shrink-0 text-subtle transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+          aria-hidden
+        />
+      </summary>
+      <div className="min-w-0 border-t border-line/70 px-3.5 py-3">{children}</div>
+    </details>
+  );
+}
+
+function CollapsibleInline({
+  title,
+  hint,
+  children,
+}: {
+  title: string;
+  hint?: string;
+  children: ReactNode;
+}) {
+  return (
+    <details className="group rounded-[12px] border border-line">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-3.5 py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 [&::-webkit-details-marker]:hidden">
+        <span className="min-w-0 flex-1">
+          <span className="block text-[13px] font-semibold text-ink">{title}</span>
+          {hint ? <span className="block text-[12px] text-subtle">{hint}</span> : null}
+        </span>
+        <ChevronDown
+          size={15}
+          className="shrink-0 text-subtle transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+          aria-hidden
+        />
+      </summary>
+      <div className="min-w-0 border-t border-line px-3.5 py-3">{children}</div>
+    </details>
+  );
+}
+
+const CHECK_TONE: Record<string, { tone: Tone; label: string }> = {
+  ok: { tone: "ok", label: "OK" },
+  warn: { tone: "warn", label: "Check" },
+  error: { tone: "bad", label: "Fix" },
+  pending: { tone: "neutral", label: "Pending" },
+};
+
 function SetupChecklist({
   items,
 }: {
   items: VoiceAgentControlCenterSnapshot["checklist"];
 }) {
   return (
-    <div className="voice-agent-panel__checklist min-w-0 rounded-xl border border-line bg-card p-4 shadow-sm">
-      <h3 className="text-xs font-semibold text-ink">Setup checklist</h3>
-      <ul className="mt-3 space-y-2">
-        {items.map((item) => (
-          <li key={item.id} className="flex gap-2 text-xs">
+    <ul className="min-w-0 overflow-hidden rounded-[12px] border border-line" aria-label="Setup checklist">
+      {items.map((item) => {
+        const tone = CHECK_TONE[item.status] ?? CHECK_TONE.pending;
+        return (
+          <li key={item.id} className="list-row items-start px-3.5">
             <CheckIcon status={item.status} />
             <div className="min-w-0 flex-1">
-              <p className="font-medium text-ink [overflow-wrap:anywhere]">
-                {item.label}
-              </p>
+              <p className="text-[13px] font-medium text-ink [overflow-wrap:anywhere]">{item.label}</p>
               {item.detail ? (
-                <p className="mt-0.5 text-muted [overflow-wrap:anywhere]">
-                  {item.detail}
-                </p>
+                <p className="mt-0.5 text-[12px] text-subtle [overflow-wrap:anywhere]">{item.detail}</p>
               ) : null}
             </div>
+            <Badge tone={tone.tone} className="mt-0.5">
+              {tone.label}
+            </Badge>
           </li>
-        ))}
-      </ul>
-    </div>
+        );
+      })}
+    </ul>
   );
 }
 
 function CheckIcon({ status }: { status: string }) {
   if (status === "ok") {
-    return (
-      <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-success/15 text-success">
-        ✓
-      </span>
-    );
+    return <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-success" aria-hidden />;
   }
   if (status === "error") {
-    return (
-      <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-danger/10 text-danger">
-        !
-      </span>
-    );
+    return <XCircle size={16} className="mt-0.5 shrink-0 text-danger" aria-hidden />;
   }
   if (status === "warn") {
-    return (
-      <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-warning/15 text-amber-900">
-        ?
-      </span>
-    );
+    return <AlertTriangle size={16} className="mt-0.5 shrink-0 text-warning" aria-hidden />;
   }
-  return (
-    <span className="mt-0.5 h-4 w-4 shrink-0 rounded-full border border-line bg-elev" />
-  );
+  return <Circle size={16} className="mt-0.5 shrink-0 text-subtle" aria-hidden />;
 }
 
 function EnvSecretsCard({
@@ -467,50 +517,30 @@ function EnvSecretsCard({
 }) {
   const missing = secrets.filter((s) => s.required && !s.ok);
   return (
-    <div className="voice-agent-panel__env-secrets min-w-0 rounded-xl border border-line bg-elev p-4 shadow-sm">
-      <h3 className="text-xs font-semibold text-ink">Environment secrets</h3>
-      <p className="mt-1 text-xs text-muted [overflow-wrap:anywhere]">
-        Server-only keys in <code className="rounded bg-card px-1">.env</code>{" "}
-        (see <code className="rounded bg-card px-1">.env.example</code>).
+    <div className="min-w-0 space-y-2">
+      <p className="text-[12px] text-subtle [overflow-wrap:anywhere]">
+        Server-only keys in <code className="rounded bg-elev px-1 font-mono">.env</code> (see{" "}
+        <code className="rounded bg-elev px-1 font-mono">.env.example</code>).
       </p>
-      <ul className="mt-3 space-y-2">
+      <ul className="min-w-0 space-y-1.5">
         {secrets.map((row) => (
-          <li
-            key={row.key}
-            className={cn(
-              "voice-agent-panel__env-row min-w-0 rounded-lg border px-3 py-2 text-xs",
-              row.ok
-                ? "border-success/25 bg-success/[0.04]"
-                : row.required
-                  ? "border-danger/30 bg-danger/[0.04]"
-                  : "border-line bg-card"
-            )}
-          >
-            <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
-              <code className="voice-agent-panel__env-key break-all font-mono text-caption text-ink [overflow-wrap:anywhere]">
-                {row.key}
-              </code>
-              <span
-                className={cn(
-                  "text-micro font-semibold uppercase",
-                  row.ok ? "text-success" : "text-danger"
-                )}
-              >
+          <li key={row.key} className="min-w-0">
+            <div className="flex min-w-0 items-center gap-2">
+              <code className="min-w-0 flex-1 break-all font-mono text-[12px] text-ink">{row.key}</code>
+              <Badge tone={row.ok ? "ok" : row.required ? "bad" : "neutral"}>
                 {row.ok ? "OK" : row.required ? "Missing" : "Optional"}
-              </span>
+              </Badge>
             </div>
             {!row.ok && row.hint ? (
-              <p className="mt-1 text-caption text-muted [overflow-wrap:anywhere]">
-                {row.hint}
-              </p>
+              <p className="mt-0.5 text-[12px] text-subtle [overflow-wrap:anywhere]">{row.hint}</p>
             ) : null}
           </li>
         ))}
       </ul>
       {missing.length > 0 ? (
-        <p className="mt-3 text-xs text-danger [overflow-wrap:anywhere]">
+        <Notice tone="bad">
           Add {missing.map((m) => m.key).join(", ")} then restart the dev server.
-        </p>
+        </Notice>
       ) : null}
     </div>
   );
@@ -522,56 +552,33 @@ function ProfileVariablesCard({
   rows: VoiceAgentControlCenterSnapshot["expectedPlaceholders"];
 }) {
   return (
-    <div className="voice-agent-panel__profile-vars min-w-0 rounded-xl border border-line bg-elev p-4 shadow-sm">
-      <h3 className="text-xs font-semibold text-ink">Profile variables</h3>
-      <p className="mt-1 text-xs text-muted [overflow-wrap:anywhere]">
-        ElevenLabs dynamic placeholders used when tools are not baked to this
-        restaurant.
+    <div className="min-w-0 space-y-2">
+      <p className="text-[12px] text-subtle [overflow-wrap:anywhere]">
+        ElevenLabs dynamic placeholders used when tools are not baked to this restaurant.
       </p>
-      <div className="voice-agent-panel__profile-scroll mt-3 min-w-0 max-w-full overflow-x-auto overscroll-x-contain">
-        <div className="voice-agent-panel__profile-table dashboard-table min-w-0">
-        <table className="w-full min-w-0 text-left text-sm xl:min-w-[280px]">
-          <thead>
-            <tr className="border-b border-line text-micro uppercase tracking-wider text-subtle">
-              <th className="pb-2 pr-3">Variable</th>
-              <th className="pb-2 pr-3">Expected</th>
-              <th className="pb-2 pr-3">On agent</th>
-              <th className="pb-2">Match</th>
+      <div className="min-w-0 max-w-full overflow-x-auto overscroll-x-contain rounded-[10px] border border-line">
+        <table className="w-full min-w-[30rem] text-left text-[12.5px]">
+          <thead className="bg-elev text-[11px] uppercase tracking-[0.04em] text-subtle">
+            <tr>
+              <th scope="col" className="px-3 py-2 font-semibold">Variable</th>
+              <th scope="col" className="px-3 py-2 font-semibold">Expected</th>
+              <th scope="col" className="px-3 py-2 font-semibold">On agent</th>
+              <th scope="col" className="px-3 py-2 font-semibold">Match</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.key} className="border-b border-line/60">
-                <td
-                  data-label="Variable"
-                  className="py-2 pr-3 font-mono text-caption [overflow-wrap:anywhere]"
-                >
-                  {row.key}
-                </td>
-                <td
-                  data-label="Expected"
-                  className="py-2 pr-3 break-all text-muted [overflow-wrap:anywhere]"
-                >
-                  {row.expected}
-                </td>
-                <td
-                  data-label="On agent"
-                  className="py-2 pr-3 break-all text-ink [overflow-wrap:anywhere]"
-                >
-                  {row.actual ?? "—"}
-                </td>
-                <td data-label="Match" className="py-2">
-                  {row.matches ? (
-                    <span className="text-success">Yes</span>
-                  ) : (
-                    <span className="text-danger">No</span>
-                  )}
+              <tr key={row.key} className="border-t border-line/70 align-top">
+                <td className="px-3 py-2 font-mono text-[12px] text-ink [overflow-wrap:anywhere]">{row.key}</td>
+                <td className="px-3 py-2 text-muted [overflow-wrap:anywhere]">{row.expected}</td>
+                <td className="px-3 py-2 text-ink [overflow-wrap:anywhere]">{row.actual ?? "—"}</td>
+                <td className="px-3 py-2">
+                  {row.matches ? <Badge tone="ok">Yes</Badge> : <Badge tone="bad">No</Badge>}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        </div>
       </div>
     </div>
   );
@@ -586,40 +593,32 @@ function ToolUrlsCard({
   copied: string | null;
   onCopy: (key: string, url: string) => void;
 }) {
+  if (tools.length === 0) {
+    return <p className="text-[12.5px] text-subtle">Tool URLs appear here after the first sync.</p>;
+  }
   return (
-    <div className="voice-agent-panel__tool-urls min-w-0 rounded-xl border border-line bg-elev p-4 shadow-sm">
-      <h3 className="text-xs font-semibold text-ink">Webhook tool URLs</h3>
-      <p className="mt-1 text-xs text-muted [overflow-wrap:anywhere]">
+    <div className="min-w-0 space-y-2">
+      <p className="text-[12px] text-subtle [overflow-wrap:anywhere]">
         Supabase Edge Functions for this restaurant (after sync).
       </p>
-      <ul className="mt-3 space-y-3">
+      <ul className="min-w-0 space-y-2">
         {tools.map((tool) => (
-          <li
-            key={tool.name}
-            className="voice-agent-panel__tool-item min-w-0 rounded-lg border border-line bg-card p-3"
-          >
-            <div className="voice-agent-panel__tool-head flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <span className="min-w-0 font-mono text-caption font-semibold text-ink [overflow-wrap:anywhere]">
+          <li key={tool.name} className="min-w-0 rounded-[10px] border border-line p-2.5">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="min-w-0 flex-1 font-mono text-[12px] font-semibold text-ink [overflow-wrap:anywhere]">
                 {tool.label}
               </span>
-              <button
-                type="button"
-                className="voice-agent-panel__copy-btn kds-thumb-btn inline-flex min-h-11 w-full shrink-0 items-center justify-center text-sm font-medium text-accent underline-offset-2 hover:underline sm:min-h-10 sm:w-auto"
+              <CopyButton
+                label={`Copy URL for ${tool.label}`}
+                copied={copied === tool.name}
                 onClick={() => void onCopy(tool.name, tool.url)}
-                aria-label={`Copy URL for ${tool.label}`}
-              >
-                {copied === tool.name ? "Copied" : "Copy URL"}
-              </button>
+              />
             </div>
-            <div className="voice-agent-panel__tool-url-scroll mt-2 max-w-full overflow-x-auto overscroll-x-contain rounded-lg border border-line/70 bg-elev/40 px-2 py-1.5">
-              <p className="min-w-0 whitespace-pre-wrap break-all font-mono text-caption text-muted [overflow-wrap:anywhere]">
-                {tool.url}
-              </p>
-            </div>
+            <p className="mt-1.5 break-all rounded-[8px] bg-elev px-2 py-1.5 font-mono text-[11.5px] text-muted">
+              {tool.url}
+            </p>
             {tool.headerNote ? (
-              <p className="mt-1 text-micro text-subtle [overflow-wrap:anywhere]">
-                {tool.headerNote}
-              </p>
+              <p className="mt-1 text-[11.5px] text-subtle [overflow-wrap:anywhere]">{tool.headerNote}</p>
             ) : null}
           </li>
         ))}

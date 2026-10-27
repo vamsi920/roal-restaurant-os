@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import {
   evaluateBillingGate,
   evaluateOrganizationGates,
@@ -9,7 +9,7 @@ import { loadOrganizationBilling } from "@/lib/billing/load-billing";
 import type { MembershipRole } from "@/lib/types";
 
 export async function loadOrganizationGateVerdicts(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     membershipRole: MembershipRole;
@@ -21,7 +21,7 @@ export async function loadOrganizationGateVerdicts(
 }
 
 export async function assertOrganizationBillingGate(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     membershipRole: MembershipRole;

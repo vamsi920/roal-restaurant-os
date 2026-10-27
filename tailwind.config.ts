@@ -24,6 +24,8 @@ const config: Config = {
         success: "rgb(var(--success) / <alpha-value>)",
         warning: "rgb(var(--warning) / <alpha-value>)",
         danger: "rgb(var(--danger) / <alpha-value>)",
+        info: "rgb(var(--info) / <alpha-value>)",
+        sidebar: "rgb(var(--bg-sidebar) / <alpha-value>)",
         ticket: "rgb(var(--ticket) / <alpha-value>)",
         "ticket-ink": "rgb(var(--ticket-ink) / <alpha-value>)",
         heat: "rgb(var(--heat) / <alpha-value>)",

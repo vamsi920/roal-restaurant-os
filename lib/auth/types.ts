@@ -1,4 +1,4 @@
-import type { User } from "@supabase/supabase-js";
+import type { SessionUser } from "@/lib/auth/session-user";
 import type {
   Membership,
   MembershipRole,
@@ -11,7 +11,7 @@ export type MembershipWithOrg = Membership & {
 };
 
 export type AuthContext = {
-  user: User;
+  user: SessionUser;
   memberships: MembershipWithOrg[];
   /** Earliest membership by created_at (stable default org). */
   primaryMembership: MembershipWithOrg | null;

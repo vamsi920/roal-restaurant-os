@@ -1,13 +1,13 @@
 import { toMergeMenu } from "@/lib/menu-import/types";
 import type { ScannedMenu } from "@/lib/menu-import/types";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 
 export async function commitMenuToRestaurant(
   restaurantId: string,
   menu: ScannedMenu
 ) {
   const mergePayload = toMergeMenu(menu);
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
 
   const { data, error } = await supabase.rpc("merge_menu", {
     p_restaurant_id: restaurantId,

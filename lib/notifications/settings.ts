@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type {
   NotificationChannelsConfig,
   NotificationEventType,
@@ -66,7 +66,7 @@ export function rowToNotificationSettings(row: SettingsRow): NotificationSetting
 }
 
 export async function loadNotificationSettings(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string
 ): Promise<NotificationSettings> {
   const { data, error } = await supabase
@@ -81,7 +81,7 @@ export async function loadNotificationSettings(
 }
 
 export async function ensureNotificationSettings(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string
 ): Promise<NotificationSettings> {
   const { data, error } = await supabase
@@ -138,7 +138,7 @@ export type SaveNotificationSettingsInput = {
 };
 
 export async function saveNotificationSettings(
-  supabase: SupabaseClient,
+  supabase: Db,
   organizationId: string,
   input: SaveNotificationSettingsInput
 ): Promise<NotificationSettings> {

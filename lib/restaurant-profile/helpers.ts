@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import type {
   ElevenLabsMenuAutoSyncStatus,
   ElevenLabsProvisionStatus,
@@ -187,7 +187,7 @@ export function serviceModesFromProfile(
 }
 
 export async function getRestaurantProfile(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string
 ): Promise<RestaurantProfile | null> {
   const { data, error } = await supabase
@@ -202,7 +202,7 @@ export async function getRestaurantProfile(
 }
 
 export async function ensureRestaurantProfile(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   organizationId: string
 ): Promise<RestaurantProfile> {
@@ -229,7 +229,7 @@ export async function ensureRestaurantProfile(
 }
 
 export async function upsertRestaurantProfile(
-  supabase: SupabaseClient,
+  supabase: Db,
   restaurantId: string,
   organizationId: string,
   input: RestaurantProfileInput

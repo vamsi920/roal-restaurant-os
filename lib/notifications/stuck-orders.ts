@@ -1,4 +1,4 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Db } from "@/lib/db";
 import { emitOrderStuckIfTransition } from "@/lib/notifications/operational-events";
 import { loadNotificationSettings } from "@/lib/notifications/settings";
 
@@ -14,7 +14,7 @@ type StuckRow = {
 };
 
 export async function notifyStuckOrdersForOrganization(
-  supabase: SupabaseClient,
+  supabase: Db,
   input: {
     organizationId: string;
     restaurantNames: Map<string, string>;

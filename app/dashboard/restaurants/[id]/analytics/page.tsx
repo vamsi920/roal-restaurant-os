@@ -7,12 +7,12 @@ import {
 } from "@/lib/auth/context-server";
 import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
 import { loadRestaurantAnalytics } from "@/lib/analytics/load-analytics";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
 import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/helpers";
 
 export const metadata: Metadata = {
-  title: "Analytics — ROAL",
+  title: "Reports — ROAL",
 };
 
 export const dynamic = "force-dynamic";
@@ -35,7 +35,7 @@ export default async function RestaurantAnalyticsPage({
   }
 
   const { restaurant, membership } = access;
-  const supabase = await createServerSupabase();
+  const supabase = getDb();
   const [snapshot, suggestionCount] = await Promise.all([
     loadRestaurantAnalytics(supabase, {
       organizationId: restaurant.organization_id,

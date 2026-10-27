@@ -4,8 +4,11 @@ import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { saveRestaurantHoursAction } from "./hours-actions";
 import { DAY_LABELS } from "@/lib/restaurant-hours/core";
-import { cn } from "@/lib/cn";
+import { Clock, Plus, Trash2 } from "lucide-react";
+import { Badge, type Tone } from "@/components/ui";
+import { Notice, SaveRow } from "@/components/live-orders/workspace-ui";
 import type { RestaurantHoursBundle } from "@/lib/restaurant-hours/types";
+import { CheckRow, SettingsPanel, SubHeading } from "./menu/menu-ui";
 
 type Props = {
   restaurantId: string;
@@ -49,17 +52,19 @@ function toExceptionForm(bundle: RestaurantHoursBundle): ExceptionFormRow[] {
   }));
 }
 
-function statusTone(status: string) {
-  if (status === "open") return "text-success border-success/25 bg-success/5";
-  if (status === "temporarily_closed") {
-    return "text-warning border-warning/25 bg-warning/5";
-  }
-  return "text-danger border-danger/25 bg-danger/5";
+function statusTone(status: string): Tone {
+  if (status === "open") return "ok";
+  if (status === "temporarily_closed") return "warn";
+  return "bad";
+}
+
+function noticeTone(status: string): "ok" | "warn" | "bad" {
+  const tone = statusTone(status);
+  return tone === "ok" ? "ok" : tone === "warn" ? "warn" : "bad";
 }
 
 export function RestaurantHoursSettings({ restaurantId, bundle }: Props) {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
   const [temporarilyClosed, setTemporarilyClosed] = useState(
     bundle.profile.temporarily_closed
   );
@@ -96,6 +101,24 @@ export function RestaurantHoursSettings({ restaurantId, bundle }: Props) {
     setSaved(false);
   }
 
+  function updateWeekly(idx: number, patch: Partial<WeeklyFormRow>) {
+    setSaved(false);
+    setWeekly((prev) => {
+      const next = [...prev];
+      next[idx] = { ...next[idx], ...patch };
+      return next;
+    });
+  }
+
+  function updateException(idx: number, patch: Partial<ExceptionFormRow>) {
+    setSaved(false);
+    setExceptions((prev) => {
+      const next = [...prev];
+      next[idx] = { ...next[idx], ...patch };
+      return next;
+    });
+  }
+
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -128,111 +151,47 @@ export function RestaurantHoursSettings({ restaurantId, bundle }: Props) {
     });
   }
 
-  return (
-    <section className="glass-card overflow-hidden">
-      <div className="flex w-full items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-5">
-        <div className="min-w-0 flex-1">
-          <h2 id="restaurant-hours-heading" className="text-sm font-semibold text-ink">
-            Hours &amp; closures
-          </h2>
-          <p className="mt-0.5 text-xs text-muted">
-            Weekly schedule, holidays, and temporary closure — synced to the voice agent.
-          </p>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <span
-            className={cn(
-              "rounded-full border px-2.5 py-0.5 text-caption font-medium",
-              statusTone(
-                temporarilyClosed ? "temporarily_closed" : liveStatus.status
-              )
-            )}
-          >
-            {previewLabel}
-          </span>
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-subtle hover:bg-elev hover:text-ink"
-            onClick={() => setOpen((o) => !o)}
-            aria-expanded={open}
-            aria-controls="restaurant-hours-panel"
-            aria-labelledby="restaurant-hours-heading"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className={cn("h-5 w-5 transition-transform", open && "rotate-180")}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              aria-hidden
-            >
-              <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="sr-only">{open ? "Collapse" : "Expand"} hours</span>
-          </button>
-        </div>
-      </div>
+  const effectiveStatus = temporarilyClosed ? "temporarily_closed" : liveStatus.status;
 
-      {open ? (
-        <form
-          id="restaurant-hours-panel"
-          onSubmit={onSubmit}
-          className="space-y-6 p-4 sm:p-5"
-        >
-          <p
-            className={cn(
-              "rounded-lg border px-3 py-2 text-sm",
-              statusTone(
-                temporarilyClosed ? "temporarily_closed" : liveStatus.status
-              )
-            )}
-          >
+  return (
+    <form onSubmit={onSubmit} id="restaurant-hours-panel">
+      <SettingsPanel
+        id="restaurant-hours"
+        icon={Clock}
+        color="amber"
+        title="Hours"
+        titleId="restaurant-hours-heading"
+        description="Weekly schedule, holidays, and temporary closures. The phone host won't take orders while you're closed."
+        action={<Badge tone={statusTone(effectiveStatus)}>{previewLabel}</Badge>}
+      >
+        <div className="space-y-6">
+          <Notice tone={noticeTone(effectiveStatus)}>
             {temporarilyClosed
               ? temporarilyClosedReason.trim() ||
-                "Temporarily closed — voice agent will refuse new orders."
+                "Temporarily closed — the phone host will refuse new orders."
               : liveStatus.message}
-            <span className="mt-1 block text-xs opacity-80">
-              Local: {liveStatus.local_date} {liveStatus.local_time} (
+            <span className="mt-0.5 block text-[12px] opacity-80">
+              Local time: {liveStatus.local_date} {liveStatus.local_time} (
               {bundle.profile.timezone})
             </span>
-          </p>
+          </Notice>
 
-          {error ? (
-            <p className="rounded-lg border border-danger/25 bg-danger/5 px-3 py-2 text-sm text-danger">
-              {error}
-            </p>
-          ) : null}
-          {saved && !pending ? (
-            <p className="rounded-lg border border-success/25 bg-success/5 px-3 py-2 text-sm text-success">
-              Hours saved. Voice agent prompt updated when connected.
-            </p>
-          ) : null}
-
-          <div className="rounded-xl border border-line bg-surface/40 p-4">
-            <label className="flex cursor-pointer items-start gap-3">
-              <input
-                type="checkbox"
-                className="mt-1"
-                checked={temporarilyClosed}
-                onChange={(e) => {
-                  setSaved(false);
-                  setTemporarilyClosed(e.target.checked);
-                }}
-                disabled={pending}
-              />
-              <span>
-                <span className="text-sm font-medium text-ink">
-                  Temporarily closed
-                </span>
-                <span className="mt-0.5 block text-xs text-muted">
-                  Overrides weekly hours until you turn this off.
-                </span>
-              </span>
-            </label>
+          <div className="rounded-[12px] border border-line p-3">
+            <CheckRow
+              checked={temporarilyClosed}
+              onChange={(v) => {
+                setSaved(false);
+                setTemporarilyClosed(v);
+              }}
+              label="Temporarily closed"
+              hint="Overrides weekly hours until you turn this off."
+              disabled={pending}
+            />
             {temporarilyClosed ? (
               <input
-                className="input-base mt-3"
+                className="input-base mt-2"
                 value={temporarilyClosedReason}
+                aria-label="Reason shown to guests"
                 onChange={(e) => {
                   setSaved(false);
                   setTemporarilyClosedReason(e.target.value);
@@ -244,206 +203,179 @@ export function RestaurantHoursSettings({ restaurantId, bundle }: Props) {
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-subtle">
-              Weekly hours
-            </h3>
-            <ul className="mt-3 space-y-2">
-              {weekly.map((row, idx) => (
-                <li
-                  key={row.day_of_week}
-                  className="grid grid-cols-1 items-center gap-2 rounded-lg border border-line/80 px-3 py-2 sm:grid-cols-[120px_1fr_auto_auto]"
-                >
-                  <span className="text-sm font-medium text-ink">
-                    {DAY_LABELS[row.day_of_week]}
-                  </span>
-                  <label className="flex items-center gap-2 text-xs text-muted">
-                    <input
-                      type="checkbox"
-                      checked={row.is_closed}
-                      onChange={(e) => {
-                        setSaved(false);
-                        setWeekly((prev) => {
-                          const next = [...prev];
-                          next[idx] = { ...next[idx], is_closed: e.target.checked };
-                          return next;
-                        });
-                      }}
-                      disabled={pending}
-                    />
-                    Closed all day
-                  </label>
-                  <input
-                    type="time"
-                    className="input-base py-1.5 text-sm"
-                    value={row.open_time}
-                    disabled={pending || row.is_closed}
-                    onChange={(e) => {
-                      setSaved(false);
-                      setWeekly((prev) => {
-                        const next = [...prev];
-                        next[idx] = { ...next[idx], open_time: e.target.value };
-                        return next;
-                      });
-                    }}
-                  />
-                  <input
-                    type="time"
-                    className="input-base py-1.5 text-sm"
-                    value={row.close_time}
-                    disabled={pending || row.is_closed}
-                    onChange={(e) => {
-                      setSaved(false);
-                      setWeekly((prev) => {
-                        const next = [...prev];
-                        next[idx] = { ...next[idx], close_time: e.target.value };
-                        return next;
-                      });
-                    }}
-                  />
-                </li>
-              ))}
+            <SubHeading>Weekly hours</SubHeading>
+            <ul className="mt-2 divide-y divide-line/70 rounded-[12px] border border-line">
+              {weekly.map((row, idx) => {
+                const day = DAY_LABELS[row.day_of_week];
+                return (
+                  <li
+                    key={row.day_of_week}
+                    className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 px-3 py-2 sm:grid-cols-[7rem_minmax(0,1fr)_auto]"
+                  >
+                    <span className="text-[13.5px] font-medium text-ink">{day}</span>
+                    <div
+                      className={
+                        "col-span-2 row-start-2 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:col-span-1 sm:row-start-auto"
+                      }
+                    >
+                      {row.is_closed ? (
+                        <span className="col-span-3 text-[13px] text-subtle">Closed all day</span>
+                      ) : (
+                        <>
+                          <input
+                            type="time"
+                            className="input-base tabular-nums"
+                            aria-label={`${day} opens`}
+                            value={row.open_time}
+                            disabled={pending}
+                            onChange={(e) => updateWeekly(idx, { open_time: e.target.value })}
+                          />
+                          <span className="text-[12.5px] text-subtle" aria-hidden>
+                            to
+                          </span>
+                          <input
+                            type="time"
+                            className="input-base tabular-nums"
+                            aria-label={`${day} closes`}
+                            value={row.close_time}
+                            disabled={pending}
+                            onChange={(e) => updateWeekly(idx, { close_time: e.target.value })}
+                          />
+                        </>
+                      )}
+                    </div>
+                    <label className="col-start-2 row-start-1 flex min-h-11 cursor-pointer items-center gap-2 text-[12.5px] text-muted sm:col-start-auto sm:row-start-auto lg:min-h-0">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 accent-ink"
+                        checked={row.is_closed}
+                        onChange={(e) => updateWeekly(idx, { is_closed: e.target.checked })}
+                        disabled={pending}
+                      />
+                      Closed
+                    </label>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           <div>
-            <div className="flex items-center justify-between gap-2">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-subtle">
-                Holidays &amp; special hours
-              </h3>
-              <button
-                type="button"
-                className="btn-ghost text-xs"
-                onClick={addException}
-                disabled={pending}
-              >
-                Add date
-              </button>
-            </div>
+            <SubHeading
+              action={
+                <button
+                  type="button"
+                  className="btn-ghost btn-sm"
+                  onClick={addException}
+                  disabled={pending}
+                >
+                  <Plus size={14} aria-hidden /> Add date
+                </button>
+              }
+            >
+              Holidays &amp; special hours
+            </SubHeading>
             {exceptions.length === 0 ? (
-              <p className="mt-2 text-xs text-muted">No upcoming exceptions.</p>
+              <p className="mt-2 rounded-[10px] border border-dashed border-line px-3 py-4 text-center text-[12.5px] text-subtle">
+                No upcoming exceptions. Add holidays or special hours so the phone
+                host knows when you&apos;re closed.
+              </p>
             ) : (
-              <ul className="mt-3 space-y-3">
+              <ul className="mt-2 space-y-2">
                 {exceptions.map((ex, idx) => (
                   <li
                     key={`${ex.exception_date}-${idx}`}
-                    className="space-y-2 rounded-lg border border-line/80 p-3"
+                    className="space-y-2 rounded-[12px] border border-line p-3"
                   >
-                    <div className="grid gap-2 sm:grid-cols-2">
+                    <div className="grid gap-2 sm:grid-cols-[10rem_minmax(0,1fr)_auto]">
                       <input
                         type="date"
                         className="input-base"
+                        aria-label="Date"
                         value={ex.exception_date}
                         disabled={pending}
-                        onChange={(e) => {
-                          setSaved(false);
-                          setExceptions((prev) => {
-                            const next = [...prev];
-                            next[idx] = {
-                              ...next[idx],
-                              exception_date: e.target.value,
-                            };
-                            return next;
-                          });
-                        }}
+                        onChange={(e) => updateException(idx, { exception_date: e.target.value })}
                       />
                       <input
                         className="input-base"
                         value={ex.label}
+                        aria-label="Label"
                         placeholder="Label (e.g. Thanksgiving)"
                         disabled={pending}
-                        onChange={(e) => {
-                          setSaved(false);
-                          setExceptions((prev) => {
-                            const next = [...prev];
-                            next[idx] = { ...next[idx], label: e.target.value };
-                            return next;
-                          });
-                        }}
+                        onChange={(e) => updateException(idx, { label: e.target.value })}
                       />
-                    </div>
-                    <label className="flex items-center gap-2 text-xs text-muted">
-                      <input
-                        type="checkbox"
-                        checked={ex.is_closed}
+                      <button
+                        type="button"
+                        className="btn-ghost w-full text-danger sm:w-9 sm:px-0"
+                        aria-label={`Remove ${ex.label || ex.exception_date}`}
                         disabled={pending}
-                        onChange={(e) => {
+                        onClick={() => {
                           setSaved(false);
-                          setExceptions((prev) => {
-                            const next = [...prev];
-                            next[idx] = {
-                              ...next[idx],
-                              is_closed: e.target.checked,
-                            };
-                            return next;
-                          });
+                          setExceptions((prev) => prev.filter((_, i) => i !== idx));
                         }}
-                      />
-                      Closed all day
-                    </label>
-                    {!ex.is_closed ? (
-                      <div className="grid grid-cols-2 gap-2">
+                      >
+                        <Trash2 size={14} aria-hidden />
+                        <span className="sm:sr-only">Remove</span>
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                      <label className="flex min-h-11 cursor-pointer items-center gap-2 text-[12.5px] text-muted lg:min-h-0">
                         <input
-                          type="time"
-                          className="input-base"
-                          value={ex.open_time}
+                          type="checkbox"
+                          className="h-4 w-4 accent-ink"
+                          checked={ex.is_closed}
                           disabled={pending}
-                          onChange={(e) => {
-                            setSaved(false);
-                            setExceptions((prev) => {
-                              const next = [...prev];
-                              next[idx] = {
-                                ...next[idx],
-                                open_time: e.target.value,
-                              };
-                              return next;
-                            });
-                          }}
+                          onChange={(e) => updateException(idx, { is_closed: e.target.checked })}
                         />
-                        <input
-                          type="time"
-                          className="input-base"
-                          value={ex.close_time}
-                          disabled={pending}
-                          onChange={(e) => {
-                            setSaved(false);
-                            setExceptions((prev) => {
-                              const next = [...prev];
-                              next[idx] = {
-                                ...next[idx],
-                                close_time: e.target.value,
-                              };
-                              return next;
-                            });
-                          }}
-                        />
-                      </div>
-                    ) : null}
-                    <button
-                      type="button"
-                      className="text-xs text-danger hover:underline"
-                      disabled={pending}
-                      onClick={() => {
-                        setSaved(false);
-                        setExceptions((prev) =>
-                          prev.filter((_, i) => i !== idx)
-                        );
-                      }}
-                    >
-                      Remove
-                    </button>
+                        Closed all day
+                      </label>
+                      {!ex.is_closed ? (
+                        <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:max-w-sm">
+                          <input
+                            type="time"
+                            className="input-base tabular-nums"
+                            aria-label="Opens"
+                            value={ex.open_time}
+                            disabled={pending}
+                            onChange={(e) => updateException(idx, { open_time: e.target.value })}
+                          />
+                          <span className="text-[12.5px] text-subtle" aria-hidden>
+                            to
+                          </span>
+                          <input
+                            type="time"
+                            className="input-base tabular-nums"
+                            aria-label="Closes"
+                            value={ex.close_time}
+                            disabled={pending}
+                            onChange={(e) => updateException(idx, { close_time: e.target.value })}
+                          />
+                        </div>
+                      ) : null}
+                    </div>
                   </li>
                 ))}
               </ul>
             )}
           </div>
+        </div>
 
-          <div className="flex justify-end">
-            <button type="submit" className="btn-primary" disabled={pending}>
-              {pending ? "Saving…" : "Save hours"}
-            </button>
-          </div>
-        </form>
-      ) : null}
-    </section>
+        <SaveRow
+          className="mt-5"
+          message={
+            error
+              ? error
+              : saved && !pending
+                ? "Hours saved. Phone host prompt updated when connected."
+                : null
+          }
+          tone={error ? "bad" : "ok"}
+        >
+          <button type="submit" className="btn-primary w-full sm:w-auto" disabled={pending}>
+            {pending ? "Saving…" : "Save hours"}
+          </button>
+        </SaveRow>
+      </SettingsPanel>
+    </form>
   );
 }
