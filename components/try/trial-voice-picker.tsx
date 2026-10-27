@@ -48,9 +48,17 @@ export function TrialVoicePicker({ value, disabled, onChange }: Props) {
     void audio.play().then(() => setPlaying(voice.id)).catch(() => setPlaying(null));
   }
 
+  // Core voices plus the selected accent voice stay visible; other accents sit behind a toggle.
+  const visible = voices.filter((v) => !v.libraryOwnerId || v.id === value);
+  const extra = voices.filter((v) => v.libraryOwnerId && v.id !== value);
+  visible.sort((a, b) => Number(b.id === value && Boolean(b.libraryOwnerId)) - Number(a.id === value && Boolean(a.libraryOwnerId)));
+  const [showAll, setShowAll] = useState(false);
+  const shown = showAll ? [...visible, ...extra] : visible;
+
   return (
+    <>
     <div className="trial-voices" role="radiogroup" aria-label="Agent voice">
-      {voices.map((voice) => {
+      {shown.map((voice) => {
         const selected = voice.id === value;
         return (
           <div key={voice.id} className={cn("trial-voice", selected && "trial-voice--selected")}>
@@ -84,5 +92,11 @@ export function TrialVoicePicker({ value, disabled, onChange }: Props) {
         );
       })}
     </div>
+    {extra.length > 0 ? (
+      <button type="button" className="trial-voices__more" onClick={() => setShowAll((v) => !v)}>
+        {showAll ? "Fewer voices" : `More accents (${extra.length})`}
+      </button>
+    ) : null}
+    </>
   );
 }

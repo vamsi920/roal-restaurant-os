@@ -2,6 +2,7 @@
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { getDb } from "@/lib/db";
+import { ensureVoiceReady } from "@/lib/trial/elevenlabs";
 import { findTrialVoice } from "@/lib/trial/voices";
 import { afterProfileSettingsMutation } from "@/lib/voice-agent/after-restaurant-settings-mutation";
 
@@ -45,6 +46,7 @@ export async function saveHostPersonaAction(
   }
 
   const greeting = raw.agentGreeting.trim().slice(0, 400) || null;
+  if (voice) await ensureVoiceReady(voice.id);
 
   const supabase = getDb();
   const { error } = await supabase

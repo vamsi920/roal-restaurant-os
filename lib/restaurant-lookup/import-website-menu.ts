@@ -1,6 +1,8 @@
 import { extractMenuFromWebsiteText } from "@/lib/ai";
 import { ScannedMenuSchema } from "@/lib/menu-import/types";
 import {
+  collapseRepeatedBlocks,
+  discoverMenuLinks,
   htmlToPlainText,
   menuCandidateUrls,
   priceSignalScore,
@@ -63,9 +65,8 @@ export async function importWebsiteMenuFromUrl(
   let bestScore = -1;
   let fetchedAny = false;
 
-  for (const url of urls) {
-    const html = await fetchHtml(url, fetchImpl);
-    if (html == null) continue;
+  const consider = (url: string, html: string | null) => {
+    if (html == null) return;
     fetchedAny = true;
     const text = htmlToPlainText(html);
     const score = priceSignalScore(text);
@@ -74,7 +75,17 @@ export async function importWebsiteMenuFromUrl(
       bestText = text;
       bestUrl = url;
     }
-  }
+  };
+
+  // Fetch the common menu paths in parallel, then any menu links the homepage points to.
+  const pages = await Promise.all(urls.map((url) => fetchHtml(url, fetchImpl)));
+  pages.forEach((html, idx) => consider(urls[idx], html));
+
+  const bare = (u: string) => u.replace(/\/+$/, "");
+  const tried = new Set(urls.map(bare));
+  const linked = pages[0] ? discoverMenuLinks(pages[0], urls[0]).filter((u) => !tried.has(bare(u))) : [];
+  const linkedPages = await Promise.all(linked.map((url) => fetchHtml(url, fetchImpl)));
+  linkedPages.forEach((html, idx) => consider(linked[idx], html));
 
   if (!fetchedAny) {
     return {
@@ -94,7 +105,7 @@ export async function importWebsiteMenuFromUrl(
 
   try {
     const extract = deps?.extractText ?? extractMenuFromWebsiteText;
-    const scan = await extract(bestText);
+    const scan = await extract(collapseRepeatedBlocks(bestText));
     const parsed = ScannedMenuSchema.safeParse(scan.data);
     if (!parsed.success || !scannedMenuHasPricedItems(parsed.data)) {
       return {

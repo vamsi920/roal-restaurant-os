@@ -51,6 +51,18 @@ async function placesLookup(query: string, city: string | null): Promise<PlaceSn
   }
 }
 
+/** Netlify cuts synchronous functions off at 30s; stop waiting on the importer well before that. */
+const MENU_IMPORT_BUDGET_MS = 22_000;
+
+async function importMenuWithinBudget(url: string) {
+  return Promise.race([
+    importWebsiteMenuFromUrl(url),
+    new Promise<{ ok: false; message: string }>((resolve) =>
+      setTimeout(() => resolve({ ok: false, message: "Reading the website menu took too long." }), MENU_IMPORT_BUDGET_MS)
+    ),
+  ]);
+}
+
 export type ResolveListingResult = { ok: true; trial: TrialRecord } | { ok: false; trial: TrialRecord; message: string };
 
 /** Step 1: turn the raw link / name into a profile + hours + seed knowledge. */
@@ -211,7 +223,7 @@ export async function resolveTrialMenu(
   if (!menu) {
     const candidate = options?.menuUrl?.trim() || trial.profile?.website || null;
     if (candidate) {
-      const imported = await importWebsiteMenuFromUrl(candidate);
+      const imported = await importMenuWithinBudget(candidate);
       if (imported.ok) {
         menu = imported.menu;
         source = options?.menuUrl?.trim() ? "menu_url" : "website";
@@ -254,8 +266,23 @@ export async function composeTrialAgent(trialId: string): Promise<TrialRecord> {
   const trial = await getTrial(trialId);
   if (!trial) throw new Error("Trial not found");
   const name = trial.restaurant_name ?? trial.profile?.name ?? "Your restaurant";
-  const persona = resolveTrialPersona(trial.persona, name);
+  const persona = resolveTrialPersona(trial.persona, name, trial.profile?.cuisine);
   const offersDelivery = Boolean((trial.persona as { offersDelivery?: boolean }).offersDelivery);
+
+  // The menu step can fail outright (timeout, network); never put a menu-less agent on the line.
+  let stepLog = trial.step_log;
+  if (!trial.menu) {
+    stepLog = upsertStep(stepLog, {
+      id: "menu",
+      status: "skipped",
+      title: "Sample menu loaded",
+      detail: "Could not read the website menu in time. Using a sample menu for the test call.",
+    });
+    trial.menu = buildSampleMenu(
+      [trial.profile?.cuisine, trial.restaurant_name, trial.profile?.name].filter(Boolean).join(" ")
+    );
+    trial.menu_source = "sample";
+  }
 
   const prompt = buildTrialAgentPrompt({
     restaurantName: name,
@@ -280,11 +307,13 @@ export async function composeTrialAgent(trialId: string): Promise<TrialRecord> {
   ].filter(Boolean);
 
   return updateTrial(trialId, {
+    menu: trial.menu,
+    menu_source: trial.menu_source,
     prompt,
     greeting,
     status: "ready",
     error: null,
-    step_log: upsertStep(trial.step_log, {
+    step_log: upsertStep(stepLog, {
       id: "agent",
       status: "done",
       title: `${persona.agentName} is ready to take calls`,

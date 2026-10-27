@@ -107,15 +107,22 @@ type OpenAIResponse = {
   error?: { message?: string; code?: string };
 };
 
+/** Lowest reasoning effort each model family accepts (gpt-5.1+ takes "none", gpt-5 only "minimal"). */
+function fastestEffort(modelName: string): string {
+  return /^gpt-5\.\d/.test(modelName) ? "none" : "minimal";
+}
+
 async function chatJson(
   modelName: string,
   apiKey: string,
   system: string,
   user: UserContent,
   maxTokens: number,
-  temperature: number
+  temperature: number,
+  fast = false
 ): Promise<string> {
   const reasoning = /^(gpt-5|o\d)/.test(modelName);
+  const effort = fast ? fastestEffort(modelName) : process.env.OPENAI_REASONING ?? "low";
   const r = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
@@ -128,7 +135,7 @@ async function chatJson(
       response_format: { type: "json_object" },
       max_completion_tokens: maxTokens + (reasoning ? 4000 : 0),
       // Reasoning models reject temperature; they take an effort level instead.
-      ...(reasoning ? { reasoning_effort: process.env.OPENAI_REASONING ?? "low" } : { temperature }),
+      ...(reasoning ? { reasoning_effort: effort } : { temperature }),
     }),
   });
   const j = (await r.json().catch(() => ({}))) as OpenAIResponse;
@@ -148,7 +155,11 @@ async function generateJson<T>(
   system: string,
   user: UserContent,
   responseSchema: unknown,
-  { temperature = 0.2, maxTokens = 4000 }: { temperature?: number; maxTokens?: number } = {}
+  {
+    temperature = 0.2,
+    maxTokens = 4000,
+    fast = false,
+  }: { temperature?: number; maxTokens?: number; fast?: boolean } = {}
 ): Promise<GenerateJsonResult<T>> {
   const { apiKey, model } = requireOpenAIEnv();
   const prompt = `${system}\n\nThe JSON must match this JSON Schema:\n${JSON.stringify(responseSchema)}`;
@@ -156,7 +167,7 @@ async function generateJson<T>(
 
   for (const modelName of getCandidateModels(model)) {
     try {
-      const text = await chatJson(modelName, apiKey, prompt, user, maxTokens, temperature);
+      const text = await chatJson(modelName, apiKey, prompt, user, maxTokens, temperature, fast);
       return { data: parseJsonResponse(text) as T, modelUsed: modelName };
     } catch (error) {
       lastError = error;
@@ -191,25 +202,141 @@ export async function scanMenuImage(
   );
 }
 
-const WEBSITE_MENU_PROMPT = `Extract a restaurant menu from this website text into hierarchical JSON.
+/**
+ * Website menus are extracted in a compact shape (short keys, no confidence fields) because
+ * output tokens dominate latency, and long pages are split into chunks extracted in parallel.
+ * Together that keeps a 100+ item menu well inside a serverless request budget.
+ */
+const WEBSITE_MENU_PROMPT = `Extract the restaurant menu from this website text.
 
-Identify categories, items (name, description, price, base_availability), and modifiers.
+Return {"c":[{"n":"Category","i":[{"n":"Item","p":4.99,"d":"Short description","m":[["Add-on",1.5]]}]}]}
+- n: name. p: price as a number (omit when not listed). d: description, at most 12 words (omit when none).
+- m: optional add-ons or choices listed for that item, as [name, extra price or 0].
+- Keep the menu's own category names and order. Do not invent items or prices.
+- Ignore navigation, delivery-app ads, catering packages, and footer copy.
+- If the text has no menu, return {"c":[]}.`;
 
-Rules:
-- Do not invent items or prices.
-- Numbers are decimals.
-- If a price is missing, omit price and set price_confidence to "low".
-- Ignore navigation, delivery-app ads, and footer copy.
-- If the text is not a menu, return {"categories":[]}.`;
+const COMPACT_MENU_SCHEMA = {
+  type: "object",
+  properties: {
+    c: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          n: { type: "string" },
+          i: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                n: { type: "string" },
+                p: { type: "number" },
+                d: { type: "string" },
+                m: { type: "array", items: { type: "array" } },
+              },
+              required: ["n"],
+            },
+          },
+        },
+        required: ["n", "i"],
+      },
+    },
+  },
+  required: ["c"],
+};
+
+type CompactMenu = {
+  c?: { n?: string; i?: { n?: string; p?: number; d?: string; m?: unknown[] }[] }[];
+};
+
+const MENU_CHUNK_CHARS = 5_000;
+const MAX_MENU_CHUNKS = 8;
+
+/** Split on line breaks into roughly even chunks so each parallel call sees whole lines. */
+function splitMenuText(text: string): string[] {
+  if (text.length <= MENU_CHUNK_CHARS) return [text];
+  const count = Math.min(MAX_MENU_CHUNKS, Math.ceil(text.length / MENU_CHUNK_CHARS));
+  const target = Math.ceil(text.length / count);
+  const chunks: string[] = [];
+  let start = 0;
+  while (start < text.length && chunks.length < count - 1) {
+    const end = text.indexOf("\n", start + target);
+    if (end < 0) break;
+    chunks.push(text.slice(start, end));
+    start = end + 1;
+  }
+  chunks.push(text.slice(start));
+  return chunks.filter((c) => c.trim());
+}
+
+function money(value: unknown): number | undefined {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : undefined;
+}
+
+/** Expand the compact shape into the ScannedMenu shape, merging categories split across chunks. */
+function expandCompactMenu(parts: CompactMenu[]) {
+  const categories: { name: string; sort_order: number; items: Record<string, unknown>[] }[] = [];
+  const byName = new Map<string, (typeof categories)[number]>();
+  const seen = new Set<string>();
+  for (const part of parts) {
+    for (const cat of part.c ?? []) {
+      const name = cat.n?.trim();
+      if (!name) continue;
+      const key = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+      let target = byName.get(key);
+      if (!target) {
+        target = { name, sort_order: categories.length + 1, items: [] };
+        byName.set(key, target);
+        categories.push(target);
+      }
+      for (const item of cat.i ?? []) {
+        const itemName = item.n?.trim();
+        if (!itemName) continue;
+        const dedupe = `${key}|${itemName.toLowerCase()}`;
+        if (seen.has(dedupe)) continue;
+        seen.add(dedupe);
+        const modifiers = (Array.isArray(item.m) ? item.m : [])
+          .filter((m): m is unknown[] => Array.isArray(m) && typeof m[0] === "string" && Boolean(m[0].trim()))
+          .slice(0, 12)
+          .map((m) => ({ modifier_name: String(m[0]).trim(), extra_price: money(m[1]) ?? 0 }));
+        target.items.push({
+          name: itemName,
+          ...(item.d?.trim() ? { description: item.d.trim() } : {}),
+          ...(money(item.p) !== undefined ? { price: money(item.p) } : {}),
+          base_availability: true,
+          modifiers,
+        });
+      }
+    }
+  }
+  return { categories: categories.filter((c) => c.items.length > 0) };
+}
 
 export async function extractMenuFromWebsiteText(
   text: string
 ): Promise<ScanMenuImageResult> {
-  const clipped = text.trim().slice(0, 80_000);
+  const clipped = text.trim().slice(0, 70_000);
   if (!clipped) {
     return { data: { categories: [] }, modelUsed: "none" };
   }
-  return generateJson(WEBSITE_MENU_PROMPT, clipped, MENU_RESPONSE_SCHEMA, { maxTokens: 16000 });
+  const chunks = splitMenuText(clipped);
+  const results = await Promise.all(
+    chunks.map((chunk, idx) =>
+      generateJson<CompactMenu>(
+        chunks.length > 1
+          ? `${WEBSITE_MENU_PROMPT}\n- This is part ${idx + 1} of ${chunks.length} of one page. Extract only what appears in this part.`
+          : WEBSITE_MENU_PROMPT,
+        chunk,
+        COMPACT_MENU_SCHEMA,
+        { maxTokens: 8000, fast: true }
+      )
+    )
+  );
+  return {
+    data: expandCompactMenu(results.map((r) => r.data)),
+    modelUsed: results[0]?.modelUsed ?? "none",
+  };
 }
 
 /* ------------------------------------------------------------------------- */

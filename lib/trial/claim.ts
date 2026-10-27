@@ -9,6 +9,7 @@ import {
 import { replaceRestaurantKnowledgeEntries } from "@/lib/restaurant-knowledge/helpers";
 import { saveWeeklyHoursFromLookup } from "@/lib/restaurant-lookup/profile";
 import { upsertRestaurantProfile } from "@/lib/restaurant-profile/helpers";
+import { ensureVoiceReady } from "@/lib/trial/elevenlabs";
 import { getTrial, updateTrial } from "@/lib/trial/store";
 import type { TrialRecord } from "@/lib/trial/types";
 import { resolveTrialPersona } from "@/lib/trial/voices";
@@ -138,12 +139,12 @@ export async function claimTrial(
     closed_hours_message: null,
   });
 
-  const persona = resolveTrialPersona(trial.persona, restaurantName);
+  const persona = resolveTrialPersona(trial.persona, restaurantName, trial.profile?.cuisine);
   await supabase
     .from("restaurant_profiles")
     .update({
       agent_display_name: persona.agentName,
-      agent_voice_id: persona.voiceId,
+      agent_voice_id: await ensureVoiceReady(persona.voiceId),
       agent_voice_label: persona.voiceLabel,
       trial_scorecard: trial.scorecard,
       source_trial_id: trial.id,

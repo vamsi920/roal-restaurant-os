@@ -1,19 +1,41 @@
 import {
   createConvaiAgent,
   duplicateConvaiAgent,
+  elevenlabsFetch,
   getConvaiAgent,
   getConvaiSignedUrl,
   patchConvaiAgent,
 } from "@/lib/elevenlabs";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import { requireTrialDb } from "@/lib/trial/store";
-import { DEFAULT_TRIAL_VOICE } from "@/lib/trial/voices";
+import { DEFAULT_TRIAL_VOICE, findTrialVoice } from "@/lib/trial/voices";
 
 const TRIAL_AGENT_CONFIG_KEY = "elevenlabs_trial_agent_id";
 const TRIAL_AGENT_NAME = "ROAL — Try-a-call (shared, overrides only)";
 
 /** Hard ceiling on a single demo call (spend cap). */
 export const TRIAL_MAX_CALL_SECONDS = 300;
+
+/**
+ * Voice stack for the demo line. Eleven v4 Turbo is ElevenLabs' most emotive low-latency
+ * model (90+ languages, keeps a voice's accent); expressive mode lets it laugh, soften and
+ * react instead of reading lines. Synced onto the shared agent once per server process.
+ */
+export const TRIAL_TTS_MODEL = "eleven_v4_turbo";
+export const TRIAL_LLM = "claude-haiku-5-5";
+
+const VOICE_STACK_CONFIG = {
+  tts: {
+    model_id: TRIAL_TTS_MODEL,
+    expressive_mode: true,
+    stability: 0.45,
+    similarity_boost: 0.8,
+    speed: 1.0,
+    optimize_streaming_latency: 3,
+  },
+  agent: { prompt: { llm: TRIAL_LLM, temperature: 0.5 } },
+  turn: { turn_eagerness: "normal", turn_timeout: 8 },
+};
 
 const OVERRIDES_PLATFORM_SETTINGS = {
   overrides: {
@@ -30,6 +52,7 @@ const OVERRIDES_PLATFORM_SETTINGS = {
 
 let cachedTrialAgentId: string | null = null;
 let overridesEnsuredFor: string | null = null;
+const readyLibraryVoices = new Set<string>();
 
 function asRecord(v: unknown): Record<string, unknown> | null {
   return v && typeof v === "object" && !Array.isArray(v)
@@ -86,10 +109,11 @@ async function stripToolsAndEnableOverrides(agentId: string): Promise<void> {
           tools: [],
           built_in_tools: keptBuiltIns,
           knowledge_base: [],
-          temperature: 0.25,
+          ...VOICE_STACK_CONFIG.agent.prompt,
         },
       },
-      tts: { voice_id: DEFAULT_TRIAL_VOICE.id },
+      tts: { ...VOICE_STACK_CONFIG.tts, voice_id: DEFAULT_TRIAL_VOICE.id },
+      turn: VOICE_STACK_CONFIG.turn,
       conversation: { max_duration_seconds: TRIAL_MAX_CALL_SECONDS },
     },
     platform_settings: OVERRIDES_PLATFORM_SETTINGS,
@@ -117,15 +141,58 @@ async function createFreshTrialAgent(): Promise<string> {
         prompt: {
           prompt:
             "You are a friendly restaurant phone host. The restaurant context is supplied at call start.",
-          temperature: 0.25,
+          ...VOICE_STACK_CONFIG.agent.prompt,
         },
       },
-      tts: { voice_id: DEFAULT_TRIAL_VOICE.id },
+      tts: { ...VOICE_STACK_CONFIG.tts, voice_id: DEFAULT_TRIAL_VOICE.id },
+      turn: VOICE_STACK_CONFIG.turn,
       conversation: { max_duration_seconds: TRIAL_MAX_CALL_SECONDS },
     },
     platform_settings: OVERRIDES_PLATFORM_SETTINGS,
   });
   return readAgentId(created);
+}
+
+/** Keep a long-lived agent on the current voice stack and overrides (once per process). */
+async function syncAgentSettings(agentId: string): Promise<void> {
+  if (overridesEnsuredFor === agentId) return;
+  try {
+    await patchConvaiAgent(agentId, {
+      conversation_config: {
+        ...VOICE_STACK_CONFIG,
+        tts: { ...VOICE_STACK_CONFIG.tts, voice_id: DEFAULT_TRIAL_VOICE.id },
+      },
+      platform_settings: OVERRIDES_PLATFORM_SETTINGS,
+    });
+  } catch (e) {
+    console.error("[trial agent] sync settings", e instanceof Error ? e.message : e);
+  }
+  overridesEnsuredFor = agentId;
+}
+
+/**
+ * Voice Library voices must be in the account before an agent can speak with them.
+ * Adds the voice on first use and returns a voice id that is safe to send; falls back to
+ * the default premade voice if the library voice cannot be added.
+ */
+export async function ensureVoiceReady(voiceId: string): Promise<string> {
+  const voice = findTrialVoice(voiceId);
+  if (!voice?.libraryOwnerId || readyLibraryVoices.has(voice.id)) return voiceId;
+  try {
+    const existing = await elevenlabsFetch(`/v1/voices/${voice.id}`, { method: "GET" });
+    if (!existing.ok) {
+      const added = await elevenlabsFetch(`/v1/voices/add/${voice.libraryOwnerId}/${voice.id}`, {
+        method: "POST",
+        body: JSON.stringify({ new_name: `ROAL · ${voice.accent} · ${voice.label}` }),
+      });
+      if (!added.ok) throw new Error(`add voice ${added.status}: ${(await added.text()).slice(0, 200)}`);
+    }
+    readyLibraryVoices.add(voice.id);
+    return voiceId;
+  } catch (e) {
+    console.error("[trial voice]", voice.label, e instanceof Error ? e.message : e);
+    return DEFAULT_TRIAL_VOICE.id;
+  }
 }
 
 /**
@@ -135,14 +202,7 @@ async function createFreshTrialAgent(): Promise<string> {
 export async function ensureTrialAgentId(): Promise<string> {
   const fromEnv = process.env.ELEVENLABS_TRIAL_AGENT_ID?.trim();
   if (fromEnv) {
-    if (overridesEnsuredFor !== fromEnv) {
-      try {
-        await patchConvaiAgent(fromEnv, { platform_settings: OVERRIDES_PLATFORM_SETTINGS });
-      } catch (e) {
-        console.error("[trial agent] enable overrides", e instanceof Error ? e.message : e);
-      }
-      overridesEnsuredFor = fromEnv;
-    }
+    await syncAgentSettings(fromEnv);
     return fromEnv;
   }
 
@@ -152,6 +212,7 @@ export async function ensureTrialAgentId(): Promise<string> {
   if (stored) {
     try {
       await getConvaiAgent(stored);
+      await syncAgentSettings(stored);
       cachedTrialAgentId = stored;
       return stored;
     } catch {

@@ -1,7 +1,7 @@
 import { startConvaiOutboundCall } from "@/lib/elevenlabs";
 import { getElevenLabsAgentPhoneNumberId } from "@/lib/env.server";
 import { toE164Phone } from "@/lib/phone/e164";
-import { ensureTrialAgentId } from "@/lib/trial/elevenlabs";
+import { ensureTrialAgentId, ensureVoiceReady } from "@/lib/trial/elevenlabs";
 import { countTrialCallsLast24h, requireTrialDb, trialDailyCallCap, updateTrial } from "@/lib/trial/store";
 import type { TrialRecord } from "@/lib/trial/types";
 import { resolveTrialPersona } from "@/lib/trial/voices";
@@ -54,14 +54,14 @@ async function placeTrialCall(trial: TrialRecord, toNumber: string): Promise<Lea
   if (!phoneNumberId || !trial.prompt || !trial.greeting) return "unavailable";
   if (trial.call_count >= 12 || (await countTrialCallsLast24h()) >= trialDailyCallCap()) return "busy";
   try {
-    const persona = resolveTrialPersona(trial.persona, trial.restaurant_name);
+    const persona = resolveTrialPersona(trial.persona, trial.restaurant_name, trial.profile?.cuisine);
     await startConvaiOutboundCall({
       agentId: await ensureTrialAgentId(),
       agentPhoneNumberId: phoneNumberId,
       toNumber,
       conversationConfigOverride: {
         agent: { prompt: { prompt: trial.prompt }, first_message: trial.greeting, language: persona.language },
-        tts: { voice_id: persona.voiceId },
+        tts: { voice_id: await ensureVoiceReady(persona.voiceId) },
       },
     });
     await updateTrial(trial.id, { call_count: trial.call_count + 1 });

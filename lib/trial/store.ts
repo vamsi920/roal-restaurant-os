@@ -168,7 +168,7 @@ export function toPublicView(trial: TrialRecord): TrialPublicView {
         }
       : null,
     knowledge: trial.knowledge,
-    persona: resolveTrialPersona(trial.persona, trial.restaurant_name),
+    persona: resolveTrialPersona(trial.persona, trial.restaurant_name, trial.profile?.cuisine),
     greeting: trial.greeting,
     scorecard: trial.scorecard,
     callCount: trial.call_count,

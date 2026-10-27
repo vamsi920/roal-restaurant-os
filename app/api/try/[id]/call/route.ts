@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { EnvValidationError } from "@/lib/env.shared";
 import { requireTrialFromCookie } from "@/lib/trial/auth";
-import { createTrialSignedUrl } from "@/lib/trial/elevenlabs";
+import { createTrialSignedUrl, ensureVoiceReady } from "@/lib/trial/elevenlabs";
 import { composeTrialAgent } from "@/lib/trial/pipeline";
 import { countTrialCallsLast24h, trialDailyCallCap, updateTrial } from "@/lib/trial/store";
 import { resolveTrialPersona } from "@/lib/trial/voices";
@@ -35,8 +35,11 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
       );
     }
 
-    const { agentId, signedUrl } = await createTrialSignedUrl();
-    const persona = resolveTrialPersona(trial.persona, trial.restaurant_name);
+    const persona = resolveTrialPersona(trial.persona, trial.restaurant_name, trial.profile?.cuisine);
+    const [{ agentId, signedUrl }, voiceId] = await Promise.all([
+      createTrialSignedUrl(),
+      ensureVoiceReady(persona.voiceId),
+    ]);
     await updateTrial(trial.id, { call_count: trial.call_count + 1 });
 
     return NextResponse.json({
@@ -48,7 +51,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
           firstMessage: trial.greeting,
           language: persona.language,
         },
-        tts: { voiceId: persona.voiceId },
+        tts: { voiceId },
       },
     });
   } catch (e) {
