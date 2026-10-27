@@ -90,7 +90,7 @@ describe("POST /api/try", () => {
       sourceKind: "website",
       sourceInput: "https://joespizza.com/",
       // Nothing is known about the restaurant yet, so the default voice names the host.
-      persona: { agentName: "Sarah" },
+      persona: { agentName: "Hope" },
     });
     expect(body.trial).not.toHaveProperty("prompt");
     expect(body.trial).not.toHaveProperty("token_hash");

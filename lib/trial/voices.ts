@@ -13,52 +13,70 @@ export type TrialVoiceOption = {
 };
 
 /**
- * Curated voices. The first block is ElevenLabs premades (on every account); the accent block
- * comes from the Voice Library and is matched to the restaurant's cuisine so an Indian spot
+ * Curated voices from the ElevenLabs Voice Library. The first block is the general set; the accent block
+ * comes from the Voice Library too and is matched to the restaurant's cuisine so an Indian spot
  * sounds like an Indian host, a taqueria like a Mexican one, and so on.
  */
 export const TRIAL_VOICE_OPTIONS: readonly TrialVoiceOption[] = [
+  // Default. Every voice here is a professional clone trained for Eleven v4; the old
+  // premade voices (Sarah, Brian, ...) are not, and sound flat on v4.
   {
-    id: "EXAVITQu4vr4xnSDxMaL",
-    label: "Sarah",
-    description: "Warm and reassuring. Great for family spots.",
+    id: "OYTbf65OHHFELVut7v2H",
+    label: "Hope",
+    description: "Natural and calm. Sounds like a real person.",
     accent: "American",
     gender: "female",
+    libraryOwnerId: "7d272ea0221fbc9ce382a3eaf4d7f907179558360d93b351ec7d344d30023cf9",
   },
   {
-    id: "cgSgspJ2msm6clMCkdW9",
+    id: "g6xIsTj2HwM6VR4iXFCw",
     label: "Jessica",
-    description: "Bright and upbeat. Keeps the line moving.",
+    description: "Chatty and friendly. Keeps the line moving.",
     accent: "American",
     gender: "female",
+    libraryOwnerId: "066125d0c3eac062cd6655ed319d2347c29d07eab96ee22c6ebe7ef1841c3b1a",
   },
   {
-    id: "nPczCjzI2devNBz1zQrb",
-    label: "Brian",
-    description: "Deep and calm. Sounds like a seasoned host.",
+    id: "UgBBYS2sOqTuMpoF3BR0",
+    label: "Mark",
+    description: "Casual and easygoing. Counter-staff energy.",
     accent: "American",
     gender: "male",
+    libraryOwnerId: "024c9393c6380665357f60b1062c863cd635d79791f13d6f0a834a319d5ff56c",
   },
   {
-    id: "IKne3meq5aSn9XLyUdCD",
-    label: "Charlie",
-    description: "Relaxed and natural. Casual counter energy.",
-    accent: "Australian",
+    id: "7EzWGsX10sAS4c9m9cPf",
+    label: "Jack",
+    description: "Upbeat and helpful. Seasoned front of house.",
+    accent: "American",
     gender: "male",
+    libraryOwnerId: "3c22f968af854e73f490d79ea08453c56af6913873cdb417a58a6e8975f2ba2f",
   },
   {
-    id: "Xb7hH8MSUJpSbSDYk0k2",
-    label: "Alice",
-    description: "Clear and confident. Polished front of house.",
+    id: "MzqUf1HbJ8UmQ0wUsx2p",
+    label: "Katie",
+    description: "Clear and caring. British accent.",
     accent: "British",
     gender: "female",
+    libraryOwnerId: "6643afd1d55a6987b18e340e00bb89ed60329c878a01823e0c10a50fb522bd76",
+    cuisines: ["british", "fish and chips", "fish & chips", "english pub", "gastropub"],
   },
   {
-    id: "TX3LPaxmHKxFdv7VOQHJ",
-    label: "Liam",
-    description: "Friendly and energetic. Fast-casual favorite.",
-    accent: "American",
+    id: "2UMI2FME0FFUFMlUoRER",
+    label: "Hugh",
+    description: "Calm and lifelike. British accent.",
+    accent: "British",
     gender: "male",
+    libraryOwnerId: "300b35287e8acc21dd12bd610b831e19b47dc75e8b8c15c2bca80cdcb776ef2d",
+  },
+  {
+    id: "56bWURjYFHyYyVf490Dp",
+    label: "Emma",
+    description: "Warm and sweet. Australian accent.",
+    accent: "Australian",
+    gender: "female",
+    libraryOwnerId: "94f03704b477b84c140c5569ba231544d4de6b7d7d4a3df569700a4c0b4a340b",
+    cuisines: ["australian", "aussie"],
   },
   // Caribbean sits before Indian so "West Indian" matches here first.
   {

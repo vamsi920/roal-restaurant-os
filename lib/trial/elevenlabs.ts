@@ -24,13 +24,15 @@ export const TRIAL_MAX_CALL_SECONDS = 300;
 export const TRIAL_TTS_MODEL = "eleven_v4_turbo";
 export const TRIAL_LLM = "claude-haiku-5-5";
 
+// v4 only reads stability and similarity. Lower stability lets delivery vary like a person's;
+// high similarity pins the output to the reference recording and costs naturalness.
+// Full eleven_v4 measured ~350ms slower to first audio on live calls, so the agent stays on Turbo.
 const VOICE_STACK_CONFIG = {
   tts: {
     model_id: TRIAL_TTS_MODEL,
     expressive_mode: true,
-    stability: 0.45,
-    similarity_boost: 0.8,
-    speed: 1.0,
+    stability: 0.35,
+    similarity_boost: 0.55,
     optimize_streaming_latency: 3,
   },
   agent: { prompt: { llm: TRIAL_LLM, temperature: 0.5 } },

@@ -112,12 +112,12 @@ describe("toPublicView", () => {
 
   it("honors a stored persona override", () => {
     const view = toPublicView(
-      baseTrial({ persona: { agentName: "Maya", voiceId: "nPczCjzI2devNBz1zQrb", language: "es" } })
+      baseTrial({ persona: { agentName: "Maya", voiceId: "UgBBYS2sOqTuMpoF3BR0", language: "es" } })
     );
     expect(view.persona).toEqual({
       agentName: "Maya",
-      voiceId: "nPczCjzI2devNBz1zQrb",
-      voiceLabel: "Brian",
+      voiceId: "UgBBYS2sOqTuMpoF3BR0",
+      voiceLabel: "Mark",
       language: "es",
     });
   });

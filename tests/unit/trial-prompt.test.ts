@@ -11,8 +11,8 @@ import type { TrialPersona, TrialProfile } from "@/lib/trial/types";
 
 const persona: TrialPersona = {
   agentName: "Addy",
-  voiceId: "EXAVITQu4vr4xnSDxMaL",
-  voiceLabel: "Sarah",
+  voiceId: "OYTbf65OHHFELVut7v2H",
+  voiceLabel: "Hope",
   language: "en",
 };
 

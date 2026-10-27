@@ -10,8 +10,8 @@ import {
 
 describe("findTrialVoice", () => {
   it("finds a curated voice by id", () => {
-    expect(findTrialVoice("nPczCjzI2devNBz1zQrb")?.label).toBe("Brian");
-    expect(findTrialVoice("  nPczCjzI2devNBz1zQrb ")?.label).toBe("Brian");
+    expect(findTrialVoice("UgBBYS2sOqTuMpoF3BR0")?.label).toBe("Mark");
+    expect(findTrialVoice("  UgBBYS2sOqTuMpoF3BR0 ")?.label).toBe("Mark");
   });
 
   it("returns null for unknown or empty ids", () => {
@@ -36,8 +36,8 @@ describe("resolveTrialPersona", () => {
       voiceLabel: DEFAULT_TRIAL_VOICE.label,
       language: "en",
     });
-    expect(resolveTrialPersona(undefined, null).agentName).toBe("Sarah");
-    expect(resolveTrialPersona({}, null).voiceLabel).toBe("Sarah");
+    expect(resolveTrialPersona(undefined, null).agentName).toBe("Hope");
+    expect(resolveTrialPersona({}, null).voiceLabel).toBe("Hope");
   });
 
   it("names the host after the voice matched to the cuisine, never the restaurant", () => {
@@ -52,17 +52,17 @@ describe("resolveTrialPersona", () => {
   });
 
   it("keeps an owner-picked voice and name over the cuisine match", () => {
-    expect(resolveTrialPersona({ voiceId: "nPczCjzI2devNBz1zQrb" }, "Eggmania", "Indian")).toMatchObject({
-      agentName: "Brian",
-      voiceLabel: "Brian",
+    expect(resolveTrialPersona({ voiceId: "UgBBYS2sOqTuMpoF3BR0" }, "Eggmania", "Indian")).toMatchObject({
+      agentName: "Mark",
+      voiceLabel: "Mark",
     });
     expect(resolveTrialPersona({ agentName: "Priya" }, "Eggmania", "Indian").agentName).toBe("Priya");
   });
 
   it("keeps a valid stored persona and trims whitespace", () => {
     expect(
-      resolveTrialPersona({ agentName: "  Maya ", voiceId: "Xb7hH8MSUJpSbSDYk0k2", language: " es " }, "X")
-    ).toEqual({ agentName: "Maya", voiceId: "Xb7hH8MSUJpSbSDYk0k2", voiceLabel: "Alice", language: "es" });
+      resolveTrialPersona({ agentName: "  Maya ", voiceId: "MzqUf1HbJ8UmQ0wUsx2p", language: " es " }, "X")
+    ).toEqual({ agentName: "Maya", voiceId: "MzqUf1HbJ8UmQ0wUsx2p", voiceLabel: "Katie", language: "es" });
   });
 
   it("falls back to the default voice for an unknown voice id and ignores a stale label", () => {
@@ -71,7 +71,7 @@ describe("resolveTrialPersona", () => {
       "X"
     );
     expect(persona).toEqual({
-      agentName: "Sarah",
+      agentName: "Hope",
       voiceId: DEFAULT_TRIAL_VOICE.id,
       voiceLabel: DEFAULT_TRIAL_VOICE.label,
       language: "en",
@@ -93,7 +93,7 @@ describe("voiceForCuisine", () => {
   });
 
   it("only uses library voices that know how to be added to the account", () => {
-    for (const v of TRIAL_VOICE_OPTIONS.filter((o) => o.cuisines?.length)) {
+    for (const v of TRIAL_VOICE_OPTIONS) {
       expect(v.libraryOwnerId).toMatch(/^[0-9a-f]{64}$/);
     }
   });
