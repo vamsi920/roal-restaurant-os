@@ -44,7 +44,7 @@ export type SyncRestaurantAgentAfterContentChangeResult = {
 };
 
 export type SyncRestaurantAgentAfterContentChangeDeps = {
-  getSupabase: () => Promise<Db>;
+  getSupabase: () => Db | Promise<Db>;
   runSync: typeof runRestaurantVoiceAgentSync;
 };
 

@@ -117,7 +117,7 @@ export async function runVoiceAgentBackfill(
 }> {
   const supabase = options.supabase ?? getDb();
   if (!supabase) {
-    throw new Error("SUPABASE_SERVICE_ROLE_KEY required for voice agent backfill");
+    throw new Error("Database unavailable for voice agent backfill");
   }
 
   const candidates = await loadVoiceAgentBackfillCandidates(supabase, {

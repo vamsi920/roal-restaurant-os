@@ -26,9 +26,9 @@ describe("workspace prompt 22 targeted checks", () => {
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    expect(panel).toContain("postgres_changes");
-    expect(panel).toContain("draft_orders");
-    expect(panel).toContain("setRealtimeUi");
+    expect(panel).toContain("usePoll");
+    expect(panel).toContain("draftOrders");
+    expect(panel).toContain("realtimeUi = live.state");
     expect(panel).toContain("RealtimeBadge");
     expect(panel).not.toMatch(/example order|fake.*order|seed.*order/i);
   });
@@ -45,7 +45,8 @@ describe("workspace prompt 22 targeted checks", () => {
       join(REPO, "app/dashboard/restaurants/[id]/agent/page.tsx"),
       "utf8"
     );
-    expect(indicator).toContain("draft_orders");
+    expect(indicator).toContain("drafts");
+    expect(indicator).toContain("liveEndpoints.callStatus");
     expect(agent).toContain("voiceAgentCenter");
     expect(agent).toContain("loadRestaurantMenuSetupPageData");
     expect(agent).not.toMatch(/MOCK_|demoAgent|fakeCenter/i);

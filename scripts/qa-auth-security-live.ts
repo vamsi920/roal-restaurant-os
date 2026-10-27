@@ -27,7 +27,7 @@ const AUTH_VITEST = [
 
 const LEAK_PATTERNS = [
   { name: "sk-", re: /\bsk-[a-zA-Z0-9]{8,}\b/ },
-  { name: "service role key=value", re: /SUPABASE_SERVICE_ROLE_KEY\s*=\s*\S+/i },
+  { name: "service account private key", re: /-----BEGIN PRIVATE KEY-----|"private_key"\s*:/ },
   { name: "GEMINI_API_KEY value", re: /GEMINI_API_KEY\s*[:=]\s*['"]?[a-zA-Z0-9_-]{10,}/i },
 ];
 
@@ -59,7 +59,8 @@ function clientFilesImportServerSecrets(): string[] {
   const forbidden = [
     /from ["']@\/lib\/env\.server["']/,
     /getDb/,
-    /SUPABASE_SERVICE_ROLE_KEY/,
+    /firebase-admin/,
+    /FIREBASE_SERVICE_ACCOUNT/,
     /GEMINI_API_KEY/,
     /STRIPE_SECRET_KEY/,
   ];
@@ -92,10 +93,8 @@ void (async () => {
   const pub = getPublicEnv();
   checks.push({
     name: "getPublicEnv exposes only NEXT_PUBLIC keys",
-    ok:
-      Boolean(pub.NEXT_PUBLIC_SUPABASE_URL) &&
-      Boolean(pub.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-    detail: "url + anon configured",
+    ok: Object.keys(pub).every((k) => k.startsWith("NEXT_PUBLIC_")),
+    detail: Object.keys(pub).join(", "),
   });
 
   const clientLeaks = clientFilesImportServerSecrets();

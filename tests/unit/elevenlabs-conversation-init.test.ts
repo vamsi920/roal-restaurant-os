@@ -16,7 +16,7 @@ import {
 } from "@/lib/elevenlabs-placeholders";
 import { getUpsellExperimentVariant } from "@/lib/restaurant-upsell/experiment";
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 

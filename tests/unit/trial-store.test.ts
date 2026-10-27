@@ -3,9 +3,8 @@ import { buildSampleMenu } from "@/lib/trial/sample-menu";
 import { toPublicView, upsertStep } from "@/lib/trial/store";
 import type { TrialRecord, TrialStepLogEntry } from "@/lib/trial/types";
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(() => null),
-  getDb: vi.fn(),
 }));
 
 function baseTrial(overrides: Partial<TrialRecord> = {}): TrialRecord {

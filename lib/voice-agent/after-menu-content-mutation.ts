@@ -38,11 +38,7 @@ export function afterMenuContentMutation(
 ): void {
   revalidateMenuContentSurfaces(restaurantId);
   if (options?.trackTemplateOverride !== false) {
-    void getDb()
-      .then((supabase) =>
-        markRestaurantMenuTemplateLocalOverride(supabase, restaurantId)
-      )
-      .catch(() => undefined);
+    void markRestaurantMenuTemplateLocalOverride(getDb(), restaurantId).catch(() => undefined);
   }
   void syncRestaurantAgentAfterContentChange({
     restaurantId,

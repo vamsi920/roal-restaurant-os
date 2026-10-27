@@ -12,7 +12,7 @@ vi.mock("@/lib/auth/context-server", () => ({
   resolveOrganizationId: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -47,7 +47,7 @@ function mockRestaurantLookup(organizationId: string | null) {
       }),
     }),
   };
-  vi.mocked(getDb).mockResolvedValue(supabase as never);
+  vi.mocked(getDb).mockReturnValue(supabase as never);
   return supabase;
 }
 
@@ -61,7 +61,7 @@ function mockCheckStuckRestaurants(
       }),
     }),
   };
-  vi.mocked(getDb).mockResolvedValue(supabase as never);
+  vi.mocked(getDb).mockReturnValue(supabase as never);
   return supabase;
 }
 
@@ -77,7 +77,7 @@ describe("POST /api/notifications/events", () => {
       } as never,
       errorResponse: null,
     });
-    vi.mocked(getDb).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockReturnValue({} as never);
     vi.mocked(dispatchNotification).mockResolvedValue(undefined);
   });
 

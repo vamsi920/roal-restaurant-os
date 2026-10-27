@@ -13,8 +13,7 @@ export const LOGIN_PAGE_COPY = {
     loadingLabel: "Signing in…",
     passwordPlaceholder: "Your password",
     forgotPasswordLink: "Forgot password?",
-    resendConfirm: "Resend confirmation email",
-    resendSent: "New confirmation link sent. Check your inbox.",
+    staleSession: "Your session ended. Sign in again to continue.",
   },
   trialBanner: {
     lead: "Your phone host for",
@@ -24,5 +23,19 @@ export const LOGIN_PAGE_COPY = {
   footer: {
     newHere: "New to ROAL?",
     createAccount: "Create an account",
+  },
+} as const;
+
+/** Shared by sign-in and sign-up. */
+export const AUTH_FORM_COPY = {
+  google: "Continue with Google",
+  googleLoading: "Opening Google…",
+  divider: "or",
+  remember: "Remember me on this device",
+  rememberHint: "Off: you're signed out when you close the browser.",
+  demo: {
+    note: "Demo mode — Firebase isn't connected yet. You'll sign in as a demo restaurant owner.",
+    submitLabel: "Continue as demo owner",
+    loadingLabel: "Opening your workspace…",
   },
 } as const;

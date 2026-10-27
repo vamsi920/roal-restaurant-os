@@ -1,5 +1,6 @@
 import { QueryBuilder, type DbResult } from "@/lib/db/query";
 import { runRpc } from "@/lib/db/rpc";
+import { createFirestoreStore } from "@/lib/db/firestore-store";
 import { createMemoryStore, type DocStore } from "@/lib/db/store";
 
 export type { DbError, DbResult } from "@/lib/db/query";
@@ -42,8 +43,6 @@ export function isFirestoreConfigured(): boolean {
 export function getDb(): Db {
   if (cached) return cached;
   if (isFirestoreConfigured() && !process.env.VITEST) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { createFirestoreStore } = require("@/lib/db/firestore-store") as typeof import("@/lib/db/firestore-store");
     cached = makeDb(createFirestoreStore());
   } else {
     cached = makeDb(createMemoryStore());

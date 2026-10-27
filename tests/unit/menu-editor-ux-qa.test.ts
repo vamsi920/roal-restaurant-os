@@ -23,7 +23,7 @@ describe("menu editor UX (launch 13)", () => {
       "utf8"
     );
     expect(sidebar).toContain("roal:menu-changed");
-    expect(sidebar).toContain("syncMenuFromServer");
+    expect(sidebar).toContain("scheduleResync");
   });
 
   it("menu editor page redirects guests to login with next", () => {

@@ -17,10 +17,13 @@ describe("dashboard owner CTAs (prompt 28)", () => {
   });
 
   it("locations list cards show real readiness and fast-path links", () => {
-    const page = readFileSync(
-      join(REPO, "app/dashboard/restaurants/page.tsx"),
-      "utf8"
-    );
+    const page = [
+      "app/dashboard/restaurants/page.tsx",
+      "app/dashboard/restaurants/LocationsList.tsx",
+      "lib/restaurant-list/load-locations.ts",
+    ]
+      .map((rel) => readFileSync(join(REPO, rel), "utf8"))
+      .join("\n");
     expect(page).toContain("loadRestaurantCardStats");
     expect(page).toContain("menuItemCount");
     expect(page).toContain("Last order");

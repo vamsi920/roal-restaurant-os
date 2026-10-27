@@ -1,6 +1,6 @@
-# Agent tool security (ElevenLabs → Supabase Edge)
+# Agent tool security (ElevenLabs → /api/agent-tools)
 
-ROAL voice-agent tools (`get-menu`, `get-restaurant-info`, `get-caller-history`, `submit-reservation-request`, `sync-draft-order`, `finalize-order`, `get-order-status`) accept authenticated webhook calls from ElevenLabs. This document describes the production auth and validation design.
+ROAL voice-agent tools (`get-menu`, `get-restaurant-info`, `get-caller-history`, `submit-reservation-request`, `sync-draft-order`, `finalize-order`, `get-order-status`) are Next.js route handlers under `/api/agent-tools/*` (handlers in `lib/agent-tools/server/`) and accept authenticated webhook calls from ElevenLabs. This document describes the production auth and validation design.
 
 ## Authentication modes
 
@@ -16,7 +16,7 @@ ROAL voice-agent tools (`get-menu`, `get-restaurant-info`, `get-caller-history`,
 - Signed with **HMAC-SHA256** using `AGENT_TOOL_SIGNING_SECRET`, or `AGENT_TOOL_SECRET` if signing secret is unset.
 - Default TTL: **90 days** (re-sync refreshes tokens in ElevenLabs tool headers).
 
-Edge verifies:
+The tool routes verify:
 
 1. Signature and expiry  
 2. Token `rid` matches `restaurant_id` from query/body/header (`x-roal-restaurant-id`)  
@@ -40,7 +40,7 @@ This blocks arbitrary UUID probing with a leaked global secret once agents are p
 
 ## Request validation (Zod)
 
-Strict **Zod** schemas in `supabase/functions/_shared/agent-tool-zod.ts` (mirrored in `lib/agent-tools/schemas.ts` for the test harness):
+Strict **Zod** schemas in `lib/agent-tools/schemas.ts` (shared by the routes and the test harness):
 
 | Tool | Request schema | Response schema |
 |------|----------------|-----------------|
@@ -75,7 +75,7 @@ Unknown JSON keys are rejected (`.strict()`). `restaurant_id` in the body must m
 
 ## Deterministic order validation
 
-After Zod parsing, `sync_draft_order` and `finalize_order` validate the cart against the live menu (`lib/orders/validate-cart.ts`, Edge: `_shared/order-validate.ts`):
+After Zod parsing, `sync_draft_order` and `finalize_order` validate the cart against the live menu (`lib/orders/validate-cart.ts`, tool routes: `lib/agent-tools/server/order-validate.ts`):
 
 - Stale or unknown `item_id` / name mismatch  
 - Sold-out (`is_available: false`) items  
@@ -109,7 +109,6 @@ ElevenLabs retries and duplicate webhooks should reuse the same key per logical 
 
 | Header | Required | Purpose |
 |--------|----------|---------|
-| `apikey` | Yes (Supabase gateway) | Publishable anon key |
 | `Authorization` | Yes | `roal1.*` token or legacy secret |
 | `x-roal-restaurant-id` | Baked tools | Restaurant UUID (must match token/body) |
 | `x-roal-idempotency-key` | Optional on write tools | Replay protection for draft/finalize retries |
@@ -119,63 +118,42 @@ ElevenLabs retries and duplicate webhooks should reuse the same key per logical 
 
 ### Rotate signing secret (recommended path)
 
-1. Generate a new `AGENT_TOOL_SIGNING_SECRET` (32+ random bytes).  
-2. Set in **both** places:
-   - Next.js env (Netlify/local)  
-   - Supabase Edge secrets: `supabase secrets set AGENT_TOOL_SIGNING_SECRET='...'`  
-3. Keep the **old** secret in Edge only as `AGENT_TOOL_SIGNING_SECRET_PREVIOUS` is **not** implemented yet — plan a short maintenance window.  
-4. Run **Re-sync** (or Connect) for **each** restaurant so ElevenLabs receives new `roal1.*` tokens.  
-5. Remove the old value from Next.js and Edge after all agents are re-synced.
+1. Generate a new `AGENT_TOOL_SIGNING_SECRET` (32+ random bytes).
+2. Set it in the Next.js env (Netlify + local `.env.local`) and redeploy. The tools run in the same app, so there is no second secret store.
+3. A `AGENT_TOOL_SIGNING_SECRET_PREVIOUS` grace window is **not** implemented — tokens minted with the old secret stop working on deploy, so plan a short maintenance window.
+4. Run **Re-sync** (or Connect) for **each** restaurant (`npm run resync:elevenlabs-all`) so ElevenLabs receives new `roal1.*` tokens.
 
 ### Rotate legacy `AGENT_TOOL_SECRET`
 
-1. Set new secret in Supabase Edge and Next.js.  
-2. Re-sync all agents (updates ElevenLabs headers).  
-3. Revoke the old secret in Supabase immediately after sync completes.
+1. Set the new secret in the Next.js env and redeploy.
+2. Re-sync all agents (updates ElevenLabs headers).
 
 ### Compromise response
 
 1. Rotate `AGENT_TOOL_SIGNING_SECRET` and `AGENT_TOOL_SECRET`.  
 2. Re-sync every connected agent.  
 3. Review `draft_orders` / `phone_order_receipts` for suspicious `session_id` patterns.  
-4. Truncate `agent_tool_idempotency` if needed:  
-   `delete from public.agent_tool_idempotency where created_at < now() - interval '1 day';`
+4. Clear old `agent_tool_idempotency` documents if needed (Firebase console → Firestore → `agent_tool_idempotency`, or a one-off script using `getDb().from("agent_tool_idempotency").delete().lt("created_at", <iso>)`).
 
 ## Deploy checklist
 
-```bash
-supabase db push   # applies 019_agent_tool_idempotency
-supabase secrets set AGENT_TOOL_SIGNING_SECRET='...'
-# optional legacy fallback during migration:
-supabase secrets set AGENT_TOOL_SECRET='...'
-supabase functions deploy get-menu --no-verify-jwt
-supabase functions deploy get-restaurant-info --no-verify-jwt
-supabase functions deploy get-caller-history --no-verify-jwt
-supabase functions deploy submit-reservation-request --no-verify-jwt
-supabase functions deploy sync-draft-order --no-verify-jwt
-supabase functions deploy finalize-order --no-verify-jwt
-supabase functions deploy get-order-status --no-verify-jwt
-```
-
-Then on each restaurant KDS: **Re-sync** voice agent.
-
-## Optional: Next.js proxy (not required)
-
-You may front Edge with `/api/agent-tools/...` so ElevenLabs never holds even a per-restaurant token. ROAL’s default is **direct Edge + signed token** to avoid extra latency. See `docs/ELEVENLABS.md` for URLs.
+1. `AGENT_TOOL_SIGNING_SECRET` set on Netlify; `NEXT_PUBLIC_APP_URL` is the public https origin (or `ROAL_AGENT_TOOLS_BASE_URL` for a tunnel / staging host).
+2. Deploy the app (tools ship with it). No database migration is needed for idempotency — `agent_tool_idempotency` docs are keyed `restaurant_id__idempotency_key`.
+3. On each restaurant KDS: **Re-sync** voice agent.
 
 ## Environment variables
 
 | Variable | Where | Purpose |
 |----------|-------|---------|
-| `AGENT_TOOL_SIGNING_SECRET` | Next.js + Edge | HMAC for `roal1.*` tokens |
-| `AGENT_TOOL_SECRET` | Next.js + Edge | Legacy global bearer; signing fallback |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Next.js → ElevenLabs `apikey` header | Supabase gateway only |
+| `AGENT_TOOL_SIGNING_SECRET` | Next.js | HMAC for `roal1.*` tokens |
+| `AGENT_TOOL_SECRET` | Next.js | Legacy global bearer; signing fallback |
+| `ROAL_AGENT_TOOLS_BASE_URL` | Next.js | Public https origin baked into tool URLs (defaults to `NEXT_PUBLIC_APP_URL`) |
 
-Never expose `SUPABASE_SERVICE_ROLE_KEY` to ElevenLabs.
+Never expose `FIREBASE_SERVICE_ACCOUNT` (or any other server key) to ElevenLabs.
 
 ## Twilio phone calls (tools vs conversation variables)
 
-After **Connect agent to this restaurant**, ROAL **bakes** `restaurant_id` into Edge tool URLs and `x-roal-restaurant-id` so **tool calls do not depend** on Twilio session dynamic variables (see prompt 29 / `syncRoalElevenLabsTools`).
+After **Connect agent to this restaurant**, ROAL **bakes** `restaurant_id` into tool URLs and `x-roal-restaurant-id` so **tool calls do not depend** on Twilio session dynamic variables (see prompt 29 / `syncRoalElevenLabsTools`).
 
 Separately, ElevenLabs may still require `restaurant_name` (and related vars) at **call start** for `first_message` if the agent uses `{{restaurant_name}}` templates. ROAL mitigates this by PATCHing a **literal** `first_message` on Connect and by PATCHing the **conversation-init** webhook:
 

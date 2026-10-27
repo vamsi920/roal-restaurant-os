@@ -29,17 +29,21 @@ describe("real-data discipline (prompt 37)", () => {
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    const restaurants = readFileSync(
-      join(REPO, "app/dashboard/restaurants/page.tsx"),
-      "utf8"
-    );
+    const restaurants = [
+      "app/dashboard/restaurants/page.tsx",
+      "app/dashboard/restaurants/LocationsList.tsx",
+      "lib/restaurant-list/load-locations.ts",
+    ]
+      .map((rel) => readFileSync(join(REPO, rel), "utf8"))
+      .join("\n");
 
     expect(kdsPage).toContain("loadLiveOrdersPageData");
     expect(kdsLoader).toContain('from("draft_orders")');
     expect(kdsLoader).toContain('from("phone_order_receipts")');
     expect(kdsLoader).toContain("loadRestaurantLaunchGate");
     expect(panel).toContain("initialDraftOrders");
-    expect(panel).toContain("postgres_changes");
+    expect(panel).toContain("usePoll");
+    expect(panel).toContain("liveEndpoints.orders");
     expect(panel).not.toMatch(/example order|fake.*order|seed.*order|MOCK_/i);
     expect(restaurants).toContain('from("restaurants")');
     expect(restaurants).toContain("loadRestaurantCardStats");
@@ -64,12 +68,12 @@ describe("real-data discipline (prompt 37)", () => {
 
     expect(strip).toContain("liveCount > 0");
     expect(strip).not.toMatch(/liveCount\s*=\s*[1-9]/);
-    expect(indicator).toContain('from("draft_orders")');
+    expect(indicator).toContain("liveEndpoints.callStatus");
     expect(indicator).toContain("isVoiceCartStatus");
     expect(indicator).not.toMatch(/setInterval|fake|demo|example/i);
-    expect(menu).toContain('setMenuRealtime("live")');
-    expect(menu).toContain('"connecting"');
-    expect(menu).not.toMatch(/setMenuRealtime\("live"\)[\s\S]*useState\("live"\)/);
+    // Menu badge state comes from the poll connection, which starts "connecting".
+    expect(menu).toContain("const menuRealtime: RealtimeState = poll.state");
+    expect(readFileSync(join(REPO, "lib/live/use-poll.ts"), "utf8")).toContain('useState<LiveConnectionState>("connecting")');
   });
 
   it("live agent uses control-center snapshot, not fabricated status", () => {

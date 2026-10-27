@@ -2,7 +2,6 @@ import type { Db } from "@/lib/db";
 import { loadOrganizationGateVerdicts } from "@/lib/billing/assert-gate";
 import type { GateVerdict } from "@/lib/billing/gates";
 import type { BillingGateAction } from "@/lib/billing/gates";
-import { getPublicEnv } from "@/lib/env.public";
 import {
   loadRestaurantMenu,
   type RestaurantMenuSnapshot,
@@ -23,7 +22,6 @@ import { serializeKnowledgeEntries } from "@/lib/restaurant-knowledge/schema";
 import { loadRestaurantUpsellRules } from "@/lib/restaurant-upsell/helpers";
 import { serializeUpsellRules } from "@/lib/restaurant-upsell/schema";
 import type { RestaurantUpsellRule } from "@/lib/restaurant-upsell/schema";
-import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
 import type { VoiceAgentControlCenterSnapshot } from "@/lib/voice-agent/control-center-types";
 import type { Restaurant, RestaurantProfile } from "@/lib/types";
@@ -93,12 +91,9 @@ export async function loadRestaurantMenuSetupPageData(
     throw new Error(menuCopySourcesResult.error.message);
   }
 
-  const supabaseUrl = getPublicEnv().NEXT_PUBLIC_SUPABASE_URL;
   const voiceAgentCenter = await loadVoiceAgentControlCenter({
     restaurantId,
     restaurantName: restaurant.name,
-    edgeBase: supabaseUrl.replace(/\/$/, ""),
-    supabaseRef: supabaseProjectRefFromUrl(supabaseUrl),
     profile,
   });
   let inheritedTemplateDiff: TemplateOverrideDiff | null = null;

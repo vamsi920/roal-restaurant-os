@@ -6,7 +6,7 @@ import {
 import {
   validateCartForFinalize as edgeValidateCartForFinalize,
   validateCartForSync as edgeValidateCartForSync,
-} from "../../supabase/functions/_shared/order-validate";
+} from "@/lib/agent-tools/server/order-validate";
 import {
   ITEM_BURGER_ID,
   ITEM_SOLD_OUT_ID,
@@ -28,7 +28,7 @@ function expectParity(
   );
 }
 
-describe("Next vs Edge cart validation parity", () => {
+describe("dashboard vs agent-tool cart validation parity", () => {
   it("sync: empty cart", () => {
     const payload = [[], menuItems, menuModifiers] as const;
     expectParity(

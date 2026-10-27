@@ -38,7 +38,7 @@ describe("get_menu_items ElevenLabs verification (launch 18)", () => {
 
   it("get_menu_items response includes service_modes from profile", () => {
     const edge = readFileSync(
-      join(REPO, "supabase/functions/get-menu/index.ts"),
+      join(REPO, "lib/agent-tools/server/tools/get-menu.ts"),
       "utf8"
     );
     const harness = readFileSync(

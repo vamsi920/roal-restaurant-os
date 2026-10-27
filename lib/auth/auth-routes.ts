@@ -4,13 +4,12 @@ export const AUTH_ROUTES = {
   login: "/login",
   signup: "/signup",
   resetPassword: "/reset-password",
-  callback: "/auth/callback",
   signout: "/auth/signout",
 } as const;
 
 export const PROTECTED_DASHBOARD_PREFIX = "/dashboard";
 
-/** Guest redirect used by `lib/supabase/middleware.ts`. */
+/** Guest redirect used by `lib/auth/middleware-session.ts`. */
 export function buildGuestLoginRedirect(pathname: string, search = ""): string {
   const next = `${pathname}${search}`;
   const params = new URLSearchParams({ next });

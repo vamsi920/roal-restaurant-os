@@ -35,6 +35,7 @@ export async function POST(req: Request) {
     typeof body.import_id === "string" && body.import_id
       ? body.import_id
       : null;
+  let importVerified = false;
 
   try {
     if (typeof restaurantId !== "string" || !restaurantId) {
@@ -81,6 +82,7 @@ export async function POST(req: Request) {
       if (!row) {
         return NextResponse.json({ error: "Import not found" }, { status: 404 });
       }
+      importVerified = true;
       const blocked = commitBlockedReason(
         row.extraction_status as MenuImportStatus
       );
@@ -122,7 +124,8 @@ export async function POST(req: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown error";
 
-    if (importId && restaurantId) {
+    // Only touch the import row once it was verified to belong to this restaurant.
+    if (importId && restaurantId && importVerified) {
       try {
         const supabase = getDb();
         await recordMenuImportCommitFailed(supabase, importId, message);

@@ -341,6 +341,19 @@ async function resolveRestaurantId(input: {
     input.data.restaurant_id,
     asRecord(input.data.metadata).restaurant_id
   );
+  // A dedicated agent is bound to exactly one restaurant. That binding wins over any
+  // restaurant id in the payload (dynamic variables can be set by whoever starts the
+  // session), so a crafted call cannot land transcripts in another tenant.
+  const agentBound = input.agentId
+    ? await lookupRestaurantForElevenLabsAgent(input.agentId)
+    : null;
+  if (agentBound?.restaurantId) {
+    if (fromPayload && fromPayload !== agentBound.restaurantId) {
+      console.warn("[elevenlabs/post-call] payload restaurant_id does not match agent binding; using agent binding");
+    }
+    return agentBound.restaurantId;
+  }
+
   if (fromPayload) {
     const { data } = await input.supabase
       .from("restaurants")
@@ -357,9 +370,7 @@ async function resolveRestaurantId(input: {
     if (byPhone?.restaurantId) return byPhone.restaurantId;
   }
 
-  if (!input.agentId) return null;
-  const resolved = await lookupRestaurantForElevenLabsAgent(input.agentId);
-  return resolved?.restaurantId ?? null;
+  return null;
 }
 
 export async function parseElevenLabsPostCallEvent(

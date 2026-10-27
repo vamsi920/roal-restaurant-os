@@ -37,7 +37,7 @@ vi.mock("@/lib/scanner/menu-import-audit", () => ({
   recordMenuImportCommitFailed: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 

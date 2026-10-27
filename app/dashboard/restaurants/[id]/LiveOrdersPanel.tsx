@@ -9,10 +9,10 @@ import {
   useRef,
   useState,
 } from "react";
-import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
-import type { AgentCallOutcome, AgentCallStatus } from "@/lib/agent-calls/types";
 import { reportRealtimeDegraded } from "@/lib/notifications/report-realtime-degraded";
-import { getBrowserSupabase } from "@/lib/supabase/client";
+import { fetchLiveJson, usePoll } from "@/lib/live/use-poll";
+import { liveEndpoints } from "@/lib/live/endpoints";
+import type { LiveOrdersPayload } from "@/lib/live/load-live-orders";
 import type {
   DbItem,
   DbModifier,
@@ -30,12 +30,7 @@ import { formatSupabaseClientError } from "@/lib/dashboard/format-user-error";
 import { RESTAURANT_LIVE_ORDERS_LABEL } from "@/lib/dashboard-restaurant-labels";
 import { LiveCallIndicator } from "./LiveCallIndicator";
 import type { CommandCenterCallRow } from "@/lib/command-center/types";
-import {
-  buildOrderCallEvidence,
-  indexOrderCallEvidence,
-  type AgentCallEventEvidenceRow,
-  type OrderCallEvidence,
-} from "@/lib/live-orders/call-evidence";
+import type { OrderCallEvidence } from "@/lib/live-orders/call-evidence";
 import {
   classifyKdsQueueLane,
   isKdsStuckOrder,
@@ -99,13 +94,6 @@ function bootstrapKey(
 type Tab = "board" | "done";
 type Lane = "new" | "preparing" | "ready";
 
-type RealtimeAgentCallEventRow = AgentCallEventEvidenceRow & {
-  restaurant_id: string;
-  caller_phone: string | null;
-  status: string;
-  updated_at?: string | null;
-};
-
 function sortStuckFirst(orders: DraftOrderRow[], now: Date): DraftOrderRow[] {
   return [...orders].sort((a, b) => {
     const aStuck = isKdsStuckOrder(a, { now });
@@ -122,55 +110,6 @@ function cardStuckProps(order: DraftOrderRow, now: Date) {
   return {
     queueLane: classifyKdsQueueLane(order),
     stuckMinutes: stuck ? minutesSinceUpdated(order.updated_at, now) : undefined,
-  };
-}
-
-const AGENT_CALL_STATUSES = new Set<AgentCallStatus>(["active", "ended"]);
-const AGENT_CALL_OUTCOMES = new Set<AgentCallOutcome>([
-  "in_progress",
-  "order_completed",
-  "abandoned",
-  "canceled",
-  "no_order",
-  "unknown",
-]);
-
-function safeAgentCallStatus(value: string | null | undefined): AgentCallStatus {
-  return AGENT_CALL_STATUSES.has(value as AgentCallStatus)
-    ? (value as AgentCallStatus)
-    : "active";
-}
-
-function safeAgentCallOutcome(value: string | null | undefined): AgentCallOutcome {
-  return AGENT_CALL_OUTCOMES.has(value as AgentCallOutcome)
-    ? (value as AgentCallOutcome)
-    : "unknown";
-}
-
-function realtimeCallRowFromEvent(
-  row: RealtimeAgentCallEventRow
-): CommandCenterCallRow | null {
-  const sessionId = row.session_id?.trim();
-  if (!sessionId) return null;
-  const metadata = row.transcript_metadata ?? {};
-  const handoffSignals = Array.isArray(metadata.handoff_signals)
-    ? metadata.handoff_signals.filter(
-        (signal): signal is string => typeof signal === "string" && signal.trim().length > 0
-      )
-    : [];
-
-  return {
-    sessionId,
-    conversationId: row.conversation_id?.trim() || sessionId,
-    callerPhone: row.caller_phone?.trim() || null,
-    status: safeAgentCallStatus(row.status),
-    outcome: safeAgentCallOutcome(row.outcome),
-    startedAt: row.started_at || row.updated_at || new Date().toISOString(),
-    endedAt: row.ended_at ?? null,
-    lastActivityAt: row.updated_at || row.ended_at || row.started_at || new Date().toISOString(),
-    lineCount: 0,
-    toolErrorCount: 0,
-    handoffSignals,
   };
 }
 
@@ -229,9 +168,6 @@ export function LiveOrdersPanel({
       initialDraftOrders.length > 0 ||
       initialReceipts.length > 0
   );
-  const [realtimeUi, setRealtimeUi] = useState<"connecting" | "live" | "degraded">(
-    "connecting"
-  );
 
   const { applyAction, pending, errors, clearError, mergeRealtimeRow } =
     useOrderStatusActions(restaurantId, setDraftRows);
@@ -270,259 +206,90 @@ export function LiveOrdersPanel({
     setActiveCalls(initialActiveCalls);
   }, [serverKey, initialCallEvidenceBySession, initialActiveCalls]);
 
-  const fetchAll = useCallback(async () => {
-    const supabase = getBrowserSupabase();
-    const [dRes, rRes] = await Promise.all([
-      supabase
-        .from("draft_orders")
-        .select("*")
-        .eq("restaurant_id", restaurantId)
-        .order("updated_at", { ascending: false }),
-      supabase
-        .from("phone_order_receipts")
-        .select("*")
-        .eq("restaurant_id", restaurantId)
-        .order("created_at", { ascending: false })
-        .limit(150),
-    ]);
-    const errMsg = dRes.error?.message ?? rRes.error?.message ?? null;
-    if (errMsg) {
-      setSyncError(formatSupabaseClientError(errMsg));
-    } else {
-      setSyncError(null);
-    }
-    if (!dRes.error && Array.isArray(dRes.data)) {
-      const fetched = (dRes.data as DraftOrderRow[]).map(normalizeDraftRow);
-      const pendingIds = new Set(Object.keys(pendingRef.current));
-      setDraftRows((prev) =>
-        mergeFetchedDraftOrders(prev, fetched, pendingIds)
+  /** Ticket ids already on screen; anything new that arrives by poll flashes once. */
+  const seenDraftIdsRef = useRef<Set<string> | null>(null);
+  if (seenDraftIdsRef.current === null) {
+    seenDraftIdsRef.current = new Set(initialDraftOrders.map((o) => o.id));
+  }
+  const [flashedIds, setFlashedIds] = useState<Set<string>>(() => new Set());
+  const flashTimersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+  const flashTickets = useCallback((ids: string[]) => {
+    if (ids.length === 0) return;
+    setFlashedIds((prev) => {
+      const next = new Set(prev);
+      for (const id of ids) next.add(id);
+      return next;
+    });
+    for (const id of ids) {
+      const existing = flashTimersRef.current.get(id);
+      if (existing) clearTimeout(existing);
+      flashTimersRef.current.set(
+        id,
+        setTimeout(() => {
+          flashTimersRef.current.delete(id);
+          setFlashedIds((prev) => {
+            if (!prev.has(id)) return prev;
+            const next = new Set(prev);
+            next.delete(id);
+            return next;
+          });
+        }, 1800)
       );
     }
-    if (!rRes.error && Array.isArray(rRes.data)) {
-      setReceipts(rRes.data as PhoneOrderReceiptRow[]);
-    }
-    if (!dRes.error || !rRes.error) {
-      const sessionIds = [
-        ...(((dRes.data ?? []) as DraftOrderRow[]).map((row) => row.session_id)),
-        ...(((rRes.data ?? []) as PhoneOrderReceiptRow[]).map((row) => row.session_id)),
-      ]
-        .map((id) => id?.trim())
-        .filter((id): id is string => Boolean(id));
-      if (sessionIds.length > 0) {
-        const evidenceRes = await supabase
-          .from("agent_call_events")
-          .select(
-            "session_id, conversation_id, outcome, started_at, ended_at, transcript_metadata"
-          )
-          .eq("restaurant_id", restaurantId)
-          .in("session_id", [...new Set(sessionIds)])
-          .order("updated_at", { ascending: false })
-          .limit(sessionIds.length);
-        if (!evidenceRes.error && Array.isArray(evidenceRes.data)) {
-          setCallEvidenceBySession(
-            indexOrderCallEvidence(
-              evidenceRes.data
-                .map((row) =>
-                  buildOrderCallEvidence(row as AgentCallEventEvidenceRow)
-                )
-                .filter((row): row is OrderCallEvidence => row != null)
-            )
-          );
-        }
-      }
-    }
-    setOrdersReady(true);
-  }, [restaurantId]);
+  }, []);
 
   useEffect(() => {
-    const supabase = getBrowserSupabase();
-    let cancelled = false;
-    let pollInterval: ReturnType<typeof setInterval> | null = null;
-    let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
-    let backoffAttempt = 0;
-    let activeChannel: ReturnType<typeof supabase.channel> | null = null;
-
-    const stopPoll = () => {
-      if (pollInterval) {
-        clearInterval(pollInterval);
-        pollInterval = null;
-      }
-    };
-
-    const startPoll = (ms: number) => {
-      stopPoll();
-      pollInterval = setInterval(() => {
-        void fetchAll();
-      }, ms);
-    };
-
-    const clearReconnect = () => {
-      if (reconnectTimer) {
-        clearTimeout(reconnectTimer);
-        reconnectTimer = null;
-      }
-    };
-
-    const teardownChannel = () => {
-      if (activeChannel) {
-        void supabase.removeChannel(activeChannel);
-        activeChannel = null;
-      }
-    };
-
-    const attach = () => {
-      if (cancelled) return;
-      teardownChannel();
-      setRealtimeUi("connecting");
-      startPoll(6000);
-
-      const ch = supabase
-        .channel(`orders-${restaurantId}`)
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "draft_orders",
-            filter: `restaurant_id=eq.${restaurantId}`,
-          },
-          (payload: RealtimePostgresChangesPayload<DraftOrderRow>) => {
-            if (payload.eventType === "INSERT") {
-              const row = normalizeDraftRow(payload.new as DraftOrderRow);
-              if (row.restaurant_id !== restaurantId) return;
-              setDraftRows((prev) =>
-                prev.some((o) => o.id === row.id) ? prev : [row, ...prev]
-              );
-            } else if (payload.eventType === "UPDATE") {
-              const row = normalizeDraftRow(payload.new as DraftOrderRow);
-              if (row.restaurant_id !== restaurantId) return;
-              if (!mergeRealtimeRow(row)) return;
-              setDraftRows((prev) =>
-                prev.map((o) => (o.id === row.id ? row : o))
-              );
-            } else if (payload.eventType === "DELETE") {
-              const row = payload.old as DraftOrderRow;
-              setDraftRows((prev) => prev.filter((o) => o.id !== row.id));
-            }
-          }
-        )
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "phone_order_receipts",
-            filter: `restaurant_id=eq.${restaurantId}`,
-          },
-          (payload: RealtimePostgresChangesPayload<PhoneOrderReceiptRow>) => {
-            if (payload.eventType === "INSERT") {
-              const row = payload.new as PhoneOrderReceiptRow;
-              if (row.restaurant_id !== restaurantId) return;
-              setReceipts((prev) => {
-                const rest = prev.filter((p) => p.session_id !== row.session_id);
-                return [row, ...rest];
-              });
-            } else if (payload.eventType === "UPDATE") {
-              const row = payload.new as PhoneOrderReceiptRow;
-              setReceipts((prev) =>
-                prev.map((o) => (o.id === row.id ? row : o))
-              );
-            } else if (payload.eventType === "DELETE") {
-              const row = payload.old as PhoneOrderReceiptRow;
-              setReceipts((prev) => prev.filter((o) => o.id !== row.id));
-            }
-          }
-        )
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "agent_call_events",
-            filter: `restaurant_id=eq.${restaurantId}`,
-          },
-          (payload: RealtimePostgresChangesPayload<RealtimeAgentCallEventRow>) => {
-            if (payload.eventType === "DELETE") {
-              const row = payload.old as Partial<RealtimeAgentCallEventRow>;
-              const sessionId = row.session_id?.trim();
-              if (!sessionId) return;
-              setActiveCalls((prev) => prev.filter((call) => call.sessionId !== sessionId));
-              setCallEvidenceBySession((prev) => {
-                const next = { ...prev };
-                delete next[sessionId];
-                return next;
-              });
-              return;
-            }
-
-            const row = payload.new as RealtimeAgentCallEventRow;
-            if (row.restaurant_id !== restaurantId) return;
-
-            const evidence = buildOrderCallEvidence(row);
-            if (evidence) {
-              setCallEvidenceBySession((prev) => ({
-                ...prev,
-                [evidence.sessionId]: evidence,
-              }));
-            }
-
-            const call = realtimeCallRowFromEvent(row);
-            if (!call) return;
-            const shouldShowActive =
-              call.status === "active" || call.outcome === "in_progress";
-            setActiveCalls((prev) => {
-              const without = prev.filter((existing) => existing.sessionId !== call.sessionId);
-              return shouldShowActive ? [call, ...without].slice(0, 12) : without;
-            });
-          }
-        )
-        .subscribe((status: string, err?: Error) => {
-          if (cancelled) return;
-          if (status === "SUBSCRIBED") {
-            backoffAttempt = 0;
-            setRealtimeUi("live");
-            startPoll(28000);
-            return;
-          }
-          if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
-            if (process.env.NODE_ENV === "development") {
-              console.warn("[LiveOrdersPanel] Realtime:", status, err);
-            }
-            setRealtimeUi("degraded");
-            reportRealtimeDegraded({ restaurantId, restaurantName });
-            startPoll(6000);
-            void fetchAll();
-            teardownChannel();
-            backoffAttempt += 1;
-            const delay = Math.min(30_000, 1500 * 2 ** (backoffAttempt - 1));
-            clearReconnect();
-            reconnectTimer = setTimeout(() => {
-              reconnectTimer = null;
-              attach();
-            }, delay);
-          }
-        });
-      activeChannel = ch;
-    };
-
-    void fetchAll();
-    attach();
-
-    function onVisible() {
-      if (document.visibilityState === "visible") {
-        void fetchAll();
-      }
-    }
-    document.addEventListener("visibilitychange", onVisible);
-
+    const timers = flashTimersRef.current;
     return () => {
-      cancelled = true;
-      document.removeEventListener("visibilitychange", onVisible);
-      clearReconnect();
-      stopPoll();
-      teardownChannel();
+      timers.forEach((t) => clearTimeout(t));
+      timers.clear();
     };
-  }, [restaurantId, restaurantName, fetchAll, mergeRealtimeRow]);
+  }, []);
+
+  const applyLivePayload = useCallback(
+    (payload: LiveOrdersPayload) => {
+      setSyncError(payload.error ? formatSupabaseClientError(payload.error) : null);
+
+      const fetched = payload.draftOrders
+        .filter((row) => row.restaurant_id === restaurantId)
+        .map(normalizeDraftRow);
+      const seen = seenDraftIdsRef.current ?? new Set<string>();
+      const arrived = fetched
+        .filter((row) => !seen.has(row.id) && !isTerminalOrderStatus(row.status))
+        .map((row) => row.id);
+      for (const row of fetched) seen.add(row.id);
+      seenDraftIdsRef.current = seen;
+      flashTickets(arrived);
+
+      // Rows with an in-flight status change keep their optimistic copy until the
+      // server catches up (mergeRealtimeRow clears the pending entry when it does).
+      const pendingIds = new Set(Object.keys(pendingRef.current));
+      for (const row of fetched) {
+        if (pendingIds.has(row.id) && mergeRealtimeRow(row)) pendingIds.delete(row.id);
+      }
+      setDraftRows((prev) => mergeFetchedDraftOrders(prev, fetched, pendingIds));
+      setReceipts(payload.receipts.filter((row) => row.restaurant_id === restaurantId));
+      setCallEvidenceBySession(payload.callEvidenceBySession ?? {});
+      setActiveCalls(payload.activeCalls ?? []);
+      setOrdersReady(true);
+    },
+    [restaurantId, flashTickets, mergeRealtimeRow]
+  );
+
+  const live = usePoll<LiveOrdersPayload>(
+    (signal) => fetchLiveJson<LiveOrdersPayload>(liveEndpoints.orders(restaurantId), signal),
+    {
+      onData: applyLivePayload,
+      onError: (err, failures) => {
+        if (failures >= 2) setSyncError(formatSupabaseClientError(err.message));
+        setOrdersReady(true);
+      },
+      onDegraded: () => reportRealtimeDegraded({ restaurantId, restaurantName }),
+    }
+  );
+  const realtimeUi = live.state;
+  const fetchAll = live.refresh;
 
   useEffect(() => {
     const timer = setInterval(() => setNowMs(Date.now()), 60_000);
@@ -681,6 +448,7 @@ export function LiveOrdersPanel({
         queueLane={stuckProps.queueLane}
         stuckMinutes={stuckProps.stuckMinutes}
         now={now}
+        flash={flashedIds.has(order.id)}
       />
     );
   }
@@ -703,6 +471,7 @@ export function LiveOrdersPanel({
         queueLane={stuckProps.queueLane}
         stuckMinutes={stuckProps.stuckMinutes}
         now={now}
+        flash={flashedIds.has(order.id)}
       />
     );
   }

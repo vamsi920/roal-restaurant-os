@@ -61,7 +61,7 @@ vi.mock("@/lib/scanner/menu-import-audit", () => ({
   recordMenuImportCommitFailed: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -97,7 +97,7 @@ function commitRequest(body: Record<string, unknown>) {
 describe("POST /api/scanner/commit", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(getDb).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockReturnValue({} as never);
   });
 
   it("returns 401 when unauthenticated", async () => {

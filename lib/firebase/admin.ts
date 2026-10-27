@@ -1,4 +1,3 @@
-import "server-only";
 // Firebase Admin singleton. Credentials come from FIREBASE_SERVICE_ACCOUNT (JSON string)
 // or Application Default Credentials. When neither exists we run in demo mode and the
 // data layer uses the in-memory store (lib/db).

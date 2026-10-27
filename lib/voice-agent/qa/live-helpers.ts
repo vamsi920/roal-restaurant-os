@@ -61,7 +61,7 @@ export function printQaChecks(checks: QaCheck[]): number {
 export function requireServiceRoleSupabase(): Db {
   const sb = getDb();
   if (!sb) {
-    throw new Error("SUPABASE_SERVICE_ROLE_KEY required for live QA scripts");
+    throw new Error("Database unavailable for live QA scripts");
   }
   return sb;
 }

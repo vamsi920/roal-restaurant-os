@@ -8,7 +8,7 @@ import {
 } from "../lib/elevenlabs/fetch-synced-tool";
 import { getElevenLabsAgentId } from "../lib/env.server";
 import { ROAL_RESTAURANT_ID_HEADER } from "../lib/sync-elevenlabs-roal-tools";
-import { getDb } from "../lib/supabase/server";
+import { getDb } from "../lib/db";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
@@ -40,7 +40,6 @@ function urlPath(url: string): string {
 
 void (async () => {
   const sb = getDb();
-  if (!sb) throw new Error("SUPABASE_SERVICE_ROLE_KEY required");
 
   const { data: profile } = await sb
     .from("restaurant_profiles")

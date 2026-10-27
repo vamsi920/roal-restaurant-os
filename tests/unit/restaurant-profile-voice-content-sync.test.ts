@@ -110,9 +110,8 @@ vi.mock("@/lib/elevenlabs", () => ({
   listAllKnowledgeBaseDocuments: vi.fn(() => Promise.resolve([])),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(() => ({})),
-  getDb: vi.fn(async () => ({})),
 }));
 
 vi.mock("@/lib/restaurant-profile/helpers", async (importOriginal) => {

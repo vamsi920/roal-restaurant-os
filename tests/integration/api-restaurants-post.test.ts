@@ -42,7 +42,7 @@ vi.mock("@/lib/onboarding/helpers", () => ({
   ensureRestaurantOnboarding: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -205,7 +205,7 @@ describe("POST /api/restaurants", () => {
     const insert = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({ single }),
     });
-    vi.mocked(getDb).mockResolvedValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn().mockReturnValue({ insert }),
     } as never);
 
@@ -244,7 +244,7 @@ describe("POST /api/restaurants", () => {
     const insert = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({ single }),
     });
-    vi.mocked(getDb).mockResolvedValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn().mockReturnValue({ insert }),
     } as never);
 
@@ -305,7 +305,7 @@ describe("POST /api/restaurants", () => {
       select: vi.fn().mockReturnValue({ single }),
     });
     vi.mocked(supabase.from).mockReturnValue({ insert });
-    vi.mocked(getDb).mockResolvedValue(supabase as never);
+    vi.mocked(getDb).mockReturnValue(supabase as never);
 
     const res = await POST(
       new Request("http://localhost/api/restaurants", {
@@ -362,7 +362,7 @@ describe("POST /api/restaurants", () => {
     const insert = vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({ single }),
     });
-    vi.mocked(getDb).mockResolvedValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn().mockReturnValue({ insert }),
     } as never);
 

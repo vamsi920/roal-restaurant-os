@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildCallerOrderStatusTimeline as buildNext } from "@/lib/orders/status-history";
-import { buildCallerOrderStatusTimeline as buildEdge } from "../../supabase/functions/_shared/caller-status-timeline";
+import { buildCallerOrderStatusTimeline as buildEdge } from "@/lib/agent-tools/server/caller-status-timeline";
 import type { DraftOrderRow } from "@/lib/types";
 
 const readyOrder = {
@@ -16,7 +16,7 @@ const readyOrder = {
   canceled_at: null,
 } as DraftOrderRow;
 
-describe("caller status timeline Next vs Edge parity", () => {
+describe("caller status timeline dashboard vs agent-tool parity", () => {
   it("builds the same milestone labels", () => {
     const next = buildNext(readyOrder);
     const edge = buildEdge(readyOrder);

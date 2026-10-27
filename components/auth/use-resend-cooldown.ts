@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-/** Seconds-left countdown so "Resend" can't hammer Supabase's email rate limit. */
+/** Seconds-left countdown so "Resend" can't hammer the reset-email rate limit. */
 export function useResendCooldown(seconds = 30) {
   const [left, setLeft] = useState(0);
 

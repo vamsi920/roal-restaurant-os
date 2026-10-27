@@ -1,6 +1,5 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { TABLES } from "@/lib/db/schema";
 import {
   emitCallReviewNeededNotification,
   emitCateringInquiryNotification,
@@ -46,7 +45,6 @@ vi.mock("@/lib/notifications/operational-events", () => ({
 import { loadNotificationSettings } from "@/lib/notifications/settings";
 import { emitStaffHandoffRequested } from "@/lib/notifications/operational-events";
 
-const REPO = join(import.meta.dirname, "../..");
 const ORG_ID = "11111111-1111-4111-8111-111111111111";
 const RESTAURANT_ID = "22222222-2222-4222-8222-222222222222";
 
@@ -100,11 +98,8 @@ describe("phone follow-up notification types", () => {
     }
   });
 
-  it("migration adds enum values and backfills org settings", () => {
-    const sql = readFileSync(
-      join(REPO, "supabase/migrations/033_notification_phone_followup_events.sql"),
-      "utf8"
-    );
+  it("notification_settings collection defaults enable the phone follow-up events", () => {
+    const enabled = TABLES.notification_settings.defaults?.enabled_events as string[];
     for (const value of [
       "voicemail_callback",
       "reservation_request",
@@ -113,10 +108,8 @@ describe("phone follow-up notification types", () => {
       "call_review_needed",
       "stuck_active_call",
     ]) {
-      expect(sql).toContain(`'${value}'`);
+      expect(enabled).toContain(value);
     }
-    expect(sql).toMatch(/array_agg\(distinct e\)/);
-    expect(sql).toMatch(/enabled_events set default array/);
   });
 });
 

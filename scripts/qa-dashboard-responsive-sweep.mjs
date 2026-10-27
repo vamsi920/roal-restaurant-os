@@ -5,9 +5,7 @@
  * Uses E2E_EMAIL / E2E_PASSWORD when set; otherwise bootstraps an ephemeral Supabase user
  * (requires service role in env). Credentials are never printed.
  */
-import { randomUUID } from "node:crypto";
 import { chromium } from "playwright";
-import { createClient } from "@supabase/supabase-js";
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { loginWithEnvCredentials, resolveRestaurantPath } from "./playwright-smoke-lib.mjs";
@@ -53,65 +51,10 @@ async function ensureE2eCredentials() {
     return { email, password, restaurantId: restaurantId ?? null };
   }
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !serviceKey) {
-    throw new Error(
-      "Set E2E_EMAIL/E2E_PASSWORD or Supabase env for ephemeral bootstrap"
-    );
-  }
-
-  const bootEmail = `responsive-40-${Date.now()}@example.com`;
-  const bootPassword = `RoalR40${randomUUID().slice(0, 12)}a1`;
-  const admin = createClient(url, serviceKey, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-
-  const { data: created, error: createErr } = await admin.auth.admin.createUser({
-    email: bootEmail,
-    password: bootPassword,
-    email_confirm: true,
-  });
-  if (createErr || !created.user) {
-    throw new Error(createErr?.message ?? "bootstrap createUser failed");
-  }
-
-  const userId = created.user.id;
-  const { data: org, error: orgErr } = await admin
-    .from("organizations")
-    .insert({ name: "Responsive 40 Org", slug: `r40-${Date.now()}` })
-    .select("id")
-    .single();
-  if (orgErr || !org) {
-    throw new Error(orgErr?.message ?? "bootstrap org failed");
-  }
-
-  const { error: memberErr } = await admin.from("memberships").insert({
-    organization_id: org.id,
-    user_id: userId,
-    role: "owner",
-  });
-  if (memberErr) throw new Error(memberErr.message);
-
-  await admin.from("profiles").upsert({
-    id: userId,
-    display_name: "Responsive QA",
-  });
-
-  const { data: restaurant, error: restErr } = await admin
-    .from("restaurants")
-    .insert({ name: "Responsive QA Location", organization_id: org.id })
-    .select("id")
-    .single();
-  if (restErr || !restaurant) {
-    throw new Error(restErr?.message ?? "bootstrap restaurant failed");
-  }
-
-  return {
-    email: bootEmail,
-    password: bootPassword,
-    restaurantId: restaurant.id,
-  };
+  throw new Error(
+    "Set E2E_EMAIL / E2E_PASSWORD (a Firebase test owner) and optionally E2E_RESTAURANT_ID. " +
+      "Create the user in Firebase console → Authentication → Users."
+  );
 }
 
 function buildRoutes(restaurantId) {

@@ -22,7 +22,7 @@ npm run lint && npm test && npm run build
 tests/
   fixtures/       # Shared menu UUIDs and sample rows
   unit/           # Pure lib/ logic and sanitizers
-  integration/    # API route handlers (mocked auth/Supabase)
+  integration/    # API route handlers (mocked auth; in-memory or mocked db)
 vitest.config.ts
 ```
 
@@ -46,17 +46,17 @@ vitest.config.ts
 | Multi-location menus | Menu snapshot copy payload, additive inherited template payloads, field-level override diffs, target replacement path, agent auto-sync hook |
 | Onboarding / nav | Wizard helpers, dashboard nav active state |
 
-Integration tests mock `requireAuthContext`, `requireRestaurantAccess`, and `createServerSupabase` — no live database or API keys.
+Integration tests mock `requireAuthContext` / `requireRestaurantAccess` (or `getSessionUser` from `@/lib/auth/session`) and either mock `getDb` from `@/lib/db` or use the real in-memory store (`createMemoryDb()` + `resetMemoryStore()` from `@/lib/db/store`, see `tests/integration/api-menu-delete.test.ts`) — no Firebase or API keys.
 
 ## Adding tests
 
 1. Prefer **unit tests** under `tests/unit/` for `lib/` (no mocks).
-2. For API routes, import the handler and mock auth/Supabase like `tests/integration/api-health.test.ts`.
+2. For API routes, import the handler and mock auth and the db like `tests/integration/api-health.test.ts`.
 3. Reuse UUIDs from `tests/fixtures/menu.ts` for Zod UUID rules.
 
 ## CI
 
-`npm test` is safe in CI without Supabase credentials.
+`npm test` is safe in CI without Firebase credentials (Vitest always uses the in-memory store; `server-only` is aliased to an empty module in `vitest.config.ts`).
 
 ## Manual E2E smoke
 
@@ -87,7 +87,6 @@ Run from repo root with `.env.local` loaded (see `package.json` scripts). Most n
 | `npm run qa:a11y-perf` | Landmarks, hydration, reduced-motion |
 | `npm run qa:error-states` | Sanitized user-facing errors |
 | `npm run qa:auth-security` | Redirect guard, API 401 |
-| `npm run qa:tenant-isolation` | Cross-org RLS probe |
 | `npm run qa:notifications-live` | Settings + dispatch APIs |
 | `npm run qa:analytics-live` | KPIs + empty states |
 | `npm run qa:admin-ops-live` | Admin gate + health |
@@ -101,7 +100,7 @@ Deploy order and post-cutover smoke: **[DEPLOYMENT.md](./DEPLOYMENT.md)**. Block
 
 ## Not in scope (automated suite)
 
-- Supabase Edge Functions (Deno) — smoke via `GET /api/health` + deployed curl
+- Agent tool routes against real ElevenLabs — `npm run qa:get-menu-elevenlabs` / `qa:draft-finalize-elevenlabs` with a public https base (tunnel)
 - Live Gemini / ElevenLabs in Playwright (scanner step mocks extract; harness not auto-run)
 - Live Gemini / ElevenLabs API calls in Vitest
 - Live `get_restaurant_info` / `get_caller_history` / `submit_reservation_request` / `get_order_status` phone lookup scripts — currently covered by schema parity, harness simulation, and health checks

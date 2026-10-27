@@ -14,7 +14,7 @@ describe("GET /api/health", () => {
     vi.clearAllMocks();
   });
 
-  it("returns request id header and no raw supabase URL in body", async () => {
+  it("returns request id header and no raw URLs in body", async () => {
     vi.mocked(runHealthChecks).mockResolvedValue({
       status: "healthy",
       timestamp: "2026-05-19T00:00:00.000Z",
@@ -23,32 +23,27 @@ describe("GET /api/health", () => {
           ok: true,
           status: "pass",
           details: {
-            supabase_url: "https://abc.supabase.co",
-            anon_key_configured: true,
+            app_url: "https://getroal.com",
+            firebase_configured: true,
           },
         },
         env_server: {
           ok: true,
           status: "pass",
           details: {
-            supabase: true,
-            serviceRole: true,
+            firebase: true,
+            firebaseAdmin: true,
+            demoMode: false,
             gemini: true,
             elevenlabs: true,
             agentTools: true,
             stripe: false,
           },
         },
-        supabase_db: { ok: true, status: "pass" },
+        database: { ok: true, status: "pass" },
         gemini: { ok: true, status: "pass" },
         elevenlabs: { ok: true, status: "pass" },
-        edge_get_menu: { ok: true, status: "pass" },
-        edge_sync_draft_order: { ok: true, status: "pass" },
-        edge_finalize_order: { ok: true, status: "pass" },
-        edge_get_order_status: { ok: true, status: "pass" },
-        edge_get_caller_history: { ok: true, status: "pass" },
-        edge_submit_reservation_request: { ok: true, status: "pass" },
-        edge_get_restaurant_info: { ok: true, status: "pass" },
+        agent_tools: { ok: true, status: "pass" },
       },
     });
 
@@ -62,12 +57,12 @@ describe("GET /api/health", () => {
     expect(res.headers.get("x-request-id")).toBe("health-req-1");
     expect(body.request_id).toBe("health-req-1");
     expect(JSON.stringify(body)).not.toMatch(/eyJ[a-zA-Z0-9_-]+\./);
-    expect(body.checks.env_public.details).not.toHaveProperty("supabase_url");
+    expect(body.checks.env_public.details).not.toHaveProperty("app_url");
   });
 
   it("returns generic error body when checks throw", async () => {
     vi.mocked(runHealthChecks).mockRejectedValue(
-      new Error("SUPABASE_SERVICE_ROLE_KEY=secret-value-leak")
+      new Error("FIREBASE_SERVICE_ACCOUNT=secret-value-leak")
     );
 
     const res = await GET(new Request("http://localhost/api/health"));

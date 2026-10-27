@@ -12,14 +12,23 @@ import { getDb } from "@/lib/db";
 export const ELEVENLABS_CONVERSATION_INIT_SECRET_HEADER =
   "x-roal-conversation-init-secret";
 
-/** When `ELEVENLABS_CONVERSATION_INIT_SECRET` is unset, all requests are allowed. */
+/**
+ * Server-to-server check for the ElevenLabs personalization webhook.
+ * When `ELEVENLABS_CONVERSATION_INIT_SECRET` is unset, requests are allowed only
+ * outside production (local dev); in production the webhook fails closed.
+ */
 export function isElevenLabsConversationInitAuthorized(options: {
   configuredSecret?: string;
   headerSecret?: string | null;
   querySecret?: string | null;
+  /** Defaults to `process.env.NODE_ENV === "production"`. */
+  production?: boolean;
 }): boolean {
   const secret = options.configuredSecret?.trim();
-  if (!secret) return true;
+  if (!secret) {
+    const production = options.production ?? process.env.NODE_ENV === "production";
+    return !production;
+  }
   const header = options.headerSecret?.trim();
   const query = options.querySecret?.trim();
   return header === secret || query === secret;

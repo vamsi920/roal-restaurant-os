@@ -70,12 +70,20 @@ export function parseEnv<T>(
 }
 
 export const ENV_HINTS: Record<string, string> = {
-  NEXT_PUBLIC_SUPABASE_URL:
-    "Supabase Dashboard → Project Settings → API → Project URL",
-  NEXT_PUBLIC_SUPABASE_ANON_KEY:
-    "Supabase Dashboard → Project Settings → API → anon / publishable key",
-  SUPABASE_SERVICE_ROLE_KEY:
-    "Supabase Dashboard → Project Settings → API → service_role (server only; never expose to the browser)",
+  NEXT_PUBLIC_FIREBASE_API_KEY:
+    "Firebase console → Project settings → Your apps → Web app → apiKey (optional; missing = demo mode)",
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:
+    "Firebase web app config → authDomain, e.g. <project-id>.firebaseapp.com",
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID: "Firebase web app config → projectId",
+  NEXT_PUBLIC_FIREBASE_APP_ID: "Firebase web app config → appId",
+  FIREBASE_SERVICE_ACCOUNT:
+    "Firebase console → Project settings → Service accounts → Generate new private key; paste the JSON on ONE line (server only)",
+  ROAL_DEMO_MODE:
+    "Set to 1 to force demo mode (local demo owner + in-memory data) even in production builds",
+  ROAL_DEMO_DB_FILE:
+    "Demo-mode persistence file (default .data/demo-db.json); set to off to keep demo data in memory only",
+  ROAL_AGENT_TOOLS_BASE_URL:
+    "Public https origin ElevenLabs calls for /api/agent-tools/* (local dev: a tunnel URL); defaults to NEXT_PUBLIC_APP_URL",
   GEMINI_API_KEY: "Google AI Studio → API keys (https://aistudio.google.com/apikey)",
   GEMINI_MODEL: "Optional override, e.g. gemini-2.5-flash",
   ELEVENLABS_API_KEY:
@@ -83,7 +91,7 @@ export const ENV_HINTS: Record<string, string> = {
   ELEVENLABS_AGENT_ID:
     "ElevenLabs → Conversational AI → your agent → Agent ID",
   AGENT_TOOL_SECRET:
-    "Legacy global bearer for agent tools; set the same value in Supabase Edge secrets",
+    "Legacy global bearer for agent tools (/api/agent-tools/*)",
   AGENT_TOOL_SIGNING_SECRET:
     "Preferred HMAC secret for per-restaurant roal1.* tokens (falls back to AGENT_TOOL_SECRET)",
   ELEVENLABS_CONVERSATION_INIT_SECRET:

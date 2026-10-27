@@ -52,6 +52,4 @@ export type OnboardingWizardState = {
     website: string | null;
   } | null;
   outboundCallConfigured: boolean;
-  supabaseRef: string | null;
-  edgeBase: string | null;
 };

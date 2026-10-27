@@ -136,3 +136,27 @@ export function parseBearerToken(authHeader: string | null): string | null {
 export function isSignedAgentToolToken(token: string): boolean {
   return token.startsWith(`${AGENT_TOOL_TOKEN_PREFIX}.`);
 }
+
+/**
+ * Secrets used to verify inbound tool calls.
+ * `signing` falls back to the legacy secret so a single AGENT_TOOL_SECRET still verifies roal1.* tokens.
+ */
+export function getSigningSecrets(): {
+  signing: string | null;
+  legacy: string | null;
+} {
+  const signing = process.env.AGENT_TOOL_SIGNING_SECRET?.trim() || null;
+  const legacy = process.env.AGENT_TOOL_SECRET?.trim() || null;
+  return {
+    signing: signing || legacy,
+    legacy,
+  };
+}
+
+/** Constant-time comparison for the legacy global bearer secret. */
+export function timingSafeSecretEqual(provided: string, expected: string): boolean {
+  const a = Buffer.from(provided, "utf8");
+  const b = Buffer.from(expected, "utf8");
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
+}

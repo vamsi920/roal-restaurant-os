@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAuthDemoMode, isFirebaseAuthConfigured } from "@/lib/auth/demo-mode";
+import { getDb } from "@/lib/db";
 import {
   DEMO_SESSION_COOKIE,
   DEMO_USER,
@@ -30,7 +31,25 @@ export async function POST(req: Request) {
     if (body.demo !== true) {
       return NextResponse.json({ error: "Demo mode: sign in with the demo account." }, { status: 400 });
     }
-    const res = NextResponse.json({ ok: true, user: { id: DEMO_USER.id, email: DEMO_USER.email }, demo: true });
+    // Demo workspace: seed the in-memory store once with a fictional restaurant so every
+    // page has data. Never runs against Firestore. Sign-in still succeeds if seeding fails.
+    let demoSeed: { seeded: boolean; restaurantId: string } | null = null;
+    try {
+      const db = getDb();
+      if (db.backend === "memory") {
+        const { seedDemoWorkspace } = await import("@/lib/demo/seed-demo-workspace");
+        const result = await seedDemoWorkspace(db, { userId: DEMO_USER.id });
+        demoSeed = { seeded: result.seeded, restaurantId: result.restaurantId };
+      }
+    } catch (e) {
+      console.error("[auth session] demo seed failed", e instanceof Error ? e.message : e);
+    }
+    const res = NextResponse.json({
+      ok: true,
+      user: { id: DEMO_USER.id, email: DEMO_USER.email },
+      demo: true,
+      ...(demoSeed ? { demo_workspace: demoSeed } : {}),
+    });
     res.cookies.set(DEMO_SESSION_COOKIE, DEMO_USER.id, cookieOptions(SESSION_MAX_AGE_SEC));
     return res;
   }

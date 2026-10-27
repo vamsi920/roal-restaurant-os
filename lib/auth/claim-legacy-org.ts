@@ -1,9 +1,23 @@
 import type { Db } from "@/lib/db";
 import { LEGACY_POC_ORGANIZATION_ID } from "@/lib/types";
 
+async function legacyMemberCount(supabase: Db): Promise<number> {
+  const { data, error } = await supabase
+    .from("memberships")
+    .select("id")
+    .eq("organization_id", LEGACY_POC_ORGANIZATION_ID)
+    .limit(2);
+  if (error) throw new Error(error.message);
+  return data?.length ?? 0;
+}
+
 /**
  * First authenticated user with no memberships can claim Legacy POC as owner
- * when that org still has zero members (RLS bootstrap policy in migration 009/024).
+ * — but ONLY while that org exists and still has zero members.
+ *
+ * Postgres RLS used to enforce the "zero members" rule. The document store has no
+ * RLS, so it is checked here; without it every new signup became an owner of the
+ * Legacy POC org (and every restaurant in it).
  */
 export async function tryClaimLegacyPocMembership(
   supabase: Db,
@@ -20,24 +34,36 @@ export async function tryClaimLegacyPocMembership(
   }
   if (existing?.length) return false;
 
+  const { data: org, error: orgErr } = await supabase
+    .from("organizations")
+    .select("id")
+    .eq("id", LEGACY_POC_ORGANIZATION_ID)
+    .maybeSingle();
+  if (orgErr) throw new Error(orgErr.message);
+  if (!org) return false;
+
+  if ((await legacyMemberCount(supabase)) > 0) return false;
+
   const { error: insertErr } = await supabase.from("memberships").insert({
     organization_id: LEGACY_POC_ORGANIZATION_ID,
     user_id: userId,
     role: "owner",
   });
 
-  if (!insertErr) return true;
+  if (insertErr) {
+    if (insertErr.code === "23505") return false;
+    throw new Error(insertErr.message);
+  }
 
-  if (insertErr.code === "23505") return false;
-
-  const msg = insertErr.message.toLowerCase();
-  if (
-    msg.includes("row-level security") ||
-    msg.includes("duplicate") ||
-    insertErr.code === "42501"
-  ) {
+  // No transactions in the store: if another user claimed concurrently, back out.
+  if ((await legacyMemberCount(supabase)) > 1) {
+    await supabase
+      .from("memberships")
+      .delete()
+      .eq("organization_id", LEGACY_POC_ORGANIZATION_ID)
+      .eq("user_id", userId);
     return false;
   }
 
-  throw new Error(insertErr.message);
+  return true;
 }

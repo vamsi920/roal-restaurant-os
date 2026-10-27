@@ -58,7 +58,7 @@ echo "Result: $PASS passed, $FAIL failed"
 echo ""
 echo "Manual checks (see docs/DEPLOYMENT.md §7):"
 echo "  - Menu scan, Realtime, ElevenLabs connect, order finalize"
-echo "  - Supabase Edge OPTIONS from /api/health checks.edge_*"
+echo "  - Agent tools public https origin from /api/health checks.agent_tools"
 
 if [[ "$FAIL" -gt 0 ]]; then
   exit 1

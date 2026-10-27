@@ -31,7 +31,7 @@ vi.mock("@/lib/onboarding/helpers", () => ({
   ensureRestaurantOnboarding: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -226,7 +226,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("returns 200 and creates restaurant when ElevenLabs provisioning fails", async () => {
     const restaurant = mockRestaurantRow("Fail Provision Kitchen");
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       buildSupabaseMock(restaurant) as never
     );
     vi.mocked(duplicateConvaiAgent).mockRejectedValue(
@@ -272,7 +272,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("saves cloned agent id on profile when provisioning succeeds", async () => {
     const restaurant = mockRestaurantRow("Success Kitchen");
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       buildSupabaseMock(restaurant) as never
     );
 
@@ -307,7 +307,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("never patches or syncs the global template agent id", async () => {
     const restaurant = mockRestaurantRow("Template Safe Kitchen");
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       buildSupabaseMock(restaurant) as never
     );
 
@@ -345,7 +345,7 @@ describe("restaurant create auto-provision (integration)", () => {
 
   it("does not return 500 when provisioning throws unexpectedly (still returns restaurant)", async () => {
     const restaurant = mockRestaurantRow("Throws Kitchen");
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       buildSupabaseMock(restaurant) as never
     );
     vi.mocked(duplicateConvaiAgent).mockImplementation(() => {

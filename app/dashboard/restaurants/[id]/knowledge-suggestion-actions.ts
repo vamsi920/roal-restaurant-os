@@ -88,7 +88,8 @@ export async function acceptKnowledgeSuggestionAction(
       category,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", raw.suggestionId);
+    .eq("id", raw.suggestionId)
+    .eq("restaurant_id", restaurantId);
   if (updateError) throw new Error(updateError.message);
 
   afterRestaurantKnowledgeMutation(restaurantId, {

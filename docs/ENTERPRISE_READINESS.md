@@ -78,7 +78,7 @@ Next.js API → session checks + billing gates + audit on key mutations
 GET /api/health → sanitized env flags only (no secret values)
 ```
 
-See `docs/RLS.md`, `docs/AGENT_TOOL_SECURITY.md`, `docs/DEPLOYMENT.md`.
+See `docs/TENANT_ISOLATION.md`, `docs/AGENT_TOOL_SECURITY.md`, `docs/DEPLOYMENT.md`.
 
 ### Tests & quality
 

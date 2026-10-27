@@ -1,21 +1,18 @@
 import { NextResponse } from "next/server";
 import { EnvValidationError } from "@/lib/env.shared";
-import { getElevenLabsAgentId, getElevenLabsSyncToken } from "@/lib/env.server";
+import { getElevenLabsAgentId } from "@/lib/env.server";
+import { authorizeInternalOpsRequest } from "@/lib/auth/internal-access";
 import { syncRoalElevenLabsTools } from "@/lib/sync-elevenlabs-roal-tools";
 
 export const runtime = "nodejs";
 
-function authorize(req: Request): boolean {
-  const token = getElevenLabsSyncToken();
-  if (!token) return true;
-  const auth = req.headers.get("Authorization") ?? "";
-  const bearer = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
-  return bearer === token;
-}
-
-/** POST — create/update ROAL webhook tools and attach to Conv AI agent. */
+/**
+ * POST — create/update ROAL webhook tools and attach to Conv AI agent.
+ * Requires the ops bearer token (ELEVENLABS_SYNC_TOKEN) or a platform-admin session;
+ * an unset token no longer opens the route.
+ */
 export async function POST(req: Request) {
-  if (!authorize(req)) {
+  if (!(await authorizeInternalOpsRequest(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {

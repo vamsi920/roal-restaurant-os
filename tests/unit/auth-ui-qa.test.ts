@@ -1,20 +1,45 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { LOGIN_PAGE_COPY } from "@/lib/auth/login-page-copy";
+import { AUTH_FORM_COPY, LOGIN_PAGE_COPY } from "@/lib/auth/login-page-copy";
 import { SIGNUP_PAGE_COPY } from "@/lib/auth/signup-page-copy";
 
 const REPO = join(import.meta.dirname, "../..");
 const read = (p: string) => readFileSync(join(REPO, p), "utf8");
 
 describe("auth UI", () => {
-  it("auth form keeps supabase sign-in, sign-up, Google and resend wiring", () => {
+  it("auth form signs in through the Firebase client helpers only", () => {
     const form = read("components/auth/auth-form.tsx");
-    expect(form).toContain("signInWithPassword");
-    expect(form).toContain("auth.signUp");
-    expect(form).toContain('provider: "google"');
-    expect(form).toContain("auth.resend");
-    expect(form).toContain("isGoogleProviderEnabled");
+    expect(form).toContain('from "@/lib/firebase/client"');
+    expect(form).toContain("signInWithEmail(submittedEmail, submittedPassword, { create: isSignUp, remember })");
+    expect(form).toContain("signInWithGoogle(remember)");
+    expect(form).toContain("signInDemo");
+    expect(form).toContain("window.location.assign(next)");
+    expect(form).not.toMatch(/supabase/i);
+    expect(read("components/auth/reset-password-form.tsx")).not.toMatch(/supabase/i);
+  });
+
+  it("remember me is a real checkbox wired to persistence", () => {
+    const form = read("components/auth/auth-form.tsx");
+    expect(form).toContain('type="checkbox"');
+    expect(form).toContain("checked={remember}");
+    expect(AUTH_FORM_COPY.remember).toBe("Remember me on this device");
+  });
+
+  it("demo mode swaps the card for one demo button", () => {
+    const form = read("components/auth/auth-form.tsx");
+    expect(form).toContain("CLIENT_DEMO_MODE");
+    expect(AUTH_FORM_COPY.demo.submitLabel).toBe("Continue as demo owner");
+    expect(AUTH_FORM_COPY.demo.note).toBe(
+      "Demo mode — Firebase isn't connected yet. You'll sign in as a demo restaurant owner."
+    );
+  });
+
+  it("password reset never reveals whether an account exists", () => {
+    const reset = read("components/auth/reset-password-form.tsx");
+    expect(reset).toContain("requestPasswordReset");
+    expect(reset).toContain('kind !== "user_not_found"');
+    expect(reset).not.toContain("updateUser");
   });
 
   it("copy stays short", () => {

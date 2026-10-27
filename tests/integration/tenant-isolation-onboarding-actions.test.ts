@@ -10,7 +10,7 @@ vi.mock("@/lib/auth/context-server", () => ({
   findMembershipForOrg: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -43,7 +43,7 @@ describe("onboarding voice provision actions tenant scope", () => {
       organization_id: ORG_A,
       role: "owner",
     } as never);
-    vi.mocked(getDb).mockResolvedValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({

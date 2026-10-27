@@ -28,7 +28,8 @@ import {
   syncRoalElevenLabsTools,
   ROAL_RESTAURANT_ID_HEADER,
 } from "../lib/sync-elevenlabs-roal-tools";
-import { getDb } from "../lib/supabase/server";
+import { getDb } from "../lib/db";
+import { tryAgentToolsBaseUrl } from "../lib/agent-tools/base-url";
 
 const TOOL_NAMES = [
   "get_menu_items",
@@ -57,9 +58,13 @@ function redactUrl(u: string): string {
   }
 }
 
+/** Origin of a tool URL (agent tools live at <origin>/api/agent-tools/*). */
 function refFromUrl(u: string): string | null {
-  const m = u.match(/https:\/\/([a-z0-9]+)\.supabase\.co/i);
-  return m?.[1] ?? null;
+  try {
+    return new URL(String(u ?? "")).origin;
+  } catch {
+    return null;
+  }
 }
 
 function redactHeaderValue(v: unknown): { present: boolean; baked?: boolean } {
@@ -69,7 +74,6 @@ function redactHeaderValue(v: unknown): { present: boolean; baked?: boolean } {
 
 async function listConfigured(): Promise<RestaurantRow[]> {
   const sb = getDb();
-  if (!sb) throw new Error("SUPABASE_SERVICE_ROLE_KEY required");
 
   const { data: profiles, error } = await sb
     .from("restaurant_profiles")
@@ -136,7 +140,6 @@ async function resyncRestaurant(row: RestaurantRow) {
   };
 
   const sb = getDb();
-  if (!sb) throw new Error("SUPABASE_SERVICE_ROLE_KEY required");
 
   const { error } = await sb
     .from("restaurant_profiles")
@@ -156,7 +159,7 @@ async function resyncRestaurant(row: RestaurantRow) {
 
 async function verifyRestaurantTools(row: RestaurantRow) {
   const pub = getPublicEnv();
-  const expectedRef = refFromUrl(pub.NEXT_PUBLIC_SUPABASE_URL ?? "");
+  const expectedRef = refFromUrl(tryAgentToolsBaseUrl() ?? "");
   const { restaurant_id: rid, elevenlabs_agent_id: agentId } = row;
 
   const agent = (await getConvaiAgent(agentId)) as {

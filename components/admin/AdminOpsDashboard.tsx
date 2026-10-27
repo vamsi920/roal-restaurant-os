@@ -66,8 +66,8 @@ function HealthSection({
   envFlags: AdminOpsSnapshot["envFlags"];
 }) {
   const flags: [string, boolean][] = [
-    ["Supabase", envFlags.supabase],
-    ["Service role", envFlags.serviceRole],
+    ["Firebase (client)", envFlags.firebase],
+    ["Firebase Admin", envFlags.firebaseAdmin],
     ["Gemini", envFlags.gemini],
     ["ElevenLabs", envFlags.elevenlabs],
     ["Agent tools", envFlags.agentTools],

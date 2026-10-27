@@ -13,10 +13,6 @@ import { simulateHarnessTool } from "@/lib/voice-agent/test-harness/simulate-too
 import { RESTAURANT_ID } from "../fixtures/menu";
 
 const REPO = join(import.meta.dirname, "../..");
-const MIGRATION = join(
-  REPO,
-  "supabase/migrations/034_reservation_request_contacted_status.sql"
-);
 const PANEL = join(REPO, "components/call-history/RestaurantCallHistoryPanel.tsx");
 const ACTIONS = join(
   REPO,
@@ -27,7 +23,7 @@ vi.mock("next/cache", () => ({ revalidatePath: vi.fn() }));
 vi.mock("@/lib/auth/context-server", () => ({
   requireRestaurantAccess: vi.fn(),
 }));
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -36,13 +32,6 @@ import { getDb } from "@/lib/db";
 import { updateReservationRequestStatusAction } from "@/app/dashboard/restaurants/[id]/calls/actions";
 
 describe("reservation status schema", () => {
-  it("migration adds contacted and member update policy", () => {
-    const sql = readFileSync(MIGRATION, "utf8");
-    expect(sql).toMatch(/'contacted'/);
-    expect(sql).toMatch(/restaurant_reservation_requests_status_check/);
-    expect(sql).toMatch(/update_member/);
-  });
-
   it("maps legacy closed to canceled for display", () => {
     expect(normalizeReservationStatus("closed")).toBe("canceled");
     expect(reservationStatusLabel("canceled")).toBe("Closed");
@@ -67,7 +56,7 @@ describe("updateReservationRequestStatusAction", () => {
     const eqRestaurant = vi.fn(() => ({ select }));
     const eqId = vi.fn(() => ({ eq: eqRestaurant }));
     const update = vi.fn(() => ({ eq: eqId }));
-    vi.mocked(getDb).mockResolvedValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn(() => ({ update })),
     } as never);
     return { update, eqId, eqRestaurant };

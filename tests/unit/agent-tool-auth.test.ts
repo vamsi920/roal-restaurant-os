@@ -149,9 +149,8 @@ describe("buildAgentToolRequestHeaders", () => {
     const headers = buildAgentToolRequestHeaders({
       restaurantId: RESTAURANT_ID,
       agentId: "agent_test",
-      supabaseAnonKey: "anon-key",
     });
-    expect(headers.apikey).toBe("anon-key");
+    expect(headers).not.toHaveProperty("apikey");
     expect(headers["x-roal-restaurant-id"]).toBe(RESTAURANT_ID);
     expect(headers.Authorization?.startsWith("Bearer roal1.")).toBe(true);
   });
@@ -161,7 +160,6 @@ describe("buildAgentToolRequestHeaders", () => {
     delete process.env.AGENT_TOOL_SECRET;
     const headers = buildAgentToolRequestHeaders({
       restaurantId: RESTAURANT_ID,
-      supabaseAnonKey: "anon-key",
       legacySecret: "legacy-bearer",
     });
     expect(headers.Authorization).toBe("Bearer legacy-bearer");

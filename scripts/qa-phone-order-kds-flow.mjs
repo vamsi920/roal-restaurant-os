@@ -1,24 +1,23 @@
 #!/usr/bin/env node
 /**
- * Prompt 14 — phone order → KDS visibility (Edge sync/update/finalize + DB bucket check).
+ * Prompt 14 — phone order → KDS visibility via /api/agent-tools (sync-draft-order,
+ * finalize-order, get-order-status) against a running app (local `npm run dev` or deployed).
  * Usage: node --env-file=.env --env-file=.env.local scripts/qa-phone-order-kds-flow.mjs
  */
 import { createHmac, randomUUID } from "node:crypto";
-import { createClient } from "@supabase/supabase-js";
-import { ensureQaOrderingOpen } from "./lib/qa-ensure-ordering-open.mjs";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
-const BASE = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "") || "";
-const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() || "";
-const SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() || "";
+const BASE = (
+  process.env.ROAL_AGENT_TOOLS_BASE_URL?.trim() ||
+  process.env.NEXT_PUBLIC_APP_URL?.trim() ||
+  "http://localhost:3000"
+).replace(/\/+$/, "");
 const LEGACY = process.env.AGENT_TOOL_SECRET?.trim() || "";
 const SIGNING = process.env.AGENT_TOOL_SIGNING_SECRET?.trim() || LEGACY;
 
-if (!BASE || !ANON || !SERVICE) {
-  console.error(
-    "Missing NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, or SUPABASE_SERVICE_ROLE_KEY"
-  );
+if (!SIGNING) {
+  console.error("Missing AGENT_TOOL_SIGNING_SECRET (or AGENT_TOOL_SECRET)");
   process.exit(1);
 }
 
@@ -43,7 +42,6 @@ function mintToken(rid) {
 function authHeaders(idempotencyKey) {
   const h = {
     "Content-Type": "application/json",
-    apikey: ANON,
     Authorization: `Bearer ${mintToken(RESTAURANT_ID)}`,
     "x-roal-restaurant-id": RESTAURANT_ID,
   };
@@ -51,11 +49,11 @@ function authHeaders(idempotencyKey) {
   return h;
 }
 
-async function callEdge(slug, body, { idempotencyKey, method = "POST" } = {}) {
+async function callTool(slug, body, { idempotencyKey, method = "POST" } = {}) {
   const url =
     method === "GET" && body?.restaurant_id
-      ? `${BASE}/functions/v1/${slug}?restaurant_id=${encodeURIComponent(body.restaurant_id)}`
-      : `${BASE}/functions/v1/${slug}`;
+      ? `${BASE}/api/agent-tools/${slug}?restaurant_id=${encodeURIComponent(body.restaurant_id)}`
+      : `${BASE}/api/agent-tools/${slug}`;
   const res = await fetch(url, {
     method,
     headers: authHeaders(idempotencyKey),
@@ -71,19 +69,15 @@ async function callEdge(slug, body, { idempotencyKey, method = "POST" } = {}) {
   return { status: res.status, json };
 }
 
+/** Order status as the kitchen sees it, read back through get-order-status. */
 async function loadDraftBySession(sessionId) {
-  const url = `${BASE}/rest/v1/draft_orders?restaurant_id=eq.${RESTAURANT_ID}&session_id=eq.${encodeURIComponent(sessionId)}&select=id,status,items,updated_at,session_id&limit=1`;
-  const res = await fetch(url, {
-    headers: {
-      apikey: SERVICE,
-      Authorization: `Bearer ${SERVICE}`,
-    },
+  const res = await callTool("get-order-status", {
+    restaurant_id: RESTAURANT_ID,
+    session_id: sessionId,
   });
-  if (!res.ok) {
-    return { error: `HTTP ${res.status}` };
-  }
-  const rows = await res.json();
-  return { row: Array.isArray(rows) ? rows[0] ?? null : null };
+  if (res.status !== 200) return { error: `HTTP ${res.status}` };
+  const order = res.json?.order ?? res.json?.draft_order ?? res.json ?? null;
+  return { row: order && typeof order.status === "string" ? order : null };
 }
 
 /** Mirrors LiveOrdersPanel tab bucketing. */
@@ -106,26 +100,15 @@ function record(name, pass, detail) {
 }
 
 async function main() {
-  let menuRes = await callEdge(
+  const menuRes = await callTool(
     "get-menu",
     { restaurant_id: RESTAURANT_ID },
     { method: "GET" }
   );
-  if (
-    menuRes.status === 200 &&
-    menuRes.json?.operations?.ordering_allowed === false &&
-    SERVICE
-  ) {
-    const admin = createClient(BASE, SERVICE, {
-      auth: { autoRefreshToken: false, persistSession: false },
-    });
-    const opened = await ensureQaOrderingOpen(admin, RESTAURANT_ID);
-    console.log(`[qa] ordering closed — opened QA window: ${opened.detail}`);
-    menuRes = await callEdge(
-      "get-menu",
-      { restaurant_id: RESTAURANT_ID },
-      { method: "GET" }
-    );
+  if (menuRes.status === 200 && menuRes.json?.operations?.ordering_allowed === false) {
+    record("get-menu", false, "ordering is closed — open hours for the QA restaurant first");
+    summarize();
+    process.exit(1);
   }
   const item =
     menuRes.json?.categories?.flatMap((c) => c.items ?? [])?.find((i) => i.is_available) ??
@@ -137,7 +120,7 @@ async function main() {
   }
   record("get-menu", true, `"${item.name}"`);
 
-  const sync1 = await callEdge("sync-draft-order", {
+  const sync1 = await callTool("sync-draft-order", {
     restaurant_id: RESTAURANT_ID,
     session_id: sessionId,
     status: "draft",
@@ -156,21 +139,22 @@ async function main() {
     db.row ? `status=${db.row.status} tab=live` : db.error ?? "no row"
   );
 
-  const sync2 = await callEdge("sync-draft-order", {
+  const sync2 = await callTool("sync-draft-order", {
     restaurant_id: RESTAURANT_ID,
     session_id: sessionId,
     status: "draft",
     items: [{ name: item.name, quantity: 2 }],
   });
   db = await loadDraftBySession(sessionId);
-  const qty = db.row?.items?.[0]?.quantity;
+  const qty =
+    sync2.json?.draft_order?.items?.[0]?.quantity ?? db.row?.items?.[0]?.quantity;
   record(
     "sync draft (update qty)",
     sync2.status === 200 && db.row?.status === "draft" && qty === 2,
     `HTTP ${sync2.status} qty=${qty ?? "?"}`
   );
 
-  const fin = await callEdge("finalize-order", {
+  const fin = await callTool("finalize-order", {
     restaurant_id: RESTAURANT_ID,
     session_id: sessionId,
     customer_name: "KDS Flow Guest",
@@ -185,7 +169,7 @@ async function main() {
     `HTTP ${fin.status} status=${db.row?.status ?? "?"} tab=queue`
   );
 
-  console.log("\n--- session (for MCP / dashboard spot-check) ---");
+  console.log("\n--- session (for dashboard spot-check) ---");
   console.log(JSON.stringify({ restaurant_id: RESTAURANT_ID, session_id: sessionId, run_id: runId }, null, 2));
 
   summarize();

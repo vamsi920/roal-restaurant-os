@@ -10,7 +10,7 @@ import { isOrgAdmin } from "../lib/auth/roles";
 import { getEnvStatus } from "../lib/env.server";
 import { sanitizeHealthReportForPublic, runHealthChecks } from "../lib/observability/health";
 import type { AuthContext } from "../lib/auth/types";
-import { getDb } from "../lib/supabase/server";
+import { getDb } from "../lib/db";
 
 const LEGACY_ORG =
   process.env.QA_ADMIN_ORG_ID?.trim() ||
@@ -25,7 +25,7 @@ const LEAK_PATTERNS: { name: string; re: RegExp }[] = [
   { name: "jwt eyJ", re: /\beyJ[a-zA-Z0-9._-]{20,}/ },
   { name: "roal1 token", re: /\broal1\.[a-zA-Z0-9._-]{8,}/i },
   { name: "raw https URL", re: /https:\/\/(?!example\.invalid)[^\s"'\]]+/i },
-  { name: "service role key name=value", re: /SUPABASE_SERVICE_ROLE_KEY\s*=\s*\S+/i },
+  { name: "service account private key", re: /-----BEGIN PRIVATE KEY-----|"private_key"\s*:/ },
 ];
 
 type Check = { name: string; ok: boolean; detail?: string };
@@ -143,8 +143,8 @@ void (async () => {
     });
     const details = parsed.checks?.env_public?.details ?? {};
     checks.push({
-      name: "health env_public drops supabase_url",
-      ok: !("supabase_url" in details),
+      name: "health env_public exposes booleans only",
+      ok: Object.values(details).every((v) => typeof v === "boolean"),
     });
   } catch (e) {
     checks.push({
@@ -183,11 +183,11 @@ void (async () => {
   });
 
   const sb = getDb();
-  if (!sb) {
+  if (sb.backend !== "firestore") {
     checks.push({
-      name: "SUPABASE_SERVICE_ROLE_KEY",
+      name: "FIREBASE_SERVICE_ACCOUNT",
       ok: false,
-      detail: "missing",
+      detail: "missing (live QA needs Firestore, not the demo store)",
     });
     summarize(checks);
     return;
@@ -205,7 +205,7 @@ void (async () => {
     ok:
       snapshot.organizations.length === 1 &&
       snapshot.health.status.length > 0 &&
-      snapshot.envFlags.supabase === true,
+      typeof snapshot.envFlags.firebase === "boolean",
     detail: `${snapshot.organizations[0]?.restaurants.length} restaurants`,
   });
 

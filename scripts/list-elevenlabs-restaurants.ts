@@ -1,12 +1,8 @@
 import { getElevenLabsAgentId } from "../lib/env.server";
-import { getDb } from "../lib/supabase/server";
+import { getDb } from "../lib/db";
 
 void (async () => {
   const sb = getDb();
-  if (!sb) {
-    console.error("SUPABASE_SERVICE_ROLE_KEY required");
-    process.exit(1);
-  }
   const { data: profiles, error } = await sb
     .from("restaurant_profiles")
     .select("restaurant_id, elevenlabs_agent_id, elevenlabs_last_sync_at")

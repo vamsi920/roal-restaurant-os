@@ -1,6 +1,6 @@
 # Manual E2E smoke checklist
 
-**Time:** ~25–40 min · **Env:** staging or local with `.env` filled, migrations `001`–`024` applied (`supabase db push`).
+**Time:** ~25–40 min · **Env:** staging or local with `.env` filled (Firebase configured per `docs/FIREBASE_SETUP.md`, or demo mode for a quick pass).
 
 **Pass criteria:** each step completes without 5xx; UI shows expected state; no secrets in browser network tab (only anon key + session).
 
@@ -10,7 +10,7 @@
 
 - [ ] `npm run dev` or staging URL loads
 - [ ] `GET /api/health` → `status` is `healthy` or `degraded`, `request_id` present, no API keys in JSON
-- [ ] Supabase Auth: Email provider on; redirect URL includes `/auth/callback`
+- [ ] Firebase Auth: Email/Password + Google enabled; current domain in Authorized domains
 
 ---
 
@@ -34,7 +34,7 @@ npm run e2e-smoke
 
 | Check | Credentials | Paid APIs |
 |-------|-------------|-----------|
-| Login/signup render + fake submit | Fake email only | Supabase auth attempt only |
+| Login/signup render + fake submit | Fake email only | Firebase auth attempt only |
 | `/dashboard` → `/login?next=` | None | None |
 | Dashboard overview | Optional `E2E_EMAIL` + `E2E_PASSWORD` | None |
 | KDS restaurant page, orders panel, voice harness | Same optional env | None |
@@ -112,7 +112,7 @@ On KDS, **Voice agent test harness** (dry run **off** for live DB writes, or **o
 | 6.2 | **Phone orders** panel | Live cart appears under draft/active |
 | 6.3 | After finalize | Order in kitchen queue as **New** (or receipt + queue per config) |
 
-*Requires `AGENT_TOOL_SIGNING_SECRET` (+ Edge functions deployed) for non–dry-run.*
+*Requires `AGENT_TOOL_SIGNING_SECRET` and a public https tool base (`NEXT_PUBLIC_APP_URL` or `ROAL_AGENT_TOOLS_BASE_URL`) for non–dry-run.*
 
 ---
 

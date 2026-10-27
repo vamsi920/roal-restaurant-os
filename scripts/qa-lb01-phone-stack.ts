@@ -24,7 +24,8 @@ import {
   webhookHostMatchesAppOrigin,
 } from "../lib/site-url";
 import { ROAL_RESTAURANT_ID_HEADER } from "../lib/sync-elevenlabs-roal-tools";
-import { getDb } from "../lib/supabase/server";
+import { getDb } from "../lib/db";
+import { tryAgentToolsBaseUrl } from "../lib/agent-tools/base-url";
 
 const RESTAURANT_ID =
   process.env.QA_RESTAURANT_ID?.trim() || "9d3263d1-4d9d-4f89-bfc5-160e2cca1855";
@@ -57,9 +58,13 @@ function redactUrl(u: string): string {
   }
 }
 
+/** Origin of a tool URL (agent tools live at <origin>/api/agent-tools/*). */
 function refFromUrl(u: string): string | null {
-  const m = u.match(/https:\/\/([a-z0-9]+)\.supabase\.co/i);
-  return m?.[1] ?? null;
+  try {
+    return new URL(String(u ?? "")).origin;
+  } catch {
+    return null;
+  }
 }
 
 async function resolveHost(hostname: string): Promise<boolean> {
@@ -90,9 +95,9 @@ async function resolveDedicatedInitAgentId(
     return { agentId: override, source: "QA_DEDICATED_AGENT_ID" };
   }
 
-  const supabase = getDb();
-  if (supabase) {
-    const { data } = await supabase
+  const db = getDb();
+  if (db) {
+    const { data } = await db
       .from("restaurant_profiles")
       .select("elevenlabs_agent_id")
       .eq("restaurant_id", RESTAURANT_ID)
@@ -136,7 +141,7 @@ void (async () => {
   const expectedInitBase = conversationInitAbsoluteUrl();
   const agentId = getElevenLabsAgentId() ?? "";
   const pub = getPublicEnv();
-  const expectedRef = refFromUrl(pub.NEXT_PUBLIC_SUPABASE_URL ?? "");
+  const expectedRef = refFromUrl(tryAgentToolsBaseUrl() ?? "");
 
   // 1. App URL configured
   checks.push({

@@ -1,105 +1,110 @@
 # ROAL — The AI phone host for restaurants
 
-Paste a restaurant link, talk to its AI phone host in the browser a minute later, claim it, forward the number. Multi-tenant SaaS: magic onboarding (website/Maps link → host builds itself), menu scan (Gemini) → review/commit, live KDS with Supabase Realtime, ElevenLabs phone orders via signed Edge tools, call history + transcripts, unanswered-question FAQ inbox, billing gates, analytics, and admin ops.
+Paste a restaurant link, talk to its AI phone host in the browser a minute later, claim it, forward the number. Multi-tenant SaaS: magic onboarding (website/Maps link → host builds itself), menu scan (Gemini) → review/commit, live KDS, ElevenLabs phone orders via signed agent tools served by this app, call history + transcripts, unanswered-question FAQ inbox, billing gates, analytics, and admin ops.
 
 ## Stack
 
-- Next.js 14 (App Router, TypeScript)
-- Supabase (Postgres, Auth, Realtime, Storage, Edge Functions)
+- Next.js 14 (App Router, TypeScript), deployed on Netlify
+- Firebase Auth (Google + email/password) with httpOnly session cookies
+- Cloud Firestore via the Firebase Admin SDK (server only) — `lib/db` keeps a small query-builder API over it
+- Demo mode: no keys → local demo owner + in-memory store (persisted to `.data/demo-db.json`)
 - Google Gemini (menu extraction)
-- ElevenLabs Conversational AI + Supabase Edge tools
+- ElevenLabs Conversational AI, calling the app's own `/api/agent-tools/*` routes
 - Vitest for unit and API tests
 
-## Quick start
+## Quick start (demo mode — no keys)
 
 ```bash
-cp .env.example .env
-# Minimum: NEXT_PUBLIC_SUPABASE_*, GEMINI_API_KEY
-# Recommended: SUPABASE_SERVICE_ROLE_KEY (KDS + server routes)
 npm install
 npm run dev
 ```
 
-Open <http://localhost:3000> → sign up at `/signup` → complete onboarding or add a membership (see [docs/AUTH.md](docs/AUTH.md)).
+Open <http://localhost:3000> → **Sign in** → **Continue as demo owner**. You are the demo owner ("Maria Rossi") with a seeded demo restaurant. Nothing leaves your machine: data lives in memory and is saved to `.data/demo-db.json` (delete the file to reset; `ROAL_DEMO_DB_FILE=off` to keep it in memory only).
 
-Apply database migrations once (linked Supabase project; `001`–`035`):
+Optional extras in demo mode: `GEMINI_API_KEY` (menu scan), `ELEVENLABS_API_KEY` + `ELEVENLABS_AGENT_ID` (voice agent), `GOOGLE_PLACES_API_KEY` (restaurant lookup). Copy `.env.example` to `.env.local` and fill in what you need.
 
-```bash
-supabase link --project-ref YOUR_PROJECT_REF
-supabase db push
-```
+## Going live (Firebase)
+
+1. Follow [docs/FIREBASE_SETUP.md](docs/FIREBASE_SETUP.md): create a Firebase project, enable Email/Password + Google sign-in, create Firestore, copy the web config into `NEXT_PUBLIC_FIREBASE_*`, and paste a service-account JSON (one line) into `FIREBASE_SERVICE_ACCOUNT`.
+2. Deploy the locked-down Firestore rules: `npx firebase-tools deploy --only firestore:rules`.
+3. Set the same env vars on Netlify ([docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)). There are no database migrations — collections are created on first write.
+
+As soon as both `NEXT_PUBLIC_FIREBASE_API_KEY` and `FIREBASE_SERVICE_ACCOUNT` are set, demo mode switches off and real accounts + Firestore are used.
 
 ## Documentation
 
 | Doc | Contents |
 |-----|----------|
-| [docs/AUTH.md](docs/AUTH.md) | Sessions, roles, protected routes |
-| [docs/RLS.md](docs/RLS.md) | Production RLS model and dev paths |
-| [docs/TENANT_SCHEMA.md](docs/TENANT_SCHEMA.md) | Organizations, memberships, legacy POC org |
+| [docs/FIREBASE_SETUP.md](docs/FIREBASE_SETUP.md) | Founder steps: Firebase project, auth providers, Firestore, keys, rules |
+| [docs/AUTH.md](docs/AUTH.md) | Session cookies, Google + email/password, demo mode, roles |
+| [docs/TENANT_SCHEMA.md](docs/TENANT_SCHEMA.md) | Firestore collections, document ids, tenant scoping |
 | [docs/MAGIC_ONBOARDING.md](docs/MAGIC_ONBOARDING.md) | Try-a-call trial pipeline, claim flow, persona, FAQ inbox |
-| [docs/COMPETITOR_FEATURES.md](docs/COMPETITOR_FEATURES.md) | What we borrowed from competitors (internal) |
-| [docs/ONBOARDING.md](docs/ONBOARDING.md) | Legacy wizard steps and helpers |
-| [docs/ELEVENLABS.md](docs/ELEVENLABS.md) | Edge tool URLs, Connect agent, Netlify parity |
+| [docs/ELEVENLABS.md](docs/ELEVENLABS.md) | Agent tool URLs (`/api/agent-tools/*`), Connect agent, tunnels |
 | [docs/AGENT_TOOL_SECURITY.md](docs/AGENT_TOOL_SECURITY.md) | `roal1.*` tokens, validation, idempotency |
-| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Migrations `001`–`024`, Edge deploy, env, smoke tests |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Netlify + Firebase env, rules deploy, smoke tests |
 | [docs/TESTING.md](docs/TESTING.md) | `npm test`, layout, CI notes |
 | [docs/E2E_SMOKE.md](docs/E2E_SMOKE.md) | Manual browser smoke checklist |
+| [docs/COMPETITOR_FEATURES.md](docs/COMPETITOR_FEATURES.md) | What we borrowed from competitors (internal) |
 | [docs/ENTERPRISE_READINESS.md](docs/ENTERPRISE_READINESS.md) | Maturity scorecard and gaps |
 
 ## Env vars (summary)
 
 | Variable | Purpose |
 |----------|---------|
-| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Client + Realtime (RLS-scoped) |
+| `NEXT_PUBLIC_FIREBASE_API_KEY` / `_AUTH_DOMAIN` / `_PROJECT_ID` / `_APP_ID` | Firebase web config for browser sign-in (blank = demo mode) |
+| `FIREBASE_SERVICE_ACCOUNT` | Server-only service-account JSON on one line: Firestore + session cookies |
+| `ROAL_DEMO_MODE=1` | Force demo mode (even in production builds) |
+| `ROAL_DEMO_DB_FILE` | Demo store file (default `.data/demo-db.json`; `off` = memory only) |
+| `NEXT_PUBLIC_APP_URL` | Public origin (canonicals, Twilio webhook, default agent-tools base) |
+| `ROAL_AGENT_TOOLS_BASE_URL` | Public https origin ElevenLabs calls for tools (tunnel in local dev) |
 | `GEMINI_API_KEY` | Menu scanner |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-only: health DB ping, menu clear, KDS fallbacks |
-| `ELEVENLABS_API_KEY` | Voice agent connect/sync (server only) |
-| `AGENT_TOOL_SIGNING_SECRET` | Per-restaurant Edge tool tokens (set on Edge too) |
+| `ELEVENLABS_API_KEY` / `ELEVENLABS_AGENT_ID` | Voice agent connect/sync (server only) |
+| `AGENT_TOOL_SIGNING_SECRET` | Per-restaurant `roal1.*` agent tool tokens |
 
 Full list: [.env.example](.env.example) and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Menu scan flow
 
 ```
-POST /api/scanner/extract  → Gemini + menu_import row (review)
-POST /api/scanner/commit   → merge_menu RPC after operator approval
+POST /api/scanner/extract  → Gemini + menu_imports doc (review)
+POST /api/scanner/commit   → merge menu after operator approval
 POST /api/scanner/discard  → abandon import
 
 Legacy: POST /api/scanner/process (deprecated; does not auto-merge)
 ```
 
-Live menu updates via Realtime on `categories`, `items`, `modifiers`.
-
 ## Voice orders
 
-Edge Functions: `get-menu`, `sync-draft-order`, `finalize-order`.  
-KDS: **Connect agent to this restaurant** bakes URLs + `roal1.*` bearer. See [docs/ELEVENLABS.md](docs/ELEVENLABS.md).
+ElevenLabs webhook tools call this app: `/api/agent-tools/get-menu`, `sync-draft-order`, `finalize-order`, `get-order-status`, `get-restaurant-info`, `get-caller-history`, `submit-reservation-request`.
+KDS: **Connect agent to this restaurant** bakes the URLs + a `roal1.*` bearer into the agent. ElevenLabs must reach a public https origin — in local dev use a tunnel and `ROAL_AGENT_TOOLS_BASE_URL`. See [docs/ELEVENLABS.md](docs/ELEVENLABS.md).
 
 ## Commands
 
 ```bash
-npm run dev              # local app
-npm test                 # Vitest (no live Supabase required)
+npm run dev              # local app (demo mode without Firebase keys)
+npm test                 # Vitest (in-memory db; no Firebase needed)
 npm run lint && npm run build
-npm run deploy:check     # ci + build; optional db push + edge deploy
-npm run deploy:edge      # deploy three Edge functions
+npm run deploy:check     # ci + build; optional Firestore rules deploy
 SMOKE_BASE_URL=https://your-app npm run smoke
+npx firebase-tools deploy --only firestore:rules
 ```
 
 ## Production
 
-- RLS: [docs/RLS.md](docs/RLS.md) — migration `009` (+ tenant `008`, membership bootstrap `024`)
+- Firestore rules deny all client access; the server (Admin SDK) is the only reader/writer, and tenant scoping lives in `lib/auth/context-server.ts`.
 - Deploy: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 - Health: `GET /api/health` (public; booleans only, no secrets)
 
 ## Project layout (high level)
 
 ```
-app/                    # routes (marketing, dashboard, api)
+app/                    # routes (marketing, dashboard, api, api/agent-tools)
 components/             # UI including landing, KDS, admin
-lib/                    # auth, billing, notifications, observability, …
-supabase/migrations/    # 001–024 SQL
-supabase/functions/     # ElevenLabs tools
+lib/db/                 # getDb(): Firestore or in-memory demo store; schema.ts = collections
+lib/firebase/           # Admin + client SDK singletons
+lib/auth/               # session cookies, demo mode, tenant access
+lib/agent-tools/        # ElevenLabs tool tokens, base URL, handlers
 tests/                  # unit + integration (Vitest)
 docs/                   # runbooks (see table above)
+firebase.json           # Firestore rules + indexes for firebase-tools
 ```

@@ -32,11 +32,11 @@ Key files:
 | Scorecard (auto-ticks from transcript) | `lib/trial/scorecard.ts`, `components/try/trial-scorecard.tsx` |
 | Voice picker with previews | `components/try/trial-voice-picker.tsx`, `app/api/try/voices/route.ts` |
 | Claim | `lib/trial/claim.ts`, `claimTrialAction` in `app/dashboard/onboarding/actions.ts` |
-| Storage | `supabase/migrations/035_agent_trials_and_persona.sql` (`agent_trials`, persona columns, `restaurant_knowledge_suggestions`) |
+| Storage | Firestore collections `agent_trials` and `restaurant_knowledge_suggestions` (defaults in `lib/db/schema.ts`); persona fields live on `restaurant_profiles` |
 
 ## Security
 
-* `agent_trials` has RLS enabled with no policies: only the service role reads or writes it.
+* `agent_trials` is only read and written by the server (Admin SDK via `getDb()`); Firestore rules deny all client access, so browsers can never list or read trials directly.
 * Each trial has a random token; the cookie carries `id.token`, the row stores the SHA-256 hash.
 * Route handlers check the cookie against the path id before touching a trial.
 * Rate limits: 8 trial starts / 10 min / IP (per server process), 12 calls per trial.

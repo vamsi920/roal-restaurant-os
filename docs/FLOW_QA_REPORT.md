@@ -2325,7 +2325,7 @@ Errors surface in delivery log `error_message` (URL-redacted when shown).
 | Public security page | `/security` | marketing copy + FAQ JSON-LD | SEC-01 | pending |
 | Health check | `GET /api/health` | `lib/observability/health.ts` (env, DB, Gemini, EL, Edge OPTIONS) | SEC-02 | **pass** (prompt 54) |
 | Request ID | all matched routes | `middleware.ts`, `lib/observability/request-id.ts` | SEC-03 | **pass** (prompt 54) |
-| RLS / tenant | Postgres | `008`, `009`, `024` migrations; [RLS.md](./RLS.md) | SEC-04 | **pass** (prompt 51: cross-org MCP probes) |
+| RLS / tenant | Postgres | `008`, `009`, `024` migrations; [TENANT_ISOLATION.md](./TENANT_ISOLATION.md) (historical: Postgres RLS) | SEC-04 | **pass** (prompt 51: cross-org MCP probes) |
 | Agent tool security | Edge + Next | [AGENT_TOOL_SECURITY.md](./AGENT_TOOL_SECURITY.md) | SEC-05 | pending |
 | Migrations apply | CLI | `supabase db push` (001–024) | DEP-01 | pending |
 | Edge deploy | CLI | `npm run deploy:edge` → `scripts/deploy-edge-functions.sh` | DEP-02 | **fixed** (prompt 05: v6/7, `verify_jwt` false) |
@@ -2931,7 +2931,7 @@ Notifications sub-route: member read-only / admin edit — covered in prompt **4
 
 ## Prompt 51 — Tenant isolation negative tests (SEC-04)
 
-**Project:** `mnkabwcbdxruefzuvuuv` · **RLS:** [RLS.md](./RLS.md) · migrations `008`, `009`, `024` · **App gates:** `requireRestaurantAccess`, `resolveOrganizationId`, `loadOrganizationAnalytics` (primary org only).
+**Project:** `mnkabwcbdxruefzuvuuv` · **RLS:** [TENANT_ISOLATION.md](./TENANT_ISOLATION.md) (historical: Postgres RLS) · migrations `008`, `009`, `024` · **App gates:** `requireRestaurantAccess`, `resolveOrganizationId`, `loadOrganizationAnalytics` (primary org only).
 
 ### Fixture orgs (pre-existing QA data; no passwords)
 

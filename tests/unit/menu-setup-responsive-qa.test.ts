@@ -47,7 +47,8 @@ describe("menu setup responsive (prompt 27)", () => {
     const indicator = read(
       "app/dashboard/restaurants/[id]/menu/MenuSetupCallIndicator.tsx"
     );
-    expect(indicator).toContain('from("draft_orders")');
+    expect(indicator).toContain("liveEndpoints.callStatus");
+    expect(read("lib/live/load-live-orders.ts")).toContain('from("draft_orders")');
     expect(indicator).toContain('role="status"');
     expect(indicator).not.toMatch(/demo|fake|placeholder/i);
   });

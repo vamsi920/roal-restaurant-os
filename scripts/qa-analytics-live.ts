@@ -9,7 +9,7 @@ import {
   parseAnalyticsRangeKey,
 } from "../lib/analytics/range";
 import { formatUsdFromCents } from "../components/analytics/format";
-import { getDb } from "../lib/supabase/server";
+import { getDb } from "../lib/db";
 
 const LEGACY_ORG =
   process.env.QA_ANALYTICS_ORG_ID?.trim() ||
@@ -33,7 +33,7 @@ function summarize(checks: Check[]) {
 }
 
 async function countUsage(
-  sb: NonNullable<ReturnType<typeof getDb>>,
+  sb: ReturnType<typeof getDb>,
   orgId: string,
   sinceIso: string,
   untilIso: string,
@@ -53,8 +53,8 @@ async function countUsage(
 void (async () => {
   const checks: Check[] = [];
   const sb = getDb();
-  if (!sb) {
-    summarize([{ name: "SUPABASE_SERVICE_ROLE_KEY", ok: false, detail: "missing" }]);
+  if (sb.backend !== "firestore") {
+    summarize([{ name: "FIREBASE_SERVICE_ACCOUNT", ok: false, detail: "missing (live QA needs Firestore)" }]);
     return;
   }
 

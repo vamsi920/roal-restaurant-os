@@ -16,8 +16,11 @@ type ProfileElevenLabsFields = Pick<
 export async function loadVoiceAgentControlCenter(input: {
   restaurantId: string;
   restaurantName: string;
-  edgeBase: string;
-  supabaseRef: string | null;
+  /** @deprecated Supabase edge base — ignored; tool URLs use agentToolsBaseUrl(). */
+  edgeBase?: string | null;
+  /** Override the agent tools origin (defaults to agentToolsBaseUrl()). */
+  agentToolsBase?: string | null;
+  supabaseRef?: string | null;
   profile: RestaurantProfile & Partial<ProfileElevenLabsFields>;
 }): Promise<VoiceAgentControlCenterSnapshot> {
   const profileAgentId =
@@ -51,8 +54,8 @@ export async function loadVoiceAgentControlCenter(input: {
   return assembleControlCenterSnapshot({
     restaurantId: input.restaurantId,
     restaurantName: input.restaurantName,
-    edgeBase: input.edgeBase,
-    supabaseRef: input.supabaseRef,
+    agentToolsBase: input.agentToolsBase,
+    supabaseRef: input.supabaseRef ?? null,
     profileAgentId,
     envDefaultAgentId,
     lastSyncAt: profile.elevenlabs_last_sync_at ?? null,

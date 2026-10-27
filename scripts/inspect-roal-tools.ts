@@ -10,6 +10,7 @@ import {
 import { getPublicEnv } from "../lib/env.public";
 import { getElevenLabsAgentId } from "../lib/env.server";
 import { ROAL_RESTAURANT_ID_HEADER } from "../lib/sync-elevenlabs-roal-tools";
+import { tryAgentToolsBaseUrl } from "../lib/agent-tools/base-url";
 
 const NAMES = [
   "get_menu_items",
@@ -21,9 +22,13 @@ const NAMES = [
   "get_order_status",
 ] as const;
 
+/** Origin of a tool URL (agent tools live at <origin>/api/agent-tools/*). */
 function refFromUrl(u: unknown): string | null {
-  const m = String(u ?? "").match(/https:\/\/([a-z0-9]+)\.supabase\.co/i);
-  return m?.[1] ?? null;
+  try {
+    return new URL(String(u ?? "")).origin;
+  } catch {
+    return null;
+  }
 }
 
 function redact(v: unknown): string {
@@ -79,7 +84,7 @@ function collectDynamicVars(
 
 void (async () => {
   const pub = getPublicEnv();
-  const expectedRef = refFromUrl(pub.NEXT_PUBLIC_SUPABASE_URL);
+  const expectedRef = refFromUrl(tryAgentToolsBaseUrl() ?? "");
   const agentId = getElevenLabsAgentId();
   if (!agentId) throw new Error("ELEVENLABS_AGENT_ID required");
 

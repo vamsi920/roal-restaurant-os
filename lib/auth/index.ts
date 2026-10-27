@@ -4,7 +4,6 @@ export * from "@/lib/auth/session";
 export * from "@/lib/auth/context-server";
 export {
   fetchAuthContextClient,
-  loadClientMemberships,
   membershipForOrg,
   canAccessRestaurantClient,
   hasOrgAdminAccessClient,

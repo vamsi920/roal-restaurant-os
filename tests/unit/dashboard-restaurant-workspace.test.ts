@@ -5,6 +5,11 @@ import { buildRestaurantWorkspaceNav } from "@/lib/restaurant-workspace-nav";
 
 const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
+/** Locations page = server page + client list + scoped loader (no browser DB access). */
+const readLocations = () =>
+  ["app/dashboard/restaurants/page.tsx", "app/dashboard/restaurants/LocationsList.tsx", "lib/restaurant-list/load-locations.ts"]
+    .map(read)
+    .join("\n");
 
 const RESTAURANT_ID = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const FOREIGN_ID = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
@@ -20,7 +25,7 @@ describe("dashboard restaurant workspace (pass 65)", () => {
   });
 
   it("locations page loads restaurants from the database only", () => {
-    const page = read("app/dashboard/restaurants/page.tsx");
+    const page = readLocations();
     expect(page).toContain('from("restaurants")');
     expect(page).toContain("loadRestaurantCardStats");
     expect(page).toContain("buildPortfolioSummary");
@@ -31,7 +36,7 @@ describe("dashboard restaurant workspace (pass 65)", () => {
   });
 
   it("locations page loads launch profile basics for card stats", () => {
-    const page = read("app/dashboard/restaurants/page.tsx");
+    const page = readLocations();
     expect(page).toContain("loadRestaurantCardStats");
     expect(page).toContain("namesById");
     expect(page).toMatch(
@@ -40,7 +45,7 @@ describe("dashboard restaurant workspace (pass 65)", () => {
   });
 
   it("location cards show operational labels and next action", () => {
-    const page = read("app/dashboard/restaurants/page.tsx");
+    const page = readLocations();
     expect(page).toContain("On calls now");
     expect(page).toContain("Needs attention");
     expect(page).toContain("Follow-ups");
@@ -50,7 +55,7 @@ describe("dashboard restaurant workspace (pass 65)", () => {
   });
 
   it("restaurant card links into the restaurant workspace", () => {
-    const page = read("app/dashboard/restaurants/page.tsx");
+    const page = readLocations();
     expect(page).toContain("restaurantLiveOrdersHref");
     expect(page).toContain("restaurantMenuSetupHref");
     expect(page).toContain("restaurantVoiceAgentHref");

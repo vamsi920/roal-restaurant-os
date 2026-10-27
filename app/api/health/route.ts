@@ -39,6 +39,8 @@ export async function GET(req: Request) {
   } catch (e) {
     log.error("health_check_failed", {
       error_type: e instanceof Error ? e.name : "unknown",
+      error_message: e instanceof Error ? e.message.slice(0, 300) : String(e).slice(0, 300),
+      error_stack: e instanceof Error ? e.stack?.split("\n").slice(1, 4).join(" | ") : undefined,
     });
     return jsonResponse(
       {

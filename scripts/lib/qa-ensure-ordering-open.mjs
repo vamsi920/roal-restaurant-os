@@ -1,8 +1,7 @@
 /**
- * Ensures QA restaurant can sync/finalize orders (Edge hours gate).
+ * Ensures QA restaurant can sync/finalize orders (agent-tools hours gate).
  * Upserts today's hours exception as open when ordering_allowed is false.
  */
-import { createClient } from "@supabase/supabase-js";
 
 function localDateInTimeZone(timeZone) {
   const fmt = new Intl.DateTimeFormat("en-CA", {
@@ -15,7 +14,7 @@ function localDateInTimeZone(timeZone) {
 }
 
 /**
- * @param {import("@supabase/supabase-js").Db} sb
+ * @param {import("../../lib/db").Db} sb  getDb() handle
  * @param {string} restaurantId
  * @returns {Promise<{ opened: boolean; detail: string }>}
  */

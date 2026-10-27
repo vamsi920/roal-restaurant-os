@@ -95,7 +95,7 @@ Skipped when `ELEVENLABS_AGENT_ID` unset — provision returns `skipped: true` (
 | Operator path | `README.md` + [`DEPLOYMENT.md`](./DEPLOYMENT.md) — **`supabase db push`** only for schema; no “run this SQL in dashboard” in app/onboarding UI |
 | Migrations | **27** files in `supabase/migrations/` including **025** (voice lifecycle), **026** (`agent_call_events`), **027** (handoff rules) — applied on remote pass 31 |
 | Realtime | `alter publication supabase_realtime` in **`001`**, **`003`**, **`007`** — not a manual onboarding step |
-| Optional ops SQL | [`RLS.md`](./RLS.md) / [`DEPLOYMENT.md`](./DEPLOYMENT.md) § Realtime — **eng-only** fallback if publication drift detected on an old fork; not required for greenfield `db push` |
+| Optional ops SQL | [`TENANT_ISOLATION.md`](./TENANT_ISOLATION.md) / [`DEPLOYMENT.md`](./DEPLOYMENT.md) § Realtime — **eng-only** fallback if publication drift detected on an old fork; not required for greenfield `db push` |
 
 Tenant isolation verification uses `scripts/sql/tenant-isolation-probe.sql` via **MCP/CI**, not restaurant owners.
 
@@ -238,7 +238,7 @@ Documented in [`PUBLIC_LAUNCH_PLAN.md`](./PUBLIC_LAUNCH_PLAN.md): routes, theme,
 
 | Subclass | Examples | Notes |
 |----------|----------|-------|
-| **Runbooks** | `AUTH.md`, `DEPLOYMENT.md`, `TESTING.md`, `E2E_SMOKE.md`, `ONBOARDING.md`, `RLS.md`, `TENANT_SCHEMA.md`, `AGENT_TOOL_SECURITY.md` | Operator-facing |
+| **Runbooks** | `AUTH.md`, `DEPLOYMENT.md`, `TESTING.md`, `E2E_SMOKE.md`, `ONBOARDING.md`, `TENANT_ISOLATION.md`, `TENANT_SCHEMA.md`, `AGENT_TOOL_SECURITY.md` | Operator-facing |
 | **QA / launch** | `FLOW_QA_REPORT.md`, `LAUNCH_BLOCKERS.md`, `FINAL_LAUNCH_READINESS.md`, `PUBLIC_LAUNCH_PLAN.md`, `*_QA.md`, `*_AUDIT.md` | Evidence for sign-off |
 | **Internal prompts** | `feature-flow-qa-60-prompts.md`, `launch-finalization-40-prompts.md`, `launch-ready-site-100-prompts.md`, `enterprise-build-prompts.md`, `cursor-qa-prompts.md`, `*-PLAN.md` | Safe in repo; not runtime |
 

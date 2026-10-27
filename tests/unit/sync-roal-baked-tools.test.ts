@@ -9,7 +9,8 @@ const RESTAURANT_B = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 const AGENT_ID = "agent_baked_test";
 const AGENT_B = "agent_location_b";
 const TEMPLATE_AGENT_ID = "agent_template_global";
-const EDGE_BASE = "https://test.supabase.co";
+const TOOLS_BASE = "https://app.roal.test";
+process.env.ROAL_AGENT_TOOLS_BASE_URL = TOOLS_BASE;
 
 const elevenLabsMocks = vi.hoisted(() => ({
   createConvaiTool: vi.fn(),
@@ -28,8 +29,6 @@ vi.mock("@/lib/env.server", () => ({
   }),
   requireRoalToolSecrets: vi.fn(() => ({
     agentToolSecret: "legacy-secret",
-    supabaseAnonKey: "anon-key",
-    edgeBase: EDGE_BASE,
   })),
 }));
 
@@ -50,8 +49,8 @@ vi.mock("@/lib/restaurant-profile/helpers", () => ({
   getRestaurantProfile: vi.fn().mockResolvedValue(null),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
-  getDb: vi.fn().mockResolvedValue(null),
+vi.mock("@/lib/db", () => ({
+  getDb: vi.fn().mockReturnValue(null),
 }));
 
 import { syncRoalElevenLabsTools } from "@/lib/sync-elevenlabs-roal-tools";
@@ -107,7 +106,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
       request_headers: Record<string, string>;
     };
     expect(apiSchema.method).toBe("GET");
-    expect(apiSchema.url).toContain("/functions/v1/get-menu");
+    expect(apiSchema.url).toContain(`${TOOLS_BASE}/api/agent-tools/get-menu`);
     expect(apiSchema.url).toContain(
       `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
     );
@@ -115,7 +114,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
       RESTAURANT_ID
     );
     expect(apiSchema.request_headers.Authorization).toBe("Bearer roal1.signed.jwt.token");
-    expect(apiSchema.request_headers.apikey).toBe("anon-key");
+    expect(apiSchema.request_headers).not.toHaveProperty("apikey");
 
     const restaurantInfo = configs.find((c) => c.name === "get_restaurant_info")!;
     const infoSchema = restaurantInfo.api_schema as {
@@ -124,7 +123,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
       request_headers: Record<string, string>;
     };
     expect(infoSchema.method).toBe("GET");
-    expect(infoSchema.url).toContain("/functions/v1/get-restaurant-info");
+    expect(infoSchema.url).toContain(`${TOOLS_BASE}/api/agent-tools/get-restaurant-info`);
     expect(infoSchema.url).toContain(
       `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
     );
@@ -141,7 +140,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
         properties: Record<string, unknown>;
       };
     };
-    expect(syncSchema.url).toContain("/functions/v1/sync-draft-order");
+    expect(syncSchema.url).toContain(`${TOOLS_BASE}/api/agent-tools/sync-draft-order`);
     expect(syncSchema.url).toContain(
       `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
     );
@@ -168,7 +167,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
       url: string;
       request_body_schema: { properties: Record<string, unknown> };
     };
-    expect(finSchema.url).toContain("/functions/v1/finalize-order");
+    expect(finSchema.url).toContain(`${TOOLS_BASE}/api/agent-tools/finalize-order`);
     expect(finSchema.url).toContain(
       `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
     );
@@ -190,7 +189,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
         properties: Record<string, unknown>;
       };
     };
-    expect(statusSchema.url).toContain("/functions/v1/get-order-status");
+    expect(statusSchema.url).toContain(`${TOOLS_BASE}/api/agent-tools/get-order-status`);
     expect(statusSchema.url).toContain(
       `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
     );
@@ -212,7 +211,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
         properties: Record<string, unknown>;
       };
     };
-    expect(callerSchema.url).toContain("/functions/v1/get-caller-history");
+    expect(callerSchema.url).toContain(`${TOOLS_BASE}/api/agent-tools/get-caller-history`);
     expect(callerSchema.url).toContain(
       `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`
     );
@@ -236,7 +235,7 @@ describe("syncRoalElevenLabsTools baked config", () => {
       };
     };
     expect(reservationSchema.url).toContain(
-      "/functions/v1/submit-reservation-request"
+      `${TOOLS_BASE}/api/agent-tools/submit-reservation-request`
     );
     expect(reservationSchema.url).toContain(
       `restaurant_id=${encodeURIComponent(RESTAURANT_ID)}`

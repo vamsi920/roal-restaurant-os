@@ -1,48 +1,73 @@
 import { describe, expect, it } from "vitest";
 import {
+  AUTH_ERROR_MESSAGES,
+  authErrorCode,
   authErrorKind,
   formatAuthError,
-  GOOGLE_DISABLED_MESSAGE,
 } from "@/lib/auth/format-auth-error";
 
-describe("formatAuthError", () => {
+/** Shape of a FirebaseError (code + "Firebase: Error (auth/…)." message). */
+function fbError(code: string) {
+  return Object.assign(new Error(`Firebase: Error (${code}).`), { code });
+}
+
+describe("formatAuthError (Firebase codes)", () => {
   it.each([
-    ["Invalid login credentials", "invalid_credentials", /incorrect/i],
-    ["Email not confirmed", "email_not_confirmed", /confirm your email/i],
-    ["User already registered", "user_exists", /already exists/i],
-    ["A user with this email address has already been registered", "user_exists", /already exists/i],
-    ["Password should be at least 6 characters", "weak_password", /at least 8 characters/i],
-    ["Password should be at least 6 characters.", "weak_password", /at least 8/i],
-    ["Unsupported provider: provider is not enabled", "provider_disabled", /switched on yet/i],
-    ["access_denied", "oauth_cancelled", /cancelled/i],
-    ["email rate limit exceeded", "rate_limited", /too many attempts/i],
-    ["Request rate limit reached", "rate_limited", /too many attempts/i],
-    ["For security purposes, you can only request this after 42 seconds.", "rate_limited", /wait/i],
-    ["Too Many Requests", "rate_limited", /too many/i],
-    ["Failed to fetch", "network", /connection/i],
-    ["TypeError: NetworkError when attempting to fetch resource.", "network", /connection/i],
-    ["Load failed", "network", /connection/i],
-    ["invalid request: both auth code and code verifier should be non-empty", "pkce_mismatch", /same browser/i],
-    ["Signups not allowed for this instance", "signup_disabled", /not available/i],
-    ["New password should be different from the old password.", "same_password", /different password/i],
-    ['Email address "x@y" is invalid', "invalid_email", /email address/i],
-    ["Email link is invalid or has expired", "link_expired", /expired/i],
-    ["Token has expired or is invalid", "link_expired", /expired/i],
-  ])("%s", (raw, kind, pattern) => {
-    expect(authErrorKind(raw)).toBe(kind);
-    expect(formatAuthError(raw)).toMatch(pattern);
+    ["auth/invalid-credential", "invalid_credentials", /incorrect/i],
+    ["auth/wrong-password", "invalid_credentials", /incorrect/i],
+    ["auth/user-not-found", "user_not_found", /no account/i],
+    ["auth/email-already-in-use", "user_exists", /already exists/i],
+    ["auth/weak-password", "weak_password", /at least 8 characters/i],
+    ["auth/invalid-email", "invalid_email", /email address/i],
+    ["auth/too-many-requests", "rate_limited", /too many attempts/i],
+    ["auth/network-request-failed", "network", /connection/i],
+    ["auth/popup-blocked", "popup_blocked", /pop-ups/i],
+    ["auth/popup-closed-by-user", "popup_closed", /closed before/i],
+    ["auth/cancelled-popup-request", "popup_closed", /closed before/i],
+    ["auth/operation-not-allowed", "provider_disabled", /^This sign-in method isn't switched on in Firebase yet\.$/],
+    ["auth/unauthorized-domain", "unauthorized_domain", /^This domain isn't authorized for sign-in yet\.$/],
+    ["session/exchange-failed", "session_failed", /couldn't start your session/i],
+  ])("%s", (code, kind, pattern) => {
+    const err = fbError(code);
+    expect(authErrorKind(err)).toBe(kind);
+    expect(formatAuthError(err)).toMatch(pattern);
+    // A bare code string maps the same way.
+    expect(formatAuthError(code)).toBe(formatAuthError(err));
   });
 
-  it("uses the exact Google hand-off message", () => {
-    expect(formatAuthError("Unsupported provider: provider is not enabled")).toBe(GOOGLE_DISABLED_MESSAGE);
-    expect(GOOGLE_DISABLED_MESSAGE).toBe("Google sign-in isn't switched on yet — use email for now.");
+  it("reads the code from the message when the object has none", () => {
+    expect(authErrorCode(new Error("Firebase: Error (auth/invalid-email)."))).toBe("auth/invalid-email");
+    expect(authErrorCode({ code: "auth/popup-blocked" })).toBe("auth/popup-blocked");
+    expect(authErrorCode("nothing here")).toBeNull();
+  });
+
+  it("never leaks Firebase wrapping for unmapped codes", () => {
+    expect(formatAuthError(fbError("auth/internal-error"))).toBe("Something went wrong. Try again.");
+    const custom = Object.assign(new Error("Firebase: Quota hit for project (auth/quota-exceeded)."), {
+      code: "auth/quota-exceeded",
+    });
+    expect(formatAuthError(custom)).toBe("Quota hit for project");
+  });
+
+  it("every message is plain English with no codes", () => {
+    for (const msg of Object.values(AUTH_ERROR_MESSAGES)) {
+      expect(msg).not.toMatch(/auth\/|firebase:/i);
+      expect(msg.length).toBeLessThan(120);
+    }
+  });
+
+  it("still maps legacy wording and network failures", () => {
+    expect(formatAuthError("Invalid login credentials")).toMatch(/incorrect/i);
+    expect(formatAuthError("User already registered")).toMatch(/already exists/i);
+    expect(formatAuthError(new TypeError("Failed to fetch"))).toMatch(/connection/i);
   });
 
   it("falls back safely", () => {
     expect(formatAuthError("")).toMatch(/something went wrong/i);
     expect(formatAuthError(null)).toMatch(/something went wrong/i);
+    expect(formatAuthError({})).toMatch(/something went wrong/i);
     expect(authErrorKind(undefined)).toBe("unknown");
     expect(formatAuthError("x".repeat(200))).toMatch(/sign-in failed/i);
-    expect(formatAuthError("Short custom note")).toBe("Short custom note");
+    expect(formatAuthError("Demo sign-in is not available.")).toBe("Demo sign-in is not available.");
   });
 });

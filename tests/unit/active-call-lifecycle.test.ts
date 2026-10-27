@@ -5,7 +5,7 @@ import {
 } from "@/lib/agent-calls/mark-call-order-completed";
 import { persistElevenLabsConversationStarted } from "@/lib/elevenlabs/conversation-init";
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 

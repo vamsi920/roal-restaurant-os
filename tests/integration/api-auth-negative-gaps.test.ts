@@ -53,7 +53,7 @@ vi.mock("@/lib/scanner/extract-menu", async (importOriginal) => {
   };
 });
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -64,7 +64,7 @@ import { extractMenuFromImage } from "@/lib/scanner/extract-menu";
 describe("API auth negative gaps", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(getDb).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockReturnValue({} as never);
   });
 
   describe("POST /api/scanner/process (deprecated)", () => {

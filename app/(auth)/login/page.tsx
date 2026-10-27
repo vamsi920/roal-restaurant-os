@@ -1,3 +1,4 @@
+import { isAuthDemoMode } from "@/lib/auth/demo-mode";
 import { Suspense } from "react";
 import { AuthForm, AuthFormSkeleton } from "@/components/auth/auth-form";
 import { readTrialHint } from "@/components/auth/trial-hint";
@@ -13,7 +14,7 @@ export default async function LoginPage({ searchParams }: Props) {
   const trial = await readTrialHint();
   return (
     <Suspense fallback={<AuthFormSkeleton />}>
-      <AuthForm key={mode} mode={mode} trial={trial} />
+      <AuthForm key={mode} mode={mode} trial={trial} demoMode={isAuthDemoMode()} />
     </Suspense>
   );
 }

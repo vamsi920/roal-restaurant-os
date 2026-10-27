@@ -10,7 +10,7 @@
  *   QA_CREATE_RESTAURANT=1 QA_ORG_ID=<uuid> QA_USER_ID=<uuid> npx tsx ...
  *   QA_FORCE_PROVISION=1  # clone a new dedicated agent even when one exists
  *
- * Requires: ELEVENLABS_API_KEY, ELEVENLABS_AGENT_ID (template), SUPABASE_SERVICE_ROLE_KEY,
+ * Requires: ELEVENLABS_API_KEY, ELEVENLABS_AGENT_ID (template), FIREBASE_SERVICE_ACCOUNT (Firestore),
  * ROAL edge tool secrets, QA_USER_ID (for provision audit).
  */
 import { firstMessageHasUnresolvedTemplates } from "../lib/elevenlabs-placeholders";

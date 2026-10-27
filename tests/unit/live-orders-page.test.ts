@@ -2,8 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/env.public", () => ({
   getPublicEnv: () => ({
-    NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co",
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: "roal-test",
   }),
 }));
 import { buildRecentPhoneOutcomes } from "@/lib/live-orders/build-recent-outcomes";

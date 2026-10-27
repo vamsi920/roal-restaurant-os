@@ -7,7 +7,7 @@
  *   npx tsx --env-file=.env --env-file=.env.local scripts/backfill-restaurant-voice-agents.ts --limit 5
  *   npx tsx --env-file=.env --env-file=.env.local scripts/backfill-restaurant-voice-agents.ts --force --limit 1
  *
- * Requires: ELEVENLABS_API_KEY, ELEVENLABS_AGENT_ID (template), SUPABASE_SERVICE_ROLE_KEY,
+ * Requires: ELEVENLABS_API_KEY, ELEVENLABS_AGENT_ID (template), FIREBASE_SERVICE_ACCOUNT (Firestore),
  * ROAL tool secrets used by provisionRestaurantVoiceAgent / runRestaurantVoiceAgentSync.
  */
 import {

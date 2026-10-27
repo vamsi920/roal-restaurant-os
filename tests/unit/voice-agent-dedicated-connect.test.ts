@@ -10,8 +10,7 @@ vi.mock("@/lib/env.server", () => ({
 
 vi.mock("@/lib/env.public", () => ({
   getPublicEnv: () => ({
-    NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co",
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: "anon-key",
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: "roal-test",
   }),
 }));
 
@@ -19,7 +18,7 @@ vi.mock("@/lib/voice-agent/run-restaurant-voice-agent-sync", () => ({
   runRestaurantVoiceAgentSync: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -84,7 +83,7 @@ describe("connectVoiceAgentAction dedicated agent guard", () => {
         error: null,
       }),
     };
-    vi.mocked(getDb).mockResolvedValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn(() => chain),
     } as never);
 

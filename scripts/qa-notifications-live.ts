@@ -17,7 +17,7 @@ import {
   saveNotificationSettings,
 } from "../lib/notifications/settings";
 import { notifyStuckOrdersForOrganization } from "../lib/notifications/stuck-orders";
-import { getDb } from "../lib/supabase/server";
+import { getDb } from "../lib/db";
 
 const QA_ORG =
   process.env.QA_NOTIF_ORG_ID?.trim() ||
@@ -90,12 +90,12 @@ async function probeCheckStuck401(): Promise<Check> {
 void (async () => {
   const checks: Check[] = [];
   const sb = getDb();
-  if (!sb) {
+  if (sb.backend !== "firestore") {
     summarize([
       {
-        name: "SUPABASE_SERVICE_ROLE_KEY",
+        name: "FIREBASE_SERVICE_ACCOUNT",
         ok: false,
-        detail: "missing",
+        detail: "missing (live QA needs Firestore, not the demo store)",
       },
     ]);
     return;

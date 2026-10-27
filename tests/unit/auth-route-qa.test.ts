@@ -35,7 +35,7 @@ describe("auth route QA", () => {
   });
 
   it("guest dashboard visits redirect to login with next path", () => {
-    const mw = readFileSync(join(REPO, "lib/supabase/middleware.ts"), "utf8");
+    const mw = readFileSync(join(REPO, "lib/auth/middleware-session.ts"), "utf8");
     expect(mw).toContain("buildGuestLoginRedirect");
     expect(mw).toContain('pathname.startsWith("/dashboard")');
 
@@ -88,7 +88,7 @@ describe("auth route QA", () => {
   });
 
   it("signed-in users on auth pages use safe next redirect", () => {
-    const mw = readFileSync(join(REPO, "lib/supabase/middleware.ts"), "utf8");
+    const mw = readFileSync(join(REPO, "lib/auth/middleware-session.ts"), "utf8");
     expect(mw).toContain("AUTH_PATHS");
     expect(mw).toContain("safeNextPath");
     expect(AUTH_ROUTES.login).toBe("/login");

@@ -1,5 +1,3 @@
-import { getPublicEnv } from "@/lib/env.public";
-import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
 import type { RestaurantProfile } from "@/lib/types";
 
@@ -15,12 +13,9 @@ export async function loadForwardingNumber(
   profile: RestaurantProfile
 ): Promise<string | null> {
   try {
-    const supabaseUrl = getPublicEnv().NEXT_PUBLIC_SUPABASE_URL;
     const center = await loadVoiceAgentControlCenter({
       restaurantId,
       restaurantName,
-      edgeBase: supabaseUrl.replace(/\/$/, ""),
-      supabaseRef: supabaseProjectRefFromUrl(supabaseUrl),
       profile,
     });
     for (const item of center.checklist) {

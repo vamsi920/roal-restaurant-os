@@ -47,6 +47,8 @@ type Props = {
   stuckMinutes?: number;
   /** Shared clock from the board so ages tick together. */
   now?: Date;
+  /** Briefly highlight a ticket that just arrived on the board. */
+  flash?: boolean;
 };
 
 const LANE_BADGE: Record<KdsQueueLane, string> = {
@@ -73,6 +75,7 @@ export function KitchenOrderCard({
   queueLane,
   stuckMinutes,
   now,
+  flash = false,
 }: Props) {
   const menuCtx = useMemo(
     () => buildMenuPriceContext(menuItems, menuModifiers),
@@ -115,6 +118,7 @@ export function KitchenOrderCard({
         lane === "ready" && "kds-ticket--ready",
         isDone && "kds-ticket--done",
         stuck && "kds-ticket--stuck",
+        flash && "flash-row",
         actionBusy && "opacity-95"
       )}
     >

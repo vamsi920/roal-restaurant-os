@@ -1,4 +1,3 @@
-import "server-only";
 import { adminDb } from "@/lib/firebase/admin";
 import type { Row } from "@/lib/db/schema";
 import type { DocStore } from "@/lib/db/store";

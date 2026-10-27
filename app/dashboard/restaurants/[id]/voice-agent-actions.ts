@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import { resolveDedicatedElevenLabsAgentId } from "@/lib/voice-agent/dedicated-agent-id";
-import { getPublicEnv } from "@/lib/env.public";
 import { loadVoiceAgentControlCenter } from "@/lib/voice-agent/load-control-center";
 import { runRestaurantVoiceAgentSync } from "@/lib/voice-agent/run-restaurant-voice-agent-sync";
 import type { VoiceAgentSyncSummary } from "@/lib/voice-agent/voice-agent-sync-summary";
@@ -21,7 +20,6 @@ import {
 import { writeAuditLog } from "@/lib/observability/audit";
 import { notifySyncFailure } from "@/lib/notifications/helpers";
 import { getDb } from "@/lib/db";
-import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import type { RestaurantProfile } from "@/lib/types";
 
 async function loadProfile(restaurantId: string) {
@@ -116,14 +114,9 @@ export async function getVoiceAgentControlCenterAction(
   }
 
   const profile = await loadProfile(restaurantId);
-  const supabaseUrl = getPublicEnv().NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseRef = supabaseProjectRefFromUrl(supabaseUrl);
-
   return loadVoiceAgentControlCenter({
     restaurantId,
     restaurantName: access.access.restaurant.name,
-    edgeBase: supabaseUrl.replace(/\/$/, ""),
-    supabaseRef,
     profile,
   });
 }
@@ -152,6 +145,20 @@ export async function connectVoiceAgentAction(input: ConnectVoiceAgentInput) {
   const access = await requireRestaurantAccess(restaurantId);
   if (access.errorResponse) {
     throw new Error("You do not have access to this restaurant.");
+  }
+
+  // Tenant isolation: an agent already linked to another location (possibly another
+  // organization) must not be re-pointed at this one — the sync below rewrites the
+  // agent's prompt, tools and phone webhook.
+  const { data: boundProfiles, error: boundErr } = await getDb()
+    .from("restaurant_profiles")
+    .select("restaurant_id")
+    .eq("elevenlabs_agent_id", agentId);
+  if (boundErr) throw new Error("Could not verify that agent. Try again.");
+  if ((boundProfiles ?? []).some((row) => String(row.restaurant_id) !== restaurantId)) {
+    throw new Error(
+      "That ElevenLabs agent is already connected to another location. Use a dedicated agent for this restaurant."
+    );
   }
 
   try {

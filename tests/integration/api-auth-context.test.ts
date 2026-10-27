@@ -154,7 +154,7 @@ describe("GET /api/auth/context", () => {
 
     expect(res.status).toBe(200);
     expect(raw).not.toMatch(/service_role/i);
-    expect(raw).not.toMatch(/SUPABASE_SERVICE_ROLE/i);
+    expect(raw).not.toMatch(/FIREBASE_SERVICE_ACCOUNT|private_key/i);
     expect(raw).not.toContain("user_id");
     expect(raw).not.toMatch(/eyJ[a-zA-Z0-9_-]+\./);
     const body = JSON.parse(raw) as Record<string, unknown>;

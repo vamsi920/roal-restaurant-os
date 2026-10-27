@@ -195,8 +195,6 @@ describe("restaurant launch checklist", () => {
 
 describe("evaluateServerLaunchEnvReady", () => {
   it("reports env readiness from server secret rows", () => {
-    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://example.supabase.co");
-    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "test-anon-key-long-enough");
     vi.stubEnv("ELEVENLABS_API_KEY", "el-key");
     vi.stubEnv("AGENT_TOOL_SIGNING_SECRET", "signing-secret");
 

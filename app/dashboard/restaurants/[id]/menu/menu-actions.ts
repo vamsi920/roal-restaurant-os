@@ -344,7 +344,7 @@ export async function saveMenuTemplateAction(
   restaurantId: string,
   raw: { name?: string; makeDefault?: boolean }
 ) {
-  const access = await requireRestaurantAccess(restaurantId);
+  const access = await requireRestaurantAccess(restaurantId, { requireAdmin: true });
   if (access.errorResponse) {
     throw new Error("You do not have access to this restaurant.");
   }
@@ -366,7 +366,7 @@ export async function setDefaultMenuTemplateAction(
   restaurantId: string,
   templateId: string
 ) {
-  const access = await requireRestaurantAccess(restaurantId);
+  const access = await requireRestaurantAccess(restaurantId, { requireAdmin: true });
   if (access.errorResponse) {
     throw new Error("You do not have access to this restaurant.");
   }
@@ -409,7 +409,7 @@ export async function applyTemplateToInheritedLocationsAction(
   restaurantId: string,
   templateId: string
 ) {
-  const access = await requireRestaurantAccess(restaurantId);
+  const access = await requireRestaurantAccess(restaurantId, { requireAdmin: true });
   if (access.errorResponse) {
     throw new Error("You do not have access to this restaurant.");
   }
@@ -621,6 +621,10 @@ export async function deleteModifierAction(
   restaurantId: string,
   modifierId: string
 ) {
+  const access = await requireRestaurantAccess(restaurantId);
+  if (access.errorResponse) {
+    throw new Error("You do not have access to this restaurant.");
+  }
   const supabase = getDb();
   const { data: mod } = await supabase
     .from("modifiers")
@@ -629,6 +633,10 @@ export async function deleteModifierAction(
     .maybeSingle();
 
   if (!mod) throw new Error("Modifier not found.");
+  // Same message whether the modifier is missing or belongs to another restaurant.
+  await assertItemInRestaurant(supabase, restaurantId, mod.item_id as string).catch(() => {
+    throw new Error("Modifier not found.");
+  });
   return deleteModifierGroupAction(
     restaurantId,
     mod.item_id as string,

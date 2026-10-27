@@ -20,7 +20,6 @@ import type {
 import type { OnboardingStepKey } from "@/lib/onboarding/steps";
 import type { OnboardingWizardState } from "@/lib/onboarding/wizard-types";
 import { getAuthContext } from "@/lib/auth/context-server";
-import { getPublicEnv } from "@/lib/env.public";
 import { getElevenLabsAgentPhoneNumberId } from "@/lib/env.server";
 import { onboardingVoiceProvisionFromProfileRow } from "@/lib/onboarding/restaurant-voice-provision";
 import { evaluateOnboardingReadiness } from "@/lib/onboarding/readiness";
@@ -29,7 +28,6 @@ import { loadRestaurantCardStats } from "@/lib/restaurant-list/card-stats";
 import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { readPendingRestaurantLookup } from "@/lib/restaurant-lookup/pending";
 import { getDb } from "@/lib/db";
-import { supabaseProjectRefFromUrl } from "@/lib/supabaseProjectRef";
 import type { Restaurant } from "@/lib/types";
 
 function isStepTerminal(
@@ -209,16 +207,6 @@ export async function loadOnboardingWizardState(
     restaurantSteps,
   });
 
-  let supabaseRef: string | null = null;
-  let edgeBase: string | null = null;
-  try {
-    const url = getPublicEnv().NEXT_PUBLIC_SUPABASE_URL;
-    supabaseRef = supabaseProjectRefFromUrl(url);
-    edgeBase = url.replace(/\/$/, "");
-  } catch {
-    /* optional */
-  }
-
   let outboundCallConfigured = false;
   try {
     outboundCallConfigured = Boolean(getElevenLabsAgentPhoneNumberId());
@@ -267,7 +255,5 @@ export async function loadOnboardingWizardState(
         }
       : null,
     outboundCallConfigured,
-    supabaseRef,
-    edgeBase,
   };
 }

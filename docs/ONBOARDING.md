@@ -1,6 +1,6 @@
 # Onboarding data model
 
-Migration: `supabase/migrations/010_onboarding.sql`  
+Storage: Firestore collections `organization_onboarding` (doc id = `organization_id`) and `restaurant_onboarding` (doc id = `restaurant_id`), see `lib/db/schema.ts`.  
 Helpers: `lib/onboarding/`
 
 ## Tables
@@ -34,11 +34,11 @@ Each row stores:
 | `updateOrganizationOnboardingStep` / `updateRestaurantOnboardingStep` | Set status, recompute `current_step` |
 | `computeOnboardingProgress` / `organizationOnboardingProgress` | `{ completed, total, percent, nextStep }` |
 | `completeOrganizationAccountStep` | Mark org `account` done |
-| `lib/onboarding/server.ts` | Session-scoped wrappers using `createServerSupabase()` |
+| `lib/onboarding/server.ts` | Session-scoped wrappers using `getDb()` |
 
 ## Apply
 
-Part of `supabase db push` (migration `010_onboarding.sql`).
+No migration needed — documents are created on first write.
 
 ## Wizard UI
 

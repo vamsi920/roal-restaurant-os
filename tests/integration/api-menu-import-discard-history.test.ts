@@ -30,7 +30,7 @@ vi.mock("@/lib/auth/context-server", () => ({
   requireRestaurantAccess: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -56,7 +56,7 @@ import { recordRestaurantUsage } from "@/lib/usage/record";
 describe("POST /api/scanner/discard", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(getDb).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockReturnValue({} as never);
   });
 
   it("returns 401 when unauthenticated", async () => {
@@ -229,7 +229,7 @@ describe("GET /api/restaurants/[id]/menu-imports", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(getDb).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockReturnValue({} as never);
   });
 
   it("returns 403 for forbidden restaurant", async () => {

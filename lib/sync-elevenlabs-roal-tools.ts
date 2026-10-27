@@ -11,7 +11,11 @@ import {
   patchConvaiAgent,
   patchConvaiTool,
 } from "@/lib/elevenlabs";
-import { buildAgentToolRequestHeaders } from "@/lib/agent-tools/headers";
+import { agentToolUrl, agentToolsBaseUrl, isPubliclyReachableToolBase } from "@/lib/agent-tools/base-url";
+import {
+  buildAgentToolRequestHeaders,
+  ROAL_RESTAURANT_ID_HEADER,
+} from "@/lib/agent-tools/headers";
 import { buildRestaurantOrderFirstMessage } from "@/lib/elevenlabs/agent-prompt";
 import {
   mergeRestaurantPlaceholders,
@@ -21,7 +25,7 @@ import { getRestaurantProfile } from "@/lib/restaurant-profile/helpers";
 import { getDb } from "@/lib/db";
 
 /** Sent on every webhook call when tools are baked to a restaurant (Twilio cannot resolve conv dynamic vars). */
-export const ROAL_RESTAURANT_ID_HEADER = "x-roal-restaurant-id";
+export { ROAL_RESTAURANT_ID_HEADER };
 
 /** Canonical ROAL ConvAI webhook tools attached per dedicated restaurant agent. */
 export const ROAL_BAKED_TOOL_NAMES = [
@@ -442,7 +446,13 @@ export async function syncRoalElevenLabsTools(options?: {
 }): Promise<SyncRoalElevenLabsToolsResult> {
   getElevenLabsApiKey();
   const agentId = requireElevenLabsAgentId(options?.agentId);
-  const { agentToolSecret, supabaseAnonKey, edgeBase } = requireRoalToolSecrets();
+  const { agentToolSecret } = requireRoalToolSecrets();
+  const toolsBase = agentToolsBaseUrl();
+  if (!isPubliclyReachableToolBase(toolsBase)) {
+    console.warn(
+      `[roal-tools] Agent tool base ${toolsBase} is not a public https URL — ElevenLabs cannot call these tools. Set ROAL_AGENT_TOOLS_BASE_URL to a tunnel (e.g. ngrok) or deploy the app.`
+    );
+  }
 
   const rid = options?.restaurantId?.trim() ?? "";
   if (rid) {
@@ -458,16 +468,14 @@ export async function syncRoalElevenLabsTools(options?: {
   const baked = rid.length > 0;
   const resolvedName = mergeRestaurantPlaceholders({}, rid, rname).restaurant_name;
 
-  const edgeHeaders = baked
+  const toolHeaders = baked
     ? buildAgentToolRequestHeaders({
         restaurantId: rid,
         agentId,
-        supabaseAnonKey,
         legacySecret: agentToolSecret,
       })
     : {
         Authorization: `Bearer ${agentToolSecret}`,
-        apikey: supabaseAnonKey,
       };
 
   const toolNames = ROAL_BAKED_TOOL_NAMES;
@@ -483,24 +491,24 @@ export async function syncRoalElevenLabsTools(options?: {
           type: "webhook",
           name: "get_menu_items",
           description:
-            "Fetches the live menu for this restaurant from Supabase. Invoke immediately when the session starts (first model turn, ideally while the guest answers pickup/delivery). Do not tell the guest you are loading or pulling up the menu. No parameters required.",
+            "Fetches the live menu for this restaurant from ROAL. Invoke immediately when the session starts (first model turn, ideally while the guest answers pickup/delivery). Do not tell the guest you are loading or pulling up the menu. No parameters required.",
           response_timeout_secs: 45,
           api_schema: {
-            url: `${edgeBase}/functions/v1/get-menu?restaurant_id=${encodeURIComponent(rid)}&restaurant_name=${encodeURIComponent(resolvedName)}`,
+            url: `${agentToolUrl("get-menu", toolsBase)}?restaurant_id=${encodeURIComponent(rid)}&restaurant_name=${encodeURIComponent(resolvedName)}`,
             method: "GET",
-            request_headers: edgeHeaders,
+            request_headers: toolHeaders,
           },
         }
       : {
           type: "webhook",
           name: "get_menu_items",
           description:
-            "Fetches the live menu from Supabase. Invoke immediately at session start—before filler speech—while the guest may still be answering pickup/delivery. Do not announce loading or menu fetch to the caller. Requires conversation dynamic variables restaurant_id (uuid) and restaurant_name (spoken name). Response JSON includes restaurant.name for greetings.",
+            "Fetches the live menu from ROAL. Invoke immediately at session start—before filler speech—while the guest may still be answering pickup/delivery. Do not announce loading or menu fetch to the caller. Requires conversation dynamic variables restaurant_id (uuid) and restaurant_name (spoken name). Response JSON includes restaurant.name for greetings.",
           response_timeout_secs: 45,
           api_schema: {
-            url: `${edgeBase}/functions/v1/get-menu`,
+            url: agentToolUrl("get-menu", toolsBase),
             method: "GET",
-            request_headers: edgeHeaders,
+            request_headers: toolHeaders,
             query_params_schema: {
               properties: {
                 restaurant_id: {
@@ -524,9 +532,9 @@ export async function syncRoalElevenLabsTools(options?: {
             "Fetches live restaurant business facts for this location: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions. FAQ answers may be restated in the guest's language for speech only—never invent facts beyond the response. No parameters required.",
           response_timeout_secs: 30,
           api_schema: {
-            url: `${edgeBase}/functions/v1/get-restaurant-info?restaurant_id=${encodeURIComponent(rid)}&restaurant_name=${encodeURIComponent(resolvedName)}`,
+            url: `${agentToolUrl("get-restaurant-info", toolsBase)}?restaurant_id=${encodeURIComponent(rid)}&restaurant_name=${encodeURIComponent(resolvedName)}`,
             method: "GET",
-            request_headers: edgeHeaders,
+            request_headers: toolHeaders,
           },
         }
       : {
@@ -536,9 +544,9 @@ export async function syncRoalElevenLabsTools(options?: {
             "Fetches live restaurant business facts: current open/closed status, hours message, address/directions fields, phone, website, service modes, prep-time estimate, and operator FAQ answers. Use for hours, directions, wait-time, policy, reservation, catering, or other non-order questions. FAQ answers may be restated in the guest's language for speech only—never invent facts beyond the response.",
           response_timeout_secs: 30,
           api_schema: {
-            url: `${edgeBase}/functions/v1/get-restaurant-info`,
+            url: agentToolUrl("get-restaurant-info", toolsBase),
             method: "GET",
-            request_headers: edgeHeaders,
+            request_headers: toolHeaders,
             query_params_schema: {
               properties: {
                 restaurant_id: {
@@ -563,12 +571,12 @@ export async function syncRoalElevenLabsTools(options?: {
       response_timeout_secs: 30,
       api_schema: {
         url: baked
-          ? `${edgeBase}/functions/v1/get-caller-history?restaurant_id=${encodeURIComponent(rid)}`
-          : `${edgeBase}/functions/v1/get-caller-history`,
+          ? `${agentToolUrl("get-caller-history", toolsBase)}?restaurant_id=${encodeURIComponent(rid)}`
+          : agentToolUrl("get-caller-history", toolsBase),
         method: "POST",
         content_type: "application/json",
         request_headers: {
-          ...edgeHeaders,
+          ...toolHeaders,
           "Content-Type": "application/json",
         },
         request_body_schema: callerHistoryBodySpec(toolMode),
@@ -583,12 +591,12 @@ export async function syncRoalElevenLabsTools(options?: {
       response_timeout_secs: 30,
       api_schema: {
         url: baked
-          ? `${edgeBase}/functions/v1/submit-reservation-request?restaurant_id=${encodeURIComponent(rid)}`
-          : `${edgeBase}/functions/v1/submit-reservation-request`,
+          ? `${agentToolUrl("submit-reservation-request", toolsBase)}?restaurant_id=${encodeURIComponent(rid)}`
+          : agentToolUrl("submit-reservation-request", toolsBase),
         method: "POST",
         content_type: "application/json",
         request_headers: {
-          ...edgeHeaders,
+          ...toolHeaders,
           "Content-Type": "application/json",
         },
         request_body_schema: reservationBodySpec(toolMode),
@@ -603,12 +611,12 @@ export async function syncRoalElevenLabsTools(options?: {
       response_timeout_secs: 45,
       api_schema: {
         url: baked
-          ? `${edgeBase}/functions/v1/sync-draft-order?restaurant_id=${encodeURIComponent(rid)}`
-          : `${edgeBase}/functions/v1/sync-draft-order`,
+          ? `${agentToolUrl("sync-draft-order", toolsBase)}?restaurant_id=${encodeURIComponent(rid)}`
+          : agentToolUrl("sync-draft-order", toolsBase),
         method: "POST",
         content_type: "application/json",
         request_headers: {
-          ...edgeHeaders,
+          ...toolHeaders,
           "Content-Type": "application/json",
         },
         request_body_schema: syncDraftBodySpec(toolMode),
@@ -623,12 +631,12 @@ export async function syncRoalElevenLabsTools(options?: {
       response_timeout_secs: 45,
       api_schema: {
         url: baked
-          ? `${edgeBase}/functions/v1/finalize-order?restaurant_id=${encodeURIComponent(rid)}`
-          : `${edgeBase}/functions/v1/finalize-order`,
+          ? `${agentToolUrl("finalize-order", toolsBase)}?restaurant_id=${encodeURIComponent(rid)}`
+          : agentToolUrl("finalize-order", toolsBase),
         method: "POST",
         content_type: "application/json",
         request_headers: {
-          ...edgeHeaders,
+          ...toolHeaders,
           "Content-Type": "application/json",
         },
         request_body_schema: finalizeBodySpec(toolMode),
@@ -643,12 +651,12 @@ export async function syncRoalElevenLabsTools(options?: {
       response_timeout_secs: 30,
       api_schema: {
         url: baked
-          ? `${edgeBase}/functions/v1/get-order-status?restaurant_id=${encodeURIComponent(rid)}`
-          : `${edgeBase}/functions/v1/get-order-status`,
+          ? `${agentToolUrl("get-order-status", toolsBase)}?restaurant_id=${encodeURIComponent(rid)}`
+          : agentToolUrl("get-order-status", toolsBase),
         method: "POST",
         content_type: "application/json",
         request_headers: {
-          ...edgeHeaders,
+          ...toolHeaders,
           "Content-Type": "application/json",
         },
         request_body_schema: orderStatusBodySpec(toolMode),

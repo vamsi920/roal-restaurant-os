@@ -10,11 +10,11 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { UtensilsCrossed } from "lucide-react";
-import { getBrowserSupabase } from "@/lib/supabase/client";
+import { fetchLiveJson, usePoll } from "@/lib/live/use-poll";
+import { liveEndpoints } from "@/lib/live/endpoints";
 import { aggregateModifierGroups } from "@/lib/menu-editor/modifier-groups";
-import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
+import type { RestaurantMenuSnapshot } from "@/lib/menu-editor/load-menu";
 import {
   filterItemsToCategories,
   filterModifiersToItems,
@@ -51,6 +51,8 @@ function serverMenuKey(
   return `${restaurantId}|${c}|${i}|${m}`;
 }
 
+type LiveMenuPayload = RestaurantMenuSnapshot & { serverTime?: string };
+
 export type LiveMenuState = {
   categories: DbCategory[];
   items: DbItem[];
@@ -68,8 +70,9 @@ export type LiveMenuState = {
 
 /**
  * Live menu rows for one restaurant: seeded from the server snapshot, kept current
- * by Supabase realtime (categories, items, modifiers), with a polling fallback
- * when the channel degrades and a resync on `roal:menu-changed`.
+ * by polling GET /api/restaurants/[id]/live/menu (3s visible / 15s hidden), with
+ * an immediate resync on `roal:menu-changed`. Unchanged polls never overwrite
+ * local (optimistic) editor state.
  */
 export function useLiveMenu(
   restaurantId: string,
@@ -82,7 +85,6 @@ export function useLiveMenu(
   const [modifiers, setModifiers] = useState<DbModifier[]>(initialModifiers);
   const [flashedIds, setFlashedIds] = useState<Set<string>>(new Set());
   const [menuUpdatedVisible, setMenuUpdatedVisible] = useState(false);
-  const [menuRealtime, setMenuRealtime] = useState<RealtimeState>("connecting");
   const flashTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const menuUpdatedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scopeRef = useRef({
@@ -155,6 +157,17 @@ export function useLiveMenu(
   );
 
   useEffect(() => {
+    let cancelled = false;
+    let resyncTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function scheduleResync() {
+      if (resyncTimer) clearTimeout(resyncTimer);
+      resyncTimer = setTimeout(() => {
+        resyncTimer = null;
+        if (!cancelled) void refreshMenuRef.current();
+      }, 400);
+    }
+
     function onMenuCleared(e: Event) {
       const ce = e as CustomEvent<{ restaurantId?: string }>;
       if (ce.detail?.restaurantId !== restaurantId) return;
@@ -166,188 +179,78 @@ export function useLiveMenu(
       flashTimers.current.clear();
       scopeRef.current = { categoryIds: new Set(), itemIds: new Set() };
     }
-    window.addEventListener("roal:menu-cleared", onMenuCleared as EventListener);
 
     function onMenuChanged(e: Event) {
       const ce = e as CustomEvent<{ restaurantId?: string }>;
       if (ce.detail?.restaurantId !== restaurantId) return;
-      void syncMenuFromServer();
+      scheduleResync();
     }
+
+    window.addEventListener("roal:menu-cleared", onMenuCleared as EventListener);
     window.addEventListener("roal:menu-changed", onMenuChanged as EventListener);
-
-    const supabase = getBrowserSupabase();
-    let pollTimer: ReturnType<typeof setInterval> | null = null;
-    let resyncTimer: ReturnType<typeof setTimeout> | null = null;
-    let cancelled = false;
-
-    async function syncMenuFromServer() {
-      try {
-        const snap = await loadRestaurantMenu(supabase, restaurantId);
-        if (cancelled) return;
-        setCategories(snap.categories);
-        setItems(snap.items);
-        setModifiers(snap.modifiers);
-        scopeRef.current = {
-          categoryIds: new Set(snap.categories.map((c) => c.id)),
-          itemIds: new Set(snap.items.map((i) => i.id)),
-        };
-      } catch {
-        /* best-effort fallback */
-      }
-    }
-
-    function scheduleResync() {
-      if (resyncTimer) clearTimeout(resyncTimer);
-      resyncTimer = setTimeout(() => {
-        resyncTimer = null;
-        void syncMenuFromServer();
-      }, 400);
-    }
-
-    function startPoll(ms: number) {
-      if (pollTimer) clearInterval(pollTimer);
-      pollTimer = setInterval(() => void syncMenuFromServer(), ms);
-    }
-
-    function stopPoll() {
-      if (pollTimer) {
-        clearInterval(pollTimer);
-        pollTimer = null;
-      }
-    }
-
-    function onVisible() {
-      if (document.visibilityState === "visible") {
-        void syncMenuFromServer();
-      }
-    }
-    document.addEventListener("visibilitychange", onVisible);
-
-    const channel = supabase
-      .channel(`menu-${restaurantId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "categories",
-          filter: `restaurant_id=eq.${restaurantId}`,
-        },
-        (payload: RealtimePostgresChangesPayload<DbCategory>) => {
-          if (payload.eventType === "INSERT") {
-            const row = payload.new as DbCategory;
-            setCategories((prev) =>
-              prev.some((c) => c.id === row.id) ? prev : [...prev, row]
-            );
-            flash(row.id);
-          } else if (payload.eventType === "UPDATE") {
-            const row = payload.new as DbCategory;
-            setCategories((prev) => prev.map((c) => (c.id === row.id ? row : c)));
-            flash(row.id);
-          } else if (payload.eventType === "DELETE") {
-            const row = payload.old as DbCategory;
-            const catId = row.id;
-            setCategories((prev) => prev.filter((c) => c.id !== catId));
-            setItems((prevItems) => {
-              const dropItemIds = prevItems
-                .filter((i) => i.category_id === catId)
-                .map((i) => i.id);
-              if (dropItemIds.length > 0) {
-                setModifiers((prevMods) =>
-                  prevMods.filter((m) => !dropItemIds.includes(m.item_id))
-                );
-              }
-              return prevItems.filter((i) => i.category_id !== catId);
-            });
-          }
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "items" },
-        (payload: RealtimePostgresChangesPayload<DbItem>) => {
-          if (payload.eventType === "INSERT") {
-            const row = payload.new as DbItem;
-            if (!scopeRef.current.categoryIds.has(row.category_id)) {
-              scheduleResync();
-              return;
-            }
-            setItems((prev) => {
-              if (prev.some((i) => i.id === row.id)) return prev;
-              return [...prev, row];
-            });
-            flash(row.id);
-          } else if (payload.eventType === "UPDATE") {
-            const row = payload.new as DbItem;
-            const known =
-              scopeRef.current.itemIds.has(row.id) ||
-              scopeRef.current.categoryIds.has(row.category_id);
-            if (!known) return;
-            setItems((prev) => prev.map((i) => (i.id === row.id ? row : i)));
-            flash(row.id);
-          } else if (payload.eventType === "DELETE") {
-            const row = payload.old as DbItem;
-            setItems((prev) => prev.filter((i) => i.id !== row.id));
-            setModifiers((prev) => prev.filter((m) => m.item_id !== row.id));
-          }
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "modifiers" },
-        (payload: RealtimePostgresChangesPayload<DbModifier>) => {
-          if (payload.eventType === "INSERT") {
-            const row = payload.new as DbModifier;
-            if (!scopeRef.current.itemIds.has(row.item_id)) return;
-            setModifiers((prev) =>
-              prev.some((m) => m.id === row.id) ? prev : [...prev, row]
-            );
-          } else if (payload.eventType === "UPDATE") {
-            const row = payload.new as DbModifier;
-            if (!scopeRef.current.itemIds.has(row.item_id)) return;
-            setModifiers((prev) => prev.map((m) => (m.id === row.id ? row : m)));
-          } else if (payload.eventType === "DELETE") {
-            const row = payload.old as DbModifier;
-            setModifiers((prev) => prev.filter((m) => m.id !== row.id));
-          }
-        }
-      )
-      .subscribe((status) => {
-        if (cancelled) return;
-        if (status === "SUBSCRIBED") {
-          setMenuRealtime("live");
-          stopPoll();
-          startPoll(30_000);
-          return;
-        }
-        if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
-          setMenuRealtime("degraded");
-          stopPoll();
-          void syncMenuFromServer();
-          startPoll(8_000);
-        }
-      });
 
     const timers = flashTimers.current;
     return () => {
       cancelled = true;
-      window.removeEventListener(
-        "roal:menu-cleared",
-        onMenuCleared as EventListener
-      );
-      window.removeEventListener(
-        "roal:menu-changed",
-        onMenuChanged as EventListener
-      );
-      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("roal:menu-cleared", onMenuCleared as EventListener);
+      window.removeEventListener("roal:menu-changed", onMenuChanged as EventListener);
       if (resyncTimer) clearTimeout(resyncTimer);
-      stopPoll();
       timers.forEach((t) => clearTimeout(t));
       timers.clear();
       if (menuUpdatedTimer.current) clearTimeout(menuUpdatedTimer.current);
-      supabase.removeChannel(channel);
     };
-  }, [restaurantId, flash]);
+  }, [restaurantId]);
+
+  /** Fingerprint of the last server snapshot we applied (skip unchanged polls). */
+  const lastServerFingerprint = useRef<string | null>(null);
+  const lastServerRows = useRef<Map<string, string>>(new Map());
+
+  const applySnapshot = useCallback(
+    (snap: LiveMenuPayload) => {
+      const cats = snap.categories.filter((c) => c.restaurant_id === restaurantId);
+      const catIds = new Set(cats.map((c) => c.id));
+      const its = snap.items.filter((i) => catIds.has(i.category_id));
+      const itemIds = new Set(its.map((i) => i.id));
+      const mods = snap.modifiers.filter((m) => itemIds.has(m.item_id));
+
+      const rowSig = new Map<string, string>();
+      for (const c of cats) rowSig.set(c.id, `${c.name}|${c.sort_order}|${c.updated_at ?? ""}`);
+      for (const i of its) {
+        rowSig.set(i.id, `${i.name}|${i.price}|${i.is_available}|${i.sort_order}|${i.updated_at ?? ""}`);
+      }
+      const modSig = mods
+        .map((m) => `${m.id}:${m.group_name}:${m.modifier_name}:${m.extra_price}:${m.sort_order}:${m.group_sort_order}`)
+        .sort()
+        .join(",");
+      const fingerprint = `${[...rowSig.entries()].map(([k, v]) => `${k}=${v}`).sort().join(",")}#${modSig}`;
+      if (fingerprint === lastServerFingerprint.current) return;
+
+      const previous = lastServerRows.current;
+      const isFirst = lastServerFingerprint.current === null;
+      lastServerFingerprint.current = fingerprint;
+      lastServerRows.current = rowSig;
+
+      setCategories(cats);
+      setItems(its);
+      setModifiers(mods);
+      scopeRef.current = { categoryIds: catIds, itemIds };
+
+      if (!isFirst) {
+        for (const [id, sig] of rowSig) {
+          if (previous.get(id) !== sig) flash(id);
+        }
+      }
+    },
+    [restaurantId, flash]
+  );
+
+  const poll = usePoll<LiveMenuPayload>(
+    (signal) => fetchLiveJson<LiveMenuPayload>(liveEndpoints.menu(restaurantId), signal),
+    { onData: applySnapshot }
+  );
+  const refreshMenuRef = useRef(poll.refresh);
+  refreshMenuRef.current = poll.refresh;
+  const menuRealtime: RealtimeState = poll.state;
 
   const scopedItems = useMemo(
     () => filterItemsToCategories(items, categories),

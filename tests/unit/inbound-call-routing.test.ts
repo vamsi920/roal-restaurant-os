@@ -5,7 +5,7 @@ import {
 } from "@/lib/elevenlabs/conversation-init";
 import { persistElevenLabsPostCallEvent } from "@/lib/elevenlabs/post-call-webhook";
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 

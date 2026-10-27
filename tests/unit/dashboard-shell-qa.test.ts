@@ -31,7 +31,13 @@ describe("dashboard shell UX", () => {
   });
 
   it("restaurant list avoids hardcoded black title", () => {
-    const page = readFileSync(join(REPO, "app/dashboard/restaurants/page.tsx"), "utf8");
+    const page = [
+      "app/dashboard/restaurants/page.tsx",
+      "app/dashboard/restaurants/LocationsList.tsx",
+      "lib/restaurant-list/load-locations.ts",
+    ]
+      .map((rel) => readFileSync(join(REPO, rel), "utf8"))
+      .join("\n");
     expect(page).not.toContain("#000000");
     expect(page).not.toContain("gradient-text");
     expect(page).toContain('aria-label="Loading restaurants"');

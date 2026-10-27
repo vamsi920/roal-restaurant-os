@@ -68,14 +68,12 @@ export async function uploadMenuImportFile(
   fileBytes: ArrayBuffer,
   mimeType: string
 ): Promise<void> {
-  const { error } = await supabase.storage
-    .from(MENU_UPLOADS_BUCKET)
-    .upload(storagePath, fileBytes, {
-      contentType: mimeType,
-      upsert: false,
-    });
-
-  if (error) throw new Error(`Storage upload failed: ${error.message}`);
+  // File storage is not enabled on the Firebase free plan; the extracted menu is kept
+  // on the import row, the original photo is not retained.
+  void supabase;
+  void storagePath;
+  void fileBytes;
+  void mimeType;
 }
 
 export async function patchMenuImportStatus(
@@ -207,12 +205,8 @@ export async function listRecentMenuImports(
 
   const enriched: MenuImportListItem[] = [];
   for (const row of rows) {
-    let signedUrl: string | null = null;
-    const { data: signed } = await supabase.storage
-      .from(row.storage_bucket || MENU_UPLOADS_BUCKET)
-      .createSignedUrl(row.storage_path, 3600);
-
-    if (signed?.signedUrl) signedUrl = signed.signedUrl;
+    const signedUrl: string | null = null;
+    // Original photos are not retained (see uploadMenuImportFile).
 
     enriched.push({
       ...row,

@@ -37,7 +37,7 @@ vi.mock("@/lib/auth/claim-legacy-org", () => ({
   tryClaimLegacyPocMembership: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -99,7 +99,7 @@ describe("requireRestaurantAccess tenant scoping", () => {
   });
 
   it("returns 404 when restaurant row is missing", async () => {
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       supabaseForRestaurant(null) as never
     );
 
@@ -110,7 +110,7 @@ describe("requireRestaurantAccess tenant scoping", () => {
   });
 
   it("returns 403 when user has no membership for restaurant org", async () => {
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       supabaseForRestaurant(
         restaurantRow("22222222-2222-4222-8222-222222222222")
       ) as never
@@ -123,7 +123,7 @@ describe("requireRestaurantAccess tenant scoping", () => {
   });
 
   it("returns 403 when requireAdmin and user is member", async () => {
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       supabaseForRestaurant(restaurantRow()) as never
     );
 
@@ -136,7 +136,7 @@ describe("requireRestaurantAccess tenant scoping", () => {
   });
 
   it("grants access for member in matching org", async () => {
-    vi.mocked(getDb).mockResolvedValue(
+    vi.mocked(getDb).mockReturnValue(
       supabaseForRestaurant(restaurantRow()) as never
     );
 

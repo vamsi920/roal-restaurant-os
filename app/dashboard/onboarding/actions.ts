@@ -14,7 +14,10 @@ import {
   updateOrganizationOnboardingStep,
   updateRestaurantOnboardingStep,
 } from "@/lib/onboarding/helpers";
-import type { RestaurantOnboardingStepKey } from "@/lib/onboarding/steps";
+import {
+  RESTAURANT_ONBOARDING_STEPS,
+  type RestaurantOnboardingStepKey,
+} from "@/lib/onboarding/steps";
 import type { OnboardingStepStatus } from "@/lib/onboarding/types";
 import { loadOnboardingWizardState } from "@/lib/onboarding/wizard-state.server";
 import { emitGoLiveIfTransition } from "@/lib/notifications/operational-events";
@@ -60,6 +63,25 @@ async function requireOrgMembership(organizationId: string) {
     throw new Error("You are not a member of that organization.");
   }
   return { context, membership };
+}
+
+/**
+ * The restaurant must belong to the organization the caller was verified for.
+ * (Postgres RLS used to block cross-org writes; the document store does not.)
+ */
+async function requireRestaurantInOrganization(restaurantId: string, organizationId: string) {
+  const rid = restaurantId?.trim();
+  if (!rid) throw new Error("Restaurant is required.");
+  const { data: restaurant, error } = await getDb()
+    .from("restaurants")
+    .select("id, name, organization_id")
+    .eq("id", rid)
+    .maybeSingle();
+  if (error) throw new Error(formatSupabaseClientError(error.message));
+  if (!restaurant || restaurant.organization_id !== organizationId) {
+    throw new Error("Restaurant does not belong to this organization.");
+  }
+  return restaurant as { id: string; name: string; organization_id: string };
 }
 
 export async function refreshOnboardingWizardState(restaurantId?: string | null) {
@@ -511,6 +533,7 @@ export async function saveRestaurantProfileAction(input: {
   address?: string;
 }) {
   await requireOrgMembership(input.organizationId);
+  await requireRestaurantInOrganization(input.restaurantId, input.organizationId);
   const name = input.name.trim();
   if (!name) throw new Error("Restaurant name is required.");
   const timezone = input.timezone?.trim() || "America/Chicago";
@@ -582,6 +605,9 @@ export async function setWizardStepStatusAction(input: {
     );
   } else {
     if (!input.restaurantId) throw new Error("Restaurant is required.");
+    if (!(RESTAURANT_ONBOARDING_STEPS as readonly string[]).includes(input.step)) {
+      throw new Error("Unknown onboarding step.");
+    }
     const { data: restaurant, error: restErr } = await supabase
       .from("restaurants")
       .select("id, name, organization_id")
@@ -626,6 +652,7 @@ export async function completeMenuImportStepAction(input: {
   organizationId: string;
 }) {
   await requireOrgMembership(input.organizationId);
+  await requireRestaurantInOrganization(input.restaurantId, input.organizationId);
   const supabase = getDb();
   const stats = await loadRestaurantCardStats(supabase, [input.restaurantId], {});
   const menuItemCount = stats[input.restaurantId]?.menuItemCount ?? 0;

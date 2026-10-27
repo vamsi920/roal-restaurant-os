@@ -11,7 +11,7 @@ import {
 import { sanitizeLogFields } from "@/lib/observability/logger";
 
 describe("sanitizeHealthReportForPublic", () => {
-  it("removes supabase URLs and sensitive detail keys", () => {
+  it("removes URLs, non-boolean details and sensitive detail keys", () => {
     const report: HealthReport = {
       status: "degraded",
       timestamp: new Date().toISOString(),
@@ -20,49 +20,39 @@ describe("sanitizeHealthReportForPublic", () => {
           ok: true,
           status: "pass",
           details: {
-            supabase_url: "https://abc.supabase.co",
-            anon_key_configured: true,
+            app_url: "https://getroal.com",
+            firebase_configured: true,
           },
         },
         env_server: {
           ok: true,
           status: "pass",
           details: {
-            supabase: true,
-            service_role: true,
+            firebase: true,
+            service_account: true,
             api_key: "should-not-appear",
           },
         },
-        supabase_db: {
+        database: {
           ok: false,
           status: "fail",
-          message: "connect failed https://db.internal.example/x",
+          message: "connect failed https://firestore.googleapis.com/x",
         },
         gemini: { ok: true, status: "pass" },
         elevenlabs: { ok: true, status: "pass" },
-        edge_get_menu: {
+        agent_tools: {
           ok: true,
           status: "pass",
-          details: { reachable: true, http_status: 204 },
+          details: { public_https_origin: true, origin: "https://tunnel.example" },
         },
-        edge_sync_draft_order: { ok: true, status: "pass" },
-        edge_finalize_order: { ok: true, status: "pass" },
-        edge_get_order_status: { ok: true, status: "pass" },
-        edge_get_caller_history: { ok: true, status: "pass" },
-        edge_submit_reservation_request: { ok: true, status: "pass" },
-        edge_get_restaurant_info: { ok: true, status: "pass" },
       },
     };
 
     const safe = sanitizeHealthReportForPublic(report);
-    expect(safe.checks.env_public.details).toEqual({
-      anon_key_configured: true,
-    });
-    expect(safe.checks.env_server.details).toEqual({ supabase: true });
-    expect(safe.checks.supabase_db.message).toBe(
-      "connect failed [redacted-url]"
-    );
-    expect(safe.checks.edge_get_menu.details).toEqual({ reachable: true });
+    expect(safe.checks.env_public.details).toEqual({ firebase_configured: true });
+    expect(safe.checks.env_server.details).toEqual({ firebase: true });
+    expect(safe.checks.database.message).toBe("connect failed [redacted-url]");
+    expect(safe.checks.agent_tools.details).toEqual({ public_https_origin: true });
   });
 });
 

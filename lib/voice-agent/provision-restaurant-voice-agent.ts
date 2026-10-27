@@ -70,7 +70,7 @@ export type VoiceAgentProvisionApiResult =
     };
 
 export type ProvisionRestaurantVoiceAgentDeps = {
-  getSupabase: () => Promise<Db>;
+  getSupabase: () => Db | Promise<Db>;
   provisionConvaiAgent: typeof provisionRestaurantConvaiAgent;
   runSync: typeof runRestaurantVoiceAgentSync;
 };

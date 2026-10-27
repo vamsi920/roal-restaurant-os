@@ -13,7 +13,7 @@ const {
   }));
 
 vi.mock("next/cache", () => ({ revalidatePath }));
-vi.mock("@/lib/supabase/server", () => ({ getDb }));
+vi.mock("@/lib/db", () => ({ getDb }));
 vi.mock("@/lib/menu-editor/copy-menu", () => ({
   markRestaurantMenuTemplateLocalOverride,
 }));
@@ -35,7 +35,7 @@ const RESTAURANT_ID = "00000000-0000-4000-8000-000000000088";
 describe("afterMenuContentMutation", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    getDb.mockResolvedValue({ from: vi.fn() });
+    getDb.mockReturnValue({ from: vi.fn() });
     markRestaurantMenuTemplateLocalOverride.mockResolvedValue({
       marked: false,
       reason: "not_inherited",

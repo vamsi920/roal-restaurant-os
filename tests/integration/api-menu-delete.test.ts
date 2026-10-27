@@ -7,17 +7,13 @@ vi.mock("@/lib/auth/context-server", () => ({
   requireRestaurantAccess: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
-  getDb: vi.fn(),
-  getDb: vi.fn(),
-}));
-
 vi.mock("@/lib/voice-agent/after-menu-content-mutation", () => ({
   afterMenuContentMutation: vi.fn(),
 }));
 
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
-import { getDb } from "@/lib/db";
+import { createMemoryDb, getDb } from "@/lib/db";
+import { resetMemoryStore } from "@/lib/db/store";
 import { afterMenuContentMutation } from "@/lib/voice-agent/after-menu-content-mutation";
 
 function accessOk() {
@@ -41,7 +37,7 @@ function accessOk() {
 describe("DELETE /api/restaurants/[id]/menu", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(getDb).mockReturnValue(null);
+    resetMemoryStore();
   });
 
   it("returns 401 when unauthenticated", async () => {
@@ -55,7 +51,7 @@ describe("DELETE /api/restaurants/[id]/menu", () => {
       params: { id: RESTAURANT_ID },
     });
     expect(res.status).toBe(401);
-    expect(getDb).not.toHaveBeenCalled();
+    expect(afterMenuContentMutation).not.toHaveBeenCalled();
   });
 
   it("returns 400 when restaurant id missing", async () => {
@@ -69,69 +65,39 @@ describe("DELETE /api/restaurants/[id]/menu", () => {
     expect(body.error).toMatch(/missing restaurant id/i);
   });
 
-  it("clears menu via clear_restaurant_menu RPC", async () => {
+  it("deletes only this restaurant's categories and schedules voice sync", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
-    const rpc = vi.fn().mockResolvedValue({ data: 3, error: null });
-    vi.mocked(getDb).mockResolvedValue({ rpc } as never);
+    const db = createMemoryDb();
+    await db.from("categories").insert([
+      { id: "c1", restaurant_id: RESTAURANT_ID, name: "Starters" },
+      { id: "c2", restaurant_id: RESTAURANT_ID, name: "Mains" },
+      { id: "c3", restaurant_id: "other-restaurant", name: "Starters" },
+    ]);
 
     const res = await DELETE(new Request("http://localhost/api"), {
       params: { id: RESTAURANT_ID },
     });
     expect(res.status).toBe(200);
     const body = await res.json();
-    expect(body).toEqual({
-      ok: true,
-      deleted_categories: 3,
-      via: "rpc",
-    });
-    expect(rpc).toHaveBeenCalledWith("clear_restaurant_menu", {
-      p_restaurant_id: RESTAURANT_ID,
-    });
+    expect(body.ok).toBe(true);
+    expect(body.deleted_categories).toBe(2);
+
+    const { data: left } = await getDb().from("categories").select("id");
+    expect((left ?? []).map((r: { id: string }) => r.id)).toEqual(["c3"]);
     expect(afterMenuContentMutation).toHaveBeenCalledWith(RESTAURANT_ID, {
       userId: "user-1",
       restaurantName: "Test",
     });
   });
 
-  it("clears menu via service role when configured", async () => {
+  it("returns 200 with zero deleted when the menu is already empty", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
-    const select = vi.fn().mockResolvedValue({
-      data: [{ id: "c1" }, { id: "c2" }],
-      error: null,
-    });
-    const eq = vi.fn().mockReturnValue({ select });
-    const deleteFn = vi.fn().mockReturnValue({ eq });
-    vi.mocked(getDb).mockReturnValue({
-      from: vi.fn().mockReturnValue({ delete: deleteFn }),
-    } as never);
 
     const res = await DELETE(new Request("http://localhost/api"), {
       params: { id: RESTAURANT_ID },
     });
     expect(res.status).toBe(200);
     const body = await res.json();
-    expect(body).toEqual({
-      ok: true,
-      deleted_categories: 2,
-      via: "service_role",
-    });
-    expect(getDb).not.toHaveBeenCalled();
-  });
-
-  it("returns 500 when RPC fails", async () => {
-    vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
-    vi.mocked(getDb).mockResolvedValue({
-      rpc: vi.fn().mockResolvedValue({
-        data: null,
-        error: { message: "permission denied" },
-      }),
-    } as never);
-
-    const res = await DELETE(new Request("http://localhost/api"), {
-      params: { id: RESTAURANT_ID },
-    });
-    expect(res.status).toBe(500);
-    const body = await res.json();
-    expect(body.error).toContain("permission denied");
+    expect(body.deleted_categories).toBe(0);
   });
 });

@@ -25,7 +25,7 @@ export function evaluateServerLaunchEnvReady(): {
     ready,
     detail: ready
       ? null
-      : "Server config incomplete — add ElevenLabs API key, Supabase URL, and agent tool signing secret.",
+      : "Server config incomplete — add ElevenLabs API key and agent tool signing secret.",
   };
 }
 

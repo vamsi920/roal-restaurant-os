@@ -76,16 +76,10 @@ describe("live order call evidence", () => {
       join(REPO, "app/dashboard/restaurants/[id]/LiveOrdersPanel.tsx"),
       "utf8"
     );
-    expect(panel).toContain('table: "agent_call_events"');
+    expect(panel).toContain("payload.callEvidenceBySession");
+    expect(readFileSync(join(REPO, "lib/live/load-live-orders.ts"), "utf8")).toContain("loadOrderCallEvidenceBySession");
     expect(panel).toContain("setCallEvidenceBySession");
     expect(panel).toContain("setActiveCalls");
     expect(panel).toContain("LiveCallIndicator");
-
-    const migration = readFileSync(
-      join(REPO, "supabase/migrations/026_agent_call_events.sql"),
-      "utf8"
-    );
-    expect(migration).toContain("supabase_realtime");
-    expect(migration).toContain("public.agent_call_events");
   });
 });

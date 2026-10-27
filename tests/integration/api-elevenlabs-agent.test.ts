@@ -5,7 +5,11 @@ import { GET, PATCH } from "@/app/api/integrations/elevenlabs/agent/route";
 const DEFAULT_AGENT = "agent-default-qa";
 vi.mock("@/lib/env.server", () => ({
   getElevenLabsAgentId: vi.fn(),
+  getElevenLabsSyncToken: vi.fn(() => undefined),
 }));
+
+const { getSessionUserMock } = vi.hoisted(() => ({ getSessionUserMock: vi.fn() }));
+vi.mock("@/lib/auth/session", () => ({ getSessionUser: getSessionUserMock }));
 
 vi.mock("@/lib/elevenlabs", () => ({
   getConvaiAgent: vi.fn(),
@@ -30,6 +34,32 @@ describe("GET/PATCH /api/integrations/elevenlabs/agent", () => {
     });
     vi.mocked(getConvaiAgent).mockResolvedValue(agentSummary);
     vi.mocked(patchConvaiAgent).mockResolvedValue(agentSummary);
+    getSessionUserMock.mockResolvedValue({
+      id: "staff",
+      email: "vammu920@gmail.com",
+      user_metadata: {},
+      provider: "firebase",
+    });
+  });
+
+  it("rejects callers that are neither platform staff nor hold the ops token", async () => {
+    getSessionUserMock.mockResolvedValue({
+      id: "owner",
+      email: "owner@example.com",
+      user_metadata: {},
+      provider: "firebase",
+    });
+    const res = await GET(new Request("http://localhost/api/integrations/elevenlabs/agent?agent_id=victim"));
+    expect(res.status).toBe(401);
+    expect(getConvaiAgent).not.toHaveBeenCalled();
+    const patch = await PATCH(
+      new Request("http://localhost/api/integrations/elevenlabs/agent?agent_id=victim", {
+        method: "PATCH",
+        body: JSON.stringify({ name: "pwned" }),
+      })
+    );
+    expect(patch.status).toBe(401);
+    expect(patchConvaiAgent).not.toHaveBeenCalled();
   });
 
   it("GET without agent_id uses ELEVENLABS_AGENT_ID default", async () => {

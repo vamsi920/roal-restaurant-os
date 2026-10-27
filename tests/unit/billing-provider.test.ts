@@ -9,8 +9,7 @@ const stripeState = vi.hoisted(() => ({
 
 vi.mock("@/lib/env.public", () => ({
   getPublicEnv: () => ({
-    NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co",
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test",
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: "roal-test",
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: stripeState.publishable,
   }),
   resetPublicEnvCache: vi.fn(),
@@ -18,14 +17,14 @@ vi.mock("@/lib/env.public", () => ({
 
 vi.mock("@/lib/env.server", () => ({
   getServerEnv: () => ({
-    NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co",
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test",
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: "roal-test",
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: stripeState.publishable,
     STRIPE_SECRET_KEY: stripeState.secret,
   }),
   getEnvStatus: () => ({
-    supabase: true,
-    serviceRole: false,
+    firebase: true,
+    firebaseAdmin: false,
+    demoMode: false,
     gemini: false,
     elevenlabs: false,
     agentTools: false,

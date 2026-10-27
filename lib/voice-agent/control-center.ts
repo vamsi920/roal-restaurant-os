@@ -1,6 +1,11 @@
 import { getPublicEnv } from "@/lib/env.public";
 import { ENV_HINTS } from "@/lib/env.shared";
 import { getSiteOrigin } from "@/lib/site-url";
+import {
+  agentToolUrl,
+  isPubliclyReachableToolBase,
+  tryAgentToolsBaseUrl,
+} from "@/lib/agent-tools/base-url";
 import { collectMissingForFeature } from "@/lib/env.server";
 import {
   firstMessageHasUnresolvedTemplates,
@@ -27,56 +32,62 @@ const ROAL_TOOL_NAMES = [
   "get_order_status",
 ] as const;
 
+/**
+ * Webhook URLs ElevenLabs calls for this restaurant (`/api/agent-tools/<tool>` on the app).
+ * `baseUrl` defaults to agentToolsBaseUrl(); `edgeBase` is accepted for older callers and ignored.
+ */
 export function buildVoiceAgentToolUrls(input: {
-  edgeBase: string;
+  baseUrl?: string | null;
+  /** @deprecated Supabase edge base — ignored; tools are served by the Next.js app now. */
+  edgeBase?: string | null;
   restaurantId: string;
   restaurantName: string;
 }): ToolUrlRow[] {
-  const base = input.edgeBase.replace(/\/+$/, "");
+  const base = (input.baseUrl ?? tryAgentToolsBaseUrl() ?? "").replace(/\/+$/, "");
   const rid = encodeURIComponent(input.restaurantId);
   const rname = encodeURIComponent(input.restaurantName);
+  const url = (slug: Parameters<typeof agentToolUrl>[0]) => agentToolUrl(slug, base);
   return [
     {
       name: "get_menu_items",
       label: "get_menu_items",
-      url: `${base}/functions/v1/get-menu?restaurant_id=${rid}&restaurant_name=${rname}`,
+      url: `${url("get-menu")}?restaurant_id=${rid}&restaurant_name=${rname}`,
       headerNote: "Baked: restaurant in URL + x-roal-restaurant-id when synced from KDS",
     },
     {
       name: "get_restaurant_info",
       label: "get_restaurant_info",
-      url: `${base}/functions/v1/get-restaurant-info?restaurant_id=${rid}&restaurant_name=${rname}`,
+      url: `${url("get-restaurant-info")}?restaurant_id=${rid}&restaurant_name=${rname}`,
       headerNote: "Baked: live hours, address, prep time, and FAQ answers",
     },
     {
       name: "get_caller_history",
       label: "get_caller_history",
-      url: `${base}/functions/v1/get-caller-history`,
+      url: url("get-caller-history"),
       headerNote: "POST · returning guest lookup by phone or guest name",
     },
     {
       name: "submit_reservation_request",
       label: "submit_reservation_request",
-      url: `${base}/functions/v1/submit-reservation-request`,
+      url: url("submit-reservation-request"),
       headerNote: "POST · reservation request intake; staff must confirm",
     },
     {
       name: "sync_draft_order",
       label: "sync_draft_order",
-      url: `${base}/functions/v1/sync-draft-order`,
-      headerNote:
-        "POST · Authorization: Bearer roal1.* (signed) or AGENT_TOOL_SECRET · apikey: anon",
+      url: url("sync-draft-order"),
+      headerNote: "POST · Authorization: Bearer roal1.* (signed) or AGENT_TOOL_SECRET",
     },
     {
       name: "finalize_order",
       label: "finalize_order",
-      url: `${base}/functions/v1/finalize-order`,
+      url: url("finalize-order"),
       headerNote: "POST · same auth headers as sync_draft_order",
     },
     {
       name: "get_order_status",
       label: "get_order_status",
-      url: `${base}/functions/v1/get-order-status`,
+      url: url("get-order-status"),
       headerNote: "POST · lookup by session, phone, or guest name",
     },
   ];
@@ -92,14 +103,14 @@ export function buildEnvSecretRows(): EnvSecretRow[] {
 
   const rows: { key: string; required: boolean; ok: boolean }[] = [
     {
-      key: "NEXT_PUBLIC_SUPABASE_URL",
-      required: true,
-      ok: Boolean(pub.NEXT_PUBLIC_SUPABASE_URL?.trim()),
+      key: "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+      required: false,
+      ok: Boolean(pub.NEXT_PUBLIC_FIREBASE_PROJECT_ID?.trim()),
     },
     {
-      key: "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-      required: true,
-      ok: Boolean(pub.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()),
+      key: "ROAL_AGENT_TOOLS_BASE_URL",
+      required: false,
+      ok: isPubliclyReachableToolBase(tryAgentToolsBaseUrl()),
     },
     {
       key: "ELEVENLABS_API_KEY",
@@ -316,21 +327,18 @@ function buildChecklist(
     });
   }
 
-  if (snapshot.supabaseRef) {
-    items.push({
-      id: "supabase_ref",
-      label: "Supabase project URL valid",
-      status: "ok",
-      detail: snapshot.supabaseRef,
-    });
-  } else {
-    items.push({
-      id: "supabase_ref",
-      label: "Supabase project URL valid",
-      status: "error",
-      detail: "Set NEXT_PUBLIC_SUPABASE_URL",
-    });
-  }
+  const toolsBase = snapshot.edgeBase || null;
+  const toolsReachable = isPubliclyReachableToolBase(toolsBase);
+  items.push({
+    id: "agent_tools_url",
+    label: "Agent tool URLs reachable by ElevenLabs (public https)",
+    status: toolsReachable ? "ok" : toolsBase ? "warn" : "error",
+    detail: toolsReachable
+      ? `${toolsBase}/api/agent-tools/*`
+      : toolsBase
+        ? `${toolsBase} is not public https — set ROAL_AGENT_TOOLS_BASE_URL to a tunnel (ngrok / cloudflared) or deploy, then Connect / Sync.`
+        : "Set NEXT_PUBLIC_APP_URL (or ROAL_AGENT_TOOLS_BASE_URL) to the public https origin, then Connect / Sync.",
+  });
 
   return items;
 }
@@ -350,8 +358,11 @@ function formatRelative(iso: string): string {
 export function assembleControlCenterSnapshot(input: {
   restaurantId: string;
   restaurantName: string;
-  edgeBase: string;
-  supabaseRef: string | null;
+  /** @deprecated Supabase edge base — ignored; the agent tools base URL is resolved here. */
+  edgeBase?: string | null;
+  /** Agent tools origin override (defaults to agentToolsBaseUrl()). */
+  agentToolsBase?: string | null;
+  supabaseRef?: string | null;
   profileAgentId: string | null;
   envDefaultAgentId: string | null;
   lastSyncAt: string | null;
@@ -377,6 +388,7 @@ export function assembleControlCenterSnapshot(input: {
       ? "env_default"
       : null;
 
+  const toolsBase = (input.agentToolsBase ?? tryAgentToolsBaseUrl() ?? "").replace(/\/+$/, "");
   const envSecrets = buildEnvSecretRows();
   const agentToolAuthOk = envSecrets
     .filter((r) => r.key.startsWith("AGENT_TOOL_"))
@@ -403,8 +415,9 @@ export function assembleControlCenterSnapshot(input: {
   const partial: Omit<VoiceAgentControlCenterSnapshot, "checklist"> = {
     restaurantId: input.restaurantId,
     restaurantName: input.restaurantName,
-    edgeBase: input.edgeBase.replace(/\/+$/, ""),
-    supabaseRef: input.supabaseRef,
+    // Field name kept for the snapshot type; it now carries the agent tools base URL.
+    edgeBase: toolsBase,
+    supabaseRef: input.supabaseRef ?? null,
     envSecrets,
     envReady,
     connectionStatus,
@@ -418,7 +431,7 @@ export function assembleControlCenterSnapshot(input: {
       input.agentRoot
     ),
     toolUrls: buildVoiceAgentToolUrls({
-      edgeBase: input.edgeBase,
+      baseUrl: toolsBase,
       restaurantId: input.restaurantId,
       restaurantName: input.restaurantName,
     }),

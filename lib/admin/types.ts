@@ -44,8 +44,9 @@ export type AdminOrganizationOps = {
 };
 
 export type AdminEnvFlags = {
-  supabase: boolean;
-  serviceRole: boolean;
+  firebase: boolean;
+  firebaseAdmin: boolean;
+  demoMode: boolean;
   gemini: boolean;
   elevenlabs: boolean;
   agentTools: boolean;

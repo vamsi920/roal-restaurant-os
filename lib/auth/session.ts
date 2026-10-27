@@ -2,6 +2,7 @@ import "server-only";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { isAuthDemoMode } from "@/lib/auth/demo-mode";
+import { isPlatformAdminEmail } from "@/lib/auth/platform-admin";
 import {
   DEMO_SESSION_COOKIE,
   DEMO_USER,
@@ -22,9 +23,13 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   try {
     const { adminAuth } = await import("@/lib/firebase/admin");
     const decoded = await adminAuth().verifySessionCookie(token, false);
+    const rawEmail = typeof decoded.email === "string" ? decoded.email : null;
+    // Platform-admin rights are keyed by email; never trust an unverified claim to one.
+    const email =
+      rawEmail && decoded.email_verified !== true && isPlatformAdminEmail(rawEmail) ? null : rawEmail;
     return {
       id: decoded.uid,
-      email: typeof decoded.email === "string" ? decoded.email : null,
+      email,
       user_metadata: {
         full_name: typeof decoded.name === "string" ? decoded.name : undefined,
         avatar_url: typeof decoded.picture === "string" ? decoded.picture : undefined,

@@ -46,7 +46,8 @@ describe("menu setup rendering (workspace)", () => {
     // Board reads from the realtime hook that backs LiveMenuSidebar.
     expect(editor).toContain("useLiveMenu(");
     expect(sidebar).toContain("export function useLiveMenu");
-    expect(sidebar).toContain("postgres_changes");
+    expect(sidebar).toContain("usePoll");
+    expect(sidebar).toContain("liveEndpoints.menu");
   });
 
   it("uses PageHeader and no internal navigation chrome", () => {
@@ -63,8 +64,8 @@ describe("menu setup rendering (workspace)", () => {
 
   it("call indicator uses draft_orders realtime subscription", () => {
     const indicator = readFileSync(CALL_INDICATOR, "utf8");
-    expect(indicator).toContain('from("draft_orders")');
-    expect(indicator).toContain("postgres_changes");
+    expect(indicator).toContain("liveEndpoints.callStatus");
+    expect(indicator).toContain("usePoll");
     expect(indicator).toContain("isVoiceCartStatus");
     expect(indicator).toContain("Call in progress");
     expect(indicator).not.toMatch(/setInterval|fake|demo|example/i);

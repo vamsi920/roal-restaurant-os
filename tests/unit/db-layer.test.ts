@@ -111,3 +111,20 @@ describe("document db layer (Postgres parity)", () => {
     expect((await db.from("restaurant_profiles").select("*")).data).toHaveLength(0);
   });
 });
+
+describe("db layer safety", () => {
+  beforeEach(() => resetMemoryStore());
+  it("undefined filter values match nothing (no accidental widening)", async () => {
+    const db = createMemoryDb();
+    await db.from("restaurants").insert({ id: "r1", name: "A", organization_id: "o1" });
+    await db.from("restaurants").insert({ id: "r2", name: "B" });
+    const res = await db.from("restaurants").select("*").eq("organization_id", undefined);
+    expect(res.data).toEqual([]);
+  });
+  it("unknown operators fail loudly", async () => {
+    const db = createMemoryDb();
+    await db.from("restaurants").insert({ id: "r1", name: "A", organization_id: "o1" });
+    const res = await db.from("restaurants").select("*").filter("organization_id", "bogus", "o1");
+    expect(res.error?.message).toMatch(/Unsupported filter operator/);
+  });
+});

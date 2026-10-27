@@ -1,46 +1,22 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { getBrowserSupabase } from "@/lib/supabase/client";
+import { useMemo, useState } from "react";
 import { isSyncDraftOrderStatus, isVoiceCartStatus } from "@/lib/order-status";
-import type { DraftOrderRow } from "@/lib/types";
+import { fetchLiveJson, usePoll } from "@/lib/live/use-poll";
+import { liveEndpoints } from "@/lib/live/endpoints";
+import type { LiveCallStatusPayload } from "@/lib/live/load-live-orders";
 import { cn } from "@/lib/cn";
 
+type DraftStatusRow = LiveCallStatusPayload["drafts"][number];
+
+/** "Call in progress" badge on the menu page — polls draft statuses for this restaurant. */
 export function MenuSetupCallIndicator({ restaurantId }: { restaurantId: string }) {
-  const [drafts, setDrafts] = useState<DraftOrderRow[]>([]);
+  const [drafts, setDrafts] = useState<DraftStatusRow[]>([]);
 
-  const loadDrafts = useCallback(async () => {
-    const supabase = getBrowserSupabase();
-    const { data } = await supabase
-      .from("draft_orders")
-      .select("*")
-      .eq("restaurant_id", restaurantId)
-      .order("updated_at", { ascending: false });
-    setDrafts((data as DraftOrderRow[]) ?? []);
-  }, [restaurantId]);
-
-  useEffect(() => {
-    void loadDrafts();
-    const supabase = getBrowserSupabase();
-    const channel = supabase
-      .channel(`menu-setup-calls:${restaurantId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "draft_orders",
-          filter: `restaurant_id=eq.${restaurantId}`,
-        },
-        () => {
-          void loadDrafts();
-        }
-      )
-      .subscribe();
-    return () => {
-      void supabase.removeChannel(channel);
-    };
-  }, [restaurantId, loadDrafts]);
+  usePoll<LiveCallStatusPayload>(
+    (signal) => fetchLiveJson<LiveCallStatusPayload>(liveEndpoints.callStatus(restaurantId), signal),
+    { onData: (payload) => setDrafts(payload.drafts ?? []) }
+  );
 
   const activeCallCount = useMemo(
     () => drafts.filter((o) => isVoiceCartStatus(o.status)).length,

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { recordAgentToolMetering } from "../../supabase/functions/_shared/record-usage";
+import { recordAgentToolMetering } from "@/lib/agent-tools/server/record-usage";
 import { RESTAURANT_ID } from "../fixtures/menu";
 
 const ORG_ID = "00000000-0000-4000-8000-000000000001";
@@ -24,7 +24,7 @@ function mockSupabaseForUsage() {
   return supabase;
 }
 
-describe("recordAgentToolMetering (Edge finalize billing)", () => {
+describe("recordAgentToolMetering (agent tools finalize billing)", () => {
   it("records order_completed only for successful finalize with line items", async () => {
     const supabase = mockSupabaseForUsage();
 

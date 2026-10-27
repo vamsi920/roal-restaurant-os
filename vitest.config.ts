@@ -12,6 +12,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "."),
+      // Next.js ships `server-only` internally; stub it so server modules load under Vitest.
+      "server-only": path.resolve(__dirname, "node_modules/next/dist/compiled/server-only/empty.js"),
       "npm:zod@3.23.8": "zod",
     },
   },

@@ -17,18 +17,6 @@ export const SIGNUP_PAGE_COPY = {
     passwordPlaceholder: "8+ characters",
     passwordHint: "At least 8 characters.",
   },
-  confirm: {
-    title: "Check your inbox",
-    lead: "We sent a confirmation link to",
-    afterConfirm: "Open it on this device to finish setting up your workspace.",
-    resend: "Resend email",
-    resending: "Sending…",
-    resent: "Sent again. It can take a minute to arrive.",
-    resendWait: "Resend in",
-    wrongEmail: "Wrong email?",
-    goBack: "Go back",
-    spamHint: "Not there? Check spam or promotions.",
-  },
   trialBanner: {
     lead: "Your phone host for",
     tail: "is saved.",

@@ -9,7 +9,7 @@ vi.mock("@/lib/auth/context-server", () => ({
   findMembershipForOrg: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -141,7 +141,7 @@ describe("applyRestaurantLookupAction", () => {
     vi.mocked(runRestaurantVoiceAgentSync).mockResolvedValue({ summary: {} } as never);
 
     const upsert = vi.fn().mockResolvedValue({ error: null });
-    vi.mocked(getDb).mockResolvedValue({
+    vi.mocked(getDb).mockReturnValue({
       from: vi.fn((table: string) => {
         if (table === "restaurants") {
           return {

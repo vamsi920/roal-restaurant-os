@@ -49,3 +49,10 @@ next-env.d.ts
 .DS_Store
 .neodevex/
 .playwright-cli/
+
+# Firebase CLI + demo-mode data
+.firebaserc
+.firebase/
+firebase-debug.log
+firestore-debug.log
+.data/

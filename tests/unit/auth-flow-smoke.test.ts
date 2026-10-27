@@ -48,11 +48,11 @@ describe("auth flow smoke (static)", () => {
     expect(form).toContain('type="submit"');
   });
 
-  it("submit path calls Supabase auth handlers", () => {
-    expect(form).toContain("signInWithPassword");
-    expect(form).toContain("auth.signUp");
+  it("submit path calls Firebase auth helpers", () => {
+    expect(form).toContain("signInWithEmail(");
+    expect(form).toContain("create: isSignUp");
     expect(form).toContain("e.preventDefault()");
-    expect(form).toContain("createBrowserSupabase()");
+    expect(form).toContain('void run("demo", signInDemo)');
   });
 
   it("copy drives titles and submit labels", () => {

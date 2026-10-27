@@ -63,32 +63,6 @@ describe("tenant isolation posture (launch 25 / pass 30)", () => {
     expect(gates).toMatch(/resolveOrganizationId|membership/i);
   });
 
-  it("SQL RLS probe script covers core surfaces", () => {
-    const sql = readFileSync(
-      join(REPO, "scripts/sql/tenant-isolation-probe.sql"),
-      "utf8"
-    );
-    for (const table of [
-      "restaurants",
-      "organizations",
-      "categories",
-      "items",
-      "draft_orders",
-      "phone_order_receipts",
-      "menu_imports",
-      "notification_settings",
-      "notification_deliveries",
-      "usage_events",
-      "agent_call_events",
-      "restaurant_profiles",
-      "restaurant_onboarding",
-      "restaurant_weekly_hours",
-      "audit_logs",
-    ]) {
-      expect(sql).toContain(table);
-    }
-  });
-
   it("call-session loader scopes by restaurant_id", () => {
     const load = readFileSync(
       join(REPO, "lib/agent-calls/load-call-sessions.ts"),

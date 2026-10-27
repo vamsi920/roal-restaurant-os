@@ -16,7 +16,7 @@ vi.mock("@/lib/auth/context-server", () => ({
   requireRestaurantAccess: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -46,7 +46,7 @@ function mockMenuSupabase(options?: {
   modifiers?: DbModifier[];
 }) {
   const categoryId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
-  vi.mocked(getDb).mockResolvedValue({
+  vi.mocked(getDb).mockReturnValue({
     from: vi.fn((table: string) => {
       if (table === "restaurant_profiles") {
         return {

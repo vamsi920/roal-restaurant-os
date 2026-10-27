@@ -8,8 +8,7 @@ import { sanitizeVoiceAgentDisplayError } from "@/lib/voice-agent/sanitize-displ
 
 vi.mock("@/lib/env.public", () => ({
   getPublicEnv: () => ({
-    NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co",
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: "roal-test",
   }),
 }));
 
@@ -20,7 +19,7 @@ vi.mock("@/lib/env.server", () => ({
 describe("voice agent control center", () => {
   it("builds tool URLs without auth secrets", () => {
     const urls = buildVoiceAgentToolUrls({
-      edgeBase: "https://example.supabase.co",
+      baseUrl: "https://app.roal.test",
       restaurantId: "11111111-1111-4111-8111-111111111111",
       restaurantName: "Test Bistro",
     });
@@ -28,19 +27,21 @@ describe("voice agent control center", () => {
     const getMenu = urls.find((u) => u.name === "get_menu_items");
     expect(getMenu?.url).toContain("restaurant_id=");
     const info = urls.find((u) => u.name === "get_restaurant_info");
-    expect(info?.url).toContain("/functions/v1/get-restaurant-info");
+    expect(info?.url).toContain("https://app.roal.test/api/agent-tools/get-restaurant-info");
     const status = urls.find((u) => u.name === "get_order_status");
-    expect(status?.url).toContain("/functions/v1/get-order-status");
+    expect(status?.url).toContain("https://app.roal.test/api/agent-tools/get-order-status");
     const history = urls.find((u) => u.name === "get_caller_history");
-    expect(history?.url).toContain("/functions/v1/get-caller-history");
+    expect(history?.url).toContain("https://app.roal.test/api/agent-tools/get-caller-history");
     const reservation = urls.find(
       (u) => u.name === "submit_reservation_request"
     );
     expect(reservation?.url).toContain(
-      "/functions/v1/submit-reservation-request"
+      "https://app.roal.test/api/agent-tools/submit-reservation-request"
     );
     for (const row of urls) {
       expect(row.url).not.toMatch(/secret|roal1\.|Bearer/i);
+      expect(row.url).not.toContain("/functions/v1/");
+      expect(row.headerNote).not.toMatch(/apikey|anon/i);
     }
   });
 
@@ -61,8 +62,8 @@ describe("voice agent control center", () => {
     const snap = assembleControlCenterSnapshot({
       restaurantId: "11111111-1111-4111-8111-111111111111",
       restaurantName: "Test",
-      edgeBase: "https://example.supabase.co",
-      supabaseRef: "example",
+      agentToolsBase: "https://app.roal.test",
+      supabaseRef: null,
       profileAgentId: null,
       envDefaultAgentId: null,
       lastSyncAt: null,
@@ -79,6 +80,28 @@ describe("voice agent control center", () => {
     });
     expect(snap.lastSyncError).toContain("[redacted]");
     expect(snap.lastSyncError).not.toContain("sk-abcdefghijklmnop");
+  });
+
+  it("flags non-public agent tool bases in the checklist", () => {
+    const base = {
+      restaurantId: "11111111-1111-4111-8111-111111111111",
+      restaurantName: "Test",
+      profileAgentId: null,
+      envDefaultAgentId: null,
+      lastSyncAt: null,
+      lastSyncError: null,
+      lastSyncSummary: null,
+      menuAutoSync: { agentLinked: false, status: null, error: null, lastSyncedAt: null },
+      agentRoot: null,
+      agentFetchError: null,
+    };
+    const local = assembleControlCenterSnapshot({ ...base, agentToolsBase: "http://localhost:3020" });
+    expect(local.checklist.find((c) => c.id === "agent_tools_url")?.status).toBe("warn");
+    expect(local.toolUrls[0]?.url).toContain("http://localhost:3020/api/agent-tools/get-menu");
+
+    const pub = assembleControlCenterSnapshot({ ...base, agentToolsBase: "https://app.roal.test" });
+    expect(pub.checklist.find((c) => c.id === "agent_tools_url")?.status).toBe("ok");
+    expect(pub.edgeBase).toBe("https://app.roal.test");
   });
 
   it("env secret rows share agent tool auth status", () => {

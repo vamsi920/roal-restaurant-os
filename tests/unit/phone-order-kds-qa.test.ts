@@ -76,9 +76,11 @@ describe("KDS orders panel UX (launch 14)", () => {
       "utf8"
     );
     expect(panel).toContain("classifyKdsQueueLane");
-    expect(panel).toContain("visibilitychange");
+    const poll = readFileSync(join(REPO, "lib/live/use-poll.ts"), "utf8");
+    expect(poll).toContain("visibilitychange");
+    expect(panel).toContain("usePoll");
     expect(panel).toContain("mergeFetchedDraftOrders");
-    expect(panel).toContain("startPoll(6000)");
+    expect(panel).toContain("onDegraded");
     expect(panel).toContain('role="alert"');
   });
 

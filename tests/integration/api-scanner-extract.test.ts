@@ -40,7 +40,7 @@ vi.mock("@/lib/billing/assert-gate", () => ({
   assertOrganizationBillingGate: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
@@ -153,7 +153,7 @@ describe("POST /api/scanner/extract", () => {
   it("returns 200 with menu shape when extraction succeeds", async () => {
     vi.mocked(requireRestaurantAccess).mockResolvedValue(accessOk());
     vi.mocked(assertOrganizationBillingGate).mockResolvedValue({ ok: true });
-    vi.mocked(getDb).mockResolvedValue({} as never);
+    vi.mocked(getDb).mockReturnValue({} as never);
     vi.mocked(extractMenuFromImage).mockResolvedValue({
       menu: {
         categories: [

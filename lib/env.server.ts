@@ -10,7 +10,13 @@ import {
 import { getPublicEnv, resetPublicEnvCache, type PublicEnv } from "@/lib/env.public";
 
 const serverEnvSchema = z.object({
-  SUPABASE_SERVICE_ROLE_KEY: optionalString,
+  /** Firebase Admin service-account JSON on one line (optional — missing = demo mode / in-memory data). */
+  FIREBASE_SERVICE_ACCOUNT: optionalString,
+  GOOGLE_APPLICATION_CREDENTIALS: optionalString,
+  ROAL_DEMO_MODE: optionalString,
+  ROAL_DEMO_DB_FILE: optionalString,
+  /** Public https origin ElevenLabs uses for /api/agent-tools/* (tunnel in local dev). */
+  ROAL_AGENT_TOOLS_BASE_URL: optionalString,
   GEMINI_API_KEY: optionalString,
   GEMINI_MODEL: optionalString,
   ELEVENLABS_API_KEY: optionalString,
@@ -110,28 +116,28 @@ export function requireElevenLabsAgentId(fallback?: string | null): string {
   ]);
 }
 
-export function requireRoalToolSecrets(): {
-  agentToolSecret: string;
-  supabaseUrl: string;
-  supabaseAnonKey: string;
-  edgeBase: string;
-} {
+export function requireRoalToolSecrets(): { agentToolSecret: string } {
   const env = getServerEnv();
-  const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL.replace(/\/+$/, "");
   return {
     agentToolSecret: requireField(
       env.AGENT_TOOL_SIGNING_SECRET || env.AGENT_TOOL_SECRET,
       "AGENT_TOOL_SIGNING_SECRET",
-      "ElevenLabs → Supabase Edge tool authentication (or AGENT_TOOL_SECRET)"
+      "ElevenLabs → /api/agent-tools authentication (or AGENT_TOOL_SECRET)"
     ),
-    supabaseUrl,
-    supabaseAnonKey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    edgeBase: supabaseUrl,
   };
 }
 
-export function getServiceRoleKey(): string | undefined {
-  return getServerEnv().SUPABASE_SERVICE_ROLE_KEY;
+/** Firebase Admin credentials present (Firestore + session-cookie verification). */
+export function isFirebaseAdminEnvConfigured(): boolean {
+  const env = getServerEnv();
+  return Boolean(env.FIREBASE_SERVICE_ACCOUNT || env.GOOGLE_APPLICATION_CREDENTIALS);
+}
+
+/** Demo mode = Firebase not configured (or ROAL_DEMO_MODE=1). Mirrors lib/auth/demo-mode. */
+export function isDemoModeEnv(): boolean {
+  const env = getServerEnv();
+  if (env.ROAL_DEMO_MODE === "1") return true;
+  return !(env.NEXT_PUBLIC_FIREBASE_API_KEY && isFirebaseAdminEnvConfigured());
 }
 
 export function isRoalOrderKbEnabled(): boolean {
@@ -173,8 +179,9 @@ export function getElevenLabsAgentPhoneNumberId(): string | null {
 
 /** Summarize config for health checks / ops (no secret values). */
 export function getEnvStatus(): {
-  supabase: boolean;
-  serviceRole: boolean;
+  firebase: boolean;
+  firebaseAdmin: boolean;
+  demoMode: boolean;
   gemini: boolean;
   elevenlabs: boolean;
   agentTools: boolean;
@@ -187,8 +194,13 @@ export function getEnvStatus(): {
   const env = getServerEnv();
   const vercelUrl = process.env.VERCEL_URL?.trim();
   return {
-    supabase: Boolean(env.NEXT_PUBLIC_SUPABASE_URL && env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-    serviceRole: Boolean(env.SUPABASE_SERVICE_ROLE_KEY),
+    firebase: Boolean(
+      env.NEXT_PUBLIC_FIREBASE_API_KEY &&
+        env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN &&
+        env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    ),
+    firebaseAdmin: isFirebaseAdminEnvConfigured(),
+    demoMode: isDemoModeEnv(),
     gemini: Boolean(env.GEMINI_API_KEY),
     elevenlabs: Boolean(env.ELEVENLABS_API_KEY),
     agentTools: Boolean(env.AGENT_TOOL_SIGNING_SECRET || env.AGENT_TOOL_SECRET),
@@ -215,11 +227,6 @@ export function collectMissingForFeature(
   switch (feature) {
     case "scanner":
       need(Boolean(env.GEMINI_API_KEY), "GEMINI_API_KEY", "Menu scanner requires Gemini");
-      need(
-        Boolean(env.NEXT_PUBLIC_SUPABASE_URL),
-        "NEXT_PUBLIC_SUPABASE_URL",
-        "Required"
-      );
       break;
     case "elevenlabs":
       need(Boolean(env.ELEVENLABS_API_KEY), "ELEVENLABS_API_KEY", "Required");
@@ -234,9 +241,9 @@ export function collectMissingForFeature(
       break;
     case "kds-receipts":
       need(
-        Boolean(env.SUPABASE_SERVICE_ROLE_KEY),
-        "SUPABASE_SERVICE_ROLE_KEY",
-        "Recommended for reliable phone-order receipt reads when RLS is open or strict"
+        isFirebaseAdminEnvConfigured(),
+        "FIREBASE_SERVICE_ACCOUNT",
+        "Required for persistent phone-order receipts (demo mode keeps them in memory)"
       );
       break;
   }

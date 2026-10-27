@@ -251,6 +251,70 @@
   color: rgb(var(--text-muted));
 }
 
+/* Notes (demo mode, stale session) ------------------------------------- */
+.auth-note {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgb(var(--text-muted));
+  background: rgb(var(--bg-base));
+  border: 1px solid rgb(var(--border));
+}
+.auth-form .auth-note {
+  margin-top: 0;
+}
+.auth-note__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.auth-note--demo {
+  color: rgb(var(--tile-amber-ink));
+  background: rgb(var(--tile-amber) / 0.55);
+  border-color: rgb(var(--tile-amber-ink) / 0.2);
+}
+
+/* Remember me ---------------------------------------------------------- */
+.auth-remember {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 0.5rem;
+  margin-top: -0.125rem;
+}
+.auth-remember__box {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: rgb(var(--accent));
+  cursor: pointer;
+}
+.auth-remember__box:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.auth-remember__box:disabled {
+  cursor: not-allowed;
+}
+.auth-remember__label {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: rgb(var(--text-muted));
+  cursor: pointer;
+  user-select: none;
+}
+.auth-remember__hint {
+  grid-column: 2;
+  font-size: 12px;
+  color: rgb(var(--text-muted));
+}
+
 /* Alerts --------------------------------------------------------------- */
 .auth-alert {
   display: flex;

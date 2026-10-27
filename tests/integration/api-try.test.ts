@@ -125,7 +125,7 @@ describe("POST /api/try", () => {
   });
 
   it("returns 503 on env validation errors", async () => {
-    vi.mocked(insertTrial).mockRejectedValue(new EnvValidationError([{ path: "SUPABASE_SERVICE_ROLE_KEY", message: "missing" }]));
+    vi.mocked(insertTrial).mockRejectedValue(new EnvValidationError([{ path: "FIREBASE_SERVICE_ACCOUNT", message: "missing" }]));
     const res = await post({ input: "https://joespizza.com" });
     expect(res.status).toBe(503);
   });

@@ -73,6 +73,9 @@ function containsValue(hay: unknown, needle: unknown): boolean {
 
 function matchOne(row: Row, f: Filter): boolean {
   const v = row[f.column];
+  // An undefined filter value never matches (Postgres would compare against
+  // the literal "undefined"); this keeps a missing tenant id from widening a query.
+  if (f.value === undefined && f.op !== "not") return false;
   switch (f.op) {
     case "eq":
       return v === f.value || (v != null && f.value != null && String(v) === String(f.value) && typeof v !== "object");
@@ -97,9 +100,10 @@ function matchOne(row: Row, f: Filter): boolean {
     case "contains":
       return containsValue(v, f.value);
     case "not":
+      if (f.value === undefined) return false;
       return !matchOne(row, { column: f.column, op: f.negateOp ?? "eq", value: f.value });
     default:
-      return true;
+      throw new Error(`Unsupported filter operator: ${String(f.op)}`);
   }
 }
 
@@ -232,7 +236,7 @@ export class QueryBuilder<T = any> implements PromiseLike<DbResult<T>> {
   private pushdown(): PushdownFilter[] {
     const out: PushdownFilter[] = [];
     for (const f of this.filters) {
-      if (f.op === "eq" && f.value !== null && typeof f.value !== "object") out.push({ column: f.column, op: "==", value: f.value });
+      if (f.op === "eq" && f.value !== null && f.value !== undefined && typeof f.value !== "object") out.push({ column: f.column, op: "==", value: f.value });
       else if (f.op === "in") {
         const list = parseInList(f.value);
         if (list.every((v) => v !== null && typeof v !== "object")) out.push({ column: f.column, op: "in", value: list });

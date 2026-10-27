@@ -64,7 +64,7 @@ export default async function RestaurantOverviewPage({
     console.error("overview load", restaurant.id, overview.warnings);
   }
 
-  const meta = context.user.user_metadata ?? {};
+  const meta: { full_name?: string; name?: string } = context.user.user_metadata ?? {};
   const firstName = firstNameFor({
     fullName:
       typeof meta.full_name === "string"

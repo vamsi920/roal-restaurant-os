@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { authorizeInternalOpsRequest } from "@/lib/auth/internal-access";
 import { EnvValidationError } from "@/lib/env.shared";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import {
@@ -14,8 +15,15 @@ function resolveAgentId(req: Request): string | null {
   return getElevenLabsAgentId(q || null);
 }
 
-/** GET — fetch Conv AI agent JSON (keys stay server-side). */
+const UNAUTHORIZED = () => NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+/**
+ * GET — fetch Conv AI agent JSON (keys stay server-side).
+ * Platform-internal: any agent id can be addressed, so only the ops bearer token or a
+ * platform-admin session may call it.
+ */
 export async function GET(req: Request) {
+  if (!(await authorizeInternalOpsRequest(req))) return UNAUTHORIZED();
   try {
     const agentId = resolveAgentId(req);
     if (!agentId) {
@@ -38,8 +46,9 @@ export async function GET(req: Request) {
   }
 }
 
-/** PATCH — forward JSON body to ElevenLabs (partial agent update). */
+/** PATCH — forward JSON body to ElevenLabs (partial agent update). Platform-internal. */
 export async function PATCH(req: Request) {
+  if (!(await authorizeInternalOpsRequest(req))) return UNAUTHORIZED();
   try {
     const agentId = resolveAgentId(req);
     if (!agentId) {

@@ -18,7 +18,7 @@ vi.mock("@/lib/elevenlabs/conversation-init", async (importOriginal) => {
   };
 });
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock("@/lib/db", () => ({
   getDb: vi.fn(),
 }));
 
