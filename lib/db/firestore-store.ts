@@ -1,3 +1,4 @@
+import type { Query } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebase/admin";
 import type { Row } from "@/lib/db/schema";
 import type { DocStore } from "@/lib/db/store";
@@ -7,7 +8,7 @@ export function createFirestoreStore(): DocStore {
   return {
     kind: "firestore",
     async list(table, filters) {
-      let q: FirebaseFirestore.Query = adminDb().collection(table);
+      let q: Query = adminDb().collection(table);
       const memoryIn: Array<{ column: string; values: unknown[] }> = [];
       let usedIn = false;
       for (const f of filters) {
