@@ -68,7 +68,7 @@ function HealthSection({
   const flags: [string, boolean][] = [
     ["Firebase (client)", envFlags.firebase],
     ["Firebase Admin", envFlags.firebaseAdmin],
-    ["Gemini", envFlags.gemini],
+    ["OpenAI", envFlags.openai],
     ["ElevenLabs", envFlags.elevenlabs],
     ["Agent tools", envFlags.agentTools],
     ["Stripe", envFlags.stripe],

@@ -92,6 +92,6 @@ describe("loadAdminOpsSnapshot", () => {
       src.indexOf("export function collectMissingForFeature")
     );
     expect(fn).toContain("Boolean(env.");
-    expect(fn).not.toMatch(/:\s*env\.(GEMINI|ELEVENLABS|STRIPE|FIREBASE_SERVICE)/);
+    expect(fn).not.toMatch(/:\s*env\.(GEMINI|OPENAI|ELEVENLABS|STRIPE|FIREBASE_SERVICE)/);
   });
 });

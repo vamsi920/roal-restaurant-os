@@ -1,7 +1,7 @@
 import {
   extractRestaurantProfileFromWebsiteText,
   type ExtractedRestaurantProfile,
-} from "@/lib/gemini";
+} from "@/lib/ai";
 import { htmlToPlainText } from "@/lib/restaurant-lookup/html-to-text";
 import type { WeeklyHourInput } from "@/lib/restaurant-hours/core";
 import { heuristicProfileFromHtml } from "@/lib/trial/heuristic-profile";

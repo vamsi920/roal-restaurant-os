@@ -1,4 +1,4 @@
-import { extractMenuFromWebsiteText } from "@/lib/gemini";
+import { extractMenuFromWebsiteText } from "@/lib/ai";
 import { ScannedMenuSchema } from "@/lib/menu-import/types";
 import {
   htmlToPlainText,

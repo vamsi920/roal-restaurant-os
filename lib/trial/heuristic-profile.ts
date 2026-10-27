@@ -1,8 +1,8 @@
-import type { ExtractedRestaurantProfile } from "@/lib/gemini";
+import type { ExtractedRestaurantProfile } from "@/lib/ai";
 
 /**
  * No-LLM fallback: schema.org JSON-LD (Restaurant / LocalBusiness), Open Graph,
- * <title>, and a phone regex. Used when Gemini is unavailable or fails.
+ * <title>, and a phone regex. Used when the AI model is unavailable or fails.
  */
 
 type Json = Record<string, unknown>;

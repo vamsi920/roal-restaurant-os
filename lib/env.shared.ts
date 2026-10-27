@@ -84,8 +84,8 @@ export const ENV_HINTS: Record<string, string> = {
     "Demo-mode persistence file (default .data/demo-db.json); set to off to keep demo data in memory only",
   ROAL_AGENT_TOOLS_BASE_URL:
     "Public https origin ElevenLabs calls for /api/agent-tools/* (local dev: a tunnel URL); defaults to NEXT_PUBLIC_APP_URL",
-  GEMINI_API_KEY: "Google AI Studio → API keys (https://aistudio.google.com/apikey)",
-  GEMINI_MODEL: "Optional override, e.g. gemini-2.5-flash",
+  OPENAI_API_KEY: "OpenAI platform → API keys (https://platform.openai.com/api-keys); server only",
+  OPENAI_MODEL: "Optional override, default gpt-5.4-mini",
   ELEVENLABS_API_KEY:
     "ElevenLabs → Profile → API Keys (server only; never NEXT_PUBLIC_)",
   ELEVENLABS_AGENT_ID:

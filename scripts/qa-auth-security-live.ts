@@ -26,9 +26,9 @@ const AUTH_VITEST = [
 ].join(" ");
 
 const LEAK_PATTERNS = [
-  { name: "sk-", re: /\bsk-[a-zA-Z0-9]{8,}\b/ },
+  { name: "sk-", re: /\bsk-[a-zA-Z0-9_-]{16,}/ },
   { name: "service account private key", re: /-----BEGIN PRIVATE KEY-----|"private_key"\s*:/ },
-  { name: "GEMINI_API_KEY value", re: /GEMINI_API_KEY\s*[:=]\s*['"]?[a-zA-Z0-9_-]{10,}/i },
+  { name: "OPENAI_API_KEY value", re: /OPENAI_API_KEY\s*[:=]\s*['"]?[a-zA-Z0-9_-]{10,}/i },
 ];
 
 type Check = { name: string; ok: boolean; detail?: string };
@@ -61,7 +61,7 @@ function clientFilesImportServerSecrets(): string[] {
     /getDb/,
     /firebase-admin/,
     /FIREBASE_SERVICE_ACCOUNT/,
-    /GEMINI_API_KEY/,
+    /OPENAI_API_KEY/,
     /STRIPE_SECRET_KEY/,
   ];
   for (const root of roots) {

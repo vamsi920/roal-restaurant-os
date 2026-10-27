@@ -17,8 +17,8 @@ const serverEnvSchema = z.object({
   ROAL_DEMO_DB_FILE: optionalString,
   /** Public https origin ElevenLabs uses for /api/agent-tools/* (tunnel in local dev). */
   ROAL_AGENT_TOOLS_BASE_URL: optionalString,
-  GEMINI_API_KEY: optionalString,
-  GEMINI_MODEL: optionalString,
+  OPENAI_API_KEY: optionalString,
+  OPENAI_MODEL: optionalString,
   ELEVENLABS_API_KEY: optionalString,
   ELEVENLABS_AGENT_ID: optionalString,
   AGENT_TOOL_SECRET: optionalString,
@@ -81,11 +81,11 @@ function requireField(
   ]);
 }
 
-export function requireGeminiEnv(): { apiKey: string; model?: string } {
+export function requireOpenAIEnv(): { apiKey: string; model?: string } {
   const env = getServerEnv();
   return {
-    apiKey: requireField(env.GEMINI_API_KEY, "GEMINI_API_KEY", "menu scanning (Gemini Vision)"),
-    model: env.GEMINI_MODEL,
+    apiKey: requireField(env.OPENAI_API_KEY, "OPENAI_API_KEY", "menu scanning and website extraction (OpenAI)"),
+    model: env.OPENAI_MODEL,
   };
 }
 
@@ -182,7 +182,7 @@ export function getEnvStatus(): {
   firebase: boolean;
   firebaseAdmin: boolean;
   demoMode: boolean;
-  gemini: boolean;
+  openai: boolean;
   elevenlabs: boolean;
   agentTools: boolean;
   agentToolSigning: boolean;
@@ -201,7 +201,7 @@ export function getEnvStatus(): {
     ),
     firebaseAdmin: isFirebaseAdminEnvConfigured(),
     demoMode: isDemoModeEnv(),
-    gemini: Boolean(env.GEMINI_API_KEY),
+    openai: Boolean(env.OPENAI_API_KEY),
     elevenlabs: Boolean(env.ELEVENLABS_API_KEY),
     agentTools: Boolean(env.AGENT_TOOL_SIGNING_SECRET || env.AGENT_TOOL_SECRET),
     agentToolSigning: Boolean(env.AGENT_TOOL_SIGNING_SECRET),
@@ -226,7 +226,7 @@ export function collectMissingForFeature(
 
   switch (feature) {
     case "scanner":
-      need(Boolean(env.GEMINI_API_KEY), "GEMINI_API_KEY", "Menu scanner requires Gemini");
+      need(Boolean(env.OPENAI_API_KEY), "OPENAI_API_KEY", "Menu scanner requires OpenAI");
       break;
     case "elevenlabs":
       need(Boolean(env.ELEVENLABS_API_KEY), "ELEVENLABS_API_KEY", "Required");

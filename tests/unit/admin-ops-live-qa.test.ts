@@ -49,7 +49,7 @@ describe("admin ops live posture (launch 24)", () => {
     );
     expect(dash).toMatch(/No API keys or secrets/i);
     expect(dash).toContain("/api/health");
-    expect(dash).not.toMatch(/process\.env\.|GEMINI_API_KEY|SERVICE_ROLE/i);
+    expect(dash).not.toMatch(/process\.env\.|GEMINI_API_KEY|OPENAI_API_KEY|SERVICE_ROLE/i);
   });
 
   it("health route sanitizes before JSON response", () => {

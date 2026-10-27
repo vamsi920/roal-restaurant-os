@@ -1,5 +1,5 @@
 import type { Db } from "@/lib/db";
-import { extractCallInsightsFromTranscript } from "@/lib/gemini";
+import { extractCallInsightsFromTranscript } from "@/lib/ai";
 
 export type KnowledgeSuggestionStatus = "pending" | "accepted" | "dismissed";
 

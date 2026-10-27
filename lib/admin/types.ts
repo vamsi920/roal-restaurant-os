@@ -47,7 +47,7 @@ export type AdminEnvFlags = {
   firebase: boolean;
   firebaseAdmin: boolean;
   demoMode: boolean;
-  gemini: boolean;
+  openai: boolean;
   elevenlabs: boolean;
   agentTools: boolean;
   agentToolSigning: boolean;

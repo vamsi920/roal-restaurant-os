@@ -3,7 +3,7 @@
  * - Auth UI with fake credentials (no paid APIs)
  * - Protected redirect
  * - Optional signed-in KDS path via E2E_EMAIL / E2E_PASSWORD (never commit)
- * - Menu scanner via mocked POST /api/scanner/extract (no Gemini)
+ * - Menu scanner via mocked POST /api/scanner/extract (no AI call)
  *
  * Run: npm run e2e-smoke
  *      E2E_EMAIL=… E2E_PASSWORD=… npm run e2e-smoke

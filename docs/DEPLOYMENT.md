@@ -70,7 +70,7 @@ If `NEXT_PUBLIC_FIREBASE_API_KEY` or `FIREBASE_SERVICE_ACCOUNT` is missing, the 
 | Variable | Purpose |
 |----------|---------|
 | `NEXT_PUBLIC_APP_URL` | Public origin, e.g. `https://getroal.com` (canonicals, Twilio webhook, agent tool URLs) |
-| `GEMINI_API_KEY` | Menu scanner |
+| `OPENAI_API_KEY` | Menu scanner |
 | `ELEVENLABS_API_KEY` | Voice agent connect/sync (server only) |
 | `ELEVENLABS_AGENT_ID` | Template agent cloned per restaurant |
 | `AGENT_TOOL_SIGNING_SECRET` | Mints per-restaurant `roal1.*` tool tokens (long random string) |
@@ -100,7 +100,7 @@ If `NEXT_PUBLIC_FIREBASE_API_KEY` or `FIREBASE_SERVICE_ACCOUNT` is missing, the 
 ### Never set in browser / never commit
 
 - `FIREBASE_SERVICE_ACCOUNT` (never `NEXT_PUBLIC_`), `.firebaserc` is git-ignored
-- `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `AGENT_TOOL_SIGNING_SECRET`, Stripe secrets
+- `ELEVENLABS_API_KEY`, `OPENAI_API_KEY`, `AGENT_TOOL_SIGNING_SECRET`, Stripe secrets
 
 Full annotated list: [`.env.example`](../.env.example).
 
@@ -143,7 +143,7 @@ Rotate the same way; only dynamic (non-baked) tools use it.
 
 Existing session cookies stay valid (they are signed by Firebase, not by the key).
 
-### D. `GEMINI_API_KEY` / `ELEVENLABS_API_KEY`
+### D. `OPENAI_API_KEY` / `ELEVENLABS_API_KEY`
 
 Replace on Netlify, redeploy; for ElevenLabs re-run Connect if the workspace changed.
 

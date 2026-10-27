@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ExtractedRestaurantProfile } from "@/lib/gemini";
+import type { ExtractedRestaurantProfile } from "@/lib/ai";
 import {
   buildProfileFromWebsite,
   collectWebsiteText,
@@ -9,9 +9,9 @@ import {
   weeklyHoursFromExtracted,
 } from "@/lib/trial/website-profile";
 
-vi.mock("@/lib/gemini", () => ({
+vi.mock("@/lib/ai", () => ({
   extractRestaurantProfileFromWebsiteText: vi.fn(async () => {
-    throw new Error("real gemini must not be called in unit tests");
+    throw new Error("real AI model must not be called in unit tests");
   }),
 }));
 

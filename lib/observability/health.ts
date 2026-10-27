@@ -18,7 +18,7 @@ export type HealthReport = {
     env_public: HealthCheckResult;
     env_server: HealthCheckResult;
     database: HealthCheckResult;
-    gemini: HealthCheckResult;
+    openai: HealthCheckResult;
     elevenlabs: HealthCheckResult;
     agent_tools: HealthCheckResult;
   };
@@ -30,7 +30,7 @@ export async function runHealthChecks(): Promise<HealthReport> {
     env_public: { ok: false, status: "fail" },
     env_server: { ok: false, status: "fail" },
     database: { ok: false, status: "fail" },
-    gemini: { ok: false, status: "fail" },
+    openai: { ok: false, status: "fail" },
     elevenlabs: { ok: false, status: "fail" },
     agent_tools: { ok: false, status: "fail" },
   };
@@ -60,7 +60,7 @@ export async function runHealthChecks(): Promise<HealthReport> {
     const flags = getEnvStatus();
     const missingOptional: string[] = [];
     if (!flags.firebaseAdmin) missingOptional.push("FIREBASE_SERVICE_ACCOUNT");
-    if (!flags.gemini) missingOptional.push("GEMINI_API_KEY");
+    if (!flags.openai) missingOptional.push("OPENAI_API_KEY");
     if (!flags.elevenlabs) missingOptional.push("ELEVENLABS_API_KEY");
     if (!flags.agentTools) missingOptional.push("AGENT_TOOL_SIGNING_SECRET");
     if (!flags.places) missingOptional.push("GOOGLE_PLACES_API_KEY");
@@ -76,10 +76,10 @@ export async function runHealthChecks(): Promise<HealthReport> {
       details: flags,
     };
 
-    checks.gemini = {
-      ok: flags.gemini,
-      status: flags.gemini ? "pass" : "warn",
-      message: flags.gemini ? "API key configured" : "GEMINI_API_KEY not set",
+    checks.openai = {
+      ok: flags.openai,
+      status: flags.openai ? "pass" : "warn",
+      message: flags.openai ? "API key configured" : "OPENAI_API_KEY not set",
     };
 
     checks.elevenlabs = {
@@ -114,7 +114,7 @@ export async function runHealthChecks(): Promise<HealthReport> {
       status: "fail",
       message: e instanceof Error ? e.message : "Server env error",
     };
-    for (const key of ["gemini", "elevenlabs", "agent_tools"] as const) {
+    for (const key of ["openai", "elevenlabs", "agent_tools"] as const) {
       checks[key] = { ok: false, status: "warn", message: "Skipped (env error)" };
     }
   }

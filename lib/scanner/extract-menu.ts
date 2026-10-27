@@ -1,4 +1,4 @@
-import { scanMenuImage } from "@/lib/gemini";
+import { scanMenuImage } from "@/lib/ai";
 import { buildReviewHints } from "@/lib/menu-import/review-hints";
 import {
   ScannedMenuSchema,
@@ -71,7 +71,7 @@ export async function extractMenuFromImage(
 
   if (!parsed.success) {
     throw new Error(
-      `Gemini returned invalid menu structure: ${parsed.error.issues[0]?.message ?? "validation failed"}`
+      `AI returned invalid menu structure: ${parsed.error.issues[0]?.message ?? "validation failed"}`
     );
   }
 

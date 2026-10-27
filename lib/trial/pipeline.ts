@@ -1,5 +1,5 @@
 import { ScannedMenuSchema, type ScannedMenu } from "@/lib/menu-import/types";
-import { scanMenuImage } from "@/lib/gemini";
+import { scanMenuImage } from "@/lib/ai";
 import { hasGooglePlacesApiKey } from "@/lib/env.server";
 import { importWebsiteMenuFromUrl } from "@/lib/restaurant-lookup/import-website-menu";
 import {

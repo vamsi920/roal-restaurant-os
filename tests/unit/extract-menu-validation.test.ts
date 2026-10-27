@@ -54,7 +54,7 @@ describe("extractErrorHttpStatus", () => {
 
   it("maps schema errors to 422", () => {
     expect(
-      extractErrorHttpStatus("Gemini returned invalid menu structure: x")
+      extractErrorHttpStatus("AI returned invalid menu structure: x")
     ).toBe(422);
   });
 });

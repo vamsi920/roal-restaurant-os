@@ -1,6 +1,6 @@
 # ROAL — The AI phone host for restaurants
 
-Paste a restaurant link, talk to its AI phone host in the browser a minute later, claim it, forward the number. Multi-tenant SaaS: magic onboarding (website/Maps link → host builds itself), menu scan (Gemini) → review/commit, live KDS, ElevenLabs phone orders via signed agent tools served by this app, call history + transcripts, unanswered-question FAQ inbox, billing gates, analytics, and admin ops.
+Paste a restaurant link, talk to its AI phone host in the browser a minute later, claim it, forward the number. Multi-tenant SaaS: magic onboarding (website/Maps link → host builds itself), menu scan (OpenAI) → review/commit, live KDS, ElevenLabs phone orders via signed agent tools served by this app, call history + transcripts, unanswered-question FAQ inbox, billing gates, analytics, and admin ops.
 
 ## Stack
 
@@ -8,7 +8,7 @@ Paste a restaurant link, talk to its AI phone host in the browser a minute later
 - Firebase Auth (Google + email/password) with httpOnly session cookies
 - Cloud Firestore via the Firebase Admin SDK (server only) — `lib/db` keeps a small query-builder API over it
 - Demo mode: no keys → local demo owner + in-memory store (persisted to `.data/demo-db.json`)
-- Google Gemini (menu extraction)
+- OpenAI gpt-5.4-mini via Chat Completions (menu, website and call-insight extraction)
 - ElevenLabs Conversational AI, calling the app's own `/api/agent-tools/*` routes
 - Vitest for unit and API tests
 
@@ -21,7 +21,7 @@ npm run dev
 
 Open <http://localhost:3000> → **Sign in** → **Continue as demo owner**. You are the demo owner ("Maria Rossi") with a seeded demo restaurant. Nothing leaves your machine: data lives in memory and is saved to `.data/demo-db.json` (delete the file to reset; `ROAL_DEMO_DB_FILE=off` to keep it in memory only).
 
-Optional extras in demo mode: `GEMINI_API_KEY` (menu scan), `ELEVENLABS_API_KEY` + `ELEVENLABS_AGENT_ID` (voice agent), `GOOGLE_PLACES_API_KEY` (restaurant lookup). Copy `.env.example` to `.env.local` and fill in what you need.
+Optional extras in demo mode: `OPENAI_API_KEY` (menu scan), `ELEVENLABS_API_KEY` + `ELEVENLABS_AGENT_ID` (voice agent), `GOOGLE_PLACES_API_KEY` (restaurant lookup). Copy `.env.example` to `.env.local` and fill in what you need.
 
 ## Going live (Firebase)
 
@@ -57,7 +57,7 @@ As soon as both `NEXT_PUBLIC_FIREBASE_API_KEY` and `FIREBASE_SERVICE_ACCOUNT` ar
 | `ROAL_DEMO_DB_FILE` | Demo store file (default `.data/demo-db.json`; `off` = memory only) |
 | `NEXT_PUBLIC_APP_URL` | Public origin (canonicals, Twilio webhook, default agent-tools base) |
 | `ROAL_AGENT_TOOLS_BASE_URL` | Public https origin ElevenLabs calls for tools (tunnel in local dev) |
-| `GEMINI_API_KEY` | Menu scanner |
+| `OPENAI_API_KEY` | Menu scanner |
 | `ELEVENLABS_API_KEY` / `ELEVENLABS_AGENT_ID` | Voice agent connect/sync (server only) |
 | `AGENT_TOOL_SIGNING_SECRET` | Per-restaurant `roal1.*` agent tool tokens |
 
@@ -66,7 +66,7 @@ Full list: [.env.example](.env.example) and [docs/DEPLOYMENT.md](docs/DEPLOYMENT
 ## Menu scan flow
 
 ```
-POST /api/scanner/extract  → Gemini + menu_imports doc (review)
+POST /api/scanner/extract  → OpenAI + menu_imports doc (review)
 POST /api/scanner/commit   → merge menu after operator approval
 POST /api/scanner/discard  → abandon import
 

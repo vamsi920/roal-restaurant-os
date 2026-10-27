@@ -38,7 +38,7 @@ describe("sanitizeHealthReportForPublic", () => {
           status: "fail",
           message: "connect failed https://firestore.googleapis.com/x",
         },
-        gemini: { ok: true, status: "pass" },
+        openai: { ok: true, status: "pass" },
         elevenlabs: { ok: true, status: "pass" },
         agent_tools: {
           ok: true,

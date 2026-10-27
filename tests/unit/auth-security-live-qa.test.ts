@@ -45,6 +45,7 @@ describe("auth security posture (launch 26)", () => {
     expect(pub).toContain("Direct `process.env.NEXT_PUBLIC_*` refs");
     expect(pub).not.toContain("SERVICE_ROLE");
     expect(pub).not.toContain("GEMINI_API");
+    expect(pub).not.toContain("OPENAI_API");
   });
 
   it("auth form only navigates to a safeNextPath destination", () => {

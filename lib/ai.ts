@@ -1,7 +1,12 @@
-import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
-import { requireGeminiEnv } from "@/lib/env.server";
+import { requireOpenAIEnv } from "@/lib/env.server";
 
-const CONFIDENCE_ENUM = ["high", "medium", "low"] as const;
+/**
+ * Structured JSON extraction (menus, restaurant profiles, call insights) via OpenAI
+ * Chat Completions in JSON mode. Chat Completions rather than the Responses API because
+ * only Chat Completions traffic counts toward the data-sharing program's free daily tokens.
+ */
+
+const CONFIDENCE = { type: "string", enum: ["high", "medium", "low"] };
 
 const VISION_PROMPT = `Analyze this restaurant menu image. Extract all data into a robust, hierarchical JSON format.
 
@@ -22,52 +27,40 @@ Rules:
 - If price is missing or unreadable, omit price and set price_confidence to "low".`;
 
 const MENU_RESPONSE_SCHEMA = {
-  type: SchemaType.OBJECT,
+  type: "object",
   properties: {
     categories: {
-      type: SchemaType.ARRAY,
+      type: "array",
       items: {
-        type: SchemaType.OBJECT,
+        type: "object",
         properties: {
-          name: { type: SchemaType.STRING },
-          sort_order: { type: SchemaType.INTEGER },
-          confidence: { type: SchemaType.STRING, enum: [...CONFIDENCE_ENUM] },
+          name: { type: "string" },
+          sort_order: { type: "integer" },
+          confidence: CONFIDENCE,
           items: {
-            type: SchemaType.ARRAY,
+            type: "array",
             items: {
-              type: SchemaType.OBJECT,
+              type: "object",
               properties: {
-                name: { type: SchemaType.STRING },
-                description: { type: SchemaType.STRING },
-                price: { type: SchemaType.NUMBER },
-                base_availability: { type: SchemaType.BOOLEAN },
-                confidence: { type: SchemaType.STRING, enum: [...CONFIDENCE_ENUM] },
-                name_confidence: {
-                  type: SchemaType.STRING,
-                  enum: [...CONFIDENCE_ENUM],
-                },
-                price_confidence: {
-                  type: SchemaType.STRING,
-                  enum: [...CONFIDENCE_ENUM],
-                },
-                description_confidence: {
-                  type: SchemaType.STRING,
-                  enum: [...CONFIDENCE_ENUM],
-                },
+                name: { type: "string" },
+                description: { type: "string" },
+                price: { type: "number" },
+                base_availability: { type: "boolean" },
+                confidence: CONFIDENCE,
+                name_confidence: CONFIDENCE,
+                price_confidence: CONFIDENCE,
+                description_confidence: CONFIDENCE,
                 modifiers: {
-                  type: SchemaType.ARRAY,
+                  type: "array",
                   items: {
-                    type: SchemaType.OBJECT,
+                    type: "object",
                     properties: {
-                      group_name: { type: SchemaType.STRING },
-                      modifier_name: { type: SchemaType.STRING },
-                      extra_price: { type: SchemaType.NUMBER },
-                      min_selection: { type: SchemaType.INTEGER },
-                      max_selection: { type: SchemaType.INTEGER },
-                      confidence: {
-                        type: SchemaType.STRING,
-                        enum: [...CONFIDENCE_ENUM],
-                      },
+                      group_name: { type: "string" },
+                      modifier_name: { type: "string" },
+                      extra_price: { type: "number" },
+                      min_selection: { type: "integer" },
+                      max_selection: { type: "integer" },
+                      confidence: CONFIDENCE,
                     },
                     required: ["modifier_name"],
                   },
@@ -84,40 +77,98 @@ const MENU_RESPONSE_SCHEMA = {
   required: ["categories"],
 };
 
-const FALLBACK_MODELS = [
-  "gemini-2.5-flash",
-  "gemini-2.5-pro",
-  "gemini-flash-latest",
-  "gemini-pro-latest",
-  "gemini-2.0-flash-lite",
-] as const;
-
-function normalizeModelName(model: string): string {
-  return model.trim().replace(/^models\//, "");
-}
+const DEFAULT_MODEL = "gpt-5.4-mini";
+/** Small models covered by the free daily token tier, tried in order if one is unavailable. */
+const FALLBACK_MODELS = ["gpt-5.4-mini", "gpt-5-mini", "gpt-4.1-mini"] as const;
 
 function getCandidateModels(preferredModel?: string): string[] {
   const preferred = preferredModel?.trim();
-  const models = preferred
-    ? [normalizeModelName(preferred), ...FALLBACK_MODELS]
-    : [...FALLBACK_MODELS];
-
-  return [...new Set(models)];
+  return [...new Set([preferred || DEFAULT_MODEL, ...FALLBACK_MODELS])];
 }
 
 function isMissingModelError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
   const message = error.message.toLowerCase();
-  return (
-    message.includes("404") ||
-    message.includes("not found") ||
-    message.includes("not supported for generatecontent")
-  );
+  return message.includes("model_not_found") || message.includes("does not exist") || message.includes("openai 404");
 }
 
 function parseJsonResponse(text: string) {
-  const cleaned = text.trim().replace(/^```json\s*|\s*```$/g, "");
-  return JSON.parse(cleaned);
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  return JSON.parse(start >= 0 && end > start ? text.slice(start, end + 1) : text);
+}
+
+type UserContent =
+  | string
+  | Array<{ type: "text"; text: string } | { type: "image_url"; image_url: { url: string } }>;
+
+type OpenAIResponse = {
+  choices?: { message?: { content?: string | null }; finish_reason?: string }[];
+  error?: { message?: string; code?: string };
+};
+
+async function chatJson(
+  modelName: string,
+  apiKey: string,
+  system: string,
+  user: UserContent,
+  maxTokens: number,
+  temperature: number
+): Promise<string> {
+  const reasoning = /^(gpt-5|o\d)/.test(modelName);
+  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+    body: JSON.stringify({
+      model: modelName,
+      messages: [
+        { role: "system", content: `${system}\nReply with a single JSON object only. No markdown fences, no commentary.` },
+        { role: "user", content: user },
+      ],
+      response_format: { type: "json_object" },
+      max_completion_tokens: maxTokens + (reasoning ? 4000 : 0),
+      // Reasoning models reject temperature; they take an effort level instead.
+      ...(reasoning ? { reasoning_effort: process.env.OPENAI_REASONING ?? "low" } : { temperature }),
+    }),
+  });
+  const j = (await r.json().catch(() => ({}))) as OpenAIResponse;
+  if (!r.ok) {
+    throw new Error(`OpenAI ${r.status}: ${j.error?.code ?? ""} ${j.error?.message ?? "unknown error"}`.trim());
+  }
+  const choice = j.choices?.[0];
+  if (choice?.finish_reason === "length") {
+    throw new Error("OpenAI response was cut off before the JSON finished");
+  }
+  return choice?.message?.content ?? "";
+}
+
+export type GenerateJsonResult<T> = { data: T; modelUsed: string };
+
+async function generateJson<T>(
+  system: string,
+  user: UserContent,
+  responseSchema: unknown,
+  { temperature = 0.2, maxTokens = 4000 }: { temperature?: number; maxTokens?: number } = {}
+): Promise<GenerateJsonResult<T>> {
+  const { apiKey, model } = requireOpenAIEnv();
+  const prompt = `${system}\n\nThe JSON must match this JSON Schema:\n${JSON.stringify(responseSchema)}`;
+  let lastError: unknown;
+
+  for (const modelName of getCandidateModels(model)) {
+    try {
+      const text = await chatJson(modelName, apiKey, prompt, user, maxTokens, temperature);
+      return { data: parseJsonResponse(text) as T, modelUsed: modelName };
+    } catch (error) {
+      lastError = error;
+      if (!isMissingModelError(error)) throw error;
+    }
+  }
+
+  const lastMessage = lastError instanceof Error ? lastError.message : "unknown error";
+  throw new Error(
+    `No OpenAI model worked. Tried: ${getCandidateModels(model).join(", ")}. ` +
+      `Set OPENAI_MODEL to an available model like ${DEFAULT_MODEL}. Last error: ${lastMessage}`
+  );
 }
 
 export type ScanMenuImageResult = {
@@ -125,62 +176,19 @@ export type ScanMenuImageResult = {
   modelUsed: string;
 };
 
-async function generateMenuJson(
-  parts: Array<{ text: string } | { inlineData: { data: string; mimeType: string } }>
-): Promise<ScanMenuImageResult> {
-  const { apiKey, model } = requireGeminiEnv();
-  const genAI = new GoogleGenerativeAI(apiKey);
-  let lastError: unknown;
-
-  for (const modelName of getCandidateModels(model)) {
-    try {
-      const generativeModel = genAI.getGenerativeModel({
-        model: modelName,
-        generationConfig: {
-          responseMimeType: "application/json",
-          // @ts-expect-error SDK type narrowing missing for nested schema
-          responseSchema: MENU_RESPONSE_SCHEMA,
-          temperature: 0.2,
-        },
-      });
-
-      const result = await generateContentSafe(generativeModel, parts);
-      return {
-        data: parseJsonResponse(result),
-        modelUsed: modelName,
-      };
-    } catch (error) {
-      lastError = error;
-      if (!isMissingModelError(error)) throw error;
-    }
-  }
-
-  const attemptedModels = getCandidateModels().join(", ");
-  const lastMessage =
-    lastError instanceof Error ? lastError.message : "unknown error";
-
-  throw new Error(
-    `No supported Gemini model alias worked. Tried: ${attemptedModels}. ` +
-      `Set GEMINI_MODEL in .env to an available model like gemini-2.5-flash. Last error: ${lastMessage}`
-  );
-}
-
-async function generateContentSafe(
-  model: ReturnType<GoogleGenerativeAI["getGenerativeModel"]>,
-  parts: Array<{ text: string } | { inlineData: { data: string; mimeType: string } }>
-): Promise<string> {
-  const result = await model.generateContent(parts);
-  return result.response.text();
-}
-
 export async function scanMenuImage(
   imageBase64: string,
   mimeType: string
 ): Promise<ScanMenuImageResult> {
-  return generateMenuJson([
-    { text: VISION_PROMPT },
-    { inlineData: { data: imageBase64, mimeType } },
-  ]);
+  return generateJson(
+    VISION_PROMPT,
+    [
+      { type: "text", text: "Extract the menu from this image." },
+      { type: "image_url", image_url: { url: `data:${mimeType};base64,${imageBase64}` } },
+    ],
+    MENU_RESPONSE_SCHEMA,
+    { maxTokens: 16000 }
+  );
 }
 
 const WEBSITE_MENU_PROMPT = `Extract a restaurant menu from this website text into hierarchical JSON.
@@ -201,81 +209,49 @@ export async function extractMenuFromWebsiteText(
   if (!clipped) {
     return { data: { categories: [] }, modelUsed: "none" };
   }
-  return generateMenuJson([{ text: `${WEBSITE_MENU_PROMPT}\n\n${clipped}` }]);
+  return generateJson(WEBSITE_MENU_PROMPT, clipped, MENU_RESPONSE_SCHEMA, { maxTokens: 16000 });
 }
 
 /* ------------------------------------------------------------------------- */
-/* Generic structured JSON generation (restaurant profile, call insights)     */
+/* Restaurant profile and call insights                                       */
 /* ------------------------------------------------------------------------- */
-
-export type GenerateJsonResult<T> = { data: T; modelUsed: string };
-
-async function generateJson<T>(
-  prompt: string,
-  responseSchema: unknown,
-  temperature = 0.2
-): Promise<GenerateJsonResult<T>> {
-  const { apiKey, model } = requireGeminiEnv();
-  const genAI = new GoogleGenerativeAI(apiKey);
-  let lastError: unknown;
-
-  for (const modelName of getCandidateModels(model)) {
-    try {
-      const generativeModel = genAI.getGenerativeModel({
-        model: modelName,
-        generationConfig: {
-          responseMimeType: "application/json",
-          // @ts-expect-error SDK type narrowing missing for nested schema
-          responseSchema,
-          temperature,
-        },
-      });
-      const text = await generateContentSafe(generativeModel, [{ text: prompt }]);
-      return { data: parseJsonResponse(text) as T, modelUsed: modelName };
-    } catch (error) {
-      lastError = error;
-      if (!isMissingModelError(error)) throw error;
-    }
-  }
-  throw lastError instanceof Error ? lastError : new Error("Gemini generation failed");
-}
 
 const RESTAURANT_PROFILE_SCHEMA = {
-  type: SchemaType.OBJECT,
+  type: "object",
   properties: {
-    is_restaurant: { type: SchemaType.BOOLEAN },
-    name: { type: SchemaType.STRING },
-    tagline: { type: SchemaType.STRING },
-    cuisine: { type: SchemaType.STRING },
-    phone: { type: SchemaType.STRING },
-    address_line1: { type: SchemaType.STRING },
-    city: { type: SchemaType.STRING },
-    region: { type: SchemaType.STRING },
-    postal_code: { type: SchemaType.STRING },
-    country: { type: SchemaType.STRING },
-    timezone: { type: SchemaType.STRING },
-    offers_delivery: { type: SchemaType.BOOLEAN },
+    is_restaurant: { type: "boolean" },
+    name: { type: "string" },
+    tagline: { type: "string" },
+    cuisine: { type: "string" },
+    phone: { type: "string" },
+    address_line1: { type: "string" },
+    city: { type: "string" },
+    region: { type: "string" },
+    postal_code: { type: "string" },
+    country: { type: "string" },
+    timezone: { type: "string" },
+    offers_delivery: { type: "boolean" },
     weekly_hours: {
-      type: SchemaType.ARRAY,
+      type: "array",
       items: {
-        type: SchemaType.OBJECT,
+        type: "object",
         properties: {
-          day_of_week: { type: SchemaType.INTEGER },
-          is_closed: { type: SchemaType.BOOLEAN },
-          open_time: { type: SchemaType.STRING },
-          close_time: { type: SchemaType.STRING },
+          day_of_week: { type: "integer" },
+          is_closed: { type: "boolean" },
+          open_time: { type: "string" },
+          close_time: { type: "string" },
         },
         required: ["day_of_week", "is_closed"],
       },
     },
     faqs: {
-      type: SchemaType.ARRAY,
+      type: "array",
       items: {
-        type: SchemaType.OBJECT,
+        type: "object",
         properties: {
-          category: { type: SchemaType.STRING },
-          question: { type: SchemaType.STRING },
-          answer: { type: SchemaType.STRING },
+          category: { type: "string" },
+          question: { type: "string" },
+          answer: { type: "string" },
         },
         required: ["question", "answer"],
       },
@@ -324,24 +300,25 @@ export async function extractRestaurantProfileFromWebsiteText(
 ): Promise<GenerateJsonResult<ExtractedRestaurantProfile>> {
   const clipped = text.trim().slice(0, 60_000);
   return generateJson<ExtractedRestaurantProfile>(
-    `${RESTAURANT_PROFILE_PROMPT}\n\nSource URL: ${sourceUrl}\n\nWEBSITE TEXT:\n${clipped}`,
+    RESTAURANT_PROFILE_PROMPT,
+    `Source URL: ${sourceUrl}\n\nWEBSITE TEXT:\n${clipped}`,
     RESTAURANT_PROFILE_SCHEMA,
-    0.1
+    { temperature: 0.1 }
   );
 }
 
 const CALL_INSIGHTS_SCHEMA = {
-  type: SchemaType.OBJECT,
+  type: "object",
   properties: {
     unanswered_questions: {
-      type: SchemaType.ARRAY,
+      type: "array",
       items: {
-        type: SchemaType.OBJECT,
+        type: "object",
         properties: {
-          caller_question: { type: SchemaType.STRING },
-          suggested_question: { type: SchemaType.STRING },
-          suggested_answer: { type: SchemaType.STRING },
-          category: { type: SchemaType.STRING },
+          caller_question: { type: "string" },
+          suggested_question: { type: "string" },
+          suggested_answer: { type: "string" },
+          category: { type: "string" },
         },
         required: ["caller_question", "suggested_question"],
       },
@@ -382,8 +359,9 @@ export async function extractCallInsightsFromTranscript(
     return { data: { unanswered_questions: [] }, modelUsed: "none" };
   }
   return generateJson<CallInsights>(
-    `${CALL_INSIGHTS_PROMPT}\n\nTRANSCRIPT:\n${transcript}`,
+    CALL_INSIGHTS_PROMPT,
+    `TRANSCRIPT:\n${transcript}`,
     CALL_INSIGHTS_SCHEMA,
-    0.1
+    { temperature: 0.1 }
   );
 }

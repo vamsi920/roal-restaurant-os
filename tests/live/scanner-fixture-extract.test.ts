@@ -8,7 +8,7 @@ const live = process.env.RUN_LIVE_SCANNER === "1";
 
 describe.runIf(live)("live menu scanner fixture", () => {
   it(
-    "extracts categories and items from sample-menu.png via Gemini",
+    "extracts categories and items from sample-menu.png via OpenAI",
     async () => {
       const bytes = readFileSync(FIXTURE);
       const file = new File([bytes], "sample-menu.png", { type: "image/png" });

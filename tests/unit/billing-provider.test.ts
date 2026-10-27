@@ -25,7 +25,7 @@ vi.mock("@/lib/env.server", () => ({
     firebase: true,
     firebaseAdmin: false,
     demoMode: false,
-    gemini: false,
+    openai: false,
     elevenlabs: false,
     agentTools: false,
     agentToolSigning: false,

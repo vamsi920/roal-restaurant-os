@@ -17,7 +17,7 @@ describe("formatScannerApiError", () => {
   it("maps invalid menu structure to retry guidance", () => {
     expect(
       formatScannerApiError(
-        { error: "Gemini returned invalid menu structure: bad price" },
+        { error: "AI returned invalid menu structure: bad price" },
         422
       )
     ).toMatch(/could not read a valid menu/i);

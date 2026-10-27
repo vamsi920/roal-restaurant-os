@@ -1,11 +1,11 @@
 import type { Db } from "@/lib/db";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/lib/gemini", () => ({
+vi.mock("@/lib/ai", () => ({
   extractCallInsightsFromTranscript: vi.fn(),
 }));
 
-import { extractCallInsightsFromTranscript } from "@/lib/gemini";
+import { extractCallInsightsFromTranscript } from "@/lib/ai";
 import {
   loadKnowledgeSuggestions,
   mineKnowledgeSuggestionsFromTranscript,
