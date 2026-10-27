@@ -18,7 +18,7 @@ describe("buildPublicPageMetadata", () => {
     });
     expect(meta.openGraph).not.toHaveProperty("images");
     expect(meta.twitter).toMatchObject({
-      card: "summary",
+      card: "summary_large_image",
       title: "Test — ROAL",
       description: "Test description for social previews.",
     });

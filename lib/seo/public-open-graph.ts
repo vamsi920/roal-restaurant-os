@@ -44,13 +44,13 @@ export function buildTextFirstOpenGraph(
   };
 }
 
-/** Twitter summary card (not large image). */
+/** Twitter card; the image comes from app/twitter-image.tsx. */
 export function buildTextFirstTwitter(
   title: string,
   description: string
 ): NonNullable<Metadata["twitter"]> {
   return {
-    card: "summary",
+    card: "summary_large_image",
     title,
     description,
   };
@@ -99,7 +99,7 @@ export function buildSiteMetadataDefaults(): Pick<Metadata, "openGraph" | "twitt
       siteName: SITE_NAME,
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
     },
   };
 }

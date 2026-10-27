@@ -4,6 +4,7 @@ import { CommandCenterSection } from "@/components/landing/home/command-center-s
 import { HomeFaq } from "@/components/landing/home/faq-section";
 import { HomeHero } from "@/components/landing/home/hero";
 import { HomeFaqJsonLd } from "@/components/landing/home/home-faq-json-ld";
+import { SiteJsonLd } from "@/components/landing/home/site-json-ld";
 import { HowItWorks } from "@/components/landing/home/how-it-works";
 import { MissedCalls } from "@/components/landing/home/missed-calls";
 import { HomePricing } from "@/components/landing/home/pricing-section";
@@ -22,6 +23,7 @@ export default async function Home() {
   return (
     <SiteShell>
       <HomeFaqJsonLd />
+      <SiteJsonLd />
       <HomeHero initialTrial={initialTrial} />
       <Capabilities />
       <HowItWorks />
