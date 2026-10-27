@@ -79,10 +79,11 @@ describe("toPublicView", () => {
       error: null,
       expiresAt: "2026-10-08T00:00:00.000Z",
     });
+    // "Joe's Pizza" matches the Italian accent voice, and the host takes that voice's name.
     expect(view.persona).toEqual({
-      agentName: "Addy",
-      voiceId: "EXAVITQu4vr4xnSDxMaL",
-      voiceLabel: "Sarah",
+      agentName: "Antonio",
+      voiceId: "iLVmqjzCGGvqtMCk6vVQ",
+      voiceLabel: "Antonio",
       language: "en",
     });
     const json = JSON.stringify(view);

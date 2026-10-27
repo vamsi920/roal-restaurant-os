@@ -89,7 +89,8 @@ describe("POST /api/try", () => {
       status: "resolving",
       sourceKind: "website",
       sourceInput: "https://joespizza.com/",
-      persona: { agentName: "Addy" },
+      // Nothing is known about the restaurant yet, so the default voice names the host.
+      persona: { agentName: "Sarah" },
     });
     expect(body.trial).not.toHaveProperty("prompt");
     expect(body.trial).not.toHaveProperty("token_hash");
