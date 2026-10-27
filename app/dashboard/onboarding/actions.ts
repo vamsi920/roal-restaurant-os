@@ -36,6 +36,7 @@ import {
 import { runRestaurantVoiceAgentSync } from "@/lib/voice-agent/run-restaurant-voice-agent-sync";
 import { sanitizeVoiceAgentDisplayError } from "@/lib/voice-agent/sanitize-display-error";
 import { getElevenLabsAgentId, getElevenLabsAgentPhoneNumberId } from "@/lib/env.server";
+import { toE164Phone } from "@/lib/phone/e164";
 import { getConvaiSignedUrl, startConvaiOutboundCall } from "@/lib/elevenlabs";
 import { commitMenuToRestaurant } from "@/lib/scanner/commit-menu";
 import { importWebsiteMenuFromUrl } from "@/lib/restaurant-lookup/import-website-menu";
@@ -380,16 +381,6 @@ export async function applyRestaurantLookupAction(input: {
   };
 }
 
-function toE164Phone(value: string | null | undefined): string | null {
-  if (!value) return null;
-  const digits = value.replace(/\D/g, "");
-  if (digits.length === 10) return `+1${digits}`;
-  if (digits.length === 11 && digits.startsWith("1")) return `+${digits}`;
-  if (value.trim().startsWith("+") && digits.length >= 10 && digits.length <= 15) {
-    return `+${digits}`;
-  }
-  return null;
-}
 
 export async function createVoiceAgentBrowserCallAction(input: {
   restaurantId: string;

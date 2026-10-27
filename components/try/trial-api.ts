@@ -55,6 +55,16 @@ export const trialApi = {
       method: "POST",
       body: JSON.stringify({ turns }),
     }),
+  lead: (
+    id: string,
+    body: { name: string; phone: string; email: string; answers?: { missedCalls?: string; ticket?: string } }
+  ) =>
+    request<{
+      ok: true;
+      callStatus: "placed" | "unavailable" | "failed" | "busy";
+      phone: string;
+      fields?: Record<string, string>;
+    }>(`/api/try/${id}/lead`, { method: "POST", body: JSON.stringify(body) }),
   voices: () =>
     request<{
       voices: Array<{ id: string; label: string; description: string; accent: string; gender: string; previewUrl: string | null }>;

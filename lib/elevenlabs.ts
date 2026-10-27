@@ -83,6 +83,8 @@ export async function startConvaiOutboundCall(input: {
   agentId: string;
   agentPhoneNumberId: string;
   toNumber: string;
+  /** Per-call overrides (prompt, first message, voice); the agent must allow them. */
+  conversationConfigOverride?: Record<string, unknown>;
 }): Promise<unknown> {
   const res = await elevenlabsFetch("/v1/convai/twilio/outbound-call", {
     method: "POST",
@@ -90,6 +92,9 @@ export async function startConvaiOutboundCall(input: {
       agent_id: input.agentId,
       agent_phone_number_id: input.agentPhoneNumberId,
       to_number: input.toNumber,
+      ...(input.conversationConfigOverride
+        ? { conversation_initiation_client_data: { conversation_config_override: input.conversationConfigOverride } }
+        : {}),
     }),
   });
   return parseJsonOrThrow(res, "outbound call");

@@ -6,17 +6,18 @@ import {
   claimTrialAction,
   startDashboardTrialAction,
 } from "@/app/dashboard/onboarding/actions";
-import { TrialBuilder } from "@/components/try/trial-builder";
-import { Badge } from "@/components/ui";
+import { StartFunnel } from "@/components/start/start-funnel";
 import type { TrialPublicView } from "@/lib/trial/types";
 
 type Props = {
   initialTrial: TrialPublicView | null;
   organizationName: string | null;
+  /** Adding another location: allow leaving back to the dashboard. */
+  canExit?: boolean;
 };
 
-/** Signed-in first-run: same link-to-call builder as the homepage, claim finishes in place. */
-export function MagicOnboarding({ initialTrial, organizationName }: Props) {
+/** Signed-in first run: the same step-by-step funnel as /try; the last step claims in place. */
+export function MagicOnboarding({ initialTrial, canExit = false }: Props) {
   const router = useRouter();
 
   const startTrial = useCallback(async (input: string) => {
@@ -33,15 +34,8 @@ export function MagicOnboarding({ initialTrial, organizationName }: Props) {
   );
 
   return (
-    <div className="mx-auto w-full min-w-0 max-w-5xl">
-      <header className="mb-4 flex flex-col items-center text-center">
-        <Badge tone="new" className="max-w-full">
-          <span className="truncate">
-            {organizationName ? `Add a location to ${organizationName}` : "Welcome to ROAL"}
-          </span>
-        </Badge>
-      </header>
-      <TrialBuilder mode="dashboard" initialTrial={initialTrial} startTrial={startTrial} onClaim={onClaim} autofocus />
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <StartFunnel mode="dashboard" initialTrial={initialTrial} startTrial={startTrial} onClaim={onClaim} exitHref={canExit ? "/dashboard" : null} />
     </div>
   );
 }

@@ -118,6 +118,12 @@ export const TABLES: Record<string, TableSpec> = {
       expires_at: () => new Date(Date.now() + 7 * 864e5).toISOString(),
     },
   },
+  /** Contact details captured at the end of the public /start funnel (one per trial). */
+  trial_leads: {
+    pk: ["trial_id"],
+    autoId: false,
+    defaults: { call_status: "not_requested", created_at: now, updated_at: now },
+  },
   restaurant_knowledge_suggestions: {
     defaults: { category: "general", status: "pending", times_asked: 1, created_at: now, updated_at: now },
   },

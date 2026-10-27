@@ -57,9 +57,22 @@ export type AdminEnvFlags = {
   outboundCall: boolean;
 };
 
+/** Contact captured at the end of the public /try funnel. */
+export type AdminTrialLead = {
+  trialId: string;
+  name: string;
+  phone: string;
+  email: string;
+  restaurantName: string | null;
+  sourceInput: string | null;
+  callStatus: string;
+  createdAt: string;
+};
+
 export type AdminOpsSnapshot = {
   generatedAt: string;
   health: HealthReport;
   envFlags: AdminEnvFlags;
   organizations: AdminOrganizationOps[];
+  leads: AdminTrialLead[];
 };

@@ -16,7 +16,7 @@ import {
   type Tone,
 } from "@/components/dashboard/page-primitives";
 import { EmptyState, IconTile, StatCard } from "@/components/ui";
-import type { AdminOpsSnapshot, OpsErrorRow } from "@/lib/admin/types";
+import type { AdminOpsSnapshot, AdminTrialLead, OpsErrorRow } from "@/lib/admin/types";
 import { formatMembershipRole } from "@/lib/auth/roles";
 import type { MembershipRole } from "@/lib/types";
 import type { HealthCheckResult } from "@/lib/observability/health";
@@ -44,6 +44,8 @@ export function AdminOpsDashboard({ snapshot }: Props) {
       />
 
       <HealthSection health={snapshot.health} envFlags={snapshot.envFlags} />
+
+      <LeadsSection leads={snapshot.leads ?? []} />
 
       {snapshot.organizations.map((org) => (
         <OrganizationSection key={org.id} org={org} />
@@ -219,6 +221,45 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
         </Panel>
       </div>
     </section>
+  );
+}
+
+const CALL_STATUS_LABEL: Record<string, string> = {
+  placed: "Called",
+  unavailable: "Call them",
+  busy: "Call them",
+  failed: "Call failed",
+  not_requested: "New",
+};
+
+/** People who finished the /try funnel and left a number. */
+function LeadsSection({ leads }: { leads: AdminTrialLead[] }) {
+  return (
+    <Panel title={`New leads from /try (${leads.length})`} flush>
+      {leads.length === 0 ? (
+        <EmptyState icon={PhoneCall} title="No leads yet." />
+      ) : (
+        <ul className="max-h-96 overflow-y-auto overscroll-y-contain">
+          {leads.map((lead) => (
+            <li key={lead.trialId} className="min-w-0 border-b border-line/70 px-[1.125rem] py-3 text-[13px] last:border-b-0">
+              <div className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                <span className="font-medium text-ink [overflow-wrap:anywhere]">
+                  {lead.name} · {lead.restaurantName ?? lead.sourceInput ?? "Unknown restaurant"}
+                </span>
+                <StatusChip tone={lead.callStatus === "placed" ? "ok" : "warn"}>
+                  {CALL_STATUS_LABEL[lead.callStatus] ?? lead.callStatus}
+                </StatusChip>
+              </div>
+              <p className="mt-0.5 text-[12px] text-muted [overflow-wrap:anywhere]">
+                <a href={`tel:${lead.phone}`} className="underline underline-offset-2">{lead.phone}</a> ·{" "}
+                <a href={`mailto:${lead.email}`} className="underline underline-offset-2">{lead.email}</a>
+              </p>
+              <p className="mt-0.5 text-[11px] text-subtle">{formatWhen(lead.createdAt)}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Panel>
   );
 }
 

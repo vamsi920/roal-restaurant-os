@@ -31,7 +31,11 @@ export default async function OnboardingPage({
     const initialTrial =
       pendingTrial && pendingTrial.status === "ready" ? toPublicView(pendingTrial) : null;
     return (
-      <MagicOnboarding initialTrial={initialTrial} organizationName={state.organization?.name ?? null} />
+      <MagicOnboarding
+        initialTrial={initialTrial}
+        organizationName={state.organization?.name ?? null}
+        canExit={state.restaurants.length > 0}
+      />
     );
   }
 

@@ -764,3 +764,14 @@
     animation: none !important;
   }
 }
+
+.hero__resume {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.hero__resume a {
+  color: rgb(var(--accent));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

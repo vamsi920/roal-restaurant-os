@@ -4,6 +4,7 @@ import type {
   AdminOpsSnapshot,
   AdminOrganizationOps,
   AdminRestaurantOps,
+  AdminTrialLead,
   OpsErrorRow,
 } from "@/lib/admin/types";
 import { sanitizeOpsErrorDetail } from "@/lib/admin/sanitize-ops-detail";
@@ -252,15 +253,36 @@ async function loadOrganizationOps(
   };
 }
 
+/** Newest funnel leads first (platform staff only — this page is admin-gated). */
+async function loadRecentLeads(supabase: Db): Promise<AdminTrialLead[]> {
+  const { data, error } = await supabase
+    .from("trial_leads")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(50);
+  if (error || !data) return [];
+  return data.map((row) => ({
+    trialId: String(row.trial_id),
+    name: String(row.name ?? ""),
+    phone: String(row.phone ?? ""),
+    email: String(row.email ?? ""),
+    restaurantName: (row.restaurant_name as string | null) ?? null,
+    sourceInput: (row.source_input as string | null) ?? null,
+    callStatus: String(row.call_status ?? "not_requested"),
+    createdAt: String(row.created_at ?? ""),
+  }));
+}
+
 export async function loadAdminOpsSnapshot(
   supabase: Db,
   adminOrgs: AdminOrgInput[]
 ): Promise<AdminOpsSnapshot> {
-  const [rawHealth, organizations] = await Promise.all([
+  const [rawHealth, organizations, leads] = await Promise.all([
     runHealthChecks(),
     Promise.all(
       adminOrgs.map((org) => loadOrganizationOps(supabase, org))
     ),
+    loadRecentLeads(supabase),
   ]);
   const health = sanitizeHealthReportForPublic(rawHealth);
 
@@ -271,5 +293,6 @@ export async function loadAdminOpsSnapshot(
     health,
     envFlags,
     organizations,
+    leads,
   };
 }

@@ -4,12 +4,12 @@ import type { MouseEvent, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 /**
- * Link to /try that, when the hero TrialBuilder input is on the page, scrolls to it and
+ * Link to /try that, when the hero link input is on the page, scrolls to it and
  * focuses it instead. Works without JS (plain link).
  */
 export function FocusTrialButton({ children, className }: { children: ReactNode; className?: string }) {
   function onClick(e: MouseEvent<HTMLAnchorElement>) {
-    const input = document.getElementById("trial-input");
+    const input = document.getElementById("start-link-input");
     if (!(input instanceof HTMLInputElement) || input.disabled) return;
     e.preventDefault();
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
