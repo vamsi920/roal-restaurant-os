@@ -89,6 +89,8 @@ export function StartFunnel({
   const [missed, setMissed] = useState<MissedCallId | undefined>();
   const [ticket, setTicket] = useState<TicketId | undefined>();
   const [menuReady, setMenuReady] = useState(Boolean(initialTrial?.menuSummary));
+  /** "site": reading their own website; "web": searching ordering pages, menu sites, PDFs and photos. */
+  const [menuPhase, setMenuPhase] = useState<"site" | "web">("site");
   const [busy, setBusy] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus | null>(null);
   const [calledPhone, setCalledPhone] = useState<string | null>(null);
@@ -140,8 +142,17 @@ export function StartFunnel({
         setTrial(listing.data.trial);
         // Read the menu in the background while the owner answers questions.
         setMenuReady(false);
-        menuPromise.current = trialApi.menu(created.id).then((r) => {
+        setMenuPhase("site");
+        menuPromise.current = trialApi.menu(created.id).then(async (r) => {
           if (r.ok) setTrial(r.data.trial);
+          // No priced menu on their site: look everywhere else before settling for a sample.
+          if (r.ok && r.data.trial.menuSummary?.source === "sample") {
+            setMenuPhase("web");
+            const deep = await trialApi.menu(created.id, { deep: true });
+            if (deep.ok) setTrial(deep.data.trial);
+            setMenuReady(true);
+            return deep.ok ? deep : r;
+          }
           setMenuReady(true);
           return r;
         });
@@ -343,6 +354,7 @@ export function StartFunnel({
               <MenuScreen
                 trial={trial}
                 ready={menuReady}
+                phase={menuPhase}
                 busy={busy}
                 error={error}
                 onFix={fixMenu}
@@ -613,6 +625,7 @@ function InsightScreen({
 function MenuScreen({
   trial,
   ready,
+  phase,
   busy,
   error,
   onFix,
@@ -620,6 +633,7 @@ function MenuScreen({
 }: {
   trial: TrialPublicView;
   ready: boolean;
+  phase: "site" | "web";
   busy: boolean;
   error: string | null;
   onFix: (p: { menu_url?: string } | FormData) => void;
@@ -638,8 +652,14 @@ function MenuScreen({
             <span key={n} style={{ animationDelay: `${n * 120}ms` }} />
           ))}
         </div>
-        <h1 className="sf__title sf__title--sm">{busy ? "Reading that menu…" : "Reading your menu…"}</h1>
-        <p className="sf__sub">Items, prices, sizes and add-ons. Almost there.</p>
+        <h1 className="sf__title sf__title--sm">
+          {busy ? "Reading that menu…" : phase === "web" ? "Searching the web for your menu…" : "Reading your menu…"}
+        </h1>
+        <p className="sf__sub">
+          {phase === "web" && !busy
+            ? "It wasn't priced on your website, so we're checking your ordering pages, menu sites and PDFs."
+            : "Items, prices, sizes and add-ons. Almost there."}
+        </p>
       </div>
     );
   }
@@ -649,10 +669,10 @@ function MenuScreen({
       {isSample ? (
         <>
           <p className="sf__eyebrow sf__eyebrow--warn">No prices online</p>
-          <h1 className="sf__title">We couldn&apos;t find a priced menu on your site.</h1>
+          <h1 className="sf__title">We couldn&apos;t find a priced menu online.</h1>
           <p className="sf__sub">
-            That&apos;s common. Snap a photo of your menu or paste your menu page, and we&apos;ll read every item and price.
-            Or keep going with a sample menu and add yours later.
+            We checked your website, ordering pages and menu sites. Snap a photo of your menu or paste a menu link, and
+            we&apos;ll read every item and price. Or keep going with a sample menu and add yours later.
           </p>
           <div className="sf__menu-fix">
             <button type="button" className="btn-accent btn-lg sf__cta" onClick={() => fileRef.current?.click()}>
@@ -696,7 +716,12 @@ function MenuScreen({
           <h1 className="sf__title">
             {summary.itemCount} items across {summary.categoryCount} categories.
           </h1>
-          <p className="sf__sub">Your host will know every one of these, with prices, the moment a caller asks.</p>
+          <p className="sf__sub">
+            {summary.source === "web_search" && summary.sourceUrl
+              ? `Found on ${hostOf(summary.sourceUrl)}, so double-check prices before you go live. `
+              : ""}
+            Your host will know every one of these, with prices, the moment a caller asks.
+          </p>
           <ul className="sf__menu">
             {summary.sampleItems.slice(0, 6).map((item, n) => (
               <motion.li key={`${item.name}-${n}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + n * 0.08 }}>
@@ -980,6 +1005,14 @@ function Arrow() {
       <path d="M5 12h13m-5-5 5 5-5 5" />
     </svg>
   );
+}
+
+function hostOf(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "the web";
+  }
 }
 
 function formatPhone(e164: string): string {

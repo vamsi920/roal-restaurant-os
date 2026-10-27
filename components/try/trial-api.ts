@@ -31,7 +31,7 @@ export const trialApi = {
     request<TrialEnvelope>("/api/try", { method: "POST", body: JSON.stringify({ input }) }),
   get: (id: string) => request<TrialEnvelope>(`/api/try/${id}`),
   listing: (id: string) => request<TrialEnvelope>(`/api/try/${id}/listing`, { method: "POST" }),
-  menu: (id: string, body?: { menu_url?: string } | FormData) =>
+  menu: (id: string, body?: { menu_url?: string; deep?: boolean } | FormData) =>
     request<TrialEnvelope>(`/api/try/${id}/menu`, {
       method: "POST",
       body: body instanceof FormData ? body : JSON.stringify(body ?? {}),

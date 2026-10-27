@@ -100,7 +100,11 @@ function parseJsonResponse(text: string) {
 
 type UserContent =
   | string
-  | Array<{ type: "text"; text: string } | { type: "image_url"; image_url: { url: string } }>;
+  | Array<
+      | { type: "text"; text: string }
+      | { type: "image_url"; image_url: { url: string } }
+      | { type: "file"; file: { filename: string; file_data: string } }
+    >;
 
 type OpenAIResponse = {
   choices?: { message?: { content?: string | null }; finish_reason?: string }[];
@@ -337,6 +341,106 @@ export async function extractMenuFromWebsiteText(
     data: expandCompactMenu(results.map((r) => r.data)),
     modelUsed: results[0]?.modelUsed ?? "none",
   };
+}
+
+/**
+ * Read a menu published as a PDF or a photo (linked from the site or found on the web).
+ * Same compact output as website text, so a multi-page PDF stays fast.
+ */
+export async function extractMenuFromDocument(
+  base64: string,
+  mimeType: string
+): Promise<ScanMenuImageResult> {
+  const isPdf = mimeType === "application/pdf";
+  const part = isPdf
+    ? ({ type: "file", file: { filename: "menu.pdf", file_data: `data:application/pdf;base64,${base64}` } } as const)
+    : ({ type: "image_url", image_url: { url: `data:${mimeType};base64,${base64}` } } as const);
+  const result = await generateJson<CompactMenu>(
+    WEBSITE_MENU_PROMPT.replace("from this website text", isPdf ? "from this PDF" : "from this menu photo"),
+    [part, { type: "text", text: "Extract the menu." }],
+    COMPACT_MENU_SCHEMA,
+    { maxTokens: 12000, fast: true }
+  );
+  return { data: expandCompactMenu([result.data]), modelUsed: result.modelUsed };
+}
+
+const MENU_SEARCH_MODEL = "gpt-5-search-api";
+
+/**
+ * Ask a web-search model for pages that list this restaurant's priced menu
+ * (its own ordering page, Slice/Toast/ChowNow, menu directories, PDFs). Returns URLs only;
+ * the caller fetches and extracts them, so nothing the search model says becomes menu data.
+ */
+export async function findMenuUrlsOnWeb(restaurant: string): Promise<string[]> {
+  const { apiKey } = requireOpenAIEnv();
+  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+    signal: AbortSignal.timeout(15_000),
+    body: JSON.stringify({
+      model: process.env.OPENAI_SEARCH_MODEL ?? MENU_SEARCH_MODEL,
+      web_search_options: { search_context_size: "low" },
+      messages: [
+        {
+          role: "user",
+          content:
+            `Find web pages that show the priced food menu (item names with prices) for this restaurant: ${restaurant}. ` +
+            "Prefer its own online ordering page (Toast, Square, Clover, ChowNow, Slice) or a menu PDF, then menu sites " +
+            "(MenuPages, Allmenus, Grubhub, Seamless, DoorDash, Yelp menu). Only pages for this exact restaurant and location. " +
+            'Reply with only a JSON object {"urls":[...]} of up to 6 URLs, best first.',
+        },
+      ],
+    }),
+  });
+  const j = (await r.json().catch(() => ({}))) as OpenAIResponse;
+  if (!r.ok) throw new Error(`OpenAI search ${r.status}: ${j.error?.message ?? "unknown error"}`);
+  const text = j.choices?.[0]?.message?.content ?? "";
+  let urls: unknown = [];
+  try {
+    urls = (parseJsonResponse(text) as { urls?: unknown }).urls;
+  } catch {
+    urls = text.match(/https?:\/\/[^\s"'<>)\]]+/g) ?? [];
+  }
+  return (Array.isArray(urls) ? urls : [])
+    .filter((u): u is string => typeof u === "string" && /^https?:\/\//i.test(u))
+    .map((u) => u.replace(/[?&]utm_[^&]+/g, "").replace(/[.,)]+$/, ""))
+    .slice(0, 6);
+}
+
+/**
+ * Last resort for menus behind bot walls (Toast, DoorDash): the search model reads the page
+ * itself and must name the one source page it copied from. Callers label the result as
+ * "found on <host>, double-check prices" and only use it when nothing we fetched worked.
+ */
+export async function readMenuViaWebSearch(
+  restaurant: string
+): Promise<{ data: unknown; sourceUrl: string } | null> {
+  const { apiKey } = requireOpenAIEnv();
+  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+    signal: AbortSignal.timeout(20_000),
+    body: JSON.stringify({
+      model: process.env.OPENAI_SEARCH_MODEL ?? MENU_SEARCH_MODEL,
+      web_search_options: { search_context_size: "medium" },
+      messages: [
+        {
+          role: "user",
+          content:
+            `Find the current priced food menu for: ${restaurant}. Copy items and prices exactly as published on ONE ` +
+            "source page for this exact location; do not estimate, round or fill gaps, and skip items without a price. " +
+            'Reply only JSON: {"source":"url of the page you copied from","c":[{"n":"Category","i":[{"n":"Item","p":9.99}]}]}. ' +
+            'If no page shows prices, reply {"source":null,"c":[]}.',
+        },
+      ],
+    }),
+  });
+  const j = (await r.json().catch(() => ({}))) as OpenAIResponse;
+  if (!r.ok) throw new Error(`OpenAI search ${r.status}: ${j.error?.message ?? "unknown error"}`);
+  const parsed = parseJsonResponse(j.choices?.[0]?.message?.content ?? "{}") as CompactMenu & { source?: unknown };
+  const source = typeof parsed.source === "string" && /^https?:\/\//i.test(parsed.source) ? parsed.source : null;
+  if (!source) return null;
+  return { data: expandCompactMenu([parsed]), sourceUrl: source };
 }
 
 /* ------------------------------------------------------------------------- */

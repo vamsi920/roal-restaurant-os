@@ -1,6 +1,7 @@
 import { ScannedMenuSchema, type ScannedMenu } from "@/lib/menu-import/types";
 import { scanMenuImage } from "@/lib/ai";
 import { hasGooglePlacesApiKey } from "@/lib/env.server";
+import { deepMenuSearch } from "@/lib/restaurant-lookup/deep-menu-search";
 import { importWebsiteMenuFromUrl } from "@/lib/restaurant-lookup/import-website-menu";
 import {
   getRestaurantPlaceSnapshot,
@@ -61,6 +62,71 @@ async function importMenuWithinBudget(url: string) {
       setTimeout(() => resolve({ ok: false, message: "Reading the website menu took too long." }), MENU_IMPORT_BUDGET_MS)
     ),
   ]);
+}
+
+/** The deep pass runs as its own request, so it gets most of a fresh function budget. */
+const DEEP_MENU_BUDGET_MS = 25_000;
+
+async function deepMenuWithinBudget(trial: TrialRecord) {
+  return Promise.race([
+    deepMenuSearch({
+      name: trial.restaurant_name ?? trial.profile?.name ?? trial.source_input,
+      website: trial.profile?.website ?? null,
+      address: trial.profile?.address_line1 ?? null,
+      city: trial.profile?.city ?? null,
+      region: trial.profile?.region ?? null,
+    }),
+    new Promise<{ ok: false; message: string; tried: number }>((resolve) =>
+      setTimeout(() => resolve({ ok: false, message: "Searching for your menu took too long.", tried: 0 }), DEEP_MENU_BUDGET_MS)
+    ),
+  ]);
+}
+
+/**
+ * Step 2b: the site had no priced menu, so look everywhere else (web search, PDFs, photos).
+ * Leaves the current (sample) menu in place when nothing better turns up.
+ */
+export async function deepSearchTrialMenu(trialId: string): Promise<TrialRecord> {
+  const existing = await getTrial(trialId);
+  if (!existing) throw new Error("Trial not found");
+  const trial = await updateTrial(trialId, {
+    step_log: upsertStep(existing.step_log, {
+      id: "menu",
+      status: "running",
+      title: "Searching the web for your menu",
+    }),
+  });
+
+  const found = await deepMenuWithinBudget(trial);
+  if (found.ok) {
+    const where = new URL(found.sourceUrl).hostname.replace(/^www\./, "");
+    const kind = found.via === "pdf" ? "menu PDF" : found.via === "image" ? "menu photo" : "online menu";
+    return updateTrial(trialId, {
+      menu: found.menu,
+      menu_source: "web_search",
+      menu_source_url: found.sourceUrl,
+      step_log: upsertStep(trial.step_log, {
+        id: "menu",
+        status: "done",
+        title: "Menu loaded",
+        detail: `Found ${found.itemCount} priced items in your ${kind} on ${where}`,
+      }),
+    });
+  }
+
+  const fallback = trial.menu ?? buildSampleMenu(
+    [trial.profile?.cuisine, trial.restaurant_name, trial.profile?.name].filter(Boolean).join(" ")
+  );
+  return updateTrial(trialId, {
+    menu: fallback,
+    menu_source: trial.menu_source ?? "sample",
+    step_log: upsertStep(trial.step_log, {
+      id: "menu",
+      status: "skipped",
+      title: "Sample menu loaded",
+      detail: `${found.message} Using a sample menu for the test call.`,
+    }),
+  });
 }
 
 export type ResolveListingResult = { ok: true; trial: TrialRecord } | { ok: false; trial: TrialRecord; message: string };

@@ -18,7 +18,8 @@ export type TrialStepLogEntry = {
   at: string;
 };
 
-export type TrialMenuSource = "website" | "menu_url" | "upload" | "sample";
+/** "web_search": found off-site (ordering page, menu directory, PDF or photo). */
+export type TrialMenuSource = "website" | "menu_url" | "upload" | "web_search" | "sample";
 
 export type TrialPersona = {
   agentName: string;
