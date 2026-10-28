@@ -16,7 +16,8 @@ import {
 
 export const runtime = "nodejs";
 
-const startLimiter = new SlidingWindowRateLimiter(8, 10 * 60 * 1000);
+// Generous: an owner may retry with a few different links, and a whole restaurant can share one IP.
+const startLimiter = new SlidingWindowRateLimiter(40, 10 * 60 * 1000);
 
 /** Start a try-a-call trial from a website / Google Maps link / "name, city". */
 export async function POST(req: Request) {

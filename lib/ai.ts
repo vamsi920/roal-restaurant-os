@@ -447,6 +447,45 @@ export async function readMenuViaWebSearch(
   return { data: expandCompactMenu([parsed]), sourceUrl: source };
 }
 
+/**
+ * Last-ditch restaurant lookup: search the open web (Google listing, Yelp, delivery apps, news) for
+ * the business behind a link or name. Used when the site blocks us and Google Places has no match.
+ */
+export async function findRestaurantViaWebSearch(
+  hint: string
+): Promise<ExtractedRestaurantProfile | null> {
+  const { apiKey } = requireOpenAIEnv();
+  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+    signal: AbortSignal.timeout(15_000),
+    body: JSON.stringify({
+      model: process.env.OPENAI_SEARCH_MODEL ?? MENU_SEARCH_MODEL,
+      web_search_options: { search_context_size: "low" },
+      messages: [
+        {
+          role: "user",
+          content:
+            `Identify this restaurant and its location: ${hint}\n` +
+            "Search listings (Google, Yelp, delivery apps, its own site). Only report facts you found; leave a field " +
+            "empty rather than guess. Hours use 24h HH:MM, day_of_week 0=Sunday. Reply only JSON: " +
+            '{"found":true,"name":"","cuisine":"","phone":"","address_line1":"","city":"","region":"","postal_code":"",' +
+            '"country":"US","timezone":"America/New_York","weekly_hours":[{"day_of_week":0,"is_closed":false,"open_time":"11:00","close_time":"22:00"}]}. ' +
+            'If you cannot identify it, reply {"found":false}.',
+        },
+      ],
+    }),
+  });
+  const j = (await r.json().catch(() => ({}))) as OpenAIResponse;
+  if (!r.ok) throw new Error(`OpenAI search ${r.status}: ${j.error?.message ?? "unknown error"}`);
+  const parsed = parseJsonResponse(j.choices?.[0]?.message?.content ?? "{}") as Partial<ExtractedRestaurantProfile> & {
+    found?: boolean;
+  };
+  const name = typeof parsed.name === "string" ? parsed.name.trim() : "";
+  if (parsed.found === false || !name) return null;
+  return { ...parsed, is_restaurant: true, name } as ExtractedRestaurantProfile;
+}
+
 /** What the caller has ordered so far, for the live ticket beside a demo call. */
 export type CallOrderDraft = {
   i?: { n?: string; q?: number; m?: string[]; note?: string }[];

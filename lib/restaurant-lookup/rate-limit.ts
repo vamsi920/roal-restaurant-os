@@ -28,6 +28,8 @@ export class SlidingWindowRateLimiter {
 export const lookupRateLimiter = new SlidingWindowRateLimiter(10, 10 * 60 * 1000);
 
 export function clientIpFromRequest(req: Request): string {
+  const netlify = req.headers.get("x-nf-client-connection-ip")?.trim();
+  if (netlify) return netlify.slice(0, 64);
   const forwarded = req.headers.get("x-forwarded-for");
   if (forwarded) {
     const first = forwarded.split(",")[0]?.trim();

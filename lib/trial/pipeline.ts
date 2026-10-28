@@ -1,5 +1,5 @@
 import { ScannedMenuSchema, type ScannedMenu } from "@/lib/menu-import/types";
-import { scanMenuImage } from "@/lib/ai";
+import { findRestaurantViaWebSearch, scanMenuImage } from "@/lib/ai";
 import { hasGooglePlacesApiKey } from "@/lib/env.server";
 import { deepMenuSearch } from "@/lib/restaurant-lookup/deep-menu-search";
 import { importWebsiteMenuFromUrl } from "@/lib/restaurant-lookup/import-website-menu";
@@ -15,7 +15,11 @@ import { buildSampleMenu } from "@/lib/trial/sample-menu";
 import { getTrial, updateTrial, upsertStep } from "@/lib/trial/store";
 import type { TrialKnowledgeEntry, TrialProfile, TrialRecord } from "@/lib/trial/types";
 import { resolveTrialPersona } from "@/lib/trial/voices";
-import { buildProfileFromWebsite } from "@/lib/trial/website-profile";
+import {
+  buildProfileFromWebsite,
+  profileFromExtracted,
+  weeklyHoursFromExtracted,
+} from "@/lib/trial/website-profile";
 
 function profileFromSnapshot(snapshot: PlaceSnapshot): TrialProfile {
   return { ...snapshot.profile, cuisine: null, tagline: null };
@@ -89,6 +93,75 @@ async function placesLookupByDomain(url: string): Promise<PlaceSnapshot | null> 
     console.error("[trial places by domain]", e instanceof Error ? e.message : e);
     return null;
   }
+}
+
+const WEB_SEARCH_LOOKUP_BUDGET_MS = 14_000;
+
+function titleFromDomainLabel(label: string): string {
+  return label.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function emptyProfile(name: string, website: string | null, city: string | null): TrialProfile {
+  return {
+    name,
+    phone: null,
+    address_line1: null,
+    address_line2: null,
+    city,
+    region: null,
+    postal_code: null,
+    country: "US",
+    timezone: "America/New_York",
+    website,
+    cuisine: null,
+    tagline: null,
+  };
+}
+
+/** Fallback when neither the website nor Google Places gave us the restaurant. Always returns a profile. */
+export async function lookupWithoutListing(
+  parsed: ParsedTrialInput,
+  search: typeof findRestaurantViaWebSearch = findRestaurantViaWebSearch
+): Promise<{ profile: TrialProfile; weeklyHours: TrialRecord["weekly_hours"]; detail: string }> {
+  const website = parsed.kind === "website" ? parsed.url : null;
+  const hint =
+    parsed.kind === "website"
+      ? `the restaurant whose website is ${parsed.url}`
+      : parsed.kind === "maps"
+        ? `${parsed.query ?? ""} (Google Maps link ${parsed.url})`.trim()
+        : [parsed.name, parsed.city].filter(Boolean).join(", ");
+
+  try {
+    const found = await Promise.race([
+      search(hint),
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), WEB_SEARCH_LOOKUP_BUDGET_MS)),
+    ]);
+    if (found) {
+      const profile = profileFromExtracted(found, website ?? "");
+      return {
+        profile: { ...profile, website },
+        weeklyHours: weeklyHoursFromExtracted(found.weekly_hours),
+        detail: `Found ${profile.name}${profile.city ? ` in ${profile.city}` : ""} on the web`,
+      };
+    }
+  } catch (e) {
+    console.error("[trial web lookup]", e instanceof Error ? e.message.slice(0, 200) : e);
+  }
+
+  const label = website ? domainLabel(website) : null;
+  const name =
+    parsed.kind === "name_city"
+      ? parsed.name
+      : parsed.kind === "maps" && parsed.query
+        ? parsed.query
+        : label
+          ? titleFromDomainLabel(label)
+          : "Your restaurant";
+  return {
+    profile: emptyProfile(name, website, parsed.kind === "name_city" ? parsed.city : null),
+    weeklyHours: null,
+    detail: "Starting from your link. You can add hours and details in the next steps.",
+  };
 }
 
 /** Netlify cuts synchronous functions off at 30s; stop waiting on the importer well before that. */
@@ -263,6 +336,16 @@ export async function resolveTrialListing(
     } else {
       failure = "We could not find that restaurant. Try the website link, or add the city.";
     }
+  }
+
+  // Never leave an owner stuck on step one: search the web, and failing that start from what they typed.
+  const notRestaurant = parsed.kind === "website" && failure?.includes("does not look like a restaurant");
+  if (!profile && !notRestaurant) {
+    const found = await lookupWithoutListing(parsed);
+    profile = found.profile;
+    weeklyHours = weeklyHours ?? found.weeklyHours;
+    detail = found.detail;
+    failure = null;
   }
 
   if (!profile || failure) {
