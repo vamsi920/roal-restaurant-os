@@ -225,7 +225,7 @@ function finalizeBodySpec(mode: "baked" | "dynamic") {
 function orderStatusBodySpec(mode: "baked" | "dynamic") {
   const baseProps = {
     session_id: {
-      ...SESSION_ID_PROP,
+      type: "string",
       description:
         "Current or prior ElevenLabs conversation/session id if known. Omit if the guest is asking about an older order and you only have phone/name.",
     },
@@ -301,11 +301,7 @@ function callerHistoryBodySpec(mode: "baked" | "dynamic") {
 
 function reservationBodySpec(mode: "baked" | "dynamic") {
   const baseProps = {
-    session_id: {
-      ...SESSION_ID_PROP,
-      description:
-        "Current ElevenLabs conversation/session id if available. Keep it stable for this call.",
-    },
+    session_id: SESSION_ID_PROP,
     conversation_id: {
       type: "string",
       description:
