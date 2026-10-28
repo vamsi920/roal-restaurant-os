@@ -38,7 +38,9 @@
     "elevenlabs:connect": "npx tsx --env-file=.env --env-file=.env.local scripts/connect-elevenlabs-restaurant.ts",
     "provision:backfill-voice-agents": "npx tsx --env-file=.env --env-file=.env.local scripts/backfill-restaurant-voice-agents.ts",
     "elevenlabs:profile": "npx tsx --env-file=.env scripts/apply-restaurant-profile.ts",
-    "elevenlabs:tools": "npx tsx --env-file=.env scripts/sync-roal-el.ts"
+    "elevenlabs:tools": "npx tsx --env-file=.env scripts/sync-roal-el.ts",
+    "outreach:pull": "npx tsx --env-file=.env.local scripts/outreach/pull-restaurants.ts",
+    "outreach:emails": "npx tsx scripts/outreach/find-emails.ts"
   },
   "dependencies": {
     "@elevenlabs/client": "^1.31.0",
