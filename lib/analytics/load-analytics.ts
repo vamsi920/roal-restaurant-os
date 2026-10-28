@@ -45,6 +45,10 @@ import type {
   RestaurantAnalyticsRow,
 } from "@/lib/analytics/types";
 import { orderPricingFromProfile } from "@/lib/orders/pricing-settings";
+import {
+  DEFAULT_RESTAURANT_TIMEZONE,
+  resolveRestaurantTimezone,
+} from "@/lib/restaurant-profile/timezone";
 import type {
   DbItem,
   DbModifier,
@@ -90,7 +94,6 @@ export async function loadOrganizationAnalytics(
   const { since, until } = analyticsRangeBounds(rangeKey);
   const sinceIso = since.toISOString();
   const untilIso = until.toISOString();
-  const dayKeys = buildDaySeries(since, until);
 
   const { data: restaurants, error: restError } = await supabase
     .from("restaurants")
@@ -111,7 +114,14 @@ export async function loadOrganizationAnalytics(
   const restaurantIds = scopedRestList.map((r) => r.id);
   const restaurantIdSet = new Set(restaurantIds);
   if (restaurantIds.length === 0) {
-    return emptySnapshot(input, rangeKey, sinceIso, untilIso, dayKeys, scope);
+    return emptySnapshot(
+      input,
+      rangeKey,
+      sinceIso,
+      untilIso,
+      buildDaySeries(since, until, DEFAULT_RESTAURANT_TIMEZONE),
+      scope
+    );
   }
 
   const usageQuery = supabase
@@ -179,7 +189,9 @@ export async function loadOrganizationAnalytics(
       .in("restaurant_id", restaurantIds),
     supabase
       .from("restaurant_profiles")
-      .select("restaurant_id, tax_rate_percent, service_fee_percent")
+      .select(
+        "restaurant_id, tax_rate_percent, service_fee_percent, timezone, region, agent_display_name"
+      )
       .in("restaurant_id", restaurantIds),
     supabase
       .from("restaurant_reservation_requests")
@@ -280,15 +292,33 @@ export async function loadOrganizationAnalytics(
     categoryRestaurantMap
   );
 
-  const pricingByRestaurant = new Map(
-    ((profilesResult.data ?? []) as Pick<
+  const profileRows = ((profilesResult.data ?? []) as Array<
+    Pick<
       RestaurantProfile,
       "restaurant_id" | "tax_rate_percent" | "service_fee_percent"
-    >[]).map((p) => [
+    > &
+      Partial<
+        Pick<RestaurantProfile, "timezone" | "region" | "agent_display_name">
+      >
+  >).filter((p) => restaurantIdSet.has(p.restaurant_id));
+
+  const pricingByRestaurant = new Map(
+    profileRows.map((p) => [p.restaurant_id, orderPricingFromProfile(p)])
+  );
+  const hostNameByRestaurant = new Map(
+    profileRows.map((p) => [
       p.restaurant_id,
-      orderPricingFromProfile(p),
+      p.agent_display_name?.trim() || null,
     ])
   );
+  const timeZone = analyticsTimeZone(
+    restaurantIds,
+    profileRows.map((p) => ({
+      restaurantId: p.restaurant_id,
+      zone: resolveRestaurantTimezone({ timezone: p.timezone, region: p.region }),
+    }))
+  );
+  const dayKeys = buildDaySeries(since, until, timeZone);
 
   const sessionMap = collectOrderSessions(
     orders,
@@ -332,18 +362,22 @@ export async function loadOrganizationAnalytics(
     receipts,
     usage,
     dayKeys,
-    restaurantIdSet
+    restaurantIdSet,
+    { timeZone, callEvents }
   );
-  const peakHours = peakOrderHoursFromReceipts(receipts);
-  const peakCallHours = peakCallHoursFromEvents(callEvents);
+  const peakHours = peakOrderHoursFromReceipts(receipts, 3, timeZone);
+  const peakCallHours = peakCallHoursFromEvents(callEvents, 3, timeZone);
   const peakCallWindows = peakCallWindowsFromEvents(
     callEvents,
-    receiptSessionKeys
+    receiptSessionKeys,
+    6,
+    timeZone
   );
   const callOutcomes = aggregateCallOutcomes(callEvents, receiptSessionKeys);
   const topCallerQuestions = aggregateCallerQuestionTopics(
     callEvents,
-    receiptSessionKeys
+    receiptSessionKeys,
+    { receipts, hostNameByRestaurant }
   );
   const conversionTrend = computeSessionConversionTrend(
     sessions,
@@ -440,7 +474,9 @@ export async function loadOrganizationAnalytics(
     since: sinceIso,
     until: untilIso,
     restaurantCount: scopedRestList.length,
+    timeZone,
     summary: {
+      ordersTaken: sessionsWithCompletedOrder,
       orderSessions,
       sessionsWithCompletedOrder,
       sessionConversionPercent,
@@ -500,7 +536,9 @@ function emptySnapshot(
     since,
     until,
     restaurantCount: 0,
+    timeZone: DEFAULT_RESTAURANT_TIMEZONE,
     summary: {
+      ordersTaken: 0,
       orderSessions: 0,
       sessionsWithCompletedOrder: 0,
       sessionConversionPercent: null,
@@ -555,6 +593,7 @@ function emptySnapshot(
     },
     ordersOverTime: dayKeys.map((date) => ({
       date,
+      calls: 0,
       orderSessions: 0,
       completed: 0,
       canceled: 0,
@@ -583,4 +622,19 @@ function emptySnapshot(
       successPercent: null,
     },
   };
+}
+
+/**
+ * One zone for the whole report: the restaurant's own zone, or the shared zone
+ * of every location in an org rollup. Mixed zones fall back to Eastern.
+ */
+function analyticsTimeZone(
+  restaurantIds: string[],
+  zones: Array<{ restaurantId: string; zone: string }>
+): string {
+  const byRestaurant = new Map(zones.map((z) => [z.restaurantId, z.zone]));
+  const resolved = new Set(
+    restaurantIds.map((id) => byRestaurant.get(id) ?? DEFAULT_RESTAURANT_TIMEZONE)
+  );
+  return resolved.size === 1 ? [...resolved][0]! : DEFAULT_RESTAURANT_TIMEZONE;
 }

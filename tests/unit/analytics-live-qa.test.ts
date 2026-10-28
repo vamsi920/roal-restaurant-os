@@ -16,22 +16,38 @@ describe("analytics live posture (launch 23)", () => {
       join(REPO, "components/analytics/AnalyticsDashboard.tsx"),
       "utf8"
     );
-    expect(dash).toContain("Order sessions");
-    expect(dash).toContain("Calls recorded");
-    expect(dash).toContain("Peak call hours");
-    expect(dash).toContain("Busiest call windows");
-    expect(dash).toContain("Call orders");
-    expect(dash).toContain("FAQ / no order");
-    expect(dash).toContain("Upsell attach rate");
-    expect(dash).toContain("Controlled upsell lift");
-    expect(dash).toContain("experimentTicketLiftCents");
-    expect(dash).toContain("eligible orders");
-    expect(dash).toContain("Voicemail / callback");
+    expect(dash).toContain("Calls answered");
+    expect(dash).toContain("Orders taken");
+    expect(dash).toContain("Sales from phone orders");
+    expect(dash).toContain("Average order");
+    expect(dash).toContain("Busiest time");
+    expect(dash).toContain("Orders waiting too long");
+    expect(dash).toContain("summary.stuckOrderCount > 0");
+    expect(dash).toContain("Busiest call times");
+    expect(dash).toContain("Questions only");
     expect(dash).toContain("Reservations");
-    expect(dash).toContain("Avg order estimate");
-    expect(dash).toContain("Stuck orders");
-    expect(dash).toContain("Menu scan");
+    expect(dash).toContain("Add-on offers");
+    expect(dash).toContain("/settings");
     expect(dash).not.toMatch(/page views|bounce rate|NPS|retention/i);
+  });
+
+  it("uses owner words only (no internal jargon on screen)", () => {
+    const dash = readFileSync(
+      join(REPO, "components/analytics/AnalyticsDashboard.tsx"),
+      "utf8"
+    );
+    const chart = readFileSync(
+      join(REPO, "components/analytics/OrdersTrendChart.tsx"),
+      "utf8"
+    );
+    // Strip identifiers like summary.orderSessions; check only quoted / JSX copy.
+    const copy = [dash, chart]
+      .join("\n")
+      .match(/"[^"\n]*"|`[^`\n]*`|>[^<>{}\n]+</g)!
+      .join("\n");
+    expect(copy).not.toMatch(
+      /session|webhook|ElevenLabs|UTC|receipt|conversion trend|treatment|control split|deterministic|finalized|Menu scan/i
+    );
   });
 
   it("empty state when no activity", () => {
@@ -59,8 +75,8 @@ describe("analytics live posture (launch 23)", () => {
       "utf8"
     );
     expect(chart).toContain("No daily data");
-    expect(chart).toContain("Order sessions");
-    expect(chart).toContain("Completed");
+    expect(chart).toContain("Calls");
+    expect(chart).toContain("Orders");
     expect(chart).toContain("Canceled");
   });
 

@@ -153,7 +153,7 @@ export function bucketUsageByDay(
 ): DailyOrderPoint[] {
   const map = new Map<string, DailyOrderPoint>();
   for (const key of dayKeys) {
-    map.set(key, { date: key, orderSessions: 0, completed: 0, canceled: 0 });
+    map.set(key, { date: key, calls: 0, orderSessions: 0, completed: 0, canceled: 0 });
   }
 
   for (const row of events) {

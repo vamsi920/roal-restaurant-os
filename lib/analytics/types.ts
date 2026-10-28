@@ -1,7 +1,10 @@
 export type AnalyticsRangeKey = "7d" | "30d" | "90d";
 
 export type DailyOrderPoint = {
+  /** Calendar day (YYYY-MM-DD) in the restaurant's time zone. */
   date: string;
+  /** Calls answered that day. */
+  calls: number;
   /** Unique order sessions with activity that day (drafts, receipts, usage). */
   orderSessions: number;
   /** Phone receipts finalized that day. */
@@ -10,7 +13,8 @@ export type DailyOrderPoint = {
 };
 
 export type PeakHourRow = {
-  hourUtc: number;
+  /** Hour of day (0-23) in the zone the row was built for. */
+  hour: number;
   label: string;
   orderCount: number;
 };
@@ -29,9 +33,10 @@ export type CallOutcomeStats = {
 };
 
 export type PeakCallWindowRow = {
-  dayOfWeekUtc: number;
+  /** 0 = Sunday, in the zone the row was built for. */
+  dayOfWeek: number;
   dayLabel: string;
-  hourUtc: number;
+  hour: number;
   hourLabel: string;
   callCount: number;
   completedCount: number;
@@ -139,7 +144,11 @@ export type AnalyticsSnapshot = {
   since: string;
   until: string;
   restaurantCount: number;
+  /** IANA zone all times and days in this report are shown in. */
+  timeZone: string;
   summary: {
+    /** Unique phone orders saved in range (one per call). */
+    ordersTaken: number;
     orderSessions: number;
     sessionsWithCompletedOrder: number;
     sessionConversionPercent: number | null;

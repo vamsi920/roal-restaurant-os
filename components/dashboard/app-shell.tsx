@@ -531,7 +531,7 @@ function AccountCard({
               </Link>
             ) : null}
             <Link href="/" onClick={go} className={cn("app-shell-marketing-link", itemCls)}>
-              <ExternalLink size={15} className="text-subtle" aria-hidden /> Marketing site
+              <ExternalLink size={15} className="text-subtle" aria-hidden /> ROAL website
             </Link>
             <form action="/auth/signout" method="post">
               <button type="submit" className={cn("app-shell-signout", itemCls)}>

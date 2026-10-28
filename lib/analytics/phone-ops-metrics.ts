@@ -3,11 +3,17 @@ import {
   isQueuedKitchenStatus,
   isTerminalOrderStatus,
 } from "@/lib/order-status";
-import { dayKeyUtc } from "@/lib/analytics/range";
+import {
+  DAY_LABELS,
+  dayKeyInZone,
+  hourLabel,
+  localTimeParts,
+} from "@/lib/analytics/range";
 import type {
   ConversionTrend,
   DailyOrderPoint,
   PeakCallWindowRow,
+  PeakHourRow,
 } from "@/lib/analytics/types";
 import {
   callEventReceiptSessionKey,
@@ -151,8 +157,15 @@ export function bucketOrderSessionsByDay(
   receipts: ReceiptRow[],
   usage: UsageRow[],
   dayKeys: string[],
-  restaurantIdSet: Set<string>
+  restaurantIdSet: Set<string>,
+  options: {
+    /** IANA zone used to pick the calendar day; UTC when omitted. */
+    timeZone?: string | null;
+    /** Answered calls, counted per day when given. */
+    callEvents?: AgentCallEventAnalyticsRow[];
+  } = {}
 ): DailyOrderPoint[] {
+  const dayOf = (iso: string) => dayKeyInZone(iso, options.timeZone);
   const sessionsByDay = new Map<string, Set<string>>();
   for (const key of dayKeys) {
     sessionsByDay.set(key, new Set());
@@ -161,7 +174,7 @@ export function bucketOrderSessionsByDay(
   const map = new Map(
     dayKeys.map((date) => [
       date,
-      { date, orderSessions: 0, completed: 0, canceled: 0 },
+      { date, calls: 0, orderSessions: 0, completed: 0, canceled: 0 },
     ])
   );
 
@@ -178,9 +191,9 @@ export function bucketOrderSessionsByDay(
 
   for (const order of orders) {
     if (!restaurantIdSet.has(order.restaurant_id)) continue;
-    addSession(dayKeyUtc(order.created_at), order.restaurant_id, order.session_id);
+    addSession(dayOf(order.created_at), order.restaurant_id, order.session_id);
     if (order.status === "canceled") {
-      const day = dayKeyUtc(order.canceled_at ?? order.created_at);
+      const day = dayOf(order.canceled_at ?? order.created_at);
       const bucket = map.get(day);
       if (bucket) bucket.canceled += 1;
     }
@@ -188,7 +201,7 @@ export function bucketOrderSessionsByDay(
 
   for (const receipt of receipts) {
     if (!restaurantIdSet.has(receipt.restaurant_id)) continue;
-    const day = dayKeyUtc(receipt.created_at);
+    const day = dayOf(receipt.created_at);
     addSession(day, receipt.restaurant_id, receipt.session_id);
     const bucket = map.get(day);
     if (bucket) bucket.completed += 1;
@@ -199,106 +212,77 @@ export function bucketOrderSessionsByDay(
     const sid = row.session_id?.trim();
     if (!sid) continue;
     if (row.event_type === "order_completed" || row.event_type === "voice_order") {
-      const day = dayKeyUtc(row.occurred_at);
+      const day = dayOf(row.occurred_at);
       addSession(day, row.restaurant_id, sid);
     }
+  }
+
+  for (const event of options.callEvents ?? []) {
+    if (!restaurantIdSet.has(event.restaurant_id)) continue;
+    const bucket = map.get(dayOf(event.started_at));
+    if (bucket) bucket.calls += 1;
   }
 
   return dayKeys.map((key) => map.get(key)!);
 }
 
-const HOUR_LABELS = [
-  "12 AM",
-  "1 AM",
-  "2 AM",
-  "3 AM",
-  "4 AM",
-  "5 AM",
-  "6 AM",
-  "7 AM",
-  "8 AM",
-  "9 AM",
-  "10 AM",
-  "11 AM",
-  "12 PM",
-  "1 PM",
-  "2 PM",
-  "3 PM",
-  "4 PM",
-  "5 PM",
-  "6 PM",
-  "7 PM",
-  "8 PM",
-  "9 PM",
-  "10 PM",
-  "11 PM",
-];
+function topHours(
+  isoTimes: string[],
+  timeZone: string,
+  limit: number
+): PeakHourRow[] {
+  const counts = new Array(24).fill(0) as number[];
+  for (const iso of isoTimes) {
+    const parts = localTimeParts(iso, timeZone);
+    if (parts) counts[parts.hour] += 1;
+  }
+  return counts
+    .map((orderCount, hour) => ({ hour, label: hourLabel(hour), orderCount }))
+    .filter((row) => row.orderCount > 0)
+    .sort((a, b) => b.orderCount - a.orderCount || a.hour - b.hour)
+    .slice(0, limit);
+}
 
-const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
+/** Busiest order hours, in `timeZone` (an IANA zone; UTC when omitted). */
 export function peakOrderHoursFromReceipts(
   receipts: ReceiptRow[],
-  limit = 3
-): import("@/lib/analytics/types").PeakHourRow[] {
-  const counts = new Array(24).fill(0) as number[];
-  for (const receipt of receipts) {
-    const h = new Date(receipt.created_at).getUTCHours();
-    if (Number.isFinite(h) && h >= 0 && h < 24) counts[h] += 1;
-  }
-  return counts
-    .map((orderCount, hourUtc) => ({
-      hourUtc,
-      label: HOUR_LABELS[hourUtc] ?? `${hourUtc}:00 UTC`,
-      orderCount,
-    }))
-    .filter((row) => row.orderCount > 0)
-    .sort((a, b) => b.orderCount - a.orderCount)
-    .slice(0, limit);
+  limit = 3,
+  timeZone = "UTC"
+): PeakHourRow[] {
+  return topHours(
+    receipts.map((receipt) => receipt.created_at),
+    timeZone,
+    limit
+  );
 }
 
+/** Busiest call hours, in `timeZone` (an IANA zone; UTC when omitted). */
 export function peakCallHoursFromEvents(
   events: AgentCallEventAnalyticsRow[],
-  limit = 3
-): import("@/lib/analytics/types").PeakHourRow[] {
-  const counts = new Array(24).fill(0) as number[];
-  for (const event of events) {
-    const h = new Date(event.started_at).getUTCHours();
-    if (Number.isFinite(h) && h >= 0 && h < 24) counts[h] += 1;
-  }
-  return counts
-    .map((orderCount, hourUtc) => ({
-      hourUtc,
-      label: HOUR_LABELS[hourUtc] ?? `${hourUtc}:00 UTC`,
-      orderCount,
-    }))
-    .filter((row) => row.orderCount > 0)
-    .sort((a, b) => b.orderCount - a.orderCount)
-    .slice(0, limit);
+  limit = 3,
+  timeZone = "UTC"
+): PeakHourRow[] {
+  return topHours(
+    events.map((event) => event.started_at),
+    timeZone,
+    limit
+  );
 }
 
+/** Busiest day + hour slots for calls, in `timeZone` (UTC when omitted). */
 export function peakCallWindowsFromEvents(
   events: AgentCallEventAnalyticsRow[],
   receiptSessionKeys: Set<string> = new Set(),
-  limit = 6
+  limit = 6,
+  timeZone = "UTC"
 ): PeakCallWindowRow[] {
   const buckets = new Map<string, { callCount: number; completedCount: number }>();
 
   for (const event of events) {
-    const started = new Date(event.started_at);
-    const dayOfWeekUtc = started.getUTCDay();
-    const hourUtc = started.getUTCHours();
-    if (
-      !Number.isFinite(dayOfWeekUtc) ||
-      !Number.isFinite(hourUtc) ||
-      dayOfWeekUtc < 0 ||
-      dayOfWeekUtc > 6 ||
-      hourUtc < 0 ||
-      hourUtc > 23
-    ) {
-      continue;
-    }
+    const parts = localTimeParts(event.started_at, timeZone);
+    if (!parts) continue;
 
-    const key = `${dayOfWeekUtc}:${hourUtc}`;
+    const key = `${parts.dayOfWeek}:${parts.hour}`;
     const bucket = buckets.get(key) ?? { callCount: 0, completedCount: 0 };
     bucket.callCount += 1;
     const sessionKey = callEventReceiptSessionKey(event);
@@ -311,13 +295,13 @@ export function peakCallWindowsFromEvents(
   return [...buckets.entries()]
     .map(([key, bucket]) => {
       const [dayRaw, hourRaw] = key.split(":");
-      const dayOfWeekUtc = Number(dayRaw);
-      const hourUtc = Number(hourRaw);
+      const dayOfWeek = Number(dayRaw);
+      const hour = Number(hourRaw);
       return {
-        dayOfWeekUtc,
-        dayLabel: DAY_LABELS[dayOfWeekUtc] ?? `Day ${dayOfWeekUtc}`,
-        hourUtc,
-        hourLabel: HOUR_LABELS[hourUtc] ?? `${hourUtc}:00 UTC`,
+        dayOfWeek,
+        dayLabel: DAY_LABELS[dayOfWeek] ?? `Day ${dayOfWeek}`,
+        hour,
+        hourLabel: hourLabel(hour),
         callCount: bucket.callCount,
         completedCount: bucket.completedCount,
         conversionPercent: conversionPercent(
@@ -331,8 +315,8 @@ export function peakCallWindowsFromEvents(
       if (b.completedCount !== a.completedCount) {
         return b.completedCount - a.completedCount;
       }
-      if (a.dayOfWeekUtc !== b.dayOfWeekUtc) return a.dayOfWeekUtc - b.dayOfWeekUtc;
-      return a.hourUtc - b.hourUtc;
+      if (a.dayOfWeek !== b.dayOfWeek) return a.dayOfWeek - b.dayOfWeek;
+      return a.hour - b.hour;
     })
     .slice(0, limit);
 }

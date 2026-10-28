@@ -1,5 +1,11 @@
-import type { AgentCallEventAnalyticsRow } from "@/lib/analytics/aggregate";
-import { resolveAnalyticsCallOutcome } from "@/lib/analytics/aggregate";
+import type {
+  AgentCallEventAnalyticsRow,
+  ReceiptRow,
+} from "@/lib/analytics/aggregate";
+import {
+  callEventReceiptSessionKey,
+  resolveAnalyticsCallOutcome,
+} from "@/lib/analytics/aggregate";
 
 export type CallerQuestionTopicId =
   | "hours"
@@ -29,7 +35,7 @@ export type CallerQuestionTopicsSnapshot = {
 
 export const CALLER_QUESTION_TOPIC_LABELS: Record<CallerQuestionTopicId, string> = {
   hours: "Hours & open/closed",
-  menu: "Menu items",
+  menu: "Menu questions",
   allergens_dietary: "Allergens & dietary",
   delivery: "Delivery",
   pickup_wait_time: "Pickup / wait time",
@@ -75,12 +81,17 @@ const TOPIC_MATCHERS: Array<{ id: CallerQuestionTopicId; patterns: RegExp[] }> =
   },
   {
     id: "allergens_dietary",
+    // Needs a real allergy / diet word. Dish names ("chicken tikka masala")
+    // and spice-level questions are not allergen questions.
     patterns: [
-      /\ballergen\b/,
-      /\ballerg(y|ic)\b/,
-      /\bgluten[- ]free\b/,
-      /\bnut[- ]free\b/,
-      /\bdairy[- ]free\b/,
+      /\ballerg(?:en|ens|y|ies|ic)\b/,
+      /\bgluten\b/,
+      /\bceliac\b/,
+      /\b(?:pea)?nuts?\b/,
+      /\btree nuts?\b/,
+      /\bdairy\b/,
+      /\blactose\b/,
+      /\bshellfish\b/,
       /\bvegan\b/,
       /\bvegetarian\b/,
       /\bhalal\b/,
@@ -151,6 +162,9 @@ const TOPIC_MATCHERS: Array<{ id: CallerQuestionTopicId; patterns: RegExp[] }> =
       /\bdo you have\b/,
       /\bwhat(?:'s| is) in\b/,
       /\bdish\b/,
+      /\bspic(?:y|ier|iness|e level)\b/,
+      /\bhow hot\b/,
+      /\bmild\b/,
     ],
   },
 ];
@@ -228,8 +242,51 @@ function collectMetadataStrings(metadata: Record<string, unknown>): string[] {
   return pieces.map(asString).filter(Boolean);
 }
 
+const AGENT_SENTENCE = /^(?:the\s+)?(?:ai\s+)?(?:agent|assistant|host)\b/i;
+const NEGATED_ALLERGY = /\bno (?:known |food )?(?:allerg(?:y|ies)|dietary restrictions?)\b/g;
+
+function summaryTexts(metadata: Record<string, unknown>): string[] {
+  const texts = [asString(metadata.transcript_summary), asString(metadata.summary)];
+  const analysis = metadata.analysis;
+  if (analysis && typeof analysis === "object" && !Array.isArray(analysis)) {
+    texts.push(asString((analysis as Record<string, unknown>).transcript_summary));
+  }
+  return texts.filter(Boolean);
+}
+
+function isCallerRole(role: string): boolean {
+  return (
+    role.includes("user") ||
+    role.includes("customer") ||
+    role.includes("guest") ||
+    role.includes("caller")
+  );
+}
+
+function turnText(row: Record<string, unknown>): string {
+  return (
+    asString(row.message) ||
+    asString(row.text) ||
+    asString(row.content) ||
+    asString(row.transcript)
+  );
+}
+
+/**
+ * Text used to guess what the caller asked about: call summaries (minus
+ * sentences about what the host said) and the caller's own turns. The host's
+ * turns are left out so "any allergies?" from the host does not count.
+ */
 export function buildCallerQuestionBlob(metadata: Record<string, unknown>): string {
-  const pieces = collectMetadataStrings(metadata);
+  const pieces: string[] = [];
+
+  for (const summary of summaryTexts(metadata)) {
+    const sentences = summary
+      .split(/(?<=[.!?])\s+/)
+      .map((sentence) => sentence.trim())
+      .filter((sentence) => sentence && !AGENT_SENTENCE.test(sentence));
+    pieces.push(...sentences);
+  }
 
   const transcript = metadata.transcript;
   if (Array.isArray(transcript)) {
@@ -237,17 +294,16 @@ export function buildCallerQuestionBlob(metadata: Record<string, unknown>): stri
       if (!turn || typeof turn !== "object" || Array.isArray(turn)) continue;
       const row = turn as Record<string, unknown>;
       const role = asString(row.role ?? row.speaker ?? row.type).toLowerCase();
-      if (role.includes("tool")) continue;
-      pieces.push(
-        asString(row.message) ||
-          asString(row.text) ||
-          asString(row.content) ||
-          asString(row.transcript)
-      );
+      if (!isCallerRole(role)) continue;
+      pieces.push(turnText(row));
     }
   }
 
-  return pieces.join(" ").toLowerCase();
+  return pieces
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+    .replace(NEGATED_ALLERGY, " ");
 }
 
 function topicFromIntentHints(metadata: Record<string, unknown>): CallerQuestionTopicId | null {
@@ -293,18 +349,7 @@ export function sanitizeQuestionSnippet(text: string): string {
 }
 
 function guestSnippetCandidates(metadata: Record<string, unknown>): string[] {
-  const candidates: string[] = [];
-
-  for (const raw of [metadata.transcript_summary, metadata.summary]) {
-    const text = asString(raw);
-    if (text) candidates.push(text);
-  }
-
-  const analysis = metadata.analysis;
-  if (analysis && typeof analysis === "object" && !Array.isArray(analysis)) {
-    const summary = asString((analysis as Record<string, unknown>).transcript_summary);
-    if (summary) candidates.push(summary);
-  }
+  const candidates: string[] = [...summaryTexts(metadata)];
 
   const transcript = metadata.transcript;
   if (Array.isArray(transcript)) {
@@ -312,34 +357,51 @@ function guestSnippetCandidates(metadata: Record<string, unknown>): string[] {
       if (!turn || typeof turn !== "object" || Array.isArray(turn)) continue;
       const row = turn as Record<string, unknown>;
       const role = asString(row.role ?? row.speaker ?? row.type).toLowerCase();
-      if (
-        role.includes("user") ||
-        role.includes("customer") ||
-        role.includes("guest") ||
-        role.includes("caller")
-      ) {
-        const text =
-          asString(row.message) ||
-          asString(row.text) ||
-          asString(row.content) ||
-          asString(row.transcript);
-        if (text) candidates.push(text);
-      }
+      if (!isCallerRole(role)) continue;
+      const text = turnText(row);
+      if (text) candidates.push(text);
     }
   }
 
   return candidates;
 }
 
+export const DEFAULT_HOST_NAME = "Your host";
+
+/**
+ * Owner-friendly wording for call summaries: "the user" becomes "the caller",
+ * "the agent" becomes the host's name ("Your host" when it has none).
+ */
+export function ownerFriendlyCallText(
+  text: string,
+  hostName?: string | null
+): string {
+  const host = hostName?.trim() || DEFAULT_HOST_NAME;
+  const isFallback = host === DEFAULT_HOST_NAME;
+  return text
+    .replace(/\b(?:(The|the) )?(?:AI )?(?:agent|assistant)\b/g, (match, article: string | undefined) => {
+      if (!article) return match;
+      if (!isFallback) return host;
+      return article === "The" ? host : host.toLowerCase();
+    })
+    .replace(/\b(?:(The|the) )?(User|user)\b/g, (_match, article: string | undefined, word: string) => {
+      const caller = word === "User" ? "Caller" : "caller";
+      return article ? `${article} caller` : caller;
+    });
+}
+
 export function extractQuestionSnippets(
   metadata: Record<string, unknown>,
-  limit = 2
+  limit = 2,
+  hostName?: string | null
 ): string[] {
   const seen = new Set<string>();
   const snippets: string[] = [];
 
   for (const candidate of guestSnippetCandidates(metadata)) {
-    const sanitized = sanitizeQuestionSnippet(candidate);
+    const sanitized = sanitizeQuestionSnippet(
+      ownerFriendlyCallText(candidate, hostName)
+    );
     if (!sanitized || seen.has(sanitized.toLowerCase())) continue;
     seen.add(sanitized.toLowerCase());
     snippets.push(sanitized);
@@ -354,12 +416,66 @@ function faqPercent(count: number, faqTotal: number): number | null {
   return Math.min(100, Math.round((count / faqTotal) * 100));
 }
 
+const ORDER_PLACED_TEXT = [
+  /\b(?:user|caller|guest|customer)\s+(?:then\s+|successfully\s+)?(?:placed|ordered|completed|finali[sz]ed|confirmed)\b/i,
+  /\b(?:called|wanted|wants|would like)\s+to\s+(?:place\s+an?\s+(?:\w+\s+)?order|order)\b/i,
+  /\border\s+(?:was|has been)\s+(?:placed|confirmed|finali[sz]ed)\b/i,
+];
+
+/** Receipts created this long before a call started / after it ended still count as that call's order. */
+const ORDER_MATCH_BEFORE_MS = 60_000;
+const ORDER_MATCH_AFTER_MS = 5 * 60_000;
+const CALL_LENGTH_FALLBACK_MS = 30 * 60_000;
+
+/**
+ * True when the call ended in (or was clearly about) an order. Those calls are
+ * not "questions" even when the order and the call were saved under different ids.
+ */
+export function callPlacedOrder(
+  event: AgentCallEventAnalyticsRow,
+  receiptSessionKeys: Set<string>,
+  receipts: ReceiptRow[] = []
+): boolean {
+  const key = callEventReceiptSessionKey(event);
+  if (key != null && receiptSessionKeys.has(key)) return true;
+  if (event.outcome === "order_completed") return true;
+
+  const metadata = event.transcript_metadata ?? {};
+  if (asString(metadata.order_finalized_at)) return true;
+
+  const startMs = new Date(event.started_at).getTime();
+  if (!Number.isNaN(startMs) && receipts.length > 0) {
+    const endParsed = event.ended_at ? new Date(event.ended_at).getTime() : NaN;
+    const endMs = Number.isNaN(endParsed) ? startMs + CALL_LENGTH_FALLBACK_MS : endParsed;
+    const from = startMs - ORDER_MATCH_BEFORE_MS;
+    const to = endMs + ORDER_MATCH_AFTER_MS;
+    const matched = receipts.some((receipt) => {
+      if (receipt.restaurant_id !== event.restaurant_id) return false;
+      const at = new Date(receipt.created_at).getTime();
+      return at >= from && at <= to;
+    });
+    if (matched) return true;
+  }
+
+  return summaryTexts(metadata).some((summary) =>
+    ORDER_PLACED_TEXT.some((pattern) => pattern.test(summary))
+  );
+}
+
 export function aggregateCallerQuestionTopics(
   events: AgentCallEventAnalyticsRow[],
-  receiptSessionKeys: Set<string> = new Set()
+  receiptSessionKeys: Set<string> = new Set(),
+  options: {
+    /** Saved orders, used to spot calls that ordered under a different id. */
+    receipts?: ReceiptRow[];
+    /** Host display name per restaurant, used in quotes. */
+    hostNameByRestaurant?: Map<string, string | null>;
+  } = {}
 ): CallerQuestionTopicsSnapshot {
   const faqEvents = events.filter(
-    (event) => resolveAnalyticsCallOutcome(event, receiptSessionKeys) === "no_order"
+    (event) =>
+      resolveAnalyticsCallOutcome(event, receiptSessionKeys) === "no_order" &&
+      !callPlacedOrder(event, receiptSessionKeys, options.receipts)
   );
 
   const counts = new Map<CallerQuestionTopicId, number>();
@@ -370,7 +486,11 @@ export function aggregateCallerQuestionTopics(
     const topicId = classifyCallerQuestionTopic(metadata);
     counts.set(topicId, (counts.get(topicId) ?? 0) + 1);
 
-    const snippets = extractQuestionSnippets(metadata);
+    const snippets = extractQuestionSnippets(
+      metadata,
+      2,
+      options.hostNameByRestaurant?.get(event.restaurant_id)
+    );
     if (snippets.length === 0) continue;
 
     const existing = examples.get(topicId) ?? [];

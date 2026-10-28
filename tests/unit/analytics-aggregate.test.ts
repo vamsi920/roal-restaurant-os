@@ -15,11 +15,8 @@ import {
 } from "@/lib/analytics/aggregate";
 import {
   averageOrderEstimateCents,
-  bucketOrderSessionsByDay,
-  collectOrderSessions,
   peakCallHoursFromEvents,
   peakCallWindowsFromEvents,
-  sessionHasCompletedOrder,
 } from "@/lib/analytics/phone-ops-metrics";
 import { buildMenuPriceContext } from "@/lib/orders/menu-price-context";
 import { DEFAULT_ORDER_PRICING } from "@/lib/orders/pricing-settings";
@@ -368,8 +365,8 @@ describe("bucketUsageByDay", () => {
     ];
     const series = bucketUsageByDay(events, dayKeys);
     expect(series).toEqual([
-      { date: "2026-05-17", orderSessions: 1, completed: 0, canceled: 0 },
-      { date: "2026-05-18", orderSessions: 0, completed: 0, canceled: 0 },
+      { date: "2026-05-17", calls: 0, orderSessions: 1, completed: 0, canceled: 0 },
+      { date: "2026-05-18", calls: 0, orderSessions: 0, completed: 0, canceled: 0 },
     ]);
   });
 });
@@ -492,12 +489,12 @@ describe("excludeTestHarnessSessions", () => {
       abandoned: 1,
     });
     expect(peakCallHoursFromEvents(events)[0]).toMatchObject({
-      hourUtc: 18,
+      hour: 18,
       orderCount: 3,
     });
     expect(peakCallWindowsFromEvents(events, receiptKeys)[0]).toMatchObject({
       dayLabel: "Sat",
-      hourUtc: 18,
+      hour: 18,
       callCount: 3,
       completedCount: 1,
       conversionPercent: 33,

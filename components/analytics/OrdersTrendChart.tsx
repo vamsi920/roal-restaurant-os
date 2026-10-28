@@ -6,15 +6,15 @@ type Props = {
 };
 
 const SERIES = [
-  { key: "orderSessions", label: "Order sessions", className: "bg-accent/30" },
-  { key: "completed", label: "Completed", className: "bg-accent" },
+  { key: "calls", label: "Calls", className: "bg-accent/30" },
+  { key: "completed", label: "Orders", className: "bg-accent" },
   { key: "canceled", label: "Canceled", className: "bg-line-strong" },
 ] as const;
 
 export function OrdersTrendChart({ points }: Props) {
   const max = Math.max(
     1,
-    ...points.map((p) => Math.max(p.orderSessions, p.completed, p.canceled))
+    ...points.map((p) => Math.max(p.calls, p.completed, p.canceled))
   );
 
   return (
@@ -34,17 +34,17 @@ export function OrdersTrendChart({ points }: Props) {
         <div
           className="orders-trend-chart__scroll flex min-w-0 items-end gap-1 overflow-x-auto overscroll-x-contain pb-1 sm:gap-1.5"
           role="list"
-          aria-label="Daily order sessions chart"
+          aria-label="Daily calls and orders chart"
         >
           {points.map((point) => (
             <div
               key={point.date}
               role="listitem"
               className="orders-trend-chart__day flex min-w-[2.25rem] shrink-0 flex-col items-center gap-1 sm:min-w-[28px] sm:flex-1"
-              title={`${formatShortDate(point.date)}: ${point.orderSessions} sessions, ${point.completed} completed, ${point.canceled} canceled`}
+              title={`${formatShortDate(point.date)}: ${point.calls} calls, ${point.completed} orders, ${point.canceled} canceled`}
             >
               <div className="flex h-28 w-full items-end justify-center gap-0.5 border-b border-line">
-                <Bar value={point.orderSessions} max={max} className={SERIES[0].className} />
+                <Bar value={point.calls} max={max} className={SERIES[0].className} />
                 <Bar value={point.completed} max={max} className={SERIES[1].className} />
                 <Bar value={point.canceled} max={max} className={SERIES[2].className} />
               </div>

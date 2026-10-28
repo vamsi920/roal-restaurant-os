@@ -43,7 +43,7 @@ describe("restaurant analytics (prompt 19)", () => {
     const dash = readFileSync(DASH, "utf8");
     expect(dash).toContain('snapshot.scope === "restaurant"');
     expect(dash).toContain("No activity in this range");
-    expect(dash).toContain("Order sessions and outcomes for this location appear once phone orders are recorded.");
+    expect(dash).toContain("Calls and orders for this location show up here once your phone host starts answering.");
     expect(dash).not.toMatch(/page views|bounce rate|NPS|retention/i);
     expect(dash).not.toMatch(/seed|demo|fabricat/i);
   });

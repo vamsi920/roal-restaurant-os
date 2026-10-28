@@ -9,6 +9,8 @@ export function GoLiveCard({ launch }: { launch: OverviewLaunch }) {
   const percent = launch.totalCount > 0 ? Math.round((launch.completedCount / launch.totalCount) * 100) : 0;
   // Highlight the next step the owner can do; automatic steps fill themselves in.
   const nextIndex = launch.items.findIndex((item) => item.status !== "ok" && !item.automatic);
+  // Once the host is set up it already answers calls; what's left only makes its answers complete.
+  const hostAnswering = launch.items.some((item) => item.automatic && item.status === "ok");
 
   return (
     <section id="go-live" className="panel scroll-mt-20 overflow-hidden" aria-labelledby="go-live-title">
@@ -16,10 +18,13 @@ export function GoLiveCard({ launch }: { launch: OverviewLaunch }) {
         <IconTile icon={Rocket} color="orange" size="lg" />
         <div className="min-w-0 flex-1">
           <h2 id="go-live-title" className="text-[15px] font-semibold text-ink">
-            Go live
+            {hostAnswering ? "Finish setup" : "Go live"}
           </h2>
           <p className="mt-0.5 text-[13px] text-subtle">
-            {launch.completedCount} of {launch.totalCount} done. Finish these and your host starts answering your calls.
+            {launch.completedCount} of {launch.totalCount} done.{" "}
+            {hostAnswering
+              ? "Your host already answers calls. Finish these so it can tell callers everything they ask."
+              : "Finish these and your host starts answering your calls."}
           </p>
           <div
             className="mt-3 h-1.5 w-full max-w-sm overflow-hidden rounded-full bg-elev"
