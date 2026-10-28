@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_TRIAL_VOICE,
-  defaultAgentName,
   findTrialVoice,
   resolveTrialPersona,
   TRIAL_VOICE_OPTIONS,
@@ -29,26 +28,20 @@ describe("findTrialVoice", () => {
 });
 
 describe("resolveTrialPersona", () => {
-  it("fills every field with defaults when nothing is stored", () => {
-    expect(resolveTrialPersona(null, "Corner Diner")).toEqual({
-      agentName: defaultAgentName(),
-      voiceId: DEFAULT_TRIAL_VOICE.id,
-      voiceLabel: DEFAULT_TRIAL_VOICE.label,
-      language: "en",
-    });
-    expect(resolveTrialPersona(undefined, null).agentName).toBe("Hope");
-    expect(resolveTrialPersona({}, null).voiceLabel).toBe("Hope");
+  it("gives a restaurant with no cuisine an American host, stable per restaurant", () => {
+    const p = resolveTrialPersona(null, "Corner Diner");
+    expect(findTrialVoice(p.voiceId)?.accent).toBe("American");
+    expect(p.language).toBe("en");
+    expect(p.agentName).toBeTruthy();
+    expect(resolveTrialPersona(null, "Corner Diner")).toEqual(p);
+    const unnamed = resolveTrialPersona(undefined, null);
+    expect(unnamed.agentName).toBe(unnamed.voiceLabel);
   });
 
-  it("names the host after the voice matched to the cuisine, never the restaurant", () => {
-    expect(resolveTrialPersona(null, "Eggmania", "Indian")).toMatchObject({
-      agentName: "Anika",
-      voiceId: "90ipbRoKi4CpHXvKVtl0",
-    });
-    // Without a cuisine the restaurant name can still hint at one.
-    expect(resolveTrialPersona(null, "Joe's Pizza").agentName).toBe("Antonio");
-    // The cuisine wins over the name.
-    expect(resolveTrialPersona(null, "Taco Pizza Palace", "Mexican").agentName).toBe("Leo");
+  it("matches the accent to the cuisine, then the name; cuisine wins", () => {
+    expect(findTrialVoice(resolveTrialPersona(null, "Eggmania", "Indian").voiceId)?.accent).toBe("Indian");
+    expect(findTrialVoice(resolveTrialPersona(null, "Joe's Pizza").voiceId)?.accent).toBe("Italian");
+    expect(findTrialVoice(resolveTrialPersona(null, "Taco Pizza Palace", "Mexican").voiceId)?.accent).toBe("Latin American");
   });
 
   it("keeps an owner-picked voice and name over the cuisine match", () => {
@@ -65,17 +58,11 @@ describe("resolveTrialPersona", () => {
     ).toEqual({ agentName: "Maya", voiceId: "MzqUf1HbJ8UmQ0wUsx2p", voiceLabel: "Katie", language: "es" });
   });
 
-  it("falls back to the default voice for an unknown voice id and ignores a stale label", () => {
-    const persona = resolveTrialPersona(
-      { agentName: "", voiceId: "bogus", voiceLabel: "Stale", language: "" },
-      "X"
-    );
-    expect(persona).toEqual({
-      agentName: "Hope",
-      voiceId: DEFAULT_TRIAL_VOICE.id,
-      voiceLabel: DEFAULT_TRIAL_VOICE.label,
-      language: "en",
-    });
+  it("ignores an unknown voice id and a stale label", () => {
+    const persona = resolveTrialPersona({ agentName: "", voiceId: "bogus", voiceLabel: "Stale", language: "" }, "X");
+    expect(findTrialVoice(persona.voiceId)?.accent).toBe("American");
+    expect(persona.voiceLabel).not.toBe("Stale");
+    expect(persona.language).toBe("en");
   });
 });
 

@@ -97,7 +97,7 @@ export const TRIAL_VOICE_OPTIONS: readonly TrialVoiceOption[] = [
     libraryOwnerId: "f87f057c2250691953ac2e6227859706764bd08c88a055a18c74261957885a51",
     cuisines: [
       "indian", "desi", "punjabi", "gujarati", "biryani", "dosa", "tandoor", "masala", "chaat",
-      "curry", "nepali", "nepalese", "himalayan", "pakistani", "bangladeshi", "sri lankan", "bombay",
+      "curry", "kati roll", "paneer", "tikka", "samosa", "thali", "naan", "idli", "vada", "nepali", "nepalese", "himalayan", "pakistani", "bangladeshi", "sri lankan", "bombay",
     ],
   },
   {
@@ -235,18 +235,89 @@ export const TRIAL_VOICE_OPTIONS: readonly TrialVoiceOption[] = [
 
 export const DEFAULT_TRIAL_VOICE = TRIAL_VOICE_OPTIONS[0];
 
-/** The accent voice that fits a cuisine (checked first) or restaurant name, if any. */
+/**
+ * Host names per accent, so each restaurant gets its own host instead of every Indian kitchen
+ * being "Anika". Short, common names a caller hears clearly on a phone line.
+ */
+const HOST_NAMES: Record<string, { female: readonly string[]; male: readonly string[] }> = {
+  American: {
+    female: ["Hope", "Jessica", "Emily", "Sarah", "Megan", "Lauren", "Ashley", "Rachel"],
+    male: ["Mark", "Jack", "Mike", "Ryan", "Chris", "Matt", "Danny", "Tyler"],
+  },
+  British: { female: ["Katie", "Sophie", "Charlotte", "Lucy", "Ellie"], male: ["Hugh", "Oliver", "Harry", "James", "George"] },
+  Australian: { female: ["Emma", "Chloe", "Isla", "Zoe", "Ruby"], male: ["Liam", "Josh", "Cooper"] },
+  Caribbean: { female: ["Nicole", "Keisha", "Shanice", "Marcia", "Tamika"], male: ["Andre", "Marlon", "Desmond"] },
+  Indian: {
+    female: ["Priya", "Anika", "Meera", "Kavya", "Diya", "Nisha", "Riya", "Asha", "Pooja", "Lakshmi"],
+    male: ["Arjun", "Rohan", "Vikram", "Karan", "Dev", "Rahul", "Sameer", "Aditya", "Ravi", "Nikhil"],
+  },
+  "Latin American": {
+    female: ["Sofia", "Lucia", "Camila", "Valeria", "Elena"],
+    male: ["Leo", "Carlos", "Diego", "Mateo", "Luis", "Javier", "Miguel"],
+  },
+  Brazilian: { female: ["Ana", "Beatriz", "Larissa"], male: ["Juliano", "Rafael", "Thiago", "Lucas", "Gabriel"] },
+  Italian: { female: ["Giulia", "Francesca", "Chiara"], male: ["Antonio", "Marco", "Luca", "Giovanni", "Matteo", "Paolo"] },
+  Chinese: { female: ["Mei", "Lily", "Jenny", "Grace", "Ling", "Amy"], male: ["Kevin", "Wei", "Jason", "Leon"] },
+  Japanese: { female: ["Yuki", "Hana", "Aiko", "Emi", "Lia", "Sakura"], male: ["Kenji", "Hiro", "Taro"] },
+  Korean: { female: ["Jiwoo", "Minji", "Sora"], male: ["Jin", "Minho", "Joon", "Hyun", "Jeongki"] },
+  "Middle Eastern": {
+    female: ["Salma", "Layla", "Nour", "Yasmin", "Rania", "Mariam"],
+    male: ["Omar", "Karim", "Sami", "Yousef"],
+  },
+  Turkish: { female: ["Elif", "Zeynep", "Defne"], male: ["Arda", "Emre", "Mehmet", "Can", "Burak"] },
+  French: { female: ["Camille", "Juliette", "Amelie", "Claire", "Margaux"], male: ["Louis", "Antoine", "Julien"] },
+  Irish: { female: ["Siobhan", "Aoife", "Ciara", "Maeve", "Niamh"], male: ["Sean", "Liam", "Conor"] },
+  "West African": {
+    female: ["Olabisi", "Adaeze", "Ama", "Folake", "Chioma", "Efua"],
+    male: ["Kwame", "Tunde", "Kofi", "Emeka"],
+  },
+  Filipino: { female: ["Jane", "Joy", "Kristine", "Angel", "Maricel"], male: ["Paolo", "Mark", "Carlo"] },
+  German: { female: ["Anna", "Lena", "Katrin"], male: ["Klaus", "Lukas", "Felix", "Jonas", "Stefan"] },
+};
+
+/** Stable small hash so a restaurant keeps the same host across requests. */
+function seedOf(text: string | null | undefined): number {
+  let h = 2166136261;
+  for (const ch of (text ?? "").toLowerCase().trim()) {
+    h ^= ch.codePointAt(0)!;
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function matchVoiceInText(text: string | null | undefined): TrialVoiceOption | null {
+  const hay = text?.toLowerCase().trim();
+  if (!hay) return null;
+  return TRIAL_VOICE_OPTIONS.find((v) => v.cuisines?.some((k) => hay.includes(k))) ?? null;
+}
+
+/**
+ * Menu dishes as a cuisine signal: only when a clear majority of matching dishes point to one
+ * accent (a diner with one taco on the menu stays American).
+ */
+export function voiceFromMenuItems(items: readonly string[] | null | undefined): TrialVoiceOption | null {
+  if (!items?.length) return null;
+  const tally = new Map<string, { voice: TrialVoiceOption; hits: number }>();
+  let total = 0;
+  for (const item of items) {
+    const v = matchVoiceInText(item);
+    if (!v) continue;
+    total += 1;
+    const row = tally.get(v.accent) ?? { voice: v, hits: 0 };
+    row.hits += 1;
+    tally.set(v.accent, row);
+  }
+  const best = [...tally.values()].sort((a, b) => b.hits - a.hits)[0];
+  return best && best.hits >= 3 && best.hits / total >= 0.6 ? best.voice : null;
+}
+
+/** The accent voice that fits a cuisine (checked first), restaurant name, or menu, if any. */
 export function voiceForCuisine(
   cuisine: string | null | undefined,
-  restaurantName?: string | null
+  restaurantName?: string | null,
+  menuItems?: readonly string[] | null
 ): TrialVoiceOption | null {
-  for (const text of [cuisine, restaurantName]) {
-    const hay = text?.toLowerCase().trim();
-    if (!hay) continue;
-    const match = TRIAL_VOICE_OPTIONS.find((v) => v.cuisines?.some((k) => hay.includes(k)));
-    if (match) return match;
-  }
-  return null;
+  return matchVoiceInText(cuisine) ?? matchVoiceInText(restaurantName) ?? voiceFromMenuItems(menuItems);
 }
 
 export function findTrialVoice(voiceId: string | null | undefined): TrialVoiceOption | null {
@@ -255,24 +326,39 @@ export function findTrialVoice(voiceId: string | null | undefined): TrialVoiceOp
   return TRIAL_VOICE_OPTIONS.find((v) => v.id === id) ?? null;
 }
 
-/**
- * The host is named after its voice (Anika for an Indian kitchen, Leo for a taqueria),
- * never after the restaurant or another product. Owners can still rename it.
- */
+/** A voice with this accent, varied per restaurant (e.g. Indian alternates a female and a male voice). */
+function voiceForAccent(accent: string, restaurantName: string | null | undefined): TrialVoiceOption {
+  const pool = TRIAL_VOICE_OPTIONS.filter((v) => v.accent === accent);
+  return pool[seedOf(restaurantName) % pool.length] ?? DEFAULT_TRIAL_VOICE;
+}
+
+/** A name that fits the voice's accent and gender, different from restaurant to restaurant. */
+export function hostNameFor(voice: TrialVoiceOption, restaurantName: string | null | undefined): string {
+  const names = HOST_NAMES[voice.accent]?.[voice.gender];
+  if (!names?.length || !restaurantName?.trim()) return voice.label;
+  return names[(seedOf(restaurantName) >>> 3) % names.length];
+}
+
+/** Fallback display name when a host has no saved name. Owners can rename it any time. */
 export function defaultAgentName(voiceId?: string | null): string {
   return (findTrialVoice(voiceId) ?? DEFAULT_TRIAL_VOICE).label;
 }
 
-/** An owner-picked voice wins; otherwise the cuisine's accent voice; otherwise the default. */
+/**
+ * An owner-picked voice wins; otherwise the accent that fits the cuisine, name or menu; otherwise an
+ * American voice. The host's name matches that accent and differs from restaurant to restaurant.
+ */
 export function resolveTrialPersona(
   persona: Partial<TrialPersona> | null | undefined,
   restaurantName?: string | null,
-  cuisine?: string | null
+  cuisine?: string | null,
+  menuItems?: readonly string[] | null
 ): TrialPersona {
-  const voice =
-    findTrialVoice(persona?.voiceId) ?? voiceForCuisine(cuisine, restaurantName) ?? DEFAULT_TRIAL_VOICE;
+  const picked = findTrialVoice(persona?.voiceId);
+  const accent = picked?.accent ?? voiceForCuisine(cuisine, restaurantName, menuItems)?.accent ?? "American";
+  const voice = picked ?? voiceForAccent(accent, restaurantName);
   return {
-    agentName: persona?.agentName?.trim() || voice.label,
+    agentName: persona?.agentName?.trim() || (picked ? picked.label : hostNameFor(voice, restaurantName)),
     voiceId: voice.id,
     voiceLabel: voice.label,
     language: persona?.language?.trim() || "en",

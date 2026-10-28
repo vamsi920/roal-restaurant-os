@@ -29,6 +29,8 @@ const DETAIL_FIELD_MASK = [
   "regularOpeningHours",
   "timeZone",
   "addressComponents",
+  "primaryType",
+  "types",
 ].join(",");
 
 type PlacesAddressComponent = {
@@ -46,6 +48,8 @@ type PlacesPlace = {
   websiteUri?: string;
   googleMapsUri?: string;
   timeZone?: { id?: string };
+  primaryType?: string;
+  types?: string[];
   addressComponents?: PlacesAddressComponent[];
   regularOpeningHours?: {
     periods?: Array<{
@@ -117,7 +121,19 @@ export function snapshotFromPlace(place: PlacesPlace, fallbackName: string): Pla
     maps_url: place.googleMapsUri?.trim() || null,
     profile: profileFromPlace(place, fallbackName),
     weekly_hours: weeklyHoursFromPlacesPeriods(place.regularOpeningHours?.periods),
+    cuisine: cuisineFromPlaceTypes(place),
   };
+}
+
+/** "indian_restaurant" → "indian"; ignores generic types like "restaurant" or "meal_takeaway". */
+export function cuisineFromPlaceTypes(place: Pick<PlacesPlace, "primaryType" | "types">): string | null {
+  const generic = new Set(["restaurant", "fast_food", "meal_takeaway", "meal_delivery", "food", "point_of_interest", "establishment", "store"]);
+  for (const t of [place.primaryType, ...(place.types ?? [])]) {
+    const m = t?.match(/^([a-z_]+?)_(restaurant|shop|house|bar)$/);
+    const kind = m?.[1];
+    if (kind && !generic.has(kind)) return kind.replace(/_/g, " ");
+  }
+  return null;
 }
 
 export function candidateFromPlace(place: PlacesPlace): PlaceCandidate | null {

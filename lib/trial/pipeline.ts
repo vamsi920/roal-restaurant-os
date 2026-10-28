@@ -22,7 +22,7 @@ import {
 } from "@/lib/trial/website-profile";
 
 function profileFromSnapshot(snapshot: PlaceSnapshot): TrialProfile {
-  return { ...snapshot.profile, cuisine: null, tagline: null };
+  return { ...snapshot.profile, cuisine: snapshot.cuisine ?? null, tagline: null };
 }
 
 function mergeProfiles(primary: TrialProfile, fallback: TrialProfile | null): TrialProfile {
@@ -463,7 +463,8 @@ export async function composeTrialAgent(trialId: string): Promise<TrialRecord> {
   const trial = await getTrial(trialId);
   if (!trial) throw new Error("Trial not found");
   const name = trial.restaurant_name ?? trial.profile?.name ?? "Your restaurant";
-  const persona = resolveTrialPersona(trial.persona, name, trial.profile?.cuisine);
+  const dishes = trial.menu?.categories.flatMap((c) => c.items.map((i) => `${c.name ?? ""} ${i.name}`)) ?? [];
+  const persona = resolveTrialPersona(trial.persona, name, trial.profile?.cuisine, dishes);
   const offersDelivery = Boolean((trial.persona as { offersDelivery?: boolean }).offersDelivery);
 
   // The menu step can fail outright (timeout, network); never put a menu-less agent on the line.

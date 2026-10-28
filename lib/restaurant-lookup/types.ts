@@ -28,6 +28,8 @@ export type PlaceSnapshot = {
   maps_url: string | null;
   profile: PlaceProfileFields;
   weekly_hours: WeeklyHourInput[] | null;
+  /** From Google's place type, e.g. "indian" for indian_restaurant. */
+  cuisine?: string | null;
 };
 
 export type LookupCookiePayload = {
