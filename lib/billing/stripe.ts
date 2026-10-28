@@ -129,7 +129,7 @@ export async function ensureOrderPrice(stripe: StripeClient): Promise<string> {
       currency: "usd",
       unit_amount: Math.round(BILLABLE_PHONE_ORDER_RATE_USD * 100),
       recurring: { interval: "month", usage_type: "metered", meter: meterId },
-      product_data: { name: "ROAL completed phone orders" },
+      product_data: { name: "ROAL completed phone orders", unit_label: "order" },
       lookup_key: ORDER_PRICE_LOOKUP_KEY,
       nickname: "Per completed order",
     },
