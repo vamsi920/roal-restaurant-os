@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { TrialCall } from "@/components/try/trial-call";
 import { trialApi } from "@/components/try/trial-api";
 import { cn } from "@/lib/cn";
@@ -19,10 +19,16 @@ export function CallWithTicket({
   trialId,
   agentName,
   restaurantName,
+  fill = false,
+  aside,
 }: {
   trialId: string;
   agentName: string;
   restaurantName: string;
+  /** Fit the whole grid into the remaining viewport height; the transcript and ticket scroll inside. */
+  fill?: boolean;
+  /** Rendered under the ticket in the side column. */
+  aside?: ReactNode;
 }) {
   const [ticket, setTicket] = useState<LiveTicket | null>(null);
   const [updating, setUpdating] = useState(false);
@@ -54,7 +60,7 @@ export function CallWithTicket({
   }, []);
 
   return (
-    <div className="sf__callgrid">
+    <div className={cn("sf__callgrid", fill && "sf__callgrid--fill")}>
       <div className="sf__callgrid-call">
         <TrialCall
           trialId={trialId}
@@ -65,61 +71,64 @@ export function CallWithTicket({
           onCallEnded={refresh}
         />
       </div>
-      <aside className="sf__ticket" aria-label="Live order ticket" aria-live="polite">
-        <header className="sf__ticket-head">
-          <div className="min-w-0">
-            <p className="sf__ticket-kicker">Kitchen ticket</p>
-            <p className="sf__ticket-title">{restaurantName}</p>
-          </div>
-          <span className={cn("sf__ticket-badge", ticket?.confirmed ? "is-ok" : "is-live")}>
-            {ticket?.confirmed ? "Confirmed" : updating ? "Updating…" : "Live"}
-          </span>
-        </header>
-        {ticket?.customerName ? <p className="sf__ticket-for">For {ticket.customerName} · Pickup</p> : null}
+      <div className="sf__callgrid-side">
+        <aside className="sf__ticket" aria-label="Live order ticket" aria-live="polite">
+          <header className="sf__ticket-head">
+            <div className="min-w-0">
+              <p className="sf__ticket-kicker">Kitchen ticket</p>
+              <p className="sf__ticket-title">{restaurantName}</p>
+            </div>
+            <span className={cn("sf__ticket-badge", ticket?.confirmed ? "is-ok" : "is-live")}>
+              {ticket?.confirmed ? "Confirmed" : updating ? "Updating…" : "Live"}
+            </span>
+          </header>
+          {ticket?.customerName ? <p className="sf__ticket-for">For {ticket.customerName} · Pickup</p> : null}
 
-        {ticket && ticket.lines.length ? (
-          <ul className="sf__ticket-lines">
-            <AnimatePresence initial={false}>
-              {ticket.lines.map((line) => (
-                <motion.li
-                  key={`${line.name}-${line.mods.map((m) => m.name).join(",")}`}
-                  layout
-                  initial={{ opacity: 0, x: 16, backgroundColor: "rgba(234,88,12,0.12)" }}
-                  animate={{ opacity: 1, x: 0, backgroundColor: "rgba(234,88,12,0)" }}
-                  exit={{ opacity: 0, x: -16 }}
-                  transition={{ duration: 0.45 }}
-                >
-                  <span className="sf__ticket-qty">{line.qty}×</span>
-                  <span className="sf__ticket-item">
-                    {line.name}
-                    {line.mods.map((m) => (
-                      <span key={m.name} className="sf__ticket-mod">
-                        + {m.name}
-                        {m.price ? ` (${money(m.price)})` : ""}
-                      </span>
-                    ))}
-                    {line.note ? <span className="sf__ticket-mod sf__ticket-note">“{line.note}”</span> : null}
-                  </span>
-                  <span className="sf__ticket-price">{line.lineTotal != null ? money(line.lineTotal) : "—"}</span>
-                </motion.li>
-              ))}
-            </AnimatePresence>
-          </ul>
-        ) : (
-          <p className="sf__ticket-empty">
-            Start the call and order something. Your ticket fills in here as you talk, just like it would print in
-            your kitchen.
-          </p>
-        )}
+          {ticket && ticket.lines.length ? (
+            <ul className="sf__ticket-lines">
+              <AnimatePresence initial={false}>
+                {ticket.lines.map((line) => (
+                  <motion.li
+                    key={`${line.name}-${line.mods.map((m) => m.name).join(",")}`}
+                    layout
+                    initial={{ opacity: 0, x: 16, backgroundColor: "rgba(234,88,12,0.12)" }}
+                    animate={{ opacity: 1, x: 0, backgroundColor: "rgba(234,88,12,0)" }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.45 }}
+                  >
+                    <span className="sf__ticket-qty">{line.qty}×</span>
+                    <span className="sf__ticket-item">
+                      {line.name}
+                      {line.mods.map((m) => (
+                        <span key={m.name} className="sf__ticket-mod">
+                          + {m.name}
+                          {m.price ? ` (${money(m.price)})` : ""}
+                        </span>
+                      ))}
+                      {line.note ? <span className="sf__ticket-mod sf__ticket-note">“{line.note}”</span> : null}
+                    </span>
+                    <span className="sf__ticket-price">{line.lineTotal != null ? money(line.lineTotal) : "—"}</span>
+                  </motion.li>
+                ))}
+              </AnimatePresence>
+            </ul>
+          ) : (
+            <p className="sf__ticket-empty">
+              Start the call and order something. Your ticket fills in here as you talk, just like it would print in
+              your kitchen.
+            </p>
+          )}
 
-        <footer className="sf__ticket-foot">
-          <span>Subtotal</span>
-          <motion.strong key={ticket?.subtotal ?? 0} initial={{ scale: 1.15 }} animate={{ scale: 1 }}>
-            {money(ticket?.subtotal ?? 0)}
-          </motion.strong>
-        </footer>
-        <p className="sf__ticket-fine">Prices from your menu, before tax.</p>
-      </aside>
+          <footer className="sf__ticket-foot">
+            <span>Subtotal</span>
+            <motion.strong key={ticket?.subtotal ?? 0} initial={{ scale: 1.15 }} animate={{ scale: 1 }}>
+              {money(ticket?.subtotal ?? 0)}
+            </motion.strong>
+          </footer>
+          <p className="sf__ticket-fine">Prices from your menu, before tax.</p>
+        </aside>
+        {aside}
+      </div>
     </div>
   );
 }

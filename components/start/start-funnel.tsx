@@ -1027,33 +1027,38 @@ function ContactScreen({
 
 function DoneScreen({ trial, callStatus, phone }: { trial: TrialPublicView; callStatus: CallStatus | null; phone: string | null }) {
   const agentName = trial.persona.agentName;
+  const restaurantName = trial.restaurantName ?? "your restaurant";
   const placed = callStatus === "placed";
+  const keep = (
+    <div className="sf__keep">
+      <p className="sf__keep-title">Keep {agentName} for {restaurantName}</p>
+      <p className="sf__keep-body">Create a free account and we&apos;ll save your menu, hours and voice. You pay {PRICING_RATE_AMOUNT} only when an order comes in.</p>
+      <Link href="/signup?next=%2Fdashboard%2Fonboarding" className="btn-primary btn-lg sf__cta">
+        Create my free account <Arrow />
+      </Link>
+    </div>
+  );
+
+  if (!placed) {
+    return (
+      <div className="sf__center sf__done-call">
+        <h1 className="sf__title sf__title--sm">You&apos;re in. Talk to {agentName} right now.</h1>
+        <p className="sf__sub">
+          We saved your details{phone ? <> and will be in touch at <strong>{formatPhone(phone)}</strong></> : null}. Call {agentName} from your browser and order like a customer would.
+        </p>
+        <CallWithTicket trialId={trial.id} agentName={agentName} restaurantName={restaurantName} fill aside={keep} />
+      </div>
+    );
+  }
+
   return (
     <div className="sf__center">
-      <div className={cn("sf__phone", placed && "is-ringing")} aria-hidden>
+      <div className="sf__phone is-ringing" aria-hidden>
         <svg viewBox="0 0 24 24" className="h-9 w-9" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z" /></svg>
       </div>
-      {placed ? (
-        <>
-          <h1 className="sf__title">{agentName} is calling you now.</h1>
-          <p className="sf__sub">Pick up {phone ? <strong>{formatPhone(phone)}</strong> : "your phone"} and order like a customer would.</p>
-        </>
-      ) : (
-        <>
-          <h1 className="sf__title">You&apos;re in. Talk to {agentName} right now.</h1>
-          <p className="sf__sub">
-            We saved your details{phone ? <> and will be in touch at <strong>{formatPhone(phone)}</strong></> : null}. No need to wait: call {agentName} from your browser below.
-          </p>
-          <CallWithTicket trialId={trial.id} agentName={agentName} restaurantName={trial.restaurantName ?? "your restaurant"} />
-        </>
-      )}
-      <div className="sf__keep">
-        <p className="sf__keep-title">Keep {agentName} for {trial.restaurantName ?? "your restaurant"}</p>
-        <p className="sf__keep-body">Create a free account and we&apos;ll save your menu, hours and voice. You pay {PRICING_RATE_AMOUNT} only when an order comes in.</p>
-        <Link href="/signup?next=%2Fdashboard%2Fonboarding" className="btn-primary btn-lg sf__cta">
-          Create my free account <Arrow />
-        </Link>
-      </div>
+      <h1 className="sf__title">{agentName} is calling you now.</h1>
+      <p className="sf__sub">Pick up {phone ? <strong>{formatPhone(phone)}</strong> : "your phone"} and order like a customer would.</p>
+      {keep}
     </div>
   );
 }

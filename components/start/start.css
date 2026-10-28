@@ -1073,10 +1073,19 @@
 .sf__callgrid-call {
   min-width: 0;
 }
-.sf__ticket {
+.sf__callgrid-side {
   align-self: start;
   position: sticky;
   top: 84px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sf__callgrid-side .sf__keep {
+  margin-top: 0;
+}
+.sf__ticket {
   display: flex;
   flex-direction: column;
   padding: 18px 18px 14px;
@@ -1197,8 +1206,95 @@
     width: 100%;
     grid-template-columns: 1fr;
   }
-  .sf__ticket {
+  .sf__callgrid-side {
     position: static;
+  }
+}
+
+/* Browser-call screen on desktop: everything fits one viewport; transcript and ticket scroll inside. */
+@media (min-width: 861px) and (min-height: 560px) {
+  .sf:has(.sf__callgrid--fill) {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .sf:has(.sf__callgrid--fill) .sf__stage {
+    min-height: 0;
+    padding: 12px 16px 20px;
+  }
+  .sf__done-call {
+    height: 100%;
+    min-height: 0;
+    gap: 6px;
+  }
+  .sf__done-call .sf__sub {
+    max-width: 640px;
+    font-size: 15px;
+  }
+  .sf__callgrid--fill {
+    flex: 1;
+    min-height: 0;
+    margin-top: 10px;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+  .sf__callgrid--fill .sf__callgrid-call {
+    min-height: 0;
+    display: flex;
+  }
+  .sf__callgrid--fill .trial-call {
+    flex: 1;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 12px;
+  }
+  .sf__callgrid--fill .trial-call__stage {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: start;
+    column-gap: 1rem;
+    padding: 0.75rem 1.25rem 0.75rem 0.75rem;
+    text-align: left;
+  }
+  .sf__callgrid--fill .trial-call__actions {
+    margin-top: 0;
+  }
+  .sf__callgrid--fill .trial-call__error {
+    grid-column: 1 / -1;
+  }
+  .sf__callgrid--fill .trial-orb {
+    width: 4.75rem;
+    height: 4.75rem;
+  }
+  .sf__callgrid--fill .trial-call__transcript {
+    min-height: 0;
+    max-height: none;
+  }
+  .sf__callgrid--fill .sf__callgrid-side {
+    position: static;
+    align-self: stretch;
+    min-height: 0;
+  }
+  .sf__callgrid--fill .sf__ticket {
+    flex: 1;
+    min-height: 0;
+  }
+  .sf__callgrid--fill .sf__ticket-lines,
+  .sf__callgrid--fill .sf__ticket-empty {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .sf__callgrid--fill .sf__keep {
+    flex: none;
+    padding: 16px;
+    gap: 4px;
+  }
+  .sf__callgrid--fill .sf__keep-title {
+    font-size: 17px;
+  }
+  .sf__callgrid--fill .sf__keep-body {
+    font-size: 13px;
+    margin-bottom: 6px;
   }
 }
 
