@@ -12,11 +12,11 @@ Operator docs: [`DEPLOYMENT.md`](./DEPLOYMENT.md) · [`ELEVENLABS.md`](./ELEVENL
 |----------|--------|
 | **Code / CI ready?** | **Yes** — `npm run build` pass, `npx tsc --noEmit --pretty false` pass, focused voice/provision/menu-sync/phone-order QA green |
 | **Pilot onboarding (signup → menu → KDS → test order, no live line)?** | **Yes** — product + Supabase + Edge verified; latest `main` pushed through `8bea5a2` |
-| **Production day-one with live forwarded guest calls on `getroal.com`?** | **No** — **LB-01 (P0) open** |
+| **Production day-one with live forwarded guest calls on `tryroal.com`?** | **No** — **LB-01 (P0) open** |
 
 ### Why production phone onboarding is not ready
 
-**LB-01 (P0) remains open.** From this QA host, `getroal.com` still does not resolve (DNS **NXDOMAIN / empty A/CNAME**, HTTP **000**, 2026-05-30 12:20 EDT). Until production hosting + DNS are live:
+**LB-01 (P0) remains open.** From this QA host, `tryroal.com` still does not resolve (DNS **NXDOMAIN / empty A/CNAME**, HTTP **000**, 2026-05-30 12:20 EDT). Until production hosting + DNS are live:
 
 - Twilio / ElevenLabs personalization webhook cannot hit production `conversation-init`
 - Live inbound call → `get_menu_items` **200** is not signed off in ElevenLabs logs
@@ -44,12 +44,12 @@ Operator docs: [`DEPLOYMENT.md`](./DEPLOYMENT.md) · [`ELEVENLABS.md`](./ELEVENL
 | Personalization webhook configured | **pass** (URL targets `NEXT_PUBLIC_APP_URL` + conversation-init) |
 | `conversation-init` | **200** on local dev with `restaurant_id` match |
 | Signing parity (LB-03) | **closed** — `npm run qa:lb03-signing-parity` **5/5** |
-| Production DNS / HTTP | **fail** — `getroal.com` unresolved; production app HTTP skipped |
+| Production DNS / HTTP | **fail** — `tryroal.com` unresolved; production app HTTP skipped |
 
 **Human actions to close (owner: ops + human):**
 
 1. Deploy Next.js to production; for Netlify, connect this repo and use committed `netlify.toml` (`npm run build`, `.next`, Node 20).
-2. Point **`getroal.com`** DNS to the production host, or update `NEXT_PUBLIC_APP_URL` to the actual live origin.
+2. Point **`tryroal.com`** DNS to the production host, or update `NEXT_PUBLIC_APP_URL` to the actual live origin.
 3. Set production env on host + Supabase Edge: `npm run ensure:signing-parity` (or match `AGENT_TOOL_SIGNING_SECRET` manually); `npm run resync:elevenlabs-all`.
 4. Re-run `npm run qa:lb01-phone-stack` — expect prod DNS + HTTP pass.
 5. Place **one inbound Twilio test call** → confirm ElevenLabs logs show `get_menu_items` **HTTP 200**.
@@ -66,12 +66,12 @@ Operator docs: [`DEPLOYMENT.md`](./DEPLOYMENT.md) · [`ELEVENLABS.md`](./ELEVENL
 | `e2e-smoke` | **15/15** (signed-in skipped without `E2E_*`) |
 | `npm run qa:deploy-smoke` | **6/8** |
 
-**Production — fail:** `getroal.com` DNS/connect **000** → `SMOKE_BASE_URL=https://getroal.com npm run smoke` **0/5** (rechecked 2026-05-30).
+**Production — fail:** `tryroal.com` DNS/connect **000** → `SMOKE_BASE_URL=https://tryroal.com npm run smoke` **0/5** (rechecked 2026-05-30).
 
 **Actions to close (owner: ops + eng, after LB-01 step 1):**
 
-1. `SMOKE_BASE_URL=https://getroal.com npm run smoke` → **6/6**
-2. Optional: `E2E_EMAIL=… E2E_PASSWORD=… E2E_BASE_URL=https://getroal.com npm run e2e-smoke`
+1. `SMOKE_BASE_URL=https://tryroal.com npm run smoke` → **6/6**
+2. Optional: `E2E_EMAIL=… E2E_PASSWORD=… E2E_BASE_URL=https://tryroal.com npm run e2e-smoke`
 3. `npm run qa:deploy-smoke` → **8/8**
 4. Manual checklist: [`DEPLOYMENT.md`](./DEPLOYMENT.md) §7
 

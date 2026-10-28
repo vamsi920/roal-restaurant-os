@@ -20,7 +20,7 @@ Hard scope:
 - Public frontend and auth styling only: `app/page.tsx`, `app/about/**`, `app/blog/**`, `app/demo/**`, `app/pricing/**`, `app/contact/**`, `app/security/**`, `app/(auth)/**`, `components/landing/**`, `components/blog/**`, `components/auth/**`, `lib/landing/**`, `lib/blog/**`, public CSS.
 - Do not modify dashboard business logic, Supabase schema, migrations, Edge Functions, restaurant APIs, billing logic, or auth logic.
 - Auth pages must keep existing form behavior.
-- Use `hello@getroal.com` for mailto demo/contact CTAs unless a newer configured contact email already exists.
+- Use `vamsi@tryroal.com` for mailto demo/contact CTAs unless a newer configured contact email already exists.
 - Pricing headline must highlight: **Only pay for successful orders** and **$0.90 per successful order**.
 
 ## 1. Launch Readiness Plan
@@ -117,7 +117,7 @@ Add JSON-LD FAQPage for homepage FAQ if easy. Keep it valid and static.
 
 ## 24. Homepage Final CTA
 
-Final section: “Your next missed call can be an order.” Buttons: “Hear a demo call” and “Book a demo”. Book demo should mailto `hello@getroal.com`.
+Final section: “Your next missed call can be an order.” Buttons: “Hear a demo call” and “Book a demo”. Book demo should mailto `vamsi@tryroal.com`.
 
 ## 25. Homepage Mobile QA
 
@@ -237,7 +237,7 @@ Make `/demo` one-page: video placeholder, 3-step call flow, sample transcript, s
 
 ## 54. Demo Mail CTA
 
-At bottom of `/demo`, add “Book a demo call” mailto `hello@getroal.com` and “Sign up” button immediately after it.
+At bottom of `/demo`, add “Book a demo call” mailto `vamsi@tryroal.com` and “Sign up” button immediately after it.
 
 ## 55. Demo Theme
 
@@ -261,7 +261,7 @@ Copy: “Send your menu. We’ll show where calls become orders.” Keep fields 
 
 ## 60. Contact CTA QA
 
-Ensure mailto uses `hello@getroal.com`; no broken submit flow.
+Ensure mailto uses `vamsi@tryroal.com`; no broken submit flow.
 
 ## 61. Login Theme Audit
 

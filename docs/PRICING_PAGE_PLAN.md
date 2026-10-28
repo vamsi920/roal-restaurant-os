@@ -13,7 +13,7 @@ Make `/pricing` the canonical answer for **“How much does ROAL cost?”** with
 1. **Headline message:** Only pay for successful orders.  
 2. **Anchor rate:** **$0.90 per successful order** (pilot/production framing honest).  
 3. **Owner trust:** what counts, what does not, no per-minute surprise bills.  
-4. **Conversion:** demo + book pricing walkthrough (`hello@getroal.com`).  
+4. **Conversion:** demo + book pricing walkthrough (`vamsi@tryroal.com`).  
 5. **Visual parity:** same glass/lavender/black theme as homepage (`public-theme`), not legacy poster yellow.
 
 Align copy with homepage: `HOME_PRICING_PILL`, `HOME_PAY`, `HOME_FAQ` (pricing items), blog post `pay-only-successful-orders`.
@@ -108,7 +108,7 @@ Single scroll page, **rate-first** (BuzzOrder/Talk2Order pattern: one clear pric
 | Eyebrow | Pricing |
 | Title | **Only pay when ROAL sends an order to your kitchen.** |
 | Lead | **$0.90 per successful pickup order** on your KDS—no per-minute phone fees, no charge for hang-ups or wrong numbers. |
-| CTAs | Primary: Hear a demo call → `/demo`. Secondary: Book a pricing walkthrough → `mailto:hello@getroal.com?subject=ROAL%20pricing%20walkthrough`. |
+| CTAs | Primary: Hear a demo call → `/demo`. Secondary: Book a pricing walkthrough → `mailto:vamsi@tryroal.com?subject=ROAL%20pricing%20walkthrough`. |
 
 Replace generic `LandingCta` in `app/pricing/page.tsx` with pricing-specific CTAs (same labels as homepage where possible).
 
@@ -176,7 +176,7 @@ Answers: honest, short, no legal overreach on refunds (describe pilot policy: �
 | CTA | Target |
 |-----|--------|
 | Start with a demo order | `/demo` |
-| Book pricing walkthrough | `mailto:hello@getroal.com` (subject: pricing walkthrough) |
+| Book pricing walkthrough | `mailto:vamsi@tryroal.com` (subject: pricing walkthrough) |
 
 Optional tertiary: `/signup` for self-serve setup.
 

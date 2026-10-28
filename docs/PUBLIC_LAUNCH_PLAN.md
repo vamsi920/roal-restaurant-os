@@ -98,11 +98,11 @@ npm run build
 | Surface | Primary | Secondary | Tertiary / notes |
 |---------|---------|-----------|------------------|
 | `/` hero & CTA band | Hear a demo call | Book a demo | Pricing pill → `/pricing` |
-| `/pricing` | Hear a demo call | Book a pricing walkthrough | `mailto:hello@getroal.com` (subject: ROAL pricing walkthrough) · signup text link |
+| `/pricing` | Hear a demo call | Book a pricing walkthrough | `mailto:vamsi@tryroal.com` (subject: ROAL pricing walkthrough) · signup text link |
 | `/demo` bottom | Book a demo call | Sign up | Mailto first, then `/signup?next=/dashboard/restaurants` |
 | `/contact` hero | Send your menu (`#contact-form`) | Book a demo (mailto) | Self-serve signup in aside |
 | Nav (all public) | — | Book a demo | Login → `/login` |
-| Footer | — | Book a demo | Login + mailto `hello@getroal.com` + Sign up |
+| Footer | — | Book a demo | Login + mailto `vamsi@tryroal.com` + Sign up |
 
 Source: `lib/landing/public-cta.ts`, `lib/landing/pricing-page-copy.ts` (`PRICING_WALKTHROUGH_CTA`), `lib/landing/demo-page-copy.ts` (`DEMO_CTA`).
 
@@ -507,7 +507,7 @@ Run on **production URL** with `NEXT_PUBLIC_APP_URL` set. Desktop + mobile (375p
 - [x] Pricing $0.90 + walkthrough mailto (92)
 - [x] Demo bottom mailto + signup (93)
 - [x] Canonical CTA labels (85)
-- [ ] `hello@getroal.com` opens correct mail client on device
+- [ ] `vamsi@tryroal.com` opens correct mail client on device
 
 ### SEO / social
 

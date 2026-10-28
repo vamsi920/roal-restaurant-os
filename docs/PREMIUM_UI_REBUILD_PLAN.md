@@ -303,7 +303,7 @@ New public styles **extend** `public-theme.css` (or scoped route files that impo
 | **Secondary** | `public-btn-ghost` | Glass fill, ink border `rgb(var(--public-ink) / 0.12)`, pill radius |
 | **On ink band** | `public-btn-ghost--on-ink` only on legacy dark bands being migrated | Prefer glass ghost on light sections |
 
-**Copy defaults (from `public-cta.ts`):** Primary = “Hear a demo call” where applicable; book demo = `mailto:hello@getroal.com`; pricing story always reinforces **$0.90 per successful order**.
+**Copy defaults (from `public-cta.ts`):** Primary = “Hear a demo call” where applicable; book demo = `mailto:vamsi@tryroal.com`; pricing story always reinforces **$0.90 per successful order**.
 
 **Forbidden CTAs:**
 

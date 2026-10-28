@@ -3,7 +3,7 @@
 **Date:** 2026-05-30  
 **Pass:** Launch finalization **37/40**  
 **Project:** Supabase `mnkabwcbdxruefzuvuuv` (yourturn)  
-**Primary app URL (env):** `https://getroal.com` (`NEXT_PUBLIC_APP_URL`)
+**Primary app URL (env):** `https://tryroal.com` (`NEXT_PUBLIC_APP_URL`)
 
 Operator cross-links: [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md) · [`FINAL_LAUNCH_READINESS.md`](./FINAL_LAUNCH_READINESS.md) · [`LOMAN_FEATURE_GAP.md`](./LOMAN_FEATURE_GAP.md) · [`TESTING.md`](./TESTING.md) · [`DEPLOYMENT.md`](./DEPLOYMENT.md)
 
@@ -160,7 +160,7 @@ npm run build
 | `npm run qa:lb03-signing-parity` | **5/5** | Local + Edge `AGENT_TOOL_SIGNING_SECRET`; `roal1` → get-menu **200** |
 | `npm run qa:get-menu-elevenlabs` | **6/6** | ElevenLabs-exact GET; 7 categories / 39 items |
 | `npm run qa:voice-agent-panel` | **8/8** | Connect + resync; tools baked; literal `first_message` |
-| `npm run qa:lb01-phone-stack` | **10/13** | Tools + get_menu sim **200**; **fail:** prod DNS `getroal.com` NXDOMAIN; conversation-init no prod/local responder |
+| `npm run qa:lb01-phone-stack` | **10/13** | Tools + get_menu sim **200**; **fail:** prod DNS `tryroal.com` NXDOMAIN; conversation-init no prod/local responder |
 | `npm run qa:draft-finalize-elevenlabs` | **2/11** | **fail:** `403 restaurant_closed` (outside open hours America/Chicago); not an auth regression |
 
 ### Pass 36 — Dashboard Playwright inspection
@@ -268,14 +268,14 @@ From [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md) (updated through pass **38** d
 
 | ID | Severity | Status | Blocker |
 |----|----------|--------|---------|
-| **LB-01** | **P0** | **Open** | Production phone stack not signed off: **`getroal.com` unreachable** from QA (DNS/connect); Twilio → ElevenLabs personalization → `conversation-init` not proven on prod; no human Twilio call with `get_menu_items` **200** in ElevenLabs logs |
-| **LB-04** | P1 | **Open** (blocked by LB-01) | `SMOKE_BASE_URL=https://getroal.com npm run smoke` fails; `qa:deploy-smoke` production URLs fail |
+| **LB-01** | **P0** | **Open** | Production phone stack not signed off: **`tryroal.com` unreachable** from QA (DNS/connect); Twilio → ElevenLabs personalization → `conversation-init` not proven on prod; no human Twilio call with `get_menu_items` **200** in ElevenLabs logs |
+| **LB-04** | P1 | **Open** (blocked by LB-01) | `SMOKE_BASE_URL=https://tryroal.com npm run smoke` fails; `qa:deploy-smoke` production URLs fail |
 | **LB-03** | P1 | **Closed** | Signing secret parity — `npm run qa:lb03-signing-parity` **5/5** |
 | **LB-02** | P2 | **Downgraded** | Self-serve Stripe not required for pilot |
 
 ### LB-01 close checklist (ops + human)
 
-1. Deploy Next.js; point **`getroal.com`** DNS (or set `NEXT_PUBLIC_APP_URL` to live origin).
+1. Deploy Next.js; point **`tryroal.com`** DNS (or set `NEXT_PUBLIC_APP_URL` to live origin).
 2. Production env + Edge: `npm run ensure:signing-parity`; `npm run resync:elevenlabs-all`.
 3. `npm run qa:lb01-phone-stack` → prod DNS + HTTP + conversation-init **pass**.
 4. One **inbound Twilio test call** → ElevenLabs logs show `get_menu_items` **HTTP 200**.

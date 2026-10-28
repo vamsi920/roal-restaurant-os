@@ -38,7 +38,7 @@ describe("contact-mailto", () => {
     expect(contactFormCanSubmit({ restaurant: "", email: "a@b.co" }).ok).toBe(false);
     expect(contactFormCanSubmit({ restaurant: "X", email: "" }).ok).toBe(false);
     expect(contactFormCanSubmit({ restaurant: "X", email: "not-email" }).ok).toBe(false);
-    expect(isValidContactEmail("ok@getroal.com")).toBe(true);
-    expect(contactFormCanSubmit({ restaurant: "X", email: "ok@getroal.com" }).ok).toBe(true);
+    expect(isValidContactEmail("ok@tryroal.com")).toBe(true);
+    expect(contactFormCanSubmit({ restaurant: "X", email: "ok@tryroal.com" }).ok).toBe(true);
   });
 });

@@ -69,7 +69,7 @@ If `NEXT_PUBLIC_FIREBASE_API_KEY` or `FIREBASE_SERVICE_ACCOUNT` is missing, the 
 
 | Variable | Purpose |
 |----------|---------|
-| `NEXT_PUBLIC_APP_URL` | Public origin, e.g. `https://getroal.com` (canonicals, Twilio webhook, agent tool URLs) |
+| `NEXT_PUBLIC_APP_URL` | Public origin, e.g. `https://tryroal.com` (canonicals, Twilio webhook, agent tool URLs) |
 | `OPENAI_API_KEY` | Menu scanner |
 | `ELEVENLABS_API_KEY` | Voice agent connect/sync (server only) |
 | `ELEVENLABS_AGENT_ID` | Template agent cloned per restaurant |

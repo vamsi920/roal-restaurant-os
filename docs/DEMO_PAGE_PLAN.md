@@ -13,7 +13,7 @@ Target experience:
 
 1. **Video placeholder** up top (future recording slot).  
 2. **3-step call flow** + **sample transcript** + **sample kitchen ticket**.  
-3. **Bottom CTA:** **Book a demo call** (`mailto:hello@getroal.com`) then **Sign up** immediately after.
+3. **Bottom CTA:** **Book a demo call** (`mailto:vamsi@tryroal.com`) then **Sign up** immediately after.
 
 Align with **glass / lavender `public-theme`** (like `/pricing`, `/about`, `/blog`)—retire yellow/lime poster beat cards on this route.
 

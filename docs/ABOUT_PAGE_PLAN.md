@@ -150,7 +150,7 @@ Three cards (fixed order):
 | Action | Target | Label |
 |--------|--------|-------|
 | Primary | `/demo` | Hear a demo call |
-| Secondary | `mailto:hello@getroal.com?subject=Book a ROAL demo` | Book a demo |
+| Secondary | `mailto:vamsi@tryroal.com?subject=Book a ROAL demo` | Book a demo |
 | Tertiary (ghost) | `/contact` | Contact & pilots |
 
 Reuse `CONTACT_PILOT_EMAIL` from `contact-page-copy.ts`. Match `PRICING_CTA` / homepage patterns.

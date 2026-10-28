@@ -69,6 +69,6 @@ describe("auth flow smoke (static)", () => {
     expect(smokeScript).toContain("playwright-smoke-lib");
     expect(e2eScript).toContain("E2E_EMAIL");
     expect(e2eScript).toContain("api/scanner/extract");
-    expect(e2eScript).not.toMatch(/password.*@getroal|hello@getroal/i);
+    expect(e2eScript).not.toMatch(/password.*@tryroal|hello@tryroal/i);
   });
 });

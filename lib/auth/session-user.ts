@@ -13,7 +13,7 @@ export const SESSION_MAX_AGE_SEC = 14 * 24 * 60 * 60;
 
 export const DEMO_USER: SessionUser = {
   id: "demo-owner",
-  email: "owner@demo.getroal.com",
+  email: "owner@demo.tryroal.com",
   user_metadata: { full_name: "Maria Rossi" },
   provider: "demo",
 };

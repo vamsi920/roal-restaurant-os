@@ -7,7 +7,7 @@ Canonical module: `lib/landing/pricing-page-copy.ts`
 | Role | Target |
 |------|--------|
 | Primary | `/demo` — Hear a demo call |
-| Secondary | `mailto:hello@getroal.com?subject=ROAL pricing walkthrough` |
+| Secondary | `mailto:vamsi@tryroal.com?subject=ROAL pricing walkthrough` |
 | Signup (text link) | `/signup?next=/dashboard/restaurants` |
 
 Rendered by `PricingCta` on hero, FAQ footer, close band, and `PricingPrimaryCard`.

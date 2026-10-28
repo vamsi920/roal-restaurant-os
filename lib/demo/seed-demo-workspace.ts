@@ -359,7 +359,7 @@ const ROAL_TOOLS = [
 function demoProfilePatch(organizationId: string, now: number): Row {
   const voice = TRIAL_VOICE_OPTIONS.find((v) => v.label === "Hope") ?? TRIAL_VOICE_OPTIONS[0]!;
   const lastSync = iso(now - 2 * DAY - 3 * HOUR - 11 * MIN);
-  const origin = getSiteOrigin() ?? "https://demo.getroal.example";
+  const origin = getSiteOrigin() ?? "https://demo.tryroal.example";
   return {
     organization_id: organizationId,
     phone: DEMO_PHONE,

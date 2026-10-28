@@ -29,7 +29,7 @@ To send more, add inboxes, not volume per inbox.
 1. **Separate sending domain.** Buy 1–2 look-alike domains (e.g. `tryroal.com`, `roalhost.com`, ~$10/yr each).
    Never cold email from the main domain or the personal Gmail.
 2. **2–3 inboxes per domain** (Zoho Mail free tier, or Google Workspace ~$7/user). Real name, photo, signature.
-3. **SPF, DKIM and DMARC** on each domain. Point the domain's website to getroal.com.
+3. **SPF, DKIM and DMARC** on each domain. Point the domain's website to tryroal.com.
 4. **Warm up 2–3 weeks**: start at 5/day per inbox, add ~5/day each week, cap around 30–40/day per inbox.
    Six inboxes at 30/day is ~180/day, which covers both cities in under a week.
 5. **Clean list**: only addresses the scraper found on the restaurant's own site; skip anything that bounces.

@@ -14,11 +14,11 @@ describe("site-url phone stack helpers", () => {
   });
 
   it("builds conversation-init URL from NEXT_PUBLIC_APP_URL", () => {
-    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://getroal.com/");
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://tryroal.com/");
     expect(conversationInitAbsoluteUrl()).toBe(
-      `https://getroal.com${ELEVENLABS_CONVERSATION_INIT_PATH}`
+      `https://tryroal.com${ELEVENLABS_CONVERSATION_INIT_PATH}`
     );
-    expect(getSiteOrigin()).toBe("https://getroal.com");
+    expect(getSiteOrigin()).toBe("https://tryroal.com");
   });
 
   it("resolveLocalDevOrigin prefers QA_DEV_ORIGIN then PORT", () => {
@@ -33,8 +33,8 @@ describe("site-url phone stack helpers", () => {
     expect(
       webhookHostMatchesAppOrigin({
         webhookUrl:
-          "https://getroal.com/api/integrations/elevenlabs/conversation-init?secret=x",
-        appOrigin: "https://getroal.com",
+          "https://tryroal.com/api/integrations/elevenlabs/conversation-init?secret=x",
+        appOrigin: "https://tryroal.com",
       }).aligned
     ).toBe(true);
 
@@ -42,12 +42,12 @@ describe("site-url phone stack helpers", () => {
       webhookHostMatchesAppOrigin({
         webhookUrl:
           "https://old.example.com/api/integrations/elevenlabs/conversation-init",
-        appOrigin: "https://getroal.com",
+        appOrigin: "https://tryroal.com",
       })
     ).toMatchObject({
       aligned: false,
       webhookHost: "old.example.com",
-      appHost: "getroal.com",
+      appHost: "tryroal.com",
     });
   });
 

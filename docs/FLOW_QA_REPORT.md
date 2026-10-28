@@ -14,7 +14,7 @@ Prompt queue: [`docs/feature-flow-qa-60-prompts.md`](./feature-flow-qa-60-prompt
 - **Deploy scripts** (`deploy-production.sh`, `deploy-edge-functions.sh`, `smoke-test-production.sh`) reviewed **pass**; macOS bash prompt fix applied (prompt 55).
 - **Playwright smokes** (`auth-smoke`, `e2e-smoke`) exist (prompt 57); not run in agent env (no local dev server) — operator runs with `npm run dev`.
 - **Stripe** checkout/portal stubbed off (`STRIPE_CHECKOUT_ENABLED`); dev mode does not block onboarding (prompt 43–45).
-- **Ops before prod:** resolve `getroal.com` / init webhook; live Twilio `get_menu_items` **200**; optional `AGENT_TOOL_SIGNING_SECRET` on Edge.
+- **Ops before prod:** resolve `tryroal.com` / init webhook; live Twilio `get_menu_items` **200**; optional `AGENT_TOOL_SIGNING_SECRET` on Edge.
 
 | Field | Value |
 |-------|--------|
@@ -1428,7 +1428,7 @@ Deployed **`get-menu` is healthy** for connected restaurant + valid legacy or si
 | 3 | Supabase menu rows | **pass** — MCP: 7 categories, 39 items; agent connected on profile |
 | 4 | Env project ref | **pass** — local `NEXT_PUBLIC_SUPABASE_URL` ref = tool URL host ref |
 | 5 | Auth | **pass** — signed `roal1.*` (minted with signing secret or `AGENT_TOOL_SECRET` fallback; Edge `getSigningSecrets()` uses same fallback). Legacy without scope → **400** `missing_restaurant_id` (failure mode for **unbaked** tools only) |
-| 6 | conversation-init | **pass** locally with secret; **blocked** probe to `https://getroal.com` (DNS did not resolve from QA host) — does not block baked `get_menu_items` |
+| 6 | conversation-init | **pass** locally with secret; **blocked** probe to `https://tryroal.com` (DNS did not resolve from QA host) — does not block baked `get_menu_items` |
 
 ### Root cause
 
@@ -1457,7 +1457,7 @@ Deployed **`get-menu` is healthy** for connected restaurant + valid legacy or si
 
 | Item | Notes |
 |------|--------|
-| Production `getroal.com` DNS / deploy | QA host could not resolve `getroal.com`; EL phone personalization webhook points there — fix hosting/DNS so init webhook succeeds on real calls (greeting/placeholders; menu tool is baked independently). |
+| Production `tryroal.com` DNS / deploy | QA host could not resolve `tryroal.com`; EL phone personalization webhook points there — fix hosting/DNS so init webhook succeeds on real calls (greeting/placeholders; menu tool is baked independently). |
 | Live Twilio call | Confirm ElevenLabs tool log shows **200** on `get_menu_items` after resync. |
 | `AGENT_TOOL_SIGNING_SECRET` parity | Optional: set on Next.js + Edge to avoid legacy-only drift (prompt 05). |
 
@@ -3384,7 +3384,7 @@ npm test -- tests/integration/auth-callback-route.test.ts \
 
 | Severity | Open blockers |
 |----------|----------------|
-| P0 | **LB-01** — production phone: `getroal.com` DNS/init + live Twilio `get_menu_items` not certified (prompt **38** code path **pass** after re-sync) |
+| P0 | **LB-01** — production phone: `tryroal.com` DNS/init + live Twilio `get_menu_items` not certified (prompt **38** code path **pass** after re-sync) |
 | P1 | **LB-02** Stripe off · **LB-03** Edge signing secret · **LB-04** live Playwright/prod smoke not run in agent env |
 
 **Code changes this prompt:** none (blocker doc only; `tsconfig.json` already excludes `tests/**` + `npm:zod` alias per prompt 58).
@@ -3402,7 +3402,7 @@ npm test -- tests/integration/auth-callback-route.test.ts \
 | Domain | Status | Evidence | Needs human |
 |--------|--------|----------|-------------|
 | Infra / DB | **pass** | MCP 24/24 migrations; Realtime publication (53) | CLI `migration list` CREATEROLE |
-| Edge / phone tools | **pass** | Deployed curl 29–31; menu chain 38 | Live Twilio log 200; `getroal.com` DNS |
+| Edge / phone tools | **pass** | Deployed curl 29–31; menu chain 38 | Live Twilio log 200; `tryroal.com` DNS |
 | Auth / session | **pass** | 09–12, callback 10, context 11, redirect 08 | Signed-in matrix browser |
 | Onboarding | **pass** | 16 wizard + RLS 12 | Full browser E2E |
 | Menu scan / import / editor | **pass** | 19–24 Vitest + MCP | Real menu image; editor browser |
@@ -3470,7 +3470,7 @@ npm test -- tests/integration/auth-callback-route.test.ts \
 | 2026-05-23 | 31 | `finalize-order` Edge: sync-then-finalize + standalone items; receipts + `status=new`; idempotency replay header; Zod + placeholder customer 400; `usage_events` verified; KDS terminal SQL pattern for completed/canceled; script `scripts/qa-finalize-order-edge.mjs`; no redeploy — **pass** |
 | 2026-05-23 | 32 | Agent tool auth: Vitest 35 (auth 18 + schemas 17); `get-menu` curl matrix signed/legacy/negative; **fixed** UUID case mismatch in scope resolve + assert; Edge redeployed — **fixed** |
 | 2026-05-23 | 33 | ElevenLabs reachability: `getConvaiAgent` via `peek-agent.ts` OK; env both files non-empty; health check config-only; `.env.example` empty-override note — **pass** |
-| 2026-05-23 | 38 | Phone menu chain: EL tools baked + ref match; Edge 200 (7×39); root cause = dynamic tools + missing scope/init, not get-menu; resync egg mania; getroal.com DNS **needs human** — **pass** |
+| 2026-05-23 | 38 | Phone menu chain: EL tools baked + ref match; Edge 200 (7×39); root cause = dynamic tools + missing scope/init, not get-menu; resync egg mania; tryroal.com DNS **needs human** — **pass** |
 | 2026-05-23 | 34 | Agent route GET/PATCH: Vitest 7/7; default/`?agent_id=`; 503 env errors no stack; no auth required; live GET 200 once; no route fixes — **pass** (tests only) |
 | 2026-05-23 | 39 | VoiceAgentPanel connect/resync: loading labels + env card OK; MCP profile agent id + 3 tool ids; success banner **fixed**; signed-in browser **needs human** — **fixed** |
 | 2026-05-23 | 40 | Voice test harness: Vitest 10/10 dry-run; scenario matrix menu/unavailable/modifier/sync/finalize/handoff(prompt)/missing guest; added `valid_modifier_sync`; invalid modifier uses item w/ groups; live KDS **needs human** — **pass** |

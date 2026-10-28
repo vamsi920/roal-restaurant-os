@@ -72,7 +72,7 @@
 
 ## Production checklist
 
-1. Set **`NEXT_PUBLIC_APP_URL`** to production origin (e.g. `https://getroal.com`) so canonicals, OG URLs, and JSON-LD use absolute HTTPS links.
+1. Set **`NEXT_PUBLIC_APP_URL`** to production origin (e.g. `https://tryroal.com`) so canonicals, OG URLs, and JSON-LD use absolute HTTPS links.
 2. After deploy, spot-check one article in [Rich Results Test](https://search.google.com/test/rich-results) and confirm `/sitemap.xml` lists all blog URLs.
 
 ---

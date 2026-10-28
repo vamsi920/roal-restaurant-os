@@ -125,7 +125,7 @@ describe("restaurant launch checklist", () => {
   });
 
   it("flags conversation-init webhook host mismatch with NEXT_PUBLIC_APP_URL", () => {
-    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://getroal.com");
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://tryroal.com");
 
     const evalResult = evaluateConversationInitWebhook({
       syncSummary: {

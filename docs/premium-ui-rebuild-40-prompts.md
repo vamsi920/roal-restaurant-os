@@ -50,7 +50,7 @@ Rewrite hero copy to be direct and catchy: “Never miss a restaurant call again
 
 ## 8. Hero CTA Pass
 
-Primary CTA: “Hear a demo call”. Secondary CTA: “Book a demo”. Book demo uses `mailto:hello@getroal.com`. Buttons must look premium.
+Primary CTA: “Hear a demo call”. Secondary CTA: “Book a demo”. Book demo uses `mailto:vamsi@tryroal.com`. Buttons must look premium.
 
 ## 9. Pricing Pill Polish
 
@@ -138,7 +138,7 @@ Make `/demo` one beautiful simple page: video placeholder, 3-step preview, sampl
 
 ## 30. Demo CTA Fix
 
-Bottom of `/demo`: “Book a demo call” mailto `hello@getroal.com`, then “Sign up”. Verify links.
+Bottom of `/demo`: “Book a demo call” mailto `vamsi@tryroal.com`, then “Sign up”. Verify links.
 
 ## 31. Auth UI Polish
 

@@ -76,7 +76,7 @@
 | **SEO** | Best long-tail (“cost unanswered restaurant phone calls”) |
 | **AEO** | Excellent worksheet framing + disclaimers |
 | **Freshness** | Says “see pricing” in prose but not a URL; ROAL charge FAQ vague on rate |
-| **Issues** | Missing `$0.90` anchor; no `/pricing` link; “contact us” without `hello@getroal.com` |
+| **Issues** | Missing `$0.90` anchor; no `/pricing` link; “contact us” without `vamsi@tryroal.com` |
 | **Priority** | **P1** — prompt **40** |
 
 ---
@@ -169,7 +169,7 @@
 ### Pricing & product copy
 
 - **No post** states **`$0.90 per successful order`** (homepage/pricing canonical).
-- **No markdown/HTML links** to `/pricing`, `/demo`, or `mailto:hello@getroal.com` in section paragraphs (only UI CTA at bottom).
+- **No markdown/HTML links** to `/pricing`, `/demo`, or `mailto:vamsi@tryroal.com` in section paragraphs (only UI CTA at bottom).
 - `pay-only-successful-orders` references **pricing tiers** that no longer match public pricing page.
 
 ### Internal linking (recommended pattern)

@@ -23,7 +23,7 @@ describe("GET /api/health", () => {
           ok: true,
           status: "pass",
           details: {
-            app_url: "https://getroal.com",
+            app_url: "https://tryroal.com",
             firebase_configured: true,
           },
         },

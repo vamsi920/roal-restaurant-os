@@ -14,7 +14,7 @@
 | **Supabase** | **Ready** — project `mnkabwcbdxruefzuvuuv`, **27/27** migrations (`001`–`027` via `supabase db push`; no operator SQL required) |
 | **Product flows (automated)** | **Pass** — create → dedicated agent clone → menu sync → Edge draft/finalize → KDS ticket; conversation-init fail-closed when agent unlinked; existing QA restaurant voice lifecycle + menu auto-sync verified live post-push |
 | **Product readiness (pass 39)** | **Pass** — no fake dashboard metrics; dedicated-agent guard; mobile core pages verified (see below) |
-| **Production launch** | **Blocked (P0)** — **LB-01** open: `getroal.com` unreachable; live Twilio sign-off pending. **LB-04** open (same root cause). **LB-03 closed**; **LB-02 downgraded** |
+| **Production launch** | **Blocked (P0)** — **LB-01** open: `tryroal.com` unreachable; live Twilio sign-off pending. **LB-04** open (same root cause). **LB-03 closed**; **LB-02 downgraded** |
 
 **Certification (39/40):** **Ready for staged pilot onboarding** (signup → menu → KDS → test order on a deployed host with env). **Not ready for production day-one with live forwarded guest calls** until **LB-01** closes — ops must deploy DNS, re-sync ElevenLabs, and confirm one live Twilio call.
 
@@ -52,9 +52,9 @@
 | `npm run build` | **pass** |
 | `npx tsc --noEmit --pretty false` | **pass** |
 | `npm run qa:lb01-phone-stack` | **11/13** — code/tool layers pass; prod DNS and prod HTTP fail |
-| `SMOKE_BASE_URL=https://getroal.com npm run smoke` | **0/5** — `getroal.com` unresolved / HTTP 000 |
+| `SMOKE_BASE_URL=https://tryroal.com npm run smoke` | **0/5** — `tryroal.com` unresolved / HTTP 000 |
 
-**Updated blocker verdict:** product code and live QA restaurant flows are ready for staged pilot onboarding. **Production forwarded guest calls remain blocked by DNS/production hosting (`getroal.com` NXDOMAIN from this host) and a human Twilio call sign-off.**
+**Updated blocker verdict:** product code and live QA restaurant flows are ready for staged pilot onboarding. **Production forwarded guest calls remain blocked by DNS/production hosting (`tryroal.com` NXDOMAIN from this host) and a human Twilio call sign-off.**
 
 ---
 
@@ -174,8 +174,8 @@ Documented in [`PUBLIC_LAUNCH_PLAN.md`](./PUBLIC_LAUNCH_PLAN.md): routes, theme,
 
 | ID | Severity | Status | Owner | Action |
 |----|----------|--------|-------|--------|
-| **LB-01** | **P0** | **open** | ops + human | Deploy prod host; DNS `getroal.com`; `ensure:signing-parity` + `resync:elevenlabs-all`; one Twilio call → `get_menu_items` **200** in EL logs |
-| **LB-04** | P1 | **open** | ops + eng | After deploy: `SMOKE_BASE_URL=https://getroal.com npm run smoke` **6/6**; `qa:deploy-smoke` **8/8** |
+| **LB-01** | **P0** | **open** | ops + human | Deploy prod host; DNS `tryroal.com`; `ensure:signing-parity` + `resync:elevenlabs-all`; one Twilio call → `get_menu_items` **200** in EL logs |
+| **LB-04** | P1 | **open** | ops + eng | After deploy: `SMOKE_BASE_URL=https://tryroal.com npm run smoke` **6/6**; `qa:deploy-smoke` **8/8** |
 | **LB-03** | P1 | **closed** | — | Signing secret parity verified 2026-05-23 |
 | **LB-02** | P2 | **downgraded** | product | Manual pilot billing OK; not required for launch |
 
@@ -528,7 +528,7 @@ Includes: `kds-workspace-qa` (14), `menu-setup-route`, `dashboard-nav`, `dashboa
 | Baked tools | 3/3 on agent; `x-roal-restaurant-id` + baked `get-menu` URL for QA restaurant |
 | `get_menu_items` | ElevenLabs-synced URL + headers → **HTTP 200**, 7 categories (simulates Twilio tool call) |
 | Personalization | Webhook **enabled** on agent; URL matches `NEXT_PUBLIC_APP_URL` + conversation-init path |
-| conversation-init | **HTTP 200** on local dev with correct `restaurant_id` (prod blocked: `getroal.com` DNS NXDOMAIN) |
+| conversation-init | **HTTP 200** on local dev with correct `restaurant_id` (prod blocked: `tryroal.com` DNS NXDOMAIN) |
 
 **LB-01 status:** **shrunk** — code/tool stack certified; **close** after DNS live + one Twilio call with `get_menu_items` **200** in ElevenLabs logs.
 
@@ -729,12 +729,12 @@ Bodies use **baked** shape (no `restaurant_id` in JSON — scoped via headers).
 | `E2E_BASE_URL=http://localhost:3020 npm run e2e-smoke` | **15/15** — auth UI + protected redirect; signed-in paths **skipped** (no `E2E_*`) |
 | `npm run qa:deploy-smoke` | **6/8** — local layers pass; prod probe fails (expected until hosting) |
 
-### Production (`NEXT_PUBLIC_APP_URL=https://getroal.com`) — **blocked**
+### Production (`NEXT_PUBLIC_APP_URL=https://tryroal.com`) — **blocked**
 
 | Check | Result |
 |-------|--------|
 | DNS / connect | **fail** — NXDOMAIN / HTTP 000 from QA host |
-| `SMOKE_BASE_URL=https://getroal.com npm run smoke` | **0/5** — all endpoints unreachable |
+| `SMOKE_BASE_URL=https://tryroal.com npm run smoke` | **0/5** — all endpoints unreachable |
 | LB-04 close criteria | Run same smokes after DNS + deploy live |
 
 ### Deploy tooling (inspected)
@@ -746,7 +746,7 @@ Bodies use **baked** shape (no `restaurant_id` in JSON — scoped via headers).
 | `scripts/smoke-test-production.sh` | curl health + public pages + dashboard gate |
 | `npm run deploy:check` | wraps deploy-production (needs human for remote steps) |
 
-**Ops checklist to close LB-04:** (1) Deploy app to host bound to `getroal.com`. (2) `SMOKE_BASE_URL=https://getroal.com npm run smoke` → **6/6**. (3) `E2E_EMAIL`/`E2E_PASSWORD` + `npm run e2e-smoke` on prod/staging. (4) Manual §7 in `docs/DEPLOYMENT.md` (menu scan, Realtime, ElevenLabs, finalize).
+**Ops checklist to close LB-04:** (1) Deploy app to host bound to `tryroal.com`. (2) `SMOKE_BASE_URL=https://tryroal.com npm run smoke` → **6/6**. (3) `E2E_EMAIL`/`E2E_PASSWORD` + `npm run e2e-smoke` on prod/staging. (4) Manual §7 in `docs/DEPLOYMENT.md` (menu scan, Realtime, ElevenLabs, finalize).
 
 ---
 
@@ -994,10 +994,10 @@ Full write-up: [`LAUNCH_BLOCKERS.md`](./LAUNCH_BLOCKERS.md).
 | Gate | Verdict |
 |------|---------|
 | Ship code to staging / guided pilot | **Go** — commit triaged tree; deploy with env + signing parity |
-| Invite restaurants to forward **live** guest calls on prod domain | **No-go** — **LB-01 (P0)** until `getroal.com` live + Twilio sign-off |
+| Invite restaurants to forward **live** guest calls on prod domain | **No-go** — **LB-01 (P0)** until `tryroal.com` live + Twilio sign-off |
 | Self-serve Stripe at signup | **Optional** — LB-02 downgraded; manual billing |
 
-**Verified 2026-05-23:** `https://getroal.com` → HTTP **000** from QA host; `npm test` **555/555**; `npm run build` pass.
+**Verified 2026-05-23:** `https://tryroal.com` → HTTP **000** from QA host; `npm test` **555/555**; `npm run build` pass.
 
 ---
 
@@ -1047,14 +1047,14 @@ downgraded). Public copy de-jargon pass; client env inlining fix.
 | Action | Result |
 |--------|--------|
 | **Commit** | **done** — see `git log -1` on `main` |
-| **Push** | **withheld** — P0 **LB-01** remains; pushing would advertise a prod-ready phone stack before `getroal.com` + Twilio sign-off |
+| **Push** | **withheld** — P0 **LB-01** remains; pushing would advertise a prod-ready phone stack before `tryroal.com` + Twilio sign-off |
 
 ### Before push (ops)
 
-1. Deploy Next.js; point **`getroal.com`** DNS (or set `NEXT_PUBLIC_APP_URL` to live origin).
+1. Deploy Next.js; point **`tryroal.com`** DNS (or set `NEXT_PUBLIC_APP_URL` to live origin).
 2. `npm run ensure:signing-parity` on prod host + Edge; `npm run resync:elevenlabs-all`.
 3. `npm run qa:lb01-phone-stack` → prod layers pass; one live Twilio call → `get_menu_items` **200**.
-4. `SMOKE_BASE_URL=https://getroal.com npm run smoke` → **6/6**; then `git push origin main`.
+4. `SMOKE_BASE_URL=https://tryroal.com npm run smoke` → **6/6**; then `git push origin main`.
 
 ---
 
@@ -1084,10 +1084,10 @@ downgraded). Public copy de-jargon pass; client env inlining fix.
 | `npm run resync:elevenlabs-all` | **pass** — 1/1 configured restaurants verified |
 | `npm run list:elevenlabs-restaurants` | **pass** — 1 agent-linked restaurant |
 | `npm run build` | **pass** |
-| `npm run qa:deploy-smoke` | **6/8** local pass; prod **fail** until `getroal.com` live (2026-05-23) |
+| `npm run qa:deploy-smoke` | **6/8** local pass; prod **fail** until `tryroal.com` live (2026-05-23) |
 | `SMOKE_BASE_URL=http://localhost:3020 npm run smoke` | **pass** — **6/6** (2026-05-23) |
 | `auth-smoke` / `e2e-smoke` (local :3020) | **pass** — **9/9** / **15/15**; signed-in skipped without `E2E_*` |
-| `SMOKE_BASE_URL=https://getroal.com npm run smoke` | **fail** — **0/5** DNS/connect (2026-05-23) |
+| `SMOKE_BASE_URL=https://tryroal.com npm run smoke` | **fail** — **0/5** DNS/connect (2026-05-23) |
 | `npm run qa:responsive-sweep` | **pass** — **33/33** mobile/tablet/desktop (2026-05-23) |
 | `npm run qa:a11y-perf` | **pass** — **13/13** + static a11y Vitest **10/10** (2026-05-23) |
 | `npm run qa:error-states` | **pass** — **10/10** + Vitest **17/17** (2026-05-23) |
@@ -1209,7 +1209,7 @@ See [`launch-finalization-40-prompts.md`](./launch-finalization-40-prompts.md).
 | 2026-05-23 | Launch 24/40 | Admin ops live 31/31; access gates + health sanitization + no secret leakage in snapshot/API |
 | 2026-05-23 | Launch 25/40 | Tenant isolation MCP JWT probe + 75 Vitest + qa:tenant-isolation 11/11; no leaks; Org B notification_settings fixture |
 | 2026-05-23 | Launch 26/40 | Auth/security 18/18 + 43 Vitest; redirects/callback/signout/API 401; no client secret leaks |
-| 2026-05-23 | Launch 27/40 | Deploy smoke local 6/6 + auth/e2e Playwright pass; prod getroal.com 0/5; signup missing import fixed; qa:deploy-smoke 6/8 |
+| 2026-05-23 | Launch 27/40 | Deploy smoke local 6/6 + auth/e2e Playwright pass; prod tryroal.com 0/5; signup missing import fixed; qa:deploy-smoke 6/8 |
 | 2026-05-23 | Launch 28/40 | Responsive sweep 33/33; FAQ scroll-reveal invisible fixed; tap targets + demo text + auth nav polish |
 | 2026-05-23 | Launch 29/40 | A11y/perf 13/13; hydration time fix; demo SVG path fix; qa:a11y-perf script |
 | 2026-05-23 | Launch 30/40 | Error/empty 9/9; formatAuthError + formatSupabaseClientError; API leak fix; qa:error-states |

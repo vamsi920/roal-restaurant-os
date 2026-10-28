@@ -20,7 +20,7 @@ Tip: create a second project (e.g. `roal-staging`) the same way if you want a se
    - **Google** → Enable → pick a **project support email** → Save.
 3. **Settings** tab → **Authorized domains** → make sure these are listed (add the missing ones):
    - `localhost`
-   - your production domain, e.g. `getroal.com` (and `www.getroal.com` if used)
+   - your production domain, e.g. `tryroal.com` (and `www.tryroal.com` if used)
    - your Netlify domain if you test on it, e.g. `your-site.netlify.app`
 
 Without the right authorized domain, the Google popup fails with `auth/unauthorized-domain`.

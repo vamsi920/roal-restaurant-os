@@ -6,7 +6,7 @@ Canonical: `lib/landing/demo-page-copy.ts` → `DEMO_CTA`
 
 Button order (left to right):
 
-1. **Book a demo call** — `mailto:hello@getroal.com` (subject: Book a ROAL demo call) — primary
+1. **Book a demo call** — `mailto:vamsi@tryroal.com` (subject: Book a ROAL demo call) — primary
 2. **Sign up** — `/signup?next=/dashboard/restaurants` — ghost, immediately after
 
 Footer shows pilot inbox linked to the same mailto href.
