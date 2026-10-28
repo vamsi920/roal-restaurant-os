@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPhoneForDisplay } from "@/lib/phone/e164";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -512,12 +513,12 @@ function ConfirmScreen({ trial, onYes, onNo }: { trial: TrialPublicView; onYes: 
         </div>
         <dl className="sf__place-facts">
           <Fact label="Address" value={address || "We'll ask for it later"} muted={!address} />
-          <Fact label="Phone" value={p?.phone ?? "Not listed"} muted={!p?.phone} />
+          <Fact label="Phone" value={formatPhoneForDisplay(p?.phone) ?? "Not listed"} muted={!p?.phone} />
           <Fact
             label="Hours"
             value={
               openDays.length
-                ? `Open ${openDays.length} days · ${DAY_SHORT[openDays[0].day_of_week]} ${openDays[0].open_time ?? ""}–${openDays[0].close_time ?? ""}`
+                ? `Open ${openDays.length} days · ${DAY_SHORT[openDays[0].day_of_week]} ${clock12(openDays[0].open_time)}–${clock12(openDays[0].close_time)}`
                 : "Not listed online"
             }
             muted={!openDays.length}
@@ -1151,4 +1152,14 @@ function useTypewriter(text: string, cps = 38): string {
     return () => clearInterval(t);
   }, [cps, text]);
   return text.slice(0, n);
+}
+
+/** "15:00" → "3 PM", "09:30" → "9:30 AM". */
+function clock12(hhmm: string | null | undefined): string {
+  const m = hhmm?.match(/^(\d{1,2}):(\d{2})/);
+  if (!m) return "";
+  const h = Number(m[1]);
+  const suffix = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return m[2] === "00" ? `${h12} ${suffix}` : `${h12}:${m[2]} ${suffix}`;
 }
