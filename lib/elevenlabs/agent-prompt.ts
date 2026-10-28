@@ -317,6 +317,9 @@ function buildOrderingPolicySection(profile: RestaurantProfile | null): string {
     );
   } else {
     lines.push(
+      "Tax: the restaurant hasn't set a tax rate, so totals from the tools are before tax. When you say a total, say it is before tax (e.g. \"that's $24.50 plus tax\")."
+    );
+    lines.push(
       "Payments: if no payment tool exists, totals and payment are confirmed at pickup or delivery per store policy. Never collect full card numbers on the call."
     );
   }
@@ -469,10 +472,25 @@ export function buildRestaurantOrderAgentPrompt(
   return sections.filter(Boolean).join("\n\n");
 }
 
+/** Calls are recorded, so guests hear that up front (required in all-party-consent states). */
+export const CALL_RECORDING_NOTICE = "This call may be recorded.";
+
+/** Put the recording notice right after the greeting's first sentence, unless it already has one. */
+export function withCallRecordingNotice(greeting: string): string {
+  const text = greeting.trim();
+  if (!text || /\brecord(ed|ing)\b/i.test(text)) return text;
+  const match = text.match(/^(.+?[.!?])\s+(.+)$/s);
+  return match ? `${match[1]} ${CALL_RECORDING_NOTICE} ${match[2]}` : `${text} ${CALL_RECORDING_NOTICE}`;
+}
+
 export function buildRestaurantOrderFirstMessage(
   profile: RestaurantProfile | null,
   restaurantName: string
 ): string {
+  return withCallRecordingNotice(buildBaseFirstMessage(profile, restaurantName));
+}
+
+function buildBaseFirstMessage(profile: RestaurantProfile | null, restaurantName: string): string {
   const name = restaurantName.trim() || "the restaurant";
 
   if (profile?.temporarily_closed) {

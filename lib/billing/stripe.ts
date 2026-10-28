@@ -13,6 +13,8 @@ export type FetchFn = (url: string, init?: RequestInit) => Promise<Response>;
 export const STRIPE_API_BASE = "https://api.stripe.com/v1";
 export const ORDER_METER_EVENT_NAME = "roal_completed_order";
 export const ORDER_PRICE_LOOKUP_KEY = "roal_completed_order_v1";
+/** Stripe Tax code for business-use software as a service. */
+export const SAAS_TAX_CODE = "txcd_10103001";
 
 type Params = Record<string, unknown>;
 
@@ -93,13 +95,20 @@ export function resetStripeCaches() {
 export async function ensureOrderPrice(stripe: StripeClient): Promise<string> {
   if (cachedOrderPriceId) return cachedOrderPriceId;
 
-  const prices = await stripe.get<StripeList<{ id: string }>>("/prices", {
+  const prices = await stripe.get<StripeList<{ id: string; tax_behavior?: string }>>("/prices", {
     lookup_keys: [ORDER_PRICE_LOOKUP_KEY],
     active: true,
     limit: 1,
   });
-  if (prices.data?.[0]?.id) {
-    cachedOrderPriceId = prices.data[0].id;
+  const existing = prices.data?.[0];
+  if (existing?.id) {
+    // Prices made before sales tax was switched on have no tax behavior; Stripe lets us set it once.
+    if (existing.tax_behavior === "unspecified") {
+      await stripe.post(`/prices/${existing.id}`, { tax_behavior: "exclusive" }).catch((e) => {
+        console.warn("[billing] price tax behavior", e instanceof Error ? e.message : e);
+      });
+    }
+    cachedOrderPriceId = existing.id;
     return cachedOrderPriceId;
   }
 
@@ -129,7 +138,9 @@ export async function ensureOrderPrice(stripe: StripeClient): Promise<string> {
       currency: "usd",
       unit_amount: Math.round(BILLABLE_PHONE_ORDER_RATE_USD * 100),
       recurring: { interval: "month", usage_type: "metered", meter: meterId },
-      product_data: { name: "ROAL completed phone orders", unit_label: "order" },
+      // Sales tax is added on top of the per-order price, where it applies.
+      tax_behavior: "exclusive",
+      product_data: { name: "ROAL completed phone orders", unit_label: "order", tax_code: SAAS_TAX_CODE },
       lookup_key: ORDER_PRICE_LOOKUP_KEY,
       nickname: "Per completed order",
     },

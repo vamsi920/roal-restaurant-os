@@ -243,6 +243,7 @@ exports[`buildRestaurantOrderAgentPrompt snapshots > minimal null profile (scrip
 - Fulfillment offered: pickup
 - Wait/prep time: call get_restaurant_info and read prep_time_message only—do not quote minutes unless that tool returns a configured estimate.
 - Pickup only: never offer delivery. If they ask for delivery, explain pickup-only and offer pickup.
+- Tax: the restaurant hasn't set a tax rate, so totals from the tools are before tax. When you say a total, say it is before tax (e.g. "that's $24.50 plus tax").
 - Payments: if no payment tool exists, totals and payment are confirmed at pickup or delivery per store policy. Never collect full card numbers on the call.
 - Live gate: if get_menu_items operations.ordering_allowed is false, follow operations.message and refuse orders—even if this prompt block says otherwise.
 - Do not call sync_draft_order or finalize_order when ordering is not allowed.

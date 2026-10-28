@@ -322,7 +322,7 @@ describe("buildRestaurantOrderFirstMessage", () => {
     expect(msg).not.toContain("this is");
   });
 
-  it("uses a custom agent_greeting verbatim over the persona template", () => {
+  it("uses a custom agent_greeting over the persona template, plus the recording notice", () => {
     const msg = buildRestaurantOrderFirstMessage(
       {
         ...baseProfile,
@@ -331,8 +331,19 @@ describe("buildRestaurantOrderFirstMessage", () => {
       },
       "QA Bistro"
     );
-    expect(msg).toBe("Yo, QA Bistro here, what's up?");
+    expect(msg).toBe("Yo, QA Bistro here, what's up? This call may be recorded.");
     expect(msg).not.toContain("this is Addy");
+  });
+
+  it("tells callers the call may be recorded right after the intro", () => {
+    const msg = buildRestaurantOrderFirstMessage({ ...baseProfile, agent_display_name: "Maya" }, "QA Bistro");
+    expect(msg).toMatch(/^Hi, thanks for calling QA Bistro, this is Maya\. This call may be recorded\. /);
+  });
+
+  it("does not repeat the recording notice when the custom greeting already has one", () => {
+    const greeting = "Thanks for calling QA Bistro. Calls are recorded for quality. What can I get you?";
+    const msg = buildRestaurantOrderFirstMessage({ ...baseProfile, agent_greeting: greeting }, "QA Bistro");
+    expect(msg).toBe(greeting);
   });
 
   it("temporarily closed still wins over a custom greeting", () => {

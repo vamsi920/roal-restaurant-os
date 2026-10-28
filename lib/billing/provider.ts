@@ -4,6 +4,7 @@ import {
   createStripeClient,
   ensureOrderPrice,
   ensurePortalConfiguration,
+  StripeApiError,
   type FetchFn,
   type StripeClient,
 } from "@/lib/billing/stripe";
@@ -115,17 +116,30 @@ export const billingProvider = {
         ensureOrderPrice(stripe),
       ]);
       const metadata = { organization_id: req.organizationId, plan_id: req.planId };
-      const session = await stripe.post<{ url?: string }>("/checkout/sessions", {
+      const params = {
         mode: "subscription",
         customer,
         client_reference_id: req.organizationId,
         line_items: [{ price }],
         payment_method_collection: "always",
+        // A billing address is needed for sales tax and for proper invoices.
+        billing_address_collection: "required",
+        customer_update: { address: "auto", name: "auto" },
+        tax_id_collection: { enabled: true },
         metadata,
         subscription_data: { metadata },
         success_url: req.successUrl,
         cancel_url: req.cancelUrl,
-      });
+      };
+      let session: { url?: string };
+      try {
+        session = await stripe.post<{ url?: string }>("/checkout/sessions", { ...params, automatic_tax: { enabled: true } });
+      } catch (e) {
+        // Stripe Tax not switched on for the account yet: still let the owner pay, without tax.
+        if (!(e instanceof StripeApiError) || e.status !== 400 || !/tax/i.test(e.message)) throw e;
+        console.warn("[billing] checkout without automatic tax:", e.message);
+        session = await stripe.post<{ url?: string }>("/checkout/sessions", params);
+      }
       if (!session.url) return FAILED;
       return { ok: true, url: session.url };
     } catch (e) {

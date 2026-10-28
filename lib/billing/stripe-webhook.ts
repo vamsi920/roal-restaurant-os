@@ -71,6 +71,15 @@ async function applyStatus(
 ): Promise<WebhookOutcome> {
   const patch: Obj = { subscription_status: status, updated_at: new Date().toISOString() };
   for (const [k, v] of Object.entries(extra)) if (v != null) patch[k] = v;
+  if (status === "active") {
+    // First activation marks where billable orders start (used by the missed-usage catch-up).
+    const { data: current } = await db
+      .from("organizations")
+      .select("plan_activated_at")
+      .eq("id", organizationId)
+      .maybeSingle<{ plan_activated_at: string | null }>();
+    if (!current?.plan_activated_at) patch.plan_activated_at = patch.updated_at;
+  }
   const { error } = await db.from("organizations").update(patch).eq("id", organizationId);
   if (error) throw new Error(error.message);
 

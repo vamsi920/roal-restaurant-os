@@ -73,3 +73,62 @@ export async function reportCompletedOrderUsage(
     .eq("session_id", input.sessionId);
   return { reported: true };
 }
+
+/** Stripe only accepts meter events up to 35 days old; stay inside that with a margin. */
+const MAX_LATE_USAGE_MS = 30 * 24 * 60 * 60 * 1000;
+
+export type MissedUsageSweepResult = { checked: number; reported: number; failed: number };
+
+/**
+ * Catch-up for orders whose usage report failed at finalize time (timeout, Stripe outage).
+ * Only orders placed during the organization's current billing period are sent, so nothing
+ * from a trial or an already-invoiced month is ever billed late.
+ */
+export async function reportMissedOrderUsage(
+  db: Db,
+  deps: { stripe?: StripeClient | null; fetchImpl?: FetchFn; now?: number; maxOrders?: number } = {}
+): Promise<MissedUsageSweepResult> {
+  const stripe = deps.stripe !== undefined ? deps.stripe : getStripeClient(deps.fetchImpl);
+  const result: MissedUsageSweepResult = { checked: 0, reported: 0, failed: 0 };
+  if (!stripe) return result;
+  const now = deps.now ?? Date.now();
+  const maxOrders = deps.maxOrders ?? 200;
+
+  const { data: orgs } = await db
+    .from("organizations")
+    .select("id, stripe_customer_id, billing_period_start, plan_activated_at")
+    .eq("subscription_status", "active");
+  for (const org of (orgs ?? []) as Array<{
+    id: string;
+    stripe_customer_id: string | null;
+    billing_period_start: string | null;
+    plan_activated_at: string | null;
+  }>) {
+    if (!org.stripe_customer_id?.trim()) continue;
+    const starts = [org.billing_period_start, org.plan_activated_at]
+      .map((v) => (v ? Date.parse(v) : NaN))
+      .filter((v) => Number.isFinite(v));
+    if (starts.length === 0) continue;
+    const since = Math.max(...starts, now - MAX_LATE_USAGE_MS);
+
+    const { data: restaurants } = await db.from("restaurants").select("id").eq("organization_id", org.id);
+    for (const r of (restaurants ?? []) as Array<{ id: string }>) {
+      const { data: receipts } = await db
+        .from("phone_order_receipts")
+        .select("restaurant_id, session_id, items, created_at, usage_reported_at")
+        .eq("restaurant_id", r.id);
+      for (const receipt of (receipts ?? []) as Array<BillableReceiptRow & { usage_reported_at?: string | null }>) {
+        if (receipt.usage_reported_at) continue;
+        const created = Date.parse(receipt.created_at);
+        if (!Number.isFinite(created) || created < since || created > now) continue;
+        if (!isBillablePhoneOrderReceipt(receipt)) continue;
+        if (result.checked >= maxOrders) return result;
+        result.checked += 1;
+        const outcome = await reportCompletedOrderUsage(db, { restaurantId: r.id, sessionId: receipt.session_id }, { stripe });
+        if (outcome.reported) result.reported += 1;
+        else if (outcome.reason === "failed") result.failed += 1;
+      }
+    }
+  }
+  return result;
+}
