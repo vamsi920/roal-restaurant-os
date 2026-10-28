@@ -21,6 +21,19 @@ First run (2026-10-28): 1,487 places (Jersey City 1,172, Hoboken 315), 900 with 
 The pull searches a grid over both cities with several queries and splits any cell that comes back full,
 so dense blocks (Newark Ave, Washington St) are not cut off.
 
+## Sending (Gmail)
+
+```
+npm run outreach:preview   # writes the next batch to leads/preview.txt, sends nothing
+npm run outreach:send      # sends today's batch from GMAIL_USER
+```
+
+Set `GMAIL_USER` and `GMAIL_APP_PASSWORD` (a Google app password, needs 2-Step Verification) in `.env.local`.
+Each run reads the inbox first (anyone who replied or bounced is never emailed again), sends due follow-ups
+(day 3 and day 8, in the same thread), then new leads, takeout spots with the most reviews first, up to
+`DAILY_LIMIT` (default 30) with 90–240s random gaps. Weekdays 9am–5pm only. Progress is in
+`leads/send-state.json`; add addresses to `leads/suppress.txt` to stop them by hand.
+
 ## Sending more without looking like spam
 
 Spam filters judge the **sender** (domain age, volume per inbox, bounce rate, replies) more than the words.
