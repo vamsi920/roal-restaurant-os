@@ -60,9 +60,9 @@ Stripe and Twilio API calls.
    tool links use the app URL. Keep `roal-os.netlify.app` working as an alias.
 7. ~~`GOOGLE_PLACES_API_KEY`~~: done. Still worth doing: a budget alert on the "Firebase Payment"
    billing account, and a daily quota cap on Places API (New), so a bot can't run up the bill.
-8. **`ELEVENLABS_WEBHOOK_SECRET`** (post-call webhook, which saves transcripts and outcomes). Not set
-   on Netlify. Create the post-call webhook in the voice platform's workspace settings, pointing at
-   `/api/integrations/elevenlabs/post-call-webhook`, and copy its secret here.
+8. ~~`ELEVENLABS_WEBHOOK_SECRET`~~: done 2026-10-28. The workspace post-call webhook "ROAL post-call"
+   (HMAC, transcripts) points at `/api/integrations/elevenlabs/post-call-webhook`, and its secret is on
+   Netlify. When the domain changes, create a new webhook for the new URL.
 9. **Voice plan capacity.** Check that the voice plan's concurrent-call limit and monthly minutes cover
    the first restaurants' rush hour. If the limit is hit, callers get no answer.
 10. **One real end-to-end test on live keys.** Sign up, pay, get a line, call it from a normal phone,
@@ -105,3 +105,14 @@ phone, website and opening hours, both calls bill at Google's higher (Pro/Enterp
 roughly $32–35 per 1,000 searches and $17–20 per 1,000 details, after the free monthly caps
 (about 1,000–5,000 of each, depending on tier). So the first ~1,000 lookups each month are free,
 and after that it's about 5 cents per restaurant looked up. Confirm on Google's pricing page.
+
+## Live Stripe (2026-10-28)
+
+- Production `STRIPE_SECRET_KEY` is a live key on the shared account `acct_1TGuViG9grk49qlE`. That
+  account's display name is "Myna-interview" and its statement descriptor is "VENKATA VAMSI DEVADULA",
+  and Addy and other apps use it too. Restaurants would see those names. A separate ROAL Stripe
+  account is recommended.
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` is still `pk_test_`, and `STRIPE_WEBHOOK_SECRET` is still the
+  sandbox one. Live webhook events will fail signature checks until the live endpoint's secret is set.
+- NJ sales-tax registration is active on the live account (business SaaS is exempt in NJ, 0%). Live
+  head office is set to 353 Liberty Avenue, Jersey City.
