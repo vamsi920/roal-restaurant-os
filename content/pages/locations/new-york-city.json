@@ -1,0 +1,115 @@
+{
+  "slug": "new-york-city",
+  "label": "New York City",
+  "h1": "An AI phone host for New York City restaurants",
+  "seoTitle": "AI phone answering for NYC restaurants | ROAL",
+  "description": "ROAL answers restaurant calls in New York City, takes pickup orders, shares hours and menu details, and sends clean kitchen tickets without monthly fees.",
+  "lead": "Busy restaurants in New York City miss calls during lunch, dinner, and late-night rushes. ROAL answers like a phone host, so callers can place pickup orders, ask menu questions, or request a reservation without tying up the line.",
+  "question": "How can an AI phone answering service help my New York City restaurant take calls?",
+  "answer": "ROAL is an AI phone host built for restaurants. It answers calls, takes pickup and delivery orders from your live menu, answers hours and menu questions, and sends a clean ticket to the kitchen screen. It can also handle reservation requests, while anything sensitive or unclear goes to your staff with a short summary.",
+  "pains": [
+    {
+      "title": "Calls pile up during rush hours",
+      "body": "Lunch, dinner, and weekend brunch can stack calls fast. When the phone rings while the counter is busy, people often hang up and call the next place."
+    },
+    {
+      "title": "Staff gets pulled off the floor",
+      "body": "A server answering the phone has to stop seating guests, running food, or packing takeout. That is hard on a small team, especially on commuter-heavy weekdays and game nights."
+    },
+    {
+      "title": "Missed calls are often simple orders",
+      "body": "Many callers just want a chicken parm hero, a plain bagel with lox, a margherita pizza, or a quick pickup time. Those are easy calls to catch, but easy to lose when the line is busy."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers the phone in your restaurant's style",
+      "body": "You choose the voice and name. The host greets callers, takes the order, and keeps the call short and clear."
+    },
+    {
+      "title": "Takes real orders from your menu",
+      "body": "ROAL can handle items, sizes, modifiers, and notes. It skips sold-out items and never takes card numbers over the phone."
+    },
+    {
+      "title": "Sends clean tickets to the kitchen",
+      "body": "Completed orders go to the kitchen screen with the caller's name, phone number, and ready time. That makes pickup smoother when the front counter is packed."
+    },
+    {
+      "title": "Fits the way restaurants already work",
+      "body": "You can forward all calls, or only when the line is busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order for two?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One plain cheese slice, one chicken parm hero, and an order of garlic knots."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes on the hero or the knots?"
+    },
+    {
+      "who": "caller",
+      "line": "No, and can I get it under Maya?"
+    },
+    {
+      "who": "host",
+      "line": "Absolutely. Maya, one plain cheese slice, one chicken parm hero, and one order of garlic knots for pickup. Your order will be ready in about 20 minutes."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "Maya · pickup",
+      "1 plain cheese slice",
+      "1 chicken parm hero",
+      "1 garlic knots",
+      "Ready in about 20 minutes"
+    ],
+    "note": ""
+  },
+  "sections": [
+    {
+      "h2": "Why this matters in New York City",
+      "body": "A restaurant phone in New York City gets hit during the exact moments your team is already busy. Think lunch service near commuter traffic, weekend brunch in neighborhoods like Hoboken and Jersey City, or dinner rushes when people are heading out before a game or show. In those moments, the phone is often for something simple: a pickup order, a question about hours, or a caller asking if you still have a certain sandwich, pie, or entree. ROAL is built for that kind of call. It answers, takes the details, and keeps the front of house from getting stuck on the phone.\n\nFor a small independent place, that can mean your host can seat guests, your line cook can stay on tickets, and your counter person can keep moving. If a call is about a manager issue, a serious allergy question, or something the host cannot answer, ROAL passes it to staff with a summary instead of guessing."
+    },
+    {
+      "h2": "A simple setup for owners who are not technical",
+      "body": "Setup is meant to be quick. You paste your restaurant website, Google Maps link, or even just the name and city into /try. ROAL reads the menu, prices, hours, and address from public pages or a menu upload, then builds a phone host in about a minute. You can test-call it in the browser before you go live.\n\nWhen you are ready, you claim the host and forward your existing number to it. Many owners start by forwarding only busy or unanswered calls, so the phone host handles overflow while the team gets comfortable. That works well for a first test during a Friday night rush or a busy Saturday brunch. You keep your number, and you can turn forwarding off any time."
+    },
+    {
+      "h2": "What to prepare before you turn it on",
+      "body": "The best results start with a clean menu and clear house rules. Make sure your menu items, sizes, toppings, sauces, and add-ons are current. If you sell a pepperoni pie, a chopped cheese, a roast turkey sandwich, or a chicken tikka roll, list the exact names people say on the phone. Add your usual pickup time, your hours, and any notes about sold-out items, parking, or where guests should pick up.\n\nIt also helps to think through the calls you get most often. A caller may ask, “Are you open now?”, “Do you have gluten-free crust?”, “Can I add jalapeños?”, or “Do you take reservations for 8?” ROAL can answer many of those right away. For anything unclear, the question goes to your inbox so you can answer it once and the host knows it from then on."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can this answer calls for my New York City restaurant after hours?",
+      "a": "Yes. ROAL can answer after-hours calls, take messages, and handle simple questions like hours or menu basics. If the call is an order and your menu supports it, it can also take the order and send a ticket."
+    },
+    {
+      "q": "Does it work for pickup orders only, or delivery too?",
+      "a": "It can take pickup and delivery orders from your live menu. The host collects the order details, caller name, and phone number, then confirms a ready time and sends the ticket to the kitchen screen."
+    },
+    {
+      "q": "What if a caller asks about an allergy or a sold-out item?",
+      "a": "ROAL will not offer items marked sold out. Allergy-sensitive questions and other sensitive calls go to your staff with a summary, so a person can handle them carefully."
+    },
+    {
+      "q": "Do I need to change my restaurant number?",
+      "a": "No. You keep your own number and forward calls to the ROAL phone line. You can forward all calls or just busy and unanswered calls, depending on how you want to use it."
+    },
+    {
+      "q": "How much does it cost?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract."
+    }
+  ]
+}

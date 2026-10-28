@@ -1,0 +1,120 @@
+{
+  "slug": "bbq",
+  "label": "BBQ restaurants",
+  "h1": "An AI phone host for BBQ restaurants",
+  "seoTitle": "AI phone answering for BBQ restaurants | ROAL",
+  "description": "AI phone answering for bbq restaurants that takes pickup orders, answers menu questions, and sends clean tickets to the kitchen screen.",
+  "lead": "Busy Friday night? ROAL answers the phone for your BBQ restaurant, takes pickup orders, and handles common questions while your team stays on the smoker and the line. It works from your live menu, so callers hear real items and prices.",
+  "question": "Can an AI phone host take BBQ pickup orders when the dining room is packed?",
+  "answer": "Yes. ROAL answers the restaurant phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can also answer hours, address, parking, and menu questions, then hand off allergy-sensitive, complaint, or manager calls to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings when the pit is busiest",
+      "body": "During lunch rush or Friday dinner, someone still has to answer while ribs, brisket, and trays are moving. A missed call can turn into a missed pickup order."
+    },
+    {
+      "title": "Callers ask the same BBQ questions",
+      "body": "People want to know if the pulled pork sandwich comes with sauce, whether the brisket plate has two sides, what time the pit closes, and if there is parking nearby. That takes time when you are already slammed."
+    },
+    {
+      "title": "Orders get garbled on a loud line",
+      "body": "A busy BBQ shop can be noisy. Names, sauces, side choices, and ready times are easy to miss when orders come in fast."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes pickup orders from your real menu",
+      "body": "ROAL reads your menu, prices, hours, and address from your site, menu PDF, menu photos, or a name and city. It can take brisket sandwich, ribs, chopped chicken, burnt ends, mac and cheese, fries, coleslaw, sauce choices, and notes."
+    },
+    {
+      "title": "Handles the rush without putting the line on hold",
+      "body": "When the smoker is busy and the counter is backed up, the host keeps answering. You can forward all calls, or only the ones that are busy or unanswered."
+    },
+    {
+      "title": "Sends a clean ticket to the kitchen screen",
+      "body": "The order comes through with the items, modifiers, caller name, phone number, and ready time. That helps the kitchen stay organized when pickup orders stack up."
+    },
+    {
+      "title": "Passes through the calls that need a person",
+      "body": "If someone asks about a big catering tray, an allergy concern, or a complaint about an order, ROAL sends it to staff with a summary. Questions it cannot answer land in an inbox, and you can teach it once."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Two brisket sandwiches, one with extra pickles. Also one half rack of ribs, and a side of mac and cheese."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any sauce on the side, or on the sandwiches?"
+    },
+    {
+      "who": "caller",
+      "line": "Sauce on the side for both sandwiches, please. Name is Marcus."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Marcus. I have 2 brisket sandwiches, 1 with extra pickles, 1 half rack of ribs, and 1 mac and cheese, sauce on the side. It will be ready around 7:10 pm."
+    },
+    {
+      "who": "host",
+      "line": "That is 2 brisket sandwiches, 1 extra pickles, 1 half rack of ribs, and 1 mac and cheese, ready around 7:10 pm. Is that correct?"
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:10 pm",
+    "lines": [
+      "Marcus · (phone number captured)",
+      "2 brisket sandwiches",
+      "- 1 with extra pickles",
+      "1 half rack of ribs",
+      "1 mac and cheese",
+      "Sauce on the side"
+    ],
+    "note": "Confirm ready time at 7:10 pm"
+  },
+  "sections": [
+    {
+      "h2": "Built for BBQ rushes, not generic phone calls",
+      "body": "BBQ restaurants have their own rhythm. Lunch orders can be short and fast: chopped beef sandwich, turkey plate, two sides, ready in 20 minutes. Dinner calls are often bigger: family packs, rib trays, extra sauce, and a request to make sure the food is ready before the drive home. ROAL is made for that kind of call flow.\n\nIf your team is trimming brisket, boxing up trays, or firing up more buns, the phone still gets answered. ROAL can take the order, repeat it back, and send a clean ticket to the kitchen screen. That keeps the counter from juggling a ringing phone and a stack of pickup bags at the same time. See more on [pickup orders](/use-cases/pickup-orders)."
+    },
+    {
+      "h2": "Set it up from the menu you already have",
+      "body": "You do not need to rewrite your whole menu. Paste your restaurant website, Google Maps link, or just your name and city at /try. ROAL reads public menu pages, menu PDFs, and menu photos, then builds a phone host in about a minute. You can also upload a menu in any format.\n\nThat matters for BBQ places because menus change often. Maybe the brisket plate is sold out early, the rib plate comes with two sides, or a holiday tray needs special timing. ROAL will not offer items marked sold out, and it can answer basic questions about hours, address, and parking from the live menu data you provide."
+    },
+    {
+      "h2": "A simple way to keep more phone orders on busy days",
+      "body": "Many BBQ restaurants already lose calls during peak hours. A line can ring while the pit crew is wrapped up with lunch, a third-party driver is waiting at the counter, or the dining room is full of takeout guests. ROAL gives you another way to catch those calls without hiring a full-time phone person.\n\nOwners can forward all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time. If you want help comparing options, see [AI phone host vs voicemail](/compare/voicemail) and [AI phone host vs hiring phone staff](/compare/hiring-phone-staff)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take BBQ pickup orders from the phone?",
+      "a": "Yes. It can take items, sizes, modifiers, notes, the caller's name, and phone number, then quote a ready time and send the ticket to the kitchen screen. It uses your live menu so callers hear real items."
+    },
+    {
+      "q": "What if a caller asks about catering trays or a big order?",
+      "a": "ROAL can hand catering questions to staff with a summary. That is useful for rib trays, brisket pans, family packs, and holiday orders that need a person."
+    },
+    {
+      "q": "Can it handle sold-out BBQ items?",
+      "a": "Yes. ROAL does not offer items marked sold out. That helps avoid taking orders for brisket, ribs, or sides you do not have that day."
+    },
+    {
+      "q": "How do I send my calls to it?",
+      "a": "You forward your restaurant's existing number to the phone line ROAL gives your location. You can forward all calls, or only busy or unanswered calls, then turn forwarding off any time."
+    },
+    {
+      "q": "What does ROAL cost for a BBQ restaurant?",
+      "a": "ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ]
+}

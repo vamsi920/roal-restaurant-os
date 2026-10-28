@@ -28,11 +28,28 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
-  title: "ROAL — The AI phone host for restaurants",
+  title: "ROAL: AI Phone Answering & Ordering for Restaurants",
   description:
-    "Paste your restaurant link, talk to your AI phone host in 60 seconds, then forward your number. ROAL takes pickup orders from your live menu and charges only for completed orders.",
+    "ROAL is an AI phone host for restaurants. It answers calls, takes pickup orders from your live menu and sends tickets to your kitchen. $0.90 per completed order, no monthly fee.",
+  applicationName: "ROAL",
+  authors: [{ name: "Venkata Vamsi", url: "/about#founder" }],
+  creator: "ROAL",
+  publisher: "ROAL",
+  category: "business",
+  alternates: {
+    types: { "application/rss+xml": [{ url: "/blog/feed.xml", title: "The ROAL Journal" }] },
+  },
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } } : {}),
+  },
   icons: {
-    icon: [{ url: "/icons/roal-app-icon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icons/roal-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icons/roal-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/roal-app-icon.svg", type: "image/svg+xml" },
+    ],
     apple: [{ url: "/icons/roal-apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   ...buildSiteMetadataDefaults(),

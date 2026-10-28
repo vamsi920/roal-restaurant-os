@@ -1,0 +1,72 @@
+{
+  "slug": "restaurant-employee-turnover",
+  "keyword": "restaurant employee turnover",
+  "category": "staffing",
+  "title": "Reducing restaurant turnover without losing phone know-how",
+  "seoTitle": "Reducing restaurant turnover and phone know-how",
+  "description": "Restaurant turnover can wipe out phone know-how fast. Use simple systems to keep orders, hours, and call handling steady as staff changes.",
+  "question": "How can I handle restaurant employee turnover without losing phone know-how?",
+  "answer": "Build a simple phone playbook, record the common answers, and make the phone host do the repetitive work. With ROAL, the restaurant's menu, hours, and address are read from public pages, and calls can be forwarded to a phone host that takes orders, answers common questions, and sends a clean ticket to the kitchen screen.",
+  "summary": "Keep phone orders, caller questions, and order details consistent even when staff changes.",
+  "intro": "Restaurant employee turnover can erase phone know-how fast. The fix is to put the routine phone work into a simple system that does not depend on one person remembering everything.\n\nFor a pizza shop, deli, or family restaurant, that means clear scripts, one source for hours and menu details, and a phone setup that still works when the best order-taker quits. ROAL can help with that by answering the restaurant's phone, taking pickup and delivery orders from the live menu, and sending a clean ticket to the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-phone-work-gets-lost-when-staff-turns-over",
+      "h2": "What phone work gets lost when staff turns over?",
+      "body": "When restaurant employee turnover is high, the first thing that disappears is the small stuff that lives in one person’s head. The specials, the parking answer, the way you say the street address, the modifier rules, the allergy reminder, and the way to handle a busy Friday call all get fuzzy.\n\nThat creates the same problems over and over:\n- A new cashier answers the phone and puts the caller on hold too long.\n- A cook hears a messy order because the order-taker skipped the size or note.\n- A manager gets interrupted for every catering question.\n- A caller hears a different answer depending on who picks up.\n\nA simple way to think about it is this: the restaurant is losing phone memory, not just staff. So write down the phone jobs that happen every day. Use a short list like:\n1. Take pickup orders.\n2. Take delivery orders if you offer them.\n3. Answer hours, address, parking, and menu questions.\n4. Pass reservation requests, catering, complaints, and allergy-sensitive questions to staff.\n\nIf you use ROAL, the host can answer those routine items from the menu and public info, then hand off the tricky calls with a summary. That keeps the basic phone know-how in place even when the schedule changes."
+    },
+    {
+      "id": "how-do-i-make-one-phone-playbook-that-new-people-can-follow",
+      "h2": "How do I make one phone playbook that new people can follow?",
+      "body": "A good phone playbook should fit on one page. It should not read like a training manual. New hires need something they can glance at while the phone rings.\n\nUse this format:\n- Greeting: what to say first.\n- Order flow: how to get items, sizes, modifiers, and notes.\n- Common answers: hours, address, parking, delivery area, and menu questions.\n- Escalations: when to send the call to a manager or cook.\n- Close: how to repeat the order back and confirm the name and phone number.\n\nA practical script line sounds like this: “Thanks for calling. What can I get started for you today?”\n\nThen add the details that are unique to your shop. For example:\n- If a caller says “no onions,” repeat it back exactly.\n- If the restaurant is out of an item, mark it clearly so no one promises it by mistake.\n- If a caller asks about a serious allergy, send it to staff and do not guess.\n\nHere is a simple checklist a new person can use:\n- Did I get the caller’s name and phone number?\n- Did I repeat the order back?\n- Did I quote a ready time?\n- Did I avoid promising anything I am not sure about?\n\nROAL can follow that same structure on the phone, and the owner can update hours, FAQs, and menu details in the dashboard when things change."
+    },
+    {
+      "id": "how-can-i-keep-order-accuracy-when-the-best-order-taker-leav",
+      "h2": "How can I keep order accuracy when the best order-taker leaves?",
+      "body": "Order accuracy usually drops when a trained person leaves and a new person starts guessing. The easiest fix is to make the order flow narrow and repeatable.\n\nUse a standard sequence every time:\n1. Item.\n2. Size.\n3. Modifier.\n4. Notes.\n5. Ready time.\n6. Name and phone.\n\nExample: “One large pepperoni pizza, extra well done, no onions, under Maria, phone number ends in 4421, ready in about 20 minutes.”\n\nIf your average phone order is say $28, then losing just a few orders to confusion adds up. Plug in your own average order amount and your own weekly call volume. The point is not to guess a perfect number. The point is to see that sloppy phone work is expensive.\n\nA useful kitchen-side checklist:\n- Is the item readable on the ticket?\n- Are the modifiers complete?\n- Is the note short and clear?\n- Did the order-taker avoid extra chatter?\n\nROAL helps here because it takes items, sizes, modifiers, and notes, then sends a clean ticket to the kitchen screen. It also does not offer items marked sold out. That matters during turnover, because the phone keeps working even if the newest employee does not know the menu yet."
+    },
+    {
+      "id": "how-do-i-train-new-staff-without-repeating-myself-all-week",
+      "h2": "How do I train new staff without repeating myself all week?",
+      "body": "Training works better when you teach the same phone pattern every time. Do not start with everything. Start with the most common calls first.\n\nA simple three-day plan:\n- Day 1: greeting, name, phone number, and repeating the order back.\n- Day 2: hours, address, parking, and menu questions.\n- Day 3: reservations, catering, complaints, and allergy-sensitive calls.\n\nKeep each practice under five minutes. Use real examples from your restaurant, not generic ones. For example, practice saying:\n- “We’re at 18 Main Street, near the corner by the laundromat.”\n- “Parking is in the lot behind the building.”\n- “I’m going to get a manager for that request.”\n\nIt also helps to keep a small “phone memory” sheet near the register or host stand:\n| Item | What to write |\n|---|---|\n| Hours | Today’s open and close time |\n| Address | Full street address |\n| Parking | Street, lot, or validation note |\n| Top sellers | The 5 items callers ask for most |\n| Escalations | Manager, allergy, complaint, catering |\n\nIf you want a wider training reset, read [training new staff to take phone orders](/blog/train-staff-phone-orders). ROAL can reduce how much of that training needs to be repeated, because the host already knows the menu, hours, and address from the restaurant’s public pages and any uploaded menu."
+    },
+    {
+      "id": "what-should-i-do-when-i-am-short-staffed-and-the-phone-keeps",
+      "h2": "What should I do when I am short-staffed and the phone keeps ringing?",
+      "body": "Short staffing is where turnover hurts the most. The phone still rings, but the person who used to answer may be gone or busy on the line, at the fryer, or at the counter.\n\nUse a phone plan that matches the rush:\n- Forward all calls when the restaurant is overwhelmed.\n- Forward only unanswered calls if you still want staff to take the first shot.\n- Send tricky calls to staff while routine calls get handled automatically.\n\nOn many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Codes vary, so confirm with your carrier and test with a call.\n\nA practical script for busy times is: “Thanks for calling. We’re on a rush right now, but I can still take your order.”\n\nROAL can be set up so the restaurant keeps its own number while calls forward to the host when busy or unanswered. That gives the team breathing room without forcing you to change the number printed on menus, flyers, or receipts."
+    },
+    {
+      "id": "how-do-i-keep-call-handling-consistent-across-owners-manager",
+      "h2": "How do I keep call handling consistent across owners, managers, and new hires?",
+      "body": "Consistency comes from having one source of truth. If one person says the hours are 10 to 9 and another says 11 to 8, callers lose trust fast. The answer is to keep menu, hours, FAQs, and escalations in one place and update them when they change.\n\nFor a restaurant, that means a simple weekly habit:\n- Check hours for holidays and special events.\n- Review the top menu items and sold-out items.\n- Update the parking note if construction or weather changes access.\n- Make sure the manager handoff rules still make sense.\n\nIf you want to compare phone options, [phone staff vs hiring phone staff](/compare/hiring-phone-staff) and [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) are useful starting points. Human answering services often bill per minute or per call, while many AI phone tools charge a fixed monthly fee per location whether or not orders come in. ROAL is different: it charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nThat pricing can matter during turnover because you are paying for completed orders, not for a quiet Tuesday with no calls. If you want to test the setup, [build a free test host](/try) from your website, Google Maps link, or restaurant name and city. Then call it in the browser and see how your menu, hours, and order flow sound before you forward anything."
+    }
+  ],
+  "takeaways": [
+    "Turnover does not just remove staff; it removes the phone knowledge stored in people’s heads.",
+    "A one-page phone playbook helps new hires answer common calls the same way.",
+    "Clear order steps reduce mistakes when the best order-taker leaves.",
+    "ROAL can keep routine phone work moving by answering common questions and sending clean kitchen tickets.",
+    "Use forwarding rules, a shared FAQ, and a weekly update habit to keep phone info current."
+  ],
+  "faq": [
+    {
+      "q": "How do I train new restaurant staff to answer the phone?",
+      "a": "Start with the three most common jobs: greet the caller, take the order, and repeat it back. Then add hours, address, parking, and escalation rules. Keep a short script near the phone so new hires are not guessing under pressure."
+    },
+    {
+      "q": "What should a restaurant phone script include?",
+      "a": "A useful script includes the greeting, the order flow, and the close. For example: “Thanks for calling. What can I get started for you today?” Then collect the item, size, modifiers, notes, name, and phone number, and repeat the order back before ending the call."
+    },
+    {
+      "q": "How can I keep menu and hour information from getting outdated?",
+      "a": "Keep one place where hours, FAQs, and menu details are updated, and review it on a set day each week. If you use ROAL, the owner can update hours, FAQs, and the menu in the dashboard, and the host learns the new answer going forward."
+    },
+    {
+      "q": "What is the best way to handle calls during a staff shortage?",
+      "a": "Use call forwarding so the phone still has a plan when the team is busy. On many carriers, you can forward all calls or only busy and unanswered calls, but the codes vary by carrier and plan. Always confirm with your carrier and test with a call."
+    }
+  ],
+  "words": 1407,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

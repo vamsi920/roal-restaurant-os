@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-phone-scripts-collection",
+  "keyword": "restaurant phone scripts",
+  "category": "guest-experience",
+  "title": "Restaurant phone scripts for common calls",
+  "seoTitle": "Restaurant phone scripts for common calls",
+  "description": "Use restaurant phone scripts for orders, hours, reservations, catering, and hard questions. These examples are simple to copy and adapt.",
+  "question": "What restaurant phone scripts should I use for common calls?",
+  "answer": "Use short, repeatable restaurant phone scripts for the calls you get most: pickup orders, delivery orders, hours and address questions, reservations, catering, and complaints. Keep each script simple, confirm the details back, and hand off anything tricky to staff. A phone host like ROAL can follow those scripts from your live menu and FAQ so the phone sounds consistent.",
+  "summary": "Copy simple phone scripts for the calls restaurants get most and make them fit your own menu, hours, and policies.",
+  "intro": "Restaurant phone scripts should be short, clear, and easy to repeat during a rush. The best ones help you take the order, answer the question, and move the caller forward without long back-and-forth.\n\nIf you own a pizza shop, deli, takeout place, or family restaurant, you do not need fancy wording. You need lines your team can actually say, plus a few backups for busy nights, after-hours calls, and tough questions. ROAL is built around that kind of practical phone work.",
+  "sections": [
+    {
+      "id": "what-should-a-good-restaurant-phone-script-sound-like",
+      "h2": "What should a good restaurant phone script sound like?",
+      "body": "A good script sounds natural, not stiff. It should get the caller to the point fast, while still sounding warm.\n\nStart with a greeting, then a simple next step. For example: \"Thanks for calling Tony’s Deli. How can I help you today?\" If the caller wants to order, follow with: \"Pickup or delivery?\" That one question saves time and sets the order flow.\n\nUse this basic structure for most calls:\n\n1. Greet the caller and name the restaurant.\n2. Ask the one question that moves the call forward.\n3. Repeat the important details back.\n4. Give the caller the next step or ready time.\n5. Close with a clear thank-you.\n\nA phone script should also match your real operation. If your menu changes often, your script should make room for substitutions and sold-out items. If you use [phone greeting templates](/tools/phone-greeting-templates), keep the same style across your team so callers hear one clear voice. If you want a broader overview of the setup, see [how it works](/how-it-works)."
+    },
+    {
+      "id": "what-script-should-i-use-for-a-pickup-or-delivery-order",
+      "h2": "What script should I use for a pickup or delivery order?",
+      "body": "This is the call most owners care about. The script should gather the order fast, then confirm it in a clean way.\n\nHere’s a simple pickup script you can use:\n\n\"Thanks for calling. What can I get started for you?\"\n\nThen move through the order like this:\n\n- Ask for size, crust, sides, or special instructions.\n- Repeat each item back as you go.\n- Ask for the caller’s name and phone number.\n- Give a ready time.\n\nExample line:\n\"So that’s one large pepperoni, extra cheese, and one order of garlic knots. Name and phone number for the order?\"\n\nWhen the order is complete, close with:\n\"Your pickup will be ready in about 20 minutes. Thanks, we’ll have it ready for you.\"\n\nIf you want to compare phone orders with other channels, see [phone orders vs delivery apps](/compare/delivery-apps). Delivery apps commonly take roughly 15-30% per order, while phone orders keep the customer on your line. ROAL can take pickup and delivery orders from your live menu, then send a clean ticket to the kitchen screen."
+    },
+    {
+      "id": "how-do-i-answer-hours-address-parking-and-menu-questions",
+      "h2": "How do I answer hours, address, parking, and menu questions?",
+      "body": "These calls should be quick. Most callers want one answer, not a speech.\n\nUse a short answer-first line, then offer one extra detail if needed. Example: \"We’re open until 9 tonight. We’re at 123 Main Street, right near the corner with parking behind the building.\" If the caller asks about the menu, answer only what they asked.\n\nA useful mini-script looks like this:\n\n| Question | Script line |\n|---|---|\n| Hours | \"We’re open until 9 tonight.\" |\n| Address | \"We’re at 123 Main Street in downtown.\" |\n| Parking | \"There’s street parking out front and a lot behind us.\" |\n| Menu item | \"Yes, we have that. It comes with fries unless you swap the side.\" |\n| Sold-out item | \"That item is sold out right now, but I can suggest a similar option.\" |\n\nIf you get a lot of these calls, [menu, hours and allergen questions](/use-cases/menu-questions) is a good page to keep handy. ROAL reads public menu and business details from your website, Google Maps link, or uploaded menu, then answers these calls from what it finds. If it cannot answer something, it sends the question to the inbox so you can reply once and keep the answer for later."
+    },
+    {
+      "id": "what-should-i-say-for-reservations-and-catering-requests",
+      "h2": "What should I say for reservations and catering requests?",
+      "body": "Reservations and catering calls need a little more structure because they often require staff review.\n\nFor reservations, keep it simple:\n\"What day and time would you like, and how many people are in the party?\"\n\nThen confirm the request:\n\"Just to confirm, that’s Friday at 7 p.m. for 6 guests. We’ll pass that along to the team.\"\n\nFor catering, collect the basics first:\n\n1. Event date and time.\n2. Guest count.\n3. Pickup or delivery.\n4. Budget range, if the caller has one.\n5. Callback number.\n\nA catering script can sound like this:\n\"Thanks for calling. What’s the date of the event, how many people are you feeding, and do you want pickup or delivery?\"\n\nIf the caller asks for a large setup, use a handoff line:\n\"I’m going to have the team review that and follow up with you. What’s the best number to reach you?\"\n\nFor more detail on this call type, see [catering inquiries](/use-cases/catering) and [reservation requests](/use-cases/reservations). ROAL can take reservation requests and hand catering questions to staff with a summary, which saves time during the rush."
+    },
+    {
+      "id": "how-do-i-handle-allergy-complaint-or-manager-calls-without-m",
+      "h2": "How do I handle allergy, complaint, or manager calls without making it awkward?",
+      "body": "These are the calls where a script matters most. You want to sound calm, direct, and respectful.\n\nFor allergies, do not guess. Use a safe handoff line:\n\"Thanks for letting us know. I’m going to pass this to the team so they can review it carefully.\"\n\nFor complaints, keep it short and steady:\n\"I’m sorry about that. Let me get a little more detail so I can pass it to the right person.\"\n\nThen gather:\n\n- Caller name\n- Phone number\n- Order number, if they have it\n- What happened\n- Best time to call back\n\nFor manager requests, say:\n\"I can have someone review that and get back to you. What’s the best number to reach you?\"\n\nThat approach keeps the call moving without arguing. It also gives your staff the facts they need. ROAL handles allergy-sensitive questions, complaints, and manager requests by sending a summary to staff instead of trying to bluff through them. If you want more examples for hard calls, see [dealing with difficult callers](/blog/difficult-callers-restaurant)."
+    },
+    {
+      "id": "how-can-i-use-phone-scripts-when-i-m-short-staffed-or-busy",
+      "h2": "How can I use phone scripts when I’m short-staffed or busy?",
+      "body": "When the line is busy, scripts need to be even tighter. The goal is to capture the order or question quickly and avoid repeat questions.\n\nUse a rush-hour version like this:\n\n- \"Thanks for calling. Pickup or delivery?\"\n- \"What items would you like?\"\n- \"Anything on top, on the side, or changed?\"\n- \"Name and phone number, please.\"\n- \"Your order will be ready in about 25 minutes.\"\n\nIf your team is overwhelmed, a phone host can help absorb the basic calls while staff works the counter and kitchen. ROAL gives each location its own phone line, and you can forward your existing number to it when you want all calls handled or only when the line is busy or unanswered.\n\nFor setup, owners often start by pasting their website, Google Maps link, or restaurant name and city at /try. You can test-call the host in the browser before going live, with no sign-up needed. If you want to compare cost side by side, [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) is worth a look. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, and no per-minute fee."
+    },
+    {
+      "id": "what-should-i-train-my-staff-to-confirm-before-ending-the-ca",
+      "h2": "What should I train my staff to confirm before ending the call?",
+      "body": "The fastest script in the world still fails if the details are wrong. Train staff to confirm the same basics every time.\n\nUse this closing checklist:\n\n- Order items and modifiers\n- Size, side, and note changes\n- Caller name and phone number\n- Pickup or delivery\n- Ready time\n- Any special warnings or staff handoff notes\n\nA clean close sounds like this:\n\"To confirm: one medium cheese pizza, no onions, one salad, pickup under Maria, ready in about 20 minutes. Did I get that right?\"\n\nThat final confirmation cuts down on mistakes and gives the caller one last chance to correct anything. It also helps your kitchen work from a cleaner ticket.\n\nIf you want a practical way to measure your call setup, use [the phone host cost calculator](/tools/phone-host-cost-calculator) or [pricing](/pricing). And if you want to see what ROAL reads from your menu and hours before you claim the line, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Keep restaurant phone scripts short, clear, and tied to your real menu and hours.",
+    "Use separate scripts for orders, questions, reservations, catering, and complaints.",
+    "Always confirm items, phone number, and ready time before ending the call.",
+    "For tricky calls, hand them to staff with a brief summary instead of guessing.",
+    "ROAL can answer common calls from your live menu and send completed orders to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "What is the best restaurant phone script for taking an order?",
+      "a": "Start with: “Thanks for calling. What can I get started for you?” Then ask pickup or delivery, take the items and modifiers, collect the caller’s name and phone number, and give a ready time. End by repeating the order back so the caller can catch any mistakes."
+    },
+    {
+      "q": "How do I answer calls about hours and address fast?",
+      "a": "Use one short sentence first: “We’re open until 9 tonight” or “We’re at 123 Main Street.” If the caller needs more detail, add parking or landmark info after that. Keep it short so the caller gets what they need without waiting."
+    },
+    {
+      "q": "What should I say when a customer has an allergy question?",
+      "a": "Do not guess or promise safety over the phone. Say that you’re passing the question to the team for review, then collect the caller’s name and number. That gives staff the chance to look at the order carefully before responding."
+    },
+    {
+      "q": "Can a phone host handle common restaurant calls?",
+      "a": "Yes. ROAL can answer common questions, take pickup and delivery orders from your live menu, take reservation requests, and hand difficult calls to staff with a summary. It also does not take card numbers over the phone, so payment stays with your usual process."
+    }
+  ],
+  "words": 1333,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,123 @@
+{
+  "slug": "caterers",
+  "label": "Caterers",
+  "h1": "An AI phone host for caterers",
+  "seoTitle": "AI phone answering for caterers | ROAL",
+  "description": "ROAL answers caterer calls, takes pickup orders from your live menu, handles hours and menu questions, and sends clean tickets to the kitchen.",
+  "lead": "When your line rings during a tray pickup, a lunch rush, or a wedding drop-off, ROAL can answer. It takes pickup orders and simple questions so your staff can keep moving.",
+  "question": "How does ROAL help caterers answer phone orders without missing rush-time calls?",
+  "answer": "ROAL is an AI phone host for caterers. It answers calls, takes pickup orders from your live menu, confirms name, phone, items, modifiers, and ready time, then sends a clean ticket to the kitchen screen. It can also answer questions about hours, address, parking, and menu items, and pass catering or allergy-sensitive calls to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings when the team is packing pans and trays",
+      "body": "A lunch pickup, a last-minute sandwich platter, and a “can I add two pans of penne?” call can all hit at once. If no one answers, the order may be lost or the caller may move on."
+    },
+    {
+      "title": "Catering calls need details, not rushed guesses",
+      "body": "People ask about pan sizes, half trays, tray counts, pickup times, and menu changes. If the person answering is juggling the oven and the register, it is easy to miss a modifier or forget the name."
+    },
+    {
+      "title": "After-hours calls still come in",
+      "body": "Someone may call at 8:30 pm to ask about tomorrow’s order, parking for pickup, or whether a menu item is available. A voicemail box does not take the order or send a kitchen ticket."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes pickup orders from your live menu",
+      "body": "ROAL can take items, sizes, modifiers, and notes like “no onions” or “extra napkins.” It does not offer items marked sold out, so callers hear only what you can make."
+    },
+    {
+      "title": "Keeps the kitchen in the loop",
+      "body": "Each completed order becomes a clean ticket on the kitchen screen. Your team sees the ready time, customer name, and order details without retyping anything."
+    },
+    {
+      "title": "Handles common catering questions",
+      "body": "ROAL can answer hours, address, parking, and menu questions. If the caller needs a manager, has an allergy-sensitive request, or wants a larger catering conversation, it sends a summary to staff."
+    },
+    {
+      "title": "Easy to try, then forward calls",
+      "body": "Paste your website, Google Maps link, or restaurant name and city at [Try ROAL](/try). You can test-call the host in the browser, then forward your existing number only when busy or unanswered."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order for 1:30?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Two chicken cutlet hero platters, one pasta salad, and a tray of baked ziti."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes?"
+    },
+    {
+      "who": "caller",
+      "line": "One cutlet platter no mayo, and the ziti with extra sauce. My name is Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thank you, Maria. What number should we reach you at, and is 1:30 pm still good for pickup?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes, 718-555-0144."
+    },
+    {
+      "who": "host",
+      "line": "Perfect. I have two chicken cutlet hero platters, one no mayo, one tray of baked ziti with extra sauce, and one pasta salad for Maria, ready at 1:30 pm. I’ll send that in now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 1:30 pm",
+    "lines": [
+      "Maria · 718-555-0144",
+      "2 chicken cutlet hero platters",
+      "- 1 no mayo",
+      "1 tray baked ziti · extra sauce",
+      "1 pasta salad"
+    ],
+    "note": "Please include extra napkins."
+  },
+  "sections": [
+    {
+      "h2": "What caterers should send to the phone host",
+      "body": "For catering and pickup orders, the best setup is a clear live menu. Include platter names, tray sizes, sides, and any add-ons that change the total order. If your menu says “half tray” or “serves 8–10,” ROAL can read that and use it in the call flow.\n\nIt also helps to keep hours, pickup instructions, parking notes, and any cutoff times easy to find on your website or menu PDF. If you want to test the flow before going live, you can do that on [Use cases](/use-cases/pickup-orders) and then build a free test host in the browser."
+    },
+    {
+      "h2": "A good phone flow for busy caterers",
+      "body": "A strong caterer phone flow is short and clear. It should answer fast, ask for the order, confirm the pickup time, and repeat the details back before the call ends. That matters when your staff is slicing bread, boxing salads, or loading trays for a noon office pickup.\n\nROAL can also catch the calls that are not simple orders. If someone asks for a manager, has a food allergy concern, or wants a large catering quote, the host passes it along with a summary instead of guessing. That gives your team the right context when they call back."
+    },
+    {
+      "h2": "Example: Friday lunch with three calls at once",
+      "body": "Picture a Friday at 11:20 am. One caller wants a chicken parm tray for 12:15. Another asks whether the turkey wraps come with chips. A third wants to add two pasta trays to a pickup that is already in the oven.\n\nThat is the kind of moment where a phone host helps. It can answer the menu question, take the simple order, and send a clean ticket to the kitchen. Your team stays focused on food, not on stopping mid-task to write down names and numbers. For common owner questions, see [Questions owners ask](/faq)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pickup orders for catering items?",
+      "a": "Yes. It can take pickup orders from your live menu, including items, sizes, modifiers, notes, name, phone number, and ready time. It then sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "What if a caller asks about a platter or tray that is not simple?",
+      "a": "ROAL can handle many menu questions, but it will pass catering, complaint, allergy-sensitive, and manager requests to staff with a summary when needed. That keeps the caller moving without making your team guess."
+    },
+    {
+      "q": "Will it offer items that are sold out?",
+      "a": "No. If an item is marked sold out, ROAL does not offer it. That helps avoid taking orders you cannot make on time."
+    },
+    {
+      "q": "Do I need to change my restaurant number?",
+      "a": "No. You keep your existing number. ROAL gives each location its own phone line, and you forward calls to it all the time or only when busy or unanswered."
+    },
+    {
+      "q": "How much does it cost for caterers?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract, and calls and test calls are free."
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "slug": "menu-questions",
+  "label": "Menu, hours and allergen questions",
+  "h1": "Menu, hours and allergen questions, answered",
+  "seoTitle": "Menu, hours and allergen calls, answered | ROAL",
+  "description": "ROAL answers menu, hours, parking and allergen questions for restaurants, so staff can keep cooking during rushes, missed calls and after-hours calls.",
+  "lead": "Calls about the menu are simple until the line rings again and again. ROAL answers common questions fast, shares hours and address, and can hand off allergy-sensitive calls with a summary.",
+  "question": "How can an AI phone host handle menu, hours and allergen questions for a restaurant?",
+  "answer": "ROAL answers your restaurant’s phone with your live menu, hours, and address. It can explain menu items, say what time you open or close, and hand allergy-sensitive questions to staff with a clear summary. If the caller wants to order, it can take the order and send a clean ticket to the kitchen screen.",
+  "pains": [
+    {
+      "title": "Your staff gets stuck repeating the same answers",
+      "body": "People call to ask if you have chicken souvlaki, what time lunch starts, or whether you are open on Sunday. That pulls a host or cook away from the line for the same small questions over and over."
+    },
+    {
+      "title": "Allergy questions need care",
+      "body": "A caller may ask about peanuts, gluten, shellfish, or dairy in a dish. If the answer is not clear, a rushed guess can create stress for the guest and the kitchen."
+    },
+    {
+      "title": "Busy moments turn simple calls into missed calls",
+      "body": "Friday dinner, a lunch rush, or a short-staffed shift can make the phone hard to keep up with. A caller who just wanted your hours or specials may hang up and call the next place."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers the basics right away",
+      "body": "ROAL can tell callers your hours, address, parking, and menu details without making them wait. That helps with common calls like “Are you open now?” or “Do you still serve breakfast?”"
+    },
+    {
+      "title": "Uses your real menu",
+      "body": "It reads your live menu from your site, menu PDF, menu photos, or a menu you upload. So it can talk about the items you actually sell, not a generic script."
+    },
+    {
+      "title": "Handles allergy-sensitive questions carefully",
+      "body": "When a caller asks about an ingredient risk, ROAL can pass the call to staff with a summary. That keeps the conversation from getting lost and gives your team the context they need."
+    },
+    {
+      "title": "Helps during rushes and after hours",
+      "body": "If the dining room is packed or the phone rings after close, the host can still answer menu and hours questions. You can also route only busy or unanswered calls to it, then turn forwarding off any time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, are you open right now?"
+    },
+    {
+      "who": "host",
+      "line": "Yes, we’re open. We close at 9 pm tonight. How can I help?"
+    },
+    {
+      "who": "caller",
+      "line": "Do you have the chicken shawarma platter, and is it gluten free?"
+    },
+    {
+      "who": "host",
+      "line": "We do have the chicken shawarma platter. For gluten questions, I can connect you with the restaurant so they can confirm the ingredients."
+    },
+    {
+      "who": "caller",
+      "line": "Okay. Also, what time is lunch service?"
+    },
+    {
+      "who": "host",
+      "line": "Lunch starts at 11 am. If you’d like, I can also take your order or share the menu."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Menu question · 6:40 pm",
+    "lines": [
+      "Caller: asked about chicken shawarma platter",
+      "Asked if lunch starts at 11 am",
+      "Requested gluten guidance",
+      "Answer given: hours confirmed; allergy question sent to staff"
+    ],
+    "note": "Allergy-sensitive question"
+  },
+  "sections": [
+    {
+      "h2": "A good phone setup for menu questions",
+      "body": "If your menu changes often, keep the basics easy to find. Make sure hours, address, and the top seller items are up to date. If you have dishes with common allergens, note them clearly in your menu file or on your site so ROAL can read them from the same source your guests already see. For items that are often asked about, like soup of the day, lunch specials, or family combos, it helps to use plain names and simple descriptions.\n\nA phone host works best when your info is clean and current. You can start by pasting your restaurant website, Google Maps link, or name and city into [Build a free test host](/try). ROAL will read the public info it finds and let you test-call it in the browser before you go live."
+    },
+    {
+      "h2": "When to route calls to the phone host",
+      "body": "A lot of owners use a phone host for the calls that interrupt the kitchen most: “Are you open?”, “What time do you close?”, “Do you have fish on Friday?”, or “Is there peanuts in that sauce?” These are short calls, but they add up during lunch rush, Friday night, and after hours.\n\nYou can also forward only busy or unanswered calls if you want to keep most calls with your team. That is helpful when the host stand is full, the cook is in the weeds, or someone is already on the phone taking an order. ROAL can answer the easy questions and leave the harder allergy calls for your staff with a summary."
+    },
+    {
+      "h2": "A simple example from a real dinner rush",
+      "body": "Say you get 12 missed calls on a Friday, and half of them are asking the same three things: hours, parking, and whether the spicy tuna roll has mayo. A phone host can answer those callers right away, explain the hours, and pass the mayo question to your team if it needs a careful check.\n\nThat means fewer interruptions for the person expoing orders or handling the front counter. It also means the caller does not have to wait through a long ring or a busy tone. If you want to compare this setup with a press-1 phone menu, see [AI phone host vs a press-1 phone menu](/compare/phone-menu-ivr)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL answer questions about my actual menu?",
+      "a": "Yes. It reads the live menu from your restaurant website, menu PDFs, menu photos, or an uploaded menu. That lets it answer common questions about items, sizes, and basic modifiers using your real information."
+    },
+    {
+      "q": "What happens if someone asks about an allergen?",
+      "a": "ROAL can route allergy-sensitive questions to staff with a summary. If it cannot answer safely from the information it has, it does not guess."
+    },
+    {
+      "q": "Can it answer my hours and address?",
+      "a": "Yes. It can share your hours, address, and parking details from the public info it reads when you set it up. That is useful for callers who just need quick basics before coming in."
+    },
+    {
+      "q": "Do I have to change my restaurant number?",
+      "a": "No. You keep your existing number. You forward calls to ROAL when you want, either all calls or only busy and unanswered calls."
+    },
+    {
+      "q": "Can it take an order if the caller asks after checking the menu?",
+      "a": "Yes. If the caller wants to order, ROAL can take pickup or delivery orders, collect the caller’s name and phone, confirm the order, and send a clean ticket to the kitchen screen."
+    }
+  ]
+}

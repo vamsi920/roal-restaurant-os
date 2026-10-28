@@ -1,0 +1,77 @@
+{
+  "slug": "questions-to-ask-ai-phone-vendor",
+  "keyword": "questions to ask ai vendor",
+  "category": "comparisons",
+  "title": "Questions to ask an AI phone vendor",
+  "seoTitle": "Questions to ask an AI phone vendor | ROAL",
+  "description": "Use these questions before you buy AI phone tools. Compare pricing, menu accuracy, call forwarding, handoff rules, and kitchen workflow.",
+  "question": "What questions should I ask an AI phone vendor before I use it for my restaurant?",
+  "answer": "Ask how the phone host learns your menu, what happens on allergy or complaint calls, how it handles sold-out items, and exactly what you pay each month or per order. Also ask how calls are forwarded, how orders reach the kitchen, and whether you can test it yourself before going live.",
+  "summary": "You will know what to ask, what to verify, and how to compare AI phone vendors for your restaurant.",
+  "intro": "Choosing an AI phone vendor should feel practical, not risky. The right questions cover price, menu accuracy, call handling, and how orders reach your kitchen.\n\nFor a busy restaurant, the goal is simple: fewer missed calls, clean orders, and less phone stress. The questions below will help you compare AI phone tools like you would compare any other service that touches your sales and your staff.",
+  "sections": [
+    {
+      "id": "what-should-i-ask-about-price-before-i-sign-up",
+      "h2": "What should I ask about price before I sign up?",
+      "body": "Start with the full cost, not just the headline number. Ask whether the vendor charges monthly, per call, per minute, per completed order, a setup fee, or a contract.\n\nFor a restaurant, the total can change fast. Many AI phone tools for restaurants charge a fixed monthly fee per location, often around $79 to $599, even in slow weeks. Human answering services usually bill per minute or per call. Delivery apps commonly take roughly 15-30% commission per order. A pay-per-order model can be easier to understand because you pay when the order is actually completed.\n\nUse a simple comparison:\n\n| Cost item | Example |\n|---|---:|\n| 20 completed phone orders | 20 x your vendor’s rate |\n| Monthly fee | one fixed charge whether or not calls come in |\n| Setup fee | one-time charge |\n| Call forwarding | confirm whether your carrier charges extra |\n\nAsk this exact question: “If I get 30 completed orders this month, what do I owe in total?” Then ask them to spell out what counts as a completed order. With ROAL, pricing is $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract."
+    },
+    {
+      "id": "how-does-it-learn-my-menu-hours-and-sold-out-items",
+      "h2": "How does it learn my menu, hours, and sold-out items?",
+      "body": "A vendor should be able to explain where the phone host gets its information and how often you can update it. For a restaurant, menu mistakes are expensive. A caller who hears the wrong price or an item you no longer sell creates extra work for staff.\n\nAsk whether it reads your website, Google Maps page, menu PDF, menu photos, or an uploaded menu. Ask how long setup takes and whether you can test-call it before using your real number. If the vendor cannot explain that clearly, keep looking.\n\nA good test is to ask the host questions you get all the time:\n- “What comes on the chicken parm hero?”\n- “What time do you close on Friday?”\n- “Do you have parking?”\n\nThen check whether it stays on your live menu and current hours. With ROAL, the owner can paste the restaurant website, Google Maps link, or “Name, City” at /try, or upload a menu in any format. ROAL reads public pages and builds a phone host in about a minute, then the owner can test-call it right in the browser with no sign-up needed. It also does not offer items marked sold out."
+    },
+    {
+      "id": "what-happens-when-the-call-is-messy-or-sensitive",
+      "h2": "What happens when the call is messy or sensitive?",
+      "body": "This is one of the most important questions to ask ai vendor. A restaurant phone host should handle simple orders well, but it also needs clear rules for the calls that should go to staff.\n\nAsk what happens with allergy questions, complaints, catering, and manager requests. Ask whether it can take reservations if your restaurant wants that. Ask how it handles a caller who speaks another language. The answer should be specific, not vague.\n\nA practical call flow looks like this:\n1. The host takes the order or the request.\n2. It collects the caller’s name and phone.\n3. It gives a ready time.\n4. It repeats the order back.\n5. It sends the tricky stuff to staff with a summary.\n\nHere is a useful script line to listen for: “I’m going to send this to the team with your notes so they can help you right away.”\n\nWith ROAL, the host takes items, sizes, modifiers and notes, quotes a ready time, speaks the caller’s language, and hands off catering, complaints, allergy-sensitive questions and manager requests to staff with a summary. It never takes card numbers over the phone, so payment stays the way your restaurant already does it."
+    },
+    {
+      "id": "how-will-the-orders-get-to-my-kitchen-and-my-staff",
+      "h2": "How will the orders get to my kitchen and my staff?",
+      "body": "A phone vendor is only useful if the order reaches the kitchen in a clean format. Ask what your team sees when a call becomes an order. Do they get a simple ticket? Can they see live status? Can they review call history later?\n\nFor a busy takeout spot, the kitchen side matters as much as the phone side. If a caller says “no onions” or “extra crispy,” that note has to be clear and easy to spot.\n\nAsk for a concrete example. For instance: “If someone orders two large pepperoni pizzas, one with extra cheese, what does the kitchen receive?” Then ask what happens if the order needs a hold or a correction.\n\nA useful checklist for your manager:\n- Live ticket appears fast enough for the kitchen team\n- Order includes items, sizes, modifiers, and notes\n- Caller name and phone are included\n- Ready time is visible\n- Call transcript is available if staff needs to review it\n\nROAL sends a clean ticket to the kitchen screen and keeps call history with transcripts and recordings in the dashboard. The same dashboard also includes menu editing, hours, FAQs, upsell suggestions, and multi-location menus, which helps when you want to keep your phone flow and your kitchen notes in one place."
+    },
+    {
+      "id": "how-do-i-know-it-will-actually-fit-my-phone-setup",
+      "h2": "How do I know it will actually fit my phone setup?",
+      "body": "Restaurants already have enough phone quirks. Before you buy anything, ask how the system works with your current number and phone carrier. Do you need to change your number, or can you keep the one your customers already know? Can you forward all calls, or only unanswered and busy calls?\n\nThis is a good place to get specific. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers such as AT&T and T-Mobile, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems often use a web portal. Codes vary by carrier and plan, so always confirm with your carrier and test with a call.\n\nAsk the vendor: “Will my restaurant keep its own number?” and “Can I turn forwarding off any time?” That matters if you want to switch back during a rush or compare performance. With ROAL, each location gets its own phone line automatically, and the restaurant forwards its existing number to it. The restaurant keeps its own number, and forwarding can be turned off any time."
+    },
+    {
+      "id": "what-should-i-test-before-i-take-it-live",
+      "h2": "What should I test before I take it live?",
+      "body": "Do not skip a live test. A vendor should let you hear the phone host, try real restaurant questions, and check how the order looks on the back end before you rely on it.\n\nTry a short test list like this:\n- Ask for pickup on two menu items\n- Change a size or topping\n- Ask about hours and parking\n- Ask an allergy-sensitive question\n- Ask for a manager\n- Call back in another language if your customers do that\n\nListen for whether the host sounds natural, stays on your menu, and keeps the order organized. Also ask what happens when it cannot answer a question. The best answer is usually some version of: “It goes to an inbox and we learn it from there.”\n\nThat matters because restaurants get repeat questions that are easy for staff to answer once, then easy for the system to remember next time. ROAL’s owner can answer unknown questions once, and the host knows it from then on. The owner also picks the voice and name, which helps the phone sound like part of the restaurant instead of a random recording.\n\nIf you want a fast way to compare vendors, build a free test host from your website at [Build a free test host](/try)."
+    },
+    {
+      "id": "what-short-checklist-should-i-use-when-comparing-vendors",
+      "h2": "What short checklist should I use when comparing vendors?",
+      "body": "Before you pick a vendor, keep the comparison simple. You are not buying software for fun. You are buying help for the phone line that brings in pickup and delivery orders.\n\nUse this checklist with any demo or sales call:\n\n| Question | What you want to hear |\n|---|---|\n| How is pricing set? | Clear monthly or per-order math |\n| What does it learn from? | Website, menu files, photos, or uploaded menu |\n| Can it handle sold-out items? | It should not offer them |\n| What about allergies and complaints? | Staff handoff with summary |\n| Does it take card numbers? | No, payment stays with your current process |\n| Can I keep my number? | Yes, with forwarding |\n| Can I test it first? | Yes, before going live |\n\nIf the answers feel vague, slow, or hard to repeat to your manager, that is a sign to keep comparing. You want a phone host that matches the way your restaurant already works.\n\nFor owners who want a plain place to compare options, [ROAL pricing](/pricing) and [how it works](/how-it-works) are the two pages worth reading next."
+    }
+  ],
+  "takeaways": [
+    "Ask about total cost, not just the headline price.",
+    "Make sure the host uses your live menu and current hours.",
+    "Test allergy, complaint, and manager calls before going live.",
+    "Confirm that orders reach the kitchen cleanly and quickly.",
+    "Keep your existing number and verify forwarding with your carrier."
+  ],
+  "faq": [
+    {
+      "q": "What questions should I ask an AI phone vendor about pricing?",
+      "a": "Ask whether pricing is monthly, per call, per minute, or per completed order, and whether there is a setup fee or contract. Then ask for the exact cost for a real month, like 30 completed orders. That makes the comparison easier than a sales pitch."
+    },
+    {
+      "q": "How do I know an AI phone host will handle my restaurant menu correctly?",
+      "a": "Ask where it gets menu information from and whether it can read your website, menu photos, PDFs, or uploaded files. Then test items, sizes, modifiers, and sold-out items. A good phone host should stay on your current menu and current hours."
+    },
+    {
+      "q": "Can an AI phone host take allergy questions and complaints?",
+      "a": "It should not try to handle those like a normal order. It should send allergy-sensitive questions, complaints, catering, and manager requests to staff with a short summary. That keeps the conversation safe and makes it easier for your team to respond."
+    },
+    {
+      "q": "Do I need a new phone number for an AI phone host?",
+      "a": "Not usually. Many restaurants keep their existing number and forward calls to the new line. The exact forwarding steps depend on your carrier or phone system, so confirm the code or portal setting with them and test it with a real call."
+    }
+  ],
+  "words": 1484,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

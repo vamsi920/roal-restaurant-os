@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-host-multiple-languages",
+  "keyword": "multilingual ai phone restaurant",
+  "category": "ai-basics",
+  "title": "Multilingual AI phone hosts for restaurants",
+  "seoTitle": "Multilingual AI phone hosts for restaurants | ROAL",
+  "description": "A multilingual AI phone host can answer calls, take orders, and help callers in their language without adding more staff.",
+  "question": "How can a multilingual AI phone host help my restaurant answer callers in their language and take orders?",
+  "answer": "A multilingual AI phone host can answer your restaurant’s calls, speak the caller’s language, take pickup and delivery orders from your live menu, and pass tricky questions to staff with a summary. For a restaurant, that means fewer missed calls, clearer orders, and less pressure on the front counter during rushes. ROAL is built to do that for independent restaurants.",
+  "summary": "You’ll learn how to set up and use a multilingual phone host for orders, questions, and busy shifts.",
+  "intro": "A multilingual AI phone restaurant host can answer calls in the caller’s language, take the order, and send it to the kitchen. It can also handle hours, address, parking, menu questions, and reservations, then hand off allergy, complaint, or manager calls to staff.\n\nFor a busy pizza shop, deli, or family restaurant, that means the phone can work even when the counter is slammed. ROAL is one option built for this job, and the basics are simple: give it your menu, let it learn your hours and address, and route calls the way your team already works.",
+  "sections": [
+    {
+      "id": "what-does-a-multilingual-ai-phone-host-do-for-a-restaurant",
+      "h2": "What does a multilingual AI phone host do for a restaurant?",
+      "body": "A multilingual AI phone host is the person callers hear when they ring your restaurant. It answers the phone, understands the order, speaks the caller’s language, and writes a clean ticket for the kitchen screen.\n\nFor a restaurant owner, the useful part is not fancy tech. It is basic phone work done clearly and fast:\n\n- Takes pickup and delivery orders from your live menu\n- Collects name and phone number\n- Quotes a ready time\n- Answers hours, address, parking, and menu questions\n- Takes reservation requests\n- Sends allergy-sensitive questions, complaints, catering, and manager requests to staff\n\nA simple phone line script might sound like this: “Thanks for calling Tony’s Deli. I can help in English or Spanish. Are you calling to place an order or ask a question?”\n\nThat one line does two jobs. It helps the caller choose their language, and it gets the call moving quickly. ROAL also will not offer items marked sold out, and it does not take card numbers over the phone. Payment still happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "id": "how-do-i-set-one-up-without-a-tech-headache",
+      "h2": "How do I set one up without a tech headache?",
+      "body": "The easiest setup is the one that starts with what you already have. With ROAL, the owner can paste a restaurant website, a Google Maps link, or just “Name, City” at /try. ROAL reads public pages like the menu, prices, hours, address, menu PDFs, and menu photos, then builds a phone host in about a minute.\n\nHere is a practical setup checklist:\n\n1. Gather your website or Google Maps link.\n2. Check that your menu, hours, and address are current.\n3. Test-call the host in the browser before you claim it.\n4. Pick the voice and name you want callers to hear.\n5. Add any common questions that matter to your store, like parking or spice levels.\n\nIf your menu lives in a messy PDF or a photo from the wall, that still works. You can also upload a menu in any format. The owner can test the host right in the browser, and no sign-up is needed for that first test. That matters when you are busy and do not want to spend an hour on setup just to see whether it fits your store."
+    },
+    {
+      "id": "how-does-it-handle-callers-who-speak-spanish-arabic-or-anoth",
+      "h2": "How does it handle callers who speak Spanish, Arabic, or another language?",
+      "body": "The job is simple: the host should greet the caller, figure out the language, and keep the order moving in that language. For the owner, the best test is to use the language your actual callers use most often, then make sure the menu items, sizes, and toppings are spoken clearly.\n\nA practical call flow looks like this:\n\n1. Greeting in English first, or in your most common language.\n2. Caller switches languages or starts in their own language.\n3. Host stays in that language for the rest of the order.\n4. Host repeats the order back item by item.\n5. Host confirms the ready time and sends the ticket.\n\nExample phone line: “Yes, we can help you in Spanish. What would you like today?”\n\nThat sounds small, but it removes a common problem at independent restaurants: one staff member at the counter trying to answer phones, make food, and translate at the same time. If a question gets too specific, the host can hand it to staff with a summary. ROAL also keeps the owner in control. If the host does not know an answer yet, it lands in an inbox, and once the owner answers it, the host knows it from then on."
+    },
+    {
+      "id": "what-orders-and-questions-should-the-host-handle-and-what-sh",
+      "h2": "What orders and questions should the host handle, and what should go to staff?",
+      "body": "A good multilingual phone host should handle the routine stuff without bothering your team. It should also know when to stop and hand the call off. That line matters for food safety, customer trust, and speed.\n\nHere is a clean breakdown:\n\n| The host should handle | The host should hand to staff |\n|---|---|\n| Pickup and delivery orders | Allergy-sensitive questions |\n| Menu questions | Complaints |\n| Hours, address, parking | Manager requests |\n| Reservation requests | Catering details that need review |\n| Name, phone, and ready time | Anything the host cannot answer |\n\nA good script for a tough call is: “I’m going to get this to the team with a summary so they can help you.”\n\nThat is better than guessing. It is also better than sending the caller into voicemail. ROAL sends a clean ticket to the kitchen screen and keeps call history with transcripts and recordings in the dashboard, so the owner can review what happened later. That helps when a caller says the order was wrong, or when a team member wants to see exactly what was said.\n\nFor example, if a caller asks for a grilled chicken wrap with no onions, extra sauce, and a side salad, the host should capture each part clearly. If the caller asks whether a sauce contains an allergen, that should go to staff."
+    },
+    {
+      "id": "how-much-does-this-cost-compared-with-the-usual-options",
+      "h2": "How much does this cost compared with the usual options?",
+      "body": "Restaurant owners usually compare three choices: delivery apps, human answering, and monthly AI phone tools. The cost difference matters, especially when orders are small.\n\nHere is a simple example you can plug your own numbers into:\n\n- Say a $28 average order.\n- If a delivery app takes a rough 20% commission, that is about $5.60 per order.\n- If you get 100 such orders in a month, that is about $560 in commission.\n- ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen.\n- At 100 completed phone orders, that is about $90.\n\nThat does not mean every restaurant should switch for the same reason. Some owners care most about the phone being answered during rushes. Others care about avoiding a fixed monthly bill. Many AI phone tools charge a monthly fee per location, often around $79 to $599 whether or not orders come in. Human answering services usually bill per minute or per call.\n\nROAL has no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. It is billed monthly. If you want to compare the math for your own store, plug in your average ticket and monthly order volume before you decide."
+    },
+    {
+      "id": "how-do-i-forward-my-restaurant-number-and-keep-control",
+      "h2": "How do I forward my restaurant number and keep control?",
+      "body": "Owners often worry about losing their number. You do not have to. With ROAL, the owner claims the host, ROAL gives each location its own phone line automatically, and the restaurant forwards its existing number to it. You can forward all calls, or only when the line is busy or unanswered. The forwarding can be turned off any time.\n\nA simple owner checklist:\n\n- Keep your current restaurant number\n- Decide whether to forward all calls or only busy/unanswered calls\n- Test forwarding with a real call before you rely on it\n- Make sure staff knows when calls are being routed\n- Check the inbox for any questions the host could not answer\n\nPhone forwarding codes vary by carrier and plan, so always confirm with your carrier and test with a call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle this in the web portal.\n\nIf you want a second look before going live, start with a test host and see how it sounds on a real call. You can [build a free test host](/try) from your website, then decide whether the fit is right for your counter, kitchen, and callers."
+    },
+    {
+      "id": "what-should-i-check-before-i-make-it-the-voice-of-my-restaur",
+      "h2": "What should I check before I make it the voice of my restaurant?",
+      "body": "Before you put any phone host live, make sure it sounds like your store and knows the basics that matter most. The goal is not perfection. The goal is fewer mistakes on the phone and fewer interruptions at the counter.\n\nUse this quick pre-live checklist:\n\n1. The menu matches what you actually sell today.\n2. Sold-out items are marked sold out.\n3. Hours, address, and parking are correct.\n4. The voice and name feel right for your brand.\n5. The host knows what to do with reservations, catering, complaints, allergy questions, and manager requests.\n6. Staff knows where to find tickets and call history.\n\nROAL’s dashboard includes live tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That makes it easier to keep the phone host current when your menu changes or when a holiday schedule shifts.\n\nA practical owner move is to test three real calls: one in English, one in your second most common language, and one messy call with a special request. For example: “Can I get two chicken platters, one with no onions, one extra spicy, and can you tell me the ready time?” If the host handles that cleanly, you are close to ready."
+    }
+  ],
+  "takeaways": [
+    "A multilingual AI phone host can answer orders, questions, and reservations in the caller’s language.",
+    "ROAL reads your public menu and hours, then builds a test host in about a minute.",
+    "You keep your restaurant number and control call forwarding.",
+    "The host should handle routine calls and send sensitive or complex ones to staff.",
+    "Pricing is pay per completed phone order, with no monthly fee or per-minute fee."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host speak Spanish for restaurant orders?",
+      "a": "Yes. A multilingual AI phone host can speak the caller’s language and keep taking the order in that language. It should also repeat the order back clearly so the kitchen gets the right items, sizes, modifiers, and notes."
+    },
+    {
+      "q": "Will it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "What happens if the host does not know an answer?",
+      "a": "That question goes to the owner in an inbox. The owner answers once, and the host knows it from then on. For tricky topics like allergies, complaints, catering, or manager requests, the host should hand the call to staff with a summary."
+    },
+    {
+      "q": "How do I set up call forwarding for my restaurant number?",
+      "a": "Many owners forward their existing number to the new phone line. On some landlines and carriers, *72 forwards all calls and *73 turns it off; some mobile and VoIP systems use different codes or portal settings. Confirm the exact code with your carrier or phone system, then test with a real call."
+    }
+  ],
+  "words": 1560,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

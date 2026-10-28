@@ -1,0 +1,77 @@
+{
+  "slug": "no-show-phone-orders",
+  "keyword": "no show pickup orders restaurant",
+  "category": "phone-orders",
+  "title": "Reducing no-show pickup orders at restaurants",
+  "seoTitle": "No-show pickup orders at restaurants | ROAL",
+  "description": "Cut down on no-show pickup orders with better phone scripts, confirmation steps, and clearer call handling from your team.",
+  "question": "How do I cut no show pickup orders restaurant customers place by phone?",
+  "answer": "Cutting no-show pickup orders starts with better call handling: confirm the caller’s name, phone, items, total, and ready time before the order is sent to the kitchen. Clear pickup rules, quick order recaps, and easy staff follow-up for odd calls help reduce mistakes and abandoned orders.",
+  "summary": "You’ll learn practical ways to reduce missed pickup orders and tighten phone order confirmation.",
+  "intro": "No-show pickup orders usually happen when the caller is not fully committed, the details were never confirmed, or the pickup process was too vague. The fix is to make the phone order clear, fast, and specific before your kitchen starts cooking.\n\nFor a busy pizza shop, deli, or family restaurant, that means better scripts, fewer back-and-forth calls, and a clean ticket that tells the kitchen exactly what to make. Tools like [Pickup order taking](/use-cases/pickup-orders) and [phone greeting templates](/tools/phone-greeting-templates) can help you tighten the process without adding more work to the counter.",
+  "sections": [
+    {
+      "id": "why-do-no-show-pickup-orders-happen-in-the-first-place",
+      "h2": "Why do no-show pickup orders happen in the first place?",
+      "body": "Most no-show pickup orders are not a mystery. The caller got distracted, forgot the time, found another place, or never felt fully committed because the order was never confirmed clearly.\n\nA few common restaurant-side causes:\n- The order was taken fast, but the total and ready time were not repeated back.\n- The caller never gave a name or phone number, so there was no way to follow up.\n- The pickup window was vague, like “in about 20 minutes,” instead of a specific ready time.\n- The caller asked a question about the menu or hours, but nobody captured the order before hanging up.\n\nA simple script helps. Try this line: “Got it. Let me repeat that back so we make it right.” Then say the items, sizes, modifiers, name, phone, total, and ready time in one clean pass.\n\nIf you want a simple way to think about it, treat every phone order like a reservation for food. The clearer it is, the less room there is for confusion later. ROAL is built around that idea: it answers the phone, takes the order from the live menu, and sends a clean ticket to the kitchen screen so staff can move fast."
+    },
+    {
+      "id": "what-should-i-say-on-the-phone-to-confirm-pickup-orders",
+      "h2": "What should I say on the phone to confirm pickup orders?",
+      "body": "Use the same confirmation flow every time. Consistency cuts missed details and makes the caller feel like the order is real.\n\nHere is a simple pickup script you can use or adapt:\n1. “What can I get started for you?”\n2. “Let me make sure I have that right.”\n3. “Your name and a good callback number?”\n4. “That will be ready at 6:25.”\n5. “Your total is $28 plus tax. You’ll pay at pickup.”\n6. “Please come to the front counter when you arrive.”\n\nThat last line matters. A caller who knows exactly where to go is less likely to wander off or call back confused. If your restaurant uses a different pickup point, say it the same way every time: “Pick up at the side window,” or “Ask for the takeout shelf at the host stand.”\n\nA quick example: say your average pickup order is $28. If a caller no-shows, you lose the sale and still have food tied up. If your team regularly takes five orders like that during a rush, the waste adds up fast. Plug in your own average order and your own volume, then think about how many of those calls could be saved with a sharper confirmation step."
+    },
+    {
+      "id": "how-can-i-stop-weak-orders-before-they-hit-the-kitchen",
+      "h2": "How can I stop weak orders before they hit the kitchen?",
+      "body": "A lot of no-show orders start as soft orders. The caller sounds unsure, asks for a lot of changes, or hangs up before the final recap. You do not need to chase every hesitant caller forever. You just need a better filter.\n\nUse these checks before you send the ticket:\n- Ask for the name and phone number before the call ends.\n- Repeat the total and ready time clearly.\n- If the caller sounds uncertain, ask one simple closing question: “Would you like me to put that in now?”\n- Keep sold-out items out of the order flow so people are not waiting for something you cannot make.\n- Route allergy-sensitive questions, complaints, and manager requests to staff with a summary instead of guessing.\n\nThat last part matters for trust. A caller who gets a sloppy answer to a serious question is less likely to show up. A caller who hears a clear, calm handoff feels taken care of.\n\nIf you use [menu, hours and allergen questions](/use-cases/menu-questions) as a separate process, your counter staff can focus on real orders instead of sorting out half-finished calls. ROAL does that handoff for tricky calls and keeps the clean order moving to the kitchen when it is ready."
+    },
+    {
+      "id": "how-do-i-make-pickup-timing-clearer-so-people-actually-come",
+      "h2": "How do I make pickup timing clearer so people actually come?",
+      "body": "Pickup timing is where a lot of no-shows start. If the time feels fuzzy, the caller has room to forget, delay, or change plans.\n\nA better process is to give one exact ready time and repeat it once. Try this wording: “Your order will be ready at 7:10. Please come straight to the counter when you arrive.”\n\nFor busy shops, this helps more than saying “about 20 minutes.” Here is a simple working method:\n- Use one standard ready-time phrase for pickup orders.\n- Do not give two different times in the same call.\n- If the kitchen is slammed, say the delay plainly: “We are running about 35 minutes on pickup right now.”\n- If the caller asks for a late pickup, note it clearly so the kitchen knows what to expect.\n\nExample you can swap for your own shop: if your current average prep time is 18 minutes and the caller is across town, a vague “soon” makes it easy to drift. A clear “ready at 6:18” gives the customer a real plan.\n\nThis also helps staff at the counter. When the caller arrives, the team can look for one name and one time instead of guessing which order they meant. If you want to compare how phone orders stack up against app orders, see [Phone orders vs delivery apps](/compare/delivery-apps)."
+    },
+    {
+      "id": "what-can-i-do-with-repeat-no-shows-and-suspicious-calls",
+      "h2": "What can I do with repeat no-shows and suspicious calls?",
+      "body": "Some no-shows are not accidental. A caller may order large amounts, ask for special items, or hang up after giving only partial details. In those cases, it helps to have a simple staff policy.\n\nUse this short checklist:\n- Keep a log of repeat no-shows by name or phone number.\n- Flag orders that are unusually large for your store.\n- Ask for a callback number before the kitchen starts anything big.\n- For suspicious calls, require a clearer confirmation before sending the ticket.\n- If a caller is abusive or confusing, hand the call to staff instead of forcing the order through.\n\nYou do not need a complicated system. You just need a habit. For example, if a caller places a $64 order and then has a pattern of not arriving, the next time the same number calls, your staff can slow down and confirm more carefully.\n\nROAL can help here because it collects the name, phone, items, sizes, modifiers, and notes before the ticket reaches the kitchen screen. It also hands unusual calls to staff with a summary. That means fewer gaps between what was said and what the kitchen sees. If you are still using handwritten tickets, [moving off handwritten phone order tickets](/blog/handwritten-phone-order-tickets) is a good next step."
+    },
+    {
+      "id": "should-i-use-delivery-apps-monthly-phone-tools-or-pay-per-or",
+      "h2": "Should I use delivery apps, monthly phone tools, or pay per order?",
+      "body": "When you are trying to cut no-show pickup orders, the cost of the system matters too. Some tools charge a fixed monthly fee whether orders come in or not. Human answering services usually bill by minute or call. Delivery apps commonly take roughly 15-30% commission per order.\n\nA simple way to compare options is to plug in your own numbers:\n| Option | How it often bills | Good to know |\n|---|---|---|\n| Delivery apps | Percentage commission | Can be expensive on each order |\n| Human answering service | Per minute or per call | Costs can rise with call volume |\n| Monthly AI phone tools | Fixed monthly fee per location | Paid even in slow weeks |\n| ROAL | $0.90 per completed phone order | No monthly fee, no setup fee, no per-minute fee |\n\nIf you take 300 completed phone orders in a month, a pay-per-order model means you pay only when a confirmed order reaches the kitchen screen. Plug in your own order count and compare that to a flat monthly bill.\n\nThat matters for owners who are trying to cut waste, not just add more software. ROAL is built for that kind of shop. It answers the phone, takes the order, and sends the kitchen a clean ticket. You still control your own number and can turn forwarding off any time. For setup details, see [How it works](/how-it-works) and [Pricing](/pricing)."
+    },
+    {
+      "id": "how-do-i-set-up-call-forwarding-without-messing-up-my-main-l",
+      "h2": "How do I set up call forwarding without messing up my main line?",
+      "body": "If you want to reduce no-shows and missed pickup calls, forwarding the restaurant number can help during busy times or when nobody can get to the phone. The goal is to keep your main number and route calls cleanly.\n\nA practical setup checklist:\n1. Decide whether to forward all calls, or only when busy or unanswered.\n2. Confirm the code or method with your carrier or phone system.\n3. Test with one real call from a mobile phone.\n4. Make sure the forwarded call still sounds professional.\n5. Turn forwarding off anytime you do not need it.\n\nCodes vary by carrier and plan, so always confirm with your provider and test after setup. On many landlines and some carriers, *72 starts forwarding and *73 turns it off. Some GSM carriers use **21*number# to forward all calls and ##21# to turn it off. Verizon Wireless uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually handle forwarding in the web portal.\n\nIf you want to try a phone host without a heavy setup, [Build a free test host](/try) from your website, Google Maps link, or restaurant name and city. You can test-call it in the browser before claiming the line."
+    }
+  ],
+  "takeaways": [
+    "Confirm name, phone, items, total, and ready time on every pickup order.",
+    "Give one exact pickup time instead of a vague window.",
+    "Use a repeatable script so callers know the order is real.",
+    "Route strange, allergy-sensitive, or manager calls to staff with a summary.",
+    "Compare your phone order costs before choosing a monthly tool or pay-per-order option."
+  ],
+  "faq": [
+    {
+      "q": "What causes no-show pickup orders at restaurants?",
+      "a": "Most no-show pickup orders come from weak confirmation, vague timing, or a caller who never fully committed. If the order is not repeated back clearly, the customer may forget or change plans. A clear name, phone number, total, and ready time can reduce that risk."
+    },
+    {
+      "q": "What should I say when taking a pickup order by phone?",
+      "a": "Use a simple script: take the items, repeat them back, collect the name and phone number, give one ready time, and confirm the total. Say where to pick up and remind the caller that payment happens at pickup if that is how your restaurant works. Short and specific is better than long and casual."
+    },
+    {
+      "q": "How do I reduce fake or suspicious phone orders?",
+      "a": "Ask for a callback number before the order is sent, and slow down on unusually large or strange orders. Keep a note of repeat no-shows by name or phone number. If something feels off, route the call to staff instead of rushing it through."
+    },
+    {
+      "q": "Can ROAL take payment over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes the order, confirms it, and sends the clean ticket to the kitchen screen, while payment happens at pickup or however your restaurant already handles it."
+    }
+  ],
+  "words": 1581,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,123 @@
+{
+  "slug": "chinese",
+  "label": "Chinese takeout",
+  "h1": "An AI phone host for Chinese takeout",
+  "seoTitle": "AI phone answering for Chinese takeout | ROAL",
+  "description": "ROAL is a phone host for Chinese takeout. It answers calls, takes pickup orders from your live menu, and sends clean tickets to the kitchen.",
+  "lead": "Busy Friday dinner. Wok stations loud. The phone keeps ringing. ROAL answers, takes the order, and sends it to the kitchen screen while your team keeps cooking.",
+  "question": "How can ROAL handle Chinese takeout phone orders without slowing down the kitchen?",
+  "answer": "ROAL answers the restaurant’s phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can quote ready times, collect names and phone numbers, and handle common menu questions like hours, address, parking, and dish details. It does not take card numbers over the phone.",
+  "pains": [
+    {
+      "title": "The phone rings when the line is busiest",
+      "body": "Lunch rush and dinner rush are when callers order most. That is also when the front counter is busy with walk-ins, bags, and pickup names."
+    },
+    {
+      "title": "Orders get noisy and easy to miss",
+      "body": "Chinese takeout orders often include rice choices, spice levels, extra sauce, and small custom notes. One missed modifier can mean a remake or a callback."
+    },
+    {
+      "title": "People call for simple questions first",
+      "body": "Callers ask if General Tso’s is ready, whether lunch specials are still on, or if parking is behind the store. Those calls still interrupt the team."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers in the middle of the rush",
+      "body": "ROAL can pick up the phone when your staff cannot. It keeps the caller moving instead of sending them to voicemail or a long hold."
+    },
+    {
+      "title": "Takes the whole order clearly",
+      "body": "It can capture items, sizes, modifiers, and notes. Example: chicken lo mein, no onion, mild sesame chicken, extra wonton soup, and white rice."
+    },
+    {
+      "title": "Sends a clean kitchen ticket",
+      "body": "The order lands on the kitchen screen with the name, phone number, and ready time. That makes it easier to start the ticket right away."
+    },
+    {
+      "title": "Handles common questions too",
+      "body": "ROAL can answer hours, address, parking, and menu questions from your live info. If it does not know something, it sends it to you with a summary."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi. Can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One chicken lo mein, no onion. One sesame chicken, mild. And a large wonton soup."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Chicken lo mein, no onion. One mild sesame chicken. One large wonton soup."
+    },
+    {
+      "who": "caller",
+      "line": "Can I get white rice with the sesame chicken?"
+    },
+    {
+      "who": "host",
+      "line": "Yes. What name should I put on the order?"
+    },
+    {
+      "who": "caller",
+      "line": "Mai Chen."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Mai. Your pickup order should be ready in about 20 minutes. I’ll send that to the kitchen now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "Mai Chen · (phone number)",
+      "Chicken lo mein · no onion",
+      "Sesame chicken · mild · white rice",
+      "Large wonton soup",
+      "Ready time: 7:20 pm"
+    ],
+    "note": "Confirm no onion on lo mein."
+  },
+  "sections": [
+    {
+      "h2": "What a Chinese takeout phone host should handle",
+      "body": "Chinese takeout calls are usually fast and specific. Callers want to order family dinner combos, lunch specials, lo mein, fried rice, dumplings, orange chicken, broccoli chicken, or soups without waiting through a long menu. A good phone host should take the order in plain language, repeat back the details, and quote a ready time the kitchen can use.\n\nROAL is built for that kind of call. It reads your live menu, so if an item is sold out it will not offer it. It can also answer the easy questions that slow your counter down, like whether you are open for lunch, where to park, or if an item is spicy. If a caller asks about allergy-sensitive food or wants to speak to a manager, it passes that along with a short summary."
+    },
+    {
+      "h2": "A simple setup for a busy shop",
+      "body": "Setup is meant to be quick. At [Build a free test host](/try), you can paste your restaurant website, Google Maps link, or just your restaurant name and city. ROAL reads the menu, prices, hours, and address from public pages, and you can also upload a menu file or photos.\n\nOnce you like the voice and name, you claim the host and forward your existing number to it. You can forward all calls, or only the ones that are busy or unanswered. That lets you keep your current number while ROAL handles pickup orders during the rush."
+    },
+    {
+      "h2": "Use a worked example before you go live",
+      "body": "Say a Friday night brings 12 missed calls while the counter is slammed with pickup bags and steamed rice. With ROAL, those calls can become order tickets instead of voicemail. The kitchen screen shows each ticket as new, preparing, or ready, so the team can work in order.\n\nIf a caller asks a question ROAL cannot answer, it goes to your inbox. You answer it once, and the host knows it from then on. If you want to see the pricing before you test it, check [Pricing](/pricing). The current plan is pay per completed phone order, with no monthly fee or setup fee."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "Can it handle common Chinese takeout modifiers?",
+      "a": "Yes. It can take items, sizes, modifiers, and notes. That includes things like no onion, extra spicy, white rice, brown rice, and sauce changes when they are on your menu."
+    },
+    {
+      "q": "What if a caller asks about something unusual?",
+      "a": "If ROAL cannot answer a question, it sends it to your inbox with context. You answer once, and the host can use that answer later."
+    },
+    {
+      "q": "How do I turn it on for my current number?",
+      "a": "You claim the host, then forward your existing number to ROAL. You can forward all calls or only when busy or unanswered, and you can turn forwarding off any time."
+    },
+    {
+      "q": "Is this only for big restaurant groups?",
+      "a": "No. ROAL is meant for independent restaurants too. It works for a single Chinese takeout shop, and it also works for more than one location."
+    }
+  ]
+}

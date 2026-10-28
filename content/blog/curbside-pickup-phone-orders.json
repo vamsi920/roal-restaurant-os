@@ -1,0 +1,71 @@
+{
+  "slug": "curbside-pickup-phone-orders",
+  "keyword": "curbside pickup phone orders",
+  "category": "phone-orders",
+  "title": "Curbside pickup phone orders: a simple setup guide",
+  "seoTitle": "Curbside pickup phone orders for restaurants | ROAL",
+  "description": "Manage curbside pickup calls with a clear script, prep notes, and simple forwarding rules. Keep pickup orders organized during busy shifts.",
+  "question": "How do I handle curbside pickup phone orders without tying up the phone all day?",
+  "answer": "Handle curbside pickup phone orders with a short phone script, clear pickup instructions, and a ticket that reaches the kitchen fast. Use phone forwarding only when you need it, and make sure the caller gets a ready time, the right curbside spot, and a clean handoff to staff.",
+  "summary": "You’ll learn how to take curbside phone orders clearly, route calls well, and keep pickup smooth for staff and guests.",
+  "intro": "Curbside pickup phone orders work best when the caller gets a quick answer, a clear ready time, and simple pickup instructions. A good phone flow keeps your line moving and keeps the kitchen from guessing.\n\nIf your team is busy, an AI phone host like ROAL can answer the restaurant’s phone, take the order from your live menu, and send a clean ticket to the kitchen screen. It can also tell callers your hours, address, and parking details, which helps curbside pickups go more smoothly.",
+  "sections": [
+    {
+      "id": "what-should-a-curbside-pickup-phone-order-sound-like",
+      "h2": "What should a curbside pickup phone order sound like?",
+      "body": "A curbside order call should feel short, calm, and specific. The caller needs to know you heard the order, the ready time, and exactly where to stop.\n\nA simple script helps your staff or phone host stay consistent. Try this:\n\n\"Thanks for calling. Is this for pickup or delivery?\"\n\nFor curbside pickup, keep the next questions tight:\n- Name\n- Callback number\n- Items, sizes, and modifiers\n- Any notes, like no onions or sauce on the side\n- Curbside spot or parking instructions\n- Ready time\n\nIf you use ROAL, it can collect the name, phone number, items, modifiers, and notes, then confirm the order back before sending the ticket. That matters on busy nights when the line is ringing and the kitchen is moving fast. Keep one extra line ready for special cases, such as: \"If you need allergy help or want to speak with a manager, I’ll connect you with staff.\""
+    },
+    {
+      "id": "how-do-i-set-curbside-instructions-so-callers-don-t-get-conf",
+      "h2": "How do I set curbside instructions so callers don’t get confused?",
+      "body": "Curbside works best when the instructions are the same every time. Put the pickup spot, the parking rule, and the best callback number in one place, then use the same wording on the phone.\n\nUse a short checklist:\n- Where the guest should park or stop\n- Whether they should call again on arrival\n- Whether you bring the order out or meet at the door\n- What name the staff should look for\n- Whether the caller should keep hazard lights on\n\nExample script line: \"When you arrive, please park at the curbside sign and call us from the same number so we can match your order.\" If you have a few curbside spaces, number them and say which ones are reserved for pickup.\n\nROAL can answer questions about address, parking, and hours from the restaurant’s public pages, which helps before the order is even placed. If the caller asks something it cannot answer, the question lands in an inbox so you can add the answer once and use it going forward."
+    },
+    {
+      "id": "how-do-i-keep-the-kitchen-from-slowing-down-on-phone-pickups",
+      "h2": "How do I keep the kitchen from slowing down on phone pickups?",
+      "body": "The kitchen should get a ticket that is easy to read and easy to start. For curbside pickup phone orders, the most important details are the guest name, items, modifiers, notes, and ready time.\n\nA clean workflow looks like this:\n1. Take the order.\n2. Repeat the order back.\n3. Quote the ready time.\n4. Send the ticket to the kitchen.\n5. Mark the order as preparing, then ready.\n\nThat ticket matters because curbside customers often arrive right when the food is supposed to be done. If the order is missing a modifier, the remake costs time and product. ROAL sends a clean ticket to the kitchen screen and keeps live order status in the dashboard, so staff can track new, preparing, and ready orders.\n\nHere is a practical example you can swap for your own numbers: say your curbside pickup order is $28 on average and you take 20 orders a day. That is $560 in daily phone-order sales before you factor in your own ticket size. The point is not the exact number; the point is to keep each order accurate enough that the kitchen can move without extra calls back and forth."
+    },
+    {
+      "id": "what-should-i-say-when-someone-asks-for-curbside-but-the-lin",
+      "h2": "What should I say when someone asks for curbside, but the line is busy?",
+      "body": "Busy lines are where curbside orders get lost. Decide in advance what happens when the phone rings during rush.\n\nA simple plan:\n- Forward all calls when you are short-staffed.\n- Forward only unanswered calls during regular service.\n- Send busy calls to the host line if your carrier allows it.\n- Tell staff who handles allergy-sensitive questions and manager requests.\n\nA useful phone line is: \"We’re busy right now, but I can still take your pickup order and get you a ready time.\" If your line goes unanswered often, forwarding can help. On many landlines and some carriers, *72 then the forwarding number forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# and ##21# often control all-call forwarding, while **61*number# may forward unanswered calls and **67*number# may forward busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Codes vary by carrier and plan, so confirm with your carrier and test with a call.\n\nROAL gives each location its own phone line automatically after you claim the host, and you forward your existing number to it. You keep your own number, and forwarding can be turned off any time."
+    },
+    {
+      "id": "how-do-curbside-pickup-orders-compare-with-delivery-apps-and",
+      "h2": "How do curbside pickup orders compare with delivery apps and monthly phone plans?",
+      "body": "For many restaurants, curbside pickup by phone can be a cleaner margin than third-party delivery apps. Delivery apps commonly charge roughly 15-30% commission per order, which can take a big bite out of a ticket.\n\nPhone ordering costs can look different. Many AI phone tools charge a fixed monthly fee per location, whether or not orders come in. Human answering services usually bill per minute or per call. ROAL uses a pay-per-completed-order model: $0.90 for each confirmed phone order whose ticket reaches the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nHere is a simple comparison you can plug your own numbers into:\n\n| Option | Common cost style | Best for |\n|---|---:|---|\n| Delivery apps | Often 15-30% commission | Restaurants that want marketplace volume |\n| Monthly phone plans | Fixed monthly fee per location | Stores with steady call volume |\n| Human answering service | Per minute or per call | Shops that want a live operator |\n| ROAL | $0.90 per completed order | Restaurants that want phone orders only when they happen |\n\nIf your curbside business is seasonal or rush-heavy, a per-order model can be easier to understand than a bill that stays the same every month."
+    },
+    {
+      "id": "what-should-i-check-before-i-go-live-with-curbside-pickup-ph",
+      "h2": "What should I check before I go live with curbside pickup phone orders?",
+      "body": "Before you send live calls to a phone host, test the details that matter most on pickup orders. Start with the basics, then try a real order from your own menu.\n\nPre-live checklist:\n- Menu prices match your current menu\n- Sold-out items are marked correctly\n- Hours and address are right\n- Parking or curbside instructions are clear\n- Ready time wording sounds natural\n- Staff know where the ticket appears\n- Allergy and manager calls reach the right person\n\nROAL lets the owner paste a website, Google Maps link, or \"Name, City\" at /try, then reads the menu, hours, and address from public pages and builds a phone host in about a minute. The owner can test-call it in the browser with no sign-up needed, then claim the host when ready.\n\nA good final test is this: call in a simple pickup order, ask one question about parking, and make sure the kitchen ticket looks clean. If the guest can get the right answer and the staff can start the order without extra cleanup, the curbside flow is in good shape. When you are ready, [build a free test host](/try) and hear how it sounds with your menu."
+    }
+  ],
+  "takeaways": [
+    "Curbside pickup calls work best with a short script, a clear ready time, and simple parking instructions.",
+    "Keep the kitchen ticket clean so staff can start pickup orders without guessing.",
+    "Phone forwarding can help during rushes, but always confirm the right carrier codes first.",
+    "ROAL can answer curbside questions, take pickup orders, and send a ticket to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "How do I take curbside pickup orders by phone without slowing down service?",
+      "a": "Use a short order flow: name, phone number, items, modifiers, notes, and ready time. Then repeat the order back and send the ticket straight to the kitchen. That keeps the call short and gives staff a clean order to start."
+    },
+    {
+      "q": "What details should I ask for on a curbside pickup phone order?",
+      "a": "Ask for the caller’s name, callback number, exact items, sizes, modifiers, and any special notes. Also give a ready time and tell them where to park or how to identify the curbside spot. Those details reduce confusion at pickup."
+    },
+    {
+      "q": "Can an AI phone host take curbside orders and still hand off special calls?",
+      "a": "Yes. ROAL takes pickup and delivery orders, answers basic menu and hours questions, and can hand allergy-sensitive questions, complaints, catering requests, and manager requests to staff with a summary. It does not take card numbers over the phone."
+    },
+    {
+      "q": "What’s the easiest way to set up call forwarding for curbside orders?",
+      "a": "The exact code depends on your carrier and phone system. Many landlines and some carriers use *72 to forward all calls and *73 to turn it off, while some mobile carriers use different codes such as **21*number# or *71 for busy/no-answer forwarding. Always confirm with your carrier and test the call before going live."
+    }
+  ],
+  "words": 1219,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

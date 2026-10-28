@@ -1,0 +1,122 @@
+{
+  "slug": "italian",
+  "label": "Italian restaurants",
+  "h1": "An AI phone host for Italian restaurants",
+  "seoTitle": "AI phone answering for Italian restaurants | ROAL",
+  "description": "ROAL is an AI phone host for italian restaurants. It answers calls, takes pickup orders, shares hours, and sends a clean ticket to the kitchen.",
+  "lead": "Busy Friday night. Line at the counter. Phones ringing while pasta is going out. ROAL answers in your restaurant's voice and takes pickup orders from your live menu.",
+  "question": "How does ROAL handle Italian restaurant phone orders without slowing down the kitchen?",
+  "answer": "ROAL answers the phone, takes pickup orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common Italian restaurant calls like spaghetti, chicken parm, baked ziti, hero sandwiches, side salads, hours, parking, and allergy-sensitive questions. If a caller asks for something it cannot answer, it sends a summary to staff.",
+  "pains": [
+    {
+      "title": "The phone rings during the dinner rush",
+      "body": "When one person is plating, another is taking tables, and the third is boxing pickups, calls get missed fast. A caller may hang up after hearing a busy kitchen."
+    },
+    {
+      "title": "Pickup orders are simple, but the details matter",
+      "body": "Italian orders often need sizes, sauces, extra cheese, no onions, gluten questions, and ready-time requests. A small mistake can mean remaking a tray of penne or a chicken parm hero."
+    },
+    {
+      "title": "Voicemail does not help a hungry caller",
+      "body": "People calling for a quick pickup want an answer now. If they leave a message, they may call the next place instead."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers like a front host would",
+      "body": "ROAL picks up the phone, greets the caller warmly, and stays focused on the order. It can handle menu questions, hours, address, parking, and pickup timing."
+    },
+    {
+      "title": "Takes real Italian orders",
+      "body": "It can capture items, sizes, modifiers, and notes from your live menu. That includes classics like fettuccine alfredo, eggplant parm, linguine with clams, and mozzarella sticks."
+    },
+    {
+      "title": "Sends clean tickets to the kitchen",
+      "body": "Each confirmed order goes to the kitchen screen with the name, phone number, items, and ready time. Staff can keep moving without stopping to rewrite the order."
+    },
+    {
+      "title": "Works when you are short on time",
+      "body": "You can forward calls when busy or unanswered, then turn forwarding off any time. It is useful for a Friday dinner rush, a Sunday lunch rush, or a two-person shift."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. I can help with that. What would you like?"
+    },
+    {
+      "who": "caller",
+      "line": "One chicken parm hero, extra sauce. And a small house salad."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One chicken parm hero with extra sauce, and one small house salad. Any other changes?"
+    },
+    {
+      "who": "caller",
+      "line": "No onions on the salad, please. Name is Marco."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Marco. I have one chicken parm hero with extra sauce and one small house salad, no onions. I can have it ready around 25 minutes. Does that work?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes, that works."
+    },
+    {
+      "who": "host",
+      "line": "Great. Your pickup order is confirmed for Marco, ready in about 25 minutes."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:15 pm",
+    "lines": [
+      "Marco · (555) 014-8821",
+      "1 Chicken Parm Hero · extra sauce",
+      "1 Small House Salad · no onions",
+      "Ready: about 25 minutes"
+    ],
+    "note": "Confirm pickup at front counter."
+  },
+  "sections": [
+    {
+      "h2": "What Italian callers ask most",
+      "body": "For an Italian restaurant, the phone is often about the same few things: pickup orders, hours, address, parking, and menu details. A caller may ask if you still have lasagna, whether the vodka sauce has cream, or if the chicken parm can be made without cheese. ROAL is built for those calls. It reads from your live menu and answers from the information you already show to guests.\n\nIt also helps during the moments that hurt most: the 6:30 dinner rush, a rainstorm, or the night your dining room is full and the pickup line is stacked. If you want a broader look at [pickup order handling](/use-cases/pickup-orders), this is the core use case for Italian spots."
+    },
+    {
+      "h2": "A simple setup for owners who do not want tech work",
+      "body": "You do not need a long setup project. At /try, you can paste your website, Google Maps link, or just your restaurant name and city. ROAL reads your public menu, prices, hours, and address, then builds the phone host in about a minute. You can test-call it in the browser before you go live.\n\nWhen you are ready, you claim the host and forward your current number to it. You can forward all calls, or only calls when busy or unanswered. Your restaurant keeps its own number, and forwarding can be turned off any time. If you want the basics first, see [pricing](/pricing)."
+    },
+    {
+      "h2": "What to tell your staff and what to keep on paper",
+      "body": "For Italian restaurants, the best phone setup is simple. Keep your live menu clean. Mark sold-out items clearly. Make sure the phone host knows the common modifiers your guests ask for: extra sauce, no cheese, gluten questions, light garlic, side of bread, or dressing on the side.\n\nA helpful checklist:\n- Common pickup times for lunch and dinner\n- What counts as a regular side vs extra side\n- How you want allergies handled\n- Whether large trays need extra lead time\n- Where the caller should pick up\n\nIf a question is unusual, ROAL can hand it to staff with a summary. That way the next caller does not get stuck waiting while someone searches for the answer."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take orders for pasta, heroes, and trays?",
+      "a": "Yes. It can take pickup and delivery orders from your live menu, including items like pasta dishes, heroes, salads, and tray orders. It collects items, sizes, modifiers, notes, the caller's name, and phone number, then confirms the order back."
+    },
+    {
+      "q": "Does ROAL take payment over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "q": "What if someone asks about a dish that is sold out?",
+      "a": "ROAL does not offer items marked sold out. If a caller asks for something it cannot answer, it can send a summary to staff so you can respond once and keep that answer for later."
+    },
+    {
+      "q": "Can I use it only when the restaurant is busy?",
+      "a": "Yes. You can forward calls only when busy or unanswered, or forward all calls if you want. You can turn forwarding off any time."
+    },
+    {
+      "q": "How is pricing set for italian restaurants?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ]
+}

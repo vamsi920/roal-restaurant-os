@@ -1,0 +1,122 @@
+{
+  "slug": "multilingual",
+  "label": "Callers in other languages",
+  "h1": "Callers in other languages, understood",
+  "seoTitle": "Restaurant phone orders in other languages | ROAL",
+  "description": "Let ROAL answer restaurant calls in more than one language, take orders, handle menu questions, and pass tricky calls to staff with a clear summary.",
+  "lead": "Some callers know what they want, but not in English. ROAL helps your restaurant answer in the caller’s language, take the order, and keep the line moving.\n\nIt can also handle hours, address, parking, and menu questions during busy lunch and dinner rushes.",
+  "question": "How can an AI phone host help restaurant callers in other languages?",
+  "answer": "ROAL answers the phone in the caller’s language, then takes pickup or delivery orders from your live menu, including items, sizes, modifiers, and notes. It can also answer common questions about hours, address, parking, and the menu. If the call is about a complaint, allergy, catering, or something it cannot answer, it sends a clear summary to your team.",
+  "pains": [
+    {
+      "title": "You lose orders when the caller switches languages",
+      "body": "A caller may be comfortable ordering by phone, but not in English. If your team cannot understand the call quickly, the order may never get placed."
+    },
+    {
+      "title": "Rush-hour language gaps slow down the counter",
+      "body": "During a Friday night rush, nobody has time to repeat the same questions three times. One long call can hold up a busy line and leave other callers waiting."
+    },
+    {
+      "title": "Simple questions turn into long interruptions",
+      "body": "Many calls are not hard orders. They are questions like “What time do you close?”, “Do you have parking?”, or “Can I get chicken biryani without onion?”"
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Speaks with the caller in a usable language",
+      "body": "ROAL can speak the caller’s language on the call, so the conversation feels more natural. That helps the caller place the order without relying on a staff member who may be rushing."
+    },
+    {
+      "title": "Takes the order from your menu",
+      "body": "It reads your live menu and can take items, sizes, modifiers, and notes. If a dish is sold out, it will not offer it."
+    },
+    {
+      "title": "Handles common questions first",
+      "body": "ROAL can answer hours, address, parking, and menu questions right away. That saves your team from repeating the same basics during dinner service."
+    },
+    {
+      "title": "Hands off the calls that need a person",
+      "body": "For allergy-sensitive questions, complaints, catering, or manager requests, ROAL sends a summary to staff. You stay in control of the calls that need a human."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, do you speak Spanish?"
+    },
+    {
+      "who": "host",
+      "line": "Yes. How can I help you today?"
+    },
+    {
+      "who": "caller",
+      "line": "I want two chicken tacos and one beef burrito for pickup."
+    },
+    {
+      "who": "host",
+      "line": "Of course. Two chicken tacos and one beef burrito for pickup. Any changes?"
+    },
+    {
+      "who": "caller",
+      "line": "No onion on the burrito, and make the tacos spicy."
+    },
+    {
+      "who": "host",
+      "line": "Got it. What name should I put on the order, and what phone number can we use if we need to reach you?"
+    },
+    {
+      "who": "caller",
+      "line": "Luis, 555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Luis. Your order will be ready around 7:20 pm. I have two chicken tacos, one beef burrito, no onion on the burrito, tacos spicy. Is that correct?"
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "Luis · 555-0148",
+      "2 chicken tacos · spicy",
+      "1 beef burrito · no onion",
+      "Ready time: 7:20 pm"
+    ],
+    "note": "Caller spoke Spanish"
+  },
+  "sections": [
+    {
+      "h2": "Why multilingual calls matter at the front counter and on the phone",
+      "body": "When a caller is speaking another language, the problem is often not the food. It is the phone conversation. A busy host may hear the name of a dish, but miss the modifiers, the number of items, or the pickup time.\n\nThat matters most during lunch rush, Friday dinner, and holiday weekends. A short call should stay short. If the call takes too long, people hang up and try another restaurant. ROAL helps keep the call moving by taking the order, repeating it back, and sending the ticket to the kitchen screen.\n\nIf you want a quick setup flow, you can start on [How it works](/how-it-works) or build a test host at [Try ROAL](/try)."
+    },
+    {
+      "h2": "What to prepare before you turn it on",
+      "body": "The best multilingual experience starts with a clean menu. Make sure your menu names are simple and consistent. If you call a dish one thing on the phone and another thing on the menu board, callers can get confused.\n\nIt also helps to have clear answers for a few basics: hours, address, parking, and which items are sold out today. ROAL reads your live menu and public pages, but your team should keep those details current.\n\nFor language-heavy neighborhoods, think about the calls you already get. Maybe it is Spanish for pickup orders, or Mandarin for lunch specials, or Arabic for halal questions. The goal is not fancy tech. It is a smoother phone call and fewer missed orders."
+    },
+    {
+      "h2": "A simple example from a real restaurant rush",
+      "body": "Say it is 6:45 pm on a Friday and your line is already ringing. One caller wants to order in Spanish, another wants to know if you have parking, and a third is asking whether a dish has peanuts. Your host is also packing takeout bags.\n\nROAL can answer the first call in the caller’s language, take the order, and confirm the ready time. It can answer the parking question right away if that info is in your public pages. For the allergy question, it can send a summary to staff instead of guessing.\n\nThat is the kind of support busy independent restaurants need: less back-and-forth, fewer interruptions, and a cleaner handoff when a person really needs to step in."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does ROAL only work in English?",
+      "a": "No. It can speak with callers in the caller’s language during the call. That helps with orders and common questions when a guest is more comfortable speaking something other than English."
+    },
+    {
+      "q": "Can it take a full pickup order in another language?",
+      "a": "Yes, if the order is from your live menu. ROAL can take items, sizes, modifiers, and notes, then confirm the order back before sending it to the kitchen screen."
+    },
+    {
+      "q": "What if the caller asks something unusual?",
+      "a": "If ROAL cannot answer, it can send the question to your team with context. The owner can answer once in the dashboard, and the host can learn it for next time."
+    },
+    {
+      "q": "Will it take payment card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles payment."
+    },
+    {
+      "q": "How do I turn it on for my restaurant phone number?",
+      "a": "After you claim the host, ROAL gives your location its own phone line. You forward your existing number to it, either for all calls or only when busy or unanswered, and you can turn forwarding off any time."
+    }
+  ]
+}

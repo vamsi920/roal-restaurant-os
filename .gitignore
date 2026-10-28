@@ -62,3 +62,4 @@ scripts-tmp-*
 
 # Outreach lead lists (local only)
 /leads/
+scripts/seo/.spend.json

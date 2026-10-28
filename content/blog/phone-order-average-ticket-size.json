@@ -1,0 +1,77 @@
+{
+  "slug": "phone-order-average-ticket-size",
+  "keyword": "phone order average ticket size",
+  "category": "phone-orders",
+  "title": "Why phone order average ticket size matters",
+  "seoTitle": "Phone order average ticket size and why it matters | ROAL",
+  "description": "Use phone order average ticket size to judge profitability and compare ordering options. Better tracking can improve pickup and delivery sales.",
+  "question": "What is phone order average ticket size, and why does it matter for my restaurant?",
+  "answer": "Phone order average ticket size is the average dollar amount of each completed order taken by phone. It matters because it shows whether phone sales are worth the time, staffing, and fees involved, and it helps you compare phone orders against delivery apps, human answering services, and monthly AI phone tools. If you track it correctly, you can make better choices about pricing, upsells, and how to handle busy shifts.",
+  "summary": "You’ll learn how to calculate phone order average ticket size and use it to make better staffing, pricing, and call-handling decisions.",
+  "intro": "Phone order average ticket size is the average dollar amount of each completed order you take over the phone. It matters because a $22 order and a $48 order do not cost you the same to handle, even if both calls take the same time.\n\nFor a busy shop, this number helps you see whether phone ordering is a small convenience or a real sales channel. It also helps you compare pickup orders, delivery orders, and the cost of tools like ROAL or other phone support options.",
+  "sections": [
+    {
+      "id": "what-is-phone-order-average-ticket-size",
+      "h2": "What is phone order average ticket size?",
+      "body": "Phone order average ticket size means the average value of the orders you complete by phone. It is simple: add up the dollar value of completed phone orders, then divide by the number of those orders.\n\nHere is the basic formula:\n\n| What to track | Example |\n|---|---:|\n| Total completed phone order sales | $1,200 |\n| Number of completed phone orders | 40 |\n| Average ticket size | $30 |\n\nIf your phone sales total $1,200 across 40 completed orders, your average ticket size is $30. Plug in your own numbers from a day, a week, or a month. A lunch spot may want to track lunch separately from dinner. A pizza shop may want to separate pickup from delivery. That gives you a cleaner read on what the phone is actually doing for the business."
+    },
+    {
+      "id": "why-does-ticket-size-matter-for-a-busy-restaurant",
+      "h2": "Why does ticket size matter for a busy restaurant?",
+      "body": "Ticket size tells you whether the phone is producing enough value to justify the work. A restaurant may get plenty of calls, but if most orders are small, the phone can still feel busy without bringing in much revenue.\n\nUse this simple way to think about it:\n- Higher ticket size can support more effort per call.\n- Lower ticket size may need faster handling, better upsells, or tighter phone coverage.\n- If your order size is small, missed calls can hurt more than you think because each call carries less value.\n\nExample: say your average phone order is $24. If a caller adds one appetizer or a drink and the average rises to $31, that is a meaningful jump. If you take 25 completed phone orders in a night, that difference is $175 in extra sales. You can swap in your own numbers and see whether small upsells are worth the effort."
+    },
+    {
+      "id": "how-do-i-calculate-it-without-overcomplicating-it",
+      "h2": "How do I calculate it without overcomplicating it?",
+      "body": "Keep the math simple and use the same method each time. The goal is not perfect accounting. The goal is a useful number you can compare from week to week.\n\n1. Pick a time period, like a day, a week, or a month.\n2. Count only completed phone orders that actually turned into sales.\n3. Add the order totals before tax or after tax, but stay consistent.\n4. Divide total sales by number of completed phone orders.\n5. Repeat the same method next week.\n\nWorked example: if your completed phone orders total $3,360 in one week and you completed 120 phone orders, your average ticket size is $28. If next week you total $3,960 across 132 orders, your average is still $30. That tells you the average improved, not just the call volume. This is the kind of number ROAL puts into context when it sends clean tickets to the kitchen screen and keeps call details in one place."
+    },
+    {
+      "id": "what-numbers-should-i-compare-it-against",
+      "h2": "What numbers should I compare it against?",
+      "body": "Average ticket size makes more sense when you compare it to other channels. Phone orders are not the same as delivery app orders, in-house orders, or large catering calls.\n\nA practical comparison table:\n\n| Channel | What to compare | Why it matters |\n|---|---|---|\n| Phone orders | Average order size | Shows value per call |\n| Delivery apps | Average order size after fees | Shows what you keep |\n| In-store orders | Counter average ticket | Helps spot upsell gaps |\n| Catering requests | Large-ticket value | Helps separate high-effort calls |\n\nIf delivery apps commonly take roughly 15-30% commission per order, a phone order with a decent ticket can be much more attractive even before you count the guest relationship. If your phone order average is $35 and your delivery app average is $32, the phone may be doing better than it looks because you avoid that commission layer. That does not mean every phone order is profitable. It means you need the ticket size number before you judge the channel."
+    },
+    {
+      "id": "how-can-i-raise-ticket-size-on-the-phone-without-slowing-ser",
+      "h2": "How can I raise ticket size on the phone without slowing service?",
+      "body": "You do not need a long sales pitch. You need a short, repeatable habit. The best upsells are natural add-ons that fit the order the caller already wants.\n\nTry this simple script pattern:\n- For pizza: “Would you like to add garlic knots or a salad?”\n- For sandwiches: “Do you want chips and a drink with that?”\n- For family meals: “Would you like to make it a larger size?”\n- For dinner orders: “Would you like an extra side for the table?”\n\nA few practical rules:\n1. Ask once, clearly.\n2. Keep it tied to the current order.\n3. Do not push items that are sold out.\n4. Do not slow down callers who are in a hurry.\n\nROAL can handle items, sizes, modifiers, and notes from the live menu, and it will not offer sold-out items. That matters because a clean phone order is easier to complete, and easier completion often means fewer abandoned calls and fewer mistakes. If your average ticket goes up, your phone time starts to pay back better."
+    },
+    {
+      "id": "how-do-fees-change-the-value-of-each-phone-order",
+      "h2": "How do fees change the value of each phone order?",
+      "body": "Ticket size and fees have to be read together. A $27 order can be good or bad depending on how you process the call and what the order costs you to handle.\n\nHere is a simple way to compare options using your own numbers:\n\n| Option | Example cost pattern | What to watch |\n|---|---|---|\n| Delivery apps | Roughly 15-30% commission | Big cut on each order |\n| Human answering services | Per minute or per call | Cost rises with call volume |\n| Monthly AI phone tools | Often a fixed monthly fee per location | Pay even when orders are light |\n| ROAL | $0.90 per completed phone order | Pay only when a confirmed order reaches the kitchen screen |\n\nSay your average phone order is $30. A $0.90 completed-order fee is a small slice of that ticket, while a monthly fee can feel expensive if the phone is slow. If your average order is $18, every dollar of handling cost matters more. If your average order is $45, the same fee feels easier to absorb. That is why ticket size is not a vanity metric. It changes the math."
+    },
+    {
+      "id": "what-should-i-track-each-week-so-i-can-improve-it",
+      "h2": "What should I track each week so I can improve it?",
+      "body": "You do not need a complicated report. A short weekly review is enough for most independent restaurants.\n\nTrack these items:\n- Number of completed phone orders\n- Total dollar value of those orders\n- Average ticket size\n- Most common add-ons\n- Top call reasons that did not become orders\n\nA practical weekly check:\n1. Look at your highest-ticket order type.\n2. Look at your lowest-ticket order type.\n3. Find one add-on you can ask for more often.\n4. Check which call questions are slowing the team down.\n5. Update your menu or your greeting if something keeps repeating.\n\nROAL’s dashboard keeps live tickets, call history, transcripts, and menu editing in one place, so it is easier to see which calls turned into sales and which ones were just questions. The owner can also answer questions once in the inbox, and the host learns it from then on. That kind of feedback loop helps raise order quality, not just order count."
+    }
+  ],
+  "takeaways": [
+    "Phone order average ticket size is the average value of completed phone orders.",
+    "Use the same calculation method each week so the number stays useful.",
+    "Compare phone ticket size with delivery apps and other channels before judging profit.",
+    "Small upsells can raise ticket size without making calls feel pushy.",
+    "ROAL charges per completed phone order, so ticket size matters when you compare tools."
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate phone order average ticket size?",
+      "a": "Add the total dollar value of completed phone orders and divide by the number of completed phone orders. For example, $1,500 across 50 orders equals a $30 average ticket. Keep the method consistent each week so your comparisons stay useful."
+    },
+    {
+      "q": "What is a good phone order average ticket size for a restaurant?",
+      "a": "There is no single good number because it depends on your menu, location, and order mix. A pizza shop, deli, or family restaurant may each have very different order patterns. The main goal is to know your own baseline so you can spot improvement or decline."
+    },
+    {
+      "q": "Should I include delivery app orders when I track phone ticket size?",
+      "a": "No, keep them separate. Phone orders and delivery app orders have different costs and different customer behavior. Track each channel on its own, then compare them side by side if you want to see which one keeps more value for the restaurant."
+    },
+    {
+      "q": "Why does ticket size matter if I already get a lot of calls?",
+      "a": "Call volume alone does not tell you how much money the phone brings in. Two restaurants can get the same number of calls, but the one with larger ticket sizes may be much more valuable. Ticket size also helps you judge whether staffing, answering services, or AI phone tools make financial sense."
+    }
+  ],
+  "words": 1251,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

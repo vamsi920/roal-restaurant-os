@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-host-privacy-recordings",
+  "keyword": "ai phone call recording privacy restaurant",
+  "category": "ai-basics",
+  "title": "AI phone call recording privacy for restaurants",
+  "seoTitle": "AI phone call recording privacy for restaurants | ROAL",
+  "description": "Understand AI phone call recording privacy for restaurants, including caller notice, storage, and how ROAL handles call history.",
+  "question": "How should I handle AI phone call recording privacy in my restaurant?",
+  "answer": "Tell callers up front that the call may be recorded, and only record calls if your restaurant is comfortable doing so and it fits your local rules. Keep the recordings tied to the order history, limit access to staff who need it, and use them to resolve mistakes or confirm details rather than for anything else.",
+  "summary": "You’ll know how to set a simple call-recording notice, store recordings safely, and explain it clearly to guests.",
+  "intro": "Call recordings can help a restaurant fix order mistakes, confirm special requests, and train staff. They also raise privacy questions, so the safest move is to be clear with callers, keep access limited, and follow your local rules.\n\nFor owners using an AI phone host, the main job is simple: tell guests what is recorded, keep the recording tied to the order, and make sure staff know where it lives. ROAL includes call history with transcripts and recordings, so you can review calls without digging through random voicemail.",
+  "sections": [
+    {
+      "id": "what-should-i-tell-callers-before-the-order-starts",
+      "h2": "What should I tell callers before the order starts?",
+      "body": "The clearest approach is to say it early, in one plain sentence. If your restaurant records calls, put the notice in the greeting before the guest gives a name, phone number, or order details.\n\nA simple script works better than legal language. For example: \"This call may be recorded for order accuracy and service.\" That line is short, polite, and easy for a caller to understand.\n\nUse the same notice every time the phone is answered, whether a person or ROAL handles the call. If the guest asks about privacy, the host can keep it simple: \"We use the recording to confirm your order details and help our staff if there’s a question.\" \n\nQuick checklist:\n- Say the notice before taking the order.\n- Keep the wording short.\n- Use the same script for every shift.\n- Train staff not to improvise a different policy.\n- If you operate in more than one place, use one standard greeting for each location.\n\nROAL lets you choose the host’s name and voice, so the notice can sound like part of your normal phone greeting instead of a hard stop."
+    },
+    {
+      "id": "how-do-i-store-recordings-without-creating-a-mess",
+      "h2": "How do I store recordings without creating a mess?",
+      "body": "A good privacy setup is about organization, not complexity. Keep recordings attached to the call history for the location, and make sure only the owner and the staff who need them can review them.\n\nThink of recordings as part of the order record, not as something to share around. If a caller says, \"I asked for no onions,\" you want one place to confirm it fast. If a guest disputes a ready time, the recording can settle it without a long back-and-forth.\n\nA practical folder rule for a single shop:\n1. Keep call recordings in the main phone history.\n2. Use one staff account for managers and one for owners if needed.\n3. Review only the calls that matter: complaints, allergy-sensitive questions, reservation requests, and order corrections.\n4. Delete or archive anything your internal policy does not need to keep.\n\nROAL’s dashboard keeps call history with transcripts and recordings in one place, which makes it easier to find the exact call tied to a ticket. That matters at rush time, when you do not want to hunt through voicemail or a shared inbox."
+    },
+    {
+      "id": "what-privacy-risks-matter-most-for-a-pizza-shop-or-takeout-c",
+      "h2": "What privacy risks matter most for a pizza shop or takeout counter?",
+      "body": "For a restaurant, the biggest risks are simple: people hear private details, recordings get shared too widely, or the team keeps more than it needs. A caller may give a phone number, address, allergy note, or reservation request. That information should stay inside your business process.\n\nUse this short privacy checklist:\n- Do not repeat private details loudly at the counter.\n- Do not save recordings in random personal phones.\n- Do not send recordings to people who do not need them.\n- Do not ask for card numbers over the phone. ROAL does not take card numbers over the phone; payment happens at pickup or however the restaurant already takes it.\n- Keep tricky calls with staff when needed, such as allergy-sensitive questions or complaints.\n\nExample: say a guest orders a $28 pickup order with a special note and a callback number. That recording should help your kitchen and front counter confirm the order, not become a file everyone on the team forwards around.\n\nIf your restaurant handles many family orders or repeat guests, privacy is mostly about discipline. Store only what helps you serve the next call better."
+    },
+    {
+      "id": "how-should-i-explain-recordings-in-a-script-that-sounds-natu",
+      "h2": "How should I explain recordings in a script that sounds natural?",
+      "body": "A privacy notice does not have to sound cold. It can feel like part of a normal greeting. Keep it short, then move straight into the order.\n\nTry this script flow:\n1. Greet the caller.\n2. Say the recording notice.\n3. Ask what they would like.\n4. Confirm the order back.\n\nExample script: \"Thanks for calling Bella Kitchen. This call may be recorded for order accuracy. What can I get started for you?\"\n\nIf you use ROAL, the host can speak the caller’s language, take items, sizes, modifiers and notes, and confirm the order back. That means the privacy notice can stay short and clear while the rest of the call feels normal.\n\nHere is a simple owner checklist for the script:\n- One sentence for the notice.\n- One sentence to start the order.\n- One standard closing if the guest asks for the manager.\n- One fallback for anything the host cannot answer.\n\nIf the guest asks a question the host cannot handle, it goes to the inbox with the call context, so staff can follow up once instead of making the caller repeat everything."
+    },
+    {
+      "id": "what-does-roal-keep-in-call-history-and-why-does-that-matter",
+      "h2": "What does ROAL keep in call history, and why does that matter?",
+      "body": "ROAL keeps call history with transcripts and recordings in the dashboard, along with live tickets on the kitchen screen. For privacy, that matters because the order record and the recording stay connected.\n\nThat connection helps in real restaurant situations:\n- A guest says the ready time was different.\n- A caller says they asked for a missing modifier.\n- A reservation note needs to be checked.\n- A complaint needs a quick review by a manager.\n\nInstead of asking staff to remember the call, you can open the history and look at the transcript or recording tied to that call. ROAL also sends a clean ticket to the kitchen screen, so the order moves from phone to kitchen without extra handling.\n\nUse a simple review habit:\n- Check the call history after rush periods.\n- Review only the calls that need follow-up.\n- Keep staff trained on where to find the recording.\n- Use the recording to improve the script, not to create extra steps.\n\nThis is especially useful for owners who are handling the phone themselves part of the day and then need a fast way to review what happened later."
+    },
+    {
+      "id": "how-do-i-turn-on-forwarding-and-keep-control-of-the-phone-li",
+      "h2": "How do I turn on forwarding and keep control of the phone line?",
+      "body": "Call forwarding is part privacy and part control. You want your restaurant to keep its own number, while the AI phone host handles calls when you choose.\n\nROAL gives each location its own phone line automatically, and you can forward your existing number to it for all calls or only when busy or unanswered. Forwarding can be turned off any time. That gives you a clean way to test the system without giving up your main line.\n\nUse this practical setup plan:\n1. Decide whether to forward all calls or only overflow calls.\n2. Test the greeting and the recording notice.\n3. Call the restaurant yourself and listen for the privacy line.\n4. Check that the ticket lands on the kitchen screen.\n5. Review one completed call in history.\n\nIf you need the carrier codes for your line, check [call forwarding codes by carrier](/tools/call-forwarding-codes) and always confirm with your phone carrier before relying on a code. Codes vary by carrier and plan.\n\nFor a restaurant owner, the privacy goal is simple: callers should know when they are being recorded, and your team should know exactly where that recording lives."
+    }
+  ],
+  "takeaways": [
+    "Tell callers up front if the call may be recorded.",
+    "Keep recordings tied to the order history and limit access to staff who need it.",
+    "Use recordings to confirm details, not to complicate the phone workflow.",
+    "ROAL keeps call history with transcripts and recordings in one dashboard.",
+    "Forwarding your restaurant number can be turned on or off as needed."
+  ],
+  "faq": [
+    {
+      "q": "Do I need to tell customers my restaurant call is being recorded?",
+      "a": "Yes, you should tell callers before the order starts if you are recording calls. A short line like \"This call may be recorded for order accuracy and service\" is clear and easy to say. Keep the notice consistent across shifts so customers hear the same message every time."
+    },
+    {
+      "q": "Does ROAL record restaurant phone calls?",
+      "a": "ROAL includes call history with transcripts and recordings in the dashboard. That lets owners review calls tied to orders, questions, and follow-up. If you use it, make sure your greeting includes a clear recording notice if that fits your policy and local rules."
+    },
+    {
+      "q": "How should I store recorded calls for privacy?",
+      "a": "Keep recordings inside the call history for the location and limit access to the people who need them. Do not spread them across personal phones or shared random folders. Use them for order accuracy, complaints, reservation details, and staff follow-up."
+    },
+    {
+      "q": "Can I use a recording instead of taking card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone, and payment happens at pickup or however your restaurant already takes it. That is better for privacy and keeps payment handling in your normal process."
+    }
+  ],
+  "words": 1216,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

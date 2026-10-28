@@ -1,0 +1,124 @@
+{
+  "slug": "wings",
+  "label": "Wing shops",
+  "h1": "An AI phone host for wing shops",
+  "seoTitle": "AI phone answering for wing shops | ROAL",
+  "description": "ROAL answers wing shop calls, takes pickup orders, shares hours and menu details, and sends clean tickets to the kitchen screen.",
+  "lead": "Busy Friday nights bring a lot of wing calls. ROAL answers, takes pickup orders, and handles common questions while your counter and kitchen stay focused.",
+  "question": "Can an AI phone host take wing shop phone orders without slowing down the kitchen?",
+  "answer": "Yes. ROAL answers calls for wing shops, takes pickup orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common wing-shop calls like 20-piece and 50-piece orders, sauce choices, ranch or blue cheese, extra crispy wings, fries, boneless wings, and questions about hours or parking. It does not take card numbers over the phone.",
+  "pains": [
+    {
+      "title": "Friday night calls pile up fast",
+      "body": "A wing shop can get a burst of calls when the dinner rush hits. If your counter is packed, people call again and again for pickup orders, and missed calls can turn into lost tickets."
+    },
+    {
+      "title": "Order details are easy to miss",
+      "body": "Wing orders often need careful notes: mild, hot, lemon pepper, garlic parm, extra crispy, no celery, extra ranch. When the line is loud, one missed detail can mean a remake."
+    },
+    {
+      "title": "Your staff should keep serving in the shop",
+      "body": "Owners do not want the fryer, prep table, and front counter tied up by the phone. The phone host can handle routine calls while your team keeps moving."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes pickup orders from the live menu",
+      "body": "ROAL can take common wing shop orders like 10 wings, 20 wings, 50 wings, boneless wings, fries, and drinks. It confirms sizes, sauces, and notes, then sends the ticket to the kitchen screen."
+    },
+    {
+      "title": "Answers the questions that come in all day",
+      "body": "Callers often ask about hours, address, parking, and what sauces are available. ROAL answers those from your menu and public business info, so your team is interrupted less often."
+    },
+    {
+      "title": "Helps during the rush and after hours",
+      "body": "You can forward all calls, or only busy and unanswered calls. That means the phone can still be handled when the counter is slammed or after closing."
+    },
+    {
+      "title": "Keeps the handoff simple for staff",
+      "body": "If a caller asks about a complaint, allergy-sensitive question, or manager request, ROAL passes it to staff with a summary. Questions it cannot answer go to your inbox so you can teach it once."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Can I get 20 wings, half lemon pepper and half hot, extra crispy. And a side of fries."
+    },
+    {
+      "who": "host",
+      "line": "Sure. Any ranch or blue cheese?"
+    },
+    {
+      "who": "caller",
+      "line": "Blue cheese, and no celery please. Name is Marcus."
+    },
+    {
+      "who": "host",
+      "line": "Got it: 20 wings, half lemon pepper and half hot, extra crispy, one fries, blue cheese, no celery. Pickup under Marcus. I have it ready in about 20 minutes."
+    },
+    {
+      "who": "caller",
+      "line": "That works."
+    },
+    {
+      "who": "host",
+      "line": "Great. Your pickup order is set."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 8:10 pm",
+    "lines": [
+      "20 wings",
+      "Half lemon pepper, half hot",
+      "Extra crispy",
+      "1 fries",
+      "Blue cheese",
+      "No celery · Name: Marcus"
+    ],
+    "note": "Ready in about 20 minutes."
+  },
+  "sections": [
+    {
+      "h2": "A better phone setup for a wing rush",
+      "body": "Wing shops get the same kinds of calls over and over. People want pickup orders, sauce choices, and a quick ready time. They also call while driving, while standing in line, or while debating whether to get 10 wings or 20. ROAL is made for that kind of day. It answers in a warm voice, takes the order, and sends a clear ticket to the kitchen screen.\n\nIf you are new to tech, the setup is simple. Paste your website, Google Maps link, or name and city at /try. ROAL reads your public menu, hours, and address. You can test-call it in the browser before you go live. Then you forward your existing number when you are ready. You keep your number, and you can turn forwarding off any time.\n\nFor a wing shop, the best menu setup is clear and plain. Use the items people actually say on the phone: 10 wings, 20 wings, 50 wings, boneless wings, fries, drinks, and common sauce names. That helps the host take orders quickly and cleanly."
+    },
+    {
+      "h2": "What to include on your menu for phone orders",
+      "body": "The phone host works best when your menu is easy to read. For a wing shop, that usually means sizes, sauces, and add-ons that callers ask for every day. Think about common notes like extra crispy, no celery, extra ranch, split sauces, and mild versus hot. If you sell combo meals, keep those listed too.\n\nIt also helps to keep sold-out items updated. If boneless wings run out, ROAL will not offer them. That saves back-and-forth during a rush. You can also add hours, address details, and parking notes so callers do not have to wait for a staff member to answer simple questions.\n\nIf a caller asks something unusual, ROAL sends it to your inbox. You answer once, and the host knows it from then on. That can be useful for local wing shops that get repeat questions from the same neighborhood every week."
+    },
+    {
+      "h2": "A simple way to think about cost during busy nights",
+      "body": "Wing shops often compare three ways to handle calls: staff at the phone, a human answering service, or a phone host. Staff time can get expensive when the rush hits. Human answering services often bill by the minute or by the call. Many monthly AI phone products charge a fixed fee even when calls are light.\n\nROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, and no per-minute fee. Calls, questions, and test calls are free. That can make it easier to try the system on real wing-shop calls without paying for quiet days.\n\nIf you want to see how forwarding would work on your line, check your carrier’s settings and test with a call. Codes vary by carrier and plan, so it is always smart to confirm first."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take special wing orders like extra crispy or split sauces?",
+      "a": "Yes. ROAL can take items, sizes, modifiers, and notes from your live menu. That includes details like extra crispy, half mild and half hot, no celery, and extra ranch or blue cheese."
+    },
+    {
+      "q": "Will it handle pickup orders during a Friday dinner rush?",
+      "a": "That is one of the main use cases. You can forward all calls, or only busy and unanswered calls, so the phone host can help when the counter is packed."
+    },
+    {
+      "q": "Does it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "Can it answer questions about hours and parking?",
+      "a": "Yes. ROAL can answer common questions about hours, address, parking, and the menu using your public business information and menu pages."
+    },
+    {
+      "q": "How do I start if I am not technical?",
+      "a": "Go to /try and paste your restaurant website, Google Maps link, or just your name and city. ROAL builds a test phone host in about a minute, and you can try it in the browser before you claim it."
+    }
+  ]
+}

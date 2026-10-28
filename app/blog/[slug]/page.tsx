@@ -7,6 +7,10 @@ import {
 } from "@/lib/blog";
 import { buildBlogArticleMetadata } from "@/lib/blog/metadata";
 
+// Scheduled posts go live on their publish day without a deploy.
+export const revalidate = 3600;
+export const dynamicParams = true;
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };

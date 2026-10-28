@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-host-transfer-to-staff",
+  "keyword": "ai phone transfer to human",
+  "category": "ai-basics",
+  "title": "Transferring AI calls to staff in restaurants",
+  "seoTitle": "AI phone transfer to a person for restaurants | ROAL",
+  "description": "Handle AI call transfers to staff when a caller needs a person, and keep restaurant calls moving without losing orders or details.",
+  "question": "How do I set up an ai phone transfer to human for my restaurant calls?",
+  "answer": "Set clear transfer rules for calls your staff should handle, like catering, complaints, allergy-sensitive questions, and manager requests. With ROAL, those calls can be handed to staff with a short summary, while routine orders, hours, and menu questions stay with the AI phone host.",
+  "summary": "You will know when to transfer a call, what to say, and how to set forwarding up at your restaurant.",
+  "intro": "An AI phone transfer to human should happen when the call needs a person, not when the caller just needs a quick answer. For a restaurant, that usually means catering, complaints, allergy questions, or anything your staff should review live.\n\nThe goal is simple: let the AI phone host handle the easy calls, then pass the hard ones to a person with enough context to help fast. That keeps the line moving and keeps your team out of repeated phone tag.",
+  "sections": [
+    {
+      "id": "which-calls-should-move-from-ai-to-a-person",
+      "h2": "Which calls should move from AI to a person?",
+      "body": "The best transfer rules are the ones that protect the order and protect the guest. In a restaurant, the AI phone host can usually handle pickup and delivery orders, hours, address, parking, and menu questions. It should hand off the rest.\n\nA practical transfer list looks like this:\n- Catering requests\n- Complaints or refunds\n- Allergy-sensitive questions\n- Manager requests\n- Anything the host could not answer from your live menu or FAQs\n\nA simple script helps staff know what happened. For example: \"I’m going to connect you with the restaurant team now.\" If the call is being handed off, ROAL can send a summary so the person picking up already knows what the caller wanted.\n\nThis matters most during rush periods. A caller asking, \"Can you do a tray for 20 by 6 p.m.?\" should not get stuck repeating details twice. Let the phone host collect the basics, then move the call to someone who can confirm the details and make a real decision."
+    },
+    {
+      "id": "what-should-the-handoff-sound-like-to-the-caller",
+      "h2": "What should the handoff sound like to the caller?",
+      "body": "A smooth handoff sounds calm, short, and confident. You do not need a long explanation. The caller just needs to know they are being connected and that someone has their details.\n\nUse a line like this: \"I’m sending this to the restaurant team now, and they’ll see your order details.\" If the caller is frustrated, keep the tone even more direct: \"I’m getting a person to help with this right away.\"\n\nA good handoff has three parts:\n1. Say why the transfer is happening.\n2. Confirm that the important details are already captured.\n3. Tell the caller what happens next.\n\nFor example, if someone asks about a shellfish allergy, the AI phone host should not guess. It should hand that to staff with a note. The staff member can then answer clearly and safely. The same goes for refunds, missing items, or a delivery issue.\n\nIf you use ROAL, the owner can choose the host’s voice and name, and questions it cannot answer go to an inbox. Once you answer them once, the host knows it from then on."
+    },
+    {
+      "id": "how-do-i-forward-my-restaurant-number-to-the-right-place",
+      "h2": "How do I forward my restaurant number to the right place?",
+      "body": "There are a few common ways restaurants forward calls, but the exact code depends on the carrier or phone system. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On many GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding.\n\nBusiness VoIP systems usually set forwarding in the web portal. The safest move is to confirm the exact code with your carrier or phone provider and then test it with a real call.\n\nUse this quick setup checklist:\n- Decide whether to forward all calls or only busy/unanswered calls\n- Confirm the forwarding code with your carrier\n- Test from an outside phone\n- Listen to the greeting and make sure the transfer works\n- Turn forwarding off when you want calls to return to the original line\n\nWith ROAL, the restaurant keeps its own number. The owner forwards the existing number to the AI phone host line, and forwarding can be turned off any time."
+    },
+    {
+      "id": "what-details-should-the-ai-collect-before-handing-off",
+      "h2": "What details should the AI collect before handing off?",
+      "body": "Before a transfer, the AI phone host should collect the information your staff needs to help quickly. That way the person answering is not starting from zero.\n\nFor a restaurant call, that usually means:\n- Caller name\n- Callback phone number\n- Order details or reason for the call\n- Requested time\n- Any special notes\n\nIf it is an order, the host should also capture items, sizes, modifiers, and notes. If it is a reservation request, it should capture the party size and time. If it is a problem call, it should capture the issue and what the guest wants fixed.\n\nHere is a simple example you can swap for your own numbers: say your average pickup order is $28 and you get 8 call orders on a busy night. If even 2 calls need a human handoff, the staff member only needs to handle the tricky ones, not every basic question. That keeps the front counter from getting buried.\n\nA clean transfer note might read: \"Caller: Maria. Wants a catering quote for 18 people, Friday at 5 p.m. Asked for gluten-free options.\" That is much better than a bare phone ring with no context."
+    },
+    {
+      "id": "how-should-staff-handle-the-transferred-call",
+      "h2": "How should staff handle the transferred call?",
+      "body": "Once the call lands with a person, the goal is to finish the job fast. Staff should not restart the whole conversation unless they need to verify something important.\n\nUse a simple internal script:\n\"I have your details here. Let me confirm what you need.\"\n\nThen work from the summary the AI phone host sent. If the caller already gave the order, repeat it back once and confirm any missing piece. If it is a complaint, acknowledge the issue first, then ask one short follow-up question. If it is a catering request, confirm timing, quantity, and pickup or delivery needs.\n\nA short staff checklist can keep this tight:\n- Read the summary first\n- Confirm name and number\n- Resolve the issue or take the order\n- Repeat key details back to the caller\n- End with the next step and timing\n\nROAL’s dashboard keeps call history, transcripts, and recordings in one place, so the owner can review what happened later. That is helpful when a handoff needs a second look or when a new FAQ should be added so the next call does not need a transfer."
+    },
+    {
+      "id": "what-should-you-watch-after-you-start-transferring-calls",
+      "h2": "What should you watch after you start transferring calls?",
+      "body": "The first week after setting up transfers is the best time to tune the rules. Listen for patterns. Are allergy questions always getting sent to staff? Good. Are simple menu questions being transferred by mistake? That needs a fix.\n\nCheck these items every few days:\n- Were the right calls handed to staff?\n- Did the caller get a clear explanation?\n- Did staff have enough context?\n- Were any common questions left unanswered?\n- Did the phone number forwarding work as expected?\n\nIf you notice the same question coming up again and again, add it to your FAQ list so the host can answer it next time. If a caller asks about a sold-out item, make sure that item is marked sold out so it is not offered. If the question is beyond what the host can answer, send it to staff once, then teach the system from the reply.\n\nFor owners comparing tools, [How it works](/how-it-works) is a good place to see the setup flow, and [Questions owners ask](/faq) covers the common operational details. When you are ready to try it, you can [Build a free test host](/try) from your website or Google Maps link and call it in the browser before you go live."
+    }
+  ],
+  "takeaways": [
+    "Transfer only the calls your staff really needs to handle, like catering, complaints, allergies, and manager requests.",
+    "Make the handoff short and clear so the caller knows a person is taking over.",
+    "Have the AI collect name, phone, order details, and timing before the transfer.",
+    "Confirm forwarding with your carrier or phone system and test it with a real call.",
+    "Review transcripts after the first week so you can tighten the rules and answers."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host transfer calls to a real person?",
+      "a": "Yes. For a restaurant, the AI phone host can hand off calls that need staff attention, such as catering, complaints, allergy-sensitive questions, and manager requests. The key is to set clear transfer rules so routine calls stay with the host and the important ones reach a person with context."
+    },
+    {
+      "q": "What should be transferred instead of answered by AI?",
+      "a": "Anything that needs human judgment should usually go to staff. That includes refund requests, complex catering orders, allergy concerns, complaints, and manager requests. Routine menu, hours, address, parking, and pickup order questions can usually stay with the AI phone host."
+    },
+    {
+      "q": "How do I forward my restaurant phone number?",
+      "a": "Many carriers and phone systems support call forwarding codes or a portal setting, but the exact method depends on your provider. On many lines, *72 starts forwarding and *73 stops it; some mobile carriers use different codes. Always confirm with your carrier and test with a real call before relying on it."
+    },
+    {
+      "q": "Will the caller have to repeat the order after the transfer?",
+      "a": "They should not have to repeat everything. A good AI phone host collects the caller’s name, phone number, order details, and timing before handing off the call. That way the person answering can start from the summary instead of asking the caller to begin again."
+    }
+  ],
+  "words": 1203,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

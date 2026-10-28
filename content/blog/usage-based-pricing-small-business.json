@@ -1,0 +1,77 @@
+{
+  "slug": "usage-based-pricing-small-business",
+  "keyword": "usage based pricing small business",
+  "category": "pricing",
+  "title": "Usage-based pricing for small businesses",
+  "seoTitle": "Usage-based pricing for small business | ROAL",
+  "description": "See what usage-based pricing means for small business owners, how it compares with monthly plans, and when it can help lower costs.",
+  "question": "What does usage based pricing mean for a small restaurant, and is it better than a monthly fee?",
+  "answer": "Usage-based pricing means you pay only when you actually use the service, instead of paying the same fixed fee every month. For a small restaurant, that can be easier to match to real call volume, order volume, or minutes used—so slow weeks cost less and busy weeks cost more.",
+  "summary": "You’ll be able to compare usage pricing with fixed monthly fees and decide what fits your restaurant.",
+  "intro": "Usage-based pricing for a small business means the bill changes with usage instead of staying flat every month. For a restaurant, that can mean paying per completed phone order, per minute, or per call, depending on the service.\n\nThat matters because a pizza shop, deli, or family restaurant can have a slow Tuesday and a packed Friday. With ROAL, the pricing is $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.",
+  "sections": [
+    {
+      "id": "what-does-usage-based-pricing-mean-for-a-restaurant",
+      "h2": "What does usage-based pricing mean for a restaurant?",
+      "body": "Usage-based pricing ties the bill to actual activity. In restaurant terms, that usually means you pay when the phone host does real work, such as taking a completed pickup order that reaches the kitchen screen. If nothing comes in, the bill stays light.\n\nThat is different from flat pricing, where you pay the same amount whether the phone rings five times or fifty. Many AI phone tools for restaurants charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in. Human answering services often bill per minute or per call.\n\nA simple way to think about it:\n- Flat fee: you pay for access.\n- Usage fee: you pay for completed work.\n- Per-minute fee: you pay for talk time.\n- Per-order fee: you pay when an order is actually completed.\n\nFor a restaurant owner, the big question is not only “what is the rate?” It is “what do I pay in a slow month, and what do I pay when the phone is busy?”"
+    },
+    {
+      "id": "how-do-you-compare-per-order-pricing-with-a-monthly-plan",
+      "h2": "How do you compare per-order pricing with a monthly plan?",
+      "body": "Start with a real month from your own shop. Count how many phone orders you usually complete, then compare the total to a flat monthly plan. Say you complete 120 phone orders in a month. At $0.90 per completed order, the usage bill would be $108. Plug in your own number and do the same math.\n\nHere is a quick comparison using example numbers you can swap:\n\n| Model | Example math | Monthly cost |\n| --- | --- | --- |\n| Per-order usage | 120 completed orders × $0.90 | $108 |\n| Flat monthly plan | One fixed fee | Whatever the plan charges |\n\nIf your shop has uneven traffic, usage pricing can feel fairer. If you have very high call volume every month, a flat plan may look simpler on paper. But with usage pricing, you are not paying for idle time, unused capacity, or a slow week.\n\nROAL uses per-order pricing, so the cost follows actual completed phone orders rather than a fixed monthly seat or location fee. If you want more detail on the math, see [Pay per order vs monthly AI phone plans](/blog/per-minute-vs-per-order-pricing)."
+    },
+    {
+      "id": "what-should-a-small-business-watch-for-in-the-fine-print",
+      "h2": "What should a small business watch for in the fine print?",
+      "body": "Usage-based pricing is simple only if the billable event is clear. For restaurants, you want to know exactly what counts as a charged order and what does not. That is why it helps to ask for a plain definition before you sign anything.\n\nUse this checklist:\n- What event triggers billing?\n- Are test calls free?\n- Are questions, wrong numbers, and hang-ups charged?\n- Are there setup fees or monthly fees?\n- Is there a contract?\n- Does the price change by location or by channel?\n\nFor ROAL, a completed phone order means a confirmed order whose ticket reached the kitchen screen. Calls, questions, and test calls are unlimited and free. That matters because a lot of restaurant calls are not orders. People ask for hours, address, parking, ingredients, or a callback from the manager.\n\nA practical owner script for any vendor call is: “Please tell me what counts as a billable event, what is free, and what the total would be in a slow month.” Keep that answer in writing. For a deeper checklist, see [Hidden fees to look for in restaurant software](/blog/hidden-fees-restaurant-software)."
+    },
+    {
+      "id": "when-does-usage-pricing-make-the-most-sense-for-a-restaurant",
+      "h2": "When does usage pricing make the most sense for a restaurant?",
+      "body": "Usage pricing tends to fit restaurants with changing phone volume. That includes lunch rushes, weekend spikes, holiday rushes, and seasonal spots. It can also fit owners who want a simple setup without paying a fixed fee when business is light.\n\nA few examples:\n- A deli with uneven lunch traffic.\n- A family restaurant with busy Friday nights.\n- A pizza shop that gets many order calls after school and after sports games.\n- A small takeout spot that wants backup when staff are tied up.\n\nIt also helps when you want to keep costs tied to revenue-generating work. If the phone host handles an actual order, that order is usually tied to sales. If the service only answers questions, the cost should not feel like wasted overhead.\n\nA good owner test is this: “If I had a slow Tuesday and a packed Saturday, would I still feel okay with the bill?” If the answer is yes, usage pricing may fit. If your monthly phone volume is extremely steady and high, a fixed plan may be easier to predict. Either way, compare the total cost to what you already spend on missed calls, staff time, or delivery apps."
+    },
+    {
+      "id": "how-do-you-set-up-call-forwarding-without-making-it-complica",
+      "h2": "How do you set up call forwarding without making it complicated?",
+      "body": "Usage pricing works best when calls actually reach the phone host. That means forwarding your restaurant number the right way and testing it before you turn anything on for real customers.\n\nA simple setup plan:\n1. Pick where calls should go when busy or unanswered.\n2. Check your carrier or phone system for the correct forwarding code.\n3. Forward a test call first, then call your own restaurant number.\n4. Confirm the call lands where you expect.\n5. Turn forwarding off when you want to stop it.\n\nCodes vary by carrier and plan, so always confirm with your carrier and test with a call. On many landlines and some carriers, *72 forwards calls and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off, while **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nROAL gives each location its own phone line automatically after the owner claims the host, and the restaurant keeps its existing number. That makes it easier to forward calls without changing the number regular customers already know."
+    },
+    {
+      "id": "what-does-the-real-monthly-math-look-like-for-a-small-shop",
+      "h2": "What does the real monthly math look like for a small shop?",
+      "body": "The easiest way to judge usage pricing is to run your own numbers. Use one month of actual calls, then plug them into the formula.\n\nExample math:\n- Say your shop completes 80 phone orders in a slow month.\n- At $0.90 per completed order, the bill would be $72.\n- Say your shop completes 200 phone orders in a busy month.\n- At $0.90 per completed order, the bill would be $180.\n\nNow compare that with a fixed monthly fee. Many AI phone tools for restaurants charge a flat monthly amount per location, often around $79 to $599. A human answering service may charge by the minute or by the call. Delivery apps commonly take roughly 15% to 30% per order, which is a very different kind of cost.\n\nHere is a simple owner worksheet:\n- Slow month orders: ___ × your per-order rate = ___\n- Busy month orders: ___ × your per-order rate = ___\n- Flat plan quoted by vendor: ___\n- Your current phone labor or missed-call cost: ___\n\nROAL’s pricing is designed to stay simple: $0.90 per completed phone order, billed monthly, with no setup fee, no monthly fee, no per-minute fee, and no contract. Questions and test calls stay free."
+    },
+    {
+      "id": "what-should-you-ask-before-you-try-a-usage-based-phone-host",
+      "h2": "What should you ask before you try a usage-based phone host?",
+      "body": "Before you make a switch, ask the questions that affect your actual day-to-day work. The right answers should be plain and specific, not vague.\n\nAsk these five:\n- What counts as a completed order?\n- Are questions and test calls free?\n- Is there a monthly minimum?\n- Can I turn call forwarding on and off anytime?\n- What happens when the phone host cannot answer something?\n\nFor ROAL, tricky calls go to staff with a summary, so your team can handle catering, complaints, allergy-sensitive questions, and manager requests. The host also learns answers to unanswered questions from the inbox, so the next caller gets a better answer.\n\nIf you want a practical starting point, build a test host from your website, menu, or Google Maps listing, then call it from your own phone and see how it handles real restaurant questions. [Build a free test host](/try).\n\nOne last owner note: usage-based pricing is easiest to trust when the vendor can explain the bill in one sentence. If they cannot, ask them to rewrite it in plain English before you commit."
+    }
+  ],
+  "takeaways": [
+    "Usage-based pricing means you pay for real activity, not idle time.",
+    "For restaurants, per-order pricing is often easier to match to sales than a fixed monthly fee.",
+    "Always check what counts as a billable event before you sign anything.",
+    "Run your own month-by-month math using your actual phone order volume.",
+    "ROAL charges $0.90 per completed phone order, with calls and questions free."
+  ],
+  "faq": [
+    {
+      "q": "Is usage-based pricing cheaper for a small restaurant?",
+      "a": "It can be, especially if your phone volume is uneven or your slow months are really slow. The only safe way to know is to compare your real order count against the vendor’s flat monthly price. If your volume swings a lot, usage pricing often feels fairer because the bill follows actual work."
+    },
+    {
+      "q": "What counts as a completed order with ROAL?",
+      "a": "A completed order is a confirmed phone order whose ticket reached the kitchen screen. That means the call turned into a real order, not just a question or a test call. Questions and test calls are free."
+    },
+    {
+      "q": "Do I pay anything when no orders come in?",
+      "a": "With ROAL, there is no monthly fee, no setup fee, and no per-minute fee. If no completed orders come in, there is no order-based charge. Calls, questions, and test calls remain unlimited and free."
+    },
+    {
+      "q": "How do I forward my restaurant number to the phone host?",
+      "a": "You usually forward calls through your carrier or phone system, then test it with a real call. Some carriers use codes like *72, *73, or mobile carrier codes such as **21*number# and ##21#, but these vary by carrier and plan. Always confirm with your carrier and test before relying on it."
+    }
+  ],
+  "words": 1424,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

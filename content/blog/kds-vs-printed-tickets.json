@@ -1,0 +1,76 @@
+{
+  "slug": "kds-vs-printed-tickets",
+  "keyword": "kds vs printer restaurant",
+  "category": "operations",
+  "title": "Kitchen display system vs printed tickets",
+  "seoTitle": "Kitchen display system vs printed tickets",
+  "description": "Compare speed, accuracy, setup, and daily workflow to choose between a kitchen display system and printed tickets for takeout service.",
+  "question": "For my kds vs printer restaurant setup, should I use a kitchen screen or printed tickets?",
+  "answer": "A kitchen screen is usually better if you want cleaner ticket flow, easier status tracking, and less paper handling. Printed tickets can still work well in some kitchens, especially where cooks prefer paper or the line layout is simple. The right choice depends on your staff, your station setup, and how you want orders to move from the phone to the kitchen.",
+  "summary": "Compare kitchen screens and printed tickets so you can choose the setup that fits your kitchen and phone order flow.",
+  "intro": "A kitchen screen is usually the better fit for a busy takeout restaurant that takes a lot of phone orders. Printed tickets can still work, but they add paper, clutter, and one more thing to keep stocked.\n\nFor a kds vs printer restaurant setup, the best choice is the one your kitchen will use without friction. If you want a simple way to send clean phone orders straight to the line, ROAL sends a ticket to the kitchen screen after it confirms the order.",
+  "sections": [
+    {
+      "id": "which-one-fits-your-kitchen-line-best",
+      "h2": "Which one fits your kitchen line best?",
+      "body": "The real question is not “screen or printer” in the abstract. It is: how does your team actually cook, pack, and hand off orders during a rush?\n\nUse this quick check:\n- Pick a kitchen screen if you want live order status, fewer paper piles, and one place to see new, preparing, and ready tickets.\n- Pick printed tickets if your cooks already work best with paper at each station and do not want to look up at a screen.\n- Pick the system that is easiest to read from 5 feet away during a Friday night rush.\n\nExample: if your expo person is calling out 12 pickup orders an hour, a screen can help them sort what is new, what is in progress, and what is ready. If your grill and fry stations are separate and each station likes its own slip, paper may feel familiar. The best setup is the one your team will follow every day, not just on a slow Tuesday."
+    },
+    {
+      "id": "what-changes-when-phone-orders-hit-the-kitchen",
+      "h2": "What changes when phone orders hit the kitchen?",
+      "body": "Phone orders are different from walk-ins because they need to be captured, confirmed, and sent fast. ROAL takes the call, repeats the order back, quotes a ready time, and sends a clean ticket to the kitchen screen.\n\nThat matters because mistakes usually happen in the handoff. A messy handwritten ticket can lead to missing modifiers, wrong sizes, or a name that is hard to read. A screen can reduce that friction by keeping the ticket clean and in order.\n\nA simple call flow looks like this:\n1. Caller says what they want.\n2. The host confirms items, sizes, modifiers, and notes.\n3. The host collects the name and phone number.\n4. The host quotes a ready time.\n5. The ticket lands in the kitchen screen.\n\nIf you prefer paper, you can still use a printer for parts of the line. But if you want the cleanest path from phone to prep, screen-based ticketing usually makes the handoff easier."
+    },
+    {
+      "id": "where-do-printed-tickets-still-work-well",
+      "h2": "Where do printed tickets still work well?",
+      "body": "Printed tickets are not outdated. They are still practical in many restaurants, especially smaller shops and kitchens that are built around paper.\n\nPrinted tickets can be a good fit when:\n- Your kitchen is small and everyone can grab slips quickly.\n- You have stations that want their own paper copy.\n- Your staff is used to paper and does not want a screen in the way.\n- You want a backup format for times when screens are being serviced.\n\nA simple paper workflow can look like this:\n- Front counter prints the order.\n- Expo sorts by station.\n- Each cook keeps the slip at the station.\n- Finished tickets go in a completed stack.\n\nIf your team already works smoothly that way, there is no reason to force a change. The point is not to be modern for its own sake. The point is to make the order easy to cook correctly and fast."
+    },
+    {
+      "id": "how-do-the-costs-compare-for-a-small-restaurant",
+      "h2": "How do the costs compare for a small restaurant?",
+      "body": "The hardware and labor picture is where many owners make the decision. Screens can cost more up front, while printers can seem cheaper at first but use paper and need upkeep. The bigger cost is usually mistakes, re-fires, and time spent sorting tickets.\n\nUse this simple example and plug in your own numbers:\n- Say your average phone order is $28.\n- Say you get 20 confirmed phone orders a day.\n- That is $560 in daily phone sales.\n\nNow ask which system helps your staff keep those orders clean and moving. A screen can reduce the time spent reading and re-reading slips. A printer can be fine if paper flow is already part of your kitchen routine.\n\nROAL bills $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. If you want to compare costs side by side, you can also use the [AI phone host cost calculator](/tools/phone-host-cost-calculator) and the [monthly AI phone plans comparison](/compare/monthly-ai-phone-plans)."
+    },
+    {
+      "id": "how-do-you-set-up-call-forwarding-without-making-a-mess",
+      "h2": "How do you set up call forwarding without making a mess?",
+      "body": "If you are moving phone orders to an AI phone host, forwarding matters. The setup should be simple: the restaurant keeps its existing number, and calls route to the host when you want them to.\n\nA practical setup checklist:\n- Decide whether to forward all calls, only busy calls, or only unanswered calls.\n- Confirm the code with your carrier or phone system.\n- Test with one real call before you turn it on for the day.\n- Make sure staff knows how to turn forwarding off if needed.\n\nCodes vary by carrier and plan. On many landlines and some carriers, *72 followed by the forwarding number forwards all calls and *73 turns it off. On many GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless often uses *72, *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set this in the web portal. Always confirm with your carrier and test with a call."
+    },
+    {
+      "id": "what-should-you-do-if-your-kitchen-still-wants-paper",
+      "h2": "What should you do if your kitchen still wants paper?",
+      "body": "You do not have to force one answer for every restaurant. Some owners use a screen for live order tracking and still keep a printer nearby for certain stations or backups.\n\nA simple decision table can help:\n\n| Kitchen need | Better fit |\n|---|---|\n| Wants live status for new, preparing, ready | Kitchen screen |\n| Wants station-by-station paper slips | Printed tickets |\n| Needs the cleanest phone-to-kitchen handoff | Kitchen screen |\n| Has cooks who rely on paper habits | Printed tickets |\n| Wants less paper handling | Kitchen screen |\n\nIf you want to compare the phone side too, the [phone orders and your POS](/blog/restaurant-pos-phone-orders) post is a good companion read. And if your team is short-staffed, ROAL can answer the phone, take pickup and delivery orders, and send the ticket to the kitchen screen while staff stays on food and service."
+    },
+    {
+      "id": "what-is-the-simplest-way-to-test-this-in-your-own-restaurant",
+      "h2": "What is the simplest way to test this in your own restaurant?",
+      "body": "Do not start with a full change. Start with one shift, one menu, and one clear rule: does the kitchen prefer to read a screen or paper when the phone is ringing?\n\nTry this 3-step test:\n1. Run the same type of order through both setups.\n2. Time how long it takes from order taken to kitchen action.\n3. Ask the cook which version was easier to read and less likely to be missed.\n\nUse a real example like: one plain pizza, one modifier-heavy sandwich, and one pickup order with a note. Compare how each ticket looks on screen and on paper.\n\nIf you want to see how a live phone host fits this flow, [build a free test host](/try) from your website or menu. ROAL reads your public menu and hours, lets you test-call it in the browser, and sends the confirmed order to the kitchen screen."
+    }
+  ],
+  "takeaways": [
+    "Choose the format your kitchen will actually use during the rush, not the one that sounds newest.",
+    "Kitchen screens help with live status and cleaner order flow; printed tickets help when paper habits already work.",
+    "For phone orders, the biggest win is a clean handoff from caller to kitchen, not more steps.",
+    "Forward calls carefully, test the setup, and keep your existing number when you go live with an AI phone host."
+  ],
+  "faq": [
+    {
+      "q": "Is a kitchen screen better than printed tickets for a pizza shop?",
+      "a": "Often yes, especially if you take a lot of phone orders and need to track new, preparing, and ready tickets in one place. Printed tickets can still work if your cooks are used to paper and your station layout depends on slips. The better choice is the one that makes your line faster and less error-prone."
+    },
+    {
+      "q": "Can I use both a kitchen screen and printed tickets?",
+      "a": "Yes. Many restaurants use a screen for the main order flow and paper for a station or backup. That can be a practical setup if your team is used to paper but you still want cleaner live tracking."
+    },
+    {
+      "q": "Will ROAL print tickets for the kitchen?",
+      "a": "ROAL sends a clean ticket to the kitchen screen. It also keeps live ticket status in the dashboard so you can see what is new, preparing, and ready. It does not take card numbers over the phone; payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "q": "How much does ROAL cost for phone orders?",
+      "a": "ROAL costs $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, billed monthly."
+    }
+  ],
+  "words": 1204,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

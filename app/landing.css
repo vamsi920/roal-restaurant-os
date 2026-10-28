@@ -2332,8 +2332,13 @@
 }
 @media (min-width: 768px) {
   .site-footer__grid {
-    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.5rem;
+  }
+}
+@media (min-width: 1100px) {
+  .site-footer__grid {
+    grid-template-columns: minmax(0, 1.4fr) repeat(5, minmax(0, 1fr));
   }
   .site-footer__brand {
     grid-column: auto;

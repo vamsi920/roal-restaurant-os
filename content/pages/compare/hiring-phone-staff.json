@@ -1,0 +1,166 @@
+{
+  "slug": "hiring-phone-staff",
+  "label": "AI phone host vs hiring phone staff",
+  "h1": "AI phone host vs hiring phone staff",
+  "seoTitle": "AI phone host vs hiring phone staff | ROAL",
+  "description": "Compare ROAL with hiring phone staff for restaurant calls, pickup orders, and rush-hour coverage. See cost, setup, control, and when people are still better.",
+  "lead": "If your phone rings during lunch, dinner, and after-hours, you have two common choices: hire phone staff, or use an AI phone host like ROAL. This page compares both in plain terms, including where hiring a person is still the better fit.",
+  "question": "Should I use an AI phone host or hire phone staff for my restaurant?",
+  "answer": "ROAL is usually better if you want lower fixed cost, quick setup, and help covering missed calls, pickup orders, and basic menu questions. Hiring phone staff can be the better choice if you need a person on site who can handle unusual situations, read the room, or do many tasks beyond the phone. The right choice depends on your call volume, your menu, and how much control you want over each call.",
+  "pains": [
+    {
+      "title": "Phone staff add fixed payroll cost",
+      "body": "A hired caller or host needs hourly pay, training, and coverage for breaks, slow shifts, and call-outs. If Friday is busy and Tuesday is quiet, you still carry that cost."
+    },
+    {
+      "title": "Missed calls pile up in rush moments",
+      "body": "A small counter team can miss calls when they are boxing fries, checking a name on a pickup order, or handling a delivery driver at the door. That is when repeat calls and lost orders often happen."
+    },
+    {
+      "title": "Not every call needs a person",
+      "body": "Many calls are simple: \"What time do you close?\" \"Do you have chicken parm?\" \"Can I place a large pepperoni for pickup?\" Paying a person to answer every one can be more than you need."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Pay only for completed orders",
+      "body": "ROAL costs $0.90 per completed phone order. That means you are not paying a monthly fee just to keep the line open, and test calls and questions are unlimited and free."
+    },
+    {
+      "title": "Covers the phone when the front counter is slammed",
+      "body": "On a Friday dinner rush, the host can answer while your team plates pasta, bags wings, or runs sandwiches to the pass. It can take pickup and delivery orders from the live menu and send a clean ticket to the kitchen screen."
+    },
+    {
+      "title": "Keeps the call simple for common tasks",
+      "body": "ROAL can answer hours, address, parking, menu questions, and reservation requests. It can also pass allergy-sensitive questions, complaints, and manager requests to staff with a short summary."
+    },
+    {
+      "title": "Still lets you keep control",
+      "body": "You can forward all calls, or only busy and unanswered calls, and turn forwarding off any time. If a question is not known yet, it goes to your inbox once, and the host learns it from then on."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One large pepperoni pizza, extra well done, and a Caesar salad with dressing on the side."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One large pepperoni pizza, extra well done, and one Caesar salad with dressing on the side. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. The name is Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. I have your order for pickup in about 20 minutes. I’ll read it back: one large pepperoni pizza, extra well done, and one Caesar salad with dressing on the side. Is that correct?"
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "1x Large Pepperoni Pizza",
+      "- Extra well done",
+      "1x Caesar Salad",
+      "- Dressing on the side",
+      "Name: Maria"
+    ],
+    "note": "Confirm ready time before boxing."
+  },
+  "sections": [
+    {
+      "h2": "When ROAL is the better choice",
+      "body": "ROAL makes sense when the phone is a constant drain on the team. Think of a pizza shop on a Friday night, a burger joint with one person on the grill and one at the register, or a Chinese takeout spot where the same call questions repeat all day: \"What are your hours?\" \"Do you have sesame chicken?\" \"Can I add extra broccoli?\" ROAL can answer those calls, take the order, and send a ticket to the kitchen without asking you to hire and schedule another person.\n\nIt is also useful if you want a simple cost model. Instead of paying a fixed hourly wage for quiet periods, ROAL charges only for completed phone orders. That can be helpful for restaurants where call volume changes a lot by daypart, weather, or holiday season. You also keep your existing number and can forward all calls or only the ones you miss."
+    },
+    {
+      "h2": "When hiring phone staff is the better choice",
+      "body": "A person is still the better choice when your front of house needs judgment that goes beyond the phone. For example, a manager might need someone to help with a huge catering request, handle a upset customer who is escalating, or decide how to work around a one-off kitchen problem that is not on a script. A trained employee can also do other work when the phone is quiet, like helping with bags, checking pickup names, or wiping tables.\n\nSome owners simply want a human voice they know well, especially in a dining room-heavy restaurant. If you already have a strong front desk team and call volume is modest, adding one more person can be the smoother path. The tradeoff is that people cost more to keep on schedule, even when the phone is slow."
+    },
+    {
+      "h2": "A simple way to decide",
+      "body": "Start with your busiest hour. If the phone rings while your team is boxing orders, greeting walk-ins, and dealing with a delivery driver, ask which calls must be answered by a person and which can be handled by a phone host. Most restaurants have a mix.\n\nA practical approach is to use ROAL for routine calls and keep staff for exceptions. For example: let the phone host take pickup orders, hours, and menu questions; send allergy concerns, complaints, and manager requests to staff. If your menu changes often or you want human help on the floor anyway, hiring may still fit better. If you want lighter overhead and cleaner coverage for missed calls, ROAL may be the better first step. You can also test the host in the browser before you decide."
+    }
+  ],
+  "table": {
+    "otherName": "Hiring staff",
+    "rows": [
+      {
+        "label": "Cost model",
+        "roal": "$0.90 per completed phone order, with no monthly fee or setup fee",
+        "other": "Hourly pay plus taxes, training, breaks, and coverage time"
+      },
+      {
+        "label": "Setup time",
+        "roal": "Build a test host in about a minute from your website, Maps link, or menu",
+        "other": "Hiring, training, and scheduling usually take more time"
+      },
+      {
+        "label": "Rush-hour coverage",
+        "roal": "Can answer while your team is busy with tickets, pickups, and walk-ins",
+        "other": "Only works if the person is on shift and available"
+      },
+      {
+        "label": "Menu knowledge",
+        "roal": "Reads the live menu and avoids items marked sold out",
+        "other": "Depends on training and how well the person remembers changes"
+      },
+      {
+        "label": "Kitchen tickets",
+        "roal": "Sends a clean ticket to the kitchen screen",
+        "other": "Usually needs manual writing, typing, or relaying to staff"
+      },
+      {
+        "label": "Languages",
+        "roal": "Can speak the caller’s language",
+        "other": "Depends on the person you hire"
+      },
+      {
+        "label": "After hours",
+        "roal": "Can take calls when forwarded, including when no one is at the counter",
+        "other": "Usually not available unless someone is paid to stay on"
+      },
+      {
+        "label": "Handoff to staff",
+        "roal": "Passes allergy-sensitive questions, complaints, and manager requests with a summary",
+        "other": "A person can use judgment directly in the moment"
+      },
+      {
+        "label": "Best for",
+        "roal": "Restaurants that want phone coverage without adding fixed payroll",
+        "other": "Restaurants that need a human on site for many tasks, not just calls"
+      }
+    ]
+  },
+  "verdict": "Pick ROAL if you want a lighter-cost way to cover busy phones, simple orders, and routine questions. Pick hired phone staff if you need a person on site who can do more than answer calls, or if your operation depends on hands-on judgment all shift long. Many restaurants may use both: ROAL for overflow and after-hours, staff for the floor.",
+  "faq": [
+    {
+      "q": "Can ROAL replace a receptionist or host entirely?",
+      "a": "Sometimes, but not always. If most of your calls are pickup orders, hours, and menu questions, ROAL may cover a lot of the job. If you need someone to seat guests, manage the front door, and handle in-person problems, a person is still valuable."
+    },
+    {
+      "q": "What if my menu changes a lot?",
+      "a": "ROAL reads from your live menu and can also be updated from your public pages or uploads. If something is not answered yet, it goes to your inbox once, and you can teach the host the right answer."
+    },
+    {
+      "q": "Is hiring phone staff more expensive than ROAL?",
+      "a": "Often yes, because payroll is fixed and continues even on slow days. ROAL charges $0.90 for each completed phone order, so your cost follows order volume instead of sitting on a monthly or hourly bill."
+    },
+    {
+      "q": "Can I forward only missed calls to ROAL?",
+      "a": "Yes. You can forward all calls, or only when busy or unanswered. That makes it useful as backup coverage if your counter team is already stretched."
+    },
+    {
+      "q": "When is a human still the better choice?",
+      "a": "A human is often better for complex catering, sensitive customer issues, and busy dining rooms where the phone is only one part of the job. If you need judgment across the whole shift, hiring may fit better than any phone-only solution."
+    }
+  ]
+}

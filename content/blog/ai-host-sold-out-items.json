@@ -1,0 +1,77 @@
+{
+  "slug": "ai-host-sold-out-items",
+  "keyword": "sold out items phone orders",
+  "category": "menu",
+  "title": "Marking items sold out for phone orders",
+  "seoTitle": "Sold out items for phone orders | ROAL",
+  "description": "Handle sold out items on phone orders with clear scripts, menu updates, and setup steps that keep callers informed and orders accurate.",
+  "question": "How should I handle sold out items on phone orders without confusing callers or slowing down my team?",
+  "answer": "Mark sold-out items out of your live menu right away, and make sure your phone host or staff never offers them. Keep a short backup script for callers asking about unavailable items, then suggest a close substitute or remove the item until you can sell it again. If you use ROAL, it reads the live menu and will not offer items marked sold out.",
+  "summary": "You’ll learn how to keep sold-out items off the phone, protect order accuracy, and give callers clear substitutes.",
+  "intro": "Sold-out items on phone orders should be removed from the live menu as soon as you run out, so callers are not promised something you cannot make. The cleanest setup is simple: hide or mark the item sold out, train the phone script, and offer a substitute only if you actually have it.\n\nFor a busy shop, this matters because one wrong promise can slow the line, upset the caller, and force a staff member to fix the order later. ROAL is built to read the live menu and skip items marked sold out, so the phone host stays aligned with what the kitchen can really make.",
+  "sections": [
+    {
+      "id": "how-do-i-keep-sold-out-items-off-the-phone-right-away",
+      "h2": "How do I keep sold-out items off the phone right away?",
+      "body": "The fastest move is to update the menu the moment an item runs out. That way, your phone host or staff is not guessing.\n\nUse this simple workflow:\n\n1. Mark the item sold out in your menu editor or remove it from the active menu.\n2. Tell the person answering the phone to stop offering it.\n3. If you have a substitute, decide that once and use the same answer every time.\n4. Check the menu again before the next rush.\n\nExample: if you run out of chicken parm at 5:30 p.m., do not keep saying yes until the kitchen catches up. If the item is unavailable, callers should hear, “We’re sold out of chicken parm right now, but I can do eggplant parm or a plain pasta instead.”"
+    },
+    {
+      "id": "what-should-my-phone-script-say-when-an-item-is-sold-out",
+      "h2": "What should my phone script say when an item is sold out?",
+      "body": "A short script keeps the call moving and avoids awkward back-and-forth. The key is to say what is unavailable, then immediately offer the next best choice if you have one.\n\nTry this structure:\n\n- State the shortage clearly.\n- Offer one or two real substitutes.\n- Do not promise a substitute the kitchen cannot make.\n- If the caller wants the sold-out item only, let them decide to change or cancel.\n\nExample script line: “We’re out of the meatball sub for tonight. I can do the chicken cutlet sub or the tuna melt instead.”\n\nIf you use a phone host like ROAL, you can keep the language simple and consistent, and it will stay within the live menu instead of inventing options."
+    },
+    {
+      "id": "how-do-i-handle-sold-out-items-during-a-rush",
+      "h2": "How do I handle sold-out items during a rush?",
+      "body": "During a rush, sold-out items need to be updated before the phone gets backed up. If the menu on the phone and the menu in the kitchen do not match, the whole order line slows down.\n\nUse this checklist when the line gets busy:\n\n- One person updates the menu immediately.\n- One person confirms the kitchen knows the item is off the menu.\n- One person handles any calls already in progress.\n- One person checks the replacement items you still have plenty of.\n\nWorked example: say your average order is $28 and a sold-out item is a top seller. If you keep taking that item by mistake, you may have to call back, remake the order, or give a refund later. Plug in your own average order value and think through the labor time it takes to fix one bad ticket. Keeping the live menu current is usually cheaper than cleaning up mistakes after the fact."
+    },
+    {
+      "id": "what-if-callers-still-ask-for-an-item-after-i-marked-it-sold",
+      "h2": "What if callers still ask for an item after I marked it sold out?",
+      "body": "Some callers will ask for the same item anyway, especially if they ordered it before or saw an old menu online. That is normal. The answer should stay calm and direct.\n\nUse this response:\n\n- “Sorry, we’re sold out of that item right now.”\n- “I can suggest a similar item if you’d like.”\n- “If you want, I can also read you the specials that are still available.”\n\nIf the item is a common request, add a backup option to your notes or FAQs so the answer is always the same. ROAL can answer menu questions from the live menu and route anything tricky to staff with a summary, which helps when a caller asks about a sold-out item and then wants to change the order."
+    },
+    {
+      "id": "how-should-i-set-up-sold-out-items-on-my-menu-pages-and-phon",
+      "h2": "How should I set up sold-out items on my menu pages and phone menu?",
+      "body": "Your website menu, uploaded menu, and phone menu should all point to the same live list. If one place says the item is available and another says it is sold out, callers get confused.\n\nUse this table as a quick setup guide:\n\n| Where it appears | What to do when sold out | \n|---|---|\n| Live menu | Remove it or mark it unavailable |\n| Phone script | Use one clear shortage line |\n| Kitchen screen | Keep staff aware of the change |\n| FAQs | Add a backup answer for repeat questions |\n\nIf your menu comes from a website or PDF, make sure that file is refreshed too. ROAL reads public pages and uploaded menus to build the phone host, so keeping the source menu current helps the phone stay current too."
+    },
+    {
+      "id": "what-should-i-do-if-the-sold-out-item-is-part-of-a-combo-or-",
+      "h2": "What should I do if the sold-out item is part of a combo or special?",
+      "body": "Combo meals and specials need extra care because one missing item can affect the whole order. If a combo is half unavailable, decide in advance whether you will swap it, remove it, or stop selling it for the day.\n\nA simple rule helps:\n\n1. If the main item is sold out, remove the combo.\n2. If only one side is sold out, decide on one approved swap.\n3. If the special changes daily, put the day’s version in the live menu.\n\nExample: if your “burger, fries, and soda” special is missing fries, do not leave the special active unless you already know the replacement. Instead, say, “Today’s special is no longer available as listed, but we can make the burger with onion rings instead.” For a deeper setup, see [Combos and specials on the phone](/blog/combo-meals-phone-orders) and [Updating menu prices without confusion](/blog/restaurant-menu-prices-update)."
+    },
+    {
+      "id": "can-roal-help-with-sold-out-items-without-extra-phone-work",
+      "h2": "Can ROAL help with sold-out items without extra phone work?",
+      "body": "Yes, if the item is marked sold out in the live menu, ROAL will not offer it on the call. That keeps the conversation tied to what your kitchen can actually make.\n\nHere is the practical owner workflow:\n\n- Update the menu when an item runs out.\n- Let the phone host answer from that live menu.\n- Keep a few clear substitute choices ready.\n- Send tricky calls, allergy-sensitive questions, complaints, or manager requests to staff.\n\nROAL also sends a clean ticket to the kitchen screen, so the order that reaches the line matches what was available on the call. If you want to test the setup, you can [Build a free test host](/try) from your website or menu upload, then place a few test calls before forwarding your number."
+    }
+  ],
+  "takeaways": [
+    "Mark sold-out items in the live menu immediately, not later.",
+    "Use one short script that says what is unavailable and what can replace it.",
+    "Keep website, uploaded menu, and phone answers aligned.",
+    "If an item is sold out, do not let the phone host offer it.",
+    "ROAL reads the live menu, so marked sold-out items stay off the call."
+  ],
+  "faq": [
+    {
+      "q": "How do I tell callers an item is sold out without sounding rude?",
+      "a": "Say it plainly and move on to a real substitute. A good line is, “We’re sold out of that item right now, but I can offer these two options instead.” Short and direct is usually better than a long apology."
+    },
+    {
+      "q": "Should I remove sold-out items from my menu or just mark them unavailable?",
+      "a": "Either works if your live menu is accurate, but removing the item is often cleaner for phone orders. If you keep it visible, make sure it is clearly marked unavailable so nobody on the phone promises it by mistake."
+    },
+    {
+      "q": "What should I do when a caller wants only the sold-out item?",
+      "a": "Tell them it is unavailable and give them the choice to switch or cancel. Do not force a replacement. If they want something else, take the new order exactly as they want it."
+    },
+    {
+      "q": "How does ROAL handle sold-out items on phone orders?",
+      "a": "ROAL reads the live menu and does not offer items marked sold out. That helps keep the phone conversation aligned with what the kitchen can make, while staff can handle unusual situations that need a human answer."
+    }
+  ],
+  "words": 1053,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "restaurant-labor-cost-control",
+  "keyword": "restaurant labor cost",
+  "category": "staffing",
+  "title": "Restaurant labor cost control without hurting service",
+  "seoTitle": "Restaurant labor cost control without hurting service",
+  "description": "Control labor costs with practical steps for phones, staffing, forwarding, and order flow, without sacrificing service quality.",
+  "question": "How can I control restaurant labor cost without cutting service?",
+  "answer": "Control restaurant labor cost by matching staffing to real call volume, busy periods, and order types instead of keeping the phone staffed all shift. Use call forwarding, tighter phone scripts, and an AI phone host like ROAL to handle pickup orders, menu questions, and simple reservations so your team stays on guests, line work, and expo. Keep tricky calls for staff and make sure forwarded calls still reach someone who can help.",
+  "summary": "You’ll learn practical ways to lower phone labor load while keeping service steady.",
+  "intro": "Restaurant labor cost control usually starts with the phone. If one person is tied up answering calls, taking pickup orders, and repeating hours all night, you pay for time that could go to prep, dine-in service, or the line.\n\nThe fix is not cutting service. It is moving simple calls off your staff, keeping a clear path for the calls that still need a human, and using tools like [How it works](/how-it-works) and [Call forwarding codes by carrier](/tools/call-forwarding-codes) to route the phone the right way.",
+  "sections": [
+    {
+      "id": "where-is-your-labor-cost-really-going-on-the-phone",
+      "h2": "Where is your labor cost really going on the phone?",
+      "body": "Start with the hours when the phone causes the most drag. For many independent spots, that is dinner rush, weekends, and the last hour before close. The hidden cost is not only the person answering the phone. It is the interruption to the cook, cashier, or manager who gets pulled away every few minutes.\n\nUse this simple check for one week:\n\n1. Write down each time someone leaves a task to answer the phone.\n2. Mark whether the call was an order, a question, a reservation, a complaint, or a wrong number.\n3. Note who answered it and what work they stopped doing.\n4. At the end of the week, circle the calls that did not need a manager.\n\nExample: say your shift lead makes $22 an hour and spends 45 minutes total on routine calls during a busy dinner. That is $16.50 in labor for one shift just on phone interruptions. Plug in your own wage and minutes. The point is not the exact number. The point is to see where your labor cost is leaking."
+    },
+    {
+      "id": "which-calls-should-your-staff-handle-and-which-should-not",
+      "h2": "Which calls should your staff handle, and which should not?",
+      "body": "Not every call belongs to the same person. A clear split protects service and lowers labor pressure. A phone host should handle the repeatable stuff. Staff should handle the edge cases.\n\nUse a quick call map like this:\n\n| Call type | Best owner |\n|---|---|\n| Pickup order from the menu | Phone host |\n| Delivery order from the menu | Phone host |\n| Hours, address, parking, menu questions | Phone host |\n| Reservation request | Phone host or staff, depending on policy |\n| Allergy-sensitive question | Staff |\n| Catering inquiry | Staff |\n| Complaint or manager request | Staff |\n| Card number over the phone | Staff policy should avoid this; payment happens at pickup or your normal method |\n\nA useful script for staff is: “I can help with the order, but for that question I’m going to hand you to the team.” That keeps the caller from feeling bounced around. ROAL can also pass messy calls to staff with a summary, which saves the team from repeating the basics back to the caller."
+    },
+    {
+      "id": "how-can-call-forwarding-reduce-labor-without-losing-control",
+      "h2": "How can call forwarding reduce labor without losing control?",
+      "body": "Call forwarding is one of the simplest ways to stop the phone from stealing labor during rushes. You keep your restaurant number. You route calls where they need to go. And you can turn forwarding off any time.\n\nCommon setup paths look like this:\n\n1. On many landlines and some carriers, dial *72 and then the forwarding number to forward all calls, and *73 to turn it off.\n2. On many GSM mobile carriers, **21*number# can forward all calls and ##21# can turn it off.\n3. On some carriers, **61*number# forwards unanswered calls and **67*number# forwards busy calls.\n4. Verizon Wireless often uses *72 / *73, and *71 for busy or no-answer forwarding.\n5. Business VoIP systems usually set forwarding in the web portal.\n\nCodes vary by carrier and plan, so confirm with your carrier and test with a real call. For owner-friendly reference, keep [Call forwarding codes by carrier](/tools/call-forwarding-codes) bookmarked.\n\nThis matters for labor because you can forward only when busy or unanswered instead of staffing a dedicated phone person all shift. That lets the host stand, counter, or kitchen team stay focused on guests and tickets."
+    },
+    {
+      "id": "what-should-a-low-labor-phone-script-sound-like",
+      "h2": "What should a low-labor phone script sound like?",
+      "body": "A good phone script saves time because it prevents back-and-forth. It should collect the order, the name, the phone number, and the ready time in one pass. Keep it short. Keep it specific to your menu.\n\nHere is a simple script line you can adapt:\n\n\"Thanks for calling. I can take your pickup order now. What would you like, and are there any sizes, modifiers, or notes?\"\n\nThen move in this order:\n\n1. Take items.\n2. Confirm sizes and modifiers.\n3. Ask for the caller’s name and phone.\n4. Quote the ready time.\n5. Repeat the order back once.\n\nThat flow reduces labor because the employee is not asking the same question three times. It also lowers mistakes that create remakes, refunds, and extra kitchen work. If you use ROAL, it follows this kind of flow automatically on the phone, speaks the caller’s language, and does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "id": "how-do-you-compare-labor-cost-to-delivery-app-commission",
+      "h2": "How do you compare labor cost to delivery app commission?",
+      "body": "A lot of owners compare phone labor to delivery app commission and see that both can get expensive. Delivery apps commonly charge roughly 15-30% commission per order. Phone labor may not look as obvious, but it adds up when a staff member is paid to answer calls instead of serving guests or cooking.\n\nHere is a simple comparison you can swap for your own numbers:\n\n- Say your average phone order is $28.\n- Say your labor cost for handling and interrupting work is $4 per order in real time and distractions.\n- Say a delivery app would take 20% on that order, or $5.60.\n\nIn that example, the delivery app commission is higher. But the phone still costs something, especially if your team is stretched thin. The goal is not to pretend one cost disappears. The goal is to choose the cheaper way to capture the order while protecting service.\n\nROAL’s pricing is different from monthly phone tools. It charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. For owners who want to compare the options, [AI phone host vs hiring phone staff](/compare/hiring-phone-staff) and [Pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) are useful starting points."
+    },
+    {
+      "id": "how-do-you-keep-service-strong-when-staff-is-short",
+      "h2": "How do you keep service strong when staff is short?",
+      "body": "Short-staffed shifts are where labor control and service usually collide. The trick is to protect the human team from routine calls so they can handle the floor, the line, and the problem calls that need judgment.\n\nA simple short-staffed checklist:\n\n- Forward the restaurant number to the phone host during rushes.\n- Make sure the live menu is current, including sold-out items.\n- Set a clear policy for allergy-sensitive questions and complaints.\n- Decide who handles manager requests.\n- Keep a quick way to review call history and tickets after the rush.\n\nThat is where the ROAL dashboard helps. It shows live tickets on the kitchen screen, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That means the team can check what was ordered without digging through notes while the line is busy.\n\nIf your shift is so tight that the phone keeps breaking the flow, [Short-staffed shifts](/use-cases/short-staffed) is the right companion read. For owners who want to try a setup from their own site or menu, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Match phone coverage to call volume, not to habit.",
+    "Use a phone host for routine orders and questions, and staff for edge cases.",
+    "Call forwarding can lower labor pressure without changing your restaurant number.",
+    "Compare labor cost, delivery app commission, and pay-per-order phone handling with your own numbers.",
+    "Keep the menu current so the phone host can only sell what you can actually make."
+  ],
+  "faq": [
+    {
+      "q": "How do I lower restaurant labor cost without hurting service?",
+      "a": "Move routine phone work off your staff first. Let a phone host take pickup and delivery orders, hours questions, and simple menu calls, while your team handles floor service, food, and tricky calls. That way you reduce interruptions instead of cutting the people guests actually see."
+    },
+    {
+      "q": "Is it cheaper to use an AI phone host or hire someone to answer the phone?",
+      "a": "It depends on your call volume and wage rate, but hiring phone staff usually means paying by the hour whether the phone rings or not. ROAL charges $0.90 per completed phone order, with no monthly fee or per-minute fee. Compare that against your own hourly labor cost and the number of orders you take by phone."
+    },
+    {
+      "q": "What calls should I still send to a real person?",
+      "a": "Send allergy-sensitive questions, complaints, catering requests, and manager requests to staff. The phone host can collect the caller’s name, phone number, and the reason for the call, then hand it off with a summary. That keeps service smooth without forcing staff to handle every basic order."
+    },
+    {
+      "q": "How do I forward calls without changing my restaurant number?",
+      "a": "Most businesses can forward calls from their current number through a carrier code or a VoIP portal, then turn it off later. Codes vary by carrier and plan, so confirm the right method with your provider and test it with a real call. ROAL also gives each location its own phone line automatically once the owner claims the host."
+    }
+  ],
+  "words": 1185,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

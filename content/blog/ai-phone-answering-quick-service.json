@@ -1,0 +1,71 @@
+{
+  "slug": "ai-phone-answering-quick-service",
+  "keyword": "qsr phone orders",
+  "category": "restaurant-types",
+  "title": "AI phone answering for quick-service restaurant orders",
+  "seoTitle": "AI phone answering for QSR phone orders",
+  "description": "AI phone answering for QSR phone orders can handle order taking, compare with delivery apps, and fit into your current setup.",
+  "question": "How can I handle qsr phone orders with an AI phone answering system?",
+  "answer": "An AI phone host can answer your restaurant’s phone, take pickup and delivery orders from your live menu, answer common questions, and send a clean ticket to the kitchen. For quick-service restaurants, that means fewer missed calls, less staff interruption, and a simple way to route tricky calls to your team when needed.",
+  "summary": "You’ll see how to use an AI phone host to take qsr phone orders and fit it into a busy quick-service workflow.",
+  "intro": "QSR phone orders can be handled by an AI phone host that answers the phone, takes the order, and sends a clean ticket to the kitchen. For a quick-service restaurant, that means the phone stops pulling staff away from the line.\n\nROAL is built for that job. It reads your live menu, answers common questions, and can take pickup and delivery orders while your team stays focused on service.",
+  "sections": [
+    {
+      "id": "how-do-qsr-phone-orders-usually-get-lost-during-a-rush",
+      "h2": "How do qsr phone orders usually get lost during a rush?",
+      "body": "In a quick-service place, the phone rings at the same time tickets are printing, the fryer is busy, and the counter line is moving. A staff member may answer late, ask the caller to repeat items, or send the call to voicemail. That is where qsr phone orders slip away.\n\nA simple phone script helps, but it still depends on a person being free. Try a line like: \"Thanks for calling. What can I get started for pickup or delivery?\" Then the staff member has to write the order, repeat it back, and handle the next guest at the counter.\n\nHere is a practical breakdown of where the time goes:\n\n| Moment | What happens in the store |\n|---|---|\n| Ringing phone | Someone leaves the line or grill |\n| Order taking | Items are repeated, spelled, and confirmed |\n| Ticket writing | Staff writes it down or keys it in |\n| Payment questions | Caller asks how to pay |\n\nFor many QSRs, that is why phone orders feel messy during lunch and dinner. The issue is not just the ring. It is the interruption."
+    },
+    {
+      "id": "what-does-an-ai-phone-host-do-with-a-pickup-order",
+      "h2": "What does an AI phone host do with a pickup order?",
+      "body": "An AI phone host can answer the call, take items, sizes, modifiers, and notes, then collect the caller’s name and phone number. It confirms the order back, quotes a ready time, and sends a clean ticket to the kitchen screen.\n\nROAL does this from the restaurant’s live menu. It does not offer items marked sold out, and it never takes card numbers over the phone. Payment happens at pickup or however your restaurant already takes it.\n\nA quick example can help. Say your average pickup order is $28. If three phone orders come in during a lunch rush, that is $84 in sales from calls that might otherwise have gone to voicemail or a rushed employee. Plug in your own average check and your own call volume.\n\nUse this order-taking flow as a checklist:\n\n1. Caller says pickup or delivery.\n2. Phone host takes the items and modifiers.\n3. It asks for name and phone number.\n4. It repeats the order back.\n5. It gives a ready time.\n6. The kitchen gets the ticket.\n\nIf a caller asks something tricky, like a catering request or a complaint, the host hands it to staff with a summary. That keeps the easy orders moving and the harder ones in human hands."
+    },
+    {
+      "id": "how-do-i-set-up-roal-for-my-restaurant-phone-line",
+      "h2": "How do I set up ROAL for my restaurant phone line?",
+      "body": "Setup is meant to be quick. The owner pastes the restaurant website, Google Maps link, or just the restaurant name and city at /try. ROAL reads the menu, prices, hours, and address from public pages, then builds a phone host in about a minute. The owner can test-call it right in the browser, with no sign-up needed.\n\nYou can also upload a menu in any format. That is useful if the menu lives in a PDF, a photo, or a format that is hard to read on the web.\n\nOnce the host is ready, the owner claims it. ROAL gives each location its own phone line automatically, and the restaurant forwards its existing number to that line. You can forward all calls, or only when busy or unanswered, and you can turn forwarding off any time.\n\nA practical setup checklist:\n\n- Make sure your menu online is current.\n- Confirm hours and address are correct.\n- Decide whether to forward all calls or only overflow calls.\n- Test one call from a mobile phone.\n- Check that the kitchen screen receives the ticket.\n\nIf you want a phone-setup reference, the [call forwarding codes by carrier](/tools/call-forwarding-codes) page is useful, but always confirm with your carrier and test with a real call."
+    },
+    {
+      "id": "how-much-does-it-cost-compared-with-delivery-apps-and-phone-",
+      "h2": "How much does it cost compared with delivery apps and phone staff?",
+      "body": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nThat pricing is very different from the common options restaurants already use. Delivery apps often charge roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in.\n\nHere is a simple math example you can swap with your own numbers:\n\n- Say you get 200 completed phone orders in a month.\n- At $0.90 each, that is $180.\n- Now compare that with a fixed monthly plan, or with delivery app commission on the same sales volume.\n\nIf you want to compare your own numbers, use the [AI phone host cost calculator](/tools/phone-host-cost-calculator) and the [delivery app commission calculator](/tools/delivery-commission-calculator). The point is not that one model fits every shop. The point is that phone costs should match actual phone orders, not just sit there every month."
+    },
+    {
+      "id": "what-kinds-of-calls-should-go-to-staff-instead-of-the-phone-",
+      "h2": "What kinds of calls should go to staff instead of the phone host?",
+      "body": "A good phone host should handle the routine stuff and pass along the calls that need judgment. ROAL is set up to hand catering inquiries, complaints, allergy-sensitive questions, and manager requests to staff with a summary.\n\nThat matters in a quick-service restaurant. A customer asking for extra caution on an allergy order should be heard by a person. A caller upset about a missed item should also reach staff fast. The same goes for large catering requests or special exceptions.\n\nUse this simple rule in the store:\n\n- Let the phone host handle standard pickup and delivery orders.\n- Let it answer hours, address, parking, and menu questions.\n- Route special requests to staff.\n- Keep one person responsible for checking the inbox for unanswered questions.\n\nA good example script for staff is: \"Thanks for waiting. I see the order and the note. Let me check that with the kitchen.\" That keeps the caller from having to repeat everything.\n\nROAL also has an inbox for questions it could not answer. The owner answers once, and the host knows it from then on. That is useful for local quirks, like a parking note, a lunch special detail, or a house rule that is not on the menu."
+    },
+    {
+      "id": "how-should-a-quick-service-restaurant-staff-use-the-dashboar",
+      "h2": "How should a quick-service restaurant staff use the dashboard day to day?",
+      "body": "The dashboard is where the operation stays organized after the call. It includes a kitchen screen with live tickets marked new, preparing, and ready, plus call history with transcripts and recordings. It also has a menu editor, hours, FAQs, upsell suggestions, and multi-location menus.\n\nFor a small quick-service team, the dashboard can be used like this:\n\n1. Open the kitchen screen at the start of service.\n2. Watch new tickets come in from phone orders.\n3. Mark orders as preparing and ready.\n4. Review calls that need follow-up.\n5. Update hours or menu items when they change.\n\nThat setup helps when the menu changes often. If you run a pizza shop, deli, or takeout counter, a wrong hour or a sold-out item can create confusion. With ROAL, the phone host reads from the live menu and avoids offering sold-out items.\n\nIf you want to see how this fits your type of restaurant, the [restaurant types page](/for) and the [pickup order taking use case](/use-cases/pickup-orders) are good starting points. ROAL was built by Venkata Vamsi in Jersey City, NJ, and it works for any US restaurant, even though the first locations are in Jersey City and Hoboken. If you want to try it, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "QSR phone orders can be answered by an AI phone host that takes orders, answers common questions, and sends tickets to the kitchen.",
+    "ROAL reads your live menu, handles pickup and delivery orders, and passes tricky calls to staff.",
+    "Pricing is per completed phone order, not a fixed monthly fee.",
+    "You keep your restaurant’s own number and forward calls to ROAL when you want to."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take qsr phone orders for pickup and delivery?",
+      "a": "Yes. ROAL can answer the call, take pickup and delivery orders from the live menu, collect the caller’s name and phone number, confirm the order back, and send a clean ticket to the kitchen screen. It does not take card numbers over the phone, so payment stays with your existing process."
+    },
+    {
+      "q": "What happens if the caller asks about an allergy or a catering order?",
+      "a": "ROAL hands allergy-sensitive questions, catering requests, complaints, and manager requests to staff with a summary. That keeps standard qsr phone orders moving while the restaurant handles special cases directly."
+    },
+    {
+      "q": "How do I forward my restaurant phone to ROAL?",
+      "a": "The owner claims the host and ROAL gives each location its own phone line automatically. Then the restaurant forwards its existing number to that line, either for all calls or only when busy or unanswered. Codes and steps vary by carrier and plan, so confirm with your carrier and test with a call."
+    },
+    {
+      "q": "Does ROAL charge a monthly fee for phone orders?",
+      "a": "No. ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "words": 1288,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

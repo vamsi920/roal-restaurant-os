@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-answering-thai-restaurants",
+  "keyword": "thai restaurant phone orders",
+  "category": "restaurant-types",
+  "title": "AI phone answering for Thai restaurant orders",
+  "seoTitle": "Thai restaurant phone orders with AI | ROAL",
+  "description": "AI phone answering for Thai restaurant orders can take pickup and delivery calls, answer menu questions, and route complex requests to staff.",
+  "question": "How can AI phone answering help my Thai restaurant take phone orders without adding more work for my staff?",
+  "answer": "An AI phone host can answer your Thai restaurant’s phone, take pickup and delivery orders from your live menu, answer common questions, and send a clean ticket to the kitchen screen. It can also hand allergy questions, complaints, catering, and manager requests to staff, while you keep your existing number and forward calls only when needed.",
+  "summary": "Learn how to use an AI phone host to handle Thai restaurant calls, orders, and common questions with less staff interruption.",
+  "intro": "Thai restaurant phone orders are still a big part of daily business. When the phone rings nonstop during dinner, it can pull your team off the line, slow service, and lead to missed orders.\n\nAn AI phone host can help by answering calls, taking pickup and delivery orders from your menu, and sending the ticket to the kitchen. ROAL is built for that exact job, and it works well for Thai menus with add-ons, spice levels, noodle choices, and special notes.",
+  "sections": [
+    {
+      "id": "what-should-an-ai-phone-host-handle-for-a-thai-restaurant",
+      "h2": "What should an AI phone host handle for a Thai restaurant?",
+      "body": "For a Thai restaurant, the phone host should do the basic work your counter staff already do on repeat calls. That means answering the phone, quoting hours, taking orders, and handling menu questions without making the caller wait.\n\nHere is the practical list to look for:\n- Take pickup and delivery orders from your live menu\n- Capture items, sizes, modifiers, and notes\n- Ask for the caller’s name and phone number\n- Quote a ready time\n- Answer hours, address, parking, and menu questions\n- Speak the caller’s language when possible\n- Pass allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary\n\nA Thai order often needs extra detail. A caller may want pad see ew with chicken, mild spice, no egg, extra vegetables, or brown rice. A phone host should handle that kind of customization cleanly. ROAL also will not offer items marked sold out, which helps avoid awkward corrections at pickup.\n\nExample phone line you can train your team to expect: “I’d like the pad thai with shrimp, mild spice, and no peanuts.” The host should repeat it back in plain language before confirming the order."
+    },
+    {
+      "id": "how-do-you-set-it-up-without-a-big-project",
+      "h2": "How do you set it up without a big project?",
+      "body": "The setup is simple enough for a busy owner. You paste your restaurant website, Google Maps link, or your restaurant name and city at /try. ROAL reads the public menu, prices, hours, and address, then builds a phone host in about a minute.\n\nIf your Thai restaurant menu is in a PDF, photo, or another format, you can upload it too. That matters for independent restaurants that update menus by hand or print specials on paper. You can test-call the host right in the browser before it goes live, and there is no sign-up needed for the test.\n\nA short setup checklist:\n1. Gather your website, Maps link, or menu file\n2. Make sure your hours and address are current\n3. Check that your menu names match what customers say on the phone\n4. Review any sold-out items before the dinner rush\n5. Test-call the host and listen to how it answers common Thai order questions\n\nROAL is designed so you can start with the menu you already have, not a rebuilt system. That is useful if your house fried rice, curries, or lunch specials change often."
+    },
+    {
+      "id": "how-should-you-route-calls-from-your-existing-number",
+      "h2": "How should you route calls from your existing number?",
+      "body": "Most restaurants do not want to give up their phone number. You do not have to. Once you claim the host, ROAL gives each location its own phone line automatically, and you forward your existing number to it.\n\nYou can forward all calls, or only forward when the line is busy or unanswered. That gives you control during slower shifts or when you want staff to answer first. Forwarding can be turned off any time.\n\nFor phone setup, the exact code depends on your carrier and plan. On many landlines and some carriers, dial *72 and then the forwarding number to forward all calls, and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Always confirm with your carrier and test with a call.\n\nQuick owner checklist:\n- Decide whether to forward all calls or only busy/unanswered calls\n- Test one call from your own phone\n- Confirm the host answers with the right restaurant name\n- Confirm the kitchen ticket shows up cleanly\n- Make sure staff knows how to turn forwarding off if needed"
+    },
+    {
+      "id": "what-happens-when-the-caller-wants-something-tricky",
+      "h2": "What happens when the caller wants something tricky?",
+      "body": "Not every phone call should be closed by the phone host. That is a good thing. If someone has a serious allergy question, wants catering, has a complaint, or asks for a manager, the call should go to staff with a clear summary.\n\nThat is especially important for Thai restaurants, where callers may ask about fish sauce, oyster sauce, shrimp paste, peanuts, or gluten concerns. The host should answer what it can from the menu and FAQ, but it should not guess. If the question is not clear enough, it should hand it to the team.\n\nHere is a useful staff handoff note format:\n- Caller name\n- Phone number\n- What they wanted\n- Any allergy or special concern\n- Whether they want a callback or live transfer\n\nExample: “Caller wants pad see ew without egg and asked whether the sauce contains fish sauce. Please confirm ingredients before placing the order.” That gives your team the context without making the caller repeat everything.\n\nROAL keeps unanswered questions in an inbox. The owner answers once, and the host knows it from then on. That helps build a better menu question flow over time without extra busywork."
+    },
+    {
+      "id": "how-does-pricing-compare-with-other-ways-to-handle-phone-ord",
+      "h2": "How does pricing compare with other ways to handle phone orders?",
+      "body": "The cost side matters, especially for an independent Thai restaurant with thin margins. ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nThat structure is different from the other common options. Delivery apps often take roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools for restaurants charge a fixed monthly fee per location, often roughly $79 to $599, whether or not orders come in.\n\nWorked example, using round numbers you can swap for your own:\n| Example monthly phone orders | Example revenue per order | ROAL order fee | Example monthly total |\n| --- | --- | --- | --- |\n| 200 orders | $28 average order | $0.90 each | $180 |\n| 400 orders | $28 average order | $0.90 each | $360 |\n\nUse your own average check and order count to compare. If your phone orders are busy mainly during dinner, a per-order model can be easier to match to sales than a fixed monthly fee. The right comparison is not just cost; it is whether the phone work is actually getting done without tying up staff."
+    },
+    {
+      "id": "what-should-you-show-staff-before-you-go-live",
+      "h2": "What should you show staff before you go live?",
+      "body": "The best rollout is short and practical. Your team does not need a long training session. They need to know what the host handles, what goes to staff, and how the ticket will look in the kitchen.\n\nUse this quick pre-launch checklist:\n1. Review the menu names and common Thai customizations\n2. Decide how to handle spice levels, rice choices, and protein swaps\n3. Confirm sold-out items are marked correctly\n4. Show staff the kitchen screen with live tickets: new, preparing, ready\n5. Show them where call history, transcripts, and recordings live\n6. Tell them how to answer inbox questions once so the host learns it\n\nA helpful staff script line is: “If the host sends a handoff, we take over from there and finish the call.” That keeps the handoff smooth and avoids confusion.\n\nROAL also includes a menu editor, hours, FAQs, upsell suggestions, and multi-location menus in the dashboard. If your Thai restaurant has separate lunch and dinner pricing, or one location with different specials, that dashboard view is where you keep things current."
+    },
+    {
+      "id": "is-roal-a-fit-for-a-thai-restaurant-like-mine",
+      "h2": "Is ROAL a fit for a Thai restaurant like mine?",
+      "body": "ROAL is a good fit if you want phone orders handled in a way that respects how independent restaurants actually work. It is built for restaurants, not general businesses, and it can answer hours, address, parking, and menu questions while taking pickup and delivery orders from the live menu.\n\nThat makes it useful for Thai restaurants with busy lunch rushes, dinner spikes, and a lot of menu customization. It is also useful if you want a cleaner handoff than voicemail or a press-1 phone menu. If a call is simple, the host can handle it. If it is complicated, staff can step in.\n\nOne soft next step: [build a free test host from your website](/try).\n\nIf you want a little more context before testing it, see [How it works](/how-it-works) or [AI phone host vs answering service](/compare/answering-service). ROAL was built by Venkata Vamsi in Jersey City, NJ, and it works for any US restaurant, including Thai spots that want a practical phone flow instead of more phone chaos."
+    }
+  ],
+  "takeaways": [
+    "An AI phone host can take Thai restaurant orders, answer common questions, and send clean tickets to the kitchen.",
+    "You can keep your existing number and forward calls only when you want to.",
+    "ROAL charges per completed order, not a monthly fee or per-minute fee.",
+    "Tricky calls like allergy questions, complaints, catering, and manager requests should go to staff.",
+    "Thai menu details like spice level, protein swaps, and notes should be captured clearly on the call."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take Thai restaurant phone orders with modifiers?",
+      "a": "Yes. ROAL can take items, sizes, modifiers, and notes from the restaurant’s live menu. That works well for Thai orders with spice levels, protein swaps, rice choices, and add-ons. It also repeats the order back before confirming it."
+    },
+    {
+      "q": "How do I forward my Thai restaurant phone number to an AI host?",
+      "a": "You usually forward your existing number to the new line the host gives you. On many carriers, you can forward all calls or only busy/unanswered calls using carrier codes or a web portal, depending on the phone system. Confirm the exact code with your carrier and test a call before relying on it."
+    },
+    {
+      "q": "Will the phone host take card payments for takeout orders?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment. That keeps the call focused on order details and kitchen timing."
+    },
+    {
+      "q": "What happens if a caller asks about allergens in a Thai dish?",
+      "a": "The host can answer menu and FAQ questions it knows, but allergy-sensitive questions should go to staff if there is any doubt. ROAL will hand those calls to your team with a summary so someone can confirm ingredients before the order is finalized."
+    }
+  ],
+  "words": 1445,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

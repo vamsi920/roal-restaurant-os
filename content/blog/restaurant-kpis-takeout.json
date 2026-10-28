@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-kpis-takeout",
+  "keyword": "restaurant kpis",
+  "category": "operations",
+  "title": "Takeout restaurant KPIs every owner should watch",
+  "seoTitle": "Takeout restaurant KPIs every owner should watch",
+  "description": "Track order volume, ticket times, answer rate, average ticket, and remake issues so you can spot leaks and improve takeout performance.",
+  "question": "What restaurant KPIs should I watch for takeout orders?",
+  "answer": "For takeout, watch the KPIs that show whether calls turn into profitable tickets: phone answer rate, completed order count, average ticket, ticket time, remake or complaint volume, and busy-hour call loss. Those numbers tell you if the front counter, phone line, and kitchen are helping or hurting sales. Use one simple weekly sheet and compare each shift, not just the whole month.",
+  "summary": "You’ll learn which takeout KPIs matter most and how to track them with a simple weekly routine.",
+  "intro": "Takeout KPIs every owner should watch are the numbers that tell you whether the phone, kitchen, and front counter are helping you make money. For most restaurants, that means tracking order volume, average ticket, ticket time, and how many calls turn into real tickets.\n\nIf you run a pizza shop, deli, family restaurant, or busy takeout counter, you do not need a giant dashboard. You need a few restaurant KPIs you can check quickly, then act on the same day. The goal is to catch lost orders, slow rushes, and repeat problems before they become normal.",
+  "sections": [
+    {
+      "id": "which-restaurant-kpis-matter-most-for-takeout",
+      "h2": "Which restaurant KPIs matter most for takeout?",
+      "body": "For takeout, start with the KPIs that connect directly to phone revenue and kitchen speed. If a number does not help you answer “Did we take the order?” or “Did we make it on time?” it can wait.\n\n| KPI | What it tells you | Simple owner question |\n| --- | --- | --- |\n| Completed orders | How many orders actually reached the kitchen | Did we turn calls into tickets? |\n| Average order value | How much each order is worth | Are people adding drinks, sides, or extras? |\n| Ticket time | How long the kitchen needs | Are pickup times realistic? |\n| Missed or unanswered calls | Lost chances to sell | Were we too busy to answer? |\n| Remake or complaint count | Quality and accuracy issues | Are we making the same mistake twice? |\n\nA simple example: say your average takeout order is $28 and you lose 5 order calls on a busy Friday. That is not “just a few calls.” Plug in your own average ticket and your own number of missed calls to estimate the cost. If you use ROAL, call history and transcripts help you review what was asked, what was ordered, and where the call went off track."
+    },
+    {
+      "id": "how-do-i-track-phone-answer-rate-without-getting-lost-in-rep",
+      "h2": "How do I track phone answer rate without getting lost in reports?",
+      "body": "You do not need a fancy system to track phone answer rate. You need a count of calls that were answered, calls that were missed, and calls that turned into confirmed orders.\n\nUse this weekly check:\n1. Count total incoming calls.\n2. Count how many were answered by a person or phone host.\n3. Count how many became confirmed pickup or delivery orders.\n4. Count how many were lost to voicemail, busy lines, or hang-ups.\n\nA worked example: say you get 120 calls in a week. If 90 are answered and 45 become orders, your answer rate is 75% and your order conversion from calls is 50% of answered calls. Those numbers are not good or bad by themselves. What matters is whether they improve on Friday nights, lunch, and holidays.\n\nA practical phone script helps too. Train staff to say, “Thanks for calling. What can I get started for pickup today?” That line is short, clear, and order-first. ROAL uses that same idea by answering the phone, taking items from the live menu, and sending a clean ticket to the kitchen screen."
+    },
+    {
+      "id": "what-order-value-numbers-should-i-watch-every-week",
+      "h2": "What order value numbers should I watch every week?",
+      "body": "Average order value matters because it tells you whether phone orders are worth the labor and packaging you put into them. If your average ticket is too low, small add-ons can make a real difference.\n\nTrack these three numbers:\n- Average order value\n- Add-on rate for sides, drinks, or extras\n- Large-order share for family meals or multiple pies\n\nHere is a simple example you can swap with your own numbers. Say your average order is $24. If 1 out of 4 callers adds a side that adds $4, your weekly total can move more than you expect. You do not need to guess. Just write down the add-on item and the final ticket amount.\n\nA useful note for owners: if you use an AI phone host like ROAL, it can read upsell suggestions from the menu setup and offer what is actually on the menu. That keeps the upsell grounded in your real items, not random suggestions. For a deeper look at time-related metrics, pair this with [ticket times: measuring kitchen speed](/blog/restaurant-ticket-times)."
+    },
+    {
+      "id": "how-do-i-tell-if-ticket-times-are-hurting-takeout",
+      "h2": "How do I tell if ticket times are hurting takeout?",
+      "body": "Ticket time is one of the clearest restaurant KPIs for takeout. Customers may forgive a wait if they know it up front. They get frustrated when the quoted time and the real time do not match.\n\nTrack ticket time in two ways:\n1. The time you quote on the phone.\n2. The time the kitchen actually needs.\n\nIf those two numbers drift apart, your phone team starts promising too much. For example, say you quote 20 minutes during dinner rush, but the kitchen usually needs 32. That gap means you need better pacing, a more honest quote, or fewer phone interruptions during the rush.\n\nA simple checklist for each shift:\n- Write the quoted ready time on the ticket.\n- Compare it with the actual finish time.\n- Mark late tickets by cause: kitchen, packaging, or call handling.\n- Review the worst 3 tickets from the shift.\n\nROAL quotes a ready time during the call and sends the order to the kitchen screen, so the phone and kitchen are working from the same ticket. That does not fix every slow rush, but it helps keep the promise consistent."
+    },
+    {
+      "id": "which-complaint-and-remake-kpis-should-owners-watch",
+      "h2": "Which complaint and remake KPIs should owners watch?",
+      "body": "Complaint and remake numbers are easy to ignore until they start costing food, time, and repeat business. For takeout, you should track them by reason, not just by count.\n\nUse a simple table like this:\n\n| Issue type | Example | What to note |\n| --- | --- | --- |\n| Wrong item | Burger instead of wrap | Missed modifier or misunderstood order |\n| Missing item | Fries left out | Packing problem |\n| Allergy note missed | No onions, no shellfish, etc. | Safety and accuracy |\n| Cold food | Order sat too long | Timing or handoff issue |\n| Order confusion | Caller changed items twice | Phone clarity issue |\n\nA worked example: say you remake 6 orders in a week, and 4 of them are packing mistakes. That points to the bagging step, not the phone line. If 4 of them come from unclear calls, the fix is in the script or the order-taking process.\n\nIf a caller has a complaint, refund request, allergy-sensitive question, or manager request, a good phone host should hand it to staff with a summary. That is how ROAL handles tricky calls: it gets the facts, then passes them along instead of trying to guess."
+    },
+    {
+      "id": "how-can-i-build-a-weekly-kpi-routine-that-takes-10-minutes",
+      "h2": "How can I build a weekly KPI routine that takes 10 minutes?",
+      "body": "The best KPI routine is the one you will actually do. For a busy owner, a 10-minute weekly review is enough to spot problems early.\n\nHere is a simple rhythm:\n1. Pick one day each week, same time.\n2. Pull call history, ticket count, and a few sample transcripts.\n3. Review the worst rush period first.\n4. Circle the top one problem for next week.\n5. Share one fix with staff before the next shift.\n\nYou can keep the sheet simple:\n- Total calls\n- Answered calls\n- Completed orders\n- Average order value\n- Average quoted ready time\n- Late tickets\n- Remakes or complaints\n\nIf you want one more useful benchmark, compare your call volume to your hours. A shop with a heavy dinner rush should not judge itself only by the full day total. Lunch, dinner, and late-night orders behave differently. That is why ROAL’s dashboard groups call history, live tickets, and menu editing in one place. It gives owners a place to see patterns without opening five different systems."
+    },
+    {
+      "id": "what-should-i-change-when-one-kpi-moves-the-wrong-way",
+      "h2": "What should I change when one KPI moves the wrong way?",
+      "body": "A KPI only helps if it leads to a small action. When one number drops, change one thing at a time so you know what worked.\n\nUse this owner-friendly response plan:\n- If answered calls drop, check forwarding, staffing, and voicemail settings.\n- If completed orders drop, review the phone script and menu clarity.\n- If ticket time rises, adjust quoted times during rush.\n- If remakes rise, inspect packing and modifier handling.\n- If average order value falls, review add-on prompts and menu visibility.\n\nExample: say your weekly average order value falls from $27 to $22. Do not assume the menu is the issue. Check whether staff stopped asking about drinks, sides, or desserts. Then test one change for a week and look at the next set of numbers.\n\nIf your current setup relies on forwarded calls, remember to test it with a real call after any change. Carrier codes can vary, so confirm with your phone provider before changing forwarding. If you want a quick way to compare tools, [see pricing](/pricing) and then [build a free test host](/try) from your website or Google Maps link."
+    }
+  ],
+  "takeaways": [
+    "Track the KPIs that connect directly to orders, speed, and accuracy.",
+    "Compare quoted ready time with actual kitchen time every week.",
+    "Break complaints and remakes into reasons so you can fix the real problem.",
+    "Use a short weekly review instead of a complicated dashboard.",
+    "Keep phone handling, menu clarity, and kitchen tickets aligned."
+  ],
+  "faq": [
+    {
+      "q": "What are the most important restaurant KPIs for takeout?",
+      "a": "The most useful takeout KPIs are completed orders, phone answer rate, average order value, ticket time, and remake or complaint counts. Those numbers tell you whether calls are turning into tickets and whether the kitchen is keeping up. Start with a simple weekly sheet before you add more detail."
+    },
+    {
+      "q": "How do I measure missed calls at my restaurant?",
+      "a": "Count how many incoming calls were not answered by a person or phone host, then compare that to total calls. You can also count how many missed calls turned into callbacks or lost orders. If you use call history in a phone system, review the log at the end of each shift or day."
+    },
+    {
+      "q": "What is a good average order value for takeout?",
+      "a": "There is no universal good number because menus and neighborhoods differ. A pizza shop, deli, and family restaurant will each have different averages. The best move is to track your own average order value by daypart and then test add-ons that fit your menu."
+    },
+    {
+      "q": "How often should I review takeout KPIs?",
+      "a": "Once a week is enough for most independent restaurants, as long as you also watch the day-to-day rush. Review the numbers after the busiest shift of the week and look for one issue to fix. If something is clearly off, like a sudden spike in missed calls, check it the same day."
+    }
+  ],
+  "words": 1428,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

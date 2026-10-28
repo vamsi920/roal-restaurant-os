@@ -1,0 +1,123 @@
+{
+  "slug": "catering",
+  "label": "Catering inquiries",
+  "h1": "Catering inquiries, captured and handed to you",
+  "seoTitle": "Catering inquiries by phone for restaurants | ROAL",
+  "description": "ROAL answers restaurant catering calls, shares menu and pickup details, and passes bigger orders to your team with a clear summary.",
+  "lead": "Catering calls are different from normal takeout. The order is bigger, the questions are longer, and the caller often wants a person right away. ROAL gives your restaurant a calm phone host for those busy moments.",
+  "question": "How can an AI phone host help with catering inquiries for my restaurant?",
+  "answer": "ROAL answers catering calls for your restaurant, checks the live menu, and gathers the details your team needs. It can take the caller’s name, phone number, order items, sizes, notes, and requested time, then send a clean summary to your kitchen screen. If the caller asks for something complex, allergy-sensitive, or out of scope, ROAL hands it to staff with context.",
+  "pains": [
+    {
+      "title": "Catering calls come at the worst time",
+      "body": "A Friday lunch rush can bury the phone while someone is asking about trays, pans, and lead time. Those calls take longer than a normal order, so they slow down the counter if your team has to stop and explain everything."
+    },
+    {
+      "title": "Big orders need careful details",
+      "body": "Catering callers often want half trays, full trays, pickup windows, parking help, and notes like \"no onions\" or \"extra tongs.\" If even one detail is missed, the kitchen has to chase it down later."
+    },
+    {
+      "title": "Staff can’t always answer every menu question",
+      "body": "The caller may ask what comes with the chicken tray, which wraps are available, or whether you can do vegetarian platters. When the answer isn’t ready, the call can turn into a callback chain."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "It answers while your team stays on the line for guests",
+      "body": "ROAL picks up the phone, so the host stand or cashier does not have to leave the floor. During a rush, that can keep the line moving while the catering caller still gets help."
+    },
+    {
+      "title": "It captures the full catering request",
+      "body": "The phone host can collect items, sizes, modifiers, notes, name, phone number, and ready time. That makes it easier to handle a tray order like \"3 chicken parm trays, 2 Caesar salads, no croutons, pickup at 5:30.\""
+    },
+    {
+      "title": "It sends the order to the kitchen clearly",
+      "body": "ROAL sends a clean ticket to the kitchen screen with the order details in one place. Your staff does not have to decode a rushed voicemail or scribbled note."
+    },
+    {
+      "title": "It knows when to hand off the hard stuff",
+      "body": "If a caller asks about a custom platter, a serious allergy concern, or a manager approval, ROAL passes it to your team with a summary. That keeps simple catering requests moving without blocking important ones."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, I need catering for tomorrow."
+    },
+    {
+      "who": "host",
+      "line": "I can help with that. What restaurant are you calling, and what would you like to order?"
+    },
+    {
+      "who": "caller",
+      "line": "Two chicken parm trays, one penne vodka tray, and a Greek salad for 12."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes? For example, no onions, sauce on the side, or extra bread."
+    },
+    {
+      "who": "caller",
+      "line": "No onions on the salad. Pickup at 5:30 tomorrow."
+    },
+    {
+      "who": "host",
+      "line": "Thanks. I have two chicken parm trays, one penne vodka tray, and one Greek salad for 12, with no onions on the salad, for pickup tomorrow at 5:30. What name and phone number should we use?"
+    },
+    {
+      "who": "caller",
+      "line": "Maria Lopez, 201-555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Perfect. I’ll send that over now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Catering · Tomorrow 5:30 pm",
+    "lines": [
+      "Maria Lopez · 201-555-0148",
+      "2 chicken parm trays",
+      "1 penne vodka tray",
+      "1 Greek salad for 12",
+      "Note: no onions on salad"
+    ],
+    "note": "Pickup at 5:30 pm"
+  },
+  "sections": [
+    {
+      "h2": "What a catering phone host should be ready for",
+      "body": "Catering calls are usually more detailed than a normal dinner order. A caller may ask for tray sizes, how many people a pan feeds, whether you can split sauces, and when the food will be ready. They may also want to know if there is parking, a side door for pickup, or the best time to arrive.\n\nROAL is built for those exact conversations. It reads your live menu and hours, so it can answer from what you already publish. If your menu includes chicken cutlet trays, pasta pans, wraps, salads, or breakfast platters, the phone host can use that menu to collect the request and send it to the kitchen.\n\nFor a simple setup, start with your website or Google Maps link at [How it works](/how-it-works). If you already know your catering items by heart, you can also test the host with a few example calls before you decide whether to go live."
+    },
+    {
+      "h2": "A good catering setup keeps staff out of phone loops",
+      "body": "Many missed catering calls are not quick one-line orders. They are long conversations with questions like \"Do you do half trays?\" or \"Can I get extra dressing?\" When the front counter is busy, those calls often turn into callbacks, and that can slow the sale down.\n\nA phone host helps by taking the first pass. It can gather the caller’s name, phone, requested pickup time, and the items that matter. If the caller asks for something unusual, the host can pass it along with a short summary instead of making your team repeat the whole story.\n\nThat is useful on lunch rush days, game days, and holiday weeks when the kitchen is already moving fast. It also helps when one person is running register, packing bags, and answering the phone at the same time."
+    },
+    {
+      "h2": "Keep your catering menu easy to hear and easy to repeat",
+      "body": "The best catering phone experience starts with clear menu language. Use names people actually say on the phone: chicken parm tray, penne vodka tray, hummus platter, sandwich tray, salad tray, or breakfast platter. If there are common add-ons, list them clearly, like extra sauce, no onions, gluten-free bread, or utensils.\n\nROAL can only work well when the menu is easy to read. If your catering items live on a PDF or a few photos, that still works. The owner can paste the site, upload the menu, and let the host build from there.\n\nIf you want to understand pricing before you try it, see [Pricing](/pricing). ROAL bills only for completed phone orders, so a simple question or test call does not count as a paid order."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take catering orders and not just normal takeout?",
+      "a": "Yes. ROAL can take restaurant orders and also handle catering inquiries, including larger pickup orders with items, notes, and a requested time. If the request is too complex or needs staff approval, it can hand it off with a summary."
+    },
+    {
+      "q": "What if the caller wants trays, platters, or half pans?",
+      "a": "ROAL can work from the menu you give it, including catering items, tray names, and common add-ons. If your menu says chicken parm tray or sandwich platter, the host can use that language in the call."
+    },
+    {
+      "q": "Can it answer questions about parking, pickup time, and hours?",
+      "a": "Yes. ROAL can answer hours, address, and parking details from your public menu pages or website. That helps callers who are planning a pickup for a group or office lunch."
+    },
+    {
+      "q": "Does it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles payment."
+    },
+    {
+      "q": "What happens if ROAL does not know the answer?",
+      "a": "The question goes to your inbox, and you answer it once. ROAL learns from that answer for future calls, so the next caller can get the same information right away."
+    }
+  ]
+}

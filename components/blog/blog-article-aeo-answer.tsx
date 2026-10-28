@@ -14,6 +14,8 @@ export function blogArticleAeoQuestion(
 }
 
 function blogArticleAeoDetail(content: BlogArticleContent): string | undefined {
+  // Generated posts show their summary in the header already.
+  if (content.intro) return undefined;
   const summary = content.summary.trim();
   const answer = content.answerShort.trim();
   if (!summary || summary === answer) return undefined;

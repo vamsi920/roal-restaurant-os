@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-answering-pizza-shops",
+  "keyword": "pizza shop phone orders ai",
+  "category": "restaurant-types",
+  "title": "AI phone answering for pizza shop orders",
+  "seoTitle": "Pizza shop phone orders with AI answering",
+  "description": "Pizza shop phone orders can be handled by AI answering, with pickup and delivery orders sent to your kitchen without a monthly fee.",
+  "question": "How can pizza shop phone orders AI help my shop take more calls without adding more phone staff?",
+  "answer": "A pizza shop phone orders AI can answer the phone, take pickup and delivery orders from your live menu, answer common questions, and send a clean ticket to the kitchen screen. With ROAL, you keep your existing number, forward calls when you want, and pay only for completed phone orders that reach the kitchen screen.",
+  "summary": "Learn how to use an AI phone host to handle pizza calls, orders, and common questions.",
+  "intro": "Pizza shop phone orders AI can answer calls, take orders, and send them straight to the kitchen. It can also answer hours, address, parking, and menu questions when your counter is busy.\n\nFor a pizza shop, that means fewer rushed calls and fewer missed pickup orders. ROAL is one option built for that job: it reads your menu, takes the order, and puts a clean ticket on the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-does-pizza-shop-phone-orders-ai-actually-do-on-a-busy-n",
+      "h2": "What does pizza shop phone orders AI actually do on a busy night?",
+      "body": "For a pizza shop, the useful part is simple: the phone host takes the order the way your staff would. It can handle sizes, crust choices, toppings, modifiers, and notes. It also collects the caller’s name and phone number, quotes a ready time, and repeats the order back before sending it to the kitchen.\n\nA practical call might sound like this: \"Thanks for calling Tony’s Pizza. What can I make for you tonight?\" Then it can continue with: \"What size do you want, and any toppings?\" If the caller asks for something sold out, it does not offer it. If the order needs a manager, allergy help, or a catering question, it hands that to staff with a summary.\n\nConcrete checklist for a pizza shop:\n- Are your sizes listed clearly on the menu?\n- Are toppings and modifiers written in plain language?\n- Do you want pickup, delivery, or both handled by phone?\n- Do you have hours and address posted where the host can read them?\n- Do you want the host to speak the caller’s language when needed?\n\nROAL is built to do those jobs from your live menu, then send a clean ticket to the kitchen screen."
+    },
+    {
+      "id": "how-do-i-set-it-up-without-a-long-tech-project",
+      "h2": "How do I set it up without a long tech project?",
+      "body": "The setup is meant for owners who do not want a long install. You paste your restaurant website, your Google Maps link, or just your restaurant name and city at /try. ROAL reads public menu pages, menu PDFs, menu photos, hours, and address, then builds a phone host in about a minute.\n\nYou can also upload a menu in any format. Before going live, you can test-call it right in the browser, with no sign-up needed. That makes it easier to check whether the host knows your pizza names, combos, and common upsells.\n\nA good setup routine for a pizza shop:\n1. Put the current menu online or upload it.\n2. Check that prices, hours, and address match what you want said on the phone.\n3. Test a few common orders, like a large pepperoni, a half-and-half pie, or a pickup order with extra cheese.\n4. Fix any menu wording in the dashboard if something sounds off.\n5. Pick a voice and name that fit your shop.\n\nIf you want more background on the process, see [How it works](/how-it-works) and [Questions owners ask](/faq)."
+    },
+    {
+      "id": "how-much-does-it-cost-compared-with-other-ways-to-answer-piz",
+      "h2": "How much does it cost compared with other ways to answer pizza calls?",
+      "body": "Pizza shop owners usually compare three things: delivery app commission, monthly AI phone tools, and human answering. Delivery apps commonly charge roughly 15-30% commission per order. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nWorked example you can swap for your own numbers:\n- Say your average phone order is $28.\n- Say you get 200 completed phone orders in a month.\n- ROAL cost at $0.90 each = $180.\n- A 20% delivery app commission on $28 orders would be $5.60 per order, or $1,120 for 200 orders.\n\nThat example is not a promise or a prediction. Plug in your own average ticket and call volume. If you want to compare your numbers, try the [AI phone host cost calculator](/tools/phone-host-cost-calculator) and the [Delivery app commission calculator](/tools/delivery-commission-calculator)."
+    },
+    {
+      "id": "what-should-the-phone-script-sound-like-for-pizza-orders",
+      "h2": "What should the phone script sound like for pizza orders?",
+      "body": "Pizza calls go smoother when the script is short and direct. The caller should hear that the shop knows pizza language: sizes, crusts, toppings, specials, and pickup time.\n\nA simple flow could sound like this:\n- \"What size pizza do you want?\"\n- \"Any toppings on that pie?\"\n- \"Would you like it well done or regular?\"\n- \"Is this for pickup or delivery?\"\n- \"What name should I put on the order?\"\n- \"Your total comes to [your price]. Ready in about [your time].\"\n\nYou can also use a line for common add-ons: \"Would you like to add wings, a salad, or garlic knots?\" Keep the offer list to items you actually sell and that are easy to prepare.\n\nA good pizza phone host should also know how to handle edge cases:\n- Half-and-half pies\n- Extra sauce or light cheese\n- Gluten-free or special requests, if your menu supports them\n- Caller questions about parking or the best pickup entrance\n- Spanish or another language your customers use often\n\nIf a caller asks about a severe allergy or wants to speak with a manager, the host should hand it to staff with a clear summary. That keeps the order moving without guessing."
+    },
+    {
+      "id": "how-do-i-forward-calls-without-losing-my-existing-number",
+      "h2": "How do I forward calls without losing my existing number?",
+      "body": "Most pizza shops want to keep the number customers already know. That is how ROAL is set up. The owner claims the host, ROAL gives each location its own phone line automatically, and then the owner forwards the restaurant’s existing number to it. You can forward all calls, or only when busy or unanswered, depending on your phone setup.\n\nPhone forwarding codes vary by carrier and plan, so always confirm with your carrier and test with a call. On many landlines and some carriers, *72 then the forwarding number turns on call forwarding, and *73 turns it off. On GSM mobile carriers such as AT&T and T-Mobile, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 and *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set this in the web portal.\n\nA practical test plan:\n1. Turn on forwarding for only unanswered calls first.\n2. Call your shop from a cell phone.\n3. Check that the phone host answers and takes the order.\n4. Confirm the kitchen screen gets the ticket.\n5. Turn forwarding off and back on as needed.\n\nIf you need a quick reference, use [Call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-happens-after-the-call-and-what-can-i-review-later",
+      "h2": "What happens after the call, and what can I review later?",
+      "body": "After the call, ROAL gives you a dashboard with live kitchen tickets, call history, transcripts, and recordings. You can see new, preparing, and ready tickets on the kitchen screen. You can also edit the menu, update hours, add FAQs, review upsell suggestions, and manage multiple locations.\n\nThat matters for a pizza shop because many problems show up after the rush. Maybe a topping name is unclear, or a special instruction gets said a few different ways. If the host could not answer something, it lands in an inbox. You answer it once, and the host knows it from then on.\n\nUse this short end-of-night checklist:\n- Review any calls that needed staff help.\n- Check whether the hours on the phone matched today’s schedule.\n- Scan new menu questions and add plain answers.\n- Look at the transcript for any order that sounded confusing.\n- Confirm the kitchen ticket format is easy to read at speed.\n\nFor owners who want to see the setup before committing, you can [build a free test host](/try) from your website. That is often the fastest way to check whether your pizza menu is ready for phone ordering."
+    }
+  ],
+  "takeaways": [
+    "Pizza shop phone orders AI can take pickup and delivery orders, answer menu questions, and send a clean ticket to the kitchen.",
+    "ROAL builds a phone host from your website, Google Maps link, or menu upload, and you can test it in the browser before going live.",
+    "ROAL charges $0.90 per completed phone order with no monthly fee, setup fee, per-minute fee, or contract.",
+    "You keep your restaurant’s existing number and can forward all calls or only busy and unanswered calls.",
+    "Tricky calls like allergy questions, catering, or manager requests can be passed to staff with a summary."
+  ],
+  "faq": [
+    {
+      "q": "Can AI answer pizza shop phone orders without taking card numbers?",
+      "a": "Yes. ROAL can take the order, collect the caller’s name and phone, and send the ticket to the kitchen screen. It does not take card numbers over the phone, so payment happens at pickup or however your shop already takes it."
+    },
+    {
+      "q": "Can I keep my current pizza shop phone number?",
+      "a": "Yes. You keep your existing number and forward calls to the ROAL number that is assigned to your location. You can forward all calls or only when busy or unanswered, and you can turn forwarding off any time."
+    },
+    {
+      "q": "What if the AI phone host does not know an answer?",
+      "a": "Questions it cannot answer go to an inbox, and you answer once. After that, the host learns from it and can answer that question going forward. You can also review and update hours, FAQs, and menu details in the dashboard."
+    },
+    {
+      "q": "How is pizza shop phone orders AI priced?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are free."
+    }
+  ],
+  "words": 1256,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

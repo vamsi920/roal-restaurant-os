@@ -1,0 +1,76 @@
+{
+  "slug": "ai-phone-answering-wing-shops",
+  "keyword": "wings phone order",
+  "category": "restaurant-types",
+  "title": "AI phone answering for wing shop orders",
+  "seoTitle": "Wing shop phone orders with AI phone host | ROAL",
+  "description": "AI phone answering for wing shop orders can take pickup and delivery calls, answer menu questions, and send clean tickets to the kitchen.",
+  "question": "How can an AI phone host handle a wings phone order without missing details?",
+  "answer": "An AI phone host can answer the phone, take a wings phone order from the live menu, collect sizes, sauces, modifiers, and notes, and send a clean ticket to the kitchen screen. It can also answer hours, address, parking, and menu questions, while handing tricky calls like allergies or manager requests to staff.",
+  "summary": "See how a wing shop can handle phone orders, rushes, and menu questions with less phone stress.",
+  "intro": "Wing shops get hit with the same calls all day: \"What flavors do you have?\" \"Can I get 20 wings?\" \"How long for pickup?\" A good wings phone order flow should make those calls fast, clear, and easy to repeat.\n\nAn AI phone host like ROAL can answer the restaurant's phone, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. It is built for busy restaurants, and it can be a useful fit for wing shops that want fewer missed calls and less back-and-forth.",
+  "sections": [
+    {
+      "id": "what-does-a-wings-phone-order-need-to-capture",
+      "h2": "What does a wings phone order need to capture?",
+      "body": "A wing order sounds simple until the caller starts stacking details. Wings shops usually need the size, sauce, dry rub, heat level, sides, dips, and whether the order is for pickup or delivery. If the order is for a big game night, you may also need notes like extra napkins, no celery, or \"separate sauces.\"\n\nA phone host should ask for the same details every time. That keeps the kitchen from guessing. ROAL can take items, sizes, modifiers, and notes from the live menu, then confirm the order back before it sends the ticket.\n\nUse a script like this:\n- \"Thanks for calling. What size wing order would you like today?\"\n- \"What sauce or dry rub should I put on that?\"\n- \"Any sides, dips, or special notes?\"\n\nFor a wing shop, the order should be complete enough that the cook can read it once and start cooking."
+    },
+    {
+      "id": "how-do-wing-shops-handle-flavors-sauces-and-add-ons-by-phone",
+      "h2": "How do wing shops handle flavors, sauces, and add-ons by phone?",
+      "body": "Wing menus can get messy fast. Some guests order 10 wings split between two sauces. Others want boneless, extra wet, mild plus garlic parmesan, or a combo with fries. The phone host has to keep up without losing the thread.\n\nThe cleanest setup is to think in menu steps. First size. Then style. Then flavor. Then add-ons. For example, the host might say: \"I have 20 bone-in wings. Which sauce would you like on them?\" If the caller wants split sauces, the host should ask how many in each flavor and repeat it back.\n\nHere is a practical checklist for wing menus:\n- Sizes: 6, 10, 20, or your own sizes\n- Style: bone-in or boneless\n- Sauce or dry rub: one or split\n- Heat level: mild, medium, hot, or your own labels\n- Add-ons: fries, celery, ranch, blue cheese, extra sauce\n\nROAL reads the live menu, so sold-out items should not be offered. That helps avoid a painful call where the caller wants a flavor you cannot make."
+    },
+    {
+      "id": "how-do-you-keep-rush-hour-calls-from-slowing-the-kitchen",
+      "h2": "How do you keep rush-hour calls from slowing the kitchen?",
+      "body": "Wing shops often feel the pressure when games start, rain hits, or the dinner rush stacks up. That is when the phone rings the most. If the staff is frying, boxing, or bagging, the phone can turn into a line of its own.\n\nA good phone flow should cut time without cutting clarity. ROAL can answer the call, take the order, quote a ready time, confirm the order back, and send a clean ticket to the kitchen screen. If the question is something the host cannot answer, it goes to the inbox and staff can answer it once so the host learns it for next time.\n\nA simple rush checklist for wing shops:\n1. Make sure the live menu is current.\n2. Confirm hours and pickup rules are correct.\n3. Set the ready-time language your staff uses.\n4. Decide which calls should forward only when busy or unanswered.\n5. Test-call the host before a big game or weekend rush.\n\nIf you want to compare the cost of phone help versus a monthly plan, use [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) or the [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "what-should-you-say-on-the-phone-so-the-order-is-clear",
+      "h2": "What should you say on the phone so the order is clear?",
+      "body": "Wing calls go smoother when the wording is short and repeatable. You do not need fancy language. You need a clear path from hello to ticket.\n\nA practical phone script for a wing shop can sound like this:\n\"Thanks for calling. What can I get started for you?\"\n\"Is that pickup or delivery?\"\n\"How many wings would you like, and what flavor?\"\n\"Any fries, dips, or notes?\"\n\"Your order will be ready in about 25 minutes. Can I get your name and phone number?\"\n\nThat script works because it moves in the same order the kitchen needs. It also catches the basics: item, size, flavor, notes, name, phone, and ready time.\n\nHere is a short order template you can use with staff or compare against your own setup:\n\n| Order detail | Example |\n| --- | --- |\n| Item | 20 bone-in wings |\n| Sauce | Half hot, half garlic parmesan |\n| Add-ons | Large fries, 2 ranches |\n| Name | Maria |\n| Phone | Caller number |\n| Ready time | 25 minutes |\n\nROAL can speak the caller's language and confirm the full order back before sending the ticket."
+    },
+    {
+      "id": "how-do-you-set-up-call-forwarding-without-losing-control",
+      "h2": "How do you set up call forwarding without losing control?",
+      "body": "Many wing shops already have a number customers know. You do not need to give that up. With ROAL, the owner claims the host, gets a phone line for each location, and forwards the restaurant's existing number to it. Forward all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nIf you are setting up forwarding yourself, carrier codes vary. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set this in the web portal. Always confirm with your carrier and test with a call.\n\nUse this setup checklist:\n- Confirm your forwarding choice: all calls, busy only, or unanswered only\n- Test a real call from a mobile phone\n- Check that the host answers with the right restaurant name\n- Make sure the kitchen gets the ticket\n- Turn forwarding off when you want to change the setup"
+    },
+    {
+      "id": "what-should-wing-shop-owners-watch-in-the-dashboard",
+      "h2": "What should wing shop owners watch in the dashboard?",
+      "body": "Once calls start coming in, the dashboard should help you see what happened without digging through a notebook. ROAL's dashboard includes live kitchen tickets with statuses like new, preparing, and ready, plus call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus.\n\nFor a wing shop, the useful parts are usually the simplest ones:\n- Live tickets so the kitchen knows what to cook next\n- Call history so you can check what the caller said\n- Menu editor so flavor names and sizes stay current\n- FAQs so common questions stop bouncing to staff\n- Upsell suggestions for items like fries or extra dips\n\nA helpful weekly habit is to review the calls that landed in the inbox. If the host could not answer a question about parking, catering, or a special request, you answer it once and the host learns it from then on. That is how the system gets better without you rewriting everything."
+    },
+    {
+      "id": "what-does-the-cost-look-like-for-a-wing-shop",
+      "h2": "What does the cost look like for a wing shop?",
+      "body": "Wing shops often compare phone help against delivery apps and hired phone staff. The math is worth doing with your own numbers.\n\nROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing happens monthly.\n\nHere is a simple example you can swap out:\n- Say you get 300 completed phone orders in a month.\n- At $0.90 each, that would be $270 for the month.\n- If your average order is $28, that is $8,400 in phone-order sales before you subtract food and labor.\n\nNow compare that with other common costs. Delivery apps often charge restaurants roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in.\n\nIf you want a simple way to compare your own numbers, use [the delivery app commission calculator](/tools/delivery-commission-calculator) and [the phone staff cost calculator](/tools/phone-staff-cost-calculator). If you want to test ROAL directly, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Wing shop calls work best when the phone host captures size, sauce, add-ons, name, phone, and ready time in one flow.",
+    "ROAL can answer the phone, take pickup and delivery orders, speak the caller's language, and send a clean ticket to the kitchen.",
+    "You can forward your existing number to the host and turn forwarding off any time.",
+    "Completed phone orders are billed at $0.90 each, with no monthly fee, setup fee, or per-minute fee."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take a wings phone order with split sauces?",
+      "a": "Yes. It can ask how many wings go to each sauce, confirm the split back to the caller, and send the details to the kitchen screen. That is important for wing shops because split flavors are common and easy to mishear."
+    },
+    {
+      "q": "Will the phone host tell callers about sold-out wing flavors?",
+      "a": "It should not offer items marked sold out. ROAL reads the live menu, so if you remove a flavor or item, it will stop offering it on the phone. That helps prevent awkward orders the kitchen cannot fill."
+    },
+    {
+      "q": "Can it handle allergy questions or manager requests?",
+      "a": "Yes, but those calls go to staff with a summary. ROAL can handle allergy-sensitive questions, catering, complaints, and manager requests by handing them off instead of guessing. That keeps the conversation safer and cleaner."
+    },
+    {
+      "q": "How do I forward my wing shop number to the host?",
+      "a": "You can forward your existing number to ROAL after claiming the host. Many carriers use codes like *72 or carrier-specific mobile forwarding codes, but the exact steps depend on your phone system and plan. Always confirm with your carrier and test with a real call."
+    }
+  ],
+  "words": 1360,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

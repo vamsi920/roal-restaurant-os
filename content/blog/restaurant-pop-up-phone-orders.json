@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-pop-up-phone-orders",
+  "keyword": "restaurant pop up",
+  "category": "operations",
+  "title": "How a pop-up restaurant can handle phone orders",
+  "seoTitle": "Pop-up restaurant phone orders | ROAL",
+  "description": "Plan how a pop-up restaurant will handle phone orders, routing, scripts, forwarding, and costs without losing control of pickup and delivery calls.",
+  "question": "How should a restaurant pop up handle phone orders without missing calls or making a mess for the kitchen?",
+  "answer": "A restaurant pop up should use one simple phone order process: a clear greeting, a live menu, a ready-time estimate, and a clean ticket sent to the kitchen. If the pop-up is temporary, forward calls to an AI phone host like ROAL so pickup and delivery orders can still be taken while questions, allergy concerns, and manager requests go to staff.",
+  "summary": "Set up a simple phone-order flow for a restaurant pop up that keeps calls organized and the kitchen in control.",
+  "intro": "A restaurant pop up should handle phone orders with a very simple system: answer quickly, take the order from a live menu, and send the ticket to the kitchen. If you are busy serving in person, an AI phone host like ROAL can answer the phone, take pickup and delivery orders, and pass tricky calls to staff.\n\nThat matters because pop-ups often run with a small team and no extra front-of-house person. One missed call can turn into a lost sale, while one messy order can slow the line down.",
+  "sections": [
+    {
+      "id": "what-should-your-restaurant-pop-up-do-with-phone-orders",
+      "h2": "What should your restaurant pop up do with phone orders?",
+      "body": "Start with one clear rule: every phone order should go through the same steps. That keeps the line moving and helps the kitchen trust what comes in.\n\nUse this basic flow:\n1. Answer the phone with your pop-up name.\n2. Confirm it is pickup or delivery.\n3. Take items, sizes, modifiers, and notes.\n4. Ask for the caller’s name and phone number.\n5. Quote a ready time.\n6. Read the order back.\n7. Send it to the kitchen screen or write it on a ticket.\n\nA simple script line helps a lot. Try: “Thanks for calling. What can I start for you today, pickup or delivery?”\n\nIf you use ROAL, it follows that kind of flow for you. It can also speak the caller’s language, skip sold-out items, and hand allergy-sensitive questions or manager requests to staff with a summary."
+    },
+    {
+      "id": "how-do-you-keep-the-menu-clear-for-a-short-term-pop-up",
+      "h2": "How do you keep the menu clear for a short-term pop-up?",
+      "body": "Pop-ups often change menus fast. That is where phone orders get messy, because the caller hears one thing and the kitchen is serving another.\n\nKeep your phone menu tied to the same live menu you are using in person. With ROAL, the owner can paste the restaurant website, Google Maps link, or just a name and city at /try, and ROAL reads the menu, prices, hours, and address from public pages. Owners can also upload a menu in any format.\n\nHere is a practical checklist for the pop-up menu:\n- Remove sold-out items right away.\n- Keep add-ons and sizes written the same way every time.\n- Decide which items need special notes, like spice level or sauce on the side.\n- Put the ready-time rules in one place for the host.\n- Keep hours and address current if you move the pop-up location.\n\nExample: say your pop-up has 12 items and 4 add-ons. If one sandwich sells out at 7:15 p.m., remove it from the live menu before the next call. That saves your team from re-explaining it over and over."
+    },
+    {
+      "id": "how-do-you-forward-calls-without-losing-your-main-number",
+      "h2": "How do you forward calls without losing your main number?",
+      "body": "For a pop-up, forwarding is often the easiest way to keep your existing number working. You can forward all calls, or only calls when busy or unanswered, so your team still has control.\n\nROAL gives each location its own phone line automatically once the owner claims the host, and the restaurant keeps its own number. Forwarding can be turned off any time.\n\nA few common forwarding patterns:\n- Forward all calls during pop-up hours.\n- Forward unanswered calls after a few rings.\n- Forward busy calls during rush periods.\n- Turn forwarding off after service ends.\n\nPhone codes vary by carrier and plan, so always confirm with your carrier and test with a call. On many landlines and some carriers, *72 plus the forwarding number sets all-call forwarding and *73 turns it off. On some mobile carriers, codes like **21*number# or **67*number# may be used, and some business VoIP systems use a web portal.\n\nIf you want a quick reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes) and still test with one real call before service starts."
+    },
+    {
+      "id": "how-much-does-a-pop-up-phone-order-system-cost",
+      "h2": "How much does a pop-up phone order system cost?",
+      "body": "The right cost model matters when your pop-up runs on tight margins. Delivery apps commonly charge restaurants roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often about $79 to $599, whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nWorked example, using easy numbers you can swap for your own:\n- Say your pop-up takes 120 completed phone orders in a month.\n- At $0.90 each, that is $108.\n- If your average phone order is $28, that is $3,360 in order value.\n\nNow compare that with the tools you already use. If a delivery app takes a percentage cut, the fee rises with every order. If a monthly tool charges a flat fee, you pay even in a slow month. For a pop-up, the pay-per-order model can be easier to match to actual phone traffic."
+    },
+    {
+      "id": "what-should-your-staff-do-when-a-call-gets-tricky",
+      "h2": "What should your staff do when a call gets tricky?",
+      "body": "Not every call should stay with the phone host. Some calls need a person, especially at a pop-up where the menu or setup may be changing by the hour.\n\nROAL sends these calls to staff with a summary:\n- Catering requests\n- Complaints\n- Allergy-sensitive questions\n- Manager requests\n- Questions it could not answer\n\nThat keeps the host useful without pretending it knows everything. It also means your team only gets the calls that need judgment.\n\nA simple internal handoff note can help:\n- Caller name:\n- Phone number:\n- What they want:\n- When they want it:\n- Any allergy or special request:\n\nExample: “Caller wants 8 pickup orders for 6:30, asked about sesame allergy, wants a manager call back.” That is far better than a vague message.\n\nIf you are using ROAL, unanswered questions land in an inbox, and once you answer them once, the host knows it from then on. That is helpful for pop-ups where the menu, hours, or pickup process can change quickly."
+    },
+    {
+      "id": "how-do-you-keep-phone-orders-organized-in-a-one-night-or-wee",
+      "h2": "How do you keep phone orders organized in a one-night or weekend pop-up?",
+      "body": "When a pop-up is short-term, the biggest risk is not technology. It is scattered information. One person answers the phone, another writes tickets, and the kitchen never knows which order is latest.\n\nUse one control sheet for the whole event:\n| Item | What to set before opening |\n|---|---|\n| Phone greeting | Short, same wording every time |\n| Hours | Exact service window |\n| Menu | Only active items |\n| Ready time | Your standard quote |\n| Handoff rules | What goes to staff |\n| Ticket flow | Where orders appear in the kitchen |\n\nROAL’s dashboard gives you live tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. For a pop-up, that means you can review what happened after service and tighten the process before the next one.\n\nA practical end-of-night review:\n1. Check which calls became tickets.\n2. Look for repeated menu questions.\n3. Remove or fix confusing items.\n4. Update hours or address if needed.\n5. Save any common question as an FAQ for next time.\n\nIf you want to see the setup flow, [Build a free test host](/try) from your website or menu pages and test-call it in the browser before you turn it on."
+    },
+    {
+      "id": "what-should-the-owner-check-before-the-doors-open",
+      "h2": "What should the owner check before the doors open?",
+      "body": "A pop-up can get busy fast, so the first 10 minutes matter. Before opening, make sure the phone side is just as ready as the kitchen side.\n\nUse this last-minute checklist:\n- Call the phone number yourself.\n- Check the greeting sounds natural.\n- Place one test pickup order.\n- Confirm the ticket lands on the kitchen screen.\n- Make sure sold-out items are blocked.\n- Confirm the address and hours are correct.\n- Test one question about parking, menu, or timing.\n\nROAL lets the owner pick the host’s voice and name, which helps the phone feel like part of the restaurant instead of an awkward extra layer. It also works for any US restaurant, including pop-ups, while the first restaurants using it are in Jersey City and Hoboken.\n\nOne useful owner script to keep on a sticky note is: “If the phone rings while we are slammed, let the host take the order. If the caller asks about catering or allergies, send it to me.” That keeps your team aligned without needing a big training session."
+    }
+  ],
+  "takeaways": [
+    "A pop-up phone order flow should be short, consistent, and tied to the live menu.",
+    "Forward calls to one main line, but test the setup with your carrier before service.",
+    "Use a phone host to take routine orders and send tricky calls to staff.",
+    "A pay-per-completed-order model can fit a pop-up better than a flat monthly fee.",
+    "Keep one end-of-night review loop so the next pop-up runs cleaner."
+  ],
+  "faq": [
+    {
+      "q": "How do I take phone orders for a restaurant pop up without hiring extra staff?",
+      "a": "Use a single phone flow with a short greeting, live menu, ready-time quote, and a clean ticket to the kitchen. An AI phone host like ROAL can handle pickup and delivery orders, collect name and phone number, and send questions it cannot answer to staff."
+    },
+    {
+      "q": "Can I forward my restaurant number to a pop-up line and turn it off later?",
+      "a": "Yes. Many carriers and phone systems support call forwarding, and you can usually turn it off when the pop-up ends. The exact codes vary by carrier and plan, so confirm with your provider and test one real call before service."
+    },
+    {
+      "q": "What phone calls should go to staff instead of the phone host?",
+      "a": "Catering, complaints, allergy-sensitive questions, and manager requests should go to staff with a short summary. That keeps the phone host focused on routine orders and basic questions, while people handle the calls that need judgment."
+    },
+    {
+      "q": "How does ROAL price phone orders for a pop-up?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract, so it can fit a short-term pop-up better than a fixed monthly plan."
+    }
+  ],
+  "words": 1342,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,76 @@
+{
+  "slug": "ai-phone-answering-ghost-kitchens",
+  "keyword": "ghost kitchen phone",
+  "category": "restaurant-types",
+  "title": "Phone answering for ghost kitchens",
+  "seoTitle": "Ghost kitchen phone support | ROAL",
+  "description": "Ghost kitchen phone support can take pickup and delivery orders, answer menu questions, and route tricky calls without extra phone clutter.",
+  "question": "How should I handle ghost kitchen phone calls without adding more work?",
+  "answer": "A ghost kitchen phone should be answered by someone or something that can take orders, answer hours and menu questions, and send a clean ticket to the kitchen fast. An AI phone host like ROAL can do that from your live menu, while tricky calls, allergy concerns, and manager requests go to staff with a summary.",
+  "summary": "You’ll know how to set up ghost kitchen phone handling, forward calls, and keep orders organized.",
+  "intro": "A ghost kitchen phone should be answered by a system that can take orders, answer common questions, and keep the kitchen from getting buried in calls. For many operators, that means an AI phone host that reads the live menu, takes pickup and delivery orders, and sends a clean ticket to the kitchen screen.\n\nThe goal is simple: fewer missed orders, less phone stress, and fewer interruptions while food is being made. If you run a ghost kitchen with one number, one menu, and a tight crew, ROAL can help by answering the phone, quoting ready times, and sending the right details to the kitchen without changing how your restaurant already works.",
+  "sections": [
+    {
+      "id": "what-should-a-ghost-kitchen-phone-handle-first",
+      "h2": "What should a ghost kitchen phone handle first?",
+      "body": "A ghost kitchen phone should do the jobs that slow your team down the most. That usually means answering the phone, taking order details, and handling the common questions that come in all day.\n\nFor a pickup-only or delivery-heavy operation, the most useful calls are usually these:\n- pickup orders\n- delivery orders from your own menu\n- hours and address questions\n- menu questions, including sizes and modifiers\n- parking or pickup instructions\n- reservation requests only if you take them\n- allergy-sensitive questions and manager requests sent to staff\n\nA good phone host should also know when to stop. ROAL does not take card numbers over the phone. It does not offer items marked sold out. And if a caller asks something tricky, like a catering request or a complaint, it sends that to staff with a summary.\n\nA simple script line helps here: \"Thanks for calling. I can help with pickup and delivery orders, hours, and menu questions. What can I get started for you?\""
+    },
+    {
+      "id": "how-do-i-set-up-a-ghost-kitchen-phone-without-a-lot-of-work",
+      "h2": "How do I set up a ghost kitchen phone without a lot of work?",
+      "body": "You do not need a long tech project. With ROAL, the owner can paste a restaurant website, a Google Maps link, or just \"Name, City\" at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute.\n\nThat matters for ghost kitchens because many of them change menus often, run from a small team, or share a building with other brands. You can also upload a menu in any format, which helps if your menu lives in a PDF or in menu photos.\n\nA practical setup checklist:\n1. Make sure your menu, prices, hours, and address are current.\n2. Include pickup instructions and any delivery zones you want the phone host to mention.\n3. Add sold-out items in your menu editor when needed.\n4. Test-call the host in the browser before going live.\n5. Pick the voice and name that fit your brand.\n\nBecause ghost kitchens often run lean, it helps that ROAL needs no sign-up to test. You can hear how it talks before you claim the host."
+    },
+    {
+      "id": "how-should-i-forward-calls-to-a-ghost-kitchen-phone-line",
+      "h2": "How should I forward calls to a ghost kitchen phone line?",
+      "body": "Once you claim the host, ROAL gives each location its own phone line automatically. You keep your existing restaurant number and forward calls to the new line, either all calls or only when busy or unanswered.\n\nThat gives you flexibility. If your crew can answer some calls during slower periods, you can keep handling those yourself and let the phone host catch the rest. If your kitchen gets slammed at lunch, you can send more calls to the host during that rush.\n\nA few common forwarding options in the US are:\n- many landlines and some carriers use *72 to forward all calls and *73 to turn it off\n- AT&T and T-Mobile mobile plans often use **21*number# for all calls, ##21# to turn it off, **61*number# for unanswered calls, and **67*number# for busy calls\n- Verizon Wireless often uses *72 and *73, and *71 for busy/no-answer forwarding\n- business VoIP systems usually set forwarding in the web portal\n\nCodes vary by carrier and plan, so confirm with your carrier and test with a call. If you want a reference, ROAL has a [call forwarding codes by carrier](/tools/call-forwarding-codes) page."
+    },
+    {
+      "id": "what-does-a-ghost-kitchen-phone-order-look-like-from-the-cal",
+      "h2": "What does a ghost kitchen phone order look like from the caller side?",
+      "body": "A caller should be able to place an order the same way they would with a person, without extra steps. The phone host should collect the item, size, modifiers, notes, name, and phone number, then quote a ready time and confirm the order back.\n\nA simple example makes this easier to picture. Say your average order is $28 and a caller wants two items with one modifier each. The phone host can say:\n\n\"Got it: one large chicken shawarma, no onions, one falafel wrap, extra tahini, and a soda. Your total is based on the menu prices, and it will be ready in about 20 minutes. Can I get your name and phone number?\"\n\nThat kind of call flow helps the kitchen because the ticket is clean and complete. It also helps the caller because they hear the order repeated before hanging up.\n\nA good ghost kitchen order ticket should include:\n- items and sizes\n- modifiers and notes\n- caller name and phone\n- ready time\n- any special instructions from the caller\n\nROAL sends that ticket to the kitchen screen, so staff can move straight to prep."
+    },
+    {
+      "id": "how-do-i-keep-ghost-kitchen-calls-from-slowing-the-kitchen-d",
+      "h2": "How do I keep ghost kitchen calls from slowing the kitchen down?",
+      "body": "The real problem is not the ring itself. It is the interruption. Every time someone in the kitchen stops to answer a call, you risk slowing tickets that are already in motion.\n\nA phone host helps by handling the repetitive calls and sending only the odd ones to staff. ROAL also has a dashboard with live tickets marked new, preparing, and ready, plus call history with transcripts and recordings. That gives you a clear picture of what came in without needing to replay every call in the moment.\n\nHere is a simple operating routine for a ghost kitchen:\n- Keep the menu editor current when items sell out or change.\n- Check the inbox for questions the host could not answer.\n- Use the call history to spot repeated questions about hours, parking, or pickup instructions.\n- Set up FAQs for common issues, like where to park or how late pickup runs.\n- Review upsell suggestions if you want to add them to the menu later.\n\nIf your kitchen has a busy lunch window, you can also use forwarding only when busy or unanswered. That keeps the front door open without putting more pressure on the line."
+    },
+    {
+      "id": "what-does-a-ghost-kitchen-phone-cost-compared-with-other-opt",
+      "h2": "What does a ghost kitchen phone cost compared with other options?",
+      "body": "Cost matters a lot in a ghost kitchen, because margins are tight and there is usually no front counter to catch calls. Here is a simple way to compare common choices using example numbers you can swap for your own.\n\n| Option | Typical cost shape | What to watch |\n| --- | --- | --- |\n| Delivery apps | Often roughly 15-30% commission per order | Costs rise with each order |\n| Human answering service | Usually per minute or per call | Can be hard to predict |\n| Monthly AI phone tools | Often roughly $79 to $599 per location | You may pay even in slow weeks |\n| ROAL | $0.90 per completed phone order | No monthly fee, no setup fee, no per-minute fee, no contract |\n\nA quick example: say you get 300 completed phone orders in a month. At ROAL’s pricing, that would be $270 for completed orders. Plug in your own order count to see your number.\n\nThe useful comparison is not just price. It is whether the phone system helps you capture the order cleanly and send it to the kitchen without more manual work. If you want a deeper comparison, see [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans)."
+    },
+    {
+      "id": "what-should-i-tell-customers-on-the-phone-so-they-know-they-",
+      "h2": "What should I tell customers on the phone so they know they reached the right place?",
+      "body": "Ghost kitchen callers often want quick confirmation that they called the correct place, especially if the brand is delivery-first or works from a shared kitchen. Keep the greeting short and specific.\n\nA good greeting line is:\n\"Thanks for calling. You’ve reached [brand name]. I can help with pickup and delivery orders, hours, and menu questions.\"\n\nYou can also add a pickup note if your setup needs one:\n- where to park\n- whether the order is handed out at a side door or pickup shelf\n- whether the caller should text on arrival\n- whether the kitchen closes earlier than the posted phone hours\n\nROAL speaks the caller’s language, which is helpful if your neighborhood gets a mix of callers. It also hands catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. That keeps the phone host useful without pretending it should handle everything.\n\nIf you want to try the setup before going live, you can [build a free test host](/try) from your website or menu and hear how it sounds on a real call."
+    }
+  ],
+  "takeaways": [
+    "A ghost kitchen phone should handle orders, hours, and menu questions first.",
+    "Forward your existing number to the new line, but test the setup with your carrier.",
+    "Keep sold-out items current so the phone host does not offer them.",
+    "Use a clean greeting, a clear ready time, and a kitchen ticket that staff can read fast."
+  ],
+  "faq": [
+    {
+      "q": "Can a ghost kitchen use one phone number for several brands?",
+      "a": "It can, but it is usually easier to keep each brand’s phone flow clear for callers and staff. ROAL gives each location its own phone line automatically, and the owner can forward the existing number to it. If you run multiple brands from one kitchen, keep the menu and hours for each one accurate so callers do not get mixed up."
+    },
+    {
+      "q": "Does ROAL take credit card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment, which keeps the call simple and avoids extra handling on the line."
+    },
+    {
+      "q": "What happens when the phone host does not know an answer?",
+      "a": "The question goes to an inbox, and the owner answers it once. After that, the phone host knows it from then on. That works well for ghost kitchens because hours, pickup notes, and menu details can change often."
+    },
+    {
+      "q": "How do I forward my ghost kitchen number to the new line?",
+      "a": "The exact code depends on your carrier and plan. Some landlines and carriers use *72 and *73, while some mobile carriers use different codes for all calls, unanswered calls, or busy calls. Confirm with your carrier and test the call forwarding before relying on it."
+    }
+  ],
+  "words": 1425,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

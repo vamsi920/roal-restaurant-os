@@ -1,0 +1,72 @@
+{
+  "slug": "restaurant-reviews-phone-service",
+  "keyword": "restaurant reviews phone",
+  "category": "marketing",
+  "title": "What reviews about your phone service are telling you",
+  "seoTitle": "Restaurant reviews phone service: what to fix",
+  "description": "Reviews can point to phone problems that affect orders and service. Find what guests notice and what to fix in the call experience.",
+  "question": "How do I handle restaurant reviews that mention my phone service?",
+  "answer": "Start by reading the call-related comments for patterns: missed calls, long holds, rude handoffs, wrong order details, or unclear hours and menu answers. Then fix the specific issue, whether that means better greetings, clearer forwarding, cleaner order taking, or using an AI phone host like ROAL to answer, quote, and ticket calls from your live menu.",
+  "summary": "You’ll learn how to spot call problems in reviews and turn them into simple fixes that help phone orders run smoother.",
+  "intro": "Restaurant reviews that mention your phone service are usually telling you one thing: callers had a bad experience before they ever got food. The fix is not to argue with the review. It is to find the phone problem behind it and make the next call easier.\n\nFor many pizza shops, delis, and family restaurants, those reviews point to the same few issues: no answer, long hold times, the wrong hours, or a messy order. If your restaurant gets a lot of [restaurant reviews phone](/blog/respond-to-restaurant-reviews) comments, treat them like free feedback from real callers. Each one is a clue you can use.",
+  "sections": [
+    {
+      "id": "what-do-reviews-about-my-phone-service-usually-mean",
+      "h2": "What do reviews about my phone service usually mean?",
+      "body": "When a review mentions the phone, the guest is usually reacting to one of a few concrete problems. They called for pickup, delivery, a reservation, or just your hours, and something broke along the way.\n\nLook for the exact words people use. That tells you where to fix the process.\n\n- “No one answered” usually means the call rang out, went to voicemail, or got missed during a rush.\n- “They put me on hold forever” usually means the phone is tied up when the line is busy.\n- “They got my order wrong” often means the order was heard but not written cleanly.\n- “They told me the wrong hour” often means the phone team is working from old info.\n- “They were rude” can mean the staff was stressed, rushed, or repeating the same questions all night.\n\nA practical way to read these reviews is to sort them into buckets: answer, accuracy, speed, and tone. If three reviews mention the same bucket, that is not random. That is a phone workflow problem."
+    },
+    {
+      "id": "how-do-i-turn-review-complaints-into-a-phone-fix",
+      "h2": "How do I turn review complaints into a phone fix?",
+      "body": "The cleanest way is to map each complaint to one action. Do not try to solve everything at once. Fix the problem the review points to.\n\n| Review complaint | Likely phone issue | Simple fix |\n|---|---|---|\n| “No answer” | Calls are missed during busy periods | Forward calls when busy or unanswered |\n| “Wrong order” | Staff is taking orders too fast or too loosely | Use a script for items, sizes, modifiers, and phone number |\n| “Wrong hours” | Outdated info is being quoted | Put hours in one place and keep it current |\n| “Had to repeat myself” | No clear order summary | Repeat the order back before ending the call |\n| “No one knew the menu” | Menu is not easy to access | Keep the live menu in one place and answer common questions from it |\n\nFor example, say a review says, “They never knew if they had wings.” That points to a menu question problem, not a food problem. A simple script line can help: “Yes, we have wings tonight, and I can tell you the sizes and prices now.”\n\nIf you use ROAL, it reads the restaurant’s menu, prices, hours, and address from public pages or an uploaded menu, then answers those questions on the phone. That means the caller gets a consistent answer instead of a rushed guess. The owner can still answer anything the host could not answer once, and the host learns it from then on."
+    },
+    {
+      "id": "what-should-i-listen-for-in-call-recordings-and-transcripts",
+      "h2": "What should I listen for in call recordings and transcripts?",
+      "body": "If your phone setup gives you transcripts or recordings, use them like a shift report. You do not need to listen to every call. Start with the calls that match the bad reviews.\n\n### What to check\n- Did the caller get a clear greeting?\n- Did the phone person ask for the caller’s name and number?\n- Was the full order repeated back?\n- Did they quote a ready time?\n- Were sold-out items left out?\n- Did the caller sound confused about hours, pickup, or delivery?\n\nA simple review audit can look like this:\n\n1. Open the call tied to the complaint.\n2. Find the exact point where the call went off track.\n3. Mark whether the problem was greeting, order accuracy, menu knowledge, or tone.\n4. Write one fix for that step.\n5. Retest with another call.\n\nHere is a small example you can swap for your own numbers: say you get 10 call-related reviews in a month, and 6 of them mention missed calls. That tells you missed calls are your main issue, not food quality. If 4 mention wrong orders, the problem is not only speed; it is also order capture. Put the fix where the pattern is strongest."
+    },
+    {
+      "id": "how-do-i-stop-bad-reviews-from-phone-mistakes",
+      "h2": "How do I stop bad reviews from phone mistakes?",
+      "body": "Bad phone reviews often come from a few avoidable habits: no greeting, too much hold time, vague order taking, and stale information. You can reduce those with a tighter phone routine.\n\nA good basic script sounds like this: “Thanks for calling [restaurant name]. How can I help with pickup, delivery, or a question?” Then: “What size would you like?” “Any modifiers or notes?” “Can I get your name and phone number?” “Your order will be ready at about [time].”\n\nUse this short checklist with your staff:\n- Answer with the same greeting every time.\n- Take items one by one.\n- Confirm size and modifiers.\n- Repeat the full order back.\n- Quote a ready time before ending the call.\n- Escalate allergy-sensitive, complaint, catering, or manager requests to a person.\n\nROAL follows that same structure on calls. It takes items, sizes, modifiers, notes, name, phone, and ready time. It also speaks the caller’s language, and it sends tricky calls to staff with a summary. It does not take card numbers over the phone, so payment stays where your restaurant already handles it. That keeps the call focused on getting the order right."
+    },
+    {
+      "id": "how-much-money-can-a-phone-problem-cost-me",
+      "h2": "How much money can a phone problem cost me?",
+      "body": "You do not need a perfect model to see the risk. Use a simple example and replace the numbers with your own.\n\nSay your average phone order is $28. If 5 call-related reviews point to missed or botched orders in a month, and even 2 of those callers would have ordered, that is $56 in immediate order value from that month alone. If one of those people never calls back, the longer-term cost is bigger, but you do not need to estimate that to know it hurts.\n\nNow compare your options.\n\n| Option | Common pricing pattern | What to watch |\n|---|---|---|\n| Delivery apps | Roughly 15-30% commission per order | Great reach, but expensive per order |\n| Human answering service | Usually per minute or per call | Helpful, but cost can rise fast |\n| Monthly AI phone tools | Often about $79 to $599 per location | You may pay even when call volume is light |\n| ROAL | $0.90 per completed phone order | No monthly fee, no setup fee, no per-minute fee |\n\nThat pricing matters because phone problems are not always constant. Some weeks are slow. Some nights are slammed. A pay-per-completed-order model can fit that kind of demand better than a fixed monthly bill. If you want to compare your own numbers, [use the phone host cost calculator](/tools/phone-host-cost-calculator) and plug in your average order value, your call volume, and your current phone setup costs."
+    },
+    {
+      "id": "what-phone-setup-should-i-use-after-the-reviews-show-a-patte",
+      "h2": "What phone setup should I use after the reviews show a pattern?",
+      "body": "Once you know the pattern, choose a phone setup that matches it. The point is not to make the phone complicated. The point is to keep the restaurant reachable and the order clean.\n\nIf you want all calls covered, many landlines and some carriers use *72 plus the forwarding number to forward all calls, and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle forwarding in the web portal. Codes vary by carrier and plan, so confirm with your carrier and test with a call.\n\nA simple rollout plan:\n1. Decide whether to forward all calls or only busy/unanswered calls.\n2. Test the forwarding with one real call.\n3. Check that the kitchen receives the ticket cleanly.\n4. Make sure the restaurant keeps its own number.\n5. Turn forwarding off any time if you need to.\n\nROAL gives each location its own phone line automatically once the owner claims the host. The owner forwards the restaurant’s existing number to it, and can turn that forwarding off any time. If you want to see whether that fits your store, [build a free test host](/try) from your website, Google Maps link, or name and city."
+    }
+  ],
+  "takeaways": [
+    "Reviews that mention phone service usually point to one of four problems: answer, accuracy, speed, or tone.",
+    "Use call recordings and transcripts to find the exact step where the call broke.",
+    "Fix the script first: greeting, order details, repeat-back, and ready time.",
+    "If phone issues are recurring, an AI phone host can answer questions, take orders, and send clean tickets to the kitchen.",
+    "Compare costs by order, not just by month, so you can see what fits your volume."
+  ],
+  "faq": [
+    {
+      "q": "Why do customers mention the phone in restaurant reviews?",
+      "a": "They usually mention the phone when something went wrong before the food even left the kitchen. Common reasons are missed calls, long hold times, wrong hours, unclear menu answers, or order mistakes. Those reviews are useful because they point to a specific fix in the phone process."
+    },
+    {
+      "q": "How do I know if the problem is my staff or my phone setup?",
+      "a": "Look at the pattern. If reviews say calls were missed or hours were wrong, that is usually a setup or process issue. If reviews say the person sounded rushed or rude, that can be a staffing or script issue. Often it is both, so start by fixing the step that failed first."
+    },
+    {
+      "q": "What should a restaurant phone script include?",
+      "a": "Keep it short and repeatable. Start with the restaurant name, then ask how you can help with pickup, delivery, or a question. For orders, collect items, sizes, modifiers, the caller’s name, and phone number, then repeat the order back and quote a ready time."
+    },
+    {
+      "q": "Can an AI phone host help with review complaints about calls?",
+      "a": "Yes, if the complaint is about order taking, answering common questions, or missed calls. An AI phone host like ROAL can answer the restaurant’s phone, take pickup and delivery orders from the live menu, answer hours and menu questions, and send a clean ticket to the kitchen screen. It does not take card numbers over the phone, and tricky calls go to staff."
+    }
+  ],
+  "words": 1401,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "automated-phone-ordering-restaurant",
+  "keyword": "automated phone ordering restaurant",
+  "category": "phone-orders",
+  "title": "Automated phone ordering for restaurants",
+  "seoTitle": "Automated phone ordering for restaurants | ROAL",
+  "description": "See what automated phone ordering systems can do, where they fall short, how pricing works, and how to test one with your menu.",
+  "question": "What should I expect from automated phone ordering in my restaurant?",
+  "answer": "Automated phone ordering for a restaurant usually means an AI phone host answers calls, takes pickup or delivery orders from your live menu, answers common questions, and sends the order to the kitchen. It should collect the caller’s name and phone, confirm items and ready time, and pass tricky calls to staff. It should not take card numbers over the phone.",
+  "summary": "You’ll learn what an automated phone ordering setup does, what to ask for, and how to test it safely in your restaurant.",
+  "intro": "Automated phone ordering for a restaurant usually means an AI phone host answers the phone, takes orders, and sends them to the kitchen. It can handle pickup and delivery orders, answer menu and hours questions, and pass harder calls to staff.\n\nWhat to expect is simpler than most owners think. You keep your restaurant’s number, set it up from your menu and website, and test it before going live. ROAL is built for that flow, and the important part is knowing where it helps and where your team still needs to step in.",
+  "sections": [
+    {
+      "id": "what-does-automated-phone-ordering-actually-handle-on-a-busy",
+      "h2": "What does automated phone ordering actually handle on a busy night?",
+      "body": "A good automated phone ordering restaurant setup should do the jobs that eat up the most time on the phone: taking orders, answering routine questions, and turning the call into a clean ticket. For a pizza shop, deli, or family restaurant, that usually means items, sizes, modifiers, notes, name, phone number, and a quoted ready time.\n\nHere is the kind of call flow to expect:\n- Caller asks for pickup.\n- The phone host reads from your live menu.\n- It confirms toppings, sides, sauces, and special notes.\n- It repeats the order back.\n- It sends the ticket to the kitchen screen.\n\nA practical script line sounds like this: \"What size pizza would you like, and do you want any toppings added?\"\n\nROAL does this from the restaurant’s live menu, and it can also answer hours, address, parking, and menu questions. It speaks the caller’s language when possible, and it can take reservation requests too. If a caller asks about catering, a complaint, allergy-sensitive issue, or wants a manager, the call is handed to staff with a summary. That is the right model for a real restaurant: automate the routine work, and keep humans on the exceptions."
+    },
+    {
+      "id": "how-does-setup-usually-work-from-your-menu-and-website",
+      "h2": "How does setup usually work from your menu and website?",
+      "body": "Setup should feel lightweight, because most owners do not have time for a long software project. With ROAL, the owner pastes the restaurant website, Google Maps link, or even just the restaurant name and city at /try. ROAL reads the menu, prices, hours, and address from public pages like the website, menu PDFs, or menu photos, then builds a phone host in about a minute.\n\nThat means you can test it in the browser before you commit to anything. No sign-up is needed to test. You can also upload a menu in any format, which helps if your menu is scattered across a PDF, a photo, and a website page.\n\nUse this simple setup checklist:\n1. Gather your website or Google Maps link.\n2. Make sure your menu items and prices are current.\n3. Check hours, address, parking notes, and delivery zones.\n4. Test a few real calls right in the browser.\n5. Fix any menu wording before going live.\n\nA good test question is: \"Do you have chicken parm with fries today?\" If the phone host gives the wrong item or misses a modifier, fix the source menu first. That is usually faster than changing how the host talks. For owners who want a fast first look, ROAL makes this part easy with a browser test and a menu import from public pages."
+    },
+    {
+      "id": "what-happens-when-the-phone-host-goes-live",
+      "h2": "What happens when the phone host goes live?",
+      "body": "Going live should not mean giving up your number. With ROAL, the owner claims the host, ROAL gives each location its own phone line automatically, and the owner forwards the restaurant’s existing number to it. You can forward all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nThat matters because most owners want to keep the number customers already know. They also want a backup plan. A simple live setup looks like this:\n- Existing number stays on your door, menus, receipts, and Google listing.\n- Calls route to the phone host when you want them to.\n- Staff still answers when they are free.\n- Tricky calls go to the team.\n\nFor call forwarding, the exact codes depend on the carrier and phone system. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# often forwards all calls and ##21# turns it off; **61*number# often forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Always confirm with your carrier and test with a real call.\n\nIf you need a refresher on setup, see the [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-do-orders-pricing-and-kitchen-tickets-work-together",
+      "h2": "How do orders, pricing, and kitchen tickets work together?",
+      "body": "The point of automated phone ordering is not just to talk to customers. It is to create an order your kitchen can use without rewriting it. ROAL sends a clean ticket to the kitchen screen, and the dashboard shows live tickets with statuses like new, preparing, and ready. It also keeps call history with transcripts and recordings, plus a menu editor, hours, FAQs, upsell suggestions, and multi-location menus.\n\nHere is a worked example you can swap with your own numbers:\n- Say your average phone order is $28.\n- Say the caller adds a side or drink once the host suggests it.\n- Say one completed order reaches the kitchen screen.\n- ROAL bills $0.90 per completed phone order.\n\nThe math is easy to compare against your current setup. If you use delivery apps, commissions are commonly around 15-30% per order. On a $28 order, that can mean roughly $4.20 to $8.40 in commission before other costs. A monthly phone plan can also be a fixed cost even if no orders come in. ROAL’s model is different: no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nA kitchen-friendly order ticket should include:\n- Customer name and phone\n- Items, sizes, modifiers, and notes\n- Ready time\n- Delivery or pickup details\n- Any staff handoff notes\n\nFor a deeper comparison, owners often look at [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) or [phone orders vs delivery apps](/compare/delivery-apps)."
+    },
+    {
+      "id": "what-kinds-of-calls-should-still-go-to-your-staff",
+      "h2": "What kinds of calls should still go to your staff?",
+      "body": "Automated phone ordering should help with routine work, not replace judgment. The right phone host knows when to stop and hand the call to a person. ROAL sends catering inquiries, complaints, allergy-sensitive questions, and manager requests to staff with a summary. That keeps the experience safe and practical.\n\nIt also does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it. That is important for every owner who worries about awkward or unsafe payment calls.\n\nUse this handoff checklist:\n- Catering request over a normal pickup call\n- Allergy question about ingredients or cross-contact\n- Customer is upset about a late order\n- Caller wants to speak to a manager\n- Caller asks for something not clearly on the menu\n\nA helpful script line is: \"I’m going to send this to the team with your number and question so they can help you directly.\"\n\nThat handoff should feel smooth, not abrupt. The caller should hear that someone will follow up, and your staff should get enough context to respond without starting over. If the phone host cannot answer a question, the owner can answer it once in the inbox, and the host knows it from then on. That is useful for special items, local delivery rules, or holiday hours that change often.\n\nOwners who want to compare this with other options can also review [AI phone host vs answering service](/compare/answering-service) and [AI phone host vs voicemail](/compare/voicemail)."
+    },
+    {
+      "id": "how-do-you-know-if-it-will-fit-your-restaurant-before-you-co",
+      "h2": "How do you know if it will fit your restaurant before you commit?",
+      "body": "The safest way to judge any automated phone ordering restaurant setup is to test it against your real menu, real rush, and real edge cases. ROAL lets owners test-call the host in the browser before going live, which is useful because it shows where the menu is clear and where it needs cleanup.\n\nA simple test plan looks like this:\n1. Call for a pickup order with three items.\n2. Add one modifier, like extra cheese or no onion.\n3. Ask about hours, parking, and address.\n4. Try a sold-out item to see if it refuses it.\n5. Ask an allergy question and confirm it hands off to staff.\n6. Try the caller’s language if you expect multilingual calls.\n\nIf you want a rough cost check, use a small example. Say you get 60 completed phone orders in a month. At $0.90 per completed order, that would be $54 for that month. Plug in your own order count, because every restaurant is different. Some places will see more dinner rushes. Others will see more lunch calls or late-night pickup.\n\nThis is also where you should check the voice and name. The owner picks both with ROAL, so the phone host can sound like it belongs to your shop. That small detail matters. Customers notice when the call feels natural.\n\nIf you want to start from your own menu, you can [build a free test host](/try) and make a few test calls before you decide whether to forward your line."
+    },
+    {
+      "id": "what-should-owners-ask-before-going-live",
+      "h2": "What should owners ask before going live?",
+      "body": "Before you turn on automated phone ordering, ask a few plain questions that matter in daily service. This is the owner checklist I would use for a pizza shop, deli, or family restaurant:\n\n| Question | Why it matters |\n| --- | --- |\n| Does it read my live menu, prices, and hours correctly? | Bad source data means bad orders. |\n| Can it handle pickup and delivery orders? | Most phone volume is ordering, not just questions. |\n| Does it send a clean kitchen ticket? | The order has to reach the line in useful form. |\n| What happens with allergy, catering, or complaint calls? | Those should reach staff fast. |\n| Can I keep my current phone number? | Customers already know that number. |\n| How am I billed? | You should know the cost before you forward calls. |\n\nROAL is built by Venkata Vamsi, a founder in Jersey City, NJ, and the first restaurants are in Jersey City and Hoboken, but it works for any US restaurant. That matters less than the daily basics: clear menu data, a simple handoff, and a phone setup that does not interrupt service.\n\nIf you want more background on the product itself, the [How it works](/how-it-works) and [ROAL facts](/facts) pages are useful next reads. The big takeaway is practical: automated phone ordering should save time on routine calls, protect staff from interruptions, and still leave room for a human when the call needs one."
+    }
+  ],
+  "takeaways": [
+    "Automated phone ordering should handle routine orders, questions, and kitchen tickets, not every call.",
+    "Keep your existing number and forward calls only when it helps your team.",
+    "Test the menu, hours, and handoff rules before you go live.",
+    "ROAL charges per completed phone order, not a monthly fee or per-minute fee.",
+    "Card payments stay with your existing payment process; tricky calls go to staff."
+  ],
+  "faq": [
+    {
+      "q": "What should automated phone ordering do for a restaurant?",
+      "a": "It should answer calls, take pickup and delivery orders from your menu, collect the customer’s name and phone, confirm the order, and send a clean ticket to the kitchen. It should also answer common questions about hours, address, parking, and the menu. When the call gets tricky, it should hand off to staff with a summary."
+    },
+    {
+      "q": "Will automated phone ordering replace my staff?",
+      "a": "No. It is best used for routine calls and order taking, not for every situation. ROAL hands catering, complaints, allergy-sensitive questions, and manager requests to staff. That way your team spends less time on repetitive calls and more time on service."
+    },
+    {
+      "q": "Can I keep my restaurant’s current phone number?",
+      "a": "Yes. With ROAL, the owner keeps the restaurant’s existing number and forwards calls to the new phone line. You can forward all calls or only when busy or unanswered, and turn forwarding off any time. That makes it easier to test without changing what customers already know."
+    },
+    {
+      "q": "How much does automated phone ordering cost?",
+      "a": "ROAL bills $0.90 per completed phone order, which means a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "words": 1739,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

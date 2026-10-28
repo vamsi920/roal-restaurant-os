@@ -1,0 +1,76 @@
+{
+  "slug": "what-to-check-in-first-week-ai-host",
+  "keyword": "first week ai phone answering",
+  "category": "operations",
+  "title": "What to expect in your first week with an AI host",
+  "seoTitle": "First week with an AI host | ROAL",
+  "description": "A practical look at the first week of AI phone answering for restaurants, including setup, forwarding, kitchen tickets, and staff checks.",
+  "question": "What should I expect during my first week with an AI phone host for my restaurant?",
+  "answer": "Your first week is usually about setup, call forwarding, and training the phone host on your menu and rules. Start by testing hours, pickup orders, reservations, and tricky questions, then check call history and kitchen tickets daily so you can fix gaps fast. Keep staff in the loop, and use forwarding only where it makes sense for your shift.",
+  "summary": "Learn how to set up, test, and manage your first week with an AI phone host.",
+  "intro": "Your first week with an AI phone host should be simple: set it up, test it, and watch how it handles real restaurant calls. The goal is to get reliable pickup orders, clear menu answers, and cleaner handoffs to the kitchen without adding work to your team.\n\nFor most owners, the first week is less about “learning software” and more about checking the basics: hours, menu items, sold-out items, call forwarding, and what happens when a call gets tricky. ROAL is built for that kind of setup, because it reads your public menu and lets you test-call it in the browser before you send it live.",
+  "sections": [
+    {
+      "id": "what-should-i-do-on-day-one",
+      "h2": "What should I do on day one?",
+      "body": "Day one is about getting a working phone host, not a perfect one. If you use ROAL, you can paste your restaurant website, Google Maps link, or just your name and city at [/try](/try). It reads your menu, prices, hours, and address from public pages, and you can also upload a menu in any format.\n\nA simple day-one checklist looks like this:\n- Confirm the restaurant name, address, hours, and parking info.\n- Check that the menu items and prices match what you actually sell.\n- Mark anything sold out so the host does not offer it.\n- Pick the voice and name you want callers to hear.\n- Test-call it from your phone and listen to the full flow.\n\nUse a real script line while testing: “Can I get a large pepperoni pizza for pickup, extra well done, ready in 20 minutes?” If the host repeats it back cleanly, you are on the right track. If not, fix the menu or the wording before you forward live calls."
+    },
+    {
+      "id": "how-do-i-test-the-calls-before-i-send-real-customers-to-it",
+      "h2": "How do I test the calls before I send real customers to it?",
+      "body": "Test calls are where the first week gets useful. ROAL lets owners test-call right in the browser, with no sign-up needed, so you can hear how it answers hours, address questions, and order-taking questions before customers hear it.\n\nTry a short test set like this:\n1. Ask for hours on a weekday and on Sunday.\n2. Ask for the address and parking.\n3. Place a pickup order with size, toppings, and a note.\n4. Ask about an item that is sold out.\n5. Ask a question the menu does not answer, like a catering request or allergy-sensitive request.\n\nListen for three things: whether the order is repeated back correctly, whether the caller’s name and phone number are captured, and whether the ready time sounds realistic. The host should also hand off sensitive or tricky calls to staff with a summary. If it cannot answer a question, it lands in the inbox, and once you answer it, the host learns it from then on. That is how the first week gets better fast."
+    },
+    {
+      "id": "how-should-i-forward-my-restaurant-number-without-causing-ch",
+      "h2": "How should I forward my restaurant number without causing chaos?",
+      "body": "Forwarding is where owners often get nervous, but it is usually straightforward. You keep your own number. ROAL gives each location its own phone line automatically, and you forward your existing number to it when you want all calls, or only when busy or unanswered.\n\nFor many restaurants, the safest first-week setup is to forward only during the busiest hours first, then expand once staff trust the flow. In many cases, landlines and some carriers use *72 to forward all calls and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Codes vary, so confirm with your carrier and test with a call.\n\nA practical first-week check:\n- Call your restaurant from an outside phone.\n- Confirm the call reaches the phone host.\n- Confirm a missed or busy call goes where you expect.\n- Turn forwarding off and on once so staff knows the process."
+    },
+    {
+      "id": "what-should-my-staff-know-during-the-first-week",
+      "h2": "What should my staff know during the first week?",
+      "body": "Your team does not need a long training session. They need a short, clear handoff plan. Tell them what kinds of calls the host handles, what gets passed to staff, and where to look for summaries.\n\nA simple staff script helps:\n- “If the phone host transfers a call, take the summary first.”\n- “If a caller asks about allergies, manager approval, catering, or a complaint, the host should hand it off.”\n- “If the host says a menu item is sold out, do not promise it anyway.”\n\nKeep one printed or saved checklist near the register:\n- Review live tickets on the kitchen screen.\n- Watch for order modifiers and notes.\n- Confirm the ready time before remaking or rushing an item.\n- Check the inbox for questions the host could not answer.\n\nThe first week is also a good time to compare the phone flow with your normal rush. If you already have a busy lunch or dinner window, use that to see how the host behaves when the restaurant is under pressure. ROAL’s dashboard shows live tickets, call history with transcripts and recordings, and menu edits, so the person on shift can fix small issues without hunting around."
+    },
+    {
+      "id": "how-do-i-use-the-kitchen-screen-and-tickets-during-week-one",
+      "h2": "How do I use the kitchen screen and tickets during week one?",
+      "body": "The kitchen screen is where the phone host becomes practical. Completed phone orders send a clean ticket to the kitchen screen, with the order details the kitchen needs to start cooking. That matters because the whole point of the first week is to make the order flow clearer, not messier.\n\nUse a simple comparison during the week:\n\n| What the caller says | What the kitchen should see |\n|---|---|\n| “Large cheese pizza, extra crispy, no garlic” | Size, item, modifier, note |\n| “Two chicken parm heroes, one no cheese” | Item count, modifier, special instruction |\n| “Ready in 25 minutes please” | Ready-time note if your workflow uses it |\n\nCheck the tickets at least a few times per shift:\n- New orders should appear cleanly.\n- Preparing and ready statuses should match your kitchen flow.\n- Notes should be readable without staff asking the front counter to repeat them.\n\nIf you already use a screen for tickets, this week is about making sure the phone orders look like the rest of your work, not like a separate mess. If your team wants a deeper look, [kitchen screen vs printed tickets](/blog/kds-vs-printed-tickets) is a useful follow-up."
+    },
+    {
+      "id": "what-numbers-should-i-watch-in-the-first-week",
+      "h2": "What numbers should I watch in the first week?",
+      "body": "Keep the numbers simple. You do not need a giant report. You need a quick weekly view that tells you whether the phone host is helping or creating extra work.\n\nStart with these items:\n- Completed phone orders that reached the kitchen screen.\n- Calls that were answered with no staff pickup needed.\n- Questions that landed in the inbox because the host could not answer them.\n- Order issues you had to correct before cooking.\n- Any call types you want to hand off sooner, such as catering or complaint calls.\n\nIf you want to compare cost, use your own numbers. Say your average phone order is $28 and you receive 40 completed phone orders in a month. That is $1,120 in phone order sales. ROAL charges $0.90 per completed phone order, so those 40 orders would cost $36 for that month. Plug in your own average order and count; the point is to see the order cost clearly.\n\nThat is different from monthly-fee AI phone tools, which often charge a fixed amount each month per location whether or not orders come in. Human answering services usually bill per minute or per call. Delivery apps commonly take rough commissions in the 15-30% range, so it helps to compare every channel using your real numbers, not guesswork. If you want to model it, [pricing](/pricing) and [the phone host cost calculator](/tools/phone-host-cost-calculator) make that easier."
+    },
+    {
+      "id": "what-should-i-fix-before-the-second-week",
+      "h2": "What should I fix before the second week?",
+      "body": "By the end of week one, you should have a short list of fixes, not a long one. The best approach is to clean up what customers actually asked for, then adjust the menu and FAQs once.\n\nUse this end-of-week review:\n1. Check the top five call questions.\n2. Update hours, parking, address, and menu wording where needed.\n3. Mark sold-out items so they are not offered again.\n4. Review any tricky calls that were handed to staff.\n5. Add notes for modifiers or special requests that repeat often.\n\nA good owner habit is to answer each missed question once, then let the phone host remember it. That reduces repeat work. It also helps to keep one staff member responsible for checking the inbox and kitchen screen at least once per shift.\n\nIf you are comparing your phone setup to hiring extra front-of-house help or using a manual answering service, the first week is your best proof point. You will know whether the host is taking the calls you want, where it needs guardrails, and what your team still needs to handle live. If you are ready to try it, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Start with a clean menu, hours, and forwarding setup before you send live calls.",
+    "Test orders, hours, sold-out items, and tricky questions on day one.",
+    "Use the kitchen screen, inbox, and call history to fix issues during week one.",
+    "Compare your actual order volume to pay-per-order pricing, not guesswork."
+  ],
+  "faq": [
+    {
+      "q": "How long does the first setup usually take for an AI phone host?",
+      "a": "ROAL builds a phone host in about a minute after you paste your website, Google Maps link, or restaurant name and city. You can also upload a menu in any format. The real first-week work is checking the menu, hours, sold-out items, and call forwarding so the host matches your restaurant."
+    },
+    {
+      "q": "Should I forward all calls on day one or only some calls?",
+      "a": "Many owners start with busy or unanswered forwarding first, then expand if the flow works well. That lets you test the setup without changing every call at once. Confirm the forwarding code or portal setting with your carrier or phone system, and test with an outside call before you rely on it."
+    },
+    {
+      "q": "What kinds of calls should go to staff instead of the phone host?",
+      "a": "Tricky calls such as catering requests, complaints, allergy-sensitive questions, and manager requests should go to staff with a summary. The phone host can also hand off anything it cannot answer. That keeps the caller moving without forcing the host to guess."
+    },
+    {
+      "q": "Does ROAL take payment over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes payment. The host’s job is to answer, take the order, confirm it, and send a clean ticket to the kitchen screen."
+    }
+  ],
+  "words": 1465,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

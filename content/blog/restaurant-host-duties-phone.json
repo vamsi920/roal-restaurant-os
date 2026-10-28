@@ -1,0 +1,71 @@
+{
+  "slug": "restaurant-host-duties-phone",
+  "keyword": "restaurant host duties",
+  "category": "staffing",
+  "title": "Restaurant host duties for phone calls and orders",
+  "seoTitle": "Restaurant host duties for phone calls and orders",
+  "description": "Use a practical phone guide for hosts, with simple scripts, routing tips, and ways to handle orders, questions, and rushes.",
+  "question": "What are restaurant host duties and how should the phone be handled at the host stand?",
+  "answer": "Restaurant host duties and the phone usually mean one person keeps the dining room moving while answering calls, quoting hours, taking pickup orders, and routing tricky questions to staff. The host should use a simple script, collect the right details, and pass along anything involving allergies, catering, complaints, or manager requests. If the phone is too busy for the front counter, an AI phone host like ROAL can take orders, answer common questions, and send clean tickets to the kitchen screen.",
+  "summary": "You’ll know what the host should handle, what to send to staff, and how to keep the phone from slowing the front door.",
+  "intro": "Restaurant host duties and the phone go together because the same person often has to greet walk-ins, keep a wait list moving, and answer calls. The host should handle simple questions, take pickup orders when possible, and hand off anything sensitive, detailed, or time-consuming.\n\nFor a busy pizza shop, deli, or family restaurant, the goal is not perfection. The goal is a short, repeatable phone routine that protects the front door, keeps orders accurate, and gives staff a clean handoff when the caller needs more help than the host can give.",
+  "sections": [
+    {
+      "id": "what-should-the-host-handle-on-the-phone-during-a-busy-shift",
+      "h2": "What should the host handle on the phone during a busy shift?",
+      "body": "The host stand should handle the calls that can be answered quickly and clearly without slowing service. That usually means hours, address, parking, menu basics, pickup orders, reservation requests, and simple status questions.\n\nA good rule: if the answer is on the public menu or can be confirmed in one quick check, the host can usually take it. If it needs judgment, a manager, or a long back-and-forth, send it to staff with a note.\n\nUse a simple script line like: \"Thanks for calling. I can help with pickup orders, hours, and menu questions. If you need catering or have an allergy question, I’ll get someone to help.\" \n\nConcrete checklist for the host stand:\n- Answer with the restaurant name first.\n- Ask whether it’s pickup, delivery, reservation, or a question.\n- Repeat the order back before hanging up.\n- Get the caller’s name and phone number.\n- Quote a ready time.\n- Send special cases to staff with a short summary.\n\nIf you want a cleaner handoff for busy nights, [short-staffed shifts](/use-cases/short-staffed) is a good place to start."
+    },
+    {
+      "id": "how-do-you-keep-phone-calls-from-slowing-down-the-front-door",
+      "h2": "How do you keep phone calls from slowing down the front door?",
+      "body": "The problem is not the phone itself. The problem is the interruption. A host who is seating a table, checking a wait list, and taking calls can lose track fast.\n\nMake the phone routine short and predictable. The host should not improvise every time. Keep the same order: greeting, reason for calling, details, confirmation, close.\n\nWorked example: say your host spends 3 minutes on a call and 4 walk-ins arrive during that time. That can create a bottleneck. If the phone call is trimmed to 90 seconds for a simple pickup order, the front door stays moving. Plug in your own times and see where the pinch point is.\n\nHere is a practical front-counter script:\n1. Greet the caller in one sentence.\n2. Ask for the order type.\n3. Take the details in one pass.\n4. Confirm the total and ready time.\n5. End with the name and pickup reminder.\n\nIf you need a stronger phone routine, [phone greeting templates](/tools/phone-greeting-templates) can help your staff sound consistent. ROAL uses a similar idea on the phone: short, clear, and focused on the order or question, not a long conversation."
+    },
+    {
+      "id": "what-details-should-the-host-collect-every-time",
+      "h2": "What details should the host collect every time?",
+      "body": "For phone orders, the host should collect the same core details every time so the kitchen gets a usable ticket. That keeps the line from guessing later.\n\nA solid phone order should include:\n- Items and sizes.\n- Modifiers and notes.\n- Name and phone number.\n- Pickup time or ready time.\n- Any special instructions the kitchen needs.\n\nExample script: \"Can I get your name and number, and then I’ll repeat the order back to you?\" That one line helps prevent confusion.\n\nHere is a simple order capture table you can copy into staff training:\n\n| Detail | Example |\n|---|---|\n| Name | Maria |\n| Phone | 201-555-0148 |\n| Item | Large cheese pizza |\n| Modifier | No onions, extra crispy |\n| Ready time | 25 minutes |\n| Notes | Call on arrival |\n\nROAL follows this same pattern on calls: it takes items, sizes, modifiers, notes, name, phone, and a ready time, then confirms the order back and sends a clean ticket to the kitchen screen. It also does not offer items marked sold out."
+    },
+    {
+      "id": "when-should-the-host-hand-the-phone-off-to-staff",
+      "h2": "When should the host hand the phone off to staff?",
+      "body": "The host should not try to solve every call. Some calls need a person with the right context, and those should go to staff quickly with a summary.\n\nSend these to staff:\n- Catering requests.\n- Complaints.\n- Allergy-sensitive questions.\n- Manager requests.\n- Anything the host cannot answer from the menu or hours.\n\nA good handoff sounds like this: \"One moment please, I’m getting someone to help with that.\" Then the caller should not have to repeat everything from scratch if the handoff is done well.\n\nA simple staff note should include the caller’s name, phone number, issue, and what was already asked. Example: \"Caller: Tony. Wants a catering quote for Saturday. Needs manager call back after 2 p.m.\" That is much better than a bare transfer.\n\nIf your team is deciding who handles which calls, [what calls should reach the manager](/blog/restaurant-manager-phone-escalations) is a useful companion topic. For restaurants using ROAL, the host can send these tricky calls to staff with a summary, while the owner answers the uncommon question once and the host learns it from then on."
+    },
+    {
+      "id": "how-do-you-answer-hours-parking-and-menu-questions-without-g",
+      "h2": "How do you answer hours, parking, and menu questions without guessing?",
+      "body": "Many host stand calls are not orders at all. They are simple questions, but the host still needs the right answer. If staff guess, the guest may show up at the wrong time or order the wrong item.\n\nKeep the answers short and factual. A host should say: \"We’re open until 9 tonight,\" or \"Parking is behind the building,\" or \"Yes, that item is on the menu.\" If the host is unsure, it is better to check than to guess.\n\nUseful mini-checklist for common questions:\n- Hours: today’s open and close time.\n- Address: full street address and entrance details.\n- Parking: lot, street parking, or nearby options.\n- Menu: yes/no on item availability and common substitutions.\n- Language: respond in the caller’s language when possible.\n\nIf you want a deeper breakdown of these calls, [menu, hours and allergen questions](/use-cases/menu-questions) covers the common patterns. ROAL reads public menu pages, menu PDFs, menu photos, hours, and address details during setup, so the owner can paste a website or Google Maps link and build a phone host quickly without starting from scratch."
+    },
+    {
+      "id": "how-should-you-set-up-the-phone-so-the-host-stand-is-not-stu",
+      "h2": "How should you set up the phone so the host stand is not stuck all day?",
+      "body": "The phone setup should match how your restaurant actually works. Many owners want all calls forwarded to one place. Others only want forwarding when the line is busy or unanswered.\n\nUS call forwarding codes vary by carrier and plan, so always confirm with your carrier and test with a live call. Common examples are:\n- Many landlines and some carriers: *72 to forward all calls, *73 to turn it off.\n- Verizon Wireless: *72 / *73 for all calls, and *71 for busy or no-answer forwarding.\n- Some GSM carriers: **21*number# for all calls, ##21# to turn it off, **61*number# for unanswered calls, and **67*number# for busy calls.\n- Business VoIP systems often use a web portal.\n\nA practical setup checklist:\n1. Decide whether to forward all calls or only overflow calls.\n2. Test from a mobile phone.\n3. Confirm the restaurant’s main number still stays live.\n4. Tell staff how to turn forwarding off if needed.\n5. Keep the routing notes in one place.\n\nROAL gives each location its own phone line automatically, and the owner forwards the restaurant’s existing number to it. The restaurant keeps its own number, and forwarding can be turned off any time. You can [build a free test host](/try) from your website, Google Maps link, or restaurant name and city, then test it right in the browser before going live."
+    }
+  ],
+  "takeaways": [
+    "The host stand should answer simple phone calls, take orders, and protect the flow at the front door.",
+    "Use the same short script every time so callers get a clear answer and the kitchen gets clean details.",
+    "Hand off catering, allergy, complaint, and manager calls with a summary instead of making the caller repeat everything.",
+    "Set up call forwarding based on your real rush patterns, and confirm it with a test call."
+  ],
+  "faq": [
+    {
+      "q": "What are the main restaurant host duties on the phone?",
+      "a": "The main phone duties are greeting callers, answering hours and location questions, taking pickup orders, and handling simple reservation requests. The host should also collect the caller’s name and phone number, then confirm the order or message before ending the call."
+    },
+    {
+      "q": "Should the host take allergy questions over the phone?",
+      "a": "The host can listen and pass the question along, but allergy-sensitive calls should go to staff or a manager. These calls need careful handling and should not be guessed at the counter or on the phone."
+    },
+    {
+      "q": "How do I keep the host stand from getting overloaded by calls?",
+      "a": "Use a short script, a clear handoff rule, and a setup that sends some calls elsewhere when needed. If the front door is busy, an AI phone host can answer routine calls and send a clean ticket to the kitchen screen while staff focus on guests."
+    },
+    {
+      "q": "Can ROAL take card payments on the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it, while the phone host handles the order details, questions, and confirmation."
+    }
+  ],
+  "words": 1226,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

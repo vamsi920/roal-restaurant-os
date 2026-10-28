@@ -1,0 +1,76 @@
+{
+  "slug": "ai-phone-answering-caribbean-restaurants",
+  "keyword": "caribbean restaurant takeout",
+  "category": "restaurant-types",
+  "title": "AI phone answering for Caribbean takeout orders",
+  "seoTitle": "Caribbean restaurant takeout | ROAL",
+  "description": "AI phone answering for Caribbean restaurants can take pickup orders, answer menu questions, and route tougher calls to staff.",
+  "question": "How can I use AI phone answering for Caribbean restaurants to handle takeout calls better?",
+  "answer": "An AI phone host can answer Caribbean restaurant takeout calls, take pickup and delivery orders from your live menu, answer hours and menu questions, and send a clean ticket to the kitchen. It can also gather the caller’s name and phone, quote a ready time, speak the caller’s language, and hand allergy or manager requests to staff when needed.",
+  "summary": "Learn how to use an AI phone host to handle Caribbean takeout calls, questions, and kitchen tickets.",
+  "intro": "AI phone answering for Caribbean restaurants helps with takeout calls, menu questions, and busy-line overflow. It can answer the phone, take orders from your live menu, and send the ticket to the kitchen so your staff can keep cooking.\n\nFor a Caribbean spot, that matters because callers often want quick pickup, custom notes, and help with menu items. A tool like ROAL can handle those routine calls, while staff still take the tricky ones and any payment at pickup or by your usual method.",
+  "sections": [
+    {
+      "id": "what-calls-should-an-ai-phone-host-handle-for-a-caribbean-ta",
+      "h2": "What calls should an AI phone host handle for a Caribbean takeout spot?",
+      "body": "For a Caribbean restaurant takeout counter, the best calls to automate are the ones that repeat all day: pickup orders, delivery orders, hours, address, parking, and menu questions. That keeps the front counter from getting tied up while the kitchen is busy.\n\nA practical split looks like this:\n- **AI phone host handles:** menu questions, hours, address, parking, pickup orders, delivery orders, and reservation requests.\n- **Staff handles:** allergy-sensitive questions, catering details, complaints, and manager requests.\n\nExample phone line: \"Thanks for calling. I can help with pickup orders, hours, and menu questions. What can I get started for you?\"\n\nFor a Caribbean menu, callers often ask about jerk chicken, oxtail, curry goat, roti, rice and peas, plantains, patties, and sides. The phone host should read what you actually sell today and skip items marked sold out. That matters because many takeout calls are rushed, and the wrong item on the ticket slows the whole line."
+    },
+    {
+      "id": "how-do-i-set-up-roal-from-my-website-or-menu",
+      "h2": "How do I set up ROAL from my website or menu?",
+      "body": "ROAL is built for fast setup. The owner pastes the restaurant website, Google Maps link, or just the restaurant name and city at /try. ROAL reads the menu, prices, hours, and address from public pages like the website, menu PDFs, and menu photos, and builds a phone host in about a minute.\n\nA simple setup checklist:\n1. Paste your website, Google Maps link, or name and city.\n2. Check the menu items, prices, hours, and address.\n3. Test-call it in the browser.\n4. Upload a menu if you want to add items in any format.\n5. Pick the voice and name.\n\nA useful script test is: \"Can I get two jerk chicken dinners, one with plantains instead of rice, and one side order of curry chickpeas?\" The phone host should take the items, sizes, modifiers, and notes, then confirm the order back. If it cannot answer something, that question goes to your inbox, and once you answer it, the host knows it from then on. You can also read more in [How it works](/how-it-works)."
+    },
+    {
+      "id": "what-should-the-phone-host-say-when-someone-orders-jerk-chic",
+      "h2": "What should the phone host say when someone orders jerk chicken, patties, or oxtail?",
+      "body": "The best phone flow is short and clear. Caribbean takeout callers want to hear the menu, place the order, get a ready time, and hang up. The phone host should not sound stiff.\n\nHere is a simple flow ROAL can follow:\n- Greet the caller.\n- Ask what they want to order.\n- Capture item, size, sides, modifiers, and notes.\n- Collect the caller’s name and phone.\n- Quote a ready time.\n- Repeat the order back for confirmation.\n\nExample phone script line: \"Got it — one oxtail dinner with rice and peas, one side of cabbage, and no extra gravy. I’ll have that ready in about 25 minutes.\"\n\nFor a real restaurant example, say your average order is $28. If five extra calls a day come in while staff are busy, plug in your own numbers and multiply by your average order size to see how much work is sitting on the line. ROAL is set up to send a clean ticket to the kitchen screen, so the person cooking sees the order without retyping it. That is useful when the caller says things like \"light pepper\" or \"extra sauce,\" because those notes matter."
+    },
+    {
+      "id": "how-do-i-handle-busy-hours-without-losing-the-main-line",
+      "h2": "How do I handle busy hours without losing the main line?",
+      "body": "Caribbean restaurants often get slammed around lunch, dinner, weekends, and after-school rushes. That is where call forwarding helps. The restaurant keeps its own number, and ROAL gives each location its own phone line automatically once the owner claims the host.\n\nCommon forwarding options depend on your carrier or phone system. On many landlines and some carriers, dial *72 then the forwarding number to forward all calls, and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nQuick setup checklist:\n- Confirm your carrier’s exact codes.\n- Test with a real call after forwarding.\n- Decide whether to forward all calls or only busy/unanswered calls.\n- Turn forwarding off any time you want.\n\nThat flexibility matters for a family restaurant. You might forward only during dinner rush, then switch it off after the line calms down. ROAL also allows calls, questions, and test calls to be unlimited and free, so you can check it as often as you need without worrying about test call charges."
+    },
+    {
+      "id": "what-does-it-cost-compared-with-delivery-apps-or-monthly-pho",
+      "h2": "What does it cost compared with delivery apps or monthly phone plans?",
+      "body": "The pricing should make sense for takeout-heavy restaurants. ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reaches the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Billing is monthly.\n\nThat is different from a few common alternatives:\n\n| Option | Typical cost pattern | What to watch |\n|---|---:|---|\n| Delivery apps | Often 15-30% commission per order | Fees can cut deep on takeout orders |\n| Human answering services | Usually per minute or per call | Costs keep going even when callers ask simple questions |\n| Many AI phone tools | Often about $79 to $599 per location each month | You pay even in slow months |\n| ROAL | $0.90 per completed phone order | Calls, questions, and test calls are free |\n\nWorked example: say you get 120 completed phone orders in a month. At $0.90 each, that would be $108 for the month. Plug in your own completed-order count and compare it with what you currently pay in commissions, monthly fees, or call center charges.\n\nIf you want a simple way to compare numbers, use the [AI phone host cost calculator](/tools/phone-host-cost-calculator) and the [phone staff cost calculator](/tools/phone-staff-cost-calculator)."
+    },
+    {
+      "id": "how-should-i-set-up-forwarding-kitchen-tickets-and-fallback-",
+      "h2": "How should I set up forwarding, kitchen tickets, and fallback rules?",
+      "body": "The cleanest setup is one number in, one ticket out. Your existing restaurant number forwards to ROAL when you want it to, and ROAL sends the finished order to the kitchen screen so the order does not sit in voicemail.\n\nUse this practical setup list:\n1. Forward the main line during busy hours, or only when unanswered.\n2. Keep pickup and delivery orders on the phone host.\n3. Send allergy-sensitive calls, catering, complaints, and manager requests to staff.\n4. Make sure sold-out items are blocked.\n5. Check the kitchen screen for new, preparing, and ready tickets.\n\nExample line for a caller with a concern: \"I can help with your order, but I need to connect you with the restaurant team about that allergy question.\"\n\nROAL also keeps call history with transcripts and recordings, plus a menu editor, hours, FAQs, upsell suggestions, and multi-location menus in the dashboard. That matters if you run one kitchen in the day and a second rush at night. If you need a reminder on the phone side, the [call forwarding codes by carrier](/tools/call-forwarding-codes) page is a handy place to check the common options before you test."
+    },
+    {
+      "id": "what-should-i-tell-customers-so-the-phone-host-feels-natural",
+      "h2": "What should I tell customers so the phone host feels natural?",
+      "body": "Customers do not need a long explanation. A short greeting is enough. The goal is to sound like a restaurant that answers quickly and clearly.\n\nA good front-end message could be:\n\"Thanks for calling [Restaurant Name]. I can help with pickup orders, delivery orders, hours, and menu questions.\"\n\nA few more practical phrases:\n- \"What can I get started for you?\"\n- \"That item is not available right now.\"\n- \"I have your order ready time as 25 minutes.\"\n- \"I’m sending that question to the restaurant team.\"\n\nIf you want wording ideas, [Phone greeting templates](/tools/phone-greeting-templates) can help you pick a tone that fits your shop.\n\nROAL also speaks the caller’s language, which is useful in many neighborhoods where callers switch between English and another language. The owner chooses the voice and name, and questions the host could not answer land in an inbox. That keeps the phone flow simple without pretending the phone host can handle every special request. For a Caribbean takeout spot, that honesty matters as much as speed."
+    }
+  ],
+  "takeaways": [
+    "Use an AI phone host for routine Caribbean takeout calls, not for card payments or complex complaints.",
+    "ROAL can read your live menu, answer questions, take orders, and send a clean kitchen ticket.",
+    "Forward calls during rushes or unanswered periods, then turn forwarding off whenever you want.",
+    "Compare per-order pricing with delivery app commissions and monthly phone plans using your own order count."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take Caribbean takeout orders from my live menu?",
+      "a": "Yes. ROAL can take pickup and delivery orders from the restaurant’s live menu, including items, sizes, modifiers, and notes. It also collects the caller’s name and phone, quotes a ready time, and confirms the order back before sending a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "Will it take credit card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it."
+    },
+    {
+      "q": "How do I forward my restaurant phone to an AI phone host?",
+      "a": "You forward your existing number to the phone line ROAL gives your location. On many carriers, you can use common forwarding codes, but codes vary by carrier and plan, so confirm with your provider and test with a real call. You can forward all calls or only when busy or unanswered."
+    },
+    {
+      "q": "What happens when the phone host cannot answer a question?",
+      "a": "That question lands in the owner’s inbox. You answer it once, and the host knows it from then on. For allergy-sensitive questions, catering, complaints, or manager requests, ROAL can hand the call to staff with a summary."
+    }
+  ],
+  "words": 1383,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

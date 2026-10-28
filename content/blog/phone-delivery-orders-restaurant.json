@@ -1,0 +1,72 @@
+{
+  "slug": "phone-delivery-orders-restaurant",
+  "keyword": "restaurant delivery phone orders",
+  "category": "phone-orders",
+  "title": "How to handle restaurant delivery phone orders",
+  "seoTitle": "Restaurant delivery phone orders: address, fees, timing",
+  "description": "Make restaurant delivery phone orders easier by confirming the address, fees, and timing every time. Use a simple script to reduce mistakes.",
+  "question": "How should I handle restaurant delivery phone orders for address, fees, and timing?",
+  "answer": "Ask for the full delivery address first, then confirm any delivery fee, minimum, and the quoted ready time before you finish the call. For restaurant delivery phone orders, repeat the order back, collect the caller’s name and phone number, and send the ticket to the kitchen only after everything is confirmed. Keep card payment out of the call and hand tricky delivery questions to staff.",
+  "summary": "You’ll know exactly what to ask, quote, and confirm on delivery calls.",
+  "intro": "Restaurant delivery phone orders go smoother when you ask for the address first, confirm the fee up front, and quote a realistic ready time before you hang up. That keeps the call short and cuts down on mistakes.\n\nIf your shop gets a mix of takeout and delivery calls, a simple script helps more than a long one. The goal is to get the name, address, order, fee, and timing right the first time, whether a person answers or an [AI phone host](/how-it-works) does it for you.",
+  "sections": [
+    {
+      "id": "what-should-i-ask-first-on-a-delivery-call",
+      "h2": "What should I ask first on a delivery call?",
+      "body": "Start with the details that affect the order most: address, whether it is delivery or pickup, and the caller’s name. Then move straight to the items so you can check whether you deliver to that area and whether any fee applies.\n\nA good opening sounds like this: \"Thanks for calling. Is this for delivery or pickup, and what’s the full address for delivery?\" That one line saves time because you know where the order is going before you quote anything.\n\nUse a simple order flow:\n1. Greet the caller.\n2. Ask for delivery or pickup.\n3. Get the full address, including apartment or suite.\n4. Take items, sizes, modifiers, and notes.\n5. Confirm fee and ready time.\n\nFor example, if the caller wants two large pizzas and a salad, you can check the address before promising a time. If the address is outside your zone, you can say, \"I’m sorry, we don’t deliver there, but I can help with pickup.\" That keeps the call clear and avoids a kitchen ticket you cannot fulfill."
+    },
+    {
+      "id": "how-do-i-quote-delivery-fees-without-confusion",
+      "h2": "How do I quote delivery fees without confusion?",
+      "body": "Make the fee part of the order, not a surprise at the end. Say the delivery fee, any minimum, and whether tax is separate before you confirm the final total.\n\nYou do not need a fancy speech. Try this: \"There is a $4 delivery fee on this order, and your total before tip is $28 plus tax.\" Swap in your own numbers. If your fee changes by area, say that clearly: \"For this address, the delivery fee is $6.\" \n\nHere is a simple checklist for fee calls:\n- Say the delivery fee before you close the order.\n- Mention the minimum if you have one.\n- Repeat whether the fee is part of the total or separate.\n- Do not guess if you are unsure; ask staff or use your house rule.\n\nDelivery apps commonly take a much larger cut from each order, often around 15-30% commission. That is why many owners still want phone delivery orders. The fee line on the call matters because it protects the guest experience and helps you keep the math clean. If ROAL answers the phone, it can say the fee the same way every time from your published info and your settings."
+    },
+    {
+      "id": "what-timing-should-i-give-for-delivery-orders",
+      "h2": "What timing should I give for delivery orders?",
+      "body": "Quote a ready time that your kitchen can actually hit. If you rush the estimate, the caller gets frustrated and the driver gets stuck waiting. If you pad it too much, you may lose the order.\n\nUse a simple formula for your own shop: prep time + hold time + delivery handoff time. Say your food usually takes 18 minutes to prep, 5 minutes to box, and 2 minutes to hand off. Your quote might be 25 minutes, not 15. Plug in your own real numbers.\n\nA practical script line is: \"Your order will be ready in about 25 minutes for delivery pickup.\" If you use a phone host, it should repeat the time back before it closes the call.\n\nHelpful timing checklist:\n- Quote a range only if your kitchen really needs one.\n- Check whether the caller wants ASAP or a later time.\n- Add a few minutes for busy periods.\n- Do not promise a time you cannot meet.\n\nROAL can quote a ready time on the call, confirm it back, and send a clean ticket to the kitchen screen. That matters because the ticket should match what the caller heard. For a busy shop, that is often the difference between a smooth rush and a stack of corrections."
+    },
+    {
+      "id": "how-do-i-keep-address-mistakes-out-of-delivery-tickets",
+      "h2": "How do I keep address mistakes out of delivery tickets?",
+      "body": "Delivery address mistakes usually happen because the call moves too fast. The fix is to collect the address in pieces and repeat it back before you send the order.\n\nAsk for:\n- Street number and street name\n- Apartment, suite, or floor\n- City and ZIP if needed\n- Any gate code, buzzer, or delivery note\n\nThen read it back exactly. A strong line is: \"Let me confirm that: 214 Oak Street, Apt 3B, Jersey City, with the buzzer code 4412.\" If the caller says the address is close but not exact, stop and ask again. That is faster than having your driver call back later.\n\nHere is a worked example you can use:\n| Item | Example |\n|---|---|\n| Address | 214 Oak Street, Apt 3B |\n| Caller name | Maria |\n| Phone | 201-555-0148 |\n| Delivery fee | $5 |\n| Ready time | 25 minutes |\n\nIf you use [phone order templates](/tools/phone-greeting-templates), keep one version for delivery and one for pickup. ROAL reads your published address and hours, but the caller still needs to give the exact drop-off details. That is why the read-back matters so much. It is a small step that saves a lot of driver confusion."
+    },
+    {
+      "id": "what-should-i-say-about-payment-and-order-confirmation",
+      "h2": "What should I say about payment and order confirmation?",
+      "body": "Keep the payment language simple. ROAL does not take card numbers over the phone, and that is a good rule for any restaurant that wants to keep payment where it already happens.\n\nA clean confirmation sounds like this: \"Your order is two large pepperoni pizzas, one Caesar salad, and one bottled water. The total is $28 plus the $4 delivery fee and tax. It’ll be ready in about 25 minutes. Is that correct?\" Then collect the caller’s name and phone number if you do not already have them.\n\nUse this confirmation checklist:\n- Repeat every item, size, modifier, and note.\n- Say the fee and timing again.\n- Ask for the caller’s name and phone number.\n- Confirm whether the order is delivery or pickup.\n- Send it only after the caller says yes.\n\nIf a caller asks to pay by card, keep the answer short: \"We don’t take card numbers on the phone. You can pay at pickup or the way we normally take payment.\" That avoids confusion and keeps staff from having to fix a half-finished order later.\n\nFor owners who want the phone handled consistently, an [AI phone host vs answering service](/compare/answering-service) comparison can help you think through the difference between a human-style handoff and a live kitchen ticket. The key is still the same: confirm clearly, then send."
+    },
+    {
+      "id": "how-can-i-set-up-delivery-phone-orders-without-extra-work",
+      "h2": "How can I set up delivery phone orders without extra work?",
+      "body": "The easiest setup is the one that uses the information you already have. ROAL can read your menu, prices, hours, and address from your website, Google Maps link, or a \"Name, City\" entry, then build a phone host in about a minute. You can test-call it in the browser before going live, and there is no sign-up needed for that test.\n\nOnce you claim the host, ROAL gives each location its own phone line automatically. You forward your existing number to it, either all calls or only when busy or unanswered. Your restaurant keeps its own number, and you can turn forwarding off any time. If you are checking setup options, the [call forwarding codes by carrier](/tools/call-forwarding-codes) page is useful, but always confirm with your carrier and test with a real call.\n\nA simple owner checklist:\n1. Make sure your address and hours are public and current.\n2. Confirm the delivery area and any fee rules.\n3. Test a delivery call from start to finish.\n4. Check that the kitchen screen receives the ticket.\n5. Update menu items that are sold out.\n\nROAL also keeps call history, transcripts, recordings, menu editing, hours, FAQs, and upsell suggestions in the dashboard. That means when a question comes in that the host could not answer, you answer it once and it remembers from then on. [Build a free test host](/try) if you want to see how your own delivery calls would sound using your menu and hours."
+    }
+  ],
+  "takeaways": [
+    "Ask for the full delivery address before you quote the order.",
+    "State the delivery fee and timing clearly, then repeat them back.",
+    "Keep payment off the phone and confirm the order before sending it to the kitchen.",
+    "Use one standard script so every caller gets the same clear flow.",
+    "If calls get busy, an AI phone host can take the order and send a clean ticket."
+  ],
+  "faq": [
+    {
+      "q": "What information should I collect for a delivery phone order?",
+      "a": "Collect the caller’s name, phone number, full delivery address, items, sizes, modifiers, notes, delivery fee, and ready time. If the address has an apartment, suite, gate code, or buzzer code, ask for that too. Then repeat the full order back before you send it to the kitchen."
+    },
+    {
+      "q": "How do I quote a delivery fee on the phone?",
+      "a": "Say the fee early and plainly, such as \"There is a $4 delivery fee for this order.\" If your fee changes by area or order size, state the exact fee for that address. Do not leave the caller guessing about whether the fee is included in the total or added on top."
+    },
+    {
+      "q": "Should I take card numbers for delivery orders over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone, and many restaurants avoid that entirely. Tell the caller they can pay at pickup or through the payment method your restaurant already uses."
+    },
+    {
+      "q": "How can I avoid wrong delivery addresses?",
+      "a": "Ask for the address in pieces, then read it back exactly before closing the call. Include street number, street name, apartment or suite, and any access notes. If anything is unclear, stop and confirm it before sending the order."
+    }
+  ],
+  "words": 1343,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

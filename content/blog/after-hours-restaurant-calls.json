@@ -1,0 +1,76 @@
+{
+  "slug": "after-hours-restaurant-calls",
+  "keyword": "after hours restaurant calls",
+  "category": "missed-calls",
+  "title": "What to do with after-hours restaurant calls",
+  "seoTitle": "After-hours restaurant calls: what to do | ROAL",
+  "description": "Find out what to do with after-hours restaurant calls, including when to forward, when to use voicemail, and how to handle pickup requests.",
+  "question": "What should I do with after-hours restaurant calls at my restaurant?",
+  "answer": "The best move is to send after-hours restaurant calls to a clear backup path: voicemail, staff voicemail, or an AI phone host that can take orders and questions when you are closed. If you want to keep taking pickup and delivery orders without tying up staff, ROAL can answer the call, quote hours and menu info, and send a clean ticket to the kitchen screen during the times you choose.",
+  "summary": "Set up a simple after-hours call plan that protects orders, answers common questions, and keeps staff from getting interrupted.",
+  "intro": "After-hours restaurant calls should not just ring into the void. They should go to a plan that matches how you want to work when the doors are locked.\n\nFor many owners, that means voicemail for true off-hours, plus a phone host for late calls that can still lead to pickup orders, hours questions, or reservation requests. If you want a quick way to see how that works, [How it works](/how-it-works) explains the setup in plain English.",
+  "sections": [
+    {
+      "id": "what-should-happen-when-the-restaurant-is-closed",
+      "h2": "What should happen when the restaurant is closed?",
+      "body": "Start with one simple decision: what do you want callers to hear after close? A lot of restaurants use one of three setups:\n\n- **Voicemail only** for full shutdown hours.\n- **Forwarding to staff** for a short window after close, like 15 to 30 minutes.\n- **An AI phone host** for after-hours restaurant calls that still deserve an answer, such as pickup orders, menu questions, or reservation requests.\n\nA practical phone script is: “Thanks for calling. We’re closed right now, but you can leave a message, or call back during business hours.” If you are using ROAL, the caller can hear a live restaurant phone host instead of a mailbox, and the host can answer hours, address, parking, and menu questions from the restaurant’s public info.\n\nThink about what callers usually want at night. Is it dinner pickup, tomorrow’s lunch, or a quick question about closing time? That should guide your setup, not habit. If you know most calls are order-related, a dead-end voicemail is usually the weakest option."
+    },
+    {
+      "id": "should-i-forward-after-hours-calls-or-send-them-to-voicemail",
+      "h2": "Should I forward after-hours calls or send them to voicemail?",
+      "body": "Use forwarding only when someone is truly able to help. If the phone is ringing on a quiet night and nobody can answer, forwarding to a manager’s cell can turn into frustration fast.\n\nA good rule is:\n\n1. Forward to staff only when there is a real chance the call will be handled.\n2. Use voicemail when nobody is available to take action.\n3. Use a phone host when you want the call answered, but do not want to keep a person on the line.\n\nHere is a simple example. Say your restaurant gets 12 after-hours restaurant calls in a week. If 5 are pickup orders and the rest are questions, then forwarding every call to a manager may interrupt dinner at home for a lot of non-urgent calls. But if you route those calls to [After-hours calls](/use-cases/after-hours), the caller can still place an order or get the hours without waking anyone up.\n\nIf you do choose call forwarding, confirm the code with your carrier and test it with a real call. Codes vary by carrier and plan. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some mobile carriers, **21*number# forwards all calls and ##21# turns it off."
+    },
+    {
+      "id": "how-do-i-keep-after-hours-calls-from-turning-into-lost-order",
+      "h2": "How do I keep after-hours calls from turning into lost orders?",
+      "body": "The main goal is not to answer every phone call yourself. The goal is to capture the calls that matter and give the rest a useful next step.\n\nA clean after-hours plan often looks like this:\n\n| Call type | Best response |\n|---|---|\n| Pickup order | Take the order or offer a clear callback time |\n| Menu or hours question | Answer from your posted info |\n| Catering request | Take a message for staff review |\n| Allergy-sensitive question | Hand to staff with a summary |\n| Complaint or manager request | Send to staff inbox |\n\nExample: say your average pickup order is $28. If you get 3 after-hours orders in a week, that is about $84 in order value. Plug in your own average ticket and your own call count to see what is at stake for your shop.\n\nROAL is built for exactly this kind of call. It can take items, sizes, modifiers, notes, caller name, phone number, and a ready time. It does not take card numbers over the phone, and it will not offer items marked sold out. For tricky calls, it passes a summary to staff instead of guessing."
+    },
+    {
+      "id": "what-should-the-voicemail-say-if-i-still-use-it",
+      "h2": "What should the voicemail say if I still use it?",
+      "body": "Even if you use an AI phone host, you may still want voicemail for certain times. Keep it short and useful. Long messages get ignored.\n\nTry a script like this:\n\n“Thanks for calling [restaurant name]. We’re closed right now. Our hours are [hours]. For pickup orders, menu questions, or reservations, please call back during business hours. For urgent messages, leave your name, phone number, and a brief message.”\n\nThat script works because it gives the caller three things: status, hours, and next step. If you have a separate line for after-hours restaurant calls, make sure the message says who should call back and what information to leave.\n\nChecklist for a better voicemail:\n\n- Say the current status clearly.\n- State your hours.\n- Ask for name and callback number.\n- Tell them what counts as urgent.\n- Keep it under 20 seconds if possible.\n\nIf you use ROAL during open hours and voicemail after close, the caller gets a clear split: a live host when it can help, and voicemail when the restaurant is fully offline."
+    },
+    {
+      "id": "how-do-i-set-up-forwarding-on-my-phone-line",
+      "h2": "How do I set up forwarding on my phone line?",
+      "body": "The exact steps depend on the carrier or phone system, so always confirm with your provider and test it with a call. The good news is that the idea is the same: send calls where you want them, when you want them there.\n\nCommon examples include:\n\n- Many landlines and some carriers: dial *72 plus the forwarding number to forward all calls, and *73 to turn it off.\n- Some GSM mobile carriers: **21*number# forwards all calls and ##21# turns it off.\n- Some mobile carriers also use **61*number# for unanswered calls and **67*number# for busy calls.\n- Verizon Wireless often uses *72 and *73, and *71 for busy/no-answer forwarding.\n- Business VoIP systems usually let you set forwarding in the web portal.\n\nA practical test plan:\n\n1. Forward the line.\n2. Call from a second phone.\n3. Confirm the greeting, ring path, or phone host.\n4. Place a sample order question.\n5. Turn forwarding off and test that too.\n\nIf you need a reference for the codes and the caveats, [Call forwarding codes by carrier](/tools/call-forwarding-codes) is a handy place to start. Keep in mind that forwarding can be turned off any time, and you still keep your own restaurant number."
+    },
+    {
+      "id": "what-is-the-cheapest-way-to-handle-after-hours-restaurant-ca",
+      "h2": "What is the cheapest way to handle after-hours restaurant calls?",
+      "body": "Cheap does not always mean best, but it helps to compare the common options in plain numbers.\n\n| Option | Typical cost style | Best for |\n|---|---|---|\n| Voicemail | Usually included | Very low call volume |\n| Human answering service | Per minute or per call | Businesses that want a live person for every call |\n| Monthly AI phone tools | Often a fixed monthly fee per location, commonly about $79 to $599 | Owners who want a predictable bill |\n| ROAL | $0.90 per completed phone order, no monthly fee | Shops that want to pay only when an order reaches the kitchen screen |\n\nSay your after-hours restaurant calls produce 20 completed orders in a month. At $0.90 per completed order, that would be $18 for completed orders only. Plug in your own monthly order count to compare it with your current setup.\n\nDelivery apps can also be expensive because they commonly charge roughly 15% to 30% commission per order. If an after-hours pickup order is worth $30, that commission can take a large bite out of the sale. That is why many owners keep phone orders on the phone line instead of sending every caller elsewhere.\n\nThe right choice depends on your own mix of orders, questions, and staff availability. If your phone rings after close with real money attached to it, the cheapest option is the one that captures the order without pulling a manager into every call."
+    },
+    {
+      "id": "what-should-i-do-this-week-to-fix-after-hours-calls",
+      "h2": "What should I do this week to fix after-hours calls?",
+      "body": "Here is a simple 5-step cleanup you can do in one pass:\n\n1. Write down your open and closed hours exactly as they should sound on the phone.\n2. Decide which after-hours restaurant calls should go to voicemail and which should still be answered.\n3. Pick one script for voicemail and one script for a live host or staff backup.\n4. Test your forwarding or after-hours setup from a second phone.\n5. Review the first few transcripts or voicemail messages and tighten the wording.\n\nA short staff note helps too: “If it’s after close, do not answer the store phone unless you are scheduled to handle it.” That one line can save a lot of confusion.\n\nIf you want a more hands-off setup, ROAL can read your menu, hours, and address from your website, Google Maps link, or menu files, then build a phone host in about a minute. You can test-call it in the browser before you claim it, and later forward your existing number when you are ready. [Build a free test host](/try) when you want to see your own menu on the phone."
+    }
+  ],
+  "takeaways": [
+    "Decide which after-hours calls deserve a live answer, and which should go to voicemail.",
+    "Use call forwarding only when someone can actually help; otherwise keep it simple.",
+    "For order-heavy shops, a phone host can capture pickup requests and common questions after close.",
+    "Compare your current setup against per-order pricing and delivery-app commission before choosing a path."
+  ],
+  "faq": [
+    {
+      "q": "Should a restaurant forward calls after closing time?",
+      "a": "Only if someone is available to help. If no one can answer, forwarding usually creates more interruptions than value. A better setup is voicemail for full closure and a phone host or staff backup for the calls you still want to handle."
+    },
+    {
+      "q": "What should after-hours voicemail say for a restaurant?",
+      "a": "It should say the restaurant name, that you are closed, your hours, and what the caller should do next. Ask for their name, phone number, and a short message. Keep it short so callers do not hang up before leaving details."
+    },
+    {
+      "q": "Can an AI phone host take late-night orders?",
+      "a": "Yes, if that is how you set it up. ROAL can answer questions, take pickup and delivery orders from the live menu, collect the caller’s name and phone, quote a ready time, and send a clean ticket to the kitchen screen. It does not take card numbers over the phone."
+    },
+    {
+      "q": "How do I know whether after-hours calls are worth saving?",
+      "a": "Multiply your average order value by the number of after-hours orders you usually get. That gives you a rough picture of what those calls are worth. Then compare that number to what you are paying now for voicemail, forwarding, human answering, or monthly phone tools."
+    }
+  ],
+  "words": 1463,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

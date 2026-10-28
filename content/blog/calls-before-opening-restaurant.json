@@ -1,0 +1,76 @@
+{
+  "slug": "calls-before-opening-restaurant",
+  "keyword": "restaurant calls before opening",
+  "category": "missed-calls",
+  "title": "Restaurant calls before opening: what to do first",
+  "seoTitle": "Restaurant calls before opening | ROAL",
+  "description": "Handle restaurant calls before opening with a simple plan for pickup orders, questions, and call forwarding. Practical steps for busy owners.",
+  "question": "How should I handle restaurant calls before opening?",
+  "answer": "Start by forwarding early calls to a clear phone host setup or to staff who can pick up before doors open. Make sure your hours, address, menu, and opening time are easy to answer, then decide which calls should ring through and which can wait until service starts. ROAL can answer those early calls, take orders from your live menu, and send a kitchen ticket when a call becomes a completed order.",
+  "summary": "You’ll know how to route early calls, protect staff time, and keep opening-hour orders organized.",
+  "intro": "Calls that come in before you open usually fall into a few buckets: people checking hours, people trying to place a pickup order, and people asking if you can squeeze them in early. The right move is to answer the common ones fast and keep the rest from tying up your morning.\n\nFor many restaurants, that means a simple phone plan for the hour before open. You can use [call forwarding codes by carrier](/tools/call-forwarding-codes), set a clear greeting, and make sure whoever answers can quote hours, address, parking, and the menu without guessing.",
+  "sections": [
+    {
+      "id": "why-do-restaurant-calls-come-in-before-opening",
+      "h2": "Why do restaurant calls come in before opening?",
+      "body": "People call before opening for simple reasons. They are on the way to work and want pickup for later. They saw your hours online and want to confirm you are actually open today. Or they want to know if breakfast starts at 10, if parking is behind the building, or if the soup of the day is ready.\n\nThe key is to treat these calls as useful, not annoying. A five-second answer can save a missed sale. A messy answer can turn into a callback later. For a small shop, that morning call might be the one that decides whether a customer orders from you or from another place down the street.\n\nUse this quick script for the first ring of the day:\n- \"Thanks for calling. We open at 11. I can take your pickup order now for after opening.\"\n- \"We open at 10, and yes, there is parking on the side of the building.\"\n- \"I can help with the menu and hours right now. For anything complicated, I’ll have the owner or manager follow up.\"\n\nIf you use an AI phone host like ROAL, it can answer those common questions from your public menu, hours, and address before the doors open, then send only the harder calls to staff."
+    },
+    {
+      "id": "what-should-your-opening-hours-phone-setup-answer-first",
+      "h2": "What should your opening-hours phone setup answer first?",
+      "body": "Before opening, your phone should handle the most common questions in the same order every time. That keeps the call short and makes your restaurant sound organized. Build the answer list around what callers ask most before lunch or dinner.\n\nUse this checklist:\n1. Opening time today.\n2. Exact address.\n3. Parking or pickup instructions.\n4. Whether pickup orders are being taken yet.\n5. Menu basics: what’s available and what’s sold out.\n6. Whether you take reservations or only walk-ins.\n\nA good response sounds like this: \"We open at 11. Pickup orders can be placed now for after opening, and parking is behind the building.\"\n\nIf you want this to run without staff picking up early, ROAL can read your website, Google Maps link, or menu upload at [How it works](/how-it-works). It builds a phone host in about a minute, and you can test-call it in the browser before you claim the line.\n\nFor owner-minded setup, keep a small note by the phone with your exact opening phrase, parking note, and any morning specials. That way the answer stays consistent even when the first call comes in while you’re still unlocking the door."
+    },
+    {
+      "id": "how-do-you-forward-calls-before-opening-without-making-a-mes",
+      "h2": "How do you forward calls before opening without making a mess?",
+      "body": "If you want early calls to ring somewhere else before open, keep the forwarding plan simple. The goal is not to create a maze. It is to make sure calls land where someone can actually handle them.\n\nA practical setup looks like this:\n- Forward all calls before opening if nobody is in the shop yet.\n- Forward only unanswered calls if you have someone on site but busy.\n- Turn forwarding off when the shift is fully staffed.\n\nMany landlines and some carriers use *72 to forward and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off, while **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually use a web portal. Codes vary by carrier and plan, so confirm with your carrier and test with a call.\n\nROAL gives each location its own phone line automatically once you claim the host, and you forward your existing number to it. That means you keep your current number and decide whether calls go to ROAL all the time or only when busy or unanswered."
+    },
+    {
+      "id": "how-do-you-turn-early-calls-into-orders-instead-of-interrupt",
+      "h2": "How do you turn early calls into orders instead of interruptions?",
+      "body": "Before opening, a lot of callers are not asking for information. They are ready to order. That is where the call becomes valuable. The fastest way to lose that sale is to put the caller on hold and make them repeat everything later.\n\nA clean early-order flow looks like this:\n1. Answer or forward the call.\n2. Confirm the order can be placed now for later pickup or delivery.\n3. Take items, sizes, modifiers, and notes.\n4. Collect the caller’s name and phone.\n5. Quote a ready time.\n6. Read the order back.\n7. Send it to the kitchen screen.\n\nExample: say your average pickup order is $28. If you get 4 early orders before lunch, that is $112 in orders. Plug in your own average ticket and your own call volume to see what the morning window is worth.\n\nROAL does this part for restaurants that want it handled automatically. It takes items, sizes, modifiers, and notes from the live menu, confirms the order back to the caller, and sends a clean ticket to the kitchen screen. It also does not take card numbers over the phone. Payment stays at pickup or however your restaurant already takes payment."
+    },
+    {
+      "id": "what-if-the-caller-asks-something-the-phone-host-cannot-answ",
+      "h2": "What if the caller asks something the phone host cannot answer?",
+      "body": "Not every call should be handled the same way. Some calls need a person. Allergy-sensitive questions, complaints, catering requests, and manager issues are better sent to staff with a short summary.\n\nA good rule is simple:\n- Easy questions stay on the phone.\n- Order-taking stays on the phone.\n- Complex or sensitive calls go to staff.\n\nFor example, the host can say: \"I’m going to have the manager review that request and call you back.\" Or: \"For allergy questions, I’m sending this to the team now with your note.\"\n\nThat matters before opening because your team is often busy counting cash, firing ovens, or setting up prep. You do not want the first call of the day to derail the whole opening routine.\n\nROAL handles this by sending questions it could not answer to an inbox. The owner answers once, and the host knows it from then on. That saves time on repeat calls like \"Are you open yet?\" or \"Do you have gluten-free crust?\" when the answer is already in the menu or FAQ.\n\nKeep a short internal checklist for staff:\n- Who checks the inbox before doors open?\n- Who handles allergy calls?\n- Who calls back catering leads?\n- Who confirms manager messages?"
+    },
+    {
+      "id": "how-much-does-it-cost-compared-with-other-options",
+      "h2": "How much does it cost compared with other options?",
+      "body": "Early calls feel small until you add them up. The cost depends on whether you ignore them, staff them manually, or route them to a phone host.\n\nHere is a simple comparison using example numbers you can swap for your own:\n\n| Option | Common cost pattern | What to watch |\n|---|---:|---|\n| Delivery apps | Roughly 15-30% commission per order | Can get expensive on every order |\n| Human answering services | Usually per minute or per call | Costs rise with volume |\n| Monthly AI phone tools | Often about $79 to $599 per location | Fixed cost even in slow weeks |\n| ROAL | $0.90 per completed phone order | No monthly fee, no setup fee, no per-minute fee |\n\nIf your early calls mostly become questions and only some become completed orders, pay-per-order pricing can be easier to reason about. Say 25 completed phone orders in a month. At $0.90 each, that is $22.50 for completed orders, billed monthly. Plug in your own order count.\n\nYou can compare your current phone cost with [the pay-per-order calculator](/tools/phone-host-cost-calculator) and, if needed, see how it stacks up against [monthly AI phone plans](/compare/monthly-ai-phone-plans). The point is not to find the fanciest system. It is to pick one that fits your actual call volume, especially during the quiet hours before opening."
+    },
+    {
+      "id": "what-should-you-do-tomorrow-morning-before-the-first-call",
+      "h2": "What should you do tomorrow morning before the first call?",
+      "body": "Before your next opening shift, tighten the basics. You do not need a big project. You need a clean phone routine.\n\nUse this morning checklist:\n1. Confirm your hours in your public menu and website.\n2. Check that the phone greeting says when you open.\n3. Make sure parking, address, and pickup instructions are current.\n4. Decide whether calls before open should go to staff or to a phone host.\n5. Test your forwarding setup with one real call.\n6. Review any messages or tickets from early callers before lunch.\n\nIf you want to see what this looks like with your own restaurant data, [build a free test host](/try). You can paste your website, Google Maps link, or \"Name, City,\" then test-call it right in the browser with no sign-up needed.\n\nFor owners with multiple locations, keep each location’s hours and phone line separate so the caller gets the right answer the first time. That is especially useful for groups, but it also helps a single shop that changes hours by day.\n\nThe goal is simple: when the first phone call hits before opening, you already know who answers, what they say, and where the order goes."
+    }
+  ],
+  "takeaways": [
+    "Early calls before opening are usually hours checks, pickup orders, or simple menu questions.",
+    "A clear phone plan should answer hours, address, parking, and opening-time ordering first.",
+    "Forwarding can route calls before open, but always confirm the codes with your carrier and test them.",
+    "ROAL can answer common questions, take orders, and send a kitchen ticket, while tricky calls go to staff."
+  ],
+  "faq": [
+    {
+      "q": "What should a restaurant say when someone calls before opening?",
+      "a": "Keep it short and useful: \"We open at 11, and I can take your pickup order now for after opening.\" If the caller only needs hours, address, or parking, answer that right away. If the question is complicated, send it to staff or ask for a callback."
+    },
+    {
+      "q": "Should I forward restaurant calls before opening?",
+      "a": "Yes, if nobody is available to answer at that time. Forwarding lets calls reach a person or a phone host instead of ringing into silence. Use your carrier’s correct code or your VoIP portal, then test the call to make sure it works."
+    },
+    {
+      "q": "Can an AI phone host take orders before the restaurant opens?",
+      "a": "Yes, if the order is from the restaurant’s live menu and the host has your hours, address, and order rules. ROAL can take pickup and delivery orders, quote a ready time, and send the ticket to the kitchen screen. It does not take card numbers over the phone."
+    },
+    {
+      "q": "What if the caller asks about allergies or catering before opening?",
+      "a": "Those calls should go to staff with a summary. Allergy-sensitive questions, complaints, catering requests, and manager requests are better handled by a person. A phone host can collect the details and pass them along for follow-up."
+    }
+  ],
+  "words": 1524,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

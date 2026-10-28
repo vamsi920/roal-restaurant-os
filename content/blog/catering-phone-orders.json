@@ -1,0 +1,77 @@
+{
+  "slug": "catering-phone-orders",
+  "keyword": "catering phone orders",
+  "category": "phone-orders",
+  "title": "Taking catering phone orders for a restaurant",
+  "seoTitle": "Catering phone orders for restaurants | ROAL",
+  "description": "Handle catering phone orders with a clear script, item checklist, and confirmation step. Keep the kitchen, front counter, and caller in sync.",
+  "question": "How should I handle catering phone orders without tying up the counter or missing details?",
+  "answer": "Take catering phone orders with a simple script, a clear menu checklist, and a reliable handoff to the kitchen. Capture the caller’s name, phone number, event time, item counts, modifiers, and notes, then confirm everything back before you promise a ready time or send the order to the kitchen.",
+  "summary": "You’ll be able to take cleaner catering calls, confirm the right details, and hand off orders to the kitchen with less back-and-forth.",
+  "intro": "Taking catering phone orders works best when the call follows a simple pattern: greet, gather the details, repeat the order back, and confirm timing. If the order is large or has allergy-sensitive notes, hand it to staff with a summary so nothing gets lost.\n\nFor many restaurants, the hard part is not the food. It is the phone call itself. One distracted counter worker can miss the headcount, the pickup time, or a special request. An [AI phone host](/use-cases/catering) like ROAL can help with that by answering the call, taking the order from your live menu, and sending a clean ticket to the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-details-should-you-collect-on-a-catering-call",
+      "h2": "What details should you collect on a catering call?",
+      "body": "Catering calls need a little more structure than a normal pickup order. The goal is to get the full picture before anyone starts cooking.\n\nUse this checklist on every call:\n- Name of the person placing the order\n- Best callback number\n- Pickup or delivery time\n- Number of people being fed\n- Exact items, sizes, and quantities\n- Sauces, sides, utensils, chafing needs, or other notes\n- Allergy-sensitive requests\n- Payment method, if your restaurant already handles payment that way\n\nA simple script line helps keep the call moving: \"What’s the event time, how many people are you feeding, and what items do you want on the order?\"\n\nFor a pizza shop, that might turn into: 6 trays of wings, 4 large pies, 2 salad bowls, and extra ranch. For a deli, it might be 20 sandwich wraps, 3 cookie trays, and serving utensils. The exact items matter more than the category. Repeat the numbers back slowly so the caller can catch mistakes before the order goes to the kitchen."
+    },
+    {
+      "id": "how-do-you-price-a-catering-order-over-the-phone",
+      "h2": "How do you price a catering order over the phone?",
+      "body": "Keep pricing simple and clear. Give the caller the menu price, any known fees your restaurant already uses, and a ready time you can actually meet.\n\nA useful way to think about it is by example. Say a catering order totals $240 in food. If your restaurant normally charges for boxes, trays, or sides separately, add those only if that is already part of your process. Then confirm the total and the pickup or delivery time before ending the call.\n\nDo not take card numbers over the phone. ROAL does not take card payments over the call either; payment happens at pickup or however the restaurant already takes it. That keeps the process simple and avoids extra risk.\n\nIf you want a rough comparison for your own business, use this simple table:\n\n| Example catering order | Food total | Add-ons you already use | What to confirm |\n|---|---:|---:|---|\n| Sandwich tray order | $180 | trays, utensils | pickup time, name, phone |\n| Pizza party order | $220 | extra sauce, boxes | ready time, location notes |\n| Family meal package | $95 | sides, serving spoons | final count, name, callback |\n\nIf you want to compare phone orders with delivery app fees, [this calculator](/tools/delivery-commission-calculator) helps you plug in your own numbers."
+    },
+    {
+      "id": "what-should-the-phone-script-sound-like",
+      "h2": "What should the phone script sound like?",
+      "body": "A good script keeps the call friendly and short. You do not need a fancy flow. You need the same few questions every time.\n\nTry this pattern:\n1. \"Thanks for calling. What day and time is the catering order for?\"\n2. \"How many people are you feeding?\"\n3. \"What items would you like, and how many of each?\"\n4. \"Any modifiers, sides, sauces, or allergy notes?\"\n5. \"What name and phone number should we put on the order?\"\n6. \"Let me repeat that back to make sure I have it right.\"\n\nHere is a useful confirmation line: \"So I have 12 chicken parm trays, 3 Caesar salads, 30 rolls, pickup at 11:30 AM under Maria, and the callback number is 201-555-____.\"\n\nIf the caller asks for something outside your menu, do not guess. Put it in a staff inbox and let a person answer once. ROAL does this by handing catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. That way the kitchen gets the order, and the tricky part gets human attention."
+    },
+    {
+      "id": "how-do-you-hand-off-a-catering-order-to-the-kitchen",
+      "h2": "How do you hand off a catering order to the kitchen?",
+      "body": "The handoff should be clean enough that the kitchen can start cooking without replaying the call. A messy note leads to callbacks and delays.\n\nA clean ticket should include:\n- Guest name\n- Phone number\n- Pickup or delivery time\n- Item list with quantities\n- Modifiers and special notes\n- Any allergy-sensitive flag\n- A clear status the kitchen can see\n\nIf you are still using handwritten tickets, move the order into one format and stick to it. A phone ticket should read like a prep list, not a paragraph.\n\nExample:\n- Maria R.\n- 201-555-____\n- Pickup 11:30 AM\n- 12 chicken parm trays\n- 3 Caesar salads\n- 30 rolls\n- No onions on 2 trays\n- Call back if anything is out of stock\n\nROAL sends a clean ticket to the kitchen screen, and the kitchen can track live status like new, preparing, and ready. If you want a closer look at what that ticket should include, see [what a clean phone order ticket looks like](/blog/phone-orders-ticket-format)."
+    },
+    {
+      "id": "how-can-you-handle-catering-calls-when-the-restaurant-is-bus",
+      "h2": "How can you handle catering calls when the restaurant is busy?",
+      "body": "Catering orders often come in when the line is already full. That is when the phone becomes a problem, not a helper.\n\nUse a simple rule for busy shifts:\n- Let the phone ring through only when someone can realistically take the order.\n- Forward it when you are busy or unanswered.\n- Send catering calls to a person or AI phone host that can collect the details without interrupting the kitchen.\n\nIf you use call forwarding, confirm the code with your carrier or phone system before relying on it. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# often forwards all calls and ##21# turns it off; **61*number# often forwards unanswered calls and **67*number# often forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Codes vary, so always test with a real call.\n\nROAL gives each location its own phone line, and you can forward your existing number to it all the time or only when busy or unanswered. Your restaurant keeps its own number, and you can turn forwarding off anytime."
+    },
+    {
+      "id": "what-should-you-do-after-the-call-ends",
+      "h2": "What should you do after the call ends?",
+      "body": "The work is not finished when the caller hangs up. The follow-up is what keeps the order from slipping through the cracks.\n\nUse this quick post-call checklist:\n1. Confirm the ticket reached the kitchen screen.\n2. Check the item counts against your prep.\n3. Make a note if anything needs manager approval.\n4. Save the caller name and phone number for the next reorder.\n5. Review the transcript if there was any confusion.\n\nROAL keeps call history with transcripts and recordings, plus a menu editor and FAQs in the dashboard. That is helpful when a caller says, \"I ordered this before,\" or when someone asks about hours, parking, or the menu and you need to check what was said.\n\nIf you serve repeat office orders, you can also save yourself time with consistent wording. For example: \"Thanks, we have your catering order under the same name and number. What date and headcount should we use today?\" That simple line makes the next call faster without making the caller repeat everything."
+    },
+    {
+      "id": "what-does-catering-phone-orders-cost-compared-with-other-opt",
+      "h2": "What does catering phone orders cost compared with other options?",
+      "body": "Phone ordering can be expensive when you add hidden labor, missed calls, and commission from delivery apps. The clean way to compare options is to use your own numbers.\n\nHere is a simple example you can swap for your own:\n- Say a catering order is $200.\n- A delivery app commission at a rough 15-30% range could mean $30 to $60 gone from that order.\n- A human answering service may charge per minute or per call, whether the order becomes a sale or not.\n- Many AI phone tools charge a fixed monthly fee per location, even if the phone barely rings.\n- ROAL charges $0.90 per completed phone order, which means a confirmed order whose ticket reached the kitchen screen.\n\nThat model is easy to understand for a busy owner. If there are no completed orders, there are no completed-order charges. Calls, questions, and test calls are unlimited and free. You can compare that setup against [pricing](/pricing) or use the [phone host cost calculator](/tools/phone-host-cost-calculator) to plug in your own volume."
+    }
+  ],
+  "takeaways": [
+    "Catering calls need a fixed script, not improvisation.",
+    "Always collect name, phone, time, headcount, items, and allergy notes.",
+    "Repeat the whole order back before you promise timing.",
+    "Send a clean ticket to the kitchen and keep a call record.",
+    "Use forwarding or an AI phone host when the restaurant is too busy to answer well."
+  ],
+  "faq": [
+    {
+      "q": "What information do I need to take a catering order by phone?",
+      "a": "At minimum, get the caller’s name, phone number, pickup or delivery time, number of people, exact items and quantities, and any modifier or allergy notes. If the order needs manager approval, write that down before you confirm the timing. Repeating the order back once helps catch mistakes."
+    },
+    {
+      "q": "Should I take card payments over the phone for catering orders?",
+      "a": "No. ROAL does not take card numbers over the phone, and many restaurants prefer to keep payment at pickup or use their existing payment process. That keeps the call simpler and avoids handling sensitive card details on the line."
+    },
+    {
+      "q": "How do I avoid mistakes on large catering phone orders?",
+      "a": "Use a short script and always confirm the order back in the same words the caller used. A clean ticket helps too, because the kitchen sees quantities, notes, and timing in one place. If the order is unusual or allergy-sensitive, send it to staff with a summary."
+    },
+    {
+      "q": "Can an AI phone host handle catering calls and questions?",
+      "a": "Yes, an AI phone host can take the order, collect the caller’s details, quote a ready time, and send a ticket to the kitchen. ROAL can also hand catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary when the call needs a person."
+    }
+  ],
+  "words": 1383,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

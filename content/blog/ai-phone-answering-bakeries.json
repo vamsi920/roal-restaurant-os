@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-answering-bakeries",
+  "keyword": "bakery phone orders custom cake",
+  "category": "restaurant-types",
+  "title": "Bakery phone orders for custom cakes",
+  "seoTitle": "Bakery phone orders for custom cakes | ROAL",
+  "description": "Handle bakery phone orders for custom cakes with a clear script, menu notes, and phone setup tips that work for a busy shop.",
+  "question": "How should I handle bakery phone orders for custom cake requests without missing details or tying up the counter?",
+  "answer": "Use a simple call flow: ask for the cake size, flavor, filling, frosting, writing, pickup date, and callback number, then repeat the order back before ending the call. For bakeries that get busy, an AI phone host like ROAL can answer the phone, take pickup orders from your live menu, collect the details, and send a clean ticket to the kitchen screen while custom or tricky cake requests go to staff.",
+  "summary": "You’ll learn a practical way to take bakery phone orders for custom cakes without slowing down the front counter.",
+  "intro": "Bakery phone orders for custom cake requests work best when the call stays short, specific, and repeatable. The goal is to get the right details the first time, then send a clear ticket to the kitchen or decorator.\n\nFor a busy bakery, that usually means a simple phone script, a written list of cake options, and a way to route special requests to the right person. Tools like [ROAL for bakeries and cake shops](/for/bakeries) can handle standard pickup orders, answer common questions, and keep the front counter from getting tied up.",
+  "sections": [
+    {
+      "id": "what-details-should-you-collect-on-a-custom-cake-call",
+      "h2": "What details should you collect on a custom cake call?",
+      "body": "A custom cake order can sound simple until one detail gets missed. The safest approach is to collect the same core items every time, in the same order.\n\nUse this checklist for every bakery phone order for a custom cake:\n- Customer name\n- Callback phone number\n- Pickup date and time\n- Cake size or serving count\n- Flavor\n- Filling\n- Frosting\n- Writing on the cake\n- Color or decoration notes\n- Allergy-sensitive notes\n\nA clean phone script line helps a lot. Try: \"What size cake do you need, what flavor, and what would you like written on it?\"\n\nIf you take different styles, ask for those too. For example:\n- Sheet cake or round cake\n- Buttercream or whipped frosting\n- Photo or themed decoration\n- Candles, sprinkles, fruit, or simple border\n\nIf your shop has limited options, say them clearly. Example: \"We can do vanilla, chocolate, or red velvet for custom orders, and pickup is available after 2 p.m. tomorrow.\" That saves time and avoids back-and-forth."
+    },
+    {
+      "id": "how-do-you-keep-phone-orders-from-slowing-the-front-counter",
+      "h2": "How do you keep phone orders from slowing the front counter?",
+      "body": "The biggest bakery problem is not just taking the order. It is taking the order while a cashier is bagging cookies, answering walk-ins, and checking the oven.\n\nA better system is to separate quick questions from custom work. Standard pickup orders can be handled fast. Custom cakes with special writing, photos, or allergy notes should be treated like a staff review order.\n\nA practical workflow looks like this:\n1. Answer the phone with a short greeting.\n2. Identify whether it is a standard order or a custom cake request.\n3. Collect the order details.\n4. Confirm the pickup time.\n5. Send the order to the kitchen or decorator.\n6. Hand off anything unusual to staff with a note.\n\nIf you use ROAL, it can answer the phone, take pickup and delivery orders from your live menu, and send a clean ticket to the kitchen screen. For custom cake requests that need a human decision, it can hand the call to staff with a summary.\n\nA simple script helps your team stay consistent: \"Thanks for calling. I can take the details now. For custom artwork or allergy-sensitive requests, I’ll pass it to the team for review.\""
+    },
+    {
+      "id": "what-should-you-say-when-a-cake-request-needs-review",
+      "h2": "What should you say when a cake request needs review?",
+      "body": "Some cake calls are easy. Others need a baker or manager to approve them. That includes unusual fillings, same-day large cakes, allergy-sensitive requests, or detailed decoration work.\n\nHave a script ready so the caller does not feel bounced around. Use lines like:\n- \"I can take the details and have our team review it.\"\n- \"For that decoration, I want to make sure we confirm availability first.\"\n- \"Let me collect the basics and pass this to the bakery team.\"\n\nHere is a simple handoff checklist for staff:\n- Cake size\n- Flavor and filling\n- Pickup date and time\n- Special writing\n- Decoration notes\n- Allergy concerns\n- Caller name and phone\n\nThat last step matters. If the caller asks for almond-free or gluten-sensitive handling, send the request to staff with a clear summary instead of guessing.\n\nROAL is set up for that kind of handoff. It can answer routine questions about hours, address, parking, and the menu, but anything it cannot answer goes to an inbox. The owner answers once, and the host learns it from then on. That keeps the phone moving without forcing the machine to improvise on tricky cake work."
+    },
+    {
+      "id": "how-do-you-price-custom-cakes-without-guessing-on-the-phone",
+      "h2": "How do you price custom cakes without guessing on the phone?",
+      "body": "Pricing gets messy when customers call and say, \"How much is a cake?\" The answer depends on size, flavor, filling, writing, and decoration. You do not need a huge pricing system to make the call smoother. You just need a few clear anchors.\n\nUse a simple pricing chart for the phone team. Example numbers only, so plug in your own:\n\n| Cake type | Example price | What it covers |\n|---|---:|---|\n| Small round cake | $28 | Basic flavor and writing |\n| Half-sheet cake | $45 | Standard frosting and message |\n| Custom themed cake | $65 | Extra decoration time |\n| Allergy-sensitive review | Quote later | Staff must confirm ingredients |\n\nIf a caller wants something outside your normal menu, you can say: \"For that style, we need to review it and call you back with a quote.\" That is better than guessing and then losing money.\n\nThis also helps with custom cake orders from regular customers. They already know your shop, but they still need a clear answer. A written price range at the counter and in your menu notes can reduce the number of uncertain calls.\n\nFor owners who want a clean cost comparison, [the phone host cost calculator](/tools/phone-host-cost-calculator) can help you think through how many completed orders it would take to fit your store’s numbers."
+    },
+    {
+      "id": "how-does-call-forwarding-work-for-a-bakery",
+      "h2": "How does call forwarding work for a bakery?",
+      "body": "If you want an AI phone host to answer while you stay at the counter, call forwarding is the bridge. On many landlines and some carriers, dialing *72 and then the forwarding number forwards all calls, and *73 turns it off. Some mobile carriers use **21*number# for all calls and ##21# to turn it off; **61*number# can forward unanswered calls; **67*number# can forward busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy or no-answer forwarding.\n\nBecause codes vary by carrier and plan, always confirm with your carrier and test with a real call. If you use a business VoIP system, forwarding is usually set in the web portal.\n\nA bakery-friendly setup is often one of these:\n- Forward all calls during a holiday rush\n- Forward only when busy during the lunch rush\n- Forward unanswered calls after a few rings\n- Turn forwarding off after closing\n\nROAL gives each location its own phone line automatically once the owner claims the host, and the restaurant keeps its own number. You can forward your existing number to it, and turn forwarding off any time. That makes it easier to test on a slow day, then use it more heavily when cake orders and pickup calls stack up."
+    },
+    {
+      "id": "what-does-a-good-bakery-phone-script-sound-like",
+      "h2": "What does a good bakery phone script sound like?",
+      "body": "A bakery phone script should sound warm, short, and direct. The customer should know you are helping them, not grilling them.\n\nHere is a script a cake shop can adapt:\n- \"Thanks for calling. How can I help with your order today?\"\n- \"Is this for pickup, delivery, or a custom cake request?\"\n- \"What size cake do you need, and what should we write on it?\"\n- \"What day and time would you like to pick it up?\"\n- \"Let me repeat that back so we make sure it is right.\"\n\nA quick repeat-back catches mistakes before the cake is made. For example:\n- Caller says: chocolate half-sheet, white frosting, happy birthday Maria, pickup Friday at 4.\n- You repeat: \"Chocolate half-sheet, white frosting, message 'Happy Birthday Maria,' pickup Friday at 4 p.m.\"\n\nThat kind of script matters even more when the shop is busy. If your staff cannot get to the phone, ROAL can answer, collect the order details, speak the caller’s language, and confirm the order back. It can also take reservations or pass complaints and manager requests to staff with a summary, which is useful if the same line handles cafe seating or event questions."
+    },
+    {
+      "id": "is-pay-per-order-cheaper-than-monthly-phone-tools-for-bakeri",
+      "h2": "Is pay-per-order cheaper than monthly phone tools for bakeries?",
+      "body": "For many bakeries, the math is easier when you only pay for completed orders. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, billed monthly.\n\nCompare that with two common alternatives:\n- Third-party delivery apps often take roughly 15-30% commission per order.\n- Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in.\n\nHere is a simple example with numbers you can swap for your own:\n- Say your bakery gets 120 completed phone orders a month.\n- At $0.90 per order, that would be $108 for the month.\n- If your average phone order is $24, then your monthly phone-order sales are $2,880.\n\nThat does not tell you which option is best by itself, but it gives you a clean starting point. If your store takes only a few custom cake calls each week, paying per completed order may fit better than a fixed monthly fee.\n\nYou can compare your own numbers with [pricing](/pricing) and your team’s workload. If you want to experiment first, [build a free test host](/try) from your website or Google Maps link and see how it handles your menu and cake questions."
+    }
+  ],
+  "takeaways": [
+    "Custom cake calls work best when you collect the same details every time: size, flavor, filling, writing, pickup time, and phone number.",
+    "Keep standard orders moving and send unusual cake requests to staff with a short summary.",
+    "Use a clear price chart or quote later for special cakes instead of guessing on the phone.",
+    "Call forwarding should be tested with your carrier before you rely on it.",
+    "ROAL can answer bakery calls, take orders from the live menu, and send clean kitchen tickets."
+  ],
+  "faq": [
+    {
+      "q": "What should I ask on a custom cake phone order?",
+      "a": "Ask for the cake size, flavor, filling, frosting, writing, pickup date and time, caller name, and callback number. If the customer wants a themed or allergy-sensitive cake, send those notes to staff for review rather than guessing. Repeating the order back before ending the call helps catch mistakes."
+    },
+    {
+      "q": "Can an AI phone host take bakery orders and custom cake requests?",
+      "a": "Yes, for routine orders and straightforward cake requests. ROAL can answer the phone, take pickup and delivery orders from your live menu, collect names and phone numbers, quote a ready time, and send a clean ticket to the kitchen screen. If a request is unusual or allergy-sensitive, it passes to staff with a summary."
+    },
+    {
+      "q": "How do I forward my bakery phone to another line?",
+      "a": "Many landlines and some carriers use *72 to forward all calls and *73 to turn it off. Some mobile carriers use different codes, and business VoIP systems often use a web portal. Codes vary by carrier and plan, so confirm with your carrier and test with a real call before relying on it."
+    },
+    {
+      "q": "Is pay-per-order better than a monthly fee for a cake shop?",
+      "a": "It can be, especially if your call volume changes by season or by day. ROAL charges $0.90 per completed phone order, with no monthly fee or setup fee, so you only pay when a confirmed order reaches the kitchen screen. If your bakery gets many calls that are just questions, the unlimited free test calls and questions can also help you evaluate it first."
+    }
+  ],
+  "words": 1506,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

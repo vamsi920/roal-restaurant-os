@@ -21,7 +21,7 @@ describe("blog index layout", () => {
     const page = readFileSync(join(REPO, "app/blog/page.tsx"), "utf8");
     expect(page).not.toMatch(/BlogIndexAeo(?!JsonLd)/);
     expect(page).toContain("BlogIndexAeoJsonLd");
-    expect(buildBlogIndexAeoJsonLd()["@type"]).toBe("FAQPage");
+    expect((buildBlogIndexAeoJsonLd()["@graph"][0] as { "@type": string })["@type"]).toBe("Blog");
   });
 
   it("uses journal hero without marketing CTAs", () => {

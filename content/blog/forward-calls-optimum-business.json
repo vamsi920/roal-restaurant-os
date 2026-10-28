@@ -1,0 +1,77 @@
+{
+  "slug": "forward-calls-optimum-business",
+  "keyword": "optimum business call forwarding",
+  "category": "phone-setup",
+  "title": "Optimum Business call forwarding for restaurants",
+  "seoTitle": "Optimum Business call forwarding for restaurants | ROAL",
+  "description": "See how Optimum Business call forwarding works for restaurants, including setup paths, test steps, and when to forward to an AI phone host.",
+  "question": "How do I set up optimum business call forwarding for my restaurant line?",
+  "answer": "On most Optimum Business phone setups, call forwarding is managed in the business phone portal or through Optimum support, and the exact steps can vary by plan. For a restaurant, the safest setup is to forward all calls or only unanswered/busy calls to a line that can answer and take orders, then test it from a mobile phone before you rely on it.",
+  "summary": "You’ll learn how to forward your Optimum Business line, test it, and use it with a restaurant phone host.",
+  "intro": "Optimum Business call forwarding is usually set up in the business phone portal or by contacting support, and the exact steps depend on your plan. For a restaurant, the practical goal is simple: send calls to a line that answers quickly, takes the order, and passes anything tricky to staff.\n\nIf you want, that forwarded line can be an AI phone host like ROAL. ROAL answers the restaurant phone, takes pickup and delivery orders from your live menu, and sends clean tickets to the kitchen screen, while your existing number stays the same.",
+  "sections": [
+    {
+      "id": "how-do-i-set-up-optimum-business-call-forwarding-the-right-w",
+      "h2": "How do I set up Optimum Business call forwarding the right way?",
+      "body": "For restaurant owners, the setup should match how your phones actually ring during service. Most Optimum Business systems let you forward calls in the web portal, but the exact buttons and labels can vary by plan, so check your account first or call support.\n\nUse this simple order of operations:\n1. Decide whether you want **all calls**, **busy calls only**, or **unanswered calls only** forwarded.\n2. Find the forwarding setting in your Optimum Business portal or ask support to enable it.\n3. Enter the destination number you want calls sent to.\n4. Save the setting.\n5. Test with a real call from a cell phone.\n\nA good restaurant script for the test call is: \"Hi, I’m testing our phone line. Please let me know if this rings through and how the caller ID looks.\" If you use ROAL as the destination, it can answer, take the caller’s name and phone number, and send the order ticket to the kitchen screen. For forwarding code details on other carriers and systems, see [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "should-i-forward-all-calls-or-only-when-busy-or-unanswered",
+      "h2": "Should I forward all calls or only when busy or unanswered?",
+      "body": "For most restaurants, forwarding only when busy or unanswered is the safer starting point. That way, your main line still rings for staff when someone is available, but callers still get help when the front counter is slammed.\n\nHere is a practical way to choose:\n\n| Option | Best for | What the caller experiences |\n|---|---|---|\n| Forward all calls | Small teams, closed dining rooms, off-hours | Every call goes to the forwarded number |\n| Forward unanswered calls | Restaurants with staff at the phone part of the day | The call forwards after no one picks up |\n| Forward busy calls | Busy lunch and dinner rushes | The call forwards when the line is already in use |\n\nExample: say your counter staff can answer 7 out of 10 calls during dinner, but the rest go to voicemail. Forwarding only busy or unanswered calls gives those missed calls a second chance without changing how the line works when your team is free. If you want a calmer flow during rushes, ROAL can handle the overflow and keep the caller moving instead of sending them to voicemail."
+    },
+    {
+      "id": "what-should-i-test-before-i-trust-the-forwarding-setup",
+      "h2": "What should I test before I trust the forwarding setup?",
+      "body": "Do not rely on the setting until you test it from outside the restaurant. A forwarding setup can look correct in the portal and still fail because of a wrong number, a plan restriction, or a carrier setting.\n\nUse this short checklist:\n- Call the restaurant from a personal cell phone.\n- Confirm the forwarded line rings.\n- Listen for the greeting or ring pattern you expect.\n- Ask: \"Can you hear me clearly?\"\n- Hang up and call again during a busy period.\n- Try both a normal call and a blocked/unknown caller if your store gets those.\n\nIf you are forwarding to ROAL, test a real restaurant scenario: ask about hours, request a pickup order, and ask for a menu item that is sold out. ROAL reads the live menu, won’t offer items marked sold out, and can hand allergy-sensitive questions or manager requests to staff with a summary. That matters more than the forwarding setting itself, because the whole point is to turn a ringing phone into a usable order or a clean handoff."
+    },
+    {
+      "id": "how-does-call-forwarding-help-a-restaurant-keep-its-main-num",
+      "h2": "How does call forwarding help a restaurant keep its main number?",
+      "body": "A lot of owners worry that forwarding means giving up their phone number. It does not have to. With ROAL, the restaurant keeps its existing number and forwards calls to the location’s own phone line automatically.\n\nThat matters because customers can keep dialing the number they already know. You are not printing a new number on menus, receipts, or storefront signs unless you want to.\n\nUse this simple message for staff or callers if needed: \"We’re still reachable at the same number. Calls are being routed so we can answer faster.\" That is cleaner than asking everyone to learn a new line.\n\nIf you run a pizza shop, deli, or family restaurant, this setup is especially useful during lunch and dinner. The caller still reaches the restaurant, but the line can now take orders, collect the caller’s name and phone, quote a ready time, and send the order to the kitchen screen. Questions ROAL cannot answer land in an inbox, and you answer once so the host learns it from then on."
+    },
+    {
+      "id": "what-does-forwarding-cost-compared-with-missed-calls-or-deli",
+      "h2": "What does forwarding cost compared with missed calls or delivery apps?",
+      "body": "Forwarding itself may be included in your phone plan, but the real cost question is what happens when calls are not answered. If a caller gives up, that can mean a lost pickup order, a missed reservation request, or a customer who orders from a delivery app instead.\n\nHere is a simple example you can swap with your own numbers:\n- Say your average pickup order is $28.\n- Say 5 calls a day would have become orders if answered.\n- That is $140 in daily order value.\n- Use your own average order and call count to see what is at stake.\n\nDelivery apps commonly take roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee whether or not orders come in. ROAL is different: it charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. For owners who want a quick way to compare options, try the [AI phone host cost calculator](/tools/phone-host-cost-calculator) or the [delivery app commission calculator](/tools/delivery-commission-calculator)."
+    },
+    {
+      "id": "how-do-i-combine-optimum-forwarding-with-roal-during-service",
+      "h2": "How do I combine Optimum forwarding with ROAL during service and after hours?",
+      "body": "The cleanest setup is usually this: forward busy or unanswered calls during service, and forward all calls after close. That gives your staff a chance to answer when they are free, but it still gives callers a place to land when the restaurant is slammed or closed.\n\nA practical phone plan looks like this:\n1. During lunch and dinner, forward busy or unanswered calls.\n2. After closing, forward all calls.\n3. Use the same destination number so the setup stays simple.\n4. Review call history and transcripts in the dashboard.\n5. Update hours or FAQs when callers ask something new.\n\nROAL’s dashboard includes live kitchen tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That makes forwarding more useful than voicemail or a basic ring-all setup, because the call becomes an order, a reservation request, or a clear message for staff. If you want a bigger picture of phone setup choices, [How it works](/how-it-works) explains the flow from website to live phone host."
+    },
+    {
+      "id": "what-if-optimum-forwarding-codes-do-not-work-on-my-line",
+      "h2": "What if Optimum forwarding codes do not work on my line?",
+      "body": "That can happen. Codes vary by carrier, plan, and system type, and some Optimum Business setups rely on portal settings instead of star codes. If a code does not work, do not keep guessing.\n\nTry this order:\n- Confirm whether your line is landline, mobile, or business VoIP.\n- Check the Optimum Business portal for forwarding settings.\n- Ask support whether your plan uses a code or web setting.\n- Test after every change with a real call.\n\nIf your line is not cooperating, you still have options. You can keep your existing number and route calls to a working destination, including ROAL, while you sort out the phone setup. If the caller needs something beyond ordering, such as a catering request, complaint, or manager question, ROAL will send it to staff with a summary instead of trying to guess. For owners who want a quieter phone during rushes, [Build a free test host](/try) lets you paste your website, Google Maps link, or restaurant name and try it in the browser before you go live."
+    }
+  ],
+  "takeaways": [
+    "Optimum Business forwarding is usually set in the portal or through support, and exact steps can vary by plan.",
+    "Forwarding busy or unanswered calls is often the best first setup for restaurants.",
+    "Always test from a real cell phone before you trust the line.",
+    "ROAL can answer forwarded calls, take orders, and send kitchen tickets while your restaurant keeps its main number.",
+    "Forwarding works best when you pair it with a clear after-hours and rush-hour plan."
+  ],
+  "faq": [
+    {
+      "q": "How do I forward my Optimum Business line to another number?",
+      "a": "Most Optimum Business lines use the business portal or support to set forwarding, but the exact steps depend on the plan. Start by checking whether you can forward all calls, unanswered calls, or busy calls, then save the destination number and test it from a mobile phone. Always confirm the setup with your carrier or phone provider if the portal labels are unclear."
+    },
+    {
+      "q": "Can I forward only busy or unanswered calls on Optimum Business?",
+      "a": "Often, yes, but it depends on the phone setup tied to your Optimum Business account. For restaurants, busy or unanswered forwarding is usually the most useful option because staff can still answer when free, while overflow calls go somewhere useful instead of to voicemail. Test both call paths during a real rush if you can."
+    },
+    {
+      "q": "Will forwarding calls make me lose my restaurant number?",
+      "a": "No. Forwarding sends calls to another line, but it does not have to replace your main restaurant number. With ROAL, the restaurant keeps its existing number and routes calls to the location’s own phone line automatically, so customers can keep using the number they already know."
+    },
+    {
+      "q": "What should I forward Optimum Business calls to after hours?",
+      "a": "After hours, many restaurants forward all calls to a line that can answer and capture the order or request. That could be a staff phone, voicemail, or an AI phone host like ROAL. ROAL can answer questions, take pickup and delivery orders, and pass harder calls to staff with a summary."
+    }
+  ],
+  "words": 1338,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

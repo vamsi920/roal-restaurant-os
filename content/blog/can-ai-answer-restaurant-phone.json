@@ -1,0 +1,76 @@
+{
+  "slug": "can-ai-answer-restaurant-phone",
+  "keyword": "can ai answer restaurant phone",
+  "category": "ai-basics",
+  "title": "Can AI answer restaurant phone calls?",
+  "seoTitle": "Can AI answer restaurant phone calls? | ROAL",
+  "description": "Can AI answer restaurant phone calls? See what it can handle, what it cannot, setup steps, pricing, and when it fits your shop.",
+  "question": "Can AI answer my restaurant phone and take orders without making a mess for my staff?",
+  "answer": "Yes. An AI phone host can answer your restaurant phone, take pickup and delivery orders from your live menu, answer common questions about hours, address, parking, and menu items, and send a clean ticket to the kitchen screen. It should hand off tricky calls, allergy-sensitive questions, complaints, catering, and manager requests to staff.",
+  "summary": "You’ll know what an AI phone host can handle, what to route to staff, and how to set one up for your restaurant.",
+  "intro": "Yes, AI can answer your restaurant phone. It can take orders, answer common questions, and send the order to the kitchen without making your staff stop what they are doing.\n\nThe important part is knowing what it should handle and what should go to a person. For restaurants like pizza shops, delis, and takeout spots, that usually means using an AI phone host for the steady calls and keeping staff for the tricky ones.",
+  "sections": [
+    {
+      "id": "what-can-an-ai-phone-host-handle-on-a-restaurant-call",
+      "h2": "What can an AI phone host handle on a restaurant call?",
+      "body": "A good restaurant AI phone host can do the parts of the call that repeat all day long. That includes pickup and delivery orders, hours, address, parking, menu questions, reservation requests, and simple order changes.\n\nFor a busy shop, that matters because the phone often interrupts prep, packing, and line work. With ROAL, the host can read your live menu, take items, sizes, modifiers, and notes, collect the caller’s name and phone, quote a ready time, and confirm the order back before it sends a clean ticket to the kitchen screen.\n\nHere is a simple call flow you can expect:\n1. Caller asks for two plain slices and a soda.\n2. Host confirms the size, add-ons, and pickup name.\n3. Host says a ready time.\n4. Host reads the order back.\n5. Ticket lands in the kitchen screen.\n\nA useful script line is: \"Thanks for calling. What can I start for you today?\" That sounds natural and gets the order moving fast."
+    },
+    {
+      "id": "what-should-still-go-to-a-person-at-the-restaurant",
+      "h2": "What should still go to a person at the restaurant?",
+      "body": "Not every call should stay with the phone host. Some calls need judgment, empathy, or a manager’s decision. That is true whether you run a diner, a family spot, or a late-night takeout counter.\n\nROAL sends these to staff with a summary: catering requests, complaints, allergy-sensitive questions, and manager requests. It also does not offer items marked sold out, which helps avoid awkward back-and-forth on the phone.\n\nUse this handoff checklist:\n- Catering or party orders\n- Angry or upset callers\n- Allergy-sensitive questions\n- Manager calls\n- Anything the host cannot answer confidently\n\nA good staff note looks like this: \"Caller wants a 12-person lunch order for Friday at 11:30, asked for a manager callback, and mentioned a nut allergy.\" That gives your team the key facts without making them listen to the whole call again.\n\nROAL also has an inbox for questions it could not answer. You answer once, and the host knows it from then on. That is helpful for local details like parking rules, special hours, or a menu item that is not obvious from the website."
+    },
+    {
+      "id": "how-do-i-set-one-up-without-spending-all-day-on-it",
+      "h2": "How do I set one up without spending all day on it?",
+      "body": "Setup should be quick, because restaurant owners do not have time for a long tech project. With ROAL, the owner pastes a restaurant website, Google Maps link, or just \"Name, City\" at /try. ROAL reads public pages like the website, menu PDFs, and menu photos, then builds a phone host in about a minute.\n\nYou can also upload a menu in any format. The owner can test-call it right in the browser, and there is no sign-up needed for that test.\n\nA simple setup plan looks like this:\n1. Gather your website, Google Maps link, or menu file.\n2. Paste it into the setup page.\n3. Pick the host’s voice and name.\n4. Test-call it from the browser.\n5. Claim the host and forward your restaurant number.\n\nFor forwarding, your restaurant keeps its own number. ROAL gives each location its own phone line automatically, and you forward your existing number to it for all calls, or only when busy or unanswered. If you are checking carrier settings, confirm the exact codes with your carrier and test with a live call. For setup help, see [How it works](/how-it-works) and the [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-much-does-it-cost-compared-with-other-phone-options",
+      "h2": "How much does it cost compared with other phone options?",
+      "body": "This is where the math matters. ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nThat is different from many monthly AI phone tools that charge a fixed fee per location, often roughly $79 to $599 whether or not orders come in. Human answering services usually bill per minute or per call. And delivery apps commonly charge restaurants roughly 15-30% commission per order.\n\nHere is a simple example you can swap for your own numbers:\n- Say your average phone order is $28.\n- Say you get 120 completed phone orders in a month.\n- ROAL cost at $0.90 each = $108.\n- If a delivery app took 20% commission on that same $28 order, that would be $5.60 per order, or $672 across 120 orders.\n\nThat does not mean every restaurant should use the same setup. But it does mean you should compare your actual order volume, average ticket, and labor pressure. The [pricing page](/pricing) and [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) can help you compare the models."
+    },
+    {
+      "id": "how-do-i-forward-my-restaurant-number-the-right-way",
+      "h2": "How do I forward my restaurant number the right way?",
+      "body": "Forwarding is the step that makes the phone host actually answer your calls. The restaurant keeps its number, and calls get routed to the new line that ROAL gives each location.\n\nThe exact method depends on your phone carrier or business phone system. On many landlines and some carriers, \n72 then the forwarding number forwards all calls, and *73 turns it off. On GSM mobile carriers like AT&T and T-Mobile, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls; **67*number# forwards busy calls. Verizon Wireless uses *72 and *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nUse this owner checklist:\n- Confirm your carrier or phone system.\n- Test forwarding during a slow time.\n- Call your restaurant number from a cell phone.\n- Make sure the call reaches the host.\n- Turn forwarding off and on to confirm you know the process.\n\nA practical script for your staff is: \"If the phone rings and we are slammed, the calls go to the host line first.\" If you want a reference while you test, see [Call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-does-a-good-restaurant-phone-answer-sound-like",
+      "h2": "What does a good restaurant phone answer sound like?",
+      "body": "The best phone answer is short, clear, and easy to repeat. It should sound like your restaurant, not like a robot reading a manual.\n\nROAL lets the owner pick the host’s voice and name, so you can make it fit your brand. A pizza shop may want something brisk and casual. A family restaurant may want something warmer and slower.\n\nHere are a few practical lines you can use or adapt:\n- \"Thanks for calling. Are you picking up or ordering delivery?\"\n- \"I can help with hours, the menu, or your order.\"\n- \"Let me confirm that back to you before I send it to the kitchen.\"\n- \"For a manager or special request, I’m sending this to staff now.\"\n\nYou should also make sure the host has the same current details your staff would give. That includes hours, address, parking, and menu changes. ROAL reads those from your public pages and your uploaded menu, and the owner can update answers from the dashboard if needed.\n\nIf you want more owner-focused examples, [the owner's guide to AI phone answering](/blog/restaurant-owner-guide-ai-phone) and [phone greeting templates](/tools/phone-greeting-templates) are good next reads."
+    },
+    {
+      "id": "should-your-restaurant-use-ai-for-phones-right-now",
+      "h2": "Should your restaurant use AI for phones right now?",
+      "body": "For many independent restaurants, the answer is yes if the phone is taking too much attention away from service. It is especially useful for pizza shops, delis, takeout counters, and other places where the same questions come in over and over.\n\nUse this quick yes-or-no check:\n- Do you get repeat order calls all day?\n- Do staff miss calls during rushes?\n- Do you answer the same hours and menu questions again and again?\n- Do you want a cleaner handoff to the kitchen?\n- Do you want staff to focus on food and guests instead of the phone?\n\nIf you answered yes to most of those, an AI phone host is worth testing. ROAL is pre-launch, so keep expectations practical: it answers the phone, takes orders from the menu, and hands off what it cannot handle. It does not take card numbers over the phone, and payment still happens at pickup or however your restaurant already takes it.\n\nIf you want to try it without committing, [build a free test host](/try). Build it from your website, test-call it in the browser, and see how it fits your menu and phone flow before you switch forwarding on."
+    }
+  ],
+  "takeaways": [
+    "An AI phone host can answer common restaurant calls, take orders, and send a kitchen ticket.",
+    "Tricky calls like catering, complaints, and allergy questions should go to staff.",
+    "ROAL charges per completed order, not a monthly fee.",
+    "Forwarding your existing number keeps your restaurant’s main line in place."
+  ],
+  "faq": [
+    {
+      "q": "Can AI answer restaurant phone calls during busy hours?",
+      "a": "Yes. That is one of the main uses for a restaurant AI phone host. It can answer the call, take the order, confirm the details, and send a clean ticket to the kitchen while your staff stays on the line or the counter."
+    },
+    {
+      "q": "Will an AI phone host take credit card numbers?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "q": "What happens if the AI cannot answer a question?",
+      "a": "The question goes to an inbox, and the owner answers it once. After that, the host knows the answer for future calls. For sensitive or unusual calls, it can also hand the caller to staff with a summary."
+    },
+    {
+      "q": "How do I connect my restaurant number to an AI phone host?",
+      "a": "You usually forward your existing restaurant number to the new line the host gives you. The exact forwarding code or method depends on your carrier or phone system, so confirm with them and test with a live call before relying on it."
+    }
+  ],
+  "words": 1395,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

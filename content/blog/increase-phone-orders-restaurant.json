@@ -1,0 +1,72 @@
+{
+  "slug": "increase-phone-orders-restaurant",
+  "keyword": "increase restaurant phone orders",
+  "category": "phone-orders",
+  "title": "How to get more phone orders for your restaurant",
+  "seoTitle": "Increase restaurant phone orders",
+  "description": "Improve call handling, menu setup, forwarding, and kitchen workflow to bring in more phone orders at your restaurant.",
+  "question": "How can I increase restaurant phone orders without adding more front counter work?",
+  "answer": "To increase restaurant phone orders, make it easier for callers to reach you, place orders quickly, and get clear answers about your menu, hours, and pickup timing. Use a phone host that can answer routine calls, take complete orders from your live menu, and send clean tickets to the kitchen while your team handles the calls that need a person.",
+  "summary": "Use better call handling, forwarding, and a cleaner order flow to capture more phone orders.",
+  "intro": "Phone orders go up when answering the phone is easy, fast, and consistent. The biggest wins are simple: answer more calls, make ordering painless, and give people a clear ready time.\n\nFor many independent restaurants, that means tightening up the phone flow, cleaning up the menu, and using a phone host like ROAL for routine order taking while staff focus on the calls that need a person.",
+  "sections": [
+    {
+      "id": "why-are-callers-hanging-up-before-they-order",
+      "h2": "Why are callers hanging up before they order?",
+      "body": "Most phone orders are lost for plain reasons: no one answers, the line is busy, the caller cannot get menu answers, or the order takes too long. A busy pizza shop, deli, or takeout spot can lose a lot of phone business just because the phone feels hard to use.\n\nStart by listening to a few of your own calls. Write down where people get stuck. Use this quick checklist:\n- Did someone answer on the first ring?\n- Could the caller hear the menu clearly?\n- Did the caller get a ready time?\n- Was the order repeated back before hanging up?\n- Did the caller have to call back for hours, address, or parking?\n\nA simple phone script helps. Try: \"Thanks for calling. What can I get started for you?\" Then move straight to items, sizes, and notes. If your team is too busy to do that on every call, an AI phone host can handle the routine parts and keep the call moving."
+    },
+    {
+      "id": "how-do-i-make-it-easier-for-people-to-place-an-order",
+      "h2": "How do I make it easier for people to place an order?",
+      "body": "The easier the call feels, the more likely the caller stays on the line and finishes the order. Keep the menu information current, especially prices, hours, address, and sold-out items. If callers hear conflicting answers, they often hang up and order somewhere else.\n\nA good setup for phone orders is:\n1. Keep the live menu accurate.\n2. Make sure hours and address are easy to say out loud.\n3. Decide how you want pickup and delivery handled.\n4. Train whoever answers to collect name, phone number, items, modifiers, and notes in the same order every time.\n\nExample: say your average phone order is $28. If a caller adds one side or drink because the phone host mentioned it, that can raise the order value a bit. Plug in your own average order and your own upsell items. If you want a cleaner starting point, ROAL reads the restaurant website, Google Maps link, or menu pages and builds a phone host in about a minute at [/try](/try)."
+    },
+    {
+      "id": "what-should-i-say-on-the-phone-to-close-more-orders",
+      "h2": "What should I say on the phone to close more orders?",
+      "body": "You do not need a long speech. You need a short, repeatable flow that sounds natural and gets the caller moving. The goal is to reduce back-and-forth and make the order feel easy.\n\nHere is a practical script flow:\n- \"Thanks for calling [restaurant name]. What can I get started for you?\"\n- \"Is that for pickup or delivery?\"\n- \"What name should I put on the order?\"\n- \"What number can we reach you at?\"\n- \"Your total is [amount]. We should have that ready at [time].\"\n- \"Let me repeat that back to make sure I got everything right.\"\n\nKeep the script short enough that staff actually use it. If your team is rushed, the script often gets skipped. That is where ROAL can help: it takes items, sizes, modifiers, and notes, speaks the caller’s language, confirms the order back, and sends a clean ticket to the kitchen screen. It also does not take card numbers over the phone, so payment can happen at pickup or however you already take it."
+    },
+    {
+      "id": "how-should-i-handle-busy-lines-and-after-hours-calls",
+      "h2": "How should I handle busy lines and after-hours calls?",
+      "body": "If your phone rings into a busy signal or goes unanswered, those calls often turn into lost orders. The fix is not always hiring more people. Sometimes it is forwarding calls so someone answers at the right times.\n\nMany restaurants use call forwarding for all calls, or only when busy or unanswered. The exact code depends on your carrier and plan, so always confirm with your carrier and test with a call. Common examples include *72 and *73 on many landlines, **21*number# and ##21# on some GSM carriers for all calls, **61*number# for unanswered calls, and **67*number# for busy calls. Business VoIP systems usually set forwarding in the web portal.\n\nA simple owner checklist:\n- Test forwarding during lunch and dinner.\n- Decide whether to forward all calls or only busy/unanswered calls.\n- Make sure the forwarded line still gives callers the right menu and hours.\n- Turn forwarding off when you do not need it.\n\nROAL gives each location its own phone line automatically once you claim the host, and you can forward your existing number to it. That helps keep the restaurant’s current number in place while routing calls where they can actually be answered."
+    },
+    {
+      "id": "how-do-i-keep-phone-orders-organized-in-the-kitchen",
+      "h2": "How do I keep phone orders organized in the kitchen?",
+      "body": "More phone orders do not help if the kitchen gets messy tickets or missing details. You want every call to turn into a clean order that the kitchen can read quickly.\n\nA good kitchen flow looks like this:\n1. The caller places the order.\n2. The order is confirmed back on the call.\n3. The ticket lands on the kitchen screen.\n4. The team marks it new, preparing, or ready.\n\nThat matters because phone orders often arrive during a rush. If the kitchen has to decode handwriting or guess the modifiers, service slows down. ROAL’s dashboard includes live tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus.\n\nHere is a worked example you can swap for your own numbers: if your restaurant takes 40 completed phone orders in a week at $28 each, that is $1,120 in phone order sales before any add-ons. If you can make the order flow smoother, you are not just answering phones better; you are making the whole kitchen run cleaner."
+    },
+    {
+      "id": "what-should-i-do-if-callers-ask-about-allergy-or-manager-iss",
+      "h2": "What should I do if callers ask about allergy or manager issues?",
+      "body": "Not every call should be handled the same way. Some questions are better answered by staff, especially allergy-sensitive requests, catering, complaints, and manager requests. A good phone setup should know when to hand off.\n\nUse a simple rule:\n- Routine order, hours, address, parking, menu question: answer it directly.\n- Allergy-sensitive question, complaint, catering request, or manager request: send it to staff with a summary.\n\nThat keeps the phone moving without forcing the host to guess. It also helps the team focus on the calls that need judgment. ROAL can hand those tougher calls to staff and leave a summary so the next person knows what happened.\n\nIf you want to see whether this fits your shop, you can [Build a free test host](/try) from your website or menu pages and try it in the browser before you go live. The owner chooses the voice and name, can answer unknown questions once, and the host learns it from then on. That is useful for menu changes, local directions, or common questions you get all the time."
+    }
+  ],
+  "takeaways": [
+    "Answering faster is one of the simplest ways to increase restaurant phone orders.",
+    "Keep your menu, hours, address, and sold-out items accurate so callers stay on the line.",
+    "Use a short order script and a clear ready time to reduce hang-ups.",
+    "Forward busy or unanswered calls so phone demand does not disappear.",
+    "Send tricky calls to staff and keep routine orders moving to the kitchen."
+  ],
+  "faq": [
+    {
+      "q": "What is the best way to increase restaurant phone orders?",
+      "a": "The best way is to reduce friction on the call. Answer quickly, give clear menu answers, collect the order in one pass, and quote a ready time the caller can trust. If your team is too busy to do that consistently, an AI phone host can handle routine calls and send the order to the kitchen screen."
+    },
+    {
+      "q": "Should I forward my restaurant phone to another line?",
+      "a": "Yes, if calls are being missed or going to voicemail. Many restaurants forward all calls, or only busy and unanswered calls, to a line that can actually be answered. Confirm the exact forwarding code with your carrier or phone system and test it before relying on it."
+    },
+    {
+      "q": "Can a phone host take pickup and delivery orders?",
+      "a": "Yes. ROAL takes pickup and delivery orders from the restaurant’s live menu, collects items, sizes, modifiers, notes, name, and phone number, and confirms the order back. It does not take card numbers over the phone, so payment stays with your usual process."
+    },
+    {
+      "q": "How do I keep phone orders organized during a rush?",
+      "a": "Put every phone order onto a clean kitchen ticket with a simple status flow like new, preparing, and ready. That helps the kitchen move faster and reduces missed details. A dashboard with live tickets and call history also makes it easier to review orders later."
+    }
+  ],
+  "words": 1119,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-host-test-call",
+  "keyword": "test ai phone agent",
+  "category": "ai-basics",
+  "title": "How to test an AI phone host before going live",
+  "seoTitle": "How to test an AI phone agent before launch | ROAL",
+  "description": "Test an AI phone agent before launch with checks for orders, hours, callbacks, and call routing, plus a practical checklist for restaurant owners.",
+  "question": "How do I test an AI phone host before I let it answer my restaurant’s calls?",
+  "answer": "Test it the same way a real caller would: ask about hours, address, parking, menu items, sold-out items, pickup orders, reservations, and odd requests. Make sure it confirms the order back, collects a name and phone number, hands tricky calls to staff, and sends a clean ticket to the kitchen screen before you forward your live number.",
+  "summary": "You’ll know how to run realistic test calls and check that the host is ready for live restaurant calls.",
+  "intro": "You should test an AI phone host before going live by making it handle the same calls your restaurant gets on a busy day. Start with simple questions, then move to pickup orders, reservations, and edge cases like sold-out items or allergy questions.\n\nThe goal is not to see whether it sounds perfect. The goal is to see whether it gives the right answer, takes the right details, and passes hard calls to staff with a clear summary. ROAL is built for that kind of restaurant workflow, and you can test-call it in the browser before you claim the host.",
+  "sections": [
+    {
+      "id": "what-should-i-test-first-on-a-restaurant-phone-host",
+      "h2": "What should I test first on a restaurant phone host?",
+      "body": "Start with the calls that happen every day. Ask for hours, address, parking, and a few menu items. Then ask one question that should come from the live menu and one that should not be guessed.\n\nUse this simple order:\n- “What time do you open on Friday?”\n- “Where do customers park?”\n- “What comes on the chicken parmesan?”\n- “Do you have the lunch special today?”\n\nIf you are testing ROAL, it should read your public pages, menu PDFs, menu photos, or uploaded menu and use that information. It should also answer in the restaurant’s language, if the caller speaks another language.\n\nA good first test also checks the basics of tone and pacing. Try saying, “I’m in a hurry,” and see whether the host stays brief. Then ask, “Can you repeat that?” and make sure it speaks clearly enough for a real caller.\n\nUse this quick checklist:\n- Correct hours\n- Correct address\n- Correct parking answer\n- Correct menu item details\n- Clear voice and name\n- Calm pace for a busy caller"
+    },
+    {
+      "id": "how-do-i-test-pickup-orders-without-missing-details",
+      "h2": "How do I test pickup orders without missing details?",
+      "body": "This is the most important part. A restaurant phone host should take items, sizes, modifiers, and notes, then collect the caller’s name and phone number and quote a ready time. It should also confirm the order back before sending a ticket.\n\nTry a real-world example. Say: “I want one large pepperoni pizza, extra cheese, well done, and a Caesar salad no croutons. My name is Maria and my number is 555-0148.” Then listen for four things:\n- Did it capture each item and modifier?\n- Did it ask for the name and phone?\n- Did it give a ready time?\n- Did it repeat the order back clearly?\n\nIf your average order is, say, $28, you can test whether the host handles the same kind of ticket you already sell. Swap in your own common order and your own prices. The point is not to match a script word for word. The point is to see that the host handles the structure of a real restaurant order.\n\nROAL also does one practical thing owners care about: it sends a clean ticket to the kitchen screen when the order is complete."
+    },
+    {
+      "id": "how-do-i-check-sold-out-items-allergy-questions-and-other-tr",
+      "h2": "How do I check sold-out items, allergy questions, and other tricky calls?",
+      "body": "These are the calls that should not be forced into a normal order flow. If an item is marked sold out, the host should not offer it. If someone asks about an allergy, a catering request, a complaint, or a manager, it should hand the call to staff with a summary.\n\nTest each one directly. For example:\n- “Do you have the fried shrimp special?” if it is sold out\n- “Does this contain peanuts?”\n- “I need catering for 25 people next Tuesday”\n- “I got the wrong order and want to talk to a manager”\n\nHere is a simple pass/fail table you can use:\n\n| Test call | What should happen |\n|---|---|\n| Sold-out item | Host does not offer it |\n| Allergy question | Host passes it to staff |\n| Complaint | Host passes it to staff |\n| Manager request | Host passes it to staff |\n| Catering inquiry | Host passes it to staff |\n\nIf you want more background on handling sensitive calls, see [How AI should handle allergy questions](/blog/ai-phone-allergy-questions) and [When the AI doesn't know the answer](/blog/ai-phone-host-unanswered-questions). The key is not to guess. It should know when to stop and hand it off."
+    },
+    {
+      "id": "how-should-i-test-call-forwarding-before-i-claim-the-host",
+      "h2": "How should I test call forwarding before I claim the host?",
+      "body": "Before going live, confirm exactly where calls will ring. On many landlines and some carriers, *72 followed by the forwarding number forwards all calls and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off, **61*number# forwards unanswered calls, and **67*number# forwards busy calls. Verizon Wireless often uses *72 / *73 and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nThose codes vary by carrier and plan, so always confirm with your carrier and test with a real call. A good restaurant test looks like this:\n1. Forward the line.\n2. Call the restaurant from a mobile phone.\n3. Check whether the host answers.\n4. Hang up and call again to test busy or unanswered forwarding.\n5. Turn forwarding off and confirm the line returns to normal.\n\nIf you use ROAL, each location gets its own phone line automatically after you claim the host, and you forward your existing number to it. That means you keep your restaurant number, and you can turn forwarding off any time. For the exact codes you may need, [use the call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-should-i-listen-for-in-the-recording-and-ticket-after-a",
+      "h2": "What should I listen for in the recording and ticket after a test call?",
+      "body": "The call itself matters, but the record of the call matters too. After each test, check the transcript, the recording, and the kitchen ticket. You want the host to write down the order cleanly so your staff can work from it without guessing.\n\nReview these items every time:\n- Caller name and phone number\n- Items, sizes, and modifiers\n- Any notes, like “no onions” or “cut in four”\n- Ready time\n- Whether the order reached the kitchen screen\n\nIf the caller asked a question the host could not answer, it should land in an inbox and be answered once by the owner or manager. Then the host should know it from then on. That is useful for things like holiday hours, parking details, or a house rule you want it to remember.\n\nA practical example: if your kitchen sees “large cheese pizza, no basil, pickup in 20 minutes,” that is a good ticket. If it sees “pizza,” that is too thin. If it sees the wrong phone number or missing name, you need another test round.\n\nROAL includes call history with transcripts and recordings, plus a menu editor and FAQs, so you can fix issues fast."
+    },
+    {
+      "id": "how-do-i-know-when-the-test-is-good-enough-to-go-live",
+      "h2": "How do I know when the test is good enough to go live?",
+      "body": "Use a simple pass list. You do not need perfection. You need the parts of the call that matter to be right every time you test them.\n\nA test round is ready when:\n- Hours, address, and parking are correct\n- Common menu questions are correct\n- Pickup orders are captured with details\n- Names, phone numbers, and ready times are collected\n- Sold-out items are not offered\n- Allergy, complaint, catering, and manager calls go to staff\n- The kitchen ticket is clear\n\nRun at least a few calls in a row and see whether the results stay consistent. Try changing your wording. A caller may say, “Can I get a pie?” instead of “pizza,” or “I need it ASAP” instead of “pickup.” The host should still keep up.\n\nOne more practical check: ask yourself whether your staff would be comfortable acting on the ticket without calling the customer back. If the answer is no, test again.\n\nIf you want a starting point, ROAL lets owners paste a website, Google Maps link, or “Name, City” at /try, test-call the host in the browser, and upload a menu in any format. [Build a free test host](/try) when you are ready to try it with your own restaurant."
+    }
+  ],
+  "takeaways": [
+    "Test the same calls your restaurant gets every day: hours, menu, pickup orders, and edge cases.",
+    "Make sure the host collects the name, phone number, items, modifiers, notes, and ready time.",
+    "Check the transcript, recording, and kitchen ticket after every test call.",
+    "Confirm forwarding with your carrier and test it before putting the live number through.",
+    "Hard calls should go to staff, not get guessed by the host."
+  ],
+  "faq": [
+    {
+      "q": "What should I ask an AI phone host before going live?",
+      "a": "Ask the questions your customers ask most often: hours, address, parking, menu items, and pickup orders. Then test harder calls like sold-out items, allergy questions, complaints, and manager requests. A good host should answer what it knows, and send the rest to staff with a clear summary."
+    },
+    {
+      "q": "How do I test an AI phone agent for restaurant orders?",
+      "a": "Make a realistic order with items, sizes, modifiers, and notes. For example: “one large pepperoni, extra cheese, well done, and a salad no croutons.” Then check whether it collects the caller’s name and phone number, gives a ready time, repeats the order back, and sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "Should I forward my restaurant number before testing?",
+      "a": "No, test first with browser calls or a separate test setup if you can. Once the host is answering correctly, claim the host and forward your existing number to it. Always confirm the forwarding steps with your carrier or phone system and test with a real call."
+    },
+    {
+      "q": "What if the host does not know an answer during testing?",
+      "a": "That should go to an inbox for you or your manager to answer once. After you answer it, the host learns it for future calls. For anything sensitive or unclear, like allergy questions or complaints, it should pass the call to staff instead of guessing."
+    }
+  ],
+  "words": 1271,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

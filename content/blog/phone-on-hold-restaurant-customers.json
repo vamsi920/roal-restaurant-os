@@ -1,0 +1,76 @@
+{
+  "slug": "phone-on-hold-restaurant-customers",
+  "keyword": "restaurant put customers on hold",
+  "category": "missed-calls",
+  "title": "What putting restaurant callers on hold costs you",
+  "seoTitle": "Restaurant hold calls: what they cost | ROAL",
+  "description": "Putting restaurant callers on hold can cost orders and repeat business. See what hold time costs and what to do instead.",
+  "question": "What does it cost my restaurant when I put customers on hold?",
+  "answer": "Putting restaurant callers on hold can cost you orders, especially during rushes when callers hang up and call someone else, order online, or give up. It can also slow service for the guests already in your shop. A better setup is to route busy or unanswered calls to a phone host that can answer questions, take pickup and delivery orders, and hand off tricky calls to staff.",
+  "summary": "You’ll learn the real cost of hold time and how to replace it with a practical call-handling plan.",
+  "intro": "Putting restaurant callers on hold usually costs you more than a minute of time. It can cost you the order, the caller’s patience, and sometimes the next call too.\n\nFor a busy pizza shop, deli, or family restaurant, the problem is simple: the phone rings while the line is already stretched. The answer is not more scrambling. It is a clear plan for busy calls, and sometimes an [AI phone host](/how-it-works) like ROAL that can answer while your team keeps serving.",
+  "sections": [
+    {
+      "id": "what-does-on-hold-really-cost-a-restaurant",
+      "h2": "What does “on hold” really cost a restaurant?",
+      "body": "When a customer hears hold music or silence, they are still deciding whether to wait. Some will stay on the line. Others will hang up and order somewhere easier.\n\nHere is a simple way to think about the cost. Use your own numbers:\n\n| Example number | Plug in your own |\n|---|---:|\n| Average order | $28 |\n| Orders lost in a busy hour | 3 |\n| Lost sales in that hour | $84 |\n\nIf those 3 callers had been pickup orders, that is $84 in sales in one hour. If some of those callers also become repeat guests, the real cost is higher. The exact number will change from shop to shop, but the pattern does not: the longer callers wait, the more likely they are to leave.\n\nA practical owner test is this: ask your staff what they say when the line is ringing and the kitchen is slammed. If the answer is, “put them on hold,” you have a bottleneck. Use a phone greeting like: “Thanks for calling. I’m helping another guest right now, but I’ll be with you as soon as I can.”"
+    },
+    {
+      "id": "which-calls-should-never-sit-on-hold",
+      "h2": "Which calls should never sit on hold?",
+      "body": "Not every call needs a human on the spot, but some do need a fast answer. The best restaurant phone plan separates simple calls from urgent ones.\n\nUse this quick list:\n- **Can be handled quickly:** hours, address, parking, menu items, pickup order taking, reservation requests.\n- **Should go straight to staff:** allergy-sensitive questions, complaints, catering, manager requests.\n- **Should not wait too long:** delivery orders during rush hour, callers asking what is sold out, callers in another language.\n\nROAL is built for the first group. It answers the restaurant’s phone, takes pickup and delivery orders from the live menu, answers menu and hours questions, and passes allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary.\n\nA useful script for your team is: “If the line is busy, the phone host can take the order. If it’s a special issue, we’ll pass it to the kitchen or manager.” That keeps the front counter from juggling every call at once. It also keeps callers from hearing long pauses while someone runs to ask a question."
+    },
+    {
+      "id": "how-much-money-do-missed-calls-and-hold-time-add-up-to",
+      "h2": "How much money do missed calls and hold time add up to?",
+      "body": "Use a simple worksheet with your own numbers. You do not need perfect math to see the size of the problem.\n\n1. Pick your average order amount.\n2. Estimate how many callers hang up during your busiest hour.\n3. Multiply the two numbers.\n4. Repeat for lunch, dinner, weekends, or weather spikes.\n\nExample: say your average order is $24 and you lose 4 callers during a dinner rush. That is $96 in sales for that one period. If half of those callers were going to order sides, drinks, or dessert, the impact may be even bigger. Plug in your own average ticket and your own busy-hour traffic.\n\nThere is also a cost to the team. When staff stop to answer repeated calls, the front of house slows down, the kitchen gets interrupted, and guests standing in line wait longer. Hold time can look small from the phone. On the floor, it steals attention from real service.\n\nIf you use delivery apps, remember that those platforms commonly take roughly 15-30% commission per order. A phone order that comes directly to the restaurant keeps more of the sale in your pocket. That is one reason many owners pay close attention to what happens when a caller is left waiting."
+    },
+    {
+      "id": "what-is-the-cheapest-way-to-stop-callers-from-waiting",
+      "h2": "What is the cheapest way to stop callers from waiting?",
+      "body": "There are a few ways to handle busy calls, and they do not all cost the same.\n\n| Option | Typical cost pattern | Best for |\n|---|---|---|\n| Human answering service | Per minute or per call | Overflow calls only |\n| Monthly AI phone tools | Often a fixed monthly fee per location | Shops with steady call volume |\n| ROAL | $0.90 per completed phone order; no monthly fee | Restaurants that want pay-as-you-go order taking |\n\nThat last line matters. ROAL charges only when a confirmed order reaches the kitchen screen. Calls, questions, and test calls are unlimited and free. There is no monthly fee, setup fee, per-minute fee, or contract.\n\nFor many owners, the cheapest plan is not “hire more phone help all day.” It is “answer simple calls automatically, and let staff handle the calls that need judgment.” A clean phone plan also helps if you are short-staffed, because the phone keeps working even when the front counter is slammed.\n\nUse a practical rule: if the call can be answered from your menu, hours, address, or parking info, it should not sit in a queue. If it needs a person, it should get a person quickly."
+    },
+    {
+      "id": "how-do-i-forward-busy-calls-without-breaking-my-current-numb",
+      "h2": "How do I forward busy calls without breaking my current number?",
+      "body": "You do not have to give up your restaurant number to improve call handling. In many setups, owners keep their existing number and forward calls when busy or unanswered.\n\nROAL gives each location its own phone line automatically after the owner claims the host, and the restaurant forwards its current number to that line. Forwarding can be turned off any time.\n\nFor general setup, carrier codes vary by plan, so always confirm with your provider and test with a real call. Common examples are:\n- On many landlines and some carriers: *72 to forward, *73 to turn off.\n- On some GSM mobile carriers: **21*number# to forward all calls, ##21# to turn off.\n- To forward unanswered calls: **61*number#.\n- To forward busy calls: **67*number#.\n- Verizon Wireless commonly uses *72 / *73, and *71 for busy or no-answer forwarding.\n- Business VoIP systems usually handle this in the web portal.\n\nA simple rollout checklist:\n1. Pick the number that should receive forwarded calls.\n2. Decide whether to forward all calls or only busy/unanswered calls.\n3. Test one real call from another phone.\n4. Make sure the caller ID and order flow look right.\n\nIf you are not sure, use [call forwarding codes by carrier](/tools/call-forwarding-codes) as a starting point, then verify with your carrier."
+    },
+    {
+      "id": "what-should-the-phone-say-instead-of-putting-people-on-hold",
+      "h2": "What should the phone say instead of putting people on hold?",
+      "body": "A clear script keeps callers calm and helps your staff sound organized. The goal is to give the caller a path, not a pause.\n\nTry these lines:\n- “Thanks for calling. I can take your order now.”\n- “I’m checking that for you.”\n- “That item is sold out right now. I can help you choose another one.”\n- “I need to pass this to the manager, and I’ll send a summary.”\n\nFor an owner, the best script depends on the call type. Here is a simple table you can reuse:\n\n| Call type | What to say |\n|---|---|\n| Pickup order | “I can take that now.” |\n| Menu question | “Let me check the menu for you.” |\n| Allergy question | “I’m sending this to staff to confirm.” |\n| Complaint | “I’m passing this to the manager.” |\n| Reservation request | “I can take that request now.” |\n\nROAL can speak the caller’s language, take the name and phone number, quote a ready time, and confirm the order back. It also does not offer items marked sold out. That makes the phone feel organized instead of rushed.\n\nOwners can also choose the host’s voice and name, which helps the phone sound like part of the restaurant, not a random line."
+    },
+    {
+      "id": "what-can-you-do-this-week-to-reduce-hold-time",
+      "h2": "What can you do this week to reduce hold time?",
+      "body": "You do not need a huge project to improve this. Start with one busy shift and one phone plan.\n\nUse this 5-step checklist:\n1. Look at your busiest hour and count how often the phone rings while staff are working.\n2. Decide which calls can be answered from your live menu, hours, and address.\n3. Set a busy-call rule: answer, forward, or let a phone host take it.\n4. Make sure staff know which calls go to the manager or kitchen.\n5. Review call history and adjust the script.\n\nIf you want a fast setup, ROAL can be built from a website, Google Maps link, or “Name, City” at /try. It reads public menu and hours pages, lets the owner test-call it in the browser with no sign-up, and can also use an uploaded menu. The dashboard keeps live tickets, call history, transcripts, recordings, menu editing, hours, FAQs, upsells, and multi-location menus in one place.\n\nThat matters because the phone problem is rarely just the phone. It is the whole rush: line out the door, kitchen moving, and someone still asking whether you have garlic knots. A better system gives the caller an answer quickly and gives your team one less interruption."
+    }
+  ],
+  "takeaways": [
+    "Holding callers can cost sales, staff time, and repeat business.",
+    "Separate simple questions from urgent calls so the right person handles them.",
+    "Use a pay-as-you-go phone plan when you want to avoid monthly fixed costs.",
+    "Keep your current number and forward busy or unanswered calls when needed."
+  ],
+  "faq": [
+    {
+      "q": "What should a restaurant do when the phone rings during a rush?",
+      "a": "Use a clear rule for busy periods: answer simple calls, forward overflow calls, or route them to a phone host. That keeps callers from waiting too long while your team stays focused on dine-in guests and the kitchen. A short script helps too: “Thanks for calling. I can take your order now.”"
+    },
+    {
+      "q": "Is it better to put callers on hold or send them to voicemail?",
+      "a": "Usually neither is ideal for a restaurant during peak hours. Hold time can frustrate callers, and voicemail can leave an order unplaced. A better setup is to answer quickly, forward busy calls, or use a phone host that can take the order and pass hard questions to staff."
+    },
+    {
+      "q": "How much does a restaurant phone answering service cost?",
+      "a": "Human answering services usually bill per minute or per call. Many AI phone tools for restaurants charge a fixed monthly fee per location, often roughly $79 to $599, whether or not orders come in. ROAL charges $0.90 per completed phone order with no monthly fee, setup fee, or per-minute fee."
+    },
+    {
+      "q": "Can I keep my restaurant number if I forward calls?",
+      "a": "Yes. In many setups, you keep your existing restaurant number and forward calls when busy or unanswered. The codes and steps depend on your carrier or phone system, so confirm with them and test with a real call. Business VoIP systems usually set this in a web portal."
+    }
+  ],
+  "words": 1493,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

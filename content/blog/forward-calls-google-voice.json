@@ -1,0 +1,72 @@
+{
+  "slug": "forward-calls-google-voice",
+  "keyword": "google voice call forwarding",
+  "category": "phone-setup",
+  "title": "Google Voice call forwarding for restaurants",
+  "seoTitle": "Google Voice call forwarding for restaurants | ROAL",
+  "description": "Set up Google Voice call forwarding for restaurant lines, including all calls, busy calls, and unanswered calls, then check the settings before testing.",
+  "question": "How do I set up Google Voice call forwarding for my restaurant number?",
+  "answer": "Google Voice can forward your restaurant calls by sending them to another number, depending on how your line is set up. In general, you turn forwarding on in Google Voice or your carrier settings, choose whether to forward all calls or only unanswered calls, and then test with a real call to make sure it rings where you expect.",
+  "summary": "Set up Google Voice forwarding for your restaurant line and test that calls reach the right phone.",
+  "intro": "If your restaurant line is on Google Voice, you can forward calls to another number from the Google Voice settings or from your carrier, depending on how the line is set up. For most owners, the key is to choose whether you want all calls forwarded or only unanswered calls.\n\nThat matters if you want your phone to ring first, then send overflow calls somewhere else. It also matters if you are forwarding to an AI phone host like ROAL, because you may want to keep your main number and only forward when busy or closed.",
+  "sections": [
+    {
+      "id": "how-do-i-forward-a-google-voice-number-step-by-step",
+      "h2": "How do I forward a Google Voice number step by step?",
+      "body": "For a restaurant owner, the setup is usually simple: open Google Voice, go to the number or call settings, and add the forwarding number you want calls sent to. Then decide whether you want all calls forwarded or only certain calls.\n\nUse this quick checklist:\n- Confirm the restaurant number is actually on Google Voice.\n- Add the forwarding number for the line you want calls sent to.\n- Choose whether calls should forward always, only when unanswered, or only when busy, if that option is available.\n- Place a test call from a mobile phone and listen for where it rings.\n- Check voicemail after the test so you know where missed calls go.\n\nA simple phone script line for your staff is: \"Thanks for calling, we’re on another line right now, but your call may ring through to our backup line.\" If you are sending calls to ROAL, the caller can still ask about hours, menu items, or pickup orders while your team works the counter."
+    },
+    {
+      "id": "which-forwarding-method-should-a-restaurant-use-all-calls-bu",
+      "h2": "Which forwarding method should a restaurant use: all calls, busy calls, or unanswered calls?",
+      "body": "The right choice depends on how you answer phones during service. If you want every call to go somewhere else, forward all calls. If you want the front counter to ring first, use unanswered or busy forwarding where your carrier supports it.\n\nHere is a restaurant-friendly way to think about it:\n\n| Situation | Best forwarding choice | Example |\n|---|---|---|\n| Lunch rush and one person at the counter | Unanswered calls | Let the phone ring a few times, then forward |\n| Closed hours | All calls | Send all calls to a backup line after close |\n| Short-staffed dinner shift | Busy calls | Forward only when the line is already in use |\n\nWorked example: say you get 20 calls in a dinner rush and can only answer 12. If 8 calls forward to a backup line, that backup should be ready to take orders, name, phone number, and a ready time. ROAL can do that and send a clean ticket to the kitchen screen, but it will not take card numbers over the phone."
+    },
+    {
+      "id": "what-codes-do-i-use-for-google-voice-call-forwarding-on-a-ca",
+      "h2": "What codes do I use for Google Voice call forwarding on a carrier line?",
+      "body": "Many restaurant owners mix up Google Voice with carrier call forwarding. If your number is on a landline or mobile carrier and you are forwarding it to Google Voice or another number, the code depends on the carrier and plan.\n\nCommon codes in the US often include:\n- \u0000*72 plus the forwarding number to forward all calls on many landlines and some carriers\n- \u0000*73 to turn forwarding off on many landlines and some carriers\n- \u0000**21*number# to forward all calls on some GSM mobile carriers\n- \u0000##21# to turn it off on some GSM mobile carriers\n- \u0000**61*number# for unanswered calls on some GSM mobile carriers\n- \u0000**67*number# for busy calls on some GSM mobile carriers\n- \u0000*72, \u0000*73, and \u0000*71 on Verizon Wireless for certain forwarding setups\n\nCodes vary by carrier and plan, so confirm with your carrier before you rely on them. Always test by placing a real call from a separate phone. If your line is business VoIP, forwarding is usually set in the web portal instead of by dialing a code. You can also check [call forwarding codes by carrier](/tools/call-forwarding-codes) if you want a quick reference."
+    },
+    {
+      "id": "how-do-i-keep-my-restaurant-number-and-still-forward-calls",
+      "h2": "How do I keep my restaurant number and still forward calls?",
+      "body": "You do not have to give up your current number to start forwarding. That is one reason many owners like this setup: the restaurant keeps its own number, and calls are routed to another line when needed.\n\nA practical setup looks like this:\n1. Keep your main number on your sign, menus, and website.\n2. Set forwarding so calls go to the backup line when you are busy or closed.\n3. Test the handoff with one call from a mobile phone.\n4. Make sure voicemail, caller ID, and missed-call handling still make sense.\n\nROAL is built for that kind of handoff. When you claim the host, ROAL gives each location its own phone line automatically, and you forward your existing number to it. If you want a plain-English walkthrough of why owners do this, see [keeping your restaurant number when you add AI](/blog/keep-restaurant-phone-number)."
+    },
+    {
+      "id": "what-should-i-test-before-i-send-real-customer-calls",
+      "h2": "What should I test before I send real customer calls?",
+      "body": "Before you rely on forwarded calls during service, test the whole path like a customer would. One missed setting can send calls to the wrong place or create a dead end.\n\nUse this restaurant test checklist:\n- Call from a cell phone, not from the restaurant line.\n- Let it ring long enough to trigger unanswered forwarding if that is your plan.\n- Confirm the forwarded phone actually rings.\n- Listen for the greeting and make sure the caller can place an order or ask for hours.\n- Check whether the call appears in your logs or inbox.\n- Make sure the kitchen sees a ticket if the call becomes an order.\n\nExample test script: \"Hi, can I place a pickup order for two pepperoni pies and a salad?\" That one call tells you whether the forwarding, order flow, and ticketing all work. If you are using ROAL, you can also test it in the browser before going live, without sign-up."
+    },
+    {
+      "id": "how-does-forwarding-help-on-busy-shifts-and-after-hours",
+      "h2": "How does forwarding help on busy shifts and after hours?",
+      "body": "Forwarding is most useful when your team is slammed or the dining room is closed. A dinner rush, a delivery wave, or a holiday weekend can make the phone ring nonstop while nobody has time to keep answering.\n\nHere is a simple way to decide what to do:\n- During service: ring the main line first, then forward unanswered or busy calls.\n- After hours: forward all calls to a line that can take orders, questions, or reservation requests.\n- On short-staffed days: forward earlier than usual so the front counter can keep moving.\n\nIf you use ROAL, the host can take pickup and delivery orders from the live menu, answer hours and address questions, and hand off allergy-sensitive issues or manager requests with a summary. It will not take card numbers over the phone, so payment still happens the way your restaurant already handles it. For owners comparing monthly phone plans, it may also help to look at [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) before deciding what fits your call volume."
+    }
+  ],
+  "takeaways": [
+    "Google Voice call forwarding can send all calls, busy calls, or unanswered calls, depending on your setup.",
+    "Restaurant owners should test forwarding with a real call before trusting it during service.",
+    "Keep your existing restaurant number and forward calls to a backup line when needed.",
+    "Carrier codes vary, so confirm the exact dialing steps with your provider.",
+    "ROAL can answer forwarded restaurant calls, take orders, and send kitchen tickets, but it does not take card numbers."
+  ],
+  "faq": [
+    {
+      "q": "How do I forward my Google Voice number to another phone?",
+      "a": "Open your Google Voice call settings and add the number you want calls sent to. Then choose whether calls should forward all the time or only under certain conditions, if your setup supports that. After that, place a test call and make sure the destination phone rings as expected."
+    },
+    {
+      "q": "Can I forward only unanswered calls from Google Voice?",
+      "a": "Yes, in many setups you can route unanswered calls to another number. That is a good option for restaurants that want the front counter to ring first and a backup line to catch overflow. Always test the timing so the call does not forward too soon or too late."
+    },
+    {
+      "q": "Will my restaurant lose its current phone number if I start forwarding calls?",
+      "a": "No. Forwarding does not mean you have to give up your current number. Many owners keep their main number and send calls to another line when they are busy or closed. That is also how ROAL works when an owner forwards the restaurant's existing number to the host line."
+    },
+    {
+      "q": "What should I do if call forwarding does not work?",
+      "a": "First, confirm the code or setting with your carrier or phone system, because codes vary by plan and provider. Then test from a different phone, check whether the line is busy or unanswered long enough to trigger forwarding, and make sure voicemail is not catching the call first. If your line is business VoIP, check the web portal settings instead of dialing codes."
+    }
+  ],
+  "words": 1114,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

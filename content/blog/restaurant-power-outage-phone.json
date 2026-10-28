@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-power-outage-phone",
+  "keyword": "restaurant internet outage",
+  "category": "operations",
+  "title": "How to keep the phone working during an internet outage",
+  "seoTitle": "Restaurant internet outage: keep orders and calls flowing",
+  "description": "An internet outage can disrupt online tools, but your phone still matters. Use backup steps for calls, forwarding, and order taking when service drops.",
+  "question": "What should I do during a restaurant internet outage so the phone still works and orders still come in?",
+  "answer": "During a restaurant internet outage, switch to a simple phone backup plan right away: forward the restaurant number if needed, use a recorded backup note for staff, and keep taking pickup and delivery orders by phone. If you use an AI phone host like ROAL, it can still answer calls and send clean tickets when the line is forwarded, but tricky questions and payment still go to staff.",
+  "summary": "Set up a simple backup plan so calls, orders, and kitchen tickets keep moving during an internet outage.",
+  "intro": "A restaurant internet outage should not turn into a phone outage. The fastest fix is to have a backup phone plan ready before the outage hits, so callers still reach you, orders still get written down, and the kitchen still gets the right ticket.\n\nFor many independent restaurants, the phone is still the lifeline during a rush. If your internet drops, your online ordering, tablets, and some phone tools may slow down, but a clear call-forwarding plan, a printed backup menu, and a staff script can keep service moving.",
+  "sections": [
+    {
+      "id": "what-breaks-first-when-the-internet-goes-down",
+      "h2": "What breaks first when the internet goes down?",
+      "body": "When the internet drops, the first thing that usually suffers is anything tied to your Wi-Fi or cloud systems. That can include your online menu, tablets, your dashboard, and any phone tool that depends on a live connection to route calls or show tickets.\n\nYour plain phone line may still work if it is a traditional line. But if your restaurant number is forwarded to another line, or your phone system lives in the cloud, you want a backup path ready. That is why the best plan is not to guess during the outage. It is to know, ahead of time, where calls go and who writes them down.\n\nA simple owner checklist:\n- Keep a printed menu behind the counter.\n- Save the restaurant address, parking note, hours, and top modifiers on paper.\n- Decide who answers the phone if the primary system is down.\n- Put a backup pen-and-ticket pad near the register.\n- Test your forwarding plan once before a real outage.\n\nIf you use ROAL, it already reads the live menu, hours, and address from your public pages and can answer common questions. But it is still smart to keep a paper backup for any emergency day, especially if your internet drops in the middle of a rush."
+    },
+    {
+      "id": "how-do-i-keep-the-restaurant-number-working-during-an-outage",
+      "h2": "How do I keep the restaurant number working during an outage?",
+      "body": "The key is call forwarding. If your main line depends on internet service, you can forward calls to another working number when things go bad. Many owners forward all calls when the outage starts, while others forward only when the line is busy or unanswered.\n\nThe exact code depends on the carrier or phone system, so always confirm with your provider and test with a real call. A common pattern on many landlines and some carriers is *72 to turn on forwarding and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# can forward unanswered calls and **67*number# can forward busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually use a web portal.\n\nUse this simple outage plan:\n1. Decide the backup number now. It could be a manager’s cell, a store cell, or another location.\n2. Write the forwarding steps on a card near the phone.\n3. Test during a quiet hour.\n4. Call the main number from outside the store and confirm it rings where you expect.\n5. Turn forwarding off once service is stable.\n\nROAL gives each location its own phone line automatically once you claim the host, and you can forward your existing number to it. That means your restaurant can keep its number, and you can switch forwarding on or off as needed."
+    },
+    {
+      "id": "what-should-staff-say-when-callers-ask-about-the-outage",
+      "h2": "What should staff say when callers ask about the outage?",
+      "body": "Customers do not need a tech explanation. They need a clear answer, a time estimate if you have one, and the easiest way to place the order. Keep the script short so staff does not improvise under pressure.\n\nUse lines like these:\n- \"Thanks for calling. We had a connection issue, but we are taking orders by phone right now.\"\n- \"If you want pickup, I can take your order now and give you a ready time.\"\n- \"If you need delivery, I can let you know what we can still handle today.\"\n- \"For allergy-sensitive questions, I’m going to check with the kitchen and call you back.\"\n\nA good outage script also tells staff what not to do:\n- Do not promise a prep time you have not checked.\n- Do not guess on sold-out items.\n- Do not take card numbers over the phone.\n- Do not leave the caller hanging while you look for answers.\n\nIf you are using ROAL, it can take items, sizes, modifiers, notes, the caller’s name and phone, and a ready time, then confirm the order back and send a clean ticket to the kitchen screen. If a caller asks about catering, a complaint, an allergy-sensitive issue, or a manager request, those can be handed to staff with a summary."
+    },
+    {
+      "id": "how-do-i-keep-taking-orders-without-making-a-mess",
+      "h2": "How do I keep taking orders without making a mess?",
+      "body": "During an outage, the biggest risk is messy handwriting and missing details. One wrong modifier can slow the kitchen and upset the guest. That is why the backup process should be simple and repeatable.\n\nTry this order-taking flow:\n1. Answer the call.\n2. Get the name and callback number first.\n3. Take the items, sizes, modifiers, and notes.\n4. Repeat the order back word for word.\n5. Give a realistic ready time.\n6. Send the ticket to the kitchen or write it clearly on paper.\n\nExample with numbers you can swap: say your average phone order is $28. If you take 12 phone orders in a shift, that is $336 in sales. If your internet outage lasts three hours and you miss even a few orders, the lost sales can add up fast. Plug in your own average check and your own busy-hour call volume to see what the outage costs your shop.\n\nA simple paper ticket should include:\n- Customer name\n- Phone number\n- Pickup or delivery\n- Menu items and sizes\n- Modifiers and notes\n- Ready time\n- Staff initials\n\nROAL is built to collect those details on the call and send a clean ticket to the kitchen screen. It also does not take card numbers over the phone, which keeps payment where your restaurant already handles it."
+    },
+    {
+      "id": "what-if-the-outage-lasts-through-the-rush",
+      "h2": "What if the outage lasts through the rush?",
+      "body": "If the outage lasts past a few minutes, treat it like a shift change problem, not just a tech problem. The front counter, kitchen, and manager need the same plan so no one is guessing.\n\nHere is a practical rush-hour backup routine:\n- Put one person on the phone, if possible.\n- Move one person to write or check tickets.\n- Tell the kitchen which orders are phone, pickup, or delivery.\n- Post a quick note near the register if wait times change.\n- Stop offering items you cannot confirm from the kitchen.\n\nWorked example: say you normally quote a 20-minute ready time at 6 p.m., but the outage means the kitchen is slower to receive tickets. You might switch to 35 minutes for the next hour, then adjust again once you see the line. Better to give a clear wait time than to rush and miss items.\n\nIf your team wants a tighter daily routine for these situations, the [weekly review routine for owners](/blog/restaurant-weekly-review-routine) is a useful place to tighten up the basics. You can also review [what your call logs tell you](/blog/restaurant-data-call-logs) after the outage to see which questions came up most often."
+    },
+    {
+      "id": "what-backup-setup-should-every-owner-keep-ready",
+      "h2": "What backup setup should every owner keep ready?",
+      "body": "Every independent restaurant should keep a small outage kit. It does not need to be fancy. It just needs to be easy to grab when the router blinks out or the internet company is slow to fix the line.\n\n| Item | Why it helps during an outage |\n|---|---|\n| Printed menu | Lets staff answer order questions fast |\n| Backup phone numbers | Keeps call forwarding simple |\n| Paper order pads | Captures orders if screens are slow |\n| Hours and address sheet | Answers common caller questions |\n| Allergy and sold-out notes | Prevents bad promises |\n| Kitchen alert process | Keeps tickets from getting lost |\n\nA smart owner also keeps a short phone FAQ on the wall. Example questions to prepare for:\n- Are you open right now?\n- What is the address?\n- Is parking available?\n- What time will my pickup be ready?\n- What items are sold out?\n\nROAL can answer hours, address, parking, and menu questions from public pages, and it can learn the questions it could not answer the first time. Owners answer once in the inbox, and the host knows it from then on. That reduces repeat confusion when the line is under stress."
+    },
+    {
+      "id": "how-can-i-make-the-next-outage-less-painful",
+      "h2": "How can I make the next outage less painful?",
+      "body": "The best fix is to prepare before the next outage, not after it. Start by writing down your backup call plan, then test it when the restaurant is calm. If your forwarding setup is confusing, simplify it until a busy host can do it in under a minute.\n\nA practical owner checklist:\n- Confirm your carrier forwarding codes with your provider.\n- Save the backup number in every manager phone.\n- Print the order-taking script for the counter.\n- Keep your top menu items and modifiers easy to read.\n- Review call history after the outage to spot weak points.\n\nThis is also a good time to compare the cost of different phone setups. Some AI phone tools charge a monthly fee whether or not orders come in. Human answering services often bill by the minute or by the call. ROAL uses pay-per-completed-order pricing at $0.90 per confirmed phone order that reaches the kitchen screen, with no monthly fee, no setup fee, and no per-minute fee. If that model fits your shop, you can [build a free test host from your website](/try) and see how it handles your menu before the next storm, router reset, or service drop.\n\nThe goal is simple: when the internet drops, the phone should still be useful, the kitchen should still get clear tickets, and your staff should still have a plan they can follow without guessing."
+    }
+  ],
+  "takeaways": [
+    "A restaurant internet outage should trigger a phone backup plan, not panic.",
+    "Forwarding your main number and testing it ahead of time saves time during a rush.",
+    "Staff need a short script, a paper backup, and clear rules for sold-out or allergy questions.",
+    "ROAL can answer common calls, take pickup and delivery orders, and send clean kitchen tickets when the line is forwarded.",
+    "Keep carrier forwarding codes and a printed outage kit ready before the next service drop."
+  ],
+  "faq": [
+    {
+      "q": "What should a restaurant do first during an internet outage?",
+      "a": "First, decide where calls should go and make sure staff know the script. If your phone system depends on internet service, forward the number to a working backup line and test it with a real call. Then switch to paper or a simple backup ticket process so orders keep moving."
+    },
+    {
+      "q": "Can we still take phone orders if the internet is down?",
+      "a": "Yes, if your phone line still works or if you forward calls to a working number. You can take pickup and delivery orders by phone, write them clearly, and send them to the kitchen. Just avoid card payments over the phone and keep the order details complete."
+    },
+    {
+      "q": "How do I forward my restaurant number during an outage?",
+      "a": "The code depends on your carrier or phone system. Many landlines and some carriers use *72 to forward all calls and *73 to turn it off, while some mobile carriers use codes like **21*number# and ##21#. Always confirm with your carrier and test the setup before you rely on it."
+    },
+    {
+      "q": "Is an AI phone host useful if my restaurant internet goes out?",
+      "a": "It can still help if you have a forwarding plan in place, because the restaurant number can ring through to the host. ROAL can answer common questions, take orders from the live menu, and send a ticket to the kitchen screen. But if a call needs manager help, allergy review, or payment handling, staff should take over."
+    }
+  ],
+  "words": 1615,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,123 @@
+{
+  "slug": "mexican",
+  "label": "Mexican restaurants",
+  "h1": "An AI phone host for Mexican restaurants",
+  "seoTitle": "AI phone answering for Mexican restaurants | ROAL",
+  "description": "ROAL is an AI phone host for Mexican restaurants. It answers calls, takes pickup orders, shares hours and menu info, and sends clean tickets to the kitchen.",
+  "lead": "Busy lunch rush, dinner rush, and weekend takeout lines can stack up fast. ROAL answers the phone like a trained phone host for your Mexican restaurant.",
+  "question": "How does an AI phone host help Mexican restaurants take pickup orders without missing calls?",
+  "answer": "ROAL answers your restaurant phone, takes pickup orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common calls like tacos, burritos, quesadillas, pozole, horchata, hours, parking, and pickup timing. You can forward all calls, or only the calls that come in when you are busy or unable to answer.",
+  "pains": [
+    {
+      "title": "Friday nights get slammed",
+      "body": "One line rings while the grill is full and the counter is helping walk-ins. A caller wants three carne asada burritos, two chicken tacos, and a pickup time in 20 minutes."
+    },
+    {
+      "title": "Phone orders get rushed or missed",
+      "body": "Staff may be packing nachos, checking tortillas, and answering in Spanish or English at the same time. Small mistakes can happen with salsas, rice, beans, or “no cilantro” notes."
+    },
+    {
+      "title": "Pickup calls interrupt the whole team",
+      "body": "A call for \"one shrimp taco plate\" can pull someone away from prep, expo, or the register. ROAL can handle those calls and leave your team focused on food and guests."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes real pickup orders",
+      "body": "ROAL can take tacos, enchiladas, burritos, quesadillas, tortas, bowls, sides, and drinks from the live menu. It collects names, phone numbers, modifiers, and notes, then reads the order back before sending it to the kitchen."
+    },
+    {
+      "title": "Handles common restaurant questions",
+      "body": "It answers hours, address, parking, and menu questions. If a caller asks something sensitive, like an allergy or a manager issue, it passes it to staff with a clear summary."
+    },
+    {
+      "title": "Fits busy shifts and after-hours calls",
+      "body": "Forward calls only when you are busy or unanswered, or send all calls to the phone host. That helps on lunch rushes, dinner rushes, holidays, and late-night takeout windows."
+    },
+    {
+      "title": "Keeps your number and your process",
+      "body": "ROAL gives each location its own phone line, while your restaurant keeps its existing number. You can turn forwarding off any time, and you still run pickup payment the way you already do."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Two chicken tacos, one carne asada burrito, and a side of chips with guacamole. No onions on the burrito."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two chicken tacos, one carne asada burrito with no onions, and chips with guacamole. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "Also one horchata."
+    },
+    {
+      "who": "host",
+      "line": "Great. What name should I put on the order, and what time would you like to pick up?"
+    },
+    {
+      "who": "caller",
+      "line": "Maria. About 25 minutes."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your pickup order is in for about 25 minutes. I’ll send it over now: two chicken tacos, one carne asada burrito no onions, chips with guacamole, and one horchata."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "Name: Maria",
+      "2 chicken tacos",
+      "1 carne asada burrito, no onions",
+      "1 chips & guacamole",
+      "1 horchata"
+    ],
+    "note": "Pickup in about 25 minutes"
+  },
+  "sections": [
+    {
+      "h2": "Built for real Mexican restaurant calls",
+      "body": "Mexican restaurants get the kind of calls that need speed and care. Someone wants tacos al pastor, another caller asks if the red salsa is spicy, and a third wants to know if the kitchen is still open for pickup. ROAL is built for those moments.\n\nIt answers with a warm phone host voice, not a press-1 maze. It can take common orders like burritos, enchiladas, quesadillas, tortas, pozole, sopes, and sides. It also handles simple questions about hours, address, parking, and the menu.\n\nIf your team is slammed on a Friday night, the call still gets answered. If you are closed, the caller can still get helpful information instead of a dead line or voicemail. For many owners, that means fewer lost pickup calls and less stress on the front counter."
+    },
+    {
+      "h2": "What to tell the phone host about your menu",
+      "body": "The best setup starts with a clear menu. Make sure your live menu includes item names, sizes, proteins, sides, drinks, and common add-ons like extra cheese, sour cream, avocado, or no cilantro.\n\nIf you sell combo plates, list what comes with them. If certain items are sold out for the day, mark them that way so the phone host does not offer them. That matters during busy hours when you are out of birria, shrimp, or fresh tortillas.\n\nA simple example helps: “2 carne asada tacos, no onions, extra salsa verde, pickup in 20 minutes.” ROAL can capture that kind of order and send a clean ticket to the kitchen. The clearer the menu, the smoother the call."
+    },
+    {
+      "h2": "A simple call flow for busy shifts",
+      "body": "Many owners use ROAL in a very practical way: forward calls only when the line is busy or unanswered. That keeps the counter team free for in-person guests while still catching pickup orders.\n\nExample setup: lunch rush from 11:30 to 1:30, dinner rush from 5:30 to 8:30, and all calls after hours. If a caller asks about catering for a tray of tacos, a big family order, or a question the phone host cannot answer, it can pass the message along with a short summary.\n\nYou can also review call history, transcripts, and recordings in the dashboard. That makes it easier to see what people ask most, which items get ordered often, and where your menu or hours may need a small update."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pickup orders for tacos, burritos, and plates?",
+      "a": "Yes. ROAL can take pickup orders from your live menu, including items like tacos, burritos, quesadillas, enchiladas, tortas, bowls, sides, and drinks. It collects modifiers and notes too, like no onions or extra salsa."
+    },
+    {
+      "q": "Does it work in Spanish and English?",
+      "a": "Yes. ROAL can speak the caller’s language during the call. That is helpful for neighborhoods where guests may call in either English or Spanish."
+    },
+    {
+      "q": "What happens if the caller asks about an allergy or a manager issue?",
+      "a": "ROAL does not try to handle sensitive issues on its own. It passes allergy-sensitive questions, complaints, and manager requests to staff with a short summary so your team can respond directly."
+    },
+    {
+      "q": "How do I set it up for my restaurant?",
+      "a": "At /try, you can paste your website, Google Maps link, or just your restaurant name and city. ROAL reads the menu, prices, hours, and address from public pages, and you can also upload a menu in any format."
+    },
+    {
+      "q": "What does it cost for Mexican restaurant phone orders?",
+      "a": "ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free, and billing is monthly."
+    }
+  ]
+}

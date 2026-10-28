@@ -1,0 +1,77 @@
+{
+  "slug": "turn-off-call-forwarding",
+  "keyword": "turn off call forwarding",
+  "category": "phone-setup",
+  "title": "How to turn off call forwarding",
+  "seoTitle": "How to turn off call forwarding | ROAL",
+  "description": "Turn off call forwarding on landlines, mobile phones, and business systems with clear steps, restaurant examples, and a quick test checklist.",
+  "question": "How do I turn off call forwarding on my restaurant phone?",
+  "answer": "To turn off call forwarding, use the cancel code for your carrier or phone system, then test the line with a real call. On many landlines and some carriers, *73 turns off forwarding; on many GSM phones, ##21# cancels all-call forwarding. Always confirm the code with your carrier, because the steps vary by line type and plan.",
+  "summary": "You’ll know how to shut off call forwarding, check that it worked, and decide what to do with overflow calls.",
+  "intro": "Call forwarding is usually turned off with a short code or a setting in your phone system. For many restaurant lines, *73 cancels forwarding, but the exact code depends on the carrier, phone type, and plan.\n\nIf your restaurant uses forwarding only for busy or unanswered calls, you may need a different cancel code for each mode. The safest move is to turn it off, then place a test call from another phone and listen to where the call lands.",
+  "sections": [
+    {
+      "id": "what-should-i-do-first-before-i-turn-forwarding-off",
+      "h2": "What should I do first before I turn forwarding off?",
+      "body": "Before you touch the settings, write down how the line is set up now. Restaurants often forget whether forwarding was turned on for all calls, only when busy, or only when unanswered. That matters, because the cancel steps can be different.\n\nUse this quick checklist:\n- Note the main restaurant number.\n- Write down the forwarding number, if you know it.\n- Check whether the line is landline, mobile, or business VoIP.\n- Ask staff whether the phones ring on every call or only when the line is busy.\n- Keep a second phone nearby so you can test after you make the change.\n\nExample: if your hostess station is forwarding calls to a manager’s cell during the dinner rush, you may want to turn off only the busy-forwarding rule, not every call rule. That way the restaurant number still works the way you expect.\n\nIf you are using [call forwarding codes by carrier](/tools/call-forwarding-codes), keep in mind those codes are only a starting point. Confirm the right code with your carrier or phone system and test it right away."
+    },
+    {
+      "id": "how-do-i-turn-off-call-forwarding-on-a-landline-or-home-styl",
+      "h2": "How do I turn off call forwarding on a landline or home-style restaurant line?",
+      "body": "On many landlines, the usual way to stop forwarding is to dial *73 and wait for the confirmation tone or message. Some systems use a different code, so listen for the carrier’s confirmation before you hang up.\n\nA simple process:\n1. Pick up the restaurant phone.\n2. Dial *73.\n3. Wait for the confirmation tone or voice prompt.\n4. Hang up.\n5. Call the restaurant number from your cell phone.\n\nWorked example: say your pizza shop forwards all calls to the owner’s mobile after 8 p.m. If you want the restaurant line back to normal, dial *73 from the restaurant phone, then call in from your cell. If the phone still rings somewhere else, the forwarding may still be active or there may be more than one rule in the system.\n\nIf the line is business VoIP, you may not use a star code at all. In that case, the turn-off setting is often in the provider’s web portal or admin screen. That is common for restaurant lines with multiple phones at the counter and kitchen."
+    },
+    {
+      "id": "how-do-i-turn-off-call-forwarding-on-a-mobile-phone",
+      "h2": "How do I turn off call forwarding on a mobile phone?",
+      "body": "On many GSM mobile carriers, ##21# turns off all-call forwarding. For busy or unanswered forwarding, the cancel code may be different, so check the line type before you dial anything.\n\nHere is a quick reference table you can use as a starting point:\n\n| Phone type | Common turn-off code | Notes |\n|---|---:|---|\n| Many landlines | *73 | Often cancels forwarding on the line |\n| GSM mobile phones | ##21# | Often cancels all-call forwarding |\n| Verizon Wireless | *73 | *71 may affect busy/no-answer forwarding |\n| Business VoIP systems | Web portal | Settings vary by system |\n\nExample script for staff: “I’m turning off call forwarding on this line now. If a call still goes to voicemail or another number, tell me right away so I can check the busy and unanswered settings.”\n\nFor a busy lunch counter, keep in mind that some restaurants forward only unanswered calls. If the code above turns off the main rule but calls still forward after a few rings, there may be a separate unanswered-call setting still active."
+    },
+    {
+      "id": "what-if-forwarding-was-set-in-my-phone-system-instead-of-the",
+      "h2": "What if forwarding was set in my phone system instead of the phone itself?",
+      "body": "If your restaurant uses a phone system in a web portal, the forwarding setting may live there instead of on the handset. In that case, turning it off on the phone may do nothing.\n\nUse this order of operations:\n- Log in to the phone system admin portal.\n- Look for call routing, forwarding, ring groups, or overflow settings.\n- Turn off all-call forwarding first.\n- Check for busy and unanswered rules.\n- Save changes and test with a real call.\n\nExample: a deli has one main line that rings the counter phone first, then forwards to the owner if nobody picks up. To turn forwarding off, the owner may need to remove the fallback rule in the portal, not just dial a code on the handset.\n\nIf you are not sure who set it up, ask your phone provider for the exact steps. Different plans handle forwarding differently, and the code that works for one line may not work for the next."
+    },
+    {
+      "id": "how-do-i-test-that-call-forwarding-is-really-off",
+      "h2": "How do I test that call forwarding is really off?",
+      "body": "Testing matters more than guessing. A line can sound normal on the restaurant phone but still forward somewhere else after a few rings.\n\nUse this test list:\n1. Call the restaurant from an outside phone.\n2. Let it ring long enough to catch a forwarded call.\n3. Answer on the restaurant line if it rings there.\n4. If it does not ring there, listen to where the call goes.\n5. Repeat once more after you make any setting change.\n\nWorked example: if a call used to forward to the owner after four rings, call the restaurant from your cell and wait past four rings. If it now stays on the restaurant line or goes to voicemail there, you probably turned forwarding off correctly. If it still lands on a manager’s mobile, check for a second rule.\n\nThis is also a good time to decide what should happen when nobody picks up. Some owners turn forwarding off because they want the phone to ring in the store again. Others turn it off because they want a [free test host](/try) like ROAL to answer the overflow instead of sending more calls to a personal cell."
+    },
+    {
+      "id": "what-should-i-do-with-overflow-calls-after-i-turn-it-off",
+      "h2": "What should I do with overflow calls after I turn it off?",
+      "body": "Turning off forwarding does not solve missed calls by itself. It only changes where the phone rings. If your team is busy with pickup bags, delivery handoff, or a lunch line at the counter, you still need a plan for the calls that come in when nobody can answer.\n\nA practical restaurant setup looks like this:\n- Main line rings in the store first.\n- Busy or unanswered calls go to a backup plan.\n- The backup plan tells the caller hours, address, parking, and menu basics.\n- Pickup and delivery orders are captured and sent to the kitchen screen.\n\nROAL is one way to handle that backup layer. It answers the restaurant’s phone, takes orders from the live menu, and sends a clean ticket to the kitchen screen. It can also hand off allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary. It does not take card numbers over the phone.\n\nExample: say your average phone order is $28. Plug in your own number. If a busy night brings in more calls than your staff can answer, the value of a backup plan is usually easier to see than any headline fee. ROAL bills $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract."
+    },
+    {
+      "id": "how-do-i-keep-the-restaurant-number-while-changing-the-setup",
+      "h2": "How do I keep the restaurant number while changing the setup?",
+      "body": "Many owners worry that turning off forwarding means losing their restaurant number. It does not. The restaurant keeps its own number; forwarding is only the routing rule.\n\nA simple transition plan:\n- Keep the published restaurant number the same.\n- Turn forwarding off when you want the phone to ring normally again.\n- Turn it back on later only if you need overflow help.\n- Test after every change.\n\nIf you are comparing call handling options, it may help to review [How it works](/how-it-works) and [Pricing](/pricing). ROAL gives each location its own phone line, and the owner can forward the restaurant’s existing number to it all the time or only when busy or unanswered. Forwarding can be turned off any time.\n\nExample script for staff: “We’re keeping the same restaurant number. We’re just changing where calls go after the first ring pattern.” That keeps the team aligned and helps avoid confusion during a rush.\n\nIf your setup is still unclear, use [How to test that call forwarding works](/blog/test-call-forwarding) as a final check. It is the fastest way to confirm the line behaves the way you want before dinner service starts."
+    }
+  ],
+  "takeaways": [
+    "Turn forwarding off with the right code or portal setting for your line type.",
+    "Always test with a real outside call after changing anything.",
+    "Forwarding can be all-calls, busy-only, or unanswered-only; each may have a different setting.",
+    "Turning forwarding off does not change your restaurant number.",
+    "If you still need backup coverage, an AI phone host like ROAL can answer overflow calls and send orders to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "What is the code to turn off call forwarding on a restaurant phone?",
+      "a": "On many landlines and some carrier plans, *73 turns off forwarding. On many GSM mobile phones, ##21# cancels all-call forwarding. These codes vary by carrier and plan, so confirm the right one with your provider and test with a real call."
+    },
+    {
+      "q": "Why does my phone still forward calls after I turned it off?",
+      "a": "There may be more than one forwarding rule active, such as busy forwarding or unanswered forwarding. Some systems also store forwarding in a web portal instead of on the phone itself. Check the setting again and test from an outside phone after each change."
+    },
+    {
+      "q": "Will turning off call forwarding change my restaurant number?",
+      "a": "No. Forwarding only changes where the call goes; it does not change the restaurant’s published number. The number stays the same unless you port it or replace it with a different line setup."
+    },
+    {
+      "q": "What should I do if I still need help with missed calls after I turn forwarding off?",
+      "a": "Set a backup plan for busy times, after-hours calls, or lunch rushes. That can be a staff member, voicemail, or an AI phone host like ROAL that answers the phone, takes orders, and sends the ticket to the kitchen screen."
+    }
+  ],
+  "words": 1378,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "second-phone-line-restaurant",
+  "keyword": "second phone line for restaurant",
+  "category": "missed-calls",
+  "title": "Second phone line for restaurant calls: when it helps",
+  "seoTitle": "Second phone line for restaurant calls: when it helps | ROAL",
+  "description": "See when a second phone line helps restaurant calls, how to forward them, and cheaper ways to handle busy shifts without missed orders.",
+  "question": "Do I need a second phone line for my restaurant, or can I forward calls to handle busy times?",
+  "answer": "A second phone line for restaurant calls can help if your current line is busy, but you do not have to keep a separate staffed line just to handle overflow. Many restaurants forward their existing number to a second line, a phone system, or an AI phone host that answers calls, takes orders, and sends clean tickets to the kitchen. The right choice depends on how many calls you miss, how you want orders handled, and whether you want a fixed monthly bill or pay per completed order.",
+  "summary": "Figure out whether a second line, forwarding, or an AI phone host fits your restaurant best.",
+  "intro": "A second phone line for restaurant calls can help, but it is not always the cheapest or easiest fix. For many restaurants, the better move is to keep the main number and forward calls when you are busy or closed.\n\nThe real question is what happens when the phone rings: does it get answered, taken as an order, sent to voicemail, or handed to staff? If your team is stretched thin, tools like ROAL can answer the phone, take pickup and delivery orders from your live menu, and send the ticket to the kitchen screen.",
+  "sections": [
+    {
+      "id": "when-does-a-second-phone-line-for-restaurant-calls-make-sens",
+      "h2": "When does a second phone line for restaurant calls make sense?",
+      "body": "A second phone line for restaurant calls makes sense when the first line is tied up often enough that callers give up, hang up, or move on to a delivery app. It can also help if you want one line for walk-in questions and one line for orders, or if you are tired of the phone interrupting the line during dinner rush.\n\nHere is a simple way to decide:\n- If most missed calls are just questions about hours or the menu, a phone host may be enough.\n- If callers are ready to order but cannot get through, you need a way to answer overflow.\n- If your staff is too busy to write orders cleanly, a second line alone does not solve the problem.\n\nTry this quick test with your own numbers:\n1. Count missed calls during a busy shift.\n2. Estimate how many of those were orders.\n3. Multiply by your average order size, say $22 or $28, and use your own number.\n4. Compare that with the cost of a second line or a pay-per-order tool.\n\nIf you already use [call forwarding codes by carrier](/tools/call-forwarding-codes), a second line can be part of the setup. But the line itself is only useful if someone, or something, answers it well."
+    },
+    {
+      "id": "should-you-forward-your-main-number-or-publish-a-new-number",
+      "h2": "Should you forward your main number or publish a new number?",
+      "body": "For most independent restaurants, forwarding the main number is the cleaner option. Guests already know that number, your menus already print it, and you do not have to train regulars to call a new line.\n\nROAL gives each location its own phone line automatically when you claim the host, then you forward your existing number to it. That means the restaurant keeps its own number, and forwarding can be turned off any time. You can forward all calls, or only when busy or unanswered, depending on your carrier and phone system.\n\nA practical setup looks like this:\n- Keep your main number on menus, receipts, and signs.\n- Forward calls to the second line during rush hour.\n- Turn forwarding off when the floor calms down.\n- Test the handoff with a real call before service starts.\n\nA quick example: say you get 8 calls in a 30-minute dinner rush and your staff can only answer 5. If 2 of the missed calls were pickup orders, a second line may pay off faster than you think. If the missed calls are mostly hours and address questions, you may need a smarter answer, not just another ring.\n\nFor owners who want a simpler way to handle overflow, [How it works](/how-it-works) shows the phone handoff and kitchen ticket flow in plain English."
+    },
+    {
+      "id": "what-does-a-second-line-cost-compared-with-missed-orders",
+      "h2": "What does a second line cost compared with missed orders?",
+      "body": "Cost matters here, especially for small shops. A second line on its own may be cheap, but the real question is whether it saves more than it costs.\n\nUse this worksheet with your own numbers:\n| Item | Example | Your number |\n| --- | --- | --- |\n| Missed orders per busy shift | 3 |  |\n| Average order size | $26 |  |\n| Sales at risk per shift | $78 |  |\n| Shifts per week | 5 |  |\n| Weekly sales at risk | $390 |  |\n\nNow compare that with your options:\n- Third-party delivery apps commonly take roughly 15-30% per order.\n- Human answering services usually bill per minute or per call.\n- Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in.\n- ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nIf your calls are mostly orders, pay-per-order pricing can be easier to match to actual revenue. If your calls are mostly questions, a flat monthly fee may feel expensive when the phone is quiet. That is why the best answer is not “always get a second line.” It is “pick the setup that matches your call volume and order flow.”\n\nYou can also use the [AI phone host cost calculator](/tools/phone-host-cost-calculator) to compare your own numbers before you change your setup."
+    },
+    {
+      "id": "how-should-the-phone-be-answered-during-a-rush",
+      "h2": "How should the phone be answered during a rush?",
+      "body": "A second line only helps if the greeting is clear and the handoff is simple. During a rush, callers do not want a long menu or a rushed person who cannot hear them.\n\nA useful script is short and direct:\n\"Thanks for calling. I can help with pickup orders, delivery orders, hours, and menu questions. What can I get started for you?\"\n\nIf you set up an AI phone host like ROAL, it can take items, sizes, modifiers, and notes; collect the caller’s name and phone; quote a ready time; and confirm the order back. It also speaks the caller’s language and can take reservation requests. If a call gets tricky, like a complaint, allergy-sensitive question, catering request, or manager request, it hands that call to staff with a summary.\n\nA good rush-hour checklist:\n- Does the phone answer after one ring or after a delay?\n- Are sold-out items blocked from ordering?\n- Are pickup and delivery instructions clear?\n- Does the caller hear a ready time before hanging up?\n- Does the kitchen get a clean ticket?\n\nIf you want to compare against a staffed line, [AI phone host vs hiring phone staff](/compare/hiring-phone-staff) is worth a look. The point is not to replace people. The point is to keep the phone from becoming the bottleneck when the front counter is already full."
+    },
+    {
+      "id": "how-do-you-set-up-forwarding-without-making-a-mess",
+      "h2": "How do you set up forwarding without making a mess?",
+      "body": "Phone forwarding sounds technical, but the actual setup is usually simple. The important part is testing it before a busy meal period so you know which calls go where.\n\nCommon setups include these, but codes vary by carrier and plan, so confirm with your carrier and test with a call:\n- On many landlines and some carriers, dial *72 then the forwarding number to forward all calls, and *73 to turn it off.\n- On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off.\n- **61*number# often forwards unanswered calls.\n- **67*number# often forwards busy calls.\n- Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding.\n- Business VoIP systems usually set forwarding in the web portal.\n\nUse this setup order:\n1. Decide whether you want all calls forwarded or only busy/no-answer calls.\n2. Enter the second line or host number carefully.\n3. Call your restaurant from a mobile phone and confirm the route.\n4. Test a busy-period call, then test an unanswered call.\n5. Write down how to turn forwarding off.\n\nROAL makes this easier for owners who do not want to juggle call menus. It gives each location its own line automatically, and the restaurant keeps its own number. If the line is not right for you, forwarding can be changed or turned off any time."
+    },
+    {
+      "id": "what-should-you-do-if-the-real-problem-is-not-the-line",
+      "h2": "What should you do if the real problem is not the line?",
+      "body": "Sometimes a second phone line for restaurant calls hides the real issue. The issue may be slow order taking, missing menu details, callers asking the same questions all day, or staff who cannot stop to answer the phone during service.\n\nBefore you spend time on a second line, check these items:\n- Are hours, address, parking, and menu questions eating up your staff’s time?\n- Are callers asking for items that are sold out?\n- Are orders getting lost because someone scribbles them on paper?\n- Are reservation requests and catering requests going to the wrong person?\n- Are callers who speak other languages getting stuck?\n\nIf several of those are true, you may need a better phone workflow, not just another line. ROAL is built for that kind of setup. It reads the restaurant’s public menu, prices, hours, and address from a website, Google Maps link, or uploaded menu, then builds a phone host in about a minute. The owner can test-call it right in the browser with no sign-up needed.\n\nIt also has a dashboard with live kitchen tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. Questions the host cannot answer land in an inbox, and once you answer them, it knows the answer from then on.\n\nIf your team is short-staffed, [short-staffed shifts](/use-cases/short-staffed) is the cleanest next read. The goal is to keep the phone from stealing time from the line, the kitchen, and the counter."
+    },
+    {
+      "id": "what-is-the-simplest-next-step-for-your-restaurant",
+      "h2": "What is the simplest next step for your restaurant?",
+      "body": "The simplest next step is to map your calls to one of three paths: keep one line, add a second line, or forward your existing number to a phone host. Do not guess. Use a busy night and real call volume as your guide.\n\nUse this decision table:\n| Situation | Best next step |\n| --- | --- |\n| A few missed calls, mostly questions | Keep one line and improve greetings/FAQ handling |\n| Busy rush, callers hang up, orders lost | Add overflow handling through forwarding |\n| Staff is overloaded and orders need clean tickets | Use a phone host that takes the order and sends it to the kitchen |\n\nFor many independent restaurants, the win is not a literal second phone sitting on the wall. It is a better way to answer the same number without making guests repeat themselves. That is where ROAL fits: one location gets its own line, your current number forwards to it, and calls can become orders, questions, reservations, or handoffs to staff.\n\nIf you want to see whether that setup fits your menu and hours, [build a free test host from your website](/try). Keep it simple, test it once, and compare it to what your team is handling now. Then decide whether a second line is the fix, or just a bandage."
+    }
+  ],
+  "takeaways": [
+    "A second phone line can help, but forwarding your existing number is often simpler.",
+    "The right fix depends on whether you miss orders, questions, or both.",
+    "Compare the cost of missed calls against per-order, per-call, or monthly pricing.",
+    "ROAL can answer calls, take orders, and send clean tickets to the kitchen.",
+    "Always test call forwarding with your carrier before a busy shift."
+  ],
+  "faq": [
+    {
+      "q": "Do I need a second phone line for my restaurant?",
+      "a": "Not always. If your main issue is missed orders during rush hour, a second line or a forwarded line can help. If the bigger problem is staff having to stop and answer the same menu and hours questions, a phone host may be a better fit because it can handle those calls and send the order to the kitchen."
+    },
+    {
+      "q": "Can I forward my restaurant number to another line?",
+      "a": "Yes, many restaurants do. On some carriers and landlines you can forward all calls, busy calls, or unanswered calls with carrier-specific codes or a web portal. Codes vary, so confirm with your carrier and test the setup with a real call before service."
+    },
+    {
+      "q": "What does ROAL do with phone calls?",
+      "a": "ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, answers common questions about hours, address, parking, and the menu, and sends a clean ticket to the kitchen screen. It can also hand tricky calls to staff with a summary."
+    },
+    {
+      "q": "How is ROAL priced compared with a second line or phone staff?",
+      "a": "ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are free. That makes it useful when you want to match cost to actual order volume instead of paying a fixed bill every month."
+    }
+  ],
+  "words": 1695,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "test-call-forwarding",
+  "keyword": "test call forwarding",
+  "category": "phone-setup",
+  "title": "How to test call forwarding at your restaurant",
+  "seoTitle": "Test call forwarding for restaurants | ROAL",
+  "description": "Test call forwarding at your restaurant, check the right codes, listen for problems, and confirm orders still reach staff.",
+  "question": "How do I test call forwarding works on my restaurant phone line?",
+  "answer": "Test call forwarding by making a real call from a different phone after you turn it on, then checking that the call lands on the forwarded number and that voicemail behaves the way you want. Confirm the carrier code with your phone provider, because the code can vary by system. For restaurants, also test after-hours, busy-line, and unanswered-call behavior separately.",
+  "summary": "You’ll know how to turn on forwarding, place a real test call, and confirm the right calls reach the right place.",
+  "intro": "To test call forwarding, turn it on, then call your restaurant from a different phone and watch where the call lands. If the call does not ring where you expect, check the code for your carrier and test again.\n\nFor restaurants, don’t stop at one test. Try a normal call, a busy-line call, and an unanswered call so you know pickup orders, reservation calls, and staff messages go where they should. If you use ROAL, this matters because forwarded calls can reach your AI phone host or your staff line depending on how you set it up.",
+  "sections": [
+    {
+      "id": "what-should-i-test-first-on-my-restaurant-line",
+      "h2": "What should I test first on my restaurant line?",
+      "body": "Start with the simplest version: all calls forwarded to one phone. That tells you whether the code works at all before you try busy or unanswered forwarding.\n\nUse this quick checklist:\n- Pick a phone that is not the restaurant line, such as your cell phone.\n- Turn on forwarding on the restaurant number.\n- Call the restaurant number from the test phone.\n- Listen for ringing, greeting, or voicemail.\n- Confirm the forwarded phone shows the call.\n\nA simple script helps when staff answer the test: \"Hi, this is a test call for forwarding. Can you tell me which number rang?\" If you are testing with ROAL, you can also listen for whether the call reaches the phone host and whether the ticket appears in the kitchen screen if it becomes an order. The goal is to make the path obvious from call to final destination."
+    },
+    {
+      "id": "which-forwarding-code-should-i-use-for-my-carrier",
+      "h2": "Which forwarding code should I use for my carrier?",
+      "body": "The exact code depends on the phone system. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On Verizon Wireless, *72 / *73 is common, and *71 may handle busy/no-answer forwarding. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls.\n\nUse this table as a starting point, then confirm with your carrier or phone system before you rely on it.\n\n| System type | Common code to turn on | Common code to turn off | Best use |\n|---|---|---|---|\n| Many landlines / some carriers | *72 + forwarding number | *73 | Forward all calls |\n| Verizon Wireless | *72 | *73 | Forward all calls |\n| Verizon Wireless | *71 + forwarding number | varies by plan/system | Busy or no-answer forwarding |\n| Some GSM mobile carriers | **21*number# | ##21# | Forward all calls |\n| Some GSM mobile carriers | **61*number# | (carrier-specific) | Unanswered calls |\n| Some GSM mobile carriers | **67*number# | (carrier-specific) | Busy calls |\n\nIf your restaurant uses business VoIP, forwarding is usually set in the web portal instead of a star code. That is why a real test call matters more than memorizing a code."
+    },
+    {
+      "id": "how-do-i-test-all-calls-busy-calls-and-unanswered-calls",
+      "h2": "How do I test all calls, busy calls, and unanswered calls?",
+      "body": "Run three separate tests so you know exactly what happens in each case. This matters for restaurants because you may want pickup orders to go to the AI phone host only when the line is busy, but have staff answer when they are free.\n\nUse this order:\n1. **All calls test:** forward everything, call in once, and confirm the destination rings.\n2. **Busy test:** keep the line occupied, then call in from another phone and confirm it routes as expected.\n3. **No-answer test:** let the phone ring without answering and see whether it forwards after the delay.\n\nA useful phone script for staff is: \"We’re testing forwarding now. Please don’t pick up this next call.\" Then call from your own phone and time what happens. If you use ROAL, test whether the forwarded call still gets the right greeting, takes the caller’s name and number, and sends a clean ticket for a completed order. If it cannot answer a tricky question, it should hand it to staff with a summary."
+    },
+    {
+      "id": "what-should-i-listen-for-during-the-test-call",
+      "h2": "What should I listen for during the test call?",
+      "body": "Do not just check that the phone rings. Listen for the whole path. A good test tells you whether the caller hears the right greeting, whether the right person answers, and whether the call ends in the right place.\n\nCheck these items:\n- Does the forwarded phone ring fast enough?\n- Does caller ID show the restaurant number or the forwarding number?\n- If voicemail picks up, is it the right mailbox?\n- If the line is busy, does the call forward or fail?\n- If the call is answered, do staff know it is a test?\n\nHere is a worked example you can swap for your own setup: say your restaurant has one main line and one cell phone for forwarding. You call from a second cell phone at 2:15 p.m., when things are slow. If the forwarded phone rings in about the expected delay and the caller can hear the message, that is a pass for all-calls forwarding. If you expect unanswered calls only, but the call still routes immediately when staff are available, that means the setting is wider than you wanted. Test the exact behavior you plan to use at lunch, dinner, and after hours."
+    },
+    {
+      "id": "how-do-i-test-forwarding-without-messing-up-service",
+      "h2": "How do I test forwarding without messing up service?",
+      "body": "The best time to test is during a quiet window, not during the dinner rush. Pick a time when one person can watch the test, answer the forwarded line, and confirm the result.\n\nA simple restaurant-safe process looks like this:\n1. Tell the team you are testing forwarding for five minutes.\n2. Put a note by the phone so staff do not assume a real customer call.\n3. Place one test call from a separate phone.\n4. Confirm where it rings and whether it is answered.\n5. Turn forwarding off or back to normal if needed.\n\nIf you are testing ROAL as your forwarded destination, make sure the call still fits your workflow. For example, ask: does it take the order, quote a ready time, and send the ticket where the kitchen can see it? ROAL also does not take card numbers over the phone, so if your restaurant takes payment at pickup, that part stays the same. For complicated questions, it should send the call to staff with a summary instead of guessing."
+    },
+    {
+      "id": "how-do-i-know-the-forwarding-setup-is-worth-keeping",
+      "h2": "How do I know the forwarding setup is worth keeping?",
+      "body": "A good forwarding setup should make the restaurant easier to run, not harder. For many owners, the decision comes down to whether calls are reaching the right place without staff having to babysit the phone.\n\nUse this quick owner checklist after your test:\n- Orders from the test call reached the right phone or phone host.\n- The caller heard the right greeting and language.\n- Busy and unanswered calls behaved the way you planned.\n- Staff could still handle manager requests, allergy-sensitive questions, and complaints.\n- You know how to turn forwarding back off when needed.\n\nIf you are comparing options, it helps to think in numbers. Say a missed call might have been a $28 pickup order. Plug in your own average order and ask how often the phone gets missed on a busy night. ROAL is priced per completed phone order, with no monthly fee, and test calls are free, so you can check the setup before committing. If you want a simple way to start, [build a free test host](/try) from your website, Google Maps link, or restaurant name and city."
+    },
+    {
+      "id": "what-if-the-test-call-does-not-forward-correctly",
+      "h2": "What if the test call does not forward correctly?",
+      "body": "Do not keep retrying the same code without checking the system type. The most common problems are the wrong code for the carrier, a forwarding number typed wrong, or a phone system that handles forwarding in a portal instead of with star codes.\n\nTry this repair list:\n- Re-enter the forwarding number carefully.\n- Confirm whether you need all-calls, busy-only, or no-answer forwarding.\n- Check whether the line is a landline, mobile, or VoIP system.\n- Turn forwarding off, then on again, and repeat the test.\n- Call your carrier or phone system support if the code still fails.\n\nA useful staff line is: \"We’re checking the forwarding path, so please ignore the next test call.\" If you use ROAL, also check your dashboard after the test. You should be able to see call history with transcripts and recordings, plus any kitchen tickets that came through. That makes it easier to tell whether the call failed at the forwarding step or later in the process."
+    }
+  ],
+  "takeaways": [
+    "Always test forwarding with a real call from a different phone.",
+    "Check all-calls, busy, and unanswered settings separately.",
+    "Confirm the exact code with your carrier or phone system before relying on it.",
+    "For restaurants, the test should end at the right phone, right greeting, and right ticket path.",
+    "If a call route is unclear, fix it before lunch or dinner service."
+  ],
+  "faq": [
+    {
+      "q": "How do I test call forwarding on my restaurant phone?",
+      "a": "Turn forwarding on, then call your restaurant number from a different phone and confirm where the call lands. If you use busy or unanswered forwarding, test those separately so you know exactly which calls move and which stay on the original line."
+    },
+    {
+      "q": "What code do I dial to forward calls on a restaurant landline?",
+      "a": "Many landlines use *72 to turn on forwarding and *73 to turn it off. But codes vary by carrier and plan, so confirm with your phone provider and then place a real test call."
+    },
+    {
+      "q": "How do I test busy call forwarding?",
+      "a": "Keep the line busy, then call the restaurant from another phone and see whether it forwards to the number you set. Some systems use a separate code for busy forwarding, and some business VoIP systems set it in a web portal instead."
+    },
+    {
+      "q": "Should I test forwarding during business hours?",
+      "a": "Yes, but only during a quiet window if possible. That way you can tell whether the call rings correctly without interrupting a real customer order, reservation, or staff conversation."
+    }
+  ],
+  "words": 1357,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

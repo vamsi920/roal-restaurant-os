@@ -1,0 +1,72 @@
+{
+  "slug": "missed-call-lost-revenue-math",
+  "keyword": "lost revenue missed calls restaurant",
+  "category": "missed-calls",
+  "title": "The math behind missed pickup calls and lost revenue",
+  "seoTitle": "Lost revenue from missed restaurant calls | ROAL",
+  "description": "Estimate lost revenue from missed restaurant calls with simple math, order examples, and practical ways to catch more pickup business.",
+  "question": "How much money do I lose from a missed pickup call at my restaurant?",
+  "answer": "A missed pickup call can mean a lost order right then, and sometimes a lost regular customer later. To estimate the impact, multiply your average order value by the number of missed order calls you think could have been placed, then compare that to the cost of fixing the problem with better call coverage or a phone host.",
+  "summary": "You’ll be able to estimate missed-call revenue and decide whether to fix it with staffing, forwarding, or an AI phone host.",
+  "intro": "A missed pickup call can cost you the value of that order right away. It can also send the caller to another restaurant or a delivery app instead.\n\nThe real cost depends on your average order size, how many calls you miss, and whether those calls were for pickup, delivery, or simple questions that could have turned into an order.",
+  "sections": [
+    {
+      "id": "how-do-i-put-a-dollar-amount-on-one-missed-pickup-call",
+      "h2": "How do I put a dollar amount on one missed pickup call?",
+      "body": "Start with one simple number: your average phone order. Say your typical pickup order is **$28**. If one missed call would likely have turned into one order, then the direct loss is $28.\n\nNow make it more realistic for your shop. Not every missed call is an order, and not every order is the same size. Use a quick estimate like this:\n\n1. Pick your average order value.\n2. Estimate how many missed calls were order calls.\n3. Estimate how many of those callers would have ordered if someone answered.\n\n| Example input | Your number |\n|---|---:|\n| Average pickup order | $28 |\n| Missed order calls per day | 4 |\n| Likely converted orders | 2 |\n| Daily missed revenue | $56 |\n\nThat table is only a starting point. Plug in your own average check and call count. Even one missed call at lunch can be the difference between a quiet hour and a solid ticket on the kitchen screen."
+    },
+    {
+      "id": "what-does-one-busy-friday-night-really-cost",
+      "h2": "What does one busy Friday night really cost?",
+      "body": "A missed call during the rush is usually more expensive than a missed call at 2 p.m. Why? Because callers are often ready to order right then. They may not call back.\n\nUse this rough math with your own numbers:\n\n- Say your average pickup order is **$32**.\n- Say you miss **6 order calls** during a rush.\n- Say **3** of those would have become tickets.\n\nThat means about **$96** in missed revenue for that shift. If one of those orders would have included extra items, your real loss may be higher.\n\nA simple phone script can help your staff recover some of that:\n\n\"Thanks for calling. Can I take your order for pickup or delivery?\"\n\nIf the line is busy, some restaurants forward calls to a backup line, but that still depends on someone being available. ROAL answers the restaurant's phone, takes pickup and delivery orders from the live menu, and sends the ticket to the kitchen screen so the order is not lost just because the phone rang at the wrong time."
+    },
+    {
+      "id": "how-do-missed-calls-compare-with-delivery-app-fees",
+      "h2": "How do missed calls compare with delivery app fees?",
+      "body": "Many owners compare missed calls to the commission they pay on delivery apps. That makes sense, because both affect what stays in the restaurant.\n\nHere is a simple comparison you can use with your own numbers:\n\n| Scenario | Example math |\n|---|---|\n| Missed pickup call | $30 average order lost |\n| Delivery app order | $30 order with roughly 15-30% commission |\n| Net from one missed call | $0 instead of the full order |\n\nIf the order would have been a pickup order, a missed call can be worse than paying a commission, because you lose the whole sale. If the caller would have ordered direct and paid at pickup, you keep more of the sale than through a delivery app.\n\nFor a fuller picture, compare this with your own delivery app totals and check your direct calls side by side. The goal is not to guess. It is to see where the money is going and which phone problems are quietly draining it. If you want a second benchmark, [compare phone orders vs delivery apps](/compare/delivery-apps)."
+    },
+    {
+      "id": "what-should-i-count-besides-the-order-itself",
+      "h2": "What should I count besides the order itself?",
+      "body": "A missed call is not only about the ticket you lost that minute. Some callers were asking about hours, parking, or a menu item. If they could not get an answer, they may have left without ordering.\n\nCount these extra losses in your own shop:\n\n- A caller asks your hours and hangs up.\n- A caller wants to know if you have a specific item.\n- A caller asks about an allergy and gives up.\n- A caller wants a reservation or catering order, but no one picks up.\n\nYou do not need perfect math. Use a simple tally sheet for one week:\n\n1. Write down missed order calls.\n2. Write down missed question calls.\n3. Estimate how many of those could have become orders.\n4. Multiply by your average order value.\n\nROAL handles menu questions, hours, address, parking, pickup and delivery orders, and reservation requests. For tricky calls, it hands the caller to staff with a summary. That matters because a simple question can turn into a sale when the caller gets a clear answer fast. See more in [menu, hours and allergen questions](/use-cases/menu-questions)."
+    },
+    {
+      "id": "what-does-a-fix-cost-and-how-do-i-compare-it-to-the-loss",
+      "h2": "What does a fix cost, and how do I compare it to the loss?",
+      "body": "Compare the money you think you are losing with the cost of fixing the problem. Many AI phone tools charge a fixed monthly fee per location, often around **$79 to $599** whether or not orders come in. Human answering services usually bill per minute or per call. Delivery apps take commission per order.\n\nROAL is priced differently: **$0.90 per completed phone order**. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nA simple comparison for your shop:\n\n- If you miss **10 orders a month** at **$30 each**, that is about **$300** in lost revenue.\n- If a fix helps recover even part of that, it may pay for itself quickly.\n- If a tool charges a fixed monthly fee, you pay it even in slower weeks.\n\nIf you want to estimate your own numbers, try the [missed call cost calculator](/tools/missed-call-calculator)."
+    },
+    {
+      "id": "how-do-i-reduce-missed-calls-without-adding-more-stress",
+      "h2": "How do I reduce missed calls without adding more stress?",
+      "body": "The easiest fix is the one your team will actually use. Start with the basics, then layer in better call handling.\n\nA practical checklist for a restaurant owner:\n\n- Make sure your hours and voicemail message are correct.\n- Decide when calls should ring through and when they should forward.\n- Train staff on a short pickup-order script.\n- Test your menu and address questions from a phone, not just from your desk.\n- Review missed calls after a lunch rush and after dinner.\n\nIf you forward calls, confirm the setup with your carrier or phone system and place a real test call. Codes can vary by carrier and plan. On many landlines and some carriers, **dial *72** plus the forwarding number to forward all calls and **\u000373** to turn it off. On some GSM mobile carriers, **\\*\\*21\\*number#** forwards all calls and **##21#** turns it off; **\\*\\*61\\*number#** forwards unanswered calls and **\\*\\*67\\*number#** forwards busy calls. Verizon Wireless uses **\\*72 / \\*73** and **\\*71** for busy/no-answer forwarding. Business VoIP systems usually handle forwarding in the web portal.\n\nIf you want to see the setup path, [How it works](/how-it-works) explains how ROAL reads your public menu and hours, builds a phone host in about a minute, and lets you test-call it before you go live. You can also read the carrier notes in [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    }
+  ],
+  "takeaways": [
+    "A missed pickup call is easiest to price by multiplying your average order by the calls you think were lost.",
+    "Rush-hour calls usually cost more than slow-hour calls because callers are ready to order right then.",
+    "Compare missed revenue to the cost of fixing the phone problem, not just to labor.",
+    "Use simple forwarding and a clear phone script, but confirm carrier codes and test the line.",
+    "ROAL can answer order calls, menu questions, and reservation requests, then send clean tickets to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate lost revenue from missed calls at my restaurant?",
+      "a": "Take your average phone order value and multiply it by the number of missed calls that were likely order calls. Then adjust for the fact that not every missed call would have turned into a sale. That gives you a practical estimate you can compare with staffing or a phone host."
+    },
+    {
+      "q": "Are missed calls worse than delivery app commission?",
+      "a": "They can be, especially when the missed call was a pickup order. A delivery app usually takes a percentage, but a missed call can mean losing the whole order. The right comparison is your lost direct revenue versus the commission you would have paid."
+    },
+    {
+      "q": "What should I do first if my restaurant keeps missing calls?",
+      "a": "Start with a quick phone audit: check hours, voicemail, forwarding, and whether staff know what to say when answering. Then test the line during lunch and dinner rush. If calls still slip through, use forwarding or an AI phone host like ROAL to cover the gap."
+    },
+    {
+      "q": "Can an AI phone host take card payments over the phone?",
+      "a": "ROAL does not take card numbers over the phone. It can take pickup and delivery orders from the live menu, collect the caller's name and phone number, quote a ready time, and send the order to the kitchen screen. Payment happens at pickup or however your restaurant already takes it."
+    }
+  ],
+  "words": 1153,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

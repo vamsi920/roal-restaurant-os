@@ -1,0 +1,124 @@
+{
+  "slug": "pizza",
+  "label": "Pizza shops",
+  "h1": "An AI phone host for pizza shops",
+  "seoTitle": "AI phone answering for pizza shops | ROAL",
+  "description": "AI phone answering for pizza shops that takes pickup orders from your live menu, answers common questions, and sends clean tickets to the kitchen.",
+  "lead": "ROAL answers pizza shop calls, takes pickup orders, and handles simple questions when the line gets busy. It works for the Friday rush, the late-night slice run, and the caller who wants “one large pepperoni, half mushrooms.”",
+  "question": "Can an AI phone host take pizza shop phone orders without making my team stop in the middle of the rush?",
+  "answer": "Yes. ROAL answers your pizza shop phone, takes pickup orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common pizza-shop calls like large and medium pies, toppings, wings, garlic knots, soda, and ready-time questions, while sending allergy-sensitive or unusual requests to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings when the oven is packed",
+      "body": "At 6:30 on a Friday, the counter is busy, the pizza line is moving, and the phone keeps ringing. Missed calls can mean missed pickup orders from nearby families and regulars."
+    },
+    {
+      "title": "Calls repeat the same questions all night",
+      "body": "Many callers ask the same things: hours, address, parking, slices, gluten-free crust, or whether you still have pepperoni left. That slows your team down when they should be boxing pies."
+    },
+    {
+      "title": "Rush-time orders are hard to catch cleanly",
+      "body": "A caller may say “one large half pepperoni, half sausage, extra well-done, no onions.” If the order is taken fast and on paper, details can get lost before it reaches the kitchen."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers calls with your real menu",
+      "body": "ROAL reads your live menu, hours, and address from your website, Google Maps link, or uploaded menu. It can answer simple pizza-shop questions and skip items you marked sold out."
+    },
+    {
+      "title": "Takes pickup orders and sends them to the kitchen",
+      "body": "It collects items, sizes, modifiers, notes, the caller’s name, and phone number. Then it confirms the order back and sends a clean ticket to the kitchen screen."
+    },
+    {
+      "title": "Handles the rush without a new hire",
+      "body": "Use it when the phone is busy or unanswered. That helps on Friday nights, during lunch slices, and when your best counter person is already helping walk-ins."
+    },
+    {
+      "title": "Lets you review every call",
+      "body": "You can see call history, transcripts, and recordings in one place. If the host could not answer a question, you reply once and it remembers for next time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One large pepperoni, half mushrooms, half sausage. Add garlic knots too."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One large pepperoni, half mushrooms, half sausage, and garlic knots. Any drinks?"
+    },
+    {
+      "who": "caller",
+      "line": "A two-liter Coke, and make the pie well-done."
+    },
+    {
+      "who": "host",
+      "line": "No problem. May I have your name and phone number?"
+    },
+    {
+      "who": "caller",
+      "line": "It’s Maria, 201-555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your pickup order should be ready at 7:20 pm. I’m reading it back now: one large pepperoni, half mushrooms, half sausage, well-done, garlic knots, and one two-liter Coke."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "1x Large pizza",
+      "- Half pepperoni",
+      "- Half mushrooms",
+      "- Half sausage",
+      "1x Garlic knots",
+      "1x 2-liter Coke"
+    ],
+    "note": "Well-done"
+  },
+  "sections": [
+    {
+      "h2": "How pizza shops use ROAL on a busy night",
+      "body": "Pizza shops get the same rush problems over and over. The phone rings when the oven is full, the register is open, and someone is asking for three boxes and extra napkins. ROAL is made for that moment. It answers the call, takes the order, and sends it to the kitchen without asking your staff to stop mid-service.\n\nA caller can ask for a simple pickup order or basic menu help. For example, “What sizes do you have?” or “Do you still have slices?” ROAL can also collect common pizza details: crust style, size, toppings, extra cheese, light sauce, no onions, and ready time. If a caller asks something sensitive, like a strong allergy concern or a manager request, it passes that along with a summary.\n\nIf you want to test it first, you can build a free test host from your website, Google Maps link, or menu. Then you can call it in the browser and hear how it handles a real pizza-shop conversation before you go live."
+    },
+    {
+      "h2": "What to include in your pizza phone setup",
+      "body": "The best pizza phone setup starts with a clear live menu. Make sure your menu has sizes, toppings, specialty pies, wings, sides, drinks, and any items you often sell out of. ROAL reads that public menu and uses it to answer calls and take orders.\n\nIt also helps to keep your hours, address, parking notes, and pickup instructions easy to find. Pizza callers often want fast answers. They may ask, “Are you open till 10?” or “Can I park in back?” Clear information cuts down on back-and-forth.\n\nThink about your most common rush orders too. A good example is a Friday call with a large pepperoni, a small cheese, breadsticks, and two sodas. ROAL is built to take that kind of order, confirm it back, and send it to the kitchen in a clean format."
+    },
+    {
+      "h2": "A simple way to go live without changing your number",
+      "body": "ROAL gives each location its own phone line, and you keep your existing restaurant number. You forward calls to it all the time, or only when the line is busy or unanswered. If you already know the forwarding steps for your carrier, that can be a quick setup. Codes vary by carrier and plan, so always confirm with your carrier and test with a call.\n\nIf you want a rough example, a landline or some carriers may use *72 to start forwarding and *73 to stop it. Some mobile carriers use different codes for all calls, busy calls, or unanswered calls. The main point is simple: you do not have to replace your current number.\n\nIf you want to compare options first, see [How it works](/how-it-works) or try the free setup at [Build a free test host](/try)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pizza pickup orders from my live menu?",
+      "a": "Yes. It can take pickup orders from your live menu, including sizes, toppings, modifiers, and notes. It then sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "What kinds of pizza shop calls can it answer?",
+      "a": "It can answer common questions about hours, address, parking, and the menu. It can also help with pickup orders and reservation requests, while passing unusual or sensitive calls to staff with a summary."
+    },
+    {
+      "q": "Does it handle sold-out items?",
+      "a": "It does not offer items you mark sold out. That helps avoid taking an order for a pie or side you cannot make right now."
+    },
+    {
+      "q": "Do I need to change my restaurant phone number?",
+      "a": "No. You keep your current number. You forward calls to ROAL, either all the time or only when you are busy or do not answer."
+    },
+    {
+      "q": "How much does it cost for pizza shops?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract."
+    }
+  ]
+}

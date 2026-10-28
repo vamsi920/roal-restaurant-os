@@ -1,0 +1,76 @@
+{
+  "slug": "restaurant-call-volume-by-hour",
+  "keyword": "restaurant call volume by hour",
+  "category": "missed-calls",
+  "title": "Reading restaurant call volume by hour",
+  "seoTitle": "Restaurant call volume by hour patterns | ROAL",
+  "description": "Read restaurant call volume by hour to spot rush periods, plan staffing, and decide when call forwarding or an AI phone host helps most.",
+  "question": "How do I read my restaurant call volume by hour and use it to cut missed calls?",
+  "answer": "Look at your calls by hour, then compare them to your staff level, order prep time, and missed-call windows. The busiest hour is not the only one that matters; the real signal is when calls rise faster than your team can answer while the kitchen is already busy. Use that pattern to set forwarding during rushes, add a second line, or use an AI phone host like ROAL for pickup orders and common questions.",
+  "summary": "You’ll learn how to read hourly call patterns and turn them into a simple phone plan.",
+  "intro": "Restaurant call volume by hour tells you when the phone is most likely to ring while your team is already in the weeds. Once you read that pattern, you can decide when to answer live, when to forward calls, and when to let an AI phone host handle the repeat questions and pickup orders.\n\nFor a busy pizza shop, deli, or family restaurant, the goal is simple: match the phone to the rhythm of the day. ROAL is built for that kind of shift, because it answers calls, takes pickup and delivery orders from your live menu, and sends clean tickets to the kitchen screen without forcing you to change how the restaurant already works.",
+  "sections": [
+    {
+      "id": "how-do-i-read-restaurant-call-volume-by-hour",
+      "h2": "How do I read restaurant call volume by hour?",
+      "body": "Start by pulling a simple call log for one normal week and sorting it by hour. You are looking for the times when calls cluster, not just the total number of calls.\n\nUse a basic table like this and fill it in with your own numbers:\n\n| Hour | Calls received | Missed calls | Orders taken | Notes |\n|---|---:|---:|---:|---|\n| 11 a.m.–12 p.m. |  |  |  | lunch prep |\n| 12 p.m.–1 p.m. |  |  |  | lunch rush |\n| 5 p.m.–6 p.m. |  |  |  | dinner starts |\n| 6 p.m.–7 p.m. |  |  |  | peak rush |\n\nA practical way to read it:\n- Hours with steady calls and low misses are usually fine with your current setup.\n- Hours with spikes and a lot of missed calls need backup.\n- Hours with many menu questions may be better handled by a phone host that can answer hours, address, parking, and menu basics.\n\nIf you use ROAL, its call history and transcripts make this easier to review. That lets you see whether people are calling for pickup, delivery, reservations, or simple questions about the menu and hours."
+    },
+    {
+      "id": "which-hourly-patterns-usually-create-missed-calls",
+      "h2": "Which hourly patterns usually create missed calls?",
+      "body": "Missed calls usually show up when the phone volume rises at the same time the kitchen gets busy. The pattern is often not random. It usually comes from lunch, dinner, weekends, holidays, weather, or one employee being stuck on the register.\n\nA common pattern looks like this:\n- 11:30 a.m. to 1:30 p.m.: lunch orders start stacking up.\n- 5 p.m. to 7:30 p.m.: dinner orders, pickup questions, and walk-ins all hit at once.\n- Right after a local event or bad weather: more inbound calls, often with the same questions.\n\nTry this quick check for each hour:\n1. How many calls came in?\n2. How many rang more than once before being answered?\n3. How many were about the same topic, like hours, menu items, or ready times?\n4. How many were actual orders?\n5. Did the phone slow the front counter or the kitchen line?\n\nExample: say you get 18 calls between 6 and 7 p.m., and 7 of them are simple questions about pickup time, parking, or a menu item. That is a strong sign that a phone host can absorb the repeat work while your staff stays on food and guests."
+    },
+    {
+      "id": "what-should-i-do-with-lunch-and-dinner-rush-data",
+      "h2": "What should I do with lunch and dinner rush data?",
+      "body": "Once you know the busy hours, turn the pattern into a simple action plan. You do not need fancy software to start. You just need a rule for what happens when the phone volume climbs.\n\nUse this owner checklist:\n- For low-volume hours, answer live as usual.\n- For moderate-volume hours, forward unanswered calls to backup coverage.\n- For rush hours, send all calls or busy calls to your phone host.\n- For late-night hours, decide whether the phone should ring, forward, or go to voicemail.\n\nExample with numbers you can swap:\n- Say your average order is $28.\n- Say you miss 4 order calls during a dinner rush.\n- If 3 of those would have been orders, that is $84 in order value at stake for that rush window.\n\nThat simple math is not a forecast. It is just a way to see the size of the gap. You can plug in your own average check and your own missed-call count.\n\nIf you want a broader picture, pair this with [the math on a missed pickup call](/blog/missed-call-lost-revenue-math) and [the restaurant phone audit](/blog/restaurant-phone-audit). Those two checks help you see whether the problem is volume, staffing, or both."
+    },
+    {
+      "id": "when-should-i-forward-calls-instead-of-answering-them-live",
+      "h2": "When should I forward calls instead of answering them live?",
+      "body": "Forwarding makes sense when your hourly pattern shows the phone is hurting service during a known rush. It is especially useful when the same few hours get overloaded every day.\n\nA practical rule:\n- Forward all calls when you are short-staffed and the phone is missing order calls.\n- Forward unanswered calls when you still want staff to pick up first.\n- Forward busy calls when the line gets blocked during a rush.\n\nTypical setup note: on many landlines and some carriers, *72 turns on call forwarding and *73 turns it off. Some mobile carriers use different codes, and business phone systems often use a web portal. Codes vary by carrier and plan, so always confirm with your carrier and test with a call.\n\nFor owners who want a cleaner setup, ROAL gives each location its own phone line automatically after you claim the host. You keep your existing number and forward it to that line, either for all calls or only when busy or unanswered. Forwarding can be turned off any time. That keeps the restaurant’s number in place while giving rush hours a backstop."
+    },
+    {
+      "id": "how-do-i-tell-whether-the-problem-is-call-volume-or-call-han",
+      "h2": "How do I tell whether the problem is call volume or call handling?",
+      "body": "Sometimes the phone is busy because too many people are calling. Other times the phone is busy because the team cannot answer fast enough. Those are different problems, and the fix is different.\n\nUse this quick comparison table:\n\n| Signal | Likely problem | What to do |\n|---|---|---|\n| Calls spike at lunch or dinner | Volume | Add backup coverage or a phone host |\n| Misses happen all day | Call handling | Tighten scripts, routing, or forwarding |\n| Most calls are questions | Repetitive calls | Let the phone host answer hours, address, parking, menu |\n| Calls are mostly orders | Order intake load | Use a system that can take items, sizes, modifiers, notes |\n\nA useful script for staff is: “Thanks for calling. If I’m with a guest, I’ll get you right back.” That buys a few seconds, but it does not solve a rush that keeps repeating.\n\nROAL helps because it can answer common questions, take pickup and delivery orders from the live menu, and hand allergy-sensitive questions, complaints, catering requests, and manager requests to staff with a summary. That is a better fit for a patterned rush than making one person chase every ring."
+    },
+    {
+      "id": "how-can-i-size-the-phone-setup-around-my-hourly-pattern",
+      "h2": "How can I size the phone setup around my hourly pattern?",
+      "body": "Once you know the hours, you can match the setup to the pattern instead of guessing. That means deciding what should happen before the rush starts.\n\nTry this decision list:\n1. Identify your top 2 busy hours.\n2. Count how many of those calls are real orders.\n3. Count how many are menu, hours, or address questions.\n4. Decide whether staff can handle both the counter and the phone at the same time.\n5. Pick the phone setup for that hour: live answer, forward to backup, or route to an AI phone host.\n\nIf you want a cleaner cost comparison, use [the phone staff cost calculator](/tools/phone-staff-cost-calculator), [the AI phone host cost calculator](/tools/phone-host-cost-calculator), and [the monthly AI phone plans comparison](/compare/monthly-ai-phone-plans). That lets you compare fixed monthly labor costs with pay-per-order pricing.\n\nROAL pricing is simple: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. Billed monthly, it can be easier to match to real order volume than a flat monthly plan that charges even when the phone is quiet."
+    },
+    {
+      "id": "what-should-i-watch-after-i-change-the-phone-plan",
+      "h2": "What should I watch after I change the phone plan?",
+      "body": "After you change the setup, watch the next week of call history and kitchen tickets. Do not just look at total calls. Look at the time of day, the type of call, and whether the phone actually helped the shift.\n\nA simple review checklist:\n- Did calls during the busy hour go down on staff phones?\n- Did more callers get their questions answered without tying up the front counter?\n- Did the kitchen get clean tickets with the right items, sizes, modifiers, and notes?\n- Did the host know the menu, hours, and address without staff having to repeat them?\n- Were tricky calls sent to staff with enough detail to act on?\n\nIf you are testing ROAL, you can build a free test host from your website or menu pages, call it in the browser, and see how it handles your real hours and menu. It can speak the caller’s language, quote a ready time, and avoid sold-out items. It does not take card numbers over the phone, so payment still happens the way your restaurant already handles it.\n\nIf you want to see the setup and the owner flow, [Build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Read call volume by hour, not just total calls for the week.",
+    "The busiest hours matter most when calls and kitchen work happen at the same time.",
+    "Use forwarding or a phone host during repeat rush windows, not only when the phone feels busy.",
+    "Match your phone plan to the pattern, then check the next week of call history and tickets."
+  ],
+  "faq": [
+    {
+      "q": "What is the best way to track restaurant call volume by hour?",
+      "a": "Use a call log and sort it by hour for at least one normal week. Track received calls, missed calls, and how many were orders versus questions. That gives you a clear pattern without needing special software."
+    },
+    {
+      "q": "When should a restaurant forward calls instead of answering them?",
+      "a": "Forward calls during the hours when the phone keeps interrupting service or when staff cannot answer fast enough. Many restaurants forward unanswered or busy calls during lunch and dinner rushes, then turn forwarding off when the shift slows down. Always confirm the exact code with your carrier or phone system."
+    },
+    {
+      "q": "What kinds of calls can ROAL handle for a restaurant?",
+      "a": "ROAL can answer questions about hours, address, parking, and the menu, and it can take pickup and delivery orders from the live menu. It can also take reservation requests and hand catering, allergy-sensitive, complaint, and manager requests to staff with a summary."
+    },
+    {
+      "q": "How does ROAL pricing work for phone orders?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "words": 1476,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

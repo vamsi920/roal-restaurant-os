@@ -1,0 +1,272 @@
+[
+  {
+    "slug": "ai-phone-host",
+    "term": "AI phone host",
+    "short": "An AI phone host answers the restaurant phone, takes orders, and sends the ticket to the kitchen.",
+    "body": "A **phone host** is the person, or system, that picks up when the restaurant gets busy, short-staffed, or closed for the night. In a real restaurant, it can take a pickup order for two chicken parms, a large plain pie, or a lunch combo with extra sauce, then pass the details to the kitchen screen.\n\nExample: it answers three calls at once during Friday rush, takes one pickup order, handles a menu question about gluten, and sends a catering request to staff.\n\nWhy it matters: missed calls can mean missed sales and annoyed regulars. A phone host helps keep the line moving without making guests wait on hold. See [How it works](/how-it-works) for the full flow."
+  },
+  {
+    "slug": "ai-receptionist",
+    "term": "AI receptionist",
+    "short": "An AI receptionist answers restaurant calls, shares basic information, and routes special requests to staff.",
+    "body": "An **AI receptionist** is a front-desk style phone helper for a restaurant. It can answer the phone with the restaurant name, give hours and address, take a pickup order, and pass along calls that need a manager.\n\nIn a real restaurant, this is useful when the host stand is slammed, the dining room is full, or the person on the phone is asking about parking, an allergy, or a birthday reservation. Example: a caller asks if the kitchen can leave out onions on a burger and wants a 6:30 table for four. The receptionist can capture that and send it to staff.\n\nWhy it matters for phone orders: the first call sets the tone, and a clear, polite answer can keep the order from slipping away."
+  },
+  {
+    "slug": "voice-ordering",
+    "term": "Voice ordering",
+    "short": "Voice ordering lets callers place a food order by speaking instead of pressing buttons or using a web form.",
+    "body": "**Voice ordering** means the caller talks through the order naturally. They say what they want, like “two shrimp tacos, no cilantro, one side of rice,” and the phone host repeats it back before sending it to the kitchen.\n\nIn a real restaurant, this feels closer to ordering from a cashier than tapping boxes on a screen. It works well for busy lunch calls, older customers, and regulars who already know the menu. Example: a caller asks for a cheesesteak, extra onions, no mayo, and a large iced tea for pickup in 20 minutes.\n\nWhy it matters: voice ordering is faster for many phone callers, and it fits the way restaurant guests actually order. It can also reduce mistakes from rushed typing or confusing menu choices."
+  },
+  {
+    "slug": "call-forwarding",
+    "term": "Call forwarding",
+    "short": "Call forwarding sends the restaurant’s incoming calls to another phone or phone host.",
+    "body": "**Call forwarding** moves calls from the restaurant’s existing number to another line. In a restaurant, that can mean sending calls to a mobile phone during lunch, to the office after hours, or to a phone host when the dining room is packed.\n\nExample: a small pizzeria keeps its main number, but forwards calls to the phone host from 5:30 to 8:00 p.m. so pickup orders still get answered while the kitchen is slammed.\n\nWhy it matters for phone orders: forwarding lets the restaurant keep one familiar number while changing who answers it. That helps when staff is busy making food, running tables, or closing the shop. If you are setting it up yourself, confirm the right code with your carrier and test it with a real call."
+  },
+  {
+    "slug": "conditional-call-forwarding",
+    "term": "Conditional call forwarding",
+    "short": "Conditional call forwarding sends calls only when the line is busy, unanswered, or not available.",
+    "body": "**Conditional call forwarding** only kicks in under certain conditions. That usually means the restaurant phone forwards when the line is busy, not answered, or out of service.\n\nIn a real restaurant, this is helpful when the host stand is already on another call or the lunch rush makes it impossible to pick up right away. Example: a diner’s line forwards only when nobody answers after a few rings, so the caller can still place a burger and fries order instead of hanging up.\n\nWhy it matters for phone orders: this setup protects the busiest moments without moving every call away from the restaurant. It is a good fit when staff still wants to answer some calls live. Codes vary by carrier and plan, so always confirm with your carrier and test with a real call. For many restaurant owners, the [call forwarding codes](/tools/call-forwarding-codes) page is a useful place to start."
+  },
+  {
+    "slug": "unconditional-call-forwarding",
+    "term": "Unconditional call forwarding",
+    "short": "Unconditional call forwarding sends all calls to another number without ringing the original phone first.",
+    "body": "**Unconditional call forwarding** means every incoming call goes straight to the forwarded number. The restaurant phone does not ring first.\n\nIn a real restaurant, this might be used when the dining room is closed, the phone line is set to a night number, or the owner wants all calls to go to a phone host during service. Example: a sushi shop forwards all calls from the main line to the phone host on Sunday nights so pickup orders and questions about hours still get answered.\n\nWhy it matters for phone orders: it gives you a clean, simple way to reroute the phone. The tradeoff is that staff will not hear the original ring at the store. Always confirm the code with your carrier or VoIP provider, and test it with a real call before relying on it."
+  },
+  {
+    "slug": "missed-call",
+    "term": "Missed call",
+    "short": "A missed call is a call that rings the restaurant but is not answered before the caller hangs up.",
+    "body": "A **missed call** is any call that comes in and does not get answered in time. In a restaurant, that often happens during dinner rush, when the phone is tied up, or when the front counter is helping in-house guests.\n\nExample: on a Friday night, a sandwich shop misses 12 calls while the line is out the door. Some callers may try again, but some will move on to another place.\n\nWhy it matters for phone orders: missed calls can turn into missed pickup orders, missed catering leads, and missed reservation requests. Even one busy hour can create a pileup. A restaurant can review missed calls in the call history, then decide whether to use forwarding, a phone host, or a better after-hours setup. That is why many owners track them closely."
+  },
+  {
+    "slug": "call-abandonment",
+    "term": "Call abandonment",
+    "short": "Call abandonment happens when a caller gives up before the restaurant answers.",
+    "body": "**Call abandonment** is when someone hangs up before they place the order or speak to staff. In a restaurant, that usually happens after too many rings, a long hold, or a confusing phone menu.\n\nExample: a caller wants a large pepperoni pizza, but after waiting 45 seconds they hang up and call the place next door instead. The order never reaches the kitchen.\n\nWhy it matters for phone orders: abandoned calls are not just a phone problem. They can become empty tickets and lost repeat business. Busy nights, holiday rushes, and short-staffed shifts make this more likely. Reducing hold time, forwarding unanswered calls, or using a phone host can help keep callers from giving up before the restaurant gets the chance to help them."
+  },
+  {
+    "slug": "hold-time",
+    "term": "Hold time",
+    "short": "Hold time is how long a caller waits on the phone before someone answers.",
+    "body": "**Hold time** is the waiting time between when the phone rings and when a person or phone host answers. In a restaurant, it can be a few seconds during a quiet lunch or much longer during Friday dinner rush.\n\nExample: a caller is put on hold while the cashier packs takeout bags and grabs a fountain drink order. If the hold stretches too long, the caller may hang up or call another restaurant.\n\nWhy it matters for phone orders: long hold time can slow down orders and frustrate guests. Shorter waits usually mean more completed orders and fewer abandoned calls. Restaurants often use forwarding or a phone host to cut the wait during the busiest hours. That matters most when the kitchen is deep in prep and the front counter is already handling walk-ins."
+  },
+  {
+    "slug": "ivr",
+    "term": "IVR (phone menu)",
+    "short": "IVR is a phone menu that asks callers to press numbers for different options.",
+    "body": "**IVR**, or a phone menu, is the recorded system that says things like “Press 1 for orders, press 2 for hours, press 3 for the manager.” In a restaurant, it can route callers to the right place, but it can also slow down people who just want to place a quick order.\n\nExample: a caller only wants two chicken tacos for pickup, but they have to press through several menu options first. If they press the wrong number, they may get frustrated and hang up.\n\nWhy it matters for phone orders: a phone menu can help sort basic calls, but it can also create extra steps during rush time. Many owners compare it with live answering options before choosing a setup. If you want to see the tradeoffs, [AI phone host vs a press-1 phone menu](/compare/phone-menu-ivr) is a good place to start."
+  },
+  {
+    "slug": "answering-service",
+    "term": "Answering service",
+    "short": "A service that answers your restaurant’s phone and relays messages or orders when your team is busy.",
+    "body": "An **answering service** is a live person or call center that picks up calls for your restaurant when the phone rings too much for your staff. In a real shift, that might mean someone takes a pickup order for two chicken parmesans and a salad while your team is handling a dine-in rush. Some services only take messages. Others take basic orders and pass them along. For phone orders, this matters because callers usually want a quick answer about specials, wait times, or whether a dish is still available. If the call is not handled well, the customer may hang up and order elsewhere. Compare the tradeoff with [AI phone host vs answering service](/compare/answering-service)."
+  },
+  {
+    "slug": "virtual-receptionist",
+    "term": "Virtual receptionist",
+    "short": "A virtual receptionist is a remote phone helper who answers calls, greets guests, and handles simple requests for your restaurant.",
+    "body": "A **virtual receptionist** is someone who answers the phone for your restaurant from somewhere else, not from behind your counter. In practice, this can mean they answer lunch calls, take a name for a pickup order, or pass along a catering question for 30 trays of sandwiches. They may sound polished, but they still need your menu, hours, and house rules to be accurate. For phone orders, this matters because the caller expects a clear greeting, a quick menu answer, and the right pickup time. If the receptionist is guessing, your line gets slower and your kitchen gets messy. When owners want a clearer setup, they often start with [How it works](/how-it-works) to see how calls, menus, and tickets fit together."
+  },
+  {
+    "slug": "kitchen-display-system",
+    "term": "Kitchen display system (KDS)",
+    "short": "A kitchen display system shows incoming orders on a screen instead of printing paper tickets.",
+    "body": "A **kitchen display system**, or **KDS**, is the screen your cooks watch to see new orders. Instead of paper tickets piled on the expo rail, the order appears on a screen with items, modifiers, and notes. For example, a Friday phone order might show: one large pepperoni pizza, one half-pepperoni half-mushroom, light sauce, extra well-done. That helps the kitchen start faster and keeps handwriting errors down. For phone orders, a KDS matters because the order should move cleanly from the call to the line without extra copying. ROAL sends a clean ticket to the kitchen screen, which is useful when the phone is ringing and the expo area is already crowded. See also [Questions owners ask](/faq)."
+  },
+  {
+    "slug": "pos",
+    "term": "POS (point of sale)",
+    "short": "A POS is the system your restaurant uses to ring in orders, payments, and receipts.",
+    "body": "A **POS** is the main system many restaurants use to enter orders, send checks, and track payments. In a busy shop, your cashier might enter a phone order there after the call ends, or the kitchen may see the order in a connected screen. For example, a caller orders a cheeseburger, fries, and a diet soda, and the staff needs that order recorded the same way as walk-ins. For phone orders, the POS matters because it is the record of what was sold, what was changed, and what needs to be prepared. If the phone note is vague, the wrong ticket can reach the line. Owners comparing systems often look at [AI phone host vs online ordering](/compare/online-ordering) to see where phone calls fit in."
+  },
+  {
+    "slug": "order-ticket",
+    "term": "Order ticket",
+    "short": "An order ticket is the written or digital slip that tells the kitchen what to make.",
+    "body": "An **order ticket** is the ticket your kitchen uses to make the food. It can be paper or digital, but it should be easy to read and complete. In a real restaurant, a phone order for two lo mein, one with no onions, plus crab rangoons, becomes a ticket the cook can follow without calling back. The ticket should include the name, items, modifiers, notes, and pickup time. For phone orders, this matters because the caller may talk fast, and staff may be busy. A clear ticket helps avoid missed toppings, wrong sizes, and unclear allergy notes. It also gives the kitchen one place to check the order instead of relying on memory during a rush. That is why many owners want a clean flow from call to ticket."
+  },
+  {
+    "slug": "expo",
+    "term": "Expo",
+    "short": "Expo is the person or station that checks finished food and sends it out to the guest.",
+    "body": "**Expo** is short for expeditor. In many restaurants, expo is the person at the pass who checks the plates, matches them to the ticket, and sends them out. For example, if a phone order says two garlic naan, chicken tikka masala, and one mango lassi, expo checks that the bag matches the ticket before pickup. This matters for phone orders because the caller is not standing there to catch mistakes. The expo step is where missing sauces, wrong names, or late tickets can still be fixed before the customer leaves. In a small shop, the expo role may be shared by the cook, cashier, or manager, but the job stays the same: make sure the order is right and ready. See [Restaurant phone glossary](/glossary) for related terms."
+  },
+  {
+    "slug": "the-pass",
+    "term": "The pass",
+    "short": "The pass is the counter or shelf where finished food waits before it goes to the guest.",
+    "body": "**The pass** is the handoff spot between the kitchen and the front of house. It is where finished plates, bags, or boxes wait before expo or staff sends them out. In a pizza shop, that might be the shelf where a large pepperoni and a garlic knots order sits until pickup. For phone orders, the pass matters because the order has to move from the phone to the kitchen to the pickup shelf without confusion. If there are three orders ready at once, the pass helps staff separate “John” from “Maria” and keep the right bag with the right ticket. A clean pass setup keeps pickup lines moving and helps the front counter answer, “Your order is almost ready.”"
+  },
+  {
+    "slug": "eighty-six",
+    "term": "86 (eighty-six)",
+    "short": "86 means an item is unavailable, so the kitchen should not sell or make it.",
+    "body": "**86** means an item is sold out, unavailable, or being held back. In a real restaurant, the kitchen might 86 grilled salmon, certain dumplings, or a special sauce after the lunch rush. For phone orders, this matters because the caller may ask for something you cannot make. The phone host or staff should know the item is unavailable before confirming the order. That avoids awkward call-backs and refunds. If you are 86 on a topping, the order should not be sold with that item attached. Clear 86 handling is especially useful on busy nights when staff are moving fast and the menu changes by the hour. It keeps the phone order honest and saves the kitchen from making something impossible. For common order questions, owners also use [Menu, hours and allergen questions](/use-cases/menu-questions)."
+  },
+  {
+    "slug": "modifier",
+    "term": "Modifier",
+    "short": "A modifier is a change to an item, like size, topping, sauce, or cooking style.",
+    "body": "A **modifier** is any change to a menu item. It can be a size, topping, spice level, cooking style, or side choice. For example, a caller orders a burger with no pickles, extra cheese, well-done, and fries instead of onion rings. Those are modifiers. In a real restaurant, modifiers matter because they are where most custom requests live, and phone orders often have many of them. If the staff misses one, the kitchen makes the wrong food and the guest is frustrated at pickup. Clear modifiers help the order ticket show the exact request in a way the cook can follow quickly. They also help the caller hear the order back before hanging up, so the restaurant can catch mistakes while there is still time to fix them."
+  },
+  {
+    "slug": "upsell",
+    "term": "Upsell",
+    "short": "An upsell is a helpful offer that adds value, like a side, drink, or larger size.",
+    "body": "An **upsell** is when you offer a smart add-on that fits the order. In a restaurant call, that might be asking, “Would you like fries and a soda with that burger?” or “Do you want to make that a large for one dollar more?” It should feel helpful, not pushy. For phone orders, upsells matter because the caller is already deciding what to buy, and a simple suggestion can improve the ticket without slowing the call. A good upsell is usually something the kitchen can make fast and the guest may already want. Owners often keep these prompts in the menu notes or FAQs so the phone host can mention them naturally. If you are building your call flow, [Build a free test host](/try) is a simple place to start."
+  },
+  {
+    "slug": "read-back",
+    "term": "Read-back",
+    "short": "Read-back is when the phone host repeats the order so the caller can confirm it before the ticket goes to the kitchen.",
+    "body": "Read-back is the final check in a phone order. The host repeats the items, sizes, modifiers, sauces, and any notes so the caller can catch mistakes right away.\n\nFor example: “So that’s one large pepperoni pizza, well done, extra ranch on the side, and a Caesar salad no croutons. Ready at 6:20?” That kind of repeat is useful when a caller says two different toppings too fast, or when a busy Friday line makes details easy to miss.\n\nWhy it matters: a good read-back helps cut down on wrong toppings, missed allergies, and remake headaches. It also gives the caller confidence that the order was heard correctly. In phone ordering, that last check is often the difference between a smooth pickup and a frustrated customer."
+  },
+  {
+    "slug": "ready-time",
+    "term": "Ready time (quote time)",
+    "short": "Ready time is the time you tell the caller their order should be ready for pickup or delivery.",
+    "body": "Ready time is the promised time for the order, usually spoken in plain language like “about 20 minutes” or “ready at 6:40.” It is also called quote time because you are quoting when the food should be done.\n\nIn a real restaurant, ready time changes with the rush. If the grill is backed up, a burger order may take longer than a side salad. If two large pies are already in the oven, a new pizza order may need a later quote. The host should base the time on your current kitchen pace, not on a guess.\n\nWhy it matters for phone orders: the quote sets expectations. A clear ready time helps reduce call-backs asking “Is it done yet?” and keeps pickup traffic spaced out. It also helps staff plan the ticket flow."
+  },
+  {
+    "slug": "ticket-time",
+    "term": "Ticket time",
+    "short": "Ticket time is the time an order is sent to the kitchen screen and starts the prep clock.",
+    "body": "Ticket time is the moment the order becomes a kitchen ticket. It is the start point for prep, not the moment the caller hangs up.\n\nIn a busy shop, this matters because the kitchen needs to know what is new now versus what was already in the queue. If three tickets came in at 6:10 and one more arrives at 6:12, that later ticket may need a slightly later ready time. For example, a chicken parm sandwich at 6:12 may not finish at the same moment as the earlier fries and wings.\n\nWhy it matters for phone orders: ticket time helps the front end and kitchen stay in sync. It makes ready-time quotes more realistic and gives you a better way to handle rush-hour calls. See also [Rush-hour phone orders](/use-cases/rush-hour)."
+  },
+  {
+    "slug": "average-order-value",
+    "term": "Average order value",
+    "short": "Average order value is the typical dollar amount of one order before tax and tip.",
+    "body": "Average order value is the average amount each phone order brings in. If one caller spends $18 and another spends $42, the average order value helps you see the middle of that range.\n\nIn a restaurant, this number changes by menu and by time of day. A lunch deli order with a sandwich and drink may be smaller than a family dinner with appetizers, entrees, and dessert. A phone host can help raise order value by capturing sides, drinks, and add-ons clearly, such as “Would you like garlic knots with that?”\n\nWhy it matters for phone orders: this number helps you understand what each call is worth. It also gives context when comparing pickup, delivery, and other order channels. If you want to estimate order economics, try the [Free tools](/tools) page."
+  },
+  {
+    "slug": "covers",
+    "term": "Covers",
+    "short": "Covers is the number of people eating in the restaurant, usually used for dine-in rather than takeout.",
+    "body": "Covers means the number of guests served. In a dining room, one table of four is four covers. It is a common restaurant word, but it does not always matter for a phone pickup order unless you are also taking a reservation or counting a group.\n\nFor example, if someone calls to book a birthday dinner for 10, that is 10 covers. If the same caller later orders takeout for six people, you may think about portions instead of covers.\n\nWhy it matters for phone orders: covers help with reservations, dining room planning, and staffing. They are useful when a call turns from “Do you have a table?” into “Can we also add appetizers?” For restaurants that handle both bookings and food calls, the phone host should recognize the difference and route each request correctly."
+  },
+  {
+    "slug": "takeout",
+    "term": "Takeout",
+    "short": "Takeout is food ordered by phone for pickup at the restaurant, not eaten in the dining room.",
+    "body": "Takeout means the caller orders food to pick up and leave with it. It can be a single lunch sandwich, a family tray, or a full dinner order with sides and drinks.\n\nIn a real restaurant, takeout calls often come during the busiest moments: Friday night pizza runs, lunch rush burritos, or a rainy evening when pickup jumps. The caller may ask simple questions like “How long for two cheeseburgers and fries?” and then add a second item before hanging up.\n\nWhy it matters for phone orders: takeout is one of the fastest ways to turn a phone call into revenue without a dining room seat. It also needs clear names, phone numbers, modifiers, and ready times so staff can find the right ticket fast. For more on pickup workflows, see [Pickup order taking](/use-cases/pickup-orders)."
+  },
+  {
+    "slug": "curbside-pickup",
+    "term": "Curbside pickup",
+    "short": "Curbside pickup is when the customer waits in or near the car and the order is brought out to them.",
+    "body": "Curbside pickup means the food does not go to the counter. The customer stays near the car, and staff or a runner brings the order outside when it is ready.\n\nIn a real restaurant, curbside pickup is helpful for rainy weather, families with kids, or busy strip-mall parking lots. A caller might say, “I’ll be in the white Honda in front,” or “I can’t come inside.” The phone host should capture the car details or note the spot if your team uses them.\n\nWhy it matters for phone orders: curbside needs a clean handoff. The kitchen needs the name, the order, and any pickup note in the ticket. That way staff do not waste time searching the dining room for a customer who is waiting outside. Clear notes reduce confusion when several pickups arrive at once."
+  },
+  {
+    "slug": "first-party-ordering",
+    "term": "First-party ordering",
+    "short": "First-party ordering is when customers order directly from the restaurant, not through a marketplace app.",
+    "body": "First-party ordering means the restaurant owns the call, the menu, and the customer relationship. The order comes directly to your phone line, not through a third-party marketplace.\n\nA simple example is a caller dialing the restaurant number to order a large pepperoni pizza, a salad, and two sodas. The restaurant takes the order, sets the ready time, and sends the ticket to the kitchen. The customer pays at pickup or by whatever method the restaurant already uses.\n\nWhy it matters for phone orders: first-party ordering helps keep the call in your control. You choose the menu, the greeting, and the process. It can also help reduce dependence on outside platforms. If you want to see how ROAL fits, read [How it works](/how-it-works)."
+  },
+  {
+    "slug": "third-party-delivery",
+    "term": "Third-party delivery",
+    "short": "Third-party delivery is when another company delivers the restaurant’s food and usually takes a commission.",
+    "body": "Third-party delivery is delivery ordered through an outside platform that handles the driver and charges the restaurant a commission. Many restaurants use it for reach, but it comes with tradeoffs.\n\nIn practice, a caller may want a delivered chicken rice bowl or a family combo late at night. The order still needs to be accurate, but the restaurant often pays a fee on each order. That can make small orders less profitable, especially when the basket is light.\n\nWhy it matters for phone orders: phone orders can give you a direct channel without handing the customer relationship to someone else. If you want to compare direct orders with outside delivery fees, the [Delivery app commission calculator](/tools/delivery-commission-calculator) can help you think it through using your own numbers."
+  },
+  {
+    "slug": "delivery-commission",
+    "term": "Delivery commission",
+    "short": "Delivery commission is the fee a restaurant pays on each delivery order handled by a third-party app.",
+    "body": "Delivery commission is the percentage or fee taken from an order when a third-party delivery service brings in the sale. In the restaurant world, those fees are often around 15–30% per order.\n\nExample: if a $30 order is placed through a delivery app and the commission is 25%, the restaurant may give up $7.50 before other costs. That adds up quickly on small-ticket orders like a burger meal, a single sushi roll, or a lunch combo.\n\nWhy it matters for phone orders: every direct phone order can feel different from a commission-heavy delivery order. Phone calls let you quote the guest, take the order directly, and keep the customer relationship in-house. If you want to estimate what those fees mean for your menu, use the [Delivery app commission calculator](/tools/delivery-commission-calculator)."
+  },
+  {
+    "slug": "ghost-kitchen",
+    "term": "Ghost kitchen",
+    "short": "A ghost kitchen is a delivery-only restaurant that cooks food without a dining room.",
+    "body": "A **ghost kitchen** is a real restaurant setup where food is made for pickup and delivery only. There may be no tables, host stand, or walk-in guests. Phone orders matter because the phone is often the main way someone places a large pickup order, checks the menu, or asks for the right pickup door or unit number.\n\nFor example, a caller might ask for two smash burgers, fries, and extra sauce, then want the order ready in 20 minutes. A phone host can take the name, items, notes, and ready time, then send a clean ticket to the kitchen.\n\n- Useful when your team is busy cooking.\n- Helpful when the caller needs directions to the pickup spot.\n- Important for keeping the line clear during dinner."
+  },
+  {
+    "slug": "catering-inquiry",
+    "term": "Catering inquiry",
+    "short": "A catering inquiry is a call about a larger food order for a group, office, event, or party.",
+    "body": "A **catering inquiry** is when someone calls about a big order for a meeting, birthday, school event, office lunch, or family gathering. It is not a small walk-in meal. The caller may ask about trays, platter sizes, lead time, delivery, setup, and whether you can handle special requests.\n\nFor example, someone might ask for 10 trays of chicken parm, salad, rolls, and utensils for 40 people on Friday at noon. A phone host can collect the basics and hand the details to staff with a summary.\n\nPhone orders matter here because catering calls often need extra attention. If the line is busy, the caller may move on quickly. See [Catering inquiries](/use-cases/catering) for more on this call type."
+  },
+  {
+    "slug": "rush-hour",
+    "term": "Rush (dinner rush)",
+    "short": "Rush is the busiest stretch of service, when the phone rings more and the kitchen is under pressure.",
+    "body": "**Rush** usually means the dinner rush: the time when the phone rings fast, the kitchen is slammed, and the front counter is moving nonstop. In many restaurants, this is when simple phone orders get missed because staff are helping in-house guests, packing bags, or checking tickets.\n\nFor example, at 6:15 p.m. on a Friday, you might get calls for a large pie, wings, and a couple of pasta orders while the expo line is already full. A phone host can take the order, confirm the name, and give a ready time without slowing the team down.\n\nPhone ordering matters most during rush because missed calls can turn into missed sales. See [Rush-hour phone orders](/use-cases/rush-hour) for the situations owners deal with most."
+  },
+  {
+    "slug": "front-of-house",
+    "term": "Front of house",
+    "short": "Front of house is the customer-facing part of the restaurant, like hosts, cashiers, and servers.",
+    "body": "**Front of house** means the people and spaces guests see and hear first: the host stand, cash register, dining room, pickup shelf, and the staff answering the phone. These team members are often handling walk-ins, takeout pickups, and questions at the same time.\n\nFor example, a server might be seating a table while the phone rings and a pickup customer is standing at the counter. That is a common moment when the front of house gets stretched thin. A phone host can take routine calls so the front team can stay focused on guests in the room.\n\nThis matters for phone orders because the front of house is usually the first place customers feel delay. Clear phone handling helps keep the dining room moving and the pickup flow steady."
+  },
+  {
+    "slug": "back-of-house",
+    "term": "Back of house",
+    "short": "Back of house is the kitchen and prep area where the food is made.",
+    "body": "**Back of house** is the kitchen, prep station, dish area, and other staff areas guests do not see. This is where phone orders become tickets, bags, and finished food. If the order is messy, the kitchen pays for it with extra questions and re-fires.\n\nFor example, a caller orders a chicken wrap, no onions, extra sauce, and a side of fries. A phone host can capture the modifiers clearly and send a clean ticket to the back of house, which helps reduce confusion during a busy shift.\n\nPhone orders matter because the kitchen needs accurate notes, not a half-heard message on a crowded line. [How it works](/how-it-works) shows how the call becomes a ticket the kitchen can use."
+  },
+  {
+    "slug": "order-throttling",
+    "term": "Order throttling",
+    "short": "Order throttling is limiting how many phone orders you accept at once so the kitchen does not get overwhelmed.",
+    "body": "**Order throttling** means slowing down or limiting incoming orders when the kitchen is already full. In a real restaurant, this can happen during a Friday rush, a holiday, or a short-staffed shift. The goal is to keep the line moving without taking more orders than the kitchen can cook well.\n\nFor example, if your fryer is backed up and the grill is packed, you may want to pause new large orders for a short time or give longer ready times. A phone host can help by taking orders only when your team is ready, and by quoting realistic wait times based on what you tell it.\n\nThis matters for phone orders because too many commitments at once can cause late food, angry callers, and stressed staff. See [Short-staffed shifts](/use-cases/short-staffed) for related scenarios."
+  },
+  {
+    "slug": "call-transcript",
+    "term": "Call transcript",
+    "short": "A call transcript is a written record of what the caller said and what the restaurant replied.",
+    "body": "A **call transcript** is the text version of a phone call. It shows what the caller asked, what items were ordered, and what the phone host or staff said back. In a restaurant, this is useful when you need to double-check a complicated order or answer a question after the call ends.\n\nFor example, if a caller said “one large cheese pie, extra well done, and no garlic on the crust,” the transcript helps staff confirm the note before the food goes out. It is also helpful when someone asks what time the caller wanted pickup.\n\nPhone orders matter because details get missed easily when the store is busy. A transcript makes it easier to review the call, fix mistakes, and train staff on common order patterns. See [Questions owners ask](/faq) for more."
+  },
+  {
+    "slug": "warm-handoff",
+    "term": "Warm handoff",
+    "short": "A warm handoff is when the phone host passes a call to staff with a short summary attached.",
+    "body": "A **warm handoff** means the phone host does not just dump the call on your team. It passes along a short summary first, such as the caller’s name, order, phone number, and why they need help. In a restaurant, this is useful for allergy-sensitive questions, complaint calls, manager requests, or catering details.\n\nFor example, a caller may ask whether the pasta sauce contains nuts. The phone host can collect the question and hand it to staff with the full context, so the caller does not need to repeat everything.\n\nPhone orders matter because busy staff often cannot start from zero. A warm handoff saves time, lowers confusion, and helps the caller feel heard. It is especially useful when the phone should reach a person, not just a generic voicemail."
+  },
+  {
+    "slug": "completed-order",
+    "term": "Completed order",
+    "short": "A completed order is a confirmed phone order that is sent to the kitchen for prep.",
+    "body": "A **completed order** is a phone order that has been fully taken, confirmed with the caller, and sent to the kitchen screen. It is not just a caller asking about food. It becomes a real ticket the staff can make.\n\nFor example, a caller orders two pizzas, one salad, and a soda. The phone host confirms the items, name, ready time, and notes, then sends the ticket to the kitchen. At that point, the order is complete enough for the team to start preparing it.\n\nThis matters because restaurant owners want the phone to turn into actual business, not just conversation. Completed orders are also the basis for [Pricing](/pricing), since ROAL bills per completed phone order, not per call."
+  },
+  {
+    "slug": "pay-per-order-pricing",
+    "term": "Pay-per-order pricing",
+    "short": "Pay-per-order pricing means you pay only when a phone order is completed and sent to the kitchen.",
+    "body": "**Pay-per-order pricing** means the restaurant pays for completed phone orders, not for a fixed monthly package. In a busy restaurant, that can feel simpler than paying the same amount every month whether the phone is ringing or not.\n\nFor example, if you get a few extra pickup orders on a Tuesday and a bigger dinner rush on Saturday, your cost follows the completed orders that reached the kitchen. That makes phone costs easier to tie to real order volume.\n\nThis matters for phone orders because owners want a cost model that matches actual business. It can be easier to compare against fixed monthly plans or labor costs when you are short-staffed. See [Comparisons](/compare) if you want to review common phone options side by side."
+  },
+  {
+    "slug": "per-minute-billing",
+    "term": "Per-minute billing",
+    "short": "Per-minute billing means you pay based on how long a call lasts, not just whether an order was taken.",
+    "body": "## What it means in a restaurant\nPer-minute billing is common with human answering services and some phone support plans. If a caller asks about Friday specials, parking, gluten-free options, and then places one pickup order, the clock keeps running. That can be hard to predict on a busy night.\n\n**Example:** A customer calls at 6:45 p.m. to order two chicken parm dinners, asks for extra sauce, and then checks if the lot behind the building is open. If the call takes 4 minutes, you pay for those minutes.\n\nWhy it matters for phone orders:\n- Longer calls can cost more.\n- Questions about hours, menu, and allergens still use time.\n- Rush-hour calls can stack up fast.\n\nIf you want a simple comparison with order-based pricing, see [Pricing](/pricing)."
+  },
+  {
+    "slug": "voip",
+    "term": "VoIP",
+    "short": "VoIP is phone service that carries calls over the internet instead of a traditional phone line.",
+    "body": "## What it means in a restaurant\nVoIP is often used for restaurant business lines, especially when owners want call forwarding, multiple lines, or a web portal for settings. It can be a practical setup for takeout counters, ghost kitchens, and multi-location groups.\n\n**Example:** Your front counter line rings on a tablet in the back, while busy-hour calls can be forwarded to another line when the host is slammed with lunch tickets.\n\nWhy it matters for phone orders:\n- It can make forwarding easier when the dining room gets busy.\n- It helps keep the restaurant’s main number while rerouting calls when needed.\n- If the internet is unstable, call quality can suffer, so it is worth testing with a real lunch rush call.\n\nFor a broader overview of restaurant phone setups, start at [How it works](/how-it-works)."
+  },
+  {
+    "slug": "number-porting",
+    "term": "Number porting",
+    "short": "Number porting means moving your existing phone number to a new phone provider or phone system.",
+    "body": "## What it means in a restaurant\nNumber porting lets a restaurant keep the number customers already know while switching how calls are handled behind the scenes. That matters for regulars who call for the same pepperoni pizza, soup of the day, or catering tray every week.\n\n**Example:** A diner has used the same number for 12 years. The owner wants a phone host for pickup orders, so the main number stays the same and calls are routed to the new setup.\n\nWhy it matters for phone orders:\n- Regulars do not need to learn a new number.\n- Printed menus, Google listings, and old flyers can stay useful.\n- It reduces confusion during a busy switch.\n\nIf you are updating how calls are handled, keep your number and forwarding plan clear before opening day or a holiday rush."
+  },
+  {
+    "slug": "google-business-profile",
+    "term": "Google Business Profile",
+    "short": "Google Business Profile is the public listing that shows your restaurant’s hours, address, menu details, and phone number on Google.",
+    "body": "## What it means in a restaurant\nYour Google Business Profile is often the first place a caller checks before phoning. People look there for hours, directions, parking, and sometimes the menu. If that listing is wrong, your phone rings with avoidable questions.\n\n**Example:** A customer sees Sunday hours on Google, calls for takeout, and asks whether the kitchen is still open. If the profile still shows last month’s schedule, the call can turn into a frustration call instead of an order.\n\nWhy it matters for phone orders:\n- Accurate hours cut down on “Are you open?” calls.\n- Clear address details help delivery and pickup.\n- A correct phone number keeps calls going to the right place.\n\nROAL can read public details like your website and Google Maps link when you set up a host at [Try](/try)."
+  },
+  {
+    "slug": "allergen-disclosure",
+    "term": "Allergen disclosure",
+    "short": "Allergen disclosure is clear information about ingredients that may contain common allergens like nuts, dairy, eggs, wheat, or shellfish.",
+    "body": "## What it means in a restaurant\nAllergen disclosure is about helping callers make safe choices. On the phone, a customer may ask if the marinara has dairy, whether the fried calamari shares oil with shellfish, or if the fried rice contains egg.\n\n**Example:** Someone calls asking for a sesame-free order for pickup. The staff member or phone host should route that question carefully and not guess.\n\nWhy it matters for phone orders:\n- It helps callers decide what to order before they arrive.\n- It reduces confusion around sauces, bread, marinades, and fryers.\n- Allergy-sensitive questions may need a manager or staff follow-up, especially when the menu changes.\n\nROAL can answer many menu and hours questions, and it can hand off allergy-sensitive questions to staff with a summary so the team can respond carefully."
+  }
+]

@@ -1,0 +1,166 @@
+{
+  "slug": "online-ordering",
+  "label": "AI phone host vs online ordering",
+  "h1": "AI phone host vs online ordering",
+  "seoTitle": "AI phone host vs online ordering | ROAL",
+  "description": "Compare ROAL’s AI phone host with online ordering for restaurants. See cost, rush-hour coverage, menu calls, tickets, and when online ordering is the better fit.",
+  "lead": "Online ordering is great when guests are already on your site. An AI phone host helps when people still call, especially during rushes, after hours, or when they want to ask a quick question first.",
+  "question": "Should my restaurant use an AI phone host or online ordering?",
+  "answer": "If most of your orders already come through your website, online ordering may be the simpler choice. If you still get calls for pickup orders, menu questions, or rush-hour hold times, ROAL can answer the phone, take the order from your live menu, and send a ticket to the kitchen screen for $0.90 per completed order. Many restaurants use both: online ordering for guests who prefer to click, and a phone host for callers.",
+  "pains": [
+    {
+      "title": "Calls still interrupt the counter",
+      "body": "A guest calls for two chicken biryani, one no onions, and asks if you still have mango lassi. Online ordering does nothing for that call, but a phone host can answer while your staff keeps moving."
+    },
+    {
+      "title": "Rush hour piles up fast",
+      "body": "Say 12 missed calls hit during Friday dinner. Online ordering only helps the people who already chose the website. It does not pick up the phone for the caller who is waiting on hold."
+    },
+    {
+      "title": "Simple online menus can miss phone habits",
+      "body": "Many callers want to ask, \"Is the lunch special still on?\" or \"Can I swap fries for salad?\" They are not ready to click through a site yet, and some will hang up if nobody answers."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Catches phone orders without extra staffing",
+      "body": "ROAL answers the call, takes items, sizes, modifiers, and notes, then sends a clean ticket to the kitchen screen. You pay $0.90 only for a completed phone order."
+    },
+    {
+      "title": "Handles common menu questions",
+      "body": "If someone asks about hours, address, parking, or ingredients, the host can answer from the restaurant’s live menu and public info. That can turn a quick question into an order."
+    },
+    {
+      "title": "Helps during busy stretches and after hours",
+      "body": "You can forward all calls, only busy calls, or unanswered calls. That makes it useful when your line is tied up, your cashier is slammed, or the dining room is closing."
+    },
+    {
+      "title": "Works beside your online ordering page",
+      "body": "This is not an either-or decision. Online ordering can stay the best path for guests who already know what they want, while ROAL handles the phone side for callers who prefer to talk."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I order pickup?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get for you today?"
+    },
+    {
+      "who": "caller",
+      "line": "Two cheesesteaks, one with no onions, and a small fries."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two cheesesteaks, one no onions, plus one small fries. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. My name is Luis."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Luis. I have your pickup order for about 20 minutes. Your total and ticket are sent to the kitchen now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "2 cheesesteaks",
+      "- 1 no onions",
+      "1 small fries",
+      "Name: Luis",
+      "Ready time: about 20 minutes"
+    ],
+    "note": "Confirm onions on one sandwich only."
+  },
+  "sections": [
+    {
+      "h2": "When online ordering is the better choice",
+      "body": "Online ordering is often the better choice when your guests already know what they want and are comfortable ordering on a screen. It is also a strong fit for repeat pickup orders, simple menus, and customers who prefer to avoid a phone call.\n\nIf your busiest flow is from regulars who tap the same combo every time, a website order form can be fast and familiar. It can also work well for menus with clear add-ons, like \"large pepperoni,\" \"extra cheese,\" or \"no jalapeños.\"\n\nROAL is not a replacement for that. It is for the people who still call. That includes the guest who wants to ask about a gluten note, the diner who wants to place a quick pickup order, and the caller who reaches you while your staff is tied up with the lunch rush."
+    },
+    {
+      "h2": "When an AI phone host is the better fit",
+      "body": "A phone host makes sense when your restaurant gets real call traffic. Think lunch rush at a sandwich shop, Friday night at a pizza place, or a takeout counter where the same phone rings over and over while staff are boxing orders.\n\nROAL can take a full phone order from the live menu, collect the name and phone number, and send the ticket to the kitchen screen. It also helps with menu questions, hours, address, parking, and reservation requests.\n\nIf your team often says, \"We missed that call,\" or \"Hold on, let me finish this order,\" the phone host can take some of that load. It is especially useful when you do not want to hire a full-time phone person just to cover the peaks."
+    },
+    {
+      "h2": "A simple way to think about cost",
+      "body": "Online ordering is usually best judged by the tools and fees tied to the website checkout. It can be low-friction for the guest, but it does not help with the caller who never gets to the site.\n\nROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. That means quiet weeks stay quiet on your bill, and busy weeks cost more only because more phone orders were completed.\n\nExample: if you have 40 completed phone orders in a month, that would be $36 from ROAL. If your business gets little phone traffic, online ordering may be all you need. If phone orders are a regular part of your day, the phone host can cover that lane without hiring extra staff."
+    }
+  ],
+  "table": {
+    "otherName": "Online ordering",
+    "rows": [
+      {
+        "label": "Cost model",
+        "roal": "$0.90 per completed phone order",
+        "other": "Usually tied to website ordering tools or checkout fees"
+      },
+      {
+        "label": "Setup",
+        "roal": "Paste your website, Google Maps link, or name and city, then test-call in the browser",
+        "other": "Set up menus, checkout, and order flow on the website"
+      },
+      {
+        "label": "Rush-hour capacity",
+        "roal": "Answers calls while your team is busy or unanswered",
+        "other": "Only helps guests who choose the site instead of calling"
+      },
+      {
+        "label": "Menu knowledge",
+        "roal": "Reads the live menu and can answer common questions from it",
+        "other": "Guests must browse the menu themselves"
+      },
+      {
+        "label": "Kitchen tickets",
+        "roal": "Sends a clean ticket to the kitchen screen",
+        "other": "Usually sends web orders to your order system, depending on setup"
+      },
+      {
+        "label": "Languages",
+        "roal": "Can speak the caller’s language",
+        "other": "Depends on the site language options you build"
+      },
+      {
+        "label": "After hours",
+        "roal": "Can still answer calls and take orders or questions",
+        "other": "Only works if the website is open and the guest uses it"
+      },
+      {
+        "label": "Handoff to staff",
+        "roal": "Can pass allergy, complaint, or manager requests with a summary",
+        "other": "Usually uses web forms, notes, or contact pages"
+      },
+      {
+        "label": "Best for",
+        "roal": "Restaurants that still get phone calls and want to capture them",
+        "other": "Restaurants whose guests mostly prefer ordering online"
+      }
+    ]
+  },
+  "verdict": "Pick online ordering if your guests already order online and your phone is not a big source of lost sales. Pick ROAL if calls still matter, especially during rushes, after hours, or when staff cannot keep up. Many restaurants will do best with both: online ordering for clicks, and ROAL for calls.",
+  "faq": [
+    {
+      "q": "Can I use ROAL and online ordering together?",
+      "a": "Yes. That is often the practical setup. Keep online ordering for guests who want to click, and use ROAL to answer the phone, take orders, and handle questions when calls come in."
+    },
+    {
+      "q": "Is ROAL cheaper than monthly AI phone plans?",
+      "a": "It can be, depending on call volume. ROAL charges $0.90 per completed order and has no monthly fee, while many monthly plans charge a fixed amount whether or not many orders come in."
+    },
+    {
+      "q": "What if I only want the phone answered when I’m busy?",
+      "a": "That works. You can forward all calls, or only busy and unanswered calls, depending on your carrier or phone system. Always confirm the forwarding code with your provider and test it with a call."
+    },
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles payment."
+    },
+    {
+      "q": "Which option is better for a small takeout shop?",
+      "a": "If most guests call, a phone host may be the better fit because it captures the orders you would otherwise miss. If almost everyone already orders through your website, online ordering may be enough on its own."
+    }
+  ]
+}

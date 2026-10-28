@@ -1,0 +1,77 @@
+{
+  "slug": "call-forwarding-codes-72-73",
+  "keyword": "*72 call forwarding",
+  "category": "phone-setup",
+  "title": "*72 call forwarding explained for restaurants",
+  "seoTitle": "*72 call forwarding explained | ROAL",
+  "description": "*72 call forwarding for restaurants: how it works, when to use *73, carrier differences, and a simple test plan for busy shops.",
+  "question": "How do I use *72 call forwarding on my restaurant phone line, and when should I use *73?",
+  "answer": "On many landlines and some carriers, *72 forwards all calls to another number and *73 turns forwarding off. The exact code can vary by carrier and plan, so restaurants should confirm with their provider and test the call path. If you only want to forward busy or unanswered calls, some carriers use different codes or a business portal instead.",
+  "summary": "You’ll learn when to use *72 and *73, how to test forwarding, and how to set it up safely for a restaurant.",
+  "intro": "*72 usually turns on call forwarding for all calls, and *73 usually turns it off. For a restaurant, that means you can send the main line to another phone when you need help, or when you want calls to ring somewhere else after hours.\n\nThe tricky part is that the code depends on the carrier and the type of line. Some restaurant phones use *72 and *73, some mobile lines use different codes, and many business VoIP systems use a web portal instead. Before you rely on it during a rush, confirm the exact code with your carrier and make a test call.",
+  "sections": [
+    {
+      "id": "what-do-72-and-73-do-on-a-restaurant-line",
+      "h2": "What do *72 and *73 do on a restaurant line?",
+      "body": "For many traditional phone lines, **\\*72** starts forwarding all incoming calls to another number. **\\*73** turns that forwarding off. That makes these codes useful when the host stand is slammed, the dining room is short-staffed, or you want calls to ring a backup phone for a few hours.\n\nA simple example: if your main number is ringing the shop and you want it to ring the manager’s mobile instead, you might dial `*72` and then enter the mobile number your carrier asks for. Later, you dial `*73` to stop forwarding and bring calls back to the restaurant line.\n\nFor a restaurant, the practical use is simple:\n- Forward to a manager’s phone during an unexpected rush.\n- Forward to a backup line after close.\n- Turn it off when the front counter is ready to answer again.\n\nIf you want the bigger picture on restaurant call routing, see [How to forward your restaurant calls](/blog/how-to-forward-restaurant-calls)."
+    },
+    {
+      "id": "which-code-should-i-use-on-my-carrier-or-phone-system",
+      "h2": "Which code should I use on my carrier or phone system?",
+      "body": "Do not assume every line uses the same code. Codes vary by carrier, plan, and phone system, so always confirm with the provider before you use them for a real restaurant line.\n\nHere are the common patterns owners run into:\n\n| Phone setup | Common forwarding code | Turn off | Notes |\n|---|---:|---:|---|\n| Many landlines and some carriers | `*72 + forwarding number` | `*73` | Often used for all calls |\n| Verizon Wireless | `*72` | `*73` | `*71` may be used for busy/no-answer forwarding |\n| GSM mobile carriers like AT&T and T-Mobile | `**21*number#` | `##21#` | `**61*number#` can forward unanswered calls; `**67*number#` can forward busy calls |\n| Business VoIP systems | Usually in the web portal | Portal setting | Often no star code is needed |\n\nIf your restaurant uses a business phone system, the forwarding setting may live in the portal instead of on the handset. If you are not sure, ask the carrier support line and then test with a real call before a dinner rush. For carrier-specific setup, owners often use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-do-i-set-forwarding-up-without-confusing-the-front-count",
+      "h2": "How do I set forwarding up without confusing the front counter?",
+      "body": "The cleanest setup is one number, one backup, and one clear rule. For a restaurant, that usually means deciding who gets the forwarded calls and when they should ring there.\n\nUse this quick checklist:\n1. Pick the destination number first. Use a manager phone, not a random staff phone.\n2. Write down why you are forwarding. Example: lunch rush, after hours, or no one at the counter.\n3. Tell staff what callers will hear. If the line rings on another phone, somebody there still has to answer quickly.\n4. Test once before service and once after you turn it off.\n5. Keep the restaurant number active. Forwarding should not replace the main number.\n\nA helpful script for the person receiving forwarded calls:\n> “Thanks for calling Bella Pizza. One moment while I check the order.”\n\nIf you want a more complete setup, ROAL does this for restaurants by giving each location its own phone line and letting the owner forward the existing number to it. The restaurant keeps its own number, and forwarding can be turned off any time."
+    },
+    {
+      "id": "should-i-forward-all-calls-or-only-busy-and-unanswered-ones",
+      "h2": "Should I forward all calls, or only busy and unanswered ones?",
+      "body": "For most restaurants, **busy or unanswered forwarding** is safer than sending every call away all day. That way, calls still ring at the shop first, and the backup phone only catches calls that the team misses or cannot pick up fast enough.\n\nUse this simple decision table:\n\n| Situation | Better option | Why |\n|---|---|---|\n| Short-staffed lunch rush | Busy/unanswered forwarding | Keeps the main line active |\n| Closed for the night | All-call forwarding | Lets a manager handle late calls |\n| Owner away for an hour | All-call forwarding or backup line | Good if the counter is uncovered |\n| Dining room packed, kitchen backed up | Busy forwarding | Reduces missed calls without rerouting everything |\n\nA practical example: say your shop gets 20 calls during dinner and you expect to miss 6 while everyone is on tickets. If each missed call is an order question, a pickup order, or a reservation request, forwarding unanswered calls can help capture the ones that slip through. Plug in your own average call count and your own order value to judge whether it is worth changing the routing.\n\nIf you want a deeper look at the difference between full forwarding and conditional forwarding, see [Forward only when busy or unanswered](/blog/conditional-call-forwarding-busy-no-answer)."
+    },
+    {
+      "id": "what-should-i-test-before-a-rush",
+      "h2": "What should I test before a rush?",
+      "body": "Test forwarding like you would test a new fryer setting: before service, with a real call, and with someone ready to listen.\n\nTry this restaurant test plan:\n1. Call your main number from a mobile phone.\n2. Confirm whether the call rings at the restaurant first or goes straight to the backup.\n3. Leave a voicemail if it does not answer, and make sure the backup phone gets it.\n4. Turn forwarding off with the right code.\n5. Call again and confirm the restaurant line rings normally.\n\nUse a simple log sheet:\n- Date and time\n- Code used\n- Forward-to number\n- What happened on the test call\n- Did the call return to the main line after turning it off?\n\nExample script for the manager doing the test:\n> “I’m testing the lunch backup line now. If you get the call, answer with the restaurant name and ask for the order type.”\n\nThis matters because a forwarding code that works in the morning may not behave the same way on every carrier or plan. Test now, not during a Friday rush. If your setup is on Verizon, AT&T, or T-Mobile business service, you may want to compare the phone-specific notes in [forwarding calls on a Verizon business line](/blog/forward-calls-verizon-business), [forwarding calls on an AT&T business line](/blog/forward-calls-att-business), or [forwarding calls on T-Mobile](/blog/forward-calls-tmobile-business)."
+    },
+    {
+      "id": "how-does-call-forwarding-fit-with-an-ai-phone-host",
+      "h2": "How does call forwarding fit with an AI phone host?",
+      "body": "Call forwarding is just the path the call takes. An AI phone host is what happens after the call lands.\n\nFor a restaurant, that means you can forward your existing number to a hosted line when you want help answering phones. ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, answers questions about hours, address, parking and the menu, and sends a clean ticket to the kitchen screen.\n\nA restaurant owner can set it up by pasting the website, Google Maps link, or “Name, City” at `/try`, then test-calling it right in the browser. Once the owner claims the host, ROAL gives each location its own phone line automatically. The owner forwards the existing number to it, either for all calls or only when busy or unanswered.\n\nThat setup is useful when the front counter is busy, but it is not meant to handle everything. ROAL does not take card numbers over the phone, and tricky calls like catering questions, allergy-sensitive requests, complaints, or manager requests go to staff with a summary. If you want to compare phone options, see [AI phone host vs answering service](/compare/answering-service) or [AI phone host vs hiring phone staff](/compare/hiring-phone-staff)."
+    },
+    {
+      "id": "what-does-this-mean-for-cost-and-daily-operations",
+      "h2": "What does this mean for cost and daily operations?",
+      "body": "Forwarding itself is usually part of your phone service, but the real cost is what happens when the phone does not get answered. For a restaurant, missed calls can mean missed pickup orders, missed reservations, or more time spent calling people back.\n\nHere is a simple way to think about it:\n- Say your average pickup order is **$28**. Plug in your own number.\n- Say you miss 5 order calls on a busy night.\n- That is **5 x $28 = $140** in order value that may need a callback or may be lost.\n\nNow compare that with the tools you already use. Third-party delivery apps commonly charge restaurants roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location even when the phone is quiet. ROAL uses a different model: **$0.90 per completed phone order** with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nThat does not mean every restaurant should change its setup today. It does mean the owner should know what forwarding is for: coverage, not magic. Put your own numbers into the math, then choose the phone setup that helps your team answer fast, take the order cleanly, and keep the kitchen moving."
+    }
+  ],
+  "takeaways": [
+    "*72 usually forwards all calls, and *73 usually turns it off.",
+    "Carrier rules vary, so always confirm the exact code and test it.",
+    "Busy/unanswered forwarding is often better than sending every call away.",
+    "ROAL can sit behind your existing number and take orders when calls forward to it.",
+    "Use a real test call before service, not during the rush."
+  ],
+  "faq": [
+    {
+      "q": "What does *72 do on a restaurant phone?",
+      "a": "On many landlines and some carriers, *72 forwards all incoming calls to another number. In a restaurant, that can send the main line to a manager, backup phone, or another site. Because codes vary by carrier and plan, confirm the exact behavior before relying on it."
+    },
+    {
+      "q": "What does *73 do?",
+      "a": "*73 usually turns call forwarding off. After you finish the rush or close for the night, you dial *73 so calls go back to the restaurant’s main line. Always test with a real call afterward to make sure the line is back to normal."
+    },
+    {
+      "q": "Can I forward only busy or unanswered calls instead of all calls?",
+      "a": "Yes, on many phone systems you can forward only when busy or unanswered. Some carriers use different star codes, and business phone systems may use a portal setting instead. That setup is often better for restaurants that still want the front counter to ring first."
+    },
+    {
+      "q": "How do I know forwarding is working before dinner service?",
+      "a": "Make a test call from a mobile phone, watch where the call rings, and check whether voicemail or the backup phone receives it. Then turn forwarding off and call again to confirm the main line rings normally. Keep a short log so staff know which code was used and when it was turned off."
+    }
+  ],
+  "words": 1477,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

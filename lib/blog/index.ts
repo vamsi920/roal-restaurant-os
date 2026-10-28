@@ -1,5 +1,6 @@
 import type { BlogCategorySlug } from "./categories";
 import { BLOG_POSTS } from "./posts";
+import { blogToday, isPublishedOn } from "./publish";
 import type { BlogPost } from "./types";
 
 export { BLOG_CATEGORIES, BLOG_CATEGORY_SLUGS, getCategoryLabel } from "./categories";
@@ -39,8 +40,12 @@ export { getBlogPostHref } from "./href";
 export { BLOG_CTA_DEMO, BLOG_CTA_MENU, blogCta } from "./cta";
 export type { BlogCtaPreset } from "./cta";
 
+export { BLOG_REVALIDATE_SECONDS, blogToday, isPublishedOn } from "./publish";
+
+/** Published posts, newest first. Scheduled posts appear on their publish day. */
 export function getAllPosts(): BlogPost[] {
-  return [...BLOG_POSTS].sort(
+  const today = blogToday();
+  return BLOG_POSTS.filter((p) => isPublishedOn(p.publishedAt, today)).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 }
@@ -71,7 +76,16 @@ export function formatPostDate(isoDate: string): string {
 }
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
-  return BLOG_POSTS.find((p) => p.slug === slug);
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  return post && isPublishedOn(post.publishedAt) ? post : undefined;
+}
+
+export function isPublishedSlug(slug: string): boolean {
+  return Boolean(getPostBySlug(slug));
+}
+
+export function getPostsByCategory(category: BlogCategorySlug): BlogPost[] {
+  return getAllPosts().filter((p) => p.categorySlugs.includes(category));
 }
 
 export const BLOG_RELATED_POST_LIMIT = 3;
@@ -99,5 +113,5 @@ export function getRelatedPosts(post: BlogPost, limit = BLOG_RELATED_POST_LIMIT)
 }
 
 export function getAllPostSlugs(): string[] {
-  return BLOG_POSTS.map((p) => p.slug);
+  return getAllPosts().map((p) => p.slug);
 }

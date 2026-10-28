@@ -3,6 +3,9 @@ import { blogPublishedInstant } from "./dates";
 import { getBlogCanonicalPath } from "./validate-seo";
 import type { BlogFaqItem, BlogPost } from "./types";
 import { absoluteUrl, getSiteOrigin } from "@/lib/site-url";
+import { breadcrumbJsonLd, FOUNDER_ID, founderJsonLd, ORG_ID, organizationJsonLd } from "@/lib/seo/json-ld";
+import { BLOG_AUTHOR } from "./generated";
+import { mdPlain } from "@/lib/seo/md-plain";
 
 const PUBLISHER_NAME = "ROAL";
 const JOURNAL_NAME = "The ROAL Journal";
@@ -21,7 +24,7 @@ function faqMainEntity(items: BlogFaqItem[]) {
     name: item.question,
     acceptedAnswer: {
       "@type": "Answer",
-      text: item.answer,
+      text: mdPlain(item.answer),
     },
   }));
 }
@@ -42,15 +45,15 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
     description,
     datePublished: blogPublishedInstant(post.publishedAt),
     dateModified: blogPublishedInstant(post.publishedAt),
-    author: {
-      "@type": "Organization",
-      name: content.author,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: PUBLISHER_NAME,
-      url: jsonLdBaseUrl(),
-    },
+    author:
+      content.author === BLOG_AUTHOR
+        ? { "@id": FOUNDER_ID(), "@type": "Person", name: BLOG_AUTHOR, url: `${jsonLdBaseUrl()}/about#founder` }
+        : { "@type": "Organization", name: content.author, url: jsonLdBaseUrl() },
+    publisher: { "@id": ORG_ID(), "@type": "Organization", name: PUBLISHER_NAME, url: jsonLdBaseUrl() },
+    image: `${url}/opengraph-image`,
+    ...(content.wordCount ? { wordCount: content.wordCount } : {}),
+    ...(content.keyword ? { about: content.keyword } : {}),
+    abstract: mdPlain(content.answerShort),
     isPartOf: {
       "@type": "Blog",
       name: JOURNAL_NAME,
@@ -62,7 +65,7 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
     },
     url,
     articleSection: getCategoryLabel(post.primaryCategorySlug),
-    keywords: keywords.join(", "),
+    keywords: [content.keyword, ...keywords].filter(Boolean).join(", "),
     inLanguage: "en-US",
     timeRequired: `PT${post.readTimeMinutes}M`,
   };
@@ -87,7 +90,17 @@ export function buildArticleJsonLdGraph(post: BlogPost) {
   const blogPosting = buildBlogPostingJsonLd(post);
   if (!blogPosting) return null;
 
-  const graph: Record<string, unknown>[] = [blogPosting];
+  const graph: Record<string, unknown>[] = [
+    blogPosting,
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Blog", path: "/blog" },
+      { name: getCategoryLabel(post.primaryCategorySlug), path: `/blog/topic/${post.primaryCategorySlug}` },
+      { name: post.title, path: getBlogCanonicalPath(post.slug) },
+    ]),
+    organizationJsonLd(),
+  ];
+  if (post.content?.author === BLOG_AUTHOR) graph.push(founderJsonLd());
   const faqPage = buildFaqPageJsonLd(post);
   if (faqPage) graph.push(faqPage);
 

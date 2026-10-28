@@ -1,0 +1,77 @@
+{
+  "slug": "teach-ai-host-new-answer",
+  "keyword": "train ai phone answers",
+  "category": "ai-basics",
+  "title": "Train AI phone answers for your restaurant",
+  "seoTitle": "Train AI phone answers for your restaurant | ROAL",
+  "description": "Train AI phone answers for your restaurant, add new menu replies, and set rules for orders, hours, and tricky calls.",
+  "question": "How do I train AI phone answers for my restaurant without spending all day on it?",
+  "answer": "Start with your menu, hours, address, and a few common questions, then test-call the host and correct anything it misses. With ROAL, owners can paste a website, Google Maps link, or name and city, test the host in the browser, and add new answers from the inbox so the phone host remembers them from then on.",
+  "summary": "You’ll learn how to add, test, and refine phone answers for a restaurant phone host.",
+  "intro": "Teaching your phone host a new answer means giving it the exact words, rules, and menu details it should use on real calls. The fastest way is to start with your public menu, hours, address, and a short list of the questions you hear every day.\n\nFor a busy restaurant, the goal is not to write a perfect script once. It is to train AI phone answers in small steps, test them on real calls, and tighten the gaps around specials, sold-out items, reservations, and staff handoffs. That is the kind of setup ROAL is built for.",
+  "sections": [
+    {
+      "id": "what-should-you-teach-first",
+      "h2": "What should you teach first?",
+      "body": "Start with the answers that save the most time at the counter. For most pizza shops, takeout spots, delis, and family restaurants, that means hours, address, parking, menu basics, and pickup order rules.\n\nA simple order of priority works well:\n- Hours and holiday hours\n- Address, cross streets, and parking\n- Top sellers and common modifiers\n- Pickup timing and order cut-off rules\n- Reservation or catering handoff rules\n- Allergy-sensitive questions and manager requests\n\nExample phone line: \"We’re open until 9, and pickup orders usually take about 20 to 30 minutes.\" Swap in your real time window.\n\nIf your menu changes often, teach the host what to do when an item is sold out. ROAL will not offer items marked sold out, which keeps the call cleaner for both the guest and your staff. For more on the basics, owners often start with [How it works](/how-it-works) and [ROAL facts](/facts)."
+    },
+    {
+      "id": "how-do-you-turn-your-menu-into-answers-the-host-can-use",
+      "h2": "How do you turn your menu into answers the host can use?",
+      "body": "A restaurant phone host learns best from plain, specific language. Do not give it a vague note like \"ask about specials.\" Instead, write the exact answer you want a caller to hear.\n\nUse a simple format for each item:\n1. Item name\n2. Sizes or portions\n3. Key modifiers\n4. What to ask next\n5. Any limits or sold-out notes\n\nExample:\n- \"Large cheese pizza: 16-inch, feeds 3 to 4 people\"\n- \"Ask if they want thin crust, regular crust, or well done\"\n- \"Do not offer anchovies if the kitchen is out\"\n\nIf the caller asks for something the host cannot answer, send that question to the inbox and answer it once. From then on, the host uses that new answer. That is the simplest way to train AI phone answers without rebuilding your whole setup.\n\nFor owners who want a fast setup, ROAL can read a restaurant website, Google Maps link, or name and city, and you can also upload a menu in any format. If your menu is messy, start with the items you sell most and add the rest later."
+    },
+    {
+      "id": "how-do-you-test-the-answer-before-real-callers-hear-it",
+      "h2": "How do you test the answer before real callers hear it?",
+      "body": "Test calls are where you catch the small mistakes. You should listen for the exact words used, the pace, and whether the host asks for the right details in the right order.\n\nTry this 5-step check:\n1. Ask for a common item.\n2. Ask for a modifier, like no onions or extra cheese.\n3. Ask about hours or parking.\n4. Ask a tricky question, like catering or allergy help.\n5. Ask something the host should hand to staff.\n\nExample script: \"Do you have your chicken parm hero in a small, and can I get it without cheese?\" The host should gather the order, repeat it back, and confirm the ready time.\n\nROAL lets an owner test-call the host right in the browser, with no sign-up needed. That makes it easy to hear where the answer feels off before you go live. If the wording sounds too long, cut it. If the host leaves out a detail, add that detail to the answer field and try again.\n\nA good test is not about being fancy. It is about making sure the phone host sounds like your restaurant, not like a script written for someone else."
+    },
+    {
+      "id": "what-happens-when-a-caller-asks-something-unusual",
+      "h2": "What happens when a caller asks something unusual?",
+      "body": "Not every call should be handled by the phone host alone. Some questions need a person, especially catering, complaints, allergy-sensitive issues, and manager requests.\n\nA practical handoff rule looks like this:\n- Take the basics first\n- Collect the caller’s name and phone number\n- Give a short summary to staff\n- Hand off anything sensitive or unclear\n\nExample phone line: \"I can help with your order, and I’m sending your allergy question to the team now.\" That keeps the caller moving without pretending the host knows more than it does.\n\nROAL is designed to send those tougher calls to staff with a summary. It also keeps a call history with transcripts and recordings, so if a caller asks the same thing later, you can see what happened and refine the answer. That is useful when you are teaching the host one answer at a time.\n\nIf you run multiple locations, keep answers location-specific. Hours, address, and menu items may differ by store. The right answer for one spot may be wrong for another, so each location should have its own clean set of details."
+    },
+    {
+      "id": "how-should-you-handle-call-forwarding-and-going-live",
+      "h2": "How should you handle call forwarding and going live?",
+      "body": "Before a phone host can answer live calls, you need to decide how calls reach it. The simplest setup is to forward all calls, or only busy and unanswered calls, from your existing number.\n\nTypical steps:\n1. Claim the host.\n2. Get the location’s phone line.\n3. Forward your existing number to it.\n4. Test the forwarding with a real call.\n5. Turn forwarding off any time you need to.\n\nSome carriers use codes like *72 and *73 on many landlines, while GSM mobile carriers often use codes such as **21*number# for all calls and ##21# to turn it off. Other codes can handle busy or unanswered calls. Codes vary by carrier and plan, so always confirm with your provider and test with a call. If you prefer, check [Call forwarding codes by carrier](/tools/call-forwarding-codes).\n\nThe restaurant keeps its own number. ROAL gives each location its own phone line automatically, and forwarding can be changed later. That makes it easier to try the host during a slower shift before you rely on it for every call."
+    },
+    {
+      "id": "how-do-you-keep-improving-the-answers-week-by-week",
+      "h2": "How do you keep improving the answers week by week?",
+      "body": "The best way to keep training is to review real calls and add answers only when you need them. That keeps the host focused on what your guests actually ask.\n\nA simple weekly routine:\n- Review new call transcripts\n- Mark missed questions\n- Add one new answer at a time\n- Update sold-out items and hours\n- Check upsell suggestions and menu wording\n\nExample: if callers keep asking whether the lunch special comes with fries, add a direct answer like, \"The lunch special includes fries unless you want a side salad instead.\" Then test it once.\n\nIf you want to compare pricing or figure out what an order is worth, use the numbers that matter to your shop. Say your average completed phone order is $28. Plug in your own average. If a delivery app takes roughly 15% to 30% commission, that can add up quickly compared with a per-order phone host. ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. For a quick side-by-side, see [Pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans).\n\nIf you want to try it, [build a free test host from your website](/try)."
+    },
+    {
+      "id": "what-should-your-team-write-down-so-the-answers-stay-consist",
+      "h2": "What should your team write down so the answers stay consistent?",
+      "body": "The easiest way to keep answers clean is to write down the rules your staff already follow. Put them in a short house sheet so the host and the team are using the same playbook.\n\nUse this checklist:\n- Today’s hours and holiday exceptions\n- Top 10 items and common modifiers\n- Sold-out items\n- Pickup timing rules\n- Reservation policy\n- Catering threshold or manager handoff rule\n- Parking or entrance notes\n\nA short example helps: \"If a caller asks for extra sauce, include one free cup with large pies and charge for extra cups on small orders.\" Swap in your own policy.\n\nROAL also gives owners a dashboard with a kitchen screen, live tickets, call history, menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That matters because training does not end when the host goes live. It gets better as your staff sees what callers ask most.\n\nIf your restaurant is short-staffed, new to tech, or just tired of repeating the same answers all day, keep the training simple: one question, one answer, one test call, then move on to the next."
+    }
+  ],
+  "takeaways": [
+    "Teach hours, menu basics, and handoff rules before anything fancy.",
+    "Use exact answer text, not vague notes, when you train AI phone answers.",
+    "Test-call the host and fix one missed answer at a time.",
+    "Keep tricky calls like allergies, complaints, and catering requests with staff.",
+    "Review transcripts weekly so the phone host stays aligned with your restaurant."
+  ],
+  "faq": [
+    {
+      "q": "How do I train AI phone answers for a restaurant?",
+      "a": "Start with your most common questions: hours, address, parking, menu items, modifiers, and pickup timing. Write the answer in plain language, test-call the host, and update the wording when you hear something off. The best results come from small fixes, not one huge rewrite."
+    },
+    {
+      "q": "Can an AI phone host learn new answers after I go live?",
+      "a": "Yes. When the host gets a question it cannot answer, that question can land in an inbox. You answer it once, and the host knows it from then on. That makes it easy to keep improving without rebuilding the whole phone setup."
+    },
+    {
+      "q": "What kind of calls should still go to staff?",
+      "a": "Catering, complaints, allergy-sensitive questions, and manager requests should go to staff with a summary. Those calls often need judgment or a human decision. The host should collect the caller’s name and phone number and then hand off cleanly."
+    },
+    {
+      "q": "How do I forward my restaurant number to an AI phone host?",
+      "a": "You can usually forward calls from your existing number to the new line the host gives you. Some carriers use codes like *72 and *73, while others use carrier-specific codes for all calls, busy calls, or unanswered calls. Confirm the right code with your carrier and test it with a real call."
+    }
+  ],
+  "words": 1368,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

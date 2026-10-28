@@ -1,0 +1,77 @@
+{
+  "slug": "kitchen-display-system-small-restaurant",
+  "keyword": "kitchen display system small restaurant",
+  "category": "operations",
+  "title": "Kitchen display system for a small restaurant",
+  "seoTitle": "Kitchen display system for small restaurants",
+  "description": "A kitchen display system can cut mistakes, speed tickets, and work with phone orders and call forwarding in a small restaurant.",
+  "question": "What kitchen display system should a small restaurant use, and how do I set it up with phone orders?",
+  "answer": "A small restaurant kitchen display system should show new orders clearly, move tickets from new to preparing to ready, and fit the way your team already works. For many small shops, the best setup is a simple screen in the kitchen plus a phone host that sends clean tickets from pickup and delivery calls. That keeps the front counter free and makes phone orders easier to read.",
+  "summary": "Learn how to pick, set up, and use a kitchen display system that fits a small restaurant.",
+  "intro": "A kitchen display system for a small restaurant should do one thing well: show the kitchen what to make, in the right order, with less back-and-forth. The best setup is usually a simple screen that turns phone orders into clean tickets your team can start right away.\n\nIf you also take pickup calls, the screen matters even more. A phone host like ROAL can answer the call, take the order from your live menu, and send the ticket to the kitchen screen so your staff is not retyping anything.",
+  "sections": [
+    {
+      "id": "what-should-a-small-restaurant-kitchen-display-system-do",
+      "h2": "What should a small restaurant kitchen display system do?",
+      "body": "A small restaurant does not need a complicated screen setup. You need a kitchen display system that is easy to read during a rush, simple for line cooks to use, and fast enough to keep up with phone orders.\n\nLook for these basics:\n- A clear ticket list with **new, preparing, and ready** status\n- Item names, sizes, modifiers, and notes shown in plain text\n- A way to spot special requests fast, like no onions or extra sauce\n- A screen view that works for pickup, delivery, and dine-in tickets\n- A clean handoff from the phone to the kitchen\n\nExample: if a caller says, \"One large pepperoni, well done, extra cheese, ready in 20 minutes,\" the kitchen should see that in one ticket, not as a messy voicemail or a handwritten slip. That is the difference between a screen that helps and one that just takes up space."
+    },
+    {
+      "id": "how-do-i-know-if-my-kitchen-is-ready-for-a-screen",
+      "h2": "How do I know if my kitchen is ready for a screen?",
+      "body": "Before you buy or switch anything, check whether your kitchen can actually use a display screen during service. A small restaurant often runs best with one main screen near expo or the make line, not three different devices nobody looks at.\n\nUse this quick checklist:\n1. Pick one place where cooks already look during service.\n2. Make sure the screen is visible from the prep area.\n3. Decide who will mark tickets as preparing and ready.\n4. Test whether your team can read the screen at rush speed.\n5. Confirm how phone orders get onto that screen.\n\nA practical test: take three example orders, such as a $18 sandwich order, a $28 pizza order, and a $42 family meal order. See how long it takes your team to find each ticket, start it, and finish it. If the screen slows people down, it needs a simpler workflow. For phone order handling, ROAL can send a clean ticket to the kitchen screen after confirming the order on the call."
+    },
+    {
+      "id": "what-does-a-good-phone-to-kitchen-workflow-look-like",
+      "h2": "What does a good phone-to-kitchen workflow look like?",
+      "body": "For a small restaurant, the best workflow is short and boring in a good way. The caller places the order, the order is confirmed, and the kitchen gets a ticket with the right details the first time.\n\nA simple flow looks like this:\n- The phone host answers the call\n- It takes items, sizes, modifiers, and notes\n- It collects the caller’s name and phone number\n- It quotes a ready time\n- It confirms the order back to the caller\n- It sends the ticket to the kitchen screen\n\nExample phone script line: \"Thanks, I have one large cheese pizza, extra sauce, no onions, ready in 20 minutes under Maria.\"\n\nThat kind of clear wording matters when the kitchen is busy. If a caller asks something unusual, like an allergy-sensitive question or a complaint, the host can hand it to staff with a summary instead of guessing. It also will not offer items marked sold out. That saves time and avoids extra calls back to the customer."
+    },
+    {
+      "id": "how-much-should-a-small-restaurant-expect-to-spend",
+      "h2": "How much should a small restaurant expect to spend?",
+      "body": "Owners usually compare three paths: delivery apps, monthly AI phone tools, and pay-per-order phone handling. The math is easier when you plug in your own numbers instead of guessing.\n\nHere is a simple example with round numbers you can swap out:\n\n| Option | Example cost pattern | What to think about |\n|---|---:|---|\n| Delivery apps | Roughly 15-30% commission per order | Useful for reach, but costly on each order |\n| Monthly AI phone tools | Often about $79 to $599 per location each month | Fixed cost even when calls are slow |\n| ROAL | $0.90 per completed phone order | No monthly fee, no setup fee, no per-minute fee |\n\nSay you get 300 completed phone orders in a month. At $0.90 each, that would be $270 for ROAL. Plug in your own order count and compare it to your monthly fees or commission costs. If your phone volume changes a lot, pay-per-order can be easier to live with than a flat bill. For a closer estimate, use the [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "how-do-i-connect-the-phone-line-without-creating-a-headache",
+      "h2": "How do I connect the phone line without creating a headache?",
+      "body": "The phone setup matters as much as the screen. ROAL gives each location its own phone line automatically, and you can forward your restaurant’s existing number to it so customers keep calling the same number they already know.\n\nHere is the clean way to set it up:\n1. Keep your current restaurant number.\n2. Forward calls to the new line when you want to.\n3. Choose all calls, or only when busy or unanswered.\n4. Test the forwarding with a real call.\n5. Turn forwarding off any time if you need to.\n\nIf you are setting this up on your own line system, confirm the code with your carrier or phone provider before you use it. On many landlines and some carriers, *72 forwards calls and *73 turns it off. On some mobile carriers, the code set is different, and business VoIP systems usually use a web portal. Codes vary by carrier and plan, so always test with a call. If you want a quick reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-can-i-make-the-kitchen-screen-useful-during-rush-hour",
+      "h2": "How can I make the kitchen screen useful during rush hour?",
+      "body": "A kitchen display system only helps if the team trusts it during the rush. That means the screen has to show the right priorities, and your staff needs a simple rule for which tickets to touch first.\n\nTry this rush-hour routine:\n- New tickets stay at the top until someone starts them\n- Preparing tickets are the ones on the line now\n- Ready tickets move out of the way fast\n- One person should handle exceptions and questions\n- Staff should not stop cooking to decipher messy order notes\n\nA practical example: if you have three tickets for two pizzas, one sandwich order, and one catering question, the screen should make it obvious which order is due first. For owners who want to tighten that process, pairing the screen with [ticket time tracking](/blog/restaurant-ticket-times) and [phone order workflows](/blog/restaurant-pos-phone-orders) can help you spot delays. ROAL also keeps call history with transcripts and recordings, so you can review what was said when a ticket looks wrong."
+    },
+    {
+      "id": "what-is-the-simplest-setup-for-a-small-restaurant-to-start-w",
+      "h2": "What is the simplest setup for a small restaurant to start with?",
+      "body": "The simplest setup is usually the one your team will actually use every day. For many small restaurants, that means one kitchen screen, one clear ticket flow, and one phone host that can handle the basic order-taking work before the ticket hits the kitchen.\n\nStart with this short launch checklist:\n- Put the screen where the cook or expo can see it\n- Load the live menu and sold-out items first\n- Test a pickup order, a delivery order, and a reservation request\n- Make sure the host knows hours, address, parking, and menu basics\n- Train staff on what to do when a call needs a person\n\nROAL lets the owner paste a website, Google Maps link, or name and city at /try, then it reads the public menu and builds a phone host in about a minute. The owner can test-call it in the browser before going live. If you want to try that for your own shop, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "A small restaurant kitchen display system should be simple, readable, and fast to update.",
+    "The cleanest workflow is phone order to confirmed ticket to kitchen screen.",
+    "Pay-per-order pricing can be easier to compare than a fixed monthly fee.",
+    "Call forwarding should be tested with your carrier before you rely on it.",
+    "ROAL can answer the phone, take orders, and send clean tickets to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "What is the best kitchen display system for a small restaurant?",
+      "a": "The best system is the one your team can read quickly during service and use without extra training. For most small restaurants, that means one clear screen with tickets moving from new to preparing to ready, plus a simple way to get phone orders onto that screen."
+    },
+    {
+      "q": "How do phone orders get to the kitchen screen?",
+      "a": "A phone host can take the order, confirm the details, and send a clean ticket to the kitchen screen. That ticket should include items, sizes, modifiers, notes, the caller’s name, and a ready time so the kitchen can start right away."
+    },
+    {
+      "q": "How much does a kitchen display system cost for a small restaurant?",
+      "a": "The screen hardware and software setup can vary, but the bigger cost question is usually how you handle orders. Delivery apps commonly charge roughly 15-30% per order, many AI phone tools charge a fixed monthly fee, and ROAL charges $0.90 per completed phone order with no monthly fee."
+    },
+    {
+      "q": "Can a phone host handle sold-out items and special requests?",
+      "a": "Yes, if it is reading your live menu and keeps your menu updated. ROAL does not offer items marked sold out, and it can hand allergy-sensitive questions, complaints, catering requests, and manager requests to staff with a summary."
+    }
+  ],
+  "words": 1257,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

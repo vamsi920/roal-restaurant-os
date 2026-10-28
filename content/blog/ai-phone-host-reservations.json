@@ -1,0 +1,71 @@
+{
+  "slug": "ai-phone-host-reservations",
+  "keyword": "ai restaurant reservations phone",
+  "category": "ai-basics",
+  "title": "Can AI take restaurant reservation requests?",
+  "seoTitle": "AI restaurant reservations by phone | ROAL",
+  "description": "Can AI handle restaurant reservation requests by phone? It works for simple bookings, while staff can take over for special cases and changes.",
+  "question": "Can an AI phone host take restaurant reservation requests on my phone?",
+  "answer": "Yes. An AI phone host can take simple reservation requests, collect the caller’s name, phone number, party size, date, and time, then pass along anything unclear to staff. It works best when your rules are clear, and it should hand off special requests, complaints, and other tricky calls to your team.",
+  "summary": "You’ll learn how to use an AI phone host for reservation requests without confusing guests or staff.",
+  "intro": "Yes, an AI phone host can take restaurant reservation requests on the phone. It can gather the basics, repeat the details back, and send staff a clear summary when needed.\n\nFor a busy pizza shop, deli, or family restaurant, that means fewer interrupted shifts and fewer missed calls. With ROAL, reservation requests can be part of the same phone flow as questions about hours, address, parking, and menu items.",
+  "sections": [
+    {
+      "id": "what-does-an-ai-phone-host-need-to-collect-for-a-reservation",
+      "h2": "What does an AI phone host need to collect for a reservation?",
+      "body": "For reservation requests, keep it simple. The phone host should ask for the details your staff actually uses at the host stand or on a paper list.\n\nA practical reservation script might sound like this: “What name should I hold the table under, and how many people will be coming?” Then: “What day and time would you like?” Then: “What phone number should we use if we need to reach you?”\n\nUse this short checklist:\n- Name\n- Party size\n- Date\n- Time\n- Phone number\n- Any note that matters, like high chair, wheelchair access, or a birthday\n\nIf you want the phone host to act like your team, teach it the exact way your restaurant phrases time slots. For example, if you seat at 6:00, 6:15, and 6:30, say that clearly in your hours or FAQs. ROAL reads your public pages and menu details when you build it, and you can also add more context later in the dashboard."
+    },
+    {
+      "id": "how-should-it-handle-reservation-requests-that-need-a-human",
+      "h2": "How should it handle reservation requests that need a human?",
+      "body": "Not every reservation should be accepted automatically. Some calls need a person, especially when a guest asks for something unusual or the restaurant is already tight on space.\n\nROAL is built to hand off catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. Reservation requests can also be passed along if they are outside your rules, like a large party, a special event, or a request the host cannot confirm safely.\n\nA good handoff line is: “I’ll pass this to the restaurant team with your details.” Then your staff gets the summary instead of a messy voicemail.\n\nUse a simple policy list:\n1. Take standard reservations for your normal table sizes.\n2. Send large parties to staff.\n3. Send special requests to staff.\n4. Send anything the host cannot answer to the inbox.\n\nThis keeps the guest moving and keeps your team in control. If you want more background on how that works, see [How it works](/how-it-works) and [Questions owners ask](/faq)."
+    },
+    {
+      "id": "what-happens-after-the-caller-books-a-table",
+      "h2": "What happens after the caller books a table?",
+      "body": "The goal is not just to collect a request. The goal is to give your team something clean they can use right away.\n\nROAL keeps a call history with transcripts and recordings in the dashboard, and it can send a clean ticket to the kitchen screen for orders. For reservation requests, the key benefit is the summary. Your staff can see who called, what they asked for, and what time they wanted.\n\nA useful end-of-call script is: “Just to confirm, I have table for 4, Friday at 7:00, under Maria, callback number ending in 2241.”\n\nHere is a simple owner checklist:\n- Read the summary for the date and time\n- Check the phone number\n- Check for special notes\n- Decide whether staff needs to call back\n- Save anything the host could not answer\n\nIf you already keep reservation notes by hand, this is the same idea, just faster and cleaner. The owner can answer unknown questions once, and the host learns that answer for next time."
+    },
+    {
+      "id": "what-if-you-only-want-reservations-on-certain-lines-or-hours",
+      "h2": "What if you only want reservations on certain lines or hours?",
+      "body": "You do not have to forward every call the same way. Many restaurants prefer to send only busy or unanswered calls to the phone host, or use it for all calls during peak times.\n\nIn practice, that means you can keep your main number and route calls when you need help. The restaurant still keeps its own number, and forwarding can be turned off any time.\n\nIf you are setting this up, use this quick plan:\n1. Decide when reservations should go to the phone host.\n2. Decide when staff should answer directly.\n3. Test the forwarding with one call.\n4. Make sure the restaurant hears the right greeting.\n5. Check that reservation notes are landing where your team expects.\n\nFor many owners, this is the easiest way to start. You do not need to change your whole phone setup on day one. If you want carrier-specific reminders, check [Call forwarding codes by carrier](/tools/call-forwarding-codes) and always confirm the code with your carrier or phone system before relying on it."
+    },
+    {
+      "id": "what-should-owners-compare-before-using-ai-for-reservations",
+      "h2": "What should owners compare before using AI for reservations?",
+      "body": "Owners usually compare three things: cost, control, and fit for the way the restaurant already works.\n\nHere is a simple way to look at it:\n\n| Option | Common cost pattern | Best for | Main tradeoff |\n|---|---|---|---|\n| Delivery apps | Roughly 15-30% commission per order | Online demand | You pay per order and give up control |\n| Human answering services | Per minute or per call | Basic call coverage | Costs can rise when calls are busy |\n| Monthly AI phone tools | Often a fixed monthly fee per location | Predictable call volume | You pay even in slow months |\n| ROAL | $0.90 per completed phone order | Restaurants that want pay-per-order pricing | It does not take card numbers over the phone |\n\nFor reservation requests alone, the question is not “can it answer?” but “does it fit your real front-of-house workflow?” ROAL also answers hours, address, parking, and menu questions, which matters because many reservation calls start with those basics. If you want a deeper cost comparison, see [Pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) and [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "how-do-you-set-up-a-reservation-ready-phone-host-fast",
+      "h2": "How do you set up a reservation-ready phone host fast?",
+      "body": "Setup is designed for busy owners. You paste your restaurant website, Google Maps link, or just “Name, City” at /try, and ROAL reads the public pages it can find, including menu PDFs and menu photos.\n\nA simple setup path looks like this:\n1. Paste your website or maps link.\n2. Review the menu, hours, and address it pulled in.\n3. Add reservation rules in plain English.\n4. Test-call it right in the browser.\n5. Claim the host and forward your restaurant number.\n\nYou can also upload a menu in any format, which helps if your menu lives in a PDF or on a flyer. The owner picks the voice and name, and questions the host cannot answer go to an inbox.\n\nROAL is pre-launch, so keep expectations grounded: it can take reservation requests, but it is not a replacement for every front-of-house judgment call. That honesty is useful. It means you can use the phone host for the repeatable part of the job while your staff handles the exceptions. If you want to try it, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Yes, an AI phone host can take simple restaurant reservation requests and pass the hard ones to staff.",
+    "The best reservation setup collects name, phone, party size, date, time, and special notes.",
+    "Keep your forwarding rules simple: all calls, busy calls, or unanswered calls only.",
+    "ROAL works alongside your team, and your restaurant keeps its own number."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI answer reservation requests for a restaurant phone?",
+      "a": "Yes. It can collect the reservation basics, confirm them back to the caller, and send a summary to your team. If the request is unusual, the phone host should hand it to staff."
+    },
+    {
+      "q": "What details should an AI phone host collect for a reservation?",
+      "a": "At minimum, it should collect the guest’s name, phone number, party size, date, and time. You can also tell it to ask for notes like high chairs, accessibility needs, or a birthday."
+    },
+    {
+      "q": "Should an AI phone host handle large party reservations?",
+      "a": "Usually, it should hand those to staff unless your restaurant has very clear rules for large groups. Big parties can affect seating, timing, and kitchen flow, so a human review is often smarter."
+    },
+    {
+      "q": "Will an AI phone host take card numbers for a reservation deposit?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    }
+  ],
+  "words": 1107,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,2228 @@
+{
+  "24-7-phone-answering-restaurant": [
+    "mothers-day-restaurant-phone-orders",
+    "restaurant-busy-signal-problem",
+    "ai-phone-answering-cost-restaurant",
+    "ai-phone-answering-quick-service",
+    "game-day-phone-orders-restaurant"
+  ],
+  "86-items-phone-orders": [
+    "phone-orders-during-renovation",
+    "restaurant-pop-up-phone-orders",
+    "restaurant-second-location-phone",
+    "ai-host-hours-holidays",
+    "ghost-kitchen-phone-orders"
+  ],
+  "accessibility-phone-orders": [
+    "after-hours-message-examples",
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant"
+  ],
+  "after-hours-message-examples": [
+    "holiday-closure-message-examples",
+    "accessibility-phone-orders",
+    "phone-host-greeting-examples",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant"
+  ],
+  "after-hours-restaurant-calls": [
+    "calls-before-opening-restaurant",
+    "lunch-rush-phone-calls",
+    "missed-call-lost-revenue-math",
+    "missed-calls-friday-night-restaurant",
+    "missed-calls-google-reviews"
+  ],
+  "ai-and-restaurant-jobs": [
+    "menu-photos-ordering",
+    "restaurant-employee-turnover",
+    "restaurant-manager-phone-escalations",
+    "bilingual-staff-phone-orders",
+    "chatgpt-for-restaurant-owners"
+  ],
+  "ai-host-catering-handoff": [
+    "ai-host-complaint-handoff",
+    "what-to-check-in-first-week-ai-host",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "front-of-house-phone-workflow"
+  ],
+  "ai-host-complaint-handoff": [
+    "ai-host-catering-handoff",
+    "restaurant-complaint-calls",
+    "what-to-check-in-first-week-ai-host",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays"
+  ],
+  "ai-host-hours-holidays": [
+    "holiday-hours-restaurant",
+    "86-items-phone-orders",
+    "multi-location-phone-management",
+    "phone-orders-during-renovation",
+    "refund-requests-phone-restaurant"
+  ],
+  "ai-host-sold-out-items": [
+    "upsell-phone-orders-restaurant",
+    "86-items-phone-orders",
+    "combo-meals-phone-orders",
+    "gluten-free-questions-phone",
+    "menu-photos-ordering"
+  ],
+  "ai-in-restaurants-small-business": [
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-voice-choice",
+    "ai-voice-agent-restaurant",
+    "ai-phone-allergy-questions"
+  ],
+  "ai-phone-allergy-questions": [
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings"
+  ],
+  "ai-phone-answering-bagel-shops": [
+    "ai-phone-answering-coffee-shops",
+    "ai-phone-answering-ice-cream-dessert",
+    "ai-phone-answering-pizza-shops",
+    "ai-phone-answering-salad-bowl-shops",
+    "ai-phone-answering-wing-shops"
+  ],
+  "ai-phone-answering-bakeries": [
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-bar-and-grill",
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-breakfast-diners",
+    "ai-phone-answering-burger-joints"
+  ],
+  "ai-phone-answering-bar-and-grill": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-breakfast-diners",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants"
+  ],
+  "ai-phone-answering-bbq-restaurants": [
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants"
+  ],
+  "ai-phone-answering-breakfast-diners": [
+    "ai-phone-answering-bar-and-grill",
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants"
+  ],
+  "ai-phone-answering-burger-joints": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants"
+  ],
+  "ai-phone-answering-caribbean-restaurants": [
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-sushi-restaurants",
+    "ai-phone-answering-vegan-restaurants",
+    "ai-phone-answering-bbq-restaurants"
+  ],
+  "ai-phone-answering-caterers": [
+    "ai-phone-answering-quick-service",
+    "ai-phone-answering-salad-bowl-shops",
+    "ai-phone-answering-bar-and-grill",
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-breakfast-diners"
+  ],
+  "ai-phone-answering-chicken-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants"
+  ],
+  "ai-phone-answering-chinese-restaurants": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-sushi-restaurants",
+    "ai-phone-answering-vegan-restaurants",
+    "ai-phone-answering-bbq-restaurants"
+  ],
+  "ai-phone-answering-coffee-shops": [
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-ice-cream-dessert",
+    "ai-phone-answering-pizza-shops",
+    "ai-phone-answering-salad-bowl-shops",
+    "ai-phone-answering-wing-shops"
+  ],
+  "ai-phone-answering-cost-restaurant": [
+    "answering-service-cost-restaurant",
+    "is-ai-phone-answering-worth-it",
+    "24-7-phone-answering-restaurant",
+    "roi-ai-phone-host-restaurant",
+    "virtual-receptionist-cost-restaurant"
+  ],
+  "ai-phone-answering-delis": [
+    "ai-phone-answering-bar-and-grill",
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-breakfast-diners",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants"
+  ],
+  "ai-phone-answering-family-restaurants": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-sushi-restaurants",
+    "ai-phone-answering-vegan-restaurants",
+    "ai-phone-answering-bbq-restaurants"
+  ],
+  "ai-phone-answering-fine-dining": [
+    "ai-phone-answering-bar-and-grill",
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-breakfast-diners",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants"
+  ],
+  "ai-phone-answering-food-trucks": [
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-bakeries",
+    "ai-phone-answering-bar-and-grill",
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-breakfast-diners"
+  ],
+  "ai-phone-answering-franchise": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-ghost-kitchens": [
+    "ai-phone-answering-bar-and-grill",
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-breakfast-diners",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants"
+  ],
+  "ai-phone-answering-greek-restaurants": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-korean-restaurants",
+    "ai-phone-answering-mediterranean"
+  ],
+  "ai-phone-answering-halal-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-ice-cream-dessert": [
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-coffee-shops",
+    "ai-phone-answering-pizza-shops",
+    "ai-phone-answering-salad-bowl-shops",
+    "ai-phone-answering-wing-shops"
+  ],
+  "ai-phone-answering-indian-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-italian-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-korean-restaurants": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-greek-restaurants",
+    "ai-phone-answering-mediterranean"
+  ],
+  "ai-phone-answering-latin-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-mediterranean": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-greek-restaurants",
+    "ai-phone-answering-korean-restaurants"
+  ],
+  "ai-phone-answering-mexican-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-middle-eastern": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-greek-restaurants",
+    "ai-phone-answering-korean-restaurants"
+  ],
+  "ai-phone-answering-multi-location-groups": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-pizza-shops": [
+    "ai-phone-answering-coffee-shops",
+    "ai-phone-answering-salad-bowl-shops",
+    "ai-phone-answering-wing-shops",
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-bar-and-grill"
+  ],
+  "ai-phone-answering-quick-service": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-ramen-noodle-shops": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-coffee-shops",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-greek-restaurants"
+  ],
+  "ai-phone-answering-salad-bowl-shops": [
+    "ai-phone-answering-coffee-shops",
+    "ai-phone-answering-pizza-shops",
+    "ai-phone-answering-wing-shops",
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-bar-and-grill"
+  ],
+  "ai-phone-answering-seafood-restaurants": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-greek-restaurants",
+    "ai-phone-answering-korean-restaurants"
+  ],
+  "ai-phone-answering-steakhouses": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-fine-dining",
+    "ai-phone-answering-greek-restaurants"
+  ],
+  "ai-phone-answering-sushi-restaurants": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-vegan-restaurants",
+    "ai-phone-answering-bbq-restaurants"
+  ],
+  "ai-phone-answering-thai-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-vegan-restaurants": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-sushi-restaurants",
+    "ai-phone-answering-bbq-restaurants"
+  ],
+  "ai-phone-answering-vietnamese-restaurants": [
+    "ai-phone-answering-bbq-restaurants",
+    "ai-phone-answering-burger-joints",
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chicken-restaurants",
+    "ai-phone-answering-chinese-restaurants"
+  ],
+  "ai-phone-answering-wing-shops": [
+    "ai-phone-answering-coffee-shops",
+    "ai-phone-answering-pizza-shops",
+    "ai-phone-answering-salad-bowl-shops",
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-bar-and-grill"
+  ],
+  "ai-phone-buyer-checklist": [
+    "restaurant-phone-answering-service",
+    "ai-phone-vs-ivr-menu",
+    "ai-vs-voicemail-restaurant",
+    "choose-ai-phone-answering-restaurant",
+    "text-ordering-vs-phone-ordering"
+  ],
+  "ai-phone-card-payments": [
+    "ai-phone-allergy-questions",
+    "ai-phone-host-learns-menu",
+    "ai-phone-host-reservations",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-multiple-languages"
+  ],
+  "ai-phone-greeting-restaurant": [
+    "can-ai-answer-restaurant-phone",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-host-accents-noise",
+    "ai-phone-host-learns-menu"
+  ],
+  "ai-phone-host-accents-noise": [
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-transfer-to-staff",
+    "can-ai-answer-restaurant-phone",
+    "tell-callers-they-are-talking-to-ai",
+    "ai-phone-allergy-questions"
+  ],
+  "ai-phone-host-learns-menu": [
+    "ai-phone-card-payments",
+    "ai-phone-allergy-questions",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings"
+  ],
+  "ai-phone-host-mistakes": [
+    "ai-phone-ordering-faq",
+    "do-customers-like-ai-phone-ordering",
+    "future-of-restaurant-phone-orders",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments"
+  ],
+  "ai-phone-host-multiple-languages": [
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-voice-choice",
+    "ai-in-restaurants-small-business",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments"
+  ],
+  "ai-phone-host-privacy-recordings": [
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-voice-choice",
+    "ai-in-restaurants-small-business",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments"
+  ],
+  "ai-phone-host-reliability": [
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu",
+    "ai-phone-host-multiple-languages"
+  ],
+  "ai-phone-host-reservations": [
+    "ai-phone-card-payments",
+    "ai-phone-allergy-questions",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu",
+    "ai-phone-host-multiple-languages"
+  ],
+  "ai-phone-host-test-call": [
+    "ai-phone-card-payments",
+    "ai-phone-host-learns-menu",
+    "ai-phone-allergy-questions",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-accents-noise"
+  ],
+  "ai-phone-host-transfer-to-staff": [
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-accents-noise",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-voice-choice"
+  ],
+  "ai-phone-host-unanswered-questions": [
+    "ai-phone-card-payments",
+    "can-ai-answer-restaurant-phone",
+    "ai-phone-allergy-questions",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-accents-noise"
+  ],
+  "ai-phone-host-voice-choice": [
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-voice-agent-restaurant",
+    "ai-in-restaurants-small-business",
+    "ai-phone-allergy-questions"
+  ],
+  "ai-phone-ordering-faq": [
+    "future-of-restaurant-phone-orders",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu"
+  ],
+  "ai-phone-ordering-system-restaurants": [
+    "automated-phone-ordering-restaurant",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant",
+    "phone-orders-takeout-only-restaurant",
+    "voice-ordering-restaurants"
+  ],
+  "ai-phone-upselling-restaurants": [
+    "spanish-speaking-callers-restaurant",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu"
+  ],
+  "ai-phone-vs-call-center": [
+    "ai-phone-buyer-checklist",
+    "ai-phone-vs-ivr-menu",
+    "ai-vs-hiring-phone-person",
+    "ai-vs-voicemail-restaurant",
+    "restaurant-call-center-centralized"
+  ],
+  "ai-phone-vs-delivery-apps": [
+    "choose-ai-phone-answering-restaurant",
+    "kiosk-vs-phone-ordering",
+    "pos-integrated-vs-standalone-phone-ai",
+    "text-ordering-vs-phone-ordering",
+    "ai-phone-buyer-checklist"
+  ],
+  "ai-phone-vs-ivr-menu": [
+    "ai-vs-voicemail-restaurant",
+    "ai-phone-buyer-checklist",
+    "ai-vs-hiring-phone-person",
+    "restaurant-phone-answering-service",
+    "text-ordering-vs-phone-ordering"
+  ],
+  "ai-phone-vs-online-ordering-page": [
+    "kiosk-vs-phone-ordering",
+    "pos-integrated-vs-standalone-phone-ai",
+    "text-ordering-vs-phone-ordering",
+    "ai-phone-buyer-checklist",
+    "ai-phone-vs-delivery-apps"
+  ],
+  "ai-receptionist-for-restaurants": [
+    "restaurant-owner-guide-ai-phone",
+    "ai-in-restaurants-small-business",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-transfer-to-staff"
+  ],
+  "ai-voice-agent-restaurant": [
+    "ai-phone-host-voice-choice",
+    "ai-in-restaurants-small-business",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "voice-ordering-restaurants"
+  ],
+  "ai-vs-answering-service-restaurant": [
+    "choose-ai-phone-answering-restaurant",
+    "restaurant-phone-answering-service",
+    "24-7-phone-answering-restaurant",
+    "ai-phone-buyer-checklist",
+    "ai-phone-vs-delivery-apps"
+  ],
+  "ai-vs-hiring-phone-person": [
+    "ai-phone-vs-ivr-menu",
+    "ai-vs-voicemail-restaurant",
+    "ai-phone-buyer-checklist",
+    "ai-phone-vs-call-center",
+    "restaurant-phone-answering-service"
+  ],
+  "ai-vs-voicemail-restaurant": [
+    "ai-phone-vs-ivr-menu",
+    "ai-phone-buyer-checklist",
+    "ai-vs-hiring-phone-person",
+    "restaurant-phone-answering-service",
+    "text-ordering-vs-phone-ordering"
+  ],
+  "allergen-menu-labeling": [
+    "menu-engineering-small-restaurant",
+    "catering-menu-guide",
+    "family-meal-deals",
+    "kids-menu-phone-orders",
+    "menu-descriptions-that-sell"
+  ],
+  "answering-service-cost-restaurant": [
+    "ai-phone-answering-cost-restaurant",
+    "is-ai-phone-answering-worth-it",
+    "per-minute-vs-per-order-pricing",
+    "restaurant-tech-stack-cost",
+    "24-7-phone-answering-restaurant"
+  ],
+  "apple-maps-yelp-listings-restaurant": [
+    "call-button-google-maps-restaurant",
+    "google-business-profile-restaurant",
+    "restaurant-local-seo",
+    "restaurant-phone-number-everywhere",
+    "restaurant-phone-number-google"
+  ],
+  "automated-phone-ordering-restaurant": [
+    "ai-phone-ordering-system-restaurants",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant",
+    "voice-ordering-restaurants",
+    "accessibility-phone-orders"
+  ],
+  "bayonne-union-city-restaurants": [
+    "jersey-city-restaurant-phone-orders",
+    "hoboken-restaurant-phone-orders",
+    "newark-restaurant-phone-orders",
+    "downtown-jersey-city-restaurants",
+    "hudson-county-restaurants-takeout"
+  ],
+  "bilingual-staff-phone-orders": [
+    "restaurant-host-duties-phone",
+    "train-staff-phone-orders",
+    "family-run-restaurant-phone",
+    "owner-working-the-line",
+    "restaurant-employee-turnover"
+  ],
+  "budget-restaurant-technology": [
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant",
+    "hidden-fees-restaurant-software",
+    "is-ai-phone-answering-worth-it",
+    "no-contract-restaurant-software"
+  ],
+  "call-button-google-maps-restaurant": [
+    "apple-maps-yelp-listings-restaurant",
+    "google-business-profile-restaurant",
+    "restaurant-phone-number-google",
+    "restaurant-local-seo",
+    "ai-phone-host-privacy-recordings"
+  ],
+  "call-forwarding-codes-72-73": [
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-google-voice",
+    "forward-calls-optimum-business",
+    "forward-calls-ringcentral"
+  ],
+  "calls-before-opening-restaurant": [
+    "after-hours-restaurant-calls",
+    "lunch-rush-phone-calls",
+    "missed-call-lost-revenue-math",
+    "missed-calls-friday-night-restaurant",
+    "missed-calls-google-reviews"
+  ],
+  "can-ai-answer-restaurant-phone": [
+    "ai-phone-greeting-restaurant",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-host-accents-noise",
+    "ai-phone-host-learns-menu"
+  ],
+  "cashier-phone-and-counter": [
+    "bilingual-staff-phone-orders",
+    "family-run-restaurant-phone",
+    "owner-working-the-line",
+    "restaurant-employee-turnover",
+    "restaurant-host-duties-phone"
+  ],
+  "catering-marketing-restaurant": [
+    "direct-orders-vs-third-party",
+    "get-more-takeout-orders",
+    "new-restaurant-opening-marketing",
+    "restaurant-customer-retention",
+    "restaurant-email-marketing"
+  ],
+  "catering-menu-guide": [
+    "menu-descriptions-that-sell",
+    "daily-specials-phone",
+    "kids-menu-phone-orders",
+    "menu-modifiers-explained",
+    "menu-pdf-vs-html"
+  ],
+  "catering-phone-orders": [
+    "large-phone-orders-restaurant",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant",
+    "office-lunch-phone-orders",
+    "older-customers-phone-orders"
+  ],
+  "chatgpt-for-restaurant-owners": [
+    "ai-and-restaurant-jobs",
+    "ai-in-restaurants-small-business",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-host-multiple-languages"
+  ],
+  "choose-ai-phone-answering-restaurant": [
+    "ai-phone-buyer-checklist",
+    "ai-phone-vs-delivery-apps",
+    "ai-vs-answering-service-restaurant",
+    "kiosk-vs-phone-ordering",
+    "pos-integrated-vs-standalone-phone-ai"
+  ],
+  "combo-meals-phone-orders": [
+    "gluten-free-questions-phone",
+    "restaurant-menu-for-phone-orders",
+    "spice-level-phone-orders",
+    "vegan-vegetarian-menu-questions",
+    "ai-host-sold-out-items"
+  ],
+  "conditional-call-forwarding-busy-no-answer": [
+    "call-forwarding-codes-72-73",
+    "forward-calls-att-business",
+    "forward-calls-cell-phone-restaurant",
+    "forward-calls-comcast-business",
+    "forward-calls-google-voice"
+  ],
+  "conversational-ai-restaurants": [
+    "ai-in-restaurants-small-business",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-transfer-to-staff",
+    "ai-phone-host-voice-choice"
+  ],
+  "cost-of-phone-staff-restaurant": [
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant",
+    "delivery-app-commission-math",
+    "virtual-receptionist-cost-restaurant",
+    "budget-restaurant-technology"
+  ],
+  "curbside-pickup-phone-orders": [
+    "phone-order-payment-at-pickup",
+    "phone-orders-takeout-only-restaurant",
+    "catering-phone-orders",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant"
+  ],
+  "daily-specials-phone": [
+    "catering-menu-guide",
+    "lunch-specials-takeout",
+    "menu-descriptions-that-sell",
+    "combo-meals-phone-orders",
+    "family-meal-deals"
+  ],
+  "delivery-app-commission-math": [
+    "pay-per-order-vs-monthly-fee",
+    "per-minute-vs-per-order-pricing",
+    "cost-of-phone-staff-restaurant",
+    "what-counts-as-completed-order",
+    "ai-phone-answering-cost-restaurant"
+  ],
+  "difficult-callers-restaurant": [
+    "first-time-callers-restaurant",
+    "what-callers-ask-restaurants",
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "gift-card-questions-restaurant"
+  ],
+  "direct-orders-vs-third-party": [
+    "catering-marketing-restaurant",
+    "get-more-takeout-orders",
+    "restaurant-customer-retention",
+    "restaurant-flyers-menus-door",
+    "restaurant-website-must-haves"
+  ],
+  "do-customers-like-ai-phone-ordering": [
+    "future-of-restaurant-phone-orders",
+    "ai-phone-host-mistakes",
+    "ai-phone-ordering-faq",
+    "tell-callers-they-are-talking-to-ai",
+    "ai-phone-allergy-questions"
+  ],
+  "downtown-jersey-city-restaurants": [
+    "jersey-city-restaurant-phone-orders",
+    "nj-commuter-dinner-rush",
+    "bayonne-union-city-restaurants",
+    "opening-restaurant-jersey-city",
+    "washington-street-hoboken-restaurants"
+  ],
+  "expo-pickup-orders": [
+    "ghost-kitchen-phone-orders",
+    "restaurant-pop-up-phone-orders",
+    "86-items-phone-orders",
+    "order-ready-text-pickup",
+    "phone-orders-during-renovation"
+  ],
+  "family-meal-deals": [
+    "lunch-specials-takeout",
+    "vegan-vegetarian-menu-questions",
+    "ai-phone-answering-family-restaurants",
+    "allergen-menu-labeling",
+    "catering-menu-guide"
+  ],
+  "family-run-restaurant-phone": [
+    "bilingual-staff-phone-orders",
+    "owner-working-the-line",
+    "restaurant-employee-turnover",
+    "restaurant-host-duties-phone",
+    "ai-and-restaurant-jobs"
+  ],
+  "first-time-callers-restaurant": [
+    "difficult-callers-restaurant",
+    "wait-time-questions-restaurant",
+    "what-callers-ask-restaurants",
+    "accessibility-phone-orders",
+    "after-hours-message-examples"
+  ],
+  "forward-calls-att-business": [
+    "forward-calls-comcast-business",
+    "forward-calls-optimum-business",
+    "forward-calls-spectrum-business",
+    "forward-calls-verizon-business",
+    "call-forwarding-codes-72-73"
+  ],
+  "forward-calls-cell-phone-restaurant": [
+    "how-to-forward-restaurant-calls",
+    "keep-restaurant-phone-number",
+    "port-restaurant-phone-number",
+    "restaurant-phone-hardware",
+    "conditional-call-forwarding-busy-no-answer"
+  ],
+  "forward-calls-comcast-business": [
+    "forward-calls-att-business",
+    "forward-calls-optimum-business",
+    "forward-calls-spectrum-business",
+    "forward-calls-verizon-business",
+    "call-forwarding-codes-72-73"
+  ],
+  "forward-calls-google-voice": [
+    "call-forwarding-codes-72-73",
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-optimum-business",
+    "forward-calls-ringcentral"
+  ],
+  "forward-calls-optimum-business": [
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-spectrum-business",
+    "forward-calls-verizon-business",
+    "call-forwarding-codes-72-73"
+  ],
+  "forward-calls-ringcentral": [
+    "call-forwarding-codes-72-73",
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-google-voice",
+    "forward-calls-optimum-business"
+  ],
+  "forward-calls-spectrum-business": [
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-optimum-business",
+    "forward-calls-verizon-business",
+    "call-forwarding-codes-72-73"
+  ],
+  "forward-calls-tmobile-business": [
+    "test-call-forwarding",
+    "call-forwarding-codes-72-73",
+    "conditional-call-forwarding-busy-no-answer",
+    "forward-calls-att-business",
+    "forward-calls-cell-phone-restaurant"
+  ],
+  "forward-calls-verizon-business": [
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-optimum-business",
+    "forward-calls-spectrum-business",
+    "call-forwarding-codes-72-73"
+  ],
+  "forward-calls-voip-restaurant": [
+    "call-forwarding-codes-72-73",
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-google-voice",
+    "forward-calls-optimum-business"
+  ],
+  "front-of-house-phone-workflow": [
+    "restaurant-phone-etiquette",
+    "86-items-phone-orders",
+    "ai-host-catering-handoff",
+    "ai-host-complaint-handoff",
+    "ai-host-hours-holidays"
+  ],
+  "future-of-restaurant-phone-orders": [
+    "ai-phone-ordering-faq",
+    "do-customers-like-ai-phone-ordering",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant"
+  ],
+  "game-day-phone-orders-restaurant": [
+    "missed-calls-bad-weather-restaurant",
+    "holiday-phone-orders-restaurant",
+    "lunch-rush-phone-calls",
+    "mothers-day-restaurant-phone-orders",
+    "24-7-phone-answering-restaurant"
+  ],
+  "get-more-takeout-orders": [
+    "restaurant-customer-retention",
+    "restaurant-flyers-menus-door",
+    "restaurant-website-must-haves",
+    "small-restaurant-growth-ideas",
+    "catering-marketing-restaurant"
+  ],
+  "ghost-kitchen-phone-orders": [
+    "restaurant-pop-up-phone-orders",
+    "86-items-phone-orders",
+    "expo-pickup-orders",
+    "phone-orders-during-renovation",
+    "refund-requests-phone-restaurant"
+  ],
+  "gift-card-questions-restaurant": [
+    "wait-time-questions-restaurant",
+    "what-callers-ask-restaurants",
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant"
+  ],
+  "gluten-free-questions-phone": [
+    "halal-kosher-menu-questions",
+    "vegan-vegetarian-menu-questions",
+    "combo-meals-phone-orders",
+    "gift-card-questions-restaurant",
+    "kids-menu-phone-orders"
+  ],
+  "google-business-profile-restaurant": [
+    "call-button-google-maps-restaurant",
+    "apple-maps-yelp-listings-restaurant",
+    "restaurant-local-seo",
+    "restaurant-phone-number-google",
+    "catering-marketing-restaurant"
+  ],
+  "halal-kosher-menu-questions": [
+    "gluten-free-questions-phone",
+    "kids-menu-phone-orders",
+    "vegan-vegetarian-menu-questions",
+    "catering-menu-guide",
+    "combo-meals-phone-orders"
+  ],
+  "handwritten-phone-order-tickets": [
+    "large-phone-orders-restaurant",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant",
+    "phone-order-mistakes-restaurants",
+    "phone-order-script-restaurant"
+  ],
+  "hidden-fees-restaurant-software": [
+    "no-contract-restaurant-software",
+    "restaurant-tech-stack-cost",
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant",
+    "budget-restaurant-technology"
+  ],
+  "hoboken-restaurant-phone-orders": [
+    "jersey-city-restaurant-phone-orders",
+    "newark-restaurant-phone-orders",
+    "bayonne-union-city-restaurants",
+    "nyc-restaurant-phone-orders",
+    "hudson-county-restaurants-takeout"
+  ],
+  "holiday-closure-message-examples": [
+    "after-hours-message-examples",
+    "accessibility-phone-orders",
+    "phone-host-greeting-examples",
+    "restaurant-voicemail-greeting-examples",
+    "difficult-callers-restaurant"
+  ],
+  "holiday-hours-restaurant": [
+    "ai-host-hours-holidays",
+    "restaurant-automation-ideas",
+    "restaurant-hours-updates-google",
+    "restaurant-owner-time-savers",
+    "86-items-phone-orders"
+  ],
+  "holiday-phone-orders-restaurant": [
+    "game-day-phone-orders-restaurant",
+    "missed-calls-bad-weather-restaurant",
+    "24-7-phone-answering-restaurant",
+    "lunch-rush-phone-calls",
+    "missed-call-text-back-restaurants"
+  ],
+  "how-ai-takes-phone-orders": [
+    "ai-phone-card-payments",
+    "ai-phone-host-reservations",
+    "ai-phone-upselling-restaurants",
+    "spanish-speaking-callers-restaurant",
+    "ai-phone-allergy-questions"
+  ],
+  "how-many-calls-do-restaurants-miss": [
+    "24-7-phone-answering-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant",
+    "lunch-rush-phone-calls",
+    "missed-call-lost-revenue-math"
+  ],
+  "how-to-forward-restaurant-calls": [
+    "forward-calls-cell-phone-restaurant",
+    "restaurant-phone-hardware",
+    "keep-restaurant-phone-number",
+    "large-phone-orders-restaurant",
+    "port-restaurant-phone-number"
+  ],
+  "how-to-take-phone-orders-restaurant": [
+    "catering-phone-orders",
+    "increase-phone-orders-restaurant",
+    "large-phone-orders-restaurant",
+    "older-customers-phone-orders",
+    "phone-delivery-orders-restaurant"
+  ],
+  "hudson-county-restaurants-takeout": [
+    "bayonne-union-city-restaurants",
+    "hoboken-restaurant-phone-orders",
+    "jersey-city-restaurant-phone-orders",
+    "journal-square-restaurants",
+    "newark-restaurant-phone-orders"
+  ],
+  "increase-phone-orders-restaurant": [
+    "catering-phone-orders",
+    "how-to-take-phone-orders-restaurant",
+    "large-phone-orders-restaurant",
+    "older-customers-phone-orders",
+    "phone-delivery-orders-restaurant"
+  ],
+  "is-ai-phone-answering-worth-it": [
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant",
+    "roi-ai-phone-host-restaurant",
+    "24-7-phone-answering-restaurant",
+    "ai-phone-answering-bbq-restaurants"
+  ],
+  "jersey-city-restaurant-phone-orders": [
+    "bayonne-union-city-restaurants",
+    "hoboken-restaurant-phone-orders",
+    "newark-restaurant-phone-orders",
+    "downtown-jersey-city-restaurants",
+    "hudson-county-restaurants-takeout"
+  ],
+  "journal-square-restaurants": [
+    "bayonne-union-city-restaurants",
+    "hoboken-restaurant-phone-orders",
+    "hudson-county-restaurants-takeout",
+    "jersey-city-restaurant-phone-orders",
+    "newark-restaurant-phone-orders"
+  ],
+  "kds-vs-printed-tickets": [
+    "kitchen-display-system-small-restaurant",
+    "multi-location-phone-management",
+    "restaurant-order-throttling",
+    "restaurant-phone-system-setup",
+    "restaurant-ticket-times"
+  ],
+  "keep-restaurant-phone-number": [
+    "forward-calls-cell-phone-restaurant",
+    "port-restaurant-phone-number",
+    "how-to-forward-restaurant-calls",
+    "restaurant-hold-music-message",
+    "restaurant-phone-hardware"
+  ],
+  "kids-menu-phone-orders": [
+    "seasonal-menu-changes",
+    "catering-menu-guide",
+    "gluten-free-questions-phone",
+    "halal-kosher-menu-questions",
+    "lunch-specials-takeout"
+  ],
+  "kiosk-vs-phone-ordering": [
+    "pos-integrated-vs-standalone-phone-ai",
+    "text-ordering-vs-phone-ordering",
+    "ai-phone-vs-delivery-apps",
+    "ai-phone-vs-online-ordering-page",
+    "choose-ai-phone-answering-restaurant"
+  ],
+  "kitchen-display-system-small-restaurant": [
+    "kds-vs-printed-tickets",
+    "multi-location-phone-management",
+    "restaurant-operations-small-team",
+    "restaurant-order-throttling",
+    "restaurant-phone-system-setup"
+  ],
+  "landline-vs-voip-restaurant": [
+    "forward-calls-voip-restaurant",
+    "call-forwarding-codes-72-73",
+    "forward-calls-att-business",
+    "forward-calls-cell-phone-restaurant",
+    "forward-calls-comcast-business"
+  ],
+  "large-phone-orders-restaurant": [
+    "catering-phone-orders",
+    "phone-order-mistakes-restaurants",
+    "phone-orders-modifiers-special-requests",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant"
+  ],
+  "lunch-rush-phone-calls": [
+    "game-day-phone-orders-restaurant",
+    "missed-calls-google-reviews",
+    "new-years-eve-restaurant-phone",
+    "second-phone-line-restaurant",
+    "valentines-day-restaurant-calls"
+  ],
+  "lunch-specials-takeout": [
+    "daily-specials-phone",
+    "family-meal-deals",
+    "kids-menu-phone-orders",
+    "multiple-menus-one-restaurant",
+    "seasonal-menu-changes"
+  ],
+  "menu-descriptions-that-sell": [
+    "catering-menu-guide",
+    "menu-photos-ordering",
+    "daily-specials-phone",
+    "kids-menu-phone-orders",
+    "menu-modifiers-explained"
+  ],
+  "menu-engineering-small-restaurant": [
+    "allergen-menu-labeling",
+    "catering-menu-guide",
+    "family-meal-deals",
+    "kids-menu-phone-orders",
+    "menu-descriptions-that-sell"
+  ],
+  "menu-modifiers-explained": [
+    "menu-photos-ordering",
+    "seasonal-menu-changes",
+    "catering-menu-guide",
+    "kids-menu-phone-orders",
+    "menu-descriptions-that-sell"
+  ],
+  "menu-pdf-vs-html": [
+    "catering-menu-guide",
+    "kids-menu-phone-orders",
+    "menu-descriptions-that-sell",
+    "menu-modifiers-explained",
+    "menu-photos-ordering"
+  ],
+  "menu-photos-ordering": [
+    "seasonal-menu-changes",
+    "menu-descriptions-that-sell",
+    "menu-modifiers-explained",
+    "ai-and-restaurant-jobs",
+    "catering-menu-guide"
+  ],
+  "menu-qr-code-vs-phone": [
+    "menu-pdf-vs-html",
+    "apple-maps-yelp-listings-restaurant",
+    "call-button-google-maps-restaurant",
+    "catering-marketing-restaurant",
+    "direct-orders-vs-third-party"
+  ],
+  "missed-call-lost-revenue-math": [
+    "missed-calls-friday-night-restaurant",
+    "track-missed-calls-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant",
+    "lunch-rush-phone-calls"
+  ],
+  "missed-call-text-back-restaurants": [
+    "missed-calls-friday-night-restaurant",
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant",
+    "missed-call-lost-revenue-math",
+    "missed-calls-bad-weather-restaurant"
+  ],
+  "missed-calls-bad-weather-restaurant": [
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant",
+    "mothers-day-restaurant-phone-orders",
+    "24-7-phone-answering-restaurant",
+    "lunch-rush-phone-calls"
+  ],
+  "missed-calls-friday-night-restaurant": [
+    "missed-call-lost-revenue-math",
+    "missed-call-text-back-restaurants",
+    "thanksgiving-catering-phone-calls",
+    "track-missed-calls-restaurant",
+    "after-hours-restaurant-calls"
+  ],
+  "missed-calls-google-reviews": [
+    "lunch-rush-phone-calls",
+    "new-years-eve-restaurant-phone",
+    "second-phone-line-restaurant",
+    "24-7-phone-answering-restaurant",
+    "after-hours-restaurant-calls"
+  ],
+  "mothers-day-restaurant-phone-orders": [
+    "24-7-phone-answering-restaurant",
+    "game-day-phone-orders-restaurant",
+    "missed-calls-bad-weather-restaurant",
+    "restaurant-busy-signal-problem",
+    "holiday-phone-orders-restaurant"
+  ],
+  "multi-location-phone-management": [
+    "restaurant-complaint-calls",
+    "restaurant-phone-system-setup",
+    "restaurant-second-location-phone",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays"
+  ],
+  "multiple-menus-one-restaurant": [
+    "catering-menu-guide",
+    "lunch-specials-takeout",
+    "combo-meals-phone-orders",
+    "daily-specials-phone",
+    "family-meal-deals"
+  ],
+  "mystery-call-your-restaurant": [
+    "missed-call-text-back-restaurants",
+    "restaurant-call-volume-by-hour",
+    "24-7-phone-answering-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant"
+  ],
+  "new-jersey-restaurant-owners-guide": [
+    "opening-restaurant-jersey-city",
+    "nj-commuter-dinner-rush",
+    "nyc-restaurant-phone-orders",
+    "opening-restaurant-hoboken",
+    "downtown-jersey-city-restaurants"
+  ],
+  "new-restaurant-opening-marketing": [
+    "catering-marketing-restaurant",
+    "restaurant-email-marketing",
+    "apple-maps-yelp-listings-restaurant",
+    "call-button-google-maps-restaurant",
+    "direct-orders-vs-third-party"
+  ],
+  "new-years-eve-restaurant-phone": [
+    "lunch-rush-phone-calls",
+    "missed-calls-google-reviews",
+    "second-phone-line-restaurant",
+    "24-7-phone-answering-restaurant",
+    "after-hours-restaurant-calls"
+  ],
+  "newark-restaurant-phone-orders": [
+    "hoboken-restaurant-phone-orders",
+    "jersey-city-restaurant-phone-orders",
+    "bayonne-union-city-restaurants",
+    "hudson-county-restaurants-takeout",
+    "journal-square-restaurants"
+  ],
+  "nj-commuter-dinner-rush": [
+    "downtown-jersey-city-restaurants",
+    "new-jersey-restaurant-owners-guide",
+    "opening-restaurant-jersey-city",
+    "jersey-city-restaurant-phone-orders",
+    "lunch-rush-phone-calls"
+  ],
+  "nj-restaurant-health-inspection": [
+    "new-jersey-restaurant-owners-guide",
+    "nj-commuter-dinner-rush",
+    "nj-sales-tax-restaurant-takeout",
+    "nyc-restaurant-phone-orders",
+    "opening-restaurant-hoboken"
+  ],
+  "nj-sales-tax-restaurant-takeout": [
+    "bayonne-union-city-restaurants",
+    "hoboken-restaurant-phone-orders",
+    "hudson-county-restaurants-takeout",
+    "jersey-city-restaurant-phone-orders",
+    "journal-square-restaurants"
+  ],
+  "no-contract-restaurant-software": [
+    "hidden-fees-restaurant-software",
+    "restaurant-tech-stack-cost",
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant",
+    "budget-restaurant-technology"
+  ],
+  "no-show-phone-orders": [
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "catering-phone-orders",
+    "curbside-pickup-phone-orders",
+    "how-to-take-phone-orders-restaurant"
+  ],
+  "nyc-restaurant-phone-orders": [
+    "hoboken-restaurant-phone-orders",
+    "jersey-city-restaurant-phone-orders",
+    "new-jersey-restaurant-owners-guide",
+    "newark-restaurant-phone-orders",
+    "restaurant-customer-service-phone"
+  ],
+  "office-lunch-phone-orders": [
+    "catering-phone-orders",
+    "large-phone-orders-restaurant",
+    "phone-orders-modifiers-special-requests",
+    "curbside-pickup-phone-orders",
+    "how-to-take-phone-orders-restaurant"
+  ],
+  "older-customers-phone-orders": [
+    "catering-phone-orders",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant",
+    "large-phone-orders-restaurant",
+    "phone-delivery-orders-restaurant"
+  ],
+  "online-menu-accuracy-restaurant": [
+    "catering-menu-guide",
+    "kids-menu-phone-orders",
+    "menu-descriptions-that-sell",
+    "menu-modifiers-explained",
+    "menu-pdf-vs-html"
+  ],
+  "opening-restaurant-hoboken": [
+    "opening-restaurant-jersey-city",
+    "new-jersey-restaurant-owners-guide",
+    "hoboken-restaurant-phone-orders",
+    "nj-commuter-dinner-rush",
+    "nj-restaurant-health-inspection"
+  ],
+  "opening-restaurant-jersey-city": [
+    "opening-restaurant-hoboken",
+    "new-jersey-restaurant-owners-guide",
+    "downtown-jersey-city-restaurants",
+    "jersey-city-restaurant-phone-orders",
+    "nj-commuter-dinner-rush"
+  ],
+  "order-ready-text-pickup": [
+    "expo-pickup-orders",
+    "pickup-shelf-organization",
+    "restaurant-order-throttling",
+    "86-items-phone-orders",
+    "ai-host-catering-handoff"
+  ],
+  "order-status-calls": [
+    "parking-directions-callers",
+    "restaurant-callback-requests",
+    "restaurant-phone-scripts-collection",
+    "accessibility-phone-orders",
+    "after-hours-message-examples"
+  ],
+  "owner-working-the-line": [
+    "bilingual-staff-phone-orders",
+    "family-run-restaurant-phone",
+    "restaurant-employee-turnover",
+    "restaurant-host-duties-phone",
+    "second-phone-line-restaurant"
+  ],
+  "parking-directions-callers": [
+    "order-status-calls",
+    "restaurant-phone-scripts-collection",
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant"
+  ],
+  "pay-per-order-vs-monthly-fee": [
+    "delivery-app-commission-math",
+    "per-minute-vs-per-order-pricing",
+    "ai-phone-answering-cost-restaurant",
+    "is-ai-phone-answering-worth-it",
+    "restaurant-tech-stack-cost"
+  ],
+  "per-minute-vs-per-order-pricing": [
+    "answering-service-cost-restaurant",
+    "delivery-app-commission-math",
+    "pay-per-order-vs-monthly-fee",
+    "ai-phone-answering-cost-restaurant",
+    "is-ai-phone-answering-worth-it"
+  ],
+  "phone-delivery-orders-restaurant": [
+    "catering-phone-orders",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant",
+    "large-phone-orders-restaurant",
+    "older-customers-phone-orders"
+  ],
+  "phone-host-greeting-examples": [
+    "after-hours-message-examples",
+    "restaurant-voicemail-greeting-examples",
+    "accessibility-phone-orders",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant"
+  ],
+  "phone-on-hold-restaurant-customers": [
+    "why-callers-hang-up-on-restaurants",
+    "restaurant-voicemail-loses-orders",
+    "24-7-phone-answering-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant"
+  ],
+  "phone-order-average-ticket-size": [
+    "large-phone-orders-restaurant",
+    "office-lunch-phone-orders",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant",
+    "phone-order-mistakes-restaurants"
+  ],
+  "phone-order-confirmation-text": [
+    "phone-order-form-template-restaurant",
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "large-phone-orders-restaurant",
+    "phone-order-mistakes-restaurants"
+  ],
+  "phone-order-form-template-restaurant": [
+    "phone-order-confirmation-text",
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "large-phone-orders-restaurant",
+    "phone-order-mistakes-restaurants"
+  ],
+  "phone-order-mistakes-restaurants": [
+    "large-phone-orders-restaurant",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant",
+    "phone-order-script-restaurant",
+    "phone-orders-modifiers-special-requests"
+  ],
+  "phone-order-payment-at-pickup": [
+    "curbside-pickup-phone-orders",
+    "large-phone-orders-restaurant",
+    "office-lunch-phone-orders",
+    "phone-order-average-ticket-size",
+    "phone-order-confirmation-text"
+  ],
+  "phone-order-script-restaurant": [
+    "large-phone-orders-restaurant",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant",
+    "phone-order-mistakes-restaurants",
+    "phone-orders-modifiers-special-requests"
+  ],
+  "phone-orders-during-renovation": [
+    "86-items-phone-orders",
+    "restaurant-pop-up-phone-orders",
+    "restaurant-power-outage-phone",
+    "restaurant-second-location-phone",
+    "ai-host-hours-holidays"
+  ],
+  "phone-orders-kitchen-display": [
+    "phone-orders-takeout-only-restaurant",
+    "ai-phone-ordering-system-restaurants",
+    "catering-phone-orders",
+    "curbside-pickup-phone-orders",
+    "how-to-take-phone-orders-restaurant"
+  ],
+  "phone-orders-modifiers-special-requests": [
+    "large-phone-orders-restaurant",
+    "catering-phone-orders",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant",
+    "office-lunch-phone-orders"
+  ],
+  "phone-orders-takeout-only-restaurant": [
+    "ai-phone-ordering-system-restaurants",
+    "catering-phone-orders",
+    "curbside-pickup-phone-orders",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant"
+  ],
+  "phone-orders-ticket-format": [
+    "handwritten-phone-order-tickets",
+    "large-phone-orders-restaurant",
+    "phone-order-average-ticket-size",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant"
+  ],
+  "phone-orders-vs-online-ordering": [
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "catering-phone-orders",
+    "curbside-pickup-phone-orders",
+    "how-to-take-phone-orders-restaurant"
+  ],
+  "phone-orders-wrong-address-delivery": [
+    "large-phone-orders-restaurant",
+    "office-lunch-phone-orders",
+    "phone-delivery-orders-restaurant",
+    "phone-orders-modifiers-special-requests",
+    "catering-phone-orders"
+  ],
+  "pickup-shelf-organization": [
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "expo-pickup-orders",
+    "holiday-hours-restaurant",
+    "kds-vs-printed-tickets"
+  ],
+  "pickup-time-quotes-phone-orders": [
+    "no-show-phone-orders",
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "catering-phone-orders",
+    "curbside-pickup-phone-orders"
+  ],
+  "pizza-phone-order-tips": [
+    "ai-phone-answering-pizza-shops",
+    "ai-phone-answering-wing-shops",
+    "ai-phone-answering-bagel-shops",
+    "ai-phone-answering-bakeries",
+    "ai-phone-answering-bar-and-grill"
+  ],
+  "port-restaurant-phone-number": [
+    "forward-calls-cell-phone-restaurant",
+    "keep-restaurant-phone-number",
+    "forward-calls-tmobile-business",
+    "how-to-forward-restaurant-calls",
+    "restaurant-phone-hardware"
+  ],
+  "pos-integrated-vs-standalone-phone-ai": [
+    "kiosk-vs-phone-ordering",
+    "text-ordering-vs-phone-ordering",
+    "ai-phone-vs-delivery-apps",
+    "ai-phone-vs-online-ordering-page",
+    "choose-ai-phone-answering-restaurant"
+  ],
+  "private-events-inquiries": [
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "first-time-callers-restaurant",
+    "gift-card-questions-restaurant"
+  ],
+  "questions-to-ask-ai-phone-vendor": [
+    "ai-phone-buyer-checklist",
+    "ai-phone-vs-delivery-apps",
+    "ai-phone-vs-ivr-menu",
+    "ai-phone-vs-online-ordering-page",
+    "ai-vs-voicemail-restaurant"
+  ],
+  "read-back-phone-orders": [
+    "large-phone-orders-restaurant",
+    "office-lunch-phone-orders",
+    "phone-order-average-ticket-size",
+    "phone-order-confirmation-text",
+    "phone-order-form-template-restaurant"
+  ],
+  "read-call-transcripts-restaurant": [
+    "restaurant-call-center-centralized",
+    "restaurant-data-call-logs",
+    "86-items-phone-orders",
+    "ai-host-complaint-handoff",
+    "ai-host-hours-holidays"
+  ],
+  "refund-requests-phone-restaurant": [
+    "restaurant-pop-up-phone-orders",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "ghost-kitchen-phone-orders",
+    "multi-location-phone-management"
+  ],
+  "repeat-callers-regulars-orders": [
+    "older-customers-phone-orders",
+    "catering-phone-orders",
+    "curbside-pickup-phone-orders",
+    "how-to-take-phone-orders-restaurant",
+    "increase-phone-orders-restaurant"
+  ],
+  "respond-to-restaurant-reviews": [
+    "restaurant-reviews-phone-service",
+    "apple-maps-yelp-listings-restaurant",
+    "call-button-google-maps-restaurant",
+    "catering-marketing-restaurant",
+    "direct-orders-vs-third-party"
+  ],
+  "restaurant-ai-search-visibility": [
+    "apple-maps-yelp-listings-restaurant",
+    "call-button-google-maps-restaurant",
+    "catering-marketing-restaurant",
+    "direct-orders-vs-third-party",
+    "get-more-takeout-orders"
+  ],
+  "restaurant-ai-tools-list": [
+    "ai-in-restaurants-small-business",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-transfer-to-staff",
+    "ai-phone-host-voice-choice"
+  ],
+  "restaurant-automation-ideas": [
+    "restaurant-owner-time-savers",
+    "holiday-hours-restaurant",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "kds-vs-printed-tickets"
+  ],
+  "restaurant-busy-signal-problem": [
+    "24-7-phone-answering-restaurant",
+    "mothers-day-restaurant-phone-orders",
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant",
+    "lunch-rush-phone-calls"
+  ],
+  "restaurant-call-center-centralized": [
+    "read-call-transcripts-restaurant",
+    "restaurant-data-call-logs",
+    "86-items-phone-orders",
+    "ai-host-complaint-handoff",
+    "ai-host-hours-holidays"
+  ],
+  "restaurant-call-volume-by-hour": [
+    "missed-call-text-back-restaurants",
+    "mystery-call-your-restaurant",
+    "24-7-phone-answering-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant"
+  ],
+  "restaurant-callback-requests": [
+    "order-status-calls",
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "first-time-callers-restaurant"
+  ],
+  "restaurant-caller-id-spam": [
+    "forward-calls-cell-phone-restaurant",
+    "how-to-forward-restaurant-calls",
+    "restaurant-phone-hardware",
+    "conditional-call-forwarding-busy-no-answer",
+    "forward-calls-tmobile-business"
+  ],
+  "restaurant-closing-checklist": [
+    "restaurant-kpis-takeout",
+    "restaurant-opening-checklist-phone",
+    "restaurant-owner-checklist-busy-season",
+    "takeout-business-plan",
+    "86-items-phone-orders"
+  ],
+  "restaurant-complaint-calls": [
+    "multi-location-phone-management",
+    "86-items-phone-orders",
+    "ai-host-complaint-handoff",
+    "ai-host-hours-holidays",
+    "lunch-rush-phone-calls"
+  ],
+  "restaurant-customer-retention": [
+    "get-more-takeout-orders",
+    "restaurant-flyers-menus-door",
+    "catering-marketing-restaurant",
+    "direct-orders-vs-third-party",
+    "restaurant-website-must-haves"
+  ],
+  "restaurant-customer-service-phone": [
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant",
+    "nyc-restaurant-phone-orders"
+  ],
+  "restaurant-data-call-logs": [
+    "read-call-transcripts-restaurant",
+    "restaurant-call-center-centralized",
+    "86-items-phone-orders",
+    "ai-host-complaint-handoff",
+    "ai-host-hours-holidays"
+  ],
+  "restaurant-email-marketing": [
+    "catering-marketing-restaurant",
+    "new-restaurant-opening-marketing",
+    "apple-maps-yelp-listings-restaurant",
+    "call-button-google-maps-restaurant",
+    "direct-orders-vs-third-party"
+  ],
+  "restaurant-employee-turnover": [
+    "ai-and-restaurant-jobs",
+    "bilingual-staff-phone-orders",
+    "family-run-restaurant-phone",
+    "how-to-forward-restaurant-calls",
+    "owner-working-the-line"
+  ],
+  "restaurant-faq-list": [
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant",
+    "phone-host-greeting-examples"
+  ],
+  "restaurant-flyers-menus-door": [
+    "get-more-takeout-orders",
+    "restaurant-customer-retention",
+    "catering-marketing-restaurant",
+    "direct-orders-vs-third-party",
+    "restaurant-website-must-haves"
+  ],
+  "restaurant-hold-music-message": [
+    "keep-restaurant-phone-number",
+    "forward-calls-cell-phone-restaurant",
+    "forward-calls-tmobile-business",
+    "how-to-forward-restaurant-calls",
+    "landline-vs-voip-restaurant"
+  ],
+  "restaurant-hospitality-takeout": [
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "first-time-callers-restaurant",
+    "gift-card-questions-restaurant"
+  ],
+  "restaurant-host-duties-phone": [
+    "bilingual-staff-phone-orders",
+    "family-run-restaurant-phone",
+    "how-to-forward-restaurant-calls",
+    "owner-working-the-line",
+    "restaurant-employee-turnover"
+  ],
+  "restaurant-hours-updates-google": [
+    "ai-host-hours-holidays",
+    "holiday-hours-restaurant",
+    "86-items-phone-orders",
+    "kds-vs-printed-tickets",
+    "kitchen-display-system-small-restaurant"
+  ],
+  "restaurant-kpis-takeout": [
+    "restaurant-closing-checklist",
+    "restaurant-owner-time-savers",
+    "takeout-business-plan",
+    "who-should-answer-restaurant-phone",
+    "86-items-phone-orders"
+  ],
+  "restaurant-labor-cost-control": [
+    "restaurant-employee-turnover",
+    "ai-and-restaurant-jobs",
+    "answering-service-cost-restaurant",
+    "bilingual-staff-phone-orders",
+    "family-run-restaurant-phone"
+  ],
+  "restaurant-local-seo": [
+    "apple-maps-yelp-listings-restaurant",
+    "call-button-google-maps-restaurant",
+    "catering-marketing-restaurant",
+    "google-business-profile-restaurant",
+    "direct-orders-vs-third-party"
+  ],
+  "restaurant-loyalty-phone-customers": [
+    "restaurant-phone-number-everywhere",
+    "restaurant-phone-number-google",
+    "restaurant-reviews-phone-service",
+    "restaurant-social-media-takeout",
+    "slow-night-promotions"
+  ],
+  "restaurant-manager-phone-escalations": [
+    "ai-and-restaurant-jobs",
+    "restaurant-host-duties-phone",
+    "bilingual-staff-phone-orders",
+    "family-run-restaurant-phone",
+    "owner-working-the-line"
+  ],
+  "restaurant-margins-phone-orders": [
+    "ai-phone-answering-caribbean-restaurants",
+    "ai-phone-answering-chinese-restaurants",
+    "ai-phone-answering-cost-restaurant",
+    "ai-phone-answering-family-restaurants",
+    "ai-phone-answering-sushi-restaurants"
+  ],
+  "restaurant-menu-for-phone-orders": [
+    "seasonal-menu-changes",
+    "catering-menu-guide",
+    "combo-meals-phone-orders",
+    "gluten-free-questions-phone",
+    "kids-menu-phone-orders"
+  ],
+  "restaurant-menu-prices-update": [
+    "online-menu-accuracy-restaurant",
+    "allergen-menu-labeling",
+    "catering-menu-guide",
+    "kids-menu-phone-orders",
+    "menu-descriptions-that-sell"
+  ],
+  "restaurant-opening-checklist-phone": [
+    "restaurant-second-location-phone",
+    "86-items-phone-orders",
+    "phone-orders-during-renovation",
+    "restaurant-closing-checklist",
+    "restaurant-owner-checklist-busy-season"
+  ],
+  "restaurant-operations-small-team": [
+    "restaurant-phone-etiquette",
+    "kitchen-display-system-small-restaurant",
+    "restaurant-owner-checklist-busy-season",
+    "restaurant-owner-time-savers",
+    "86-items-phone-orders"
+  ],
+  "restaurant-order-throttling": [
+    "kds-vs-printed-tickets",
+    "kitchen-display-system-small-restaurant",
+    "restaurant-ticket-times",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays"
+  ],
+  "restaurant-owner-checklist-busy-season": [
+    "restaurant-closing-checklist",
+    "restaurant-opening-checklist-phone",
+    "restaurant-operations-small-team",
+    "restaurant-phone-etiquette",
+    "restaurant-tech-for-non-tech-owners"
+  ],
+  "restaurant-owner-guide-ai-phone": [
+    "what-is-ai-phone-answering-restaurants",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-transfer-to-staff",
+    "ai-phone-host-voice-choice"
+  ],
+  "restaurant-owner-time-savers": [
+    "restaurant-automation-ideas",
+    "holiday-hours-restaurant",
+    "restaurant-kpis-takeout",
+    "restaurant-operations-small-team",
+    "86-items-phone-orders"
+  ],
+  "restaurant-phone-answering-best-practices": [
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant",
+    "phone-host-greeting-examples"
+  ],
+  "restaurant-phone-answering-service": [
+    "ai-phone-buyer-checklist",
+    "24-7-phone-answering-restaurant",
+    "ai-phone-answering-quick-service",
+    "ai-phone-vs-ivr-menu",
+    "ai-vs-answering-service-restaurant"
+  ],
+  "restaurant-phone-audit": [
+    "24-7-phone-answering-restaurant",
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant",
+    "lunch-rush-phone-calls",
+    "missed-calls-bad-weather-restaurant"
+  ],
+  "restaurant-phone-bot": [
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu",
+    "ai-phone-host-multiple-languages"
+  ],
+  "restaurant-phone-etiquette": [
+    "restaurant-operations-small-team",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "front-of-house-phone-workflow",
+    "multi-location-phone-management"
+  ],
+  "restaurant-phone-hardware": [
+    "forward-calls-cell-phone-restaurant",
+    "how-to-forward-restaurant-calls",
+    "keep-restaurant-phone-number",
+    "port-restaurant-phone-number",
+    "restaurant-caller-id-spam"
+  ],
+  "restaurant-phone-number-everywhere": [
+    "restaurant-phone-number-google",
+    "apple-maps-yelp-listings-restaurant",
+    "restaurant-loyalty-phone-customers",
+    "restaurant-reviews-phone-service",
+    "ai-phone-allergy-questions"
+  ],
+  "restaurant-phone-number-google": [
+    "call-button-google-maps-restaurant",
+    "restaurant-phone-number-everywhere",
+    "apple-maps-yelp-listings-restaurant",
+    "google-business-profile-restaurant",
+    "restaurant-loyalty-phone-customers"
+  ],
+  "restaurant-phone-ringing-off-the-hook": [
+    "second-phone-line-restaurant",
+    "24-7-phone-answering-restaurant",
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant",
+    "lunch-rush-phone-calls"
+  ],
+  "restaurant-phone-scripts-collection": [
+    "what-callers-ask-restaurants",
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant"
+  ],
+  "restaurant-phone-system-setup": [
+    "multi-location-phone-management",
+    "set-up-ai-phone-host-one-minute",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "kds-vs-printed-tickets"
+  ],
+  "restaurant-phone-tree-ivr": [
+    "forward-calls-cell-phone-restaurant",
+    "how-to-forward-restaurant-calls",
+    "keep-restaurant-phone-number",
+    "port-restaurant-phone-number",
+    "restaurant-phone-hardware"
+  ],
+  "restaurant-pop-up-phone-orders": [
+    "86-items-phone-orders",
+    "ghost-kitchen-phone-orders",
+    "phone-orders-during-renovation",
+    "refund-requests-phone-restaurant",
+    "restaurant-second-location-phone"
+  ],
+  "restaurant-pos-phone-orders": [
+    "86-items-phone-orders",
+    "ghost-kitchen-phone-orders",
+    "phone-orders-during-renovation",
+    "restaurant-pop-up-phone-orders",
+    "restaurant-second-location-phone"
+  ],
+  "restaurant-power-outage-phone": [
+    "phone-orders-during-renovation",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "multi-location-phone-management",
+    "refund-requests-phone-restaurant"
+  ],
+  "restaurant-reviews-phone-service": [
+    "respond-to-restaurant-reviews",
+    "restaurant-loyalty-phone-customers",
+    "restaurant-phone-number-everywhere",
+    "restaurant-phone-number-google",
+    "24-7-phone-answering-restaurant"
+  ],
+  "restaurant-scheduling-peak-hours": [
+    "ai-and-restaurant-jobs",
+    "bilingual-staff-phone-orders",
+    "family-run-restaurant-phone",
+    "owner-working-the-line",
+    "restaurant-employee-turnover"
+  ],
+  "restaurant-second-location-phone": [
+    "86-items-phone-orders",
+    "multi-location-phone-management",
+    "phone-orders-during-renovation",
+    "restaurant-opening-checklist-phone",
+    "restaurant-pop-up-phone-orders"
+  ],
+  "restaurant-social-media-takeout": [
+    "slow-night-promotions",
+    "catering-marketing-restaurant",
+    "restaurant-loyalty-phone-customers",
+    "small-restaurant-growth-ideas",
+    "apple-maps-yelp-listings-restaurant"
+  ],
+  "restaurant-staff-burnout": [
+    "bilingual-staff-phone-orders",
+    "restaurant-staff-meeting-ai-host",
+    "restaurant-staff-shortage-phone",
+    "ai-and-restaurant-jobs",
+    "family-run-restaurant-phone"
+  ],
+  "restaurant-staff-meeting-ai-host": [
+    "bilingual-staff-phone-orders",
+    "restaurant-staff-burnout",
+    "restaurant-staff-shortage-phone",
+    "ai-and-restaurant-jobs",
+    "family-run-restaurant-phone"
+  ],
+  "restaurant-staff-shortage-phone": [
+    "bilingual-staff-phone-orders",
+    "restaurant-staff-burnout",
+    "restaurant-staff-meeting-ai-host",
+    "ai-and-restaurant-jobs",
+    "family-run-restaurant-phone"
+  ],
+  "restaurant-tech-for-non-tech-owners": [
+    "restaurant-weekly-review-routine",
+    "restaurant-owner-checklist-busy-season",
+    "who-should-answer-restaurant-phone",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays"
+  ],
+  "restaurant-tech-stack-cost": [
+    "answering-service-cost-restaurant",
+    "hidden-fees-restaurant-software",
+    "no-contract-restaurant-software",
+    "ai-phone-answering-cost-restaurant",
+    "budget-restaurant-technology"
+  ],
+  "restaurant-ticket-times": [
+    "kds-vs-printed-tickets",
+    "kitchen-display-system-small-restaurant",
+    "restaurant-order-throttling",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays"
+  ],
+  "restaurant-tone-of-voice-phone": [
+    "accessibility-phone-orders",
+    "after-hours-message-examples",
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant",
+    "phone-host-greeting-examples"
+  ],
+  "restaurant-voicemail-greeting-examples": [
+    "phone-host-greeting-examples",
+    "after-hours-message-examples",
+    "holiday-closure-message-examples",
+    "accessibility-phone-orders",
+    "difficult-callers-restaurant"
+  ],
+  "restaurant-voicemail-loses-orders": [
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant",
+    "missed-call-text-back-restaurants",
+    "missed-calls-bad-weather-restaurant",
+    "missed-calls-friday-night-restaurant"
+  ],
+  "restaurant-website-must-haves": [
+    "get-more-takeout-orders",
+    "small-restaurant-growth-ideas",
+    "catering-marketing-restaurant",
+    "direct-orders-vs-third-party",
+    "restaurant-customer-retention"
+  ],
+  "restaurant-weekly-review-routine": [
+    "restaurant-tech-for-non-tech-owners",
+    "restaurant-owner-checklist-busy-season",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "holiday-hours-restaurant"
+  ],
+  "roi-ai-phone-host-restaurant": [
+    "ai-phone-answering-cost-restaurant",
+    "is-ai-phone-answering-worth-it",
+    "ai-phone-card-payments",
+    "ai-phone-host-learns-menu",
+    "answering-service-cost-restaurant"
+  ],
+  "seasonal-menu-changes": [
+    "menu-photos-ordering",
+    "kids-menu-phone-orders",
+    "menu-modifiers-explained",
+    "restaurant-menu-for-phone-orders",
+    "catering-menu-guide"
+  ],
+  "second-phone-line-restaurant": [
+    "lunch-rush-phone-calls",
+    "missed-calls-google-reviews",
+    "new-years-eve-restaurant-phone",
+    "restaurant-phone-ringing-off-the-hook",
+    "24-7-phone-answering-restaurant"
+  ],
+  "self-serve-vs-sales-led-software": [
+    "text-ordering-vs-phone-ordering",
+    "ai-phone-buyer-checklist",
+    "ai-phone-vs-call-center",
+    "ai-phone-vs-delivery-apps",
+    "ai-phone-vs-ivr-menu"
+  ],
+  "set-up-ai-phone-host-one-minute": [
+    "restaurant-phone-system-setup",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "multi-location-phone-management",
+    "phone-orders-during-renovation"
+  ],
+  "slow-night-promotions": [
+    "restaurant-social-media-takeout",
+    "catering-marketing-restaurant",
+    "restaurant-loyalty-phone-customers",
+    "small-restaurant-growth-ideas",
+    "apple-maps-yelp-listings-restaurant"
+  ],
+  "small-restaurant-growth-ideas": [
+    "get-more-takeout-orders",
+    "restaurant-website-must-haves",
+    "catering-marketing-restaurant",
+    "direct-orders-vs-third-party",
+    "restaurant-customer-retention"
+  ],
+  "spanish-speaking-callers-restaurant": [
+    "ai-phone-upselling-restaurants",
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu"
+  ],
+  "spice-level-phone-orders": [
+    "combo-meals-phone-orders",
+    "gluten-free-questions-phone",
+    "kids-menu-phone-orders",
+    "lunch-specials-takeout",
+    "restaurant-menu-for-phone-orders"
+  ],
+  "super-bowl-pizza-phone-orders": [
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant",
+    "missed-calls-bad-weather-restaurant",
+    "24-7-phone-answering-restaurant",
+    "ai-phone-answering-bagel-shops"
+  ],
+  "takeout-business-plan": [
+    "restaurant-closing-checklist",
+    "restaurant-kpis-takeout",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "holiday-hours-restaurant"
+  ],
+  "takeout-packaging-phone-orders": [
+    "86-items-phone-orders",
+    "ghost-kitchen-phone-orders",
+    "phone-orders-during-renovation",
+    "restaurant-pop-up-phone-orders",
+    "restaurant-pos-phone-orders"
+  ],
+  "teach-ai-host-new-answer": [
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-learns-menu",
+    "ai-phone-host-multiple-languages"
+  ],
+  "tell-callers-they-are-talking-to-ai": [
+    "ai-phone-allergy-questions",
+    "ai-phone-card-payments",
+    "ai-phone-greeting-restaurant",
+    "ai-phone-host-accents-noise",
+    "ai-phone-host-transfer-to-staff"
+  ],
+  "test-call-forwarding": [
+    "forward-calls-tmobile-business",
+    "call-forwarding-codes-72-73",
+    "conditional-call-forwarding-busy-no-answer",
+    "forward-calls-att-business",
+    "forward-calls-cell-phone-restaurant"
+  ],
+  "text-ordering-vs-phone-ordering": [
+    "kiosk-vs-phone-ordering",
+    "phone-order-confirmation-text",
+    "pos-integrated-vs-standalone-phone-ai",
+    "accessibility-phone-orders",
+    "ai-phone-buyer-checklist"
+  ],
+  "thanksgiving-catering-phone-calls": [
+    "missed-calls-friday-night-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant",
+    "game-day-phone-orders-restaurant",
+    "holiday-phone-orders-restaurant"
+  ],
+  "track-missed-calls-restaurant": [
+    "missed-call-lost-revenue-math",
+    "missed-calls-friday-night-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant",
+    "lunch-rush-phone-calls"
+  ],
+  "train-staff-phone-orders": [
+    "bilingual-staff-phone-orders",
+    "restaurant-host-duties-phone",
+    "cashier-phone-and-counter",
+    "family-run-restaurant-phone",
+    "owner-working-the-line"
+  ],
+  "turn-off-call-forwarding": [
+    "call-forwarding-codes-72-73",
+    "conditional-call-forwarding-busy-no-answer",
+    "forward-calls-att-business",
+    "forward-calls-comcast-business",
+    "forward-calls-google-voice"
+  ],
+  "upsell-phone-orders-restaurant": [
+    "ai-host-sold-out-items",
+    "ai-phone-upselling-restaurants",
+    "combo-meals-phone-orders",
+    "gluten-free-questions-phone",
+    "menu-photos-ordering"
+  ],
+  "usage-based-pricing-small-business": [
+    "is-ai-phone-answering-worth-it",
+    "per-minute-vs-per-order-pricing",
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant",
+    "budget-restaurant-technology"
+  ],
+  "valentines-day-restaurant-calls": [
+    "lunch-rush-phone-calls",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant",
+    "game-day-phone-orders-restaurant",
+    "missed-call-lost-revenue-math"
+  ],
+  "vegan-vegetarian-menu-questions": [
+    "gluten-free-questions-phone",
+    "combo-meals-phone-orders",
+    "family-meal-deals",
+    "halal-kosher-menu-questions",
+    "kids-menu-phone-orders"
+  ],
+  "virtual-host-restaurant": [
+    "ai-phone-card-payments",
+    "ai-phone-host-learns-menu",
+    "ai-in-restaurants-small-business",
+    "ai-phone-allergy-questions",
+    "ai-phone-greeting-restaurant"
+  ],
+  "virtual-receptionist-cost-restaurant": [
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant",
+    "cost-of-phone-staff-restaurant",
+    "ai-receptionist-for-restaurants",
+    "budget-restaurant-technology"
+  ],
+  "voice-ordering-restaurants": [
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "ai-voice-agent-restaurant",
+    "no-show-phone-orders",
+    "phone-order-confirmation-text"
+  ],
+  "wait-time-questions-restaurant": [
+    "gift-card-questions-restaurant",
+    "first-time-callers-restaurant",
+    "what-callers-ask-restaurants",
+    "accessibility-phone-orders",
+    "after-hours-message-examples"
+  ],
+  "washington-street-hoboken-restaurants": [
+    "downtown-jersey-city-restaurants",
+    "hoboken-restaurant-phone-orders",
+    "bayonne-union-city-restaurants",
+    "hudson-county-restaurants-takeout",
+    "jersey-city-restaurant-phone-orders"
+  ],
+  "what-callers-ask-restaurants": [
+    "difficult-callers-restaurant",
+    "gift-card-questions-restaurant",
+    "restaurant-phone-scripts-collection",
+    "accessibility-phone-orders",
+    "after-hours-message-examples"
+  ],
+  "what-counts-as-completed-order": [
+    "delivery-app-commission-math",
+    "pay-per-order-vs-monthly-fee",
+    "per-minute-vs-per-order-pricing",
+    "ai-phone-answering-cost-restaurant",
+    "answering-service-cost-restaurant"
+  ],
+  "what-is-ai-phone-answering-restaurants": [
+    "restaurant-owner-guide-ai-phone",
+    "ai-phone-host-multiple-languages",
+    "ai-phone-host-privacy-recordings",
+    "ai-phone-host-transfer-to-staff",
+    "ai-phone-host-voice-choice"
+  ],
+  "what-to-check-in-first-week-ai-host": [
+    "ai-host-catering-handoff",
+    "ai-host-complaint-handoff",
+    "set-up-ai-phone-host-one-minute",
+    "86-items-phone-orders",
+    "ai-host-hours-holidays"
+  ],
+  "who-should-answer-restaurant-phone": [
+    "86-items-phone-orders",
+    "ai-host-hours-holidays",
+    "multi-location-phone-management",
+    "phone-orders-during-renovation",
+    "refund-requests-phone-restaurant"
+  ],
+  "why-callers-hang-up-on-restaurants": [
+    "phone-on-hold-restaurant-customers",
+    "24-7-phone-answering-restaurant",
+    "after-hours-restaurant-calls",
+    "calls-before-opening-restaurant",
+    "difficult-callers-restaurant"
+  ],
+  "why-customers-still-call-restaurants": [
+    "ai-phone-ordering-system-restaurants",
+    "automated-phone-ordering-restaurant",
+    "no-show-phone-orders",
+    "older-customers-phone-orders",
+    "phone-order-confirmation-text"
+  ]
+}

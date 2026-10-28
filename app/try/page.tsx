@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { StartFunnel } from "@/components/start/start-funnel";
+import { JsonLd } from "@/components/seo/json-ld";
+import { graph, organizationJsonLd, softwareJsonLd, webPageJsonLd } from "@/lib/seo/json-ld";
+import { buildPublicPageMetadata } from "@/lib/seo/public-open-graph";
 import { readPendingTrialFromCookie } from "@/lib/trial/auth";
 import { toPublicView } from "@/lib/trial/store";
 
-export const metadata: Metadata = {
-  title: "Build your AI phone host — ROAL",
+export const metadata: Metadata = buildPublicPageMetadata({
+  title: "Try ROAL free: build your restaurant's AI phone host",
   description:
-    "Paste your restaurant's website or Google Maps link. We read your menu and hours, build your AI phone host, and it calls you in about two minutes. No sign-up.",
-  alternates: { canonical: "/try" },
-};
+    "Paste your restaurant's website or Google Maps link. ROAL reads your menu and hours and builds an AI phone host you can call in about a minute. No sign-up.",
+  canonicalPath: "/try",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -24,5 +27,16 @@ export default async function TryPage({ searchParams }: { searchParams: { q?: st
       initialTrial = null;
     }
   }
-  return <StartFunnel mode="public" initialQuery={q} initialTrial={initialTrial} />;
+  return (
+    <>
+      <JsonLd
+        data={graph(
+          webPageJsonLd({ path: "/try", name: "Build your AI phone host", description: "Build a free test phone host from your restaurant link." }),
+          organizationJsonLd(),
+          softwareJsonLd()
+        )}
+      />
+      <StartFunnel mode="public" initialQuery={q} initialTrial={initialTrial} />
+    </>
+  );
 }

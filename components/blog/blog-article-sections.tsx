@@ -1,3 +1,4 @@
+import { Markdown } from "@/components/seo/markdown";
 import { renderBlogInline } from "@/lib/blog/render-inline";
 import type { BlogArticleSection } from "@/lib/blog/types";
 
@@ -18,6 +19,7 @@ export function BlogArticleSections({ sections }: Props) {
           <h2 id={`${section.id}-heading`} className="blog-article-section__title">
             {section.title}
           </h2>
+          {section.body ? <Markdown text={section.body} className="seo-md mt-3" /> : null}
           {section.paragraphs.map((paragraph, i) => (
             <p key={i} className="blog-article-section__p">
               {renderBlogInline(paragraph)}

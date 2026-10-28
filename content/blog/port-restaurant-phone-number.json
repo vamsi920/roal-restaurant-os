@@ -1,0 +1,72 @@
+{
+  "slug": "port-restaurant-phone-number",
+  "keyword": "port business phone number",
+  "category": "phone-setup",
+  "title": "Porting a restaurant phone number: what owners need",
+  "seoTitle": "Porting a restaurant phone number | ROAL",
+  "description": "Port a restaurant phone number without losing calls. Keep your number, forward calls, and set up a phone system that keeps orders flowing.",
+  "question": "How do I port a restaurant phone number without losing calls or my existing number?",
+  "answer": "You usually do not need to port your restaurant number to add ROAL. The restaurant keeps its existing number, and you forward calls to the phone line ROAL gives each location. You can forward all calls or only when busy or unanswered, then turn forwarding off any time if you want to change back.",
+  "summary": "Learn how to keep your restaurant number while forwarding calls to a new phone host.",
+  "intro": "Porting a restaurant phone number usually does not mean giving up your old number. In many cases, the better move is to keep your existing number and forward it to a new line so calls still come in the same place.\n\nFor restaurant owners, that matters. Your number is on menus, Google, receipts, and old flyers. With ROAL, each location gets its own line automatically, and you forward your current number to it. That keeps the number your customers already know while the phone host answers orders and questions for you.",
+  "sections": [
+    {
+      "id": "do-you-need-to-port-the-number-or-just-forward-it",
+      "h2": "Do you need to port the number, or just forward it?",
+      "body": "For most restaurants, **forwarding** is the simpler choice. You keep your current restaurant number, and calls route to the line ROAL gives your location. That means you do not have to change the number on your signs, website, or printed menus.\n\nUse porting only if you are moving the number itself from one carrier or phone system to another. If your goal is just to have calls answered by an AI phone host, forwarding is usually enough. ROAL is set up that way by design, so the restaurant keeps its own number.\n\nA quick owner checklist:\n- Keep your current number active.\n- Make sure the forwarding target is the ROAL line for that location.\n- Test a real call from a mobile phone.\n- Confirm the caller reaches the phone host and the kitchen gets the ticket.\n\nIf you want the simplest setup path, start with [How it works](/how-it-works) and then check [How to forward your restaurant calls](/blog/how-to-forward-restaurant-calls)."
+    },
+    {
+      "id": "how-do-i-port-a-business-phone-number-without-breaking-servi",
+      "h2": "How do I port a business phone number without breaking service?",
+      "body": "If you truly need to port a business phone number, keep the old line working until the transfer is done. That helps avoid missed calls while the number moves between providers. Ask your current carrier or phone system what information they need, and verify the exact handoff date before you switch.\n\nFor a restaurant, timing matters. A lunch rush is not the time to lose the phone. Many owners plan the switch for a slower hour or after close, then test again the next morning.\n\nUse this simple plan:\n1. Confirm whether you need a real port or just call forwarding.\n2. Save account details from your current provider.\n3. Keep the old line live until the transfer is complete.\n4. Test inbound calls from an outside phone.\n5. If anything feels off, keep the old setup running until it is fixed.\n\nIf your goal is to add ROAL, you can often avoid the port step entirely and just forward calls to the new line instead."
+    },
+    {
+      "id": "what-forwarding-code-should-i-use-on-my-restaurant-line",
+      "h2": "What forwarding code should I use on my restaurant line?",
+      "body": "The code depends on the carrier or phone system. On many landlines and some carriers, `*72` starts forwarding all calls and `*73` turns it off. On GSM mobile carriers, `**21*number#` often forwards all calls and `##21#` turns it off; `**61*number#` often forwards unanswered calls and `**67*number#` often forwards busy calls. Verizon Wireless commonly uses `*72` / `*73`, with `*71` for busy or no-answer forwarding.\n\nBusiness VoIP systems usually handle forwarding in a web portal instead of a keypad code. Codes vary by carrier and plan, so always confirm with your provider and test with a real call.\n\nA practical restaurant example: say your current main number is the one printed on your takeout boxes, and ROAL gives your location a new line. You forward your main number to that ROAL line during dinner, then turn it off later if you want phones back on the old line.\n\nBefore you call your carrier, keep this on a note:\n- Main restaurant number\n- Forwarding target number\n- Whether you want all calls, unanswered calls, or busy calls\n- The time you want forwarding to start and stop\n\nFor more detail, see [Call forwarding codes by carrier](/tools/call-forwarding-codes) and [How to turn call forwarding back off](/blog/turn-off-call-forwarding)."
+    },
+    {
+      "id": "what-should-you-tell-staff-before-you-switch-the-number",
+      "h2": "What should you tell staff before you switch the number?",
+      "body": "Tell staff what calls will change, what will stay the same, and who answers edge cases. ROAL can take pickup and delivery orders, answer hours and menu questions, and hand off catering, complaints, allergy-sensitive questions, and manager requests with a summary.\n\nA simple staff script helps:\n\"We are forwarding the main line to our phone host. Orders still come in on the same restaurant number, and anything unusual goes to the team.\"\n\nMake sure staff knows these three things:\n- The restaurant keeps its own number.\n- ROAL will not take card numbers over the phone.\n- Questions it cannot answer go to the inbox, and you answer once so it learns it from then on.\n\nIf you are changing numbers on signage or a website, update those places only after you confirm forwarding works. If you are keeping the number, there may be nothing to update at all. That is one reason many owners prefer forwarding over a full port."
+    },
+    {
+      "id": "how-do-you-test-the-switch-before-a-busy-shift",
+      "h2": "How do you test the switch before a busy shift?",
+      "body": "Test it like a customer would. Call from a cell phone that is not on the restaurant Wi‑Fi, listen to the greeting, and place a small order or ask a menu question. You want to confirm the call reaches the phone host, the order is clear, and the kitchen screen shows the ticket.\n\nUse this quick test list:\n- Does the restaurant number still ring as expected?\n- Does the call forward to the right line?\n- Does the host answer in the right voice and name?\n- Can it take items, sizes, modifiers, and notes?\n- Does the caller hear the quoted ready time?\n- Does the kitchen screen show a clean ticket?\n\nExample script for a test call: \"Hi, can I get one medium pepperoni pizza for pickup, extra cheese, no onions, name is Sam?\" Then check whether the order is repeated back correctly and whether the ticket reaches the kitchen.\n\nROAL lets owners test-call the host right in the browser during setup, which makes this easier before you ever go live."
+    },
+    {
+      "id": "what-does-this-change-cost-compared-with-monthly-phone-plans",
+      "h2": "What does this change cost compared with monthly phone plans?",
+      "body": "The cost question usually comes up right after the setup question. ROAL charges **$0.90 per completed phone order**—a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nThat is different from many AI phone tools that charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call. Delivery apps commonly take roughly 15-30% commission per order, which can add up fast on takeout and pickup.\n\nHere is a simple plug-in example:\n| Example | Formula | Result |\n|---|---:|---:|\n| 120 completed phone orders | 120 × $0.90 | $108 |\n| 250 completed phone orders | 250 × $0.90 | $225 |\n\nUse your own order count and compare it to whatever you already spend on phone coverage, missed calls, or delivery app commissions. You can also use [Pricing](/pricing) and [AI phone host cost calculator](/tools/phone-host-cost-calculator) to sanity-check the numbers."
+    }
+  ],
+  "takeaways": [
+    "For most restaurants, forwarding is easier than porting the number itself.",
+    "ROAL keeps your restaurant’s existing number and gives each location its own line.",
+    "Use carrier-specific codes only after you confirm them and test a real call.",
+    "A good switch plan includes a live test, staff notice, and a backup path for unusual calls.",
+    "ROAL charges per completed phone order, not a monthly fee."
+  ],
+  "faq": [
+    {
+      "q": "Can I keep my restaurant phone number with ROAL?",
+      "a": "Yes. The restaurant keeps its own number. ROAL gives each location a phone line, and you forward your existing number to it. You can forward all calls, or only when busy or unanswered, and turn it off any time."
+    },
+    {
+      "q": "Do I need to port my number to use an AI phone host?",
+      "a": "Usually no. If your goal is to have calls answered and orders taken, forwarding is often enough. Porting is only needed when you want to move the number itself to another provider or system."
+    },
+    {
+      "q": "Will customers notice a new number when I switch?",
+      "a": "If you keep your current number and forward it, customers keep calling the same number they already know. Behind the scenes, the calls can route to the ROAL line for that location. That avoids reprinting menus and signage in many cases."
+    },
+    {
+      "q": "How do I know call forwarding is working?",
+      "a": "Call your restaurant from a different phone and listen to the full path. Confirm the call reaches the phone host, the order or question is handled correctly, and the ticket or summary arrives where it should. If the call does not route right, confirm the carrier code with your provider and test again."
+    }
+  ],
+  "words": 1133,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

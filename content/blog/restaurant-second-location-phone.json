@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-second-location-phone",
+  "keyword": "opening second restaurant location",
+  "category": "operations",
+  "title": "Opening a second restaurant location: phone and orders",
+  "seoTitle": "Opening a second restaurant location: phone and ordering",
+  "description": "Opening a second restaurant location means planning calls, pickup orders, and menu questions early. Use this phone checklist to set things up.",
+  "question": "How should I handle phone calls and ordering when opening a second restaurant location?",
+  "answer": "Set up each location with its own phone line, its own hours, and its own live menu so calls and orders go to the right kitchen. Forward the existing number to the new line during launch, then use an AI phone host like ROAL to answer calls, take pickup and delivery orders, quote ready times, and send clean tickets to the right location.",
+  "summary": "You’ll know how to route calls, set up ordering, and keep both locations organized from opening day.",
+  "intro": "Opening a second restaurant location means your phone setup has to be as clean as your kitchen flow. The safest plan is to give each store its own number, route calls carefully, and make sure every order lands on the right kitchen screen.\n\nIf you’re adding a second pizza shop, deli, or family restaurant, the phone can get messy fast. One missed forward, one wrong address, or one confused caller can turn into a bad rush, so the goal is simple: make the new location easy to reach and easy to order from.",
+  "sections": [
+    {
+      "id": "what-should-be-ready-before-the-second-location-opens",
+      "h2": "What should be ready before the second location opens?",
+      "body": "Before opening day, get the phone and ordering basics in place for each location. That means a working number, current hours, address, parking notes, and a menu that matches what the kitchen can actually make.\n\nA practical setup checklist:\n- Confirm the new location’s exact name, address, and suite number.\n- Decide which items are sold at both locations and which are location-specific.\n- Write down hours for dine-in, pickup, and delivery if they differ.\n- Set the best callback number for orders and questions.\n- Decide who handles allergy-sensitive questions, manager requests, and catering.\n\nFor a second location, I like to think in terms of “same brand, separate operations.” A caller should not have to guess where their food is coming from. If a customer asks, “Are you the one on Grand Avenue?” the phone host should answer clearly: “Yes, this is the Grand Avenue location. We’re at 42 Grand Avenue, and pickup is ready in about 20 minutes for a typical order.”\n\nIf you use ROAL, you can paste the restaurant website, Google Maps link, or just the name and city at /try, then test-call the host right in the browser. That helps you catch bad hours, missing menu items, or confusing location details before the new store gets busy."
+    },
+    {
+      "id": "how-do-you-route-calls-between-two-locations-without-confusi",
+      "h2": "How do you route calls between two locations without confusion?",
+      "body": "The cleanest setup is one phone line per location, then forward the existing number to the right line. ROAL gives each location its own phone line automatically after you claim the host, so the caller reaches the correct store and the kitchen sees the correct ticket.\n\nHere’s a simple routing plan many owners use:\n1. Keep the original number on your signs, website, and receipts.\n2. Forward that number to the new location’s line during the launch period.\n3. Test what happens when the line is answered, busy, or unanswered.\n4. Make sure staff know which location owns which calls.\n\nFor forwarding, the code depends on your carrier or phone system. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually do this in a web portal. Always confirm with your carrier and test with a real call.\n\nA good script line for staff is: “If it rings on this line, treat it as a Grand Avenue order unless the caller says otherwise.” That small rule prevents a lot of kitchen confusion."
+    },
+    {
+      "id": "how-do-you-take-orders-when-both-menus-are-not-the-same",
+      "h2": "How do you take orders when both menus are not the same?",
+      "body": "Second locations often start with different menus, different hours, or different prep capacity. That is normal. The key is to make sure the caller only hears items the location can actually sell.\n\nROAL reads the live menu, prices, hours, and address from public pages or an uploaded menu. It does not offer items marked sold out. It takes items, sizes, modifiers, and notes, then confirms the order back before sending a clean ticket to the kitchen screen.\n\nUse this menu checklist for each location:\n- Same signature items? List them on both menus.\n- Smaller kitchen at the second store? Remove slow or complicated items there.\n- Different prices by location? Keep each menu separate.\n- Different hours? Make sure the phone host knows them.\n- Sold-out items? Update them quickly so callers do not order what you cannot make.\n\nExample: say Location A sells a $28 average order and Location B averages $24. If you get 10 completed phone orders a day at each location, you can plug in your own numbers to estimate the weekly impact of missed calls or delivery-app commission. The exact math is yours to set, but the point is simple: phone orders from your own line usually keep more of the sale than third-party delivery apps, which commonly charge roughly 15-30% commission per order.\n\nA useful script line is: “For this location, we have the margherita, pepperoni, and vodka pie today, but we do not have the deep-fried special at this store.”"
+    },
+    {
+      "id": "how-do-you-keep-the-kitchen-from-getting-mixed-tickets",
+      "h2": "How do you keep the kitchen from getting mixed tickets?",
+      "body": "When you open a second location, the kitchen needs to know exactly which order belongs where. A ticket with the wrong store name or the wrong ready time causes delay before the food even starts cooking.\n\nA good ticket workflow is simple:\n- Each location gets its own kitchen screen or ticket view.\n- The ticket shows the caller name, phone number, items, modifiers, and notes.\n- The ready time is quoted on the call and visible on the kitchen side.\n- Staff can mark orders new, preparing, or ready.\n\nThat is where a tool like ROAL helps. It sends a clean ticket to the kitchen screen, keeps call history with transcripts and recordings, and gives you one place to review what happened on each line. If a caller says, “Please make it no onions and call me when it’s ready,” that note should land where the cook can see it.\n\nUse this short kitchen checklist at both stores:\n- Is the ticket for the correct location?\n- Did the order include the caller name and phone?\n- Are modifiers readable, not buried in a messy voicemail?\n- Did the quoted ready time match the current rush?\n- Is anything missing that staff need to confirm?\n\nIf you want a simple standard, train everyone to ask: “What location are you ordering from?” before anything else when a call reaches a staff member instead of the phone host."
+    },
+    {
+      "id": "how-much-will-the-second-location-cost-to-handle-by-phone",
+      "h2": "How much will the second location cost to handle by phone?",
+      "body": "Your phone setup should be part of the opening budget, not a surprise later. The cost model matters because a second store often has a new stream of calls, orders, and questions from day one.\n\nHere are common ways restaurants pay for phone help:\n- Delivery apps commonly charge roughly 15-30% commission per order.\n- Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in.\n- Human answering services usually bill per minute or per call.\n\nROAL uses a different structure: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. Billing is monthly.\n\nWorked example: say your second location takes 300 completed phone orders in a month. At $0.90 per completed order, the phone host cost would be $270 for that month. Plug in your own order count to compare it with a fixed monthly fee or a human answering service.\n\nHere’s a simple comparison table you can reuse with your own numbers:\n\n| Option | Typical cost style | Best for |\n|---|---|---|\n| Delivery apps | Commission per order | Extra reach, but costly |\n| Human answering service | Per minute or per call | Basic call coverage |\n| Monthly AI phone tools | Fixed monthly fee per location | Predictable bill |\n| ROAL | Pay per completed order | Restaurants with varying call volume |\n\nThe right choice depends on your volume, but for a second location, you want a cost model that grows with real orders instead of idle time."
+    },
+    {
+      "id": "what-should-staff-say-when-calls-spill-over-from-one-store-t",
+      "h2": "What should staff say when calls spill over from one store to the other?",
+      "body": "A second location usually means more edge cases: wrong number calls, location mix-ups, catering questions, complaints, reservation requests, and allergy concerns. The phone plan needs a clear handoff rule.\n\nROAL can take reservations, hand allergy-sensitive questions, catering, complaints, and manager requests to staff with a summary. That saves your team from repeating the same information over and over.\n\nTrain staff on a few exact lines:\n- “This store is on Main Street. The other location is on Grand Avenue.”\n- “I’m going to have the manager review that for you.”\n- “For allergy questions, I’m sending this to the kitchen and manager now.”\n- “For catering, we’ll have someone call you back with details.”\n\nA short handoff checklist helps a lot:\n1. Confirm the caller’s name and phone number.\n2. Confirm which location they want.\n3. Write down the issue in one sentence.\n4. Tell the caller who will respond and when.\n5. Log the call so the next shift can see it.\n\nIf the caller asks something the phone host cannot answer, ROAL sends it to an inbox. The owner answers once, and the host knows it from then on. That is useful in a second-location setup because your menus, policies, and hours may still be changing during the first few weeks.\n\nA good fallback line is: “I want to make sure we get that right, so I’m sending this to the store team now.”"
+    },
+    {
+      "id": "how-do-you-launch-the-second-location-without-missing-the-li",
+      "h2": "How do you launch the second location without missing the little things?",
+      "body": "The first week after opening is where phone mistakes usually show up. That is normal. The goal is to catch them early and tighten the process before the rush gets bigger.\n\nUse this launch checklist:\n- Test the number from a cell phone and a landline if you have one.\n- Confirm the caller hears the right location name and hours.\n- Place a test order and check the ticket on the kitchen screen.\n- Ask a staff member to answer a call and see if the fallback is clear.\n- Review call transcripts for missed questions or wrong menu details.\n- Update hours, sold-out items, and FAQs as soon as they change.\n\nROAL was built by Venkata Vamsi, a founder in Jersey City, NJ, and it works for any US restaurant. For owners in multi-location mode, the dashboard’s call history, menu editor, FAQs, upsell suggestions, and multi-location menus give you one place to keep both stores aligned.\n\nIf you want a practical starting point, build the new location’s phone host from your website, test it in the browser, and then switch on forwarding only when you’re ready: [build a free test host](/try).\n\nA final owner-minded tip: do not launch both stores with the same exact phone script if the menus or hours differ. A few custom lines for each location save a lot of callbacks later."
+    }
+  ],
+  "takeaways": [
+    "Give each location its own phone line and keep the original number on the business.",
+    "Make sure the menu, hours, address, and sold-out items match the store that answers the call.",
+    "Use call forwarding during launch, but confirm the codes with your carrier and test the call.",
+    "Keep kitchen tickets clean and location-specific so the right store makes the right order.",
+    "Choose a phone cost model that fits real order volume, not just busy work."
+  ],
+  "faq": [
+    {
+      "q": "Should each restaurant location have its own phone number?",
+      "a": "Yes, that is usually the cleanest setup. Each location should have its own line, hours, address, and menu details so callers reach the right kitchen and staff do not have to guess. You can still forward the original number during launch if needed."
+    },
+    {
+      "q": "How do I forward my restaurant number to a second location?",
+      "a": "Many landlines and some carriers use *72 to forward all calls and *73 to turn it off. Some mobile carriers use different codes, and business VoIP systems usually handle forwarding in a web portal. Always confirm with your carrier and test with a real call before you rely on it."
+    },
+    {
+      "q": "What should happen if a caller asks for the wrong location?",
+      "a": "Staff should confirm the location right away and either transfer the caller or take the order only if the kitchen can make it. A simple line like, “This is the Main Street store; the other location is on Grand Avenue,” keeps things clear. If the caller needs a manager or has an allergy question, send it with a summary."
+    },
+    {
+      "q": "Can ROAL handle different menus at different locations?",
+      "a": "Yes. ROAL supports multi-location menus, so each location can show the items, hours, and details that apply to that store. It reads public menu pages or uploaded menus, then takes orders from the live menu and sends a clean ticket to the kitchen screen."
+    }
+  ],
+  "words": 1744,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

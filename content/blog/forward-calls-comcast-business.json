@@ -1,0 +1,77 @@
+{
+  "slug": "forward-calls-comcast-business",
+  "keyword": "comcast business call forwarding",
+  "category": "phone-setup",
+  "title": "Comcast Business call forwarding for restaurants",
+  "seoTitle": "Comcast Business call forwarding for restaurants | ROAL",
+  "description": "Set up Comcast Business call forwarding for restaurants, with busy and no-answer options, test steps, and how ROAL fits in.",
+  "question": "How do I set up Comcast business call forwarding for my restaurant?",
+  "answer": "On Comcast Business Voice, call forwarding is usually set up from the phone line itself or through the business portal, depending on the plan and equipment. For many lines, you can forward all calls to another number, and some setups also let you forward only when the line is busy or unanswered. Always confirm the exact code or portal steps with Comcast and test by calling your restaurant before you rely on it.",
+  "summary": "Set up Comcast Business Voice forwarding, test it, and decide whether to route all calls or only busy/unanswered calls.",
+  "intro": "Comcast business call forwarding is usually set up by forwarding your restaurant line to another number, either for all calls or only when the line is busy or not answered. The exact steps depend on your Comcast Business Voice setup, so the safest move is to confirm the code or portal setting with Comcast and test it with a real call.\n\nFor restaurants, that matters because forwarding is often the bridge between your main number and a phone host like ROAL. Your guests keep calling the same restaurant number, while ROAL can answer pickup and delivery questions, take orders from your live menu, and send the ticket to the kitchen screen.",
+  "sections": [
+    {
+      "id": "how-do-i-forward-my-comcast-business-voice-number",
+      "h2": "How do I forward my Comcast Business Voice number?",
+      "body": "For many Comcast Business Voice setups, forwarding is done either with a phone code or in the web portal. The exact steps can vary by line type, device, and plan, so treat the steps below as a starting point, then confirm them with Comcast.\n\nA practical restaurant workflow looks like this:\n1. Find out whether your line uses a handset code or the business portal.\n2. Decide whether you want **all calls** forwarded or only **busy/unanswered** calls.\n3. Enter the forwarding number you want calls sent to.\n4. Place a test call from a mobile phone and watch what happens.\n5. Turn forwarding off after the test so you can confirm it worked both ways.\n\nIf your setup uses a code, Comcast support may tell you the exact sequence for your line. If your setup uses the portal, look for call handling or call forwarding settings. Keep a note taped near the phone with the forwarding number and the turn-off step so staff do not have to guess during a rush.\n\nFor a restaurant owner, the goal is simple: your main number stays yours, and forwarded calls land where you actually want them. That may be a manager phone, a second line, or an AI phone host like ROAL."
+    },
+    {
+      "id": "should-i-forward-all-calls-or-only-busy-and-unanswered-ones",
+      "h2": "Should I forward all calls or only busy and unanswered ones?",
+      "body": "Most restaurants do better with **busy/unanswered forwarding** than with forwarding every call. That way, your line still rings at the counter first, but overflow calls go somewhere useful when staff are tied up.\n\nHere is a simple way to decide:\n- **Forward all calls** if the front counter is closed, you are short-staffed, or you want one place to handle every call.\n- **Forward busy/unanswered** if you still want staff to pick up when they can.\n- **Use both** if your carrier supports it and your team wants a clear backup.\n\nExample: say your restaurant gets 20 calls during the dinner rush and your team can answer 12. The other 8 can go to the forwarding destination instead of turning into voicemail. If those 8 are order calls, reservation requests, or menu questions, that is the part that matters.\n\nFor a restaurant using ROAL, busy/unanswered forwarding can be a good fit because the host can answer calls about hours, address, parking, and the menu, and it can take pickup and delivery orders from the live menu. If a caller asks for a manager, has an allergy-sensitive question, or wants catering help, the call can be handed to staff with a summary."
+    },
+    {
+      "id": "what-should-i-test-before-i-trust-the-forwarding-setup",
+      "h2": "What should I test before I trust the forwarding setup?",
+      "body": "Do not assume the code worked just because the phone beeped. Test it like a customer would.\n\nUse this quick checklist:\n- Call from a cell phone, not the restaurant phone.\n- Let the line ring long enough to trigger the forwarding behavior you chose.\n- Check whether the call lands on the right number.\n- Listen for caller ID if that matters to your staff.\n- Confirm what happens when the forwarded line is busy.\n- Turn forwarding off and make sure calls return to the main line.\n\nA good test script is: \"Hi, I am calling the restaurant to place a pickup order.\" Then see whether the right person or system gets the call. If you use ROAL, test a real order question, such as \"What size calzone do you have?\" or \"Can I add extra onions?\" so you can see how it handles live menu items and modifiers.\n\nMake the test at the same time of day you expect real pressure. A setup that works at 11 a.m. can behave differently during a Friday dinner rush if staff are already on the line."
+    },
+    {
+      "id": "how-does-call-forwarding-fit-with-roal",
+      "h2": "How does call forwarding fit with ROAL?",
+      "body": "ROAL gives each location its own phone line automatically after the owner claims the host. You keep your restaurant number, and you forward it to the ROAL line so the restaurant can keep its familiar number while the host answers the calls.\n\nA common setup looks like this:\n| Step | What you do | Why it matters |\n|---|---|---|\n| 1 | Paste your restaurant website, Google Maps link, or Name, City at /try | ROAL reads the menu, hours, and address |\n| 2 | Test-call the host in the browser | You hear how it sounds before going live |\n| 3 | Claim the host | You attach it to your restaurant |\n| 4 | Forward your Comcast Business Voice number | Calls reach the host instead of going unanswered |\n| 5 | Test and adjust | You confirm the handoff works |\n\nOnce live, ROAL can take items, sizes, modifiers, notes, caller name and phone, and a ready time. It does not take card numbers over the phone, and it will not offer items marked sold out. If it cannot answer a question, the owner sees it in the inbox and answers once, so the host knows it next time.\n\nIf you want a deeper setup walk-through, see [How it works](/how-it-works) or [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-does-forwarding-do-for-order-flow-during-a-rush",
+      "h2": "What does forwarding do for order flow during a rush?",
+      "body": "Forwarding is not just a phone setting. It changes how orders move through the restaurant.\n\nSay your average pickup order is $28. If forwarding helps recover just 5 missed orders in a busy night, that is $140 in order value for that shift. Plug in your own average ticket and your own call volume. The point is not to chase a magic number. It is to see whether the calls that used to slip away can now become useful tickets.\n\nHere is a simple owner checklist for the rush:\n- Keep the restaurant number on your signage and Google profile.\n- Forward the number when the front counter gets slammed.\n- Make sure the forwarded destination can quote ready times clearly.\n- Keep allergy-sensitive and complaint calls going to staff, not the kitchen.\n- Review the call history later so you can see what people asked.\n\nROAL's dashboard includes live tickets on the kitchen screen, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That makes forwarding part of the full order process, not a separate phone problem. For owners comparing phone options, [Pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) is a useful read."
+    },
+    {
+      "id": "how-do-i-turn-forwarding-off-after-hours-or-when-the-team-is",
+      "h2": "How do I turn forwarding off after hours or when the team is back?",
+      "body": "Always know the turn-off step before you turn forwarding on. In many systems, there is a matching code or a portal switch, but the exact method depends on Comcast Business Voice and your plan.\n\nA practical shutdown routine:\n1. Pick one person who owns the setting.\n2. Save the forward-to number in the phone notes or on a printed sheet.\n3. Turn forwarding off at closing, or when the manager comes back on duty.\n4. Test the main line again so you know it rings normally.\n5. Check the next morning that no one left it stuck on by mistake.\n\nThis matters because a restaurant can lose calls for a boring reason: someone forgot the setting was still live. A simple close-of-night checklist fixes that.\n\nIf you are using ROAL, you can also decide when to forward calls to the host and when to let staff answer directly. The restaurant keeps its own number, and forwarding can be turned off any time. That is helpful for owners who want coverage during lunch, dinner, or short-staffed shifts but want the front desk to take over when the team is ready. For setup ideas beyond Comcast, see [forward only when busy or unanswered](/blog/conditional-call-forwarding-busy-no-answer)."
+    },
+    {
+      "id": "what-should-i-tell-staff-so-the-phone-stays-consistent",
+      "h2": "What should I tell staff so the phone stays consistent?",
+      "body": "Your phone plan works better when the team uses the same language. Staff do not need a long script. They need a short one that matches how forwarded calls are handled.\n\nHere is a simple script for a counter person:\n\"Thanks for calling. If the line is busy, your call may be answered by our phone host for orders and menu questions. For anything urgent or specific to your table, I can get a manager.\"\n\nAnd here is a clean handoff line for staff if the call needs a human:\n\"I am going to transfer you to the team member who handles that. Please hold for a moment.\"\n\nUse this mini checklist with your team:\n- Know whether Comcast forwarding is on or off.\n- Know which calls go to the host and which go to staff.\n- Keep the restaurant hours and address consistent.\n- Tell callers when payment is taken in person or by the restaurant's usual method.\n- Review the inbox for questions the host could not answer.\n\nIf you want to see how ROAL fits a restaurant workflow before you change your phone setup, [build a free test host](/try). It takes the restaurant's public menu, hours, and address, and you can test-call it right in the browser with no sign-up needed."
+    }
+  ],
+  "takeaways": [
+    "Comcast Business Voice forwarding can usually be set up through a code or the business portal, but you should confirm the exact steps with Comcast.",
+    "Busy/unanswered forwarding is often a better fit for restaurants than forwarding every call.",
+    "Always test forwarding with a real call before relying on it during service.",
+    "ROAL can answer restaurant calls, take orders from the live menu, and send a clean ticket to the kitchen screen.",
+    "Keep a clear close-of-night routine so forwarding does not stay on by accident."
+  ],
+  "faq": [
+    {
+      "q": "How do I forward my Comcast Business Voice line to another number?",
+      "a": "The exact method depends on your Comcast Business Voice setup. Some lines use a phone code, while others use the web portal for call forwarding settings. Confirm the right steps with Comcast, enter the destination number, and test it with a real call."
+    },
+    {
+      "q": "Can I forward calls only when my line is busy or not answered?",
+      "a": "Often, yes. Many business phone setups support busy or unanswered forwarding, but the available option depends on the line and plan. For a restaurant, that is often the best setting because staff can still answer when free, while overflow calls go somewhere useful."
+    },
+    {
+      "q": "Will call forwarding replace my restaurant number?",
+      "a": "No. The restaurant keeps its own number. Forwarding just sends calls to another destination when you choose. That is useful if you want callers to keep using the same number while calls are handled by staff, voicemail, or a phone host like ROAL."
+    },
+    {
+      "q": "Should I test forwarding after I set it up?",
+      "a": "Yes. Always make a real test call from a mobile phone and check where the call lands, how long it rings, and whether the turn-off step works. A quick test can save you from missed orders or a setting that stayed on longer than you wanted."
+    }
+  ],
+  "words": 1549,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "phone-orders-kitchen-display",
+  "keyword": "phone orders kitchen display system",
+  "category": "phone-orders",
+  "title": "Getting phone orders onto the kitchen display",
+  "seoTitle": "Phone orders kitchen display system for restaurants",
+  "description": "See how a phone orders kitchen display system works, what details the kitchen needs, and how to set up a cleaner workflow.",
+  "question": "How do I get phone orders onto the kitchen display system in my restaurant?",
+  "answer": "Use a phone host that turns each confirmed call into a clean kitchen ticket with items, modifiers, notes, name, phone, and ready time. With ROAL, the order is taken from your live menu, confirmed on the call, and sent to the kitchen screen so staff can start cooking right away.",
+  "summary": "You’ll know how to connect phone orders to your kitchen screen and keep the order flow clean from call to prep.",
+  "intro": "Getting phone orders onto the kitchen display means every confirmed order lands in the kitchen screen as a clean ticket, instead of sitting on a notepad or in someone’s memory. That is the simplest way to keep pickup and delivery orders organized when the phone gets busy.\n\nROAL does that by answering the call, taking the order from your live menu, and sending a kitchen ticket with the details your staff needs. The owner keeps the restaurant’s existing number, and forwarding can be turned on for all calls or only when busy or unanswered.",
+  "sections": [
+    {
+      "id": "what-should-a-phone-order-ticket-send-to-the-kitchen",
+      "h2": "What should a phone order ticket send to the kitchen?",
+      "body": "A good kitchen ticket should be short, clear, and hard to misread. Your cook does not need the whole call transcript. They need the order, the timing, and the contact details that matter.\n\nUse this as the minimum ticket format:\n- Customer name and phone number\n- Order type: pickup or delivery\n- Items, sizes, modifiers, and notes\n- Ready time or promised time\n- Any special instructions for staff\n\nExample ticket:\n| Field | Example |\n|---|---|\n| Name | Maria S. |\n| Phone | 201-555-0148 |\n| Order type | Pickup |\n| Items | Large pepperoni pizza, no onions; side salad |\n| Notes | Cut pizza into squares |\n| Ready time | 25 minutes |\n\nIf you already use a kitchen display system, ask one simple question: “Can the person on the phone create a ticket the kitchen can read in five seconds?” If the answer is no, the setup is too messy. ROAL sends a clean ticket to the kitchen screen after confirming the order, which is exactly what busy line cooks need."
+    },
+    {
+      "id": "how-do-i-connect-my-restaurant-phone-to-the-kitchen-screen",
+      "h2": "How do I connect my restaurant phone to the kitchen screen?",
+      "body": "The phone side and the kitchen side have to meet somewhere simple. In most restaurants, that means forwarding the existing restaurant number to the phone host, then letting the host send the confirmed order to the kitchen screen.\n\nA practical setup looks like this:\n1. Decide which calls should go to the host: all calls, or only busy and unanswered calls.\n2. Confirm the forward code with your carrier or phone system.\n3. Test a real call and place a small sample order.\n4. Watch the ticket appear on the kitchen screen.\n5. Make sure the staff can read items, modifiers, and ready time at a glance.\n\nPhone forwarding codes vary, so always confirm with your carrier and test with a call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nROAL gives each location its own phone line automatically once the owner claims the host, and forwarding can be turned off any time."
+    },
+    {
+      "id": "what-does-a-clean-phone-order-ticket-look-like-in-real-life",
+      "h2": "What does a clean phone order ticket look like in real life?",
+      "body": "Kitchen tickets fail when they are too long, too vague, or full of extra words. A clean ticket should make the next action obvious: start the pizza, pack the sandwich, mark the order ready.\n\nHere is a worked example you can copy for your own menu:\n- Restaurant: family pizza shop\n- Order: 1 large cheese pizza, 1 medium meat lovers pizza, 2 sodas\n- Modifiers: cheese pizza well done, meat lovers no mushrooms\n- Notes: call upon arrival for pickup\n- Ready time: 20 minutes\n\nNow compare that with a messy version:\n- “Caller wants food for later, maybe around 20 minutes, and said something about the pizza being crispy.”\n\nThe first version is usable. The second one creates questions at the make line. That is why a kitchen display should show the order in a format that matches how your staff cooks and packs food.\n\nIf you use ROAL, the host confirms the order back on the call before the ticket goes to the kitchen screen. It takes items, sizes, modifiers, notes, name, phone, and ready time, which helps reduce back-and-forth at the counter."
+    },
+    {
+      "id": "how-do-i-handle-sold-out-items-allergies-and-special-request",
+      "h2": "How do I handle sold-out items, allergies, and special requests?",
+      "body": "The kitchen display should not become a dumping ground for every question. Some calls need staff attention, not an automatic ticket. That includes allergy-sensitive questions, catering requests, complaints, and manager requests.\n\nUse a simple rule:\n- Routine order details go to the kitchen screen.\n- Sensitive or unusual questions go to staff with a summary.\n\nExample phone lines you can use:\n- “Let me check that with the kitchen before I confirm it.”\n- “I’m going to send that request to the team and have them review it.”\n- “For allergy questions, I’ll get the staff member who handles that.”\n\nThat split matters because the kitchen needs speed, but it also needs accuracy. ROAL does not offer items marked sold out. It can hand off catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. That way, your screen stays clean and your team only sees what they actually need to act on.\n\nSimple checklist before you go live:\n- Mark sold-out items in your menu editor\n- Decide who handles allergy questions\n- Decide who gets manager calls\n- Make sure the kitchen screen is checked during rush periods"
+    },
+    {
+      "id": "how-should-i-think-about-cost-compared-with-other-options",
+      "h2": "How should I think about cost compared with other options?",
+      "body": "A phone orders kitchen display system should save time without adding a big fixed bill every month. That matters when some days are busy and some days are slow.\n\nHere is a simple way to compare options using example numbers you can swap for your own:\n- Say your average completed phone order is $28.\n- If a delivery app takes roughly 15-30% commission, that order can cost about $4.20 to $8.40 in commission before other costs.\n- If a monthly AI phone plan is $79 to $599 per location, you pay that whether the phone rings or not.\n- Human answering services often bill by the minute or by the call.\n\nROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nFor a rough owner-side comparison, plug in your own numbers:\n| Item | Example |\n|---|---|\n| Average phone order | $28 |\n| Completed phone orders in a month | 300 |\n| ROAL cost at $0.90 each | $270 |\n| Fixed monthly plan example | $199+ even in a slow month |\n\nThe point is not to chase the cheapest line item. The point is to pay for completed orders that actually reach the kitchen."
+    },
+    {
+      "id": "what-should-i-train-staff-to-watch-for-on-day-one",
+      "h2": "What should I train staff to watch for on day one?",
+      "body": "The first day matters because the kitchen screen is only useful if the team trusts it. Keep the training short and practical.\n\nTrain staff on these five things:\n1. Where to look for new tickets.\n2. How to tell a new ticket from one already preparing.\n3. Who marks an order ready.\n4. What to do when a ticket looks wrong.\n5. Who handles a call summary that was sent to staff instead of the kitchen.\n\nA useful line for the shift lead is: “If the ticket is on the screen, make it. If it looks wrong, flag it right away.” That keeps the team focused.\n\nAlso decide who owns menu updates. If a price changes, a topping runs out, or hours change, the menu and hours should be corrected fast so the phone host stays current. ROAL includes a menu editor, hours, FAQs, upsell suggestions, call history with transcripts and recordings, and multi-location menus in the dashboard.\n\nKeep a small opening checklist near the register:\n- Kitchen screen on\n- Tickets showing in the right order\n- Sold-out items updated\n- Hours correct\n- One person assigned to check call handoffs"
+    },
+    {
+      "id": "how-do-i-set-this-up-without-making-the-phone-messy",
+      "h2": "How do I set this up without making the phone messy?",
+      "body": "Start small and keep the call flow simple. Your goal is not to sound fancy. Your goal is to get the order into the kitchen cleanly.\n\nA practical setup plan:\n1. Paste your restaurant website, Google Maps link, or “Name, City” into the setup page.\n2. Let ROAL read the menu, prices, hours, and address from public pages.\n3. Test-call it in the browser before going live.\n4. Claim the host and forward the existing number to it.\n5. Place one real order and confirm the ticket appears on the kitchen screen.\n\nYou can also upload a menu in any format. The owner picks the host’s voice and name, and questions the host could not answer land in an inbox. Once you answer them, the host learns from then on.\n\nFor owners who want to try it, [Build a free test host](/try) is the fastest first step. You can also read [How it works](/how-it-works) or check [Pricing](/pricing) before you decide. ROAL was built by Venkata Vamsi in Jersey City, NJ, and it works for any US restaurant, not just the first locations."
+    }
+  ],
+  "takeaways": [
+    "A kitchen display needs a clean ticket with name, phone, items, modifiers, notes, and ready time.",
+    "Forward your existing number to the phone host, then test the path from call to kitchen screen.",
+    "Keep sold-out items, allergy questions, and manager requests out of the standard ticket flow.",
+    "ROAL charges per completed phone order, not a monthly fee.",
+    "Train staff on where to see tickets and who fixes menu issues fast."
+  ],
+  "faq": [
+    {
+      "q": "How do phone orders get to the kitchen display system?",
+      "a": "The phone host takes the order, confirms it with the caller, and sends a clean ticket to the kitchen screen. The ticket should include items, sizes, modifiers, notes, the customer name and phone, and the ready time. That keeps the kitchen focused on prep instead of re-listening to a call."
+    },
+    {
+      "q": "Can I keep my restaurant’s current phone number?",
+      "a": "Yes. The restaurant keeps its own number and forwards it to ROAL. Forwarding can be set to all calls or only when busy or unanswered, and it can be turned off any time. Always confirm the exact forwarding steps with your carrier or phone system and test with a real call."
+    },
+    {
+      "q": "What if a caller asks about allergies or catering?",
+      "a": "Those calls should be handed to staff with a summary, not pushed into a standard kitchen ticket. ROAL can do that for catering, complaints, allergy-sensitive questions, and manager requests. That keeps urgent or sensitive issues in human hands while routine orders still reach the kitchen screen."
+    },
+    {
+      "q": "How much does a phone orders kitchen display system cost with ROAL?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly."
+    }
+  ],
+  "words": 1467,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "spice-level-phone-orders",
+  "keyword": "spice level ordering",
+  "category": "menu",
+  "title": "Spice level ordering for restaurant phone calls",
+  "seoTitle": "Spice level ordering for restaurant phone calls | ROAL",
+  "description": "Use simple scripts and modifier setup to handle mild, medium, hot, and extra hot orders correctly on the phone.",
+  "question": "How should I handle spice level ordering on restaurant phone calls?",
+  "answer": "Set up clear spice choices for each dish, then have your phone host repeat the level back before sending the ticket. Use simple labels like mild, medium, hot, and extra hot, and make sure the kitchen sees the same wording every time. For dishes with special heat levels, add a short note like “sauce on the side” or “make it extra spicy” only when your menu allows it.",
+  "summary": "You’ll learn how to take spice level orders clearly, speed up phone calls, and send cleaner tickets to the kitchen.",
+  "intro": "Spice level ordering works best when the menu is simple and the call script is even simpler. Give callers a few clear choices, repeat the choice back, and make sure the kitchen ticket shows the same words every time.\n\nFor a busy pizza shop, deli, takeout spot, or family restaurant, this saves time and cuts down on “too spicy” or “not spicy enough” complaints. ROAL can take those modifier notes from your live menu, repeat them back to the caller, and send a clean ticket to the kitchen screen.",
+  "sections": [
+    {
+      "id": "which-spice-levels-should-i-offer-on-the-phone",
+      "h2": "Which spice levels should I offer on the phone?",
+      "body": "Keep the choices short. Most restaurants do best with 3 to 5 levels that match what the kitchen already understands.\n\nA simple setup looks like this:\n- Mild\n- Medium\n- Hot\n- Extra hot\n- No spice / sauce on the side\n\nIf you serve dishes with a house seasoning or a specific chili oil, use the words your kitchen already uses. Don’t make the caller guess. Say the level in plain English, then repeat it back.\n\nExample phone line:\n\"For the chicken curry, would you like mild, medium, hot, or extra hot?\"\n\nIf a dish cannot be made less spicy, say that clearly. For example: \"The buffalo wings come as-is, but I can note extra ranch on the side.\" That keeps the call honest and avoids confusion at pickup."
+    },
+    {
+      "id": "how-do-i-keep-spice-notes-clear-on-the-ticket",
+      "h2": "How do I keep spice notes clear on the ticket?",
+      "body": "The ticket should show the exact spice note in kitchen language, not a long story from the caller. Short notes are easier to read during a rush.\n\nA good note format is:\n1. Item name\n2. Spice level\n3. Any extra instruction\n4. Name and phone\n\nWorked example: say a caller orders two chicken sandwiches and one curry bowl. If the sandwich can be made hot and the curry can be made medium, the ticket should read:\n- Chicken sandwich — hot\n- Chicken sandwich — no spice\n- Curry bowl — medium\n\nIf your menu has a special phrasing, keep it consistent. ROAL reads the live menu and sends a clean ticket to the kitchen screen, so your team sees one standard version instead of a messy mix of caller language. That matters when the line is busy and one person is juggling pickup, delivery, and walk-ins."
+    },
+    {
+      "id": "what-should-the-phone-script-sound-like",
+      "h2": "What should the phone script sound like?",
+      "body": "A good script feels natural, not robotic. The goal is to ask one clear question, confirm the answer, and move on.\n\nTry this structure:\n- Ask for the item\n- Ask for spice level\n- Repeat the spice level back\n- Confirm any extra notes\n\nExample script lines:\n- \"How spicy would you like that?\"\n- \"Got it — medium spice.\"\n- \"Just to confirm, that’s one medium curry and one mild noodle dish.\"\n\nIf you use ROAL, it can speak the caller’s language and collect the order details in the same flow. That helps when callers are not comfortable with fast back-and-forth. It also helps staff because the kitchen ticket arrives with a short summary instead of a long call transcript.\n\nA simple owner checklist:\n- Use the same spice words on the menu and on the phone\n- Repeat the level back once before ending the item\n- Ask whether the caller wants sauce on the side if that matters\n- Do not promise a level the kitchen cannot make"
+    },
+    {
+      "id": "how-do-i-handle-dishes-that-only-allow-some-spice-levels",
+      "h2": "How do I handle dishes that only allow some spice levels?",
+      "body": "Not every item needs every level. Some dishes can handle spice changes, and some cannot. The cleaner your rules, the fewer mistakes.\n\nUse a quick menu rule like this:\n| Item type | Best phone rule | Example wording |\n|---|---|---|\n| Curry, noodles, fried rice | Offer full spice range | \"Mild, medium, hot, or extra hot\" |\n| Wings, sandwiches, wraps | Offer one or two spice options | \"Hot sauce added\" or \"make it mild\" |\n| Soups, sauces, specialty dishes | Limit changes | \"Spice notes only, if the kitchen allows it\" |\n\nWorked example: if your kitchen can only adjust the sauce on a stir-fry, do not let the caller treat it like a fully customizable dish. Say: \"I can note mild, medium, or hot for the sauce, but I can’t change the base seasoning.\" That is better than taking an order the kitchen cannot follow.\n\nIf you want more help with menu wording, see [menu modifiers, explained for owners](/blog/menu-modifiers-explained) and [combos and specials on the phone](/blog/combo-meals-phone-orders)."
+    },
+    {
+      "id": "how-should-i-train-staff-or-an-ai-phone-host-to-confirm-spic",
+      "h2": "How should I train staff or an AI phone host to confirm spice levels?",
+      "body": "Train for one rule: no spice level is complete until it is repeated back. That one habit prevents a lot of mistakes.\n\nUse this confirmation flow:\n1. Caller names the item.\n2. The host asks for the spice level.\n3. The host repeats the level back.\n4. The host adds any side note.\n5. The host confirms the whole order before sending it.\n\nExample confirmation line:\n\"So that’s one chicken biryani, medium spice, and one lamb wrap, mild, correct?\"\n\nROAL is built to do this on the phone and send a clean ticket to the kitchen screen. It can also take the caller’s name and phone, quote a ready time, and hand off allergy-sensitive questions or manager requests to staff with a summary. It will not take card numbers over the phone, so payment still happens the way your restaurant already handles it.\n\nA simple training checklist for your team:\n- Never guess the spice level\n- Never assume “regular” means the same thing for every dish\n- Repeat “mild, medium, hot, extra hot” exactly as written on the menu\n- Escalate allergy-sensitive spice questions to staff"
+    },
+    {
+      "id": "how-do-i-explain-spice-levels-to-callers-without-slowing-the",
+      "h2": "How do I explain spice levels to callers without slowing the line?",
+      "body": "The fastest calls use plain words and a short menu. Don’t overexplain each dish. Just give the caller the options and move on.\n\nA useful approach is to keep one standard line for every spicy item:\n- \"What spice level would you like?\"\n- \"Do you want it mild, medium, hot, or extra hot?\"\n- \"Would you like that on the side instead?\"\n\nIf a caller asks for “as spicy as possible,” translate that into your kitchen’s highest level only if your menu supports it. If not, say so clearly: \"Our hottest option is extra hot.\" That is easier than letting the order drift into a special request the kitchen may not want to make.\n\nFor owners watching costs, cleaner phone orders can matter a lot. Delivery apps commonly take roughly 15-30% per order, and many monthly AI phone tools charge a fixed fee whether or not the phone rings. ROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, and no per-minute fee. If you want to compare your own numbers, you can use the [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "what-does-a-good-spice-level-menu-setup-look-like-day-to-day",
+      "h2": "What does a good spice-level menu setup look like day to day?",
+      "body": "The best setup is boring in the right way. The caller hears clear choices, the kitchen gets a clean note, and nobody has to decode the order later.\n\nA practical daily setup:\n- Keep spice labels the same across phone, website, and printed menu\n- Put the hottest level last so it is easy to hear\n- Use one note for “no spice” or “sauce on the side” when needed\n- Review the call history for any repeated confusion\n\nIf your menu changes often, update the wording in one place and keep it current. ROAL’s dashboard includes a menu editor, call history with transcripts and recordings, and live kitchen tickets so you can check how callers are actually asking for spice. That is useful for lunch rushes, delivery-heavy nights, and late calls when staff are busy.\n\nIf you want to test a simple setup from your own menu, [build a free test host](/try). You can paste your restaurant website, Google Maps link, or name and city, then see how the host reads your menu and handles spice options before you claim the line."
+    }
+  ],
+  "takeaways": [
+    "Use a small set of clear spice levels, and keep the wording the same on every menu.",
+    "Repeat the spice level back before you send the ticket to the kitchen.",
+    "Limit spice choices on dishes that cannot be customized well.",
+    "Use short phone script lines so the order stays fast and accurate.",
+    "ROAL can take spice notes from the live menu and send a clean kitchen ticket."
+  ],
+  "faq": [
+    {
+      "q": "What are the best spice levels to offer on phone orders?",
+      "a": "Most restaurants do well with mild, medium, hot, and extra hot. If your kitchen uses different words, stick with those words instead so the phone and kitchen match. Keep the list short enough that callers can answer quickly."
+    },
+    {
+      "q": "How do I stop callers from saying “make it spicy” in a vague way?",
+      "a": "Offer fixed choices right away: “Would you like mild, medium, hot, or extra hot?” If the dish cannot be fully customized, say that clearly and give the closest option. Repeating the level back helps prevent mix-ups."
+    },
+    {
+      "q": "Should spice level be part of the menu item or a separate note?",
+      "a": "For many restaurants, it works best as a modifier tied to the item. That keeps the ticket clean and makes it easier for the kitchen to see the exact level next to the dish. If a dish only allows limited changes, add a short note instead of opening every possible choice."
+    },
+    {
+      "q": "Can ROAL handle spice level ordering on the phone?",
+      "a": "Yes. ROAL can take items, modifiers, and notes from the restaurant’s live menu, repeat the order back, and send a clean ticket to the kitchen screen. It also takes the caller’s name and phone, quotes a ready time, and hands tricky questions to staff."
+    }
+  ],
+  "words": 1270,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

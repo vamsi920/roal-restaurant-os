@@ -1,0 +1,124 @@
+{
+  "slug": "seafood",
+  "label": "Seafood restaurants",
+  "h1": "An AI phone host for seafood restaurants",
+  "seoTitle": "AI phone answering for seafood restaurants | ROAL",
+  "description": "ROAL answers seafood restaurant calls, takes pickup orders, and handles questions about hours, parking, and the menu. Built for busy rushes.",
+  "lead": "Busy dinner rush. Fried shrimp on the grill. Phones ringing while you plate crab cakes. ROAL is a phone host for seafood restaurants that answers calls and takes pickup orders from your live menu.",
+  "question": "How can an AI phone host help a seafood restaurant answer calls and take pickup orders?",
+  "answer": "ROAL answers your restaurant’s phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common seafood call situations like soft-shell crab availability, fried flounder pickup times, oyster questions, parking, and hours, while handing harder questions to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings during the rush",
+      "body": "On a Friday night, your team may be dropping baskets, packing clams, and trying to keep the line moving. A missed call can mean a lost order for crab legs, lobster rolls, or a family pickup."
+    },
+    {
+      "title": "Seafood menus change fast",
+      "body": "Sold-out items matter more when you run fish, oysters, or daily specials. If the catch changes, the phone host can avoid offering items marked sold out and stick to what is live on the menu."
+    },
+    {
+      "title": "Calls can slow down the kitchen",
+      "body": "A phone order needs names, numbers, modifiers, and ready times. If staff have to stop mid-service for every call, the back of house gets crowded fast."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes seafood pickup orders clearly",
+      "body": "ROAL can take items, sizes, sauces, sides, modifiers, and notes. For example: fried shrimp platter, extra tartar, no coleslaw, ready at 6:30."
+    },
+    {
+      "title": "Answers common seafood questions",
+      "body": "It can give hours, address, parking, and menu details from your live info. That helps with simple questions like “Do you have raw oysters today?” or “Can I park out front?”"
+    },
+    {
+      "title": "Sends clean tickets to the kitchen",
+      "body": "Orders go to the kitchen screen with live status like new, preparing, and ready. That keeps phone orders easier to track during a crab cake rush or a Friday fish fry."
+    },
+    {
+      "title": "Helps when the line is busy or after hours",
+      "body": "You can forward all calls, busy calls, or unanswered calls to ROAL. If a caller needs a manager, has an allergy question, or asks about catering, it can pass that along with a summary."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order for 6:45?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Two fried shrimp platters, one lobster roll, and an order of clam strips."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes? For the platters, would you like coleslaw and fries as listed?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes. No coleslaw on one platter. Extra tartar sauce, please. Name’s Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. I have two fried shrimp platters, one no coleslaw, one lobster roll, and one clam strips order, all with extra tartar sauce. Ready for pickup at 6:45 pm."
+    },
+    {
+      "who": "caller",
+      "line": "That’s right."
+    },
+    {
+      "who": "host",
+      "line": "Perfect. I’ll send it over now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:45 pm",
+    "lines": [
+      "Maria",
+      "2 Fried Shrimp Platters",
+      "1 Lobster Roll",
+      "1 Clam Strips",
+      "Modifier: no coleslaw on 1 platter",
+      "Modifier: extra tartar sauce"
+    ],
+    "note": "Confirm sauces and sides at pickup."
+  },
+  "sections": [
+    {
+      "h2": "Built for seafood call patterns",
+      "body": "Seafood restaurants get the kind of calls that need quick, exact answers. A caller may ask if you still have oysters, whether the clam chowder is available, if the fish is baked or fried, or how long a pickup order will take on a busy night. ROAL is designed for those moments. It reads your live menu, so it can speak from the items you actually sell. If a dish is marked sold out, it does not offer it. That matters when the last soft-shell crab is gone or the catch changes before dinner service.\n\nYou can also use it for the calls that pull staff away from the line: hours, address, parking, reservation requests, and manager questions. If someone asks about a shellfish allergy, it can send the question to staff with a summary instead of guessing. Start at [Build a free test host](/try), then test-call it in your browser before you forward anything."
+    },
+    {
+      "h2": "Keep the phone from breaking the flow",
+      "body": "A seafood kitchen has tight timing. Fries, rice, crab legs, sauces, and fried baskets all need to land at the right moment. When the phone rings during that stretch, even a short call can interrupt the cook line or the host stand.\n\nROAL can help with pickup orders from the live menu and quote a ready time during the call. That gives the caller a clear answer without tying up your staff. If you only want help when the team is slammed, you can forward calls only when busy or unanswered. Your restaurant keeps its own number, and forwarding can be turned off any time. For owners comparing options, [How it works](/how-it-works) explains the setup in plain steps."
+    },
+    {
+      "h2": "A simple setup for owners who are not tech people",
+      "body": "You do not need a long setup project. Paste your restaurant website, Google Maps link, or just your name and city into [ROAL for seafood restaurants](/for/seafood). ROAL reads your menu, prices, hours, and address from public pages or an uploaded menu, then builds a phone host in about a minute.\n\nYou choose the host’s voice and name. You can test-call it right in the browser with no sign-up needed. After that, claim the host and forward your current number to it. The dashboard keeps call history, transcripts, recordings, live tickets, menu edits, and FAQs in one place, so the team can check what was ordered if a caller says, “I asked for no butter on the crab legs.”"
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take seafood pickup orders from my live menu?",
+      "a": "Yes. ROAL can take pickup and delivery orders from the menu it reads from your public pages or uploaded menu. It collects items, sizes, modifiers, notes, name, and phone number, then sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "Will it answer questions about oysters, parking, and hours?",
+      "a": "Yes. It can answer common questions about hours, address, parking, and menu items. If it cannot answer something, it places the question in an inbox so you can reply once and the host learns it from then on."
+    },
+    {
+      "q": "What happens if a caller asks about allergies?",
+      "a": "ROAL can hand allergy-sensitive questions to staff with a summary. That lets your team handle the details directly instead of the phone host guessing about shellfish, sauces, or cross-contact."
+    },
+    {
+      "q": "Can I use it only when the restaurant is busy?",
+      "a": "Yes. You can forward all calls, or only when the line is busy or unanswered. That is useful on Friday nights, holiday weekends, or any shift where the phone starts pulling people off the line."
+    },
+    {
+      "q": "How do I start?",
+      "a": "Go to [Build a free test host](/try) and paste your website, Google Maps link, or name and city. You can test-call it in the browser first, then decide whether to forward your restaurant’s number."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "forward-calls-verizon-business",
+  "keyword": "verizon call forwarding business",
+  "category": "phone-setup",
+  "title": "Verizon business call forwarding for restaurants",
+  "seoTitle": "Verizon business call forwarding for restaurants | ROAL",
+  "description": "Set up Verizon business call forwarding for restaurants, choose busy or unanswered forwarding, and test calls without disrupting service.",
+  "question": "How do I set up Verizon call forwarding on my restaurant business line?",
+  "answer": "On many Verizon business lines, you can forward all calls with *72 plus the forwarding number, and turn it off with *73. For busy or unanswered forwarding on Verizon Wireless, *71 is commonly used, but codes can vary by plan, so always confirm with Verizon and test with a live call.",
+  "summary": "You’ll learn how to forward a Verizon business line, test it, and use it for overflow, after-hours, or an AI phone host.",
+  "intro": "Forwarding calls on a Verizon business line is usually done with star codes, but the exact steps depend on the kind of Verizon service you have. For many Verizon lines, *72 starts call forwarding and *73 turns it off; on some wireless plans, *71 is used for busy or unanswered forwarding.\n\nFor a restaurant, that matters because you may want to send calls to staff, voicemail, or an AI phone host like ROAL during rushes, after hours, or when the line rings too long. The goal is simple: keep your main number, set the forwarding you need, and test it before a busy service starts.",
+  "sections": [
+    {
+      "id": "what-verizon-forwarding-option-should-i-use-for-my-restauran",
+      "h2": "What Verizon forwarding option should I use for my restaurant?",
+      "body": "Before you punch in any code, decide what problem you are solving. A pizza shop on Friday night usually needs different forwarding than a deli that just wants after-hours coverage.\n\nUse this simple match-up:\n\n| Situation | Best forwarding type |\n|---|---|\n| You want every call sent elsewhere | Forward all calls |\n| You want calls forwarded only when the line is busy | Busy forwarding |\n| You want calls forwarded when no one picks up | No-answer forwarding |\n| You want calls sent to an AI phone host after hours | Conditional or timed forwarding |\n\nFor a restaurant, the best setup is often conditional forwarding. That lets your counter staff answer first, while overflow calls go somewhere useful. If you use ROAL, you can forward unanswered or busy calls to the restaurant’s ROAL line while keeping your own number active.\n\nA good staff script is: “Thanks for calling. If we miss you, the next ring may go to our phone host so we can still take your order.” That keeps the plan simple for anyone working the counter."
+    },
+    {
+      "id": "how-do-i-forward-calls-on-verizon-wireless",
+      "h2": "How do I forward calls on Verizon Wireless?",
+      "body": "On Verizon Wireless, the common codes are *72 for forwarding all calls, *73 to turn it off, and *71 for busy or no-answer forwarding. The exact behavior can vary by plan, so confirm with Verizon before service starts.\n\nA basic setup looks like this:\n\n1. Pick the number you want calls sent to.\n2. From the Verizon business phone, dial the forwarding code.\n3. Enter the destination number when prompted, if your line asks for it.\n4. Wait for the confirmation tone or message.\n5. Test it by calling your restaurant from another phone.\n\nExample: say you want overflow calls sent to a manager phone or to your ROAL line. If your own number is (555) 123-4567 and your forwarding destination is (555) 987-0000, you would program the forwarding on the Verizon line, then place a test call from a second phone.\n\nOne small checklist helps:\n- Keep the destination number written down near the register\n- Test both busy and unanswered cases\n- Make sure staff know when forwarding is on\n- Turn it off after the rush if you only need temporary coverage\n\nIf you want a broader setup guide, [How to forward your restaurant calls](/blog/how-to-forward-restaurant-calls) is a good companion read."
+    },
+    {
+      "id": "how-do-i-turn-verizon-forwarding-on-and-off-without-confusio",
+      "h2": "How do I turn Verizon forwarding on and off without confusion?",
+      "body": "The easiest way to avoid mistakes is to write the code on a sticky note by the phone, then train one or two managers to use it. A busy shift is not the time to search through old emails for the right sequence.\n\nFor many Verizon lines, the basic pattern is:\n\n- Turn on all-call forwarding: *72 + forwarding number\n- Turn off all-call forwarding: *73\n- Forward busy/no-answer calls on Verizon Wireless: *71 + forwarding number\n\nIf your restaurant uses the same number for dine-in, takeout, and delivery, you may not want full forwarding all day. Instead, forward only when the phone is busy or when no one answers within a few rings. That keeps your front counter in control while still catching overflow.\n\nA practical script for staff is: “If the phone rings past the third ring, let it roll to the host line.” That gives the team a clear rule.\n\n### Quick off/on checklist\n- Know whether the line is landline, wireless, or business VoIP\n- Confirm the correct Verizon code for that line\n- Test with one call before lunch\n- Test again before dinner if you changed anything\n- Keep a backup plan in case the forwarding does not activate as expected"
+    },
+    {
+      "id": "how-can-forwarding-help-with-lunch-and-dinner-rushes",
+      "h2": "How can forwarding help with lunch and dinner rushes?",
+      "body": "Restaurants usually need a call plan that changes with the day. Lunch rush, Friday night, holiday takeout, and slow Tuesday afternoon all need different coverage.\n\nHere is a simple worked example you can swap for your own numbers:\n\n- Say your average phone order is $28\n- Say you miss 5 calls during a rush\n- If 3 of those would have been orders, that is $84 in sales you may have kept\n\nUse your own average order and your own call volume. The point is not a perfect formula. The point is to see whether forwarding is worth setting up for rush hours.\n\nA good restaurant workflow is:\n1. Let staff answer first.\n2. If the line is busy, forward overflow to another staffed phone or a phone host.\n3. If no one is available, forward to an after-hours option.\n4. Review missed calls at the end of service.\n\nROAL fits into that kind of setup because it can answer the restaurant’s calls, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. If your staff is buried during dinner, forwarding unanswered calls to a phone host is more useful than letting them ring out."
+    },
+    {
+      "id": "should-i-forward-verizon-calls-to-voicemail-staff-or-roal",
+      "h2": "Should I forward Verizon calls to voicemail, staff, or ROAL?",
+      "body": "That depends on what the caller needs and who is available. Voicemail is simple, but it can turn into a pile of messages that someone has to listen to later. Staff answering is best when the room is calm. An AI phone host is useful when you want orders and common questions handled while the team is working the floor.\n\nCompare the options like this:\n\n| Option | Best for | Downside |\n|---|---|---|\n| Staff phone | Regular hours, low volume | Missed calls when busy |\n| Voicemail | Backup coverage only | Caller has to leave a message |\n| ROAL | Orders, hours, address, menu questions | It does not take card numbers over the phone |\n\nA practical script for the team is: “If we’re in the weeds, let ROAL pick up the overflow and keep the line moving.” That is especially useful for restaurants that answer the same phone for ordering, hours, and reservations.\n\nROAL can answer questions about hours, address, parking, and menu items, and it can take pickup and delivery orders from the live menu. Tricky calls like allergy-sensitive questions, complaints, catering, or manager requests go to staff with a summary. That keeps the handoff clean without forcing the caller to repeat everything."
+    },
+    {
+      "id": "what-should-i-test-before-i-rely-on-forwarding",
+      "h2": "What should I test before I rely on forwarding?",
+      "body": "Always test forwarding before you trust it during a rush. A code can be entered correctly and still behave differently depending on the line type, phone system, or carrier plan.\n\nUse this test routine:\n\n1. Call the restaurant from a separate phone.\n2. Let the line ring the normal number of times.\n3. Confirm the call forwards where you expect.\n4. Listen for the greeting or pickup behavior.\n5. Place a second test while the line is busy.\n6. Turn forwarding off and confirm the phone returns to normal.\n\nIf you are sending calls to ROAL, do a real test call from a browser too, so you can hear how the host answers, what it says, and whether the menu data looks right. Owners can paste their website, Google Maps link, or even a “Name, City” search at /try to build a test host quickly, then adjust the menu or hours before going live.\n\nChecklist for a restaurant owner:\n- Test during slow hours\n- Test from an outside phone, not the same line\n- Confirm the greeting sounds right for your store\n- Make sure staff know where overflow calls go\n- Re-test after any Verizon plan or system change"
+    },
+    {
+      "id": "what-does-a-clean-restaurant-call-flow-look-like-after-setup",
+      "h2": "What does a clean restaurant call flow look like after setup?",
+      "body": "Once forwarding is working, keep the flow simple. The fewer decisions your staff has to make, the better the phone behaves during service.\n\nA clean setup for many restaurants looks like this:\n\n1. Main line rings the front counter.\n2. If no one answers in time, Verizon forwards the call.\n3. ROAL answers overflow calls, takes the order, confirms it, and sends the ticket to the kitchen screen.\n4. Staff handles anything unusual, like a complaint, a large catering request, or a question the host could not answer.\n\nThat setup works because the restaurant keeps its own number. Forwarding can be turned off any time, so you are not locked into one mode. ROAL also lets owners choose the host’s voice and name, and any unanswered questions go into an inbox so the host can learn them later.\n\nIf you are comparing monthly phone tools with pay-per-order pricing, [Pricing](/pricing) is worth a look. ROAL bills $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are free. That makes forwarding easier to budget when call volume swings up and down."
+    }
+  ],
+  "takeaways": [
+    "Verizon business forwarding usually starts with *72 and stops with *73, but confirm the code for your exact line.",
+    "Busy or unanswered forwarding is often better than forwarding every call all day in a restaurant.",
+    "Always test with a live call before lunch or dinner service.",
+    "ROAL can take overflow calls, answer menu and hours questions, and send order tickets to the kitchen.",
+    "Keep one written forwarding cheat sheet near the register so managers can use it fast."
+  ],
+  "faq": [
+    {
+      "q": "What is the Verizon call forwarding business code?",
+      "a": "On many Verizon business lines, *72 is used to forward all calls and *73 turns forwarding off. For busy or no-answer forwarding on Verizon Wireless, *71 is commonly used. Always confirm with Verizon for your exact plan and test with a real call."
+    },
+    {
+      "q": "Can I forward only unanswered calls on a Verizon business line?",
+      "a": "Yes, many Verizon Wireless plans support forwarding when a call is unanswered, and some also support busy forwarding. That is usually better for restaurants than forwarding every call all day. It lets your front desk answer first and sends overflow somewhere useful."
+    },
+    {
+      "q": "Will my restaurant keep its main number if I forward calls to ROAL?",
+      "a": "Yes. The restaurant keeps its own number. You are forwarding calls from that number to another line, which can be a manager phone, voicemail, or ROAL. Forwarding can be turned off any time."
+    },
+    {
+      "q": "Should I forward calls to voicemail or an AI phone host?",
+      "a": "Voicemail is fine for backup, but it still leaves work for later. An AI phone host is better when you want common questions, pickup orders, and delivery orders handled live. ROAL can also pass tricky calls to staff with a summary."
+    }
+  ],
+  "words": 1508,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

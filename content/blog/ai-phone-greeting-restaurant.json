@@ -1,0 +1,76 @@
+{
+  "slug": "ai-phone-greeting-restaurant",
+  "keyword": "restaurant phone greeting ai",
+  "category": "ai-basics",
+  "title": "Writing a better AI phone greeting for restaurant calls",
+  "seoTitle": "Restaurant phone greeting for AI calls | ROAL",
+  "description": "Write a clear restaurant phone greeting for AI callers with simple scripts, examples, and setup tips for busy owners.",
+  "question": "How do I write a good AI phone greeting for my restaurant?",
+  "answer": "Keep the greeting short, clear, and useful: say the restaurant name, what the phone host can help with, and ask how to help next. For a restaurant phone greeting ai callers hear, include pickup orders, hours, address, and a simple handoff for staff-only issues. The best version sounds natural, not robotic.",
+  "summary": "You’ll be able to write a short, clear AI phone greeting that fits your restaurant and handles real calls well.",
+  "intro": "A good restaurant phone greeting AI callers hear should be short, warm, and specific to your menu and hours. It should say who they reached, what help is available, and what to say next.\n\nFor most restaurants, the best greeting is not fancy. It is clear enough for a busy lunch caller, a pickup customer in a car, and someone who just wants your hours or address. If you want a starting point, [phone greeting templates](/tools/phone-greeting-templates) can help you shape the first line before you test it.",
+  "sections": [
+    {
+      "id": "what-should-the-first-10-seconds-say",
+      "h2": "What should the first 10 seconds say?",
+      "body": "The first few seconds should do three jobs: identify the restaurant, explain what the phone host can handle, and move the caller forward. Keep it simple. Long greetings make people wait, and waiting is where they hang up.\n\nA strong first line sounds like this: \"Thanks for calling Maria's Pizza. I can take pickup and delivery orders, answer questions about hours, address, parking, and the menu, or get you to the right person.\" That line tells callers what is available right away.\n\nUse this quick checklist:\n- Say the restaurant name first.\n- Mention the main jobs the host can do.\n- Tell callers what to say next.\n- Keep the tone friendly, not scripted.\n\nIf your shop gets a lot of quick calls, shorten it even more. Example: \"Thanks for calling Tony's Deli. How can I help with your order or a question about our menu?\""
+    },
+    {
+      "id": "which-details-belong-in-the-greeting-and-which-do-not",
+      "h2": "Which details belong in the greeting, and which do not?",
+      "body": "Put only the most useful details in the greeting. The greeting is not the full script. It is the front door. Save the deeper questions for later in the call.\n\nA practical split looks like this:\n\n| Put in the greeting | Leave for later |\n|---|---|\n| Restaurant name | Full menu details |\n| Pickup and delivery orders | Every topping and modifier |\n| Hours, address, parking | Long explanations about specials |\n| Simple handoff for staff requests | Payment card collection |\n\nFor example, a caller does not need to hear your full menu up front. They just need to know the host can take their order from the live menu. ROAL does that, and it also skips sold-out items so callers are not offered something you cannot make.\n\nA good line for the middle of the greeting is: \"I can help with your order, hours, address, and menu questions.\" That is enough for most guests. If the caller needs something harder, like catering or an allergy-sensitive question, the host can hand it to staff with a summary."
+    },
+    {
+      "id": "how-do-i-make-it-sound-like-my-restaurant",
+      "h2": "How do I make it sound like my restaurant?",
+      "body": "Your greeting should sound like your place, not like every other place. A pizza shop, a family diner, and a busy takeout counter do not greet callers the same way.\n\nStart with your own style:\n- Casual shop: \"Thanks for calling Joe's Pizza. What can I get started for you?\"\n- Family restaurant: \"Thank you for calling the Parkside Diner. How can we help with your meal today?\"\n- Fast takeout spot: \"Thanks for calling East Side Chinese. Pickup or delivery order?\"\n\nYou can also choose the host's voice and name when you set up ROAL. That helps the greeting feel like part of your business instead of a generic phone tree. The important part is not sounding polished for the sake of it. The important part is sounding clear enough that your regulars know they reached the right place.\n\nA helpful test: read the greeting out loud to yourself while standing in the kitchen. If it feels too long for a lunch rush, cut it down. If it sounds stiff, make the words simpler."
+    },
+    {
+      "id": "what-should-the-greeting-say-about-orders-questions-and-hand",
+      "h2": "What should the greeting say about orders, questions, and handoffs?",
+      "body": "Your greeting should tell callers what the phone host can do on its own and what still goes to staff. That keeps expectations clear and prevents frustration.\n\nA useful script line is: \"I can take pickup and delivery orders, answer questions about hours, address, parking, and menu items, and get a staff member involved if needed.\" That covers the everyday calls without promising more than the host can do.\n\nHere is a simple rule for handoffs:\n1. Let the host handle normal ordering, hours, menu, and reservation requests.\n2. Send catering, complaints, allergy-sensitive questions, and manager requests to staff.\n3. Keep the caller informed that someone will follow up or take over.\n\nThat matters because people call restaurants for different reasons. A caller asking about a gluten issue needs a person. A caller asking for a large catering order may need your staff to confirm details. ROAL can collect the basics, quote a ready time, confirm the order back, and send a clean ticket to the kitchen screen, but card numbers stay off the phone. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "id": "how-do-i-write-a-greeting-for-busy-times-and-after-hours-cal",
+      "h2": "How do I write a greeting for busy times and after-hours calls?",
+      "body": "Busy-time greetings should be shorter than daytime greetings. When the line is moving fast, callers want speed. Your greeting should get them to the order or answer with as few steps as possible.\n\nA good busy-hours example: \"Thanks for calling Roma Grill. I can take your order or answer a quick question. What can I help with?\" That is direct and easy to answer.\n\nFor after-hours calls, be clear about what happens next. You might say: \"Thanks for calling. We are currently closed, but I can still take a message about an order, reservation, or question for the team.\" If you want after-hours callers to leave a pickup request, make that obvious.\n\nUse this mini checklist before you go live:\n- Does the greeting mention when you are open?\n- Does it tell callers whether they can order now?\n- Does it work when the dining room is full?\n- Does it still make sense after closing?\n\nIf you want to compare phone greetings with other call-handling setups, [AI phone host vs voicemail](/compare/voicemail) and [AI phone host vs a press-1 phone menu](/compare/phone-menu-ivr) are useful reads."
+    },
+    {
+      "id": "how-can-i-test-the-greeting-before-i-forward-my-number",
+      "h2": "How can I test the greeting before I forward my number?",
+      "body": "Test the greeting with real restaurant situations, not just a happy-path call. The best way is to call it the way your customers do.\n\nTry these test calls:\n- A simple pickup order.\n- A question about hours or parking.\n- A caller asking for a sold-out item.\n- A caller who wants a reservation.\n- A caller who needs a manager.\n\nWhen you test, listen for three things: did it answer quickly, did it sound natural, and did it move the caller toward the right next step? If the caller has to repeat themselves too often, the greeting may be too vague.\n\nROAL lets an owner paste a restaurant website, a Google Maps link, or a name and city at /try, then test-call the phone host in the browser before going live. That makes it easier to hear the greeting as a customer would. Owners can also upload a menu in any format. Once live, the restaurant keeps its own number and can forward calls all the time or only when busy or unanswered."
+    },
+    {
+      "id": "what-is-a-practical-greeting-example-i-can-copy-and-change",
+      "h2": "What is a practical greeting example I can copy and change?",
+      "body": "Here is a working template you can adapt for your own place:\n\n\"Thanks for calling [Restaurant Name]. I can take pickup and delivery orders, answer questions about hours, address, parking, and the menu, or help get your message to the right person. What can I help you with today?\"\n\nIf you want a shorter version, use this:\n\n\"Thanks for calling [Restaurant Name]. How can I help with your order or a question today?\"\n\nIf you want a more takeout-focused version:\n\n\"Thanks for calling [Restaurant Name]. Pickup or delivery order, or a quick question about the menu?\"\n\nWhen you swap in your own details, keep the sentence count low. Do not pack in every policy or special. Keep the greeting focused on what callers need first. Then let the call move into ordering, menu questions, or a staff handoff.\n\nIf you want a place to start building and testing, [Build a free test host](/try). ROAL will read your public menu, hours, and address, and you can hear how the greeting sounds before you forward calls."
+    }
+  ],
+  "takeaways": [
+    "Short greetings work better than long ones for restaurant callers.",
+    "Say what the phone host can help with right away: orders, hours, address, parking, and menu questions.",
+    "Keep staff-only issues out of the greeting and hand them off with a summary.",
+    "Test the script with real restaurant calls before forwarding your number."
+  ],
+  "faq": [
+    {
+      "q": "What should an AI phone greeting for a restaurant say?",
+      "a": "It should say the restaurant name, what help is available, and what to do next. A good greeting is short and clear, like: \"Thanks for calling Joe's Grill. I can take your order or answer questions about hours and the menu. How can I help?\""
+    },
+    {
+      "q": "How long should a restaurant phone greeting be?",
+      "a": "Short enough that callers do not feel stuck listening. In most cases, one to two sentences is enough for the greeting. Save detailed questions for the rest of the call so the caller can get to the reason they called quickly."
+    },
+    {
+      "q": "Should an AI phone host mention that it is AI?",
+      "a": "That depends on your comfort level and how you want the call to feel. The greeting should still stay clear either way: identify the restaurant, explain what help is available, and keep the caller moving. For a deeper look, see [Should you tell callers they're talking to AI?](/blog/tell-callers-they-are-talking-to-ai)."
+    },
+    {
+      "q": "Can an AI phone host handle reservations and special requests?",
+      "a": "Yes, it can take reservation requests and pass more complex calls to staff. It should hand off catering, complaints, allergy-sensitive questions, and manager requests with a summary. That keeps the greeting simple while still covering the important calls."
+    }
+  ],
+  "words": 1312,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

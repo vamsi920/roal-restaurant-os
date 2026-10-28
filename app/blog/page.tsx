@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { BlogIndexAeoJsonLd } from "@/components/blog/blog-index-aeo-json-ld";
 import { BlogIndexContent } from "@/components/blog/blog-index-content";
 import { BlogIndexHero } from "@/components/blog/blog-index-hero";
@@ -7,15 +6,8 @@ import { getAllPosts } from "@/lib/blog";
 
 export { buildBlogIndexMetadata as metadata } from "@/lib/blog/metadata";
 
-function BlogIndexFallback() {
-  return (
-    <section className="blog-index" aria-busy="true">
-      <div className="landing-wrap landing-wrap-tight">
-        <p className="blog-index__empty">Loading articles…</p>
-      </div>
-    </section>
-  );
-}
+// Scheduled posts appear on their publish day (see lib/blog/publish.ts).
+export const revalidate = 3600;
 
 export default function BlogIndexPage() {
   const posts = getAllPosts();
@@ -25,9 +17,7 @@ export default function BlogIndexPage() {
       <BlogIndexAeoJsonLd />
       <div className="blog-shell min-w-0 overflow-x-clip">
         <BlogIndexHero />
-        <Suspense fallback={<BlogIndexFallback />}>
-          <BlogIndexContent posts={posts} />
-        </Suspense>
+        <BlogIndexContent posts={posts} />
       </div>
     </MarketingShell>
   );

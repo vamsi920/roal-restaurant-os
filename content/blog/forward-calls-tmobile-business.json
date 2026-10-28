@@ -1,0 +1,72 @@
+{
+  "slug": "forward-calls-tmobile-business",
+  "keyword": "t-mobile call forwarding",
+  "category": "phone-setup",
+  "title": "T-Mobile call forwarding for restaurant owners",
+  "seoTitle": "T-Mobile call forwarding for restaurants | ROAL",
+  "description": "Set up T-Mobile call forwarding for restaurant phones, including all calls, busy, and unanswered calls, plus a quick owner checklist.",
+  "question": "How do I set up T-Mobile call forwarding for my restaurant phone?",
+  "answer": "On many T-Mobile GSM lines, dial **21*forwarding-number# to forward all calls and ##21# to turn it off. For unanswered calls, use **61*number#; for busy calls, use **67*number#. Codes can vary by plan, so confirm with T-Mobile and test with a real call before you rely on it.",
+  "summary": "Set up T-Mobile call forwarding for your restaurant and know when to use all-calls, busy, or unanswered forwarding.",
+  "intro": "If you want to forward calls on T-Mobile, the common code for all calls is **21*forwarding-number# and the common off code is ##21#. For busy or unanswered calls, many T-Mobile lines use **67*number# and **61*number#.\n\nFor a restaurant, that means your main number can keep ringing on your existing line, while calls route to another line, a phone host, or a staff phone when you need it. The exact code can vary by plan, so test it once before service and call your carrier if it does not work.",
+  "sections": [
+    {
+      "id": "what-code-do-i-dial-for-t-mobile-call-forwarding",
+      "h2": "What code do I dial for T-Mobile call forwarding?",
+      "body": "On many T-Mobile mobile lines, these are the common GSM forwarding codes:\n\n| What you want | Common code |\n|---|---|\n| Forward all calls | `**21*number#` |\n| Turn off all-call forwarding | `##21#` |\n| Forward unanswered calls | `**61*number#` |\n| Forward busy calls | `**67*number#` |\n\nUse the full phone number you want to receive the calls, including area code. For example, if you want calls sent to your manager’s phone, dial `**21*2015550123#` and then press call. Some plans and devices handle this a little differently, so keep the forwarding number handy and test it right away.\n\nA simple restaurant script for your staff can help too: “I’m forwarding the main line to our backup phone for the lunch rush. If the phone doesn’t ring here, call the forwarding number once to confirm it’s working.”"
+    },
+    {
+      "id": "how-do-i-forward-only-busy-or-unanswered-restaurant-calls",
+      "h2": "How do I forward only busy or unanswered restaurant calls?",
+      "body": "Many owners do not want every call moved off the main phone. They only want backup forwarding when the line is busy or no one picks up. That is where conditional forwarding helps.\n\nUse this quick setup plan:\n1. Pick the backup number first. It might be the manager’s phone, a host stand phone, or your [phone forwarding plan notes](/blog/conditional-call-forwarding-busy-no-answer).\n2. Set busy forwarding with `**67*number#` if your T-Mobile line supports it.\n3. Set unanswered forwarding with `**61*number#`.\n4. Call your restaurant number from a second phone and let it ring until it forwards.\n5. Call again while the line is busy and confirm the busy route.\n\nExample: say lunch brings in 12 calls and your counter staff can answer only 8. You can forward unanswered calls to a backup phone so the other 4 still get picked up. Swap in your own busy hours and call volume, then test it during a slow moment, not during the rush."
+    },
+    {
+      "id": "what-should-i-tell-staff-before-i-turn-forwarding-on",
+      "h2": "What should I tell staff before I turn forwarding on?",
+      "body": "Forwarding changes how your restaurant is reached, so your team should know what to expect. Keep it simple. Tell staff which number is forwarding, where the calls are going, and who checks the backup phone.\n\nA practical checklist:\n- Write down the restaurant number that will be forwarded.\n- Write down the backup phone number.\n- Decide when forwarding should stay on: lunch, dinner, after hours, or all day.\n- Tell staff who answers the backup line and who handles text messages from missed callers.\n- Test one pickup order call and one question call.\n\nA useful phone line for the host stand is: “If the main phone starts going to the backup line, please note it on the shift sheet so we can switch it back after the rush.” That keeps the team from wondering where calls went. It also helps if you use a phone host like ROAL for pickup orders and menu questions, because the staff can focus on harder calls and prep work."
+    },
+    {
+      "id": "how-do-i-forward-my-restaurant-number-to-roal",
+      "h2": "How do I forward my restaurant number to ROAL?",
+      "body": "ROAL gives each location its own phone line automatically, and you forward your existing restaurant number to it. That lets you keep your current number while using ROAL to answer calls, take pickup and delivery orders from the live menu, answer common questions, and send a clean ticket to the kitchen screen.\n\nSetup is straightforward:\n1. Paste your restaurant website, Google Maps link, or name and city at [Build a free test host](/try).\n2. ROAL reads public menu, hours, and address information and builds a phone host in about a minute.\n3. Test-call it in the browser with no sign-up needed.\n4. Claim the host when you are ready.\n5. Forward your existing number to the ROAL line, either for all calls or only when busy or unanswered.\n\nROAL does not take card numbers over the phone. Payment still happens at pickup or however your restaurant already takes it. If a caller asks for something ROAL cannot answer, that call goes to your inbox with a summary so you can reply once and teach the host for next time."
+    },
+    {
+      "id": "what-happens-if-t-mobile-forwarding-does-not-work-right-away",
+      "h2": "What happens if T-Mobile forwarding does not work right away?",
+      "body": "If the code does not work the first time, do not guess. T-Mobile plans, device settings, and call type can change the result. Start with a basic check and move step by step.\n\n| Check | What to look for |\n|---|---|\n| Number format | Use the full forwarding number with area code |\n| Dial string | Make sure stars and pound signs are typed exactly |\n| Phone settings | Some phones have call-forwarding menus that can conflict |\n| Test call | Call from another number after setting it |\n| Carrier help | Confirm the exact code for your line |\n\nIf you want a clean fallback, you can also use a missed-call workflow while you sort it out. For example, keep the main line on the restaurant phone during service, then turn on forwarding only after close or during a rush. If you need carrier-specific help, our [call forwarding codes by carrier](/tools/call-forwarding-codes) page and the related post on [forwarding calls on a Verizon business line](/blog/forward-calls-verizon-business) can help you compare setup styles without mixing them up."
+    },
+    {
+      "id": "is-forwarding-better-than-hiring-more-phone-help",
+      "h2": "Is forwarding better than hiring more phone help?",
+      "body": "For many independent restaurants, forwarding is a simple way to keep calls covered without adding another full-time phone role. It is also a clean way to send overflow calls to an AI phone host instead of letting them ring out.\n\nHere is a simple cost check using example numbers you can swap:\n- Say your average completed order is $28.\n- Say you lose 3 call orders on a busy night.\n- That is $84 in order value.\n- If those calls are answered by a phone host, ROAL charges $0.90 per completed phone order, billed monthly.\n\nCompare that with common market costs. Delivery apps often take roughly 15-30% commission per order. Human answering services often bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in. The right setup depends on your volume, but forwarding gives you a practical way to route calls where they can actually get answered. You can also compare options on [AI phone host vs answering service](/compare/answering-service) and [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans)."
+    }
+  ],
+  "takeaways": [
+    "T-Mobile forwarding commonly uses **21*number# for all calls and ##21# to turn it off.",
+    "You can often forward only busy or unanswered restaurant calls with **67*number# and **61*number#.",
+    "Always test forwarding with a real call before service starts.",
+    "ROAL can receive forwarded calls, take orders, answer menu questions, and send tickets to the kitchen screen.",
+    "Forwarding should fit your rush hours, not interrupt how your staff already works."
+  ],
+  "faq": [
+    {
+      "q": "What is the T-Mobile code to forward all calls?",
+      "a": "On many T-Mobile GSM lines, the common code is `**21*number#` to forward all calls and `##21#` to turn it off. The forwarding number should include the full area code. Because codes can vary by plan and device, test it with a real call after you set it."
+    },
+    {
+      "q": "Can I forward only unanswered calls on T-Mobile?",
+      "a": "Yes, many T-Mobile lines support unanswered-call forwarding with `**61*number#`. That means calls keep ringing on your main line first, then route to the backup number if nobody answers. It is a good fit for lunch rushes and short-staffed shifts."
+    },
+    {
+      "q": "Can I forward my restaurant calls to ROAL?",
+      "a": "Yes. ROAL gives each location its own phone line, and you forward your existing number to it. ROAL can answer questions, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. It does not take card numbers over the phone."
+    },
+    {
+      "q": "What should I do if the forwarding code does not work?",
+      "a": "Check the full number you entered, confirm the stars and pound signs are exact, and test from another phone. If it still fails, confirm the code with T-Mobile because carrier rules can vary by line and plan. For business lines, some owners also compare carrier-specific setup pages and then test before opening."
+    }
+  ],
+  "words": 1102,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

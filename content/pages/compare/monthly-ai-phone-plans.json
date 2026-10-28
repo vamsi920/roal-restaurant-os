@@ -1,0 +1,179 @@
+{
+  "slug": "monthly-ai-phone-plans",
+  "label": "Pay per order vs monthly AI phone plans",
+  "h1": "Pay per order vs monthly AI phone plans",
+  "seoTitle": "Pay per order vs monthly AI phone plans | ROAL",
+  "description": "Compare pay per order and monthly AI phone plans for restaurants. See when ROAL's $0.90 per completed order fits, and when a monthly plan can make sense.",
+  "lead": "If your phone rings a lot during dinner rush, the pricing model matters as much as the phone host itself. ROAL charges only for completed orders, while monthly plans charge a fixed fee whether or not calls turn into tickets.",
+  "question": "Is pay per order or a monthly AI phone plan better for my restaurant?",
+  "answer": "Pay per order can be a better fit if you want costs tied to real orders, not quiet days, slow weekdays, or missed calls that never turn into tickets. A monthly plan can be better if you expect steady call volume, want a fixed bill for budgeting, or use the phone host for lots of non-order calls like hours, directions, and reservations. The right choice depends on how many calls become completed orders and how much predictability you want.",
+  "pains": [
+    {
+      "title": "You still pay on slow days with monthly plans",
+      "body": "If Tuesday is quiet and you only get a few orders, a fixed monthly fee can feel heavy. You pay the same even when the phone barely rings."
+    },
+    {
+      "title": "Rush-hour calls are the real pressure",
+      "body": "Dinner rush can bring the worst mix: the phone rings while staff is boxing takeout, running cards, and watching the line. The price model should make sense when the rush is real, not just on paper."
+    },
+    {
+      "title": "Not every call should cost the same",
+      "body": "A quick question like “What time do you close?” is not the same as a completed pickup order for two chicken parm dinners, a large plain pie, and extra sauce. Some owners want to pay only when a ticket reaches the kitchen screen."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Keeps cost tied to completed orders",
+      "body": "With ROAL, you pay $0.90 only when the phone host finishes an order and sends a ticket to the kitchen screen. Calls, questions, and test calls are unlimited and free."
+    },
+    {
+      "title": "Fits uneven traffic",
+      "body": "If your phone is busy on Friday night but quiet on Monday afternoon, pay per order can feel more natural. You are not locked into paying the same monthly amount every month."
+    },
+    {
+      "title": "Still handles the common restaurant calls",
+      "body": "ROAL can take pickup and delivery orders, answer hours and menu questions, and pass allergy-sensitive issues or manager requests to staff with a summary. That matters when the front counter is slammed."
+    },
+    {
+      "title": "A monthly plan can still be the better choice",
+      "body": "If you want one fixed bill, expect a high and steady order count, or prefer to spread costs evenly across every call, a monthly plan may be simpler. Some owners value predictability more than usage-based pricing."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One large pepperoni pizza, well-done, and a chicken Caesar salad with dressing on the side."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One large pepperoni pizza, well-done, and one chicken Caesar salad with dressing on the side. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "Add one order of garlic knots. My name is Marco."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Marco. What number should we use if we need to reach you, and what time would you like it ready?"
+    },
+    {
+      "who": "caller",
+      "line": "555-014-8821. Around 7:20."
+    },
+    {
+      "who": "host",
+      "line": "Perfect. I have one large pepperoni pizza well-done, one chicken Caesar salad with dressing on the side, and one order of garlic knots for Marco at 7:20 pm. I’ll send that to the kitchen now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "1 large pepperoni pizza",
+      "- well-done",
+      "1 chicken Caesar salad",
+      "- dressing on the side",
+      "1 garlic knots"
+    ],
+    "note": "Call-back number: 555-014-8821"
+  },
+  "sections": [
+    {
+      "h2": "How to think about the price per order",
+      "body": "For a restaurant owner, the big question is simple: do you want to pay for usage or pay a fixed monthly fee? With ROAL, the cost is tied to a completed order, so a slow day does not cost the same as a packed Friday. That can feel fair if your phone volume changes a lot.\n\nExample: say you get 12 completed orders in a week. At $0.90 per order, that week would cost $10.80. A monthly plan could be cheaper or more expensive depending on the provider and your call volume. The key is to compare what you actually need: order taking, menu questions, hours, and handoffs to staff.\n\nIf you mostly need a phone host for pickup orders and the occasional menu question, pay per order is often easier to justify. If you want a predictable monthly bill no matter what, a fixed plan may be the simpler choice."
+    },
+    {
+      "h2": "When a monthly plan can be the better choice",
+      "body": "A monthly plan can make sense if your restaurant has steady call volume every day and you want one fixed expense for the month. Some owners prefer that because it is easy to budget, especially if the phone is busy with orders, reservations, and questions all day.\n\nIt can also be a better fit if your team wants the same cost even when the number of completed orders rises and falls. For example, a pizzeria with a steady stream of calls from lunch through late night may care more about predictable billing than paying per completed order.\n\nMonthly plans are not automatically worse. They are just a different tradeoff. You may pay even when calls do not become orders, but you may like the simplicity and certainty."
+    },
+    {
+      "h2": "A practical way to compare both options",
+      "body": "Start with a normal week. Count only the calls that become completed orders, not every ring. Then look at when those calls happen: lunch, dinner rush, late night, or after hours. Also think about the calls your staff hates taking during the rush, like “What time do you close?” or “Do you have parking?”\n\nIf you want a quick fit check, compare the monthly fixed fee against your likely completed orders. Example: 200 completed orders in a month at ROAL's rate would be $180. If a monthly plan costs less than that, it may be worth a look. If it costs more, pay per order may be the better deal.\n\nThe best choice is the one that matches your real phone pattern, not a guess."
+    }
+  ],
+  "table": {
+    "otherName": "Monthly plan",
+    "rows": [
+      {
+        "label": "Cost model",
+        "roal": "$0.90 per completed order",
+        "other": "Fixed monthly fee, whether or not orders come in"
+      },
+      {
+        "label": "Best when",
+        "roal": "Order volume changes by day or week",
+        "other": "You want one steady bill each month"
+      },
+      {
+        "label": "Slow days",
+        "roal": "Usually lower cost when fewer orders come in",
+        "other": "You still pay the same fee"
+      },
+      {
+        "label": "Busy rushes",
+        "roal": "Scales with completed tickets",
+        "other": "May feel better if you want predictable cost during rushes"
+      },
+      {
+        "label": "Setup",
+        "roal": "Paste your website, Google Maps link, or name and city",
+        "other": "Depends on the provider, but usually still needs setup and training"
+      },
+      {
+        "label": "Kitchen tickets",
+        "roal": "Sends a clean ticket to the kitchen screen",
+        "other": "May or may not include ticketing, depending on the plan"
+      },
+      {
+        "label": "Menu knowledge",
+        "roal": "Reads your live menu and can avoid sold-out items",
+        "other": "Varies by product and plan"
+      },
+      {
+        "label": "After-hours calls",
+        "roal": "Can answer calls, questions, and orders after hours too",
+        "other": "Often available, but pricing does not change when calls are quiet"
+      },
+      {
+        "label": "Handoff to staff",
+        "roal": "Passes allergy-sensitive questions, complaints, and manager requests with a summary",
+        "other": "Varies by provider"
+      },
+      {
+        "label": "Budgeting",
+        "roal": "Great if you want cost to follow actual orders",
+        "other": "Great if you want a fixed monthly number"
+      }
+    ]
+  },
+  "verdict": "Pick ROAL if you want to pay only when a call becomes a completed order, especially if your volume swings a lot. Pick a monthly AI phone plan if you value a fixed bill more than usage-based pricing. If your restaurant is busy every day and you want steady costs, the monthly route may fit better.",
+  "faq": [
+    {
+      "q": "Does ROAL charge for every call?",
+      "a": "No. ROAL charges $0.90 only for a completed phone order that reaches the kitchen screen. Calls, questions, and test calls are unlimited and free."
+    },
+    {
+      "q": "When is a monthly plan better than pay per order?",
+      "a": "A monthly plan can be better if you want one predictable bill and your order volume is steady. It can also make sense if you do a lot of calls that are not orders and prefer paying the same fixed amount each month."
+    },
+    {
+      "q": "What if my restaurant has slow weekdays and busy weekends?",
+      "a": "That is where pay per order can be appealing. You pay more when the phone actually produces completed orders and less when business is slow."
+    },
+    {
+      "q": "Can ROAL still handle non-order calls?",
+      "a": "Yes. It can answer hours, address, parking, and menu questions, and it can hand off allergy-sensitive questions, complaints, and manager requests to staff with a summary. Those calls are not billed as completed orders unless they become one."
+    },
+    {
+      "q": "How do I compare the two prices fairly?",
+      "a": "Look at your actual completed orders in a normal month, then compare that to the fixed monthly fee. If you expect around 100 completed orders, ROAL would be about $90. If you expect 300, it would be about $270. Then decide whether usage-based billing or fixed billing feels better for your shop."
+    }
+  ]
+}

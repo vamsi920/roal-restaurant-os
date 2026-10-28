@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-allergy-questions",
+  "keyword": "ai allergy questions restaurant phone",
+  "category": "ai-basics",
+  "title": "How AI should handle allergy questions on restaurant phones",
+  "seoTitle": "AI allergy questions on restaurant phones | ROAL",
+  "description": "Handle allergy questions on restaurant phones with clear wording, smart handoffs, and simple steps that keep the kitchen and caller aligned.",
+  "question": "How should an AI phone host handle allergy questions on a restaurant phone?",
+  "answer": "An AI phone host should not guess about allergens. It should use the menu and known notes to answer simple ingredient questions, then hand off any allergy-sensitive or uncertain question to staff with a clear summary. That keeps the caller informed and gives the restaurant a safe review point before the order is confirmed.",
+  "summary": "Learn a simple way to route allergy questions, avoid guessing, and keep callers and staff on the same page.",
+  "intro": "Allergy questions should be handled carefully on a restaurant phone. The right move is simple: answer only what you know from the menu, and hand off anything uncertain or allergy-sensitive to staff.\n\nFor a busy pizza shop, deli, or family restaurant, that means the phone host needs a clear rule. ROAL does this by answering menu questions it can support, and sending allergy-sensitive questions to staff with a summary so the team can review the order before it goes to the kitchen.",
+  "sections": [
+    {
+      "id": "what-should-the-phone-host-say-when-a-caller-asks-about-alle",
+      "h2": "What should the phone host say when a caller asks about allergies?",
+      "body": "The safest approach is to keep the answer short, clear, and honest. The host should not make guesses about hidden ingredients, cross-contact, or kitchen prep. It should answer only from the menu and any notes the restaurant has provided.\n\nA good script line is: \"I can help with menu details, but for allergy-sensitive questions I’m going to send this to the restaurant team.\" That tells the caller what is happening without sounding stiff.\n\nFor a real call, use this simple flow:\n1. Identify the dish the caller wants.\n2. Check the menu for the listed ingredients and modifiers.\n3. State only what is known, such as sauce, cheese, bread, or toppings.\n4. If the caller mentions a food allergy, hand it to staff.\n\nExample: a caller asks, “Does the chicken wrap have dairy?” The host can say, “I can see the wrap includes ranch unless removed. For allergy-sensitive details, I’m sending this to the restaurant team.” That is better than guessing.\n\nROAL is built to do exactly that kind of handoff. It can take the rest of the order, but allergy-sensitive questions go to staff with a summary so nothing gets lost."
+    },
+    {
+      "id": "which-allergy-questions-can-be-answered-and-which-ones-need-",
+      "h2": "Which allergy questions can be answered, and which ones need a person?",
+      "body": "Not every question needs the same response. Some are simple menu questions. Others are safety questions that should go straight to staff. A good rule is to answer ingredient questions from the menu, but hand off anything about allergy risk, shared equipment, or custom prep.\n\n| Question type | Example | Best response |\n|---|---|---|\n| Menu ingredient | “Does the salad have cheese?” | Answer from the menu |\n| Modifier question | “Can I get no mayo?” | Answer if your menu supports it |\n| Allergy-sensitive | “Is this safe for a peanut allergy?” | Hand off to staff |\n| Cross-contact | “Do you fry fries in the same oil?” | Hand off to staff |\n| Custom prep | “Can the kitchen make this separately?” | Hand off to staff |\n\nIf you want a quick script for staff, keep it plain: \"Caller asked about a peanut allergy on the chicken sandwich. Please review ingredients and prep before confirming.\" That gives the kitchen a clear task.\n\nA practical restaurant rule is to keep the host helpful, but not overconfident. If the answer is not on the menu page, menu PDF, or store notes, the host should stop and hand it off. That is especially important for mixed dishes, sauces, breading, soups, and anything prepared in-house.\n\nThis also helps during rush periods. The phone host can keep the line moving while the kitchen or manager handles the higher-risk question."
+    },
+    {
+      "id": "how-do-you-train-the-host-to-stop-and-hand-off-the-right-cal",
+      "h2": "How do you train the host to stop and hand off the right calls?",
+      "body": "The host needs a simple playbook. The best setup is not complicated. You tell it what it may answer, what it must not answer, and who should get the handoff.\n\nUse a short internal checklist like this:\n- Answer regular menu questions from the live menu.\n- Answer hours, address, parking, and pickup details.\n- Take the order if the caller is comfortable.\n- Stop and hand off if the caller mentions an allergy, intolerance, or special medical concern.\n- Include the dish name, the ingredient concern, and the caller’s contact info.\n\nA useful script is: \"I want to make sure I get this right, so I’m sending this to the restaurant team now.\" That sounds calm and professional.\n\nFor example, say your restaurant sells a $24 pasta dinner and a caller asks whether the sauce has shellfish. The host should not try to infer the answer. It should collect the caller’s name, phone number, and the dish name, then send the question to staff. If the manager already knows the answer, the next time that same question comes in, the host can use the updated note.\n\nROAL supports this pattern. Questions it cannot answer land in an inbox, and once the owner answers them, the host knows it from then on. That makes the phone flow cleaner without pretending the host can safely judge every ingredient situation."
+    },
+    {
+      "id": "what-should-staff-see-in-the-handoff-summary",
+      "h2": "What should staff see in the handoff summary?",
+      "body": "A good handoff summary should be short and useful. Staff do not need a transcript dump. They need the facts that matter so they can respond fast and correctly.\n\nA strong summary includes:\n- Caller name\n- Phone number\n- Menu item requested\n- The allergy or ingredient concern\n- Any modifiers already requested\n- Whether the caller wants pickup or delivery\n\nExample summary: \"Maria, 555-0100, wants two chicken wraps. Asked whether the wrap or sauce contains dairy. Would like pickup at 6:30.\"\n\nThat is better than a vague note like “caller had a question.” It gives the manager enough context to call back or answer right away.\n\nIf your team wants a printed rule, use this line near the phone or prep station: \"All allergy questions go to staff before confirmation.\" That keeps everyone aligned.\n\nFor restaurants that do a lot of phone orders, this matters because the host is often handling several tasks at once. It can take the order, collect the ready time, and still move the allergy question to staff. ROAL sends a clean ticket to the kitchen screen, and the handoff summary helps staff spot the issue before prep begins.\n\nIf your team uses a kitchen screen, make the allergy note easy to see. If not, the manager should be the one to confirm the answer before the order is finalized."
+    },
+    {
+      "id": "how-do-you-avoid-mistakes-on-the-kitchen-side",
+      "h2": "How do you avoid mistakes on the kitchen side?",
+      "body": "The phone side is only half the job. The kitchen side needs a clear way to see the allergy note and act on it. The goal is not to make the host responsible for food safety decisions. The goal is to make sure the concern reaches the right person.\n\nA simple kitchen checklist works well:\n1. Read the ticket as soon as it appears.\n2. Look for any allergy note or staff handoff flag.\n3. Confirm the item and modifiers before cooking.\n4. If the note is unclear, pause and ask the manager.\n5. Do not assume a standard build is safe for every caller.\n\nExample: a caller orders a sandwich with no onions, but says they have a sesame allergy. The kitchen should not treat that as a routine modifier. Even if the bread is normally used, the team needs to review it before confirming.\n\nThis is where a clean ticket helps. ROAL sends orders to the kitchen screen and includes the details the restaurant needs, so the phone and kitchen stay aligned. If your menu changes often, keep the menu editor updated so the host is working from current items and prices.\n\nA practical owner rule is: if a question could change how the kitchen prepares the food, it belongs with staff. That protects the caller and keeps the team from having to fix confusion later."
+    },
+    {
+      "id": "how-do-allergy-calls-fit-into-your-phone-and-ordering-setup",
+      "h2": "How do allergy calls fit into your phone and ordering setup?",
+      "body": "If your restaurant forwards calls to an AI phone host, allergy questions should be part of the same call flow as orders and hours. The host can answer simple menu questions, take pickup or delivery orders, and pass sensitive questions to staff without breaking the call.\n\nA basic setup looks like this:\n- Forward all calls, or only busy and unanswered calls, to the host.\n- Let the host handle normal menu and order questions.\n- Route allergy-sensitive questions to staff.\n- Keep your existing number.\n- Review the inbox for any unanswered items.\n\nIf you want to compare the cost of different phone setups, [Pricing](/pricing) and the [AI phone host cost calculator](/tools/phone-host-cost-calculator) can help you plug in your own numbers. That is useful when you are deciding whether to rely on delivery apps, staff, or a phone host.\n\nA worked example: say your average phone order is $28 and you get 40 completed phone orders in a month. That would be 40 x your per-order cost. Plug in your own order count and average ticket size to see what the phone channel costs you. The point is not to guess. The point is to compare clearly.\n\nROAL is set up for this kind of call flow. It answers the restaurant’s phone, takes orders from the live menu, and hands allergy-sensitive questions to staff with a summary. If you want to try it, [build a free test host](/try) from your website or menu pages and see how it handles your own menu language."
+    }
+  ],
+  "takeaways": [
+    "Answer ingredient questions from the menu, but hand off allergy-sensitive questions to staff.",
+    "Use a short script that tells callers you are reviewing the question, not guessing.",
+    "Make sure the handoff summary includes the dish, the concern, and the caller’s contact info.",
+    "Keep the kitchen loop clear so the team can confirm before prep begins.",
+    "Update menu notes often so the phone host stays accurate."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host answer allergy questions at a restaurant?",
+      "a": "Yes, but only in a limited way. It should answer simple ingredient questions from the menu and hand off allergy-sensitive or uncertain questions to staff. That is the safest approach for a busy restaurant phone."
+    },
+    {
+      "q": "What should the host say when a caller asks about a food allergy?",
+      "a": "It should say that it can help with menu details, but allergy-sensitive questions need to go to the restaurant team. A good line is, “I want to make sure I get this right, so I’m sending this to the restaurant team now.”"
+    },
+    {
+      "q": "Should the host guess about cross-contact or shared fryers?",
+      "a": "No. Those questions should go to staff. Cross-contact depends on how the kitchen works that day, and the host should not guess about prep methods or safety."
+    },
+    {
+      "q": "How does ROAL handle allergy questions on a call?",
+      "a": "ROAL can answer menu, hours, address, and order questions, but it hands allergy-sensitive questions to staff with a summary. It also does not take card numbers over the phone, so payment stays with the restaurant’s normal process."
+    }
+  ],
+  "words": 1452,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

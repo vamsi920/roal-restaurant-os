@@ -1,0 +1,71 @@
+{
+  "slug": "restaurant-ticket-times",
+  "keyword": "restaurant ticket times",
+  "category": "operations",
+  "title": "Restaurant ticket times: how to measure kitchen speed",
+  "seoTitle": "Restaurant ticket times: how to measure kitchen speed | ROAL",
+  "description": "Track restaurant ticket times, spot slowdowns, and use clear kitchen tickets to keep pickup and delivery orders moving.",
+  "question": "How do I measure restaurant ticket times without slowing down service?",
+  "answer": "Track the time from order taken to ticket sent, then from ticket sent to order ready. Break it down by hour, item type, and rush period so you can see where the slowdown happens. A clean phone host like ROAL can help by sending structured tickets to the kitchen screen, so your team can focus on prep instead of repeating orders.",
+  "summary": "You’ll learn how to measure ticket times, find kitchen bottlenecks, and use simple tools to make speed visible.",
+  "intro": "Restaurant ticket times tell you how fast an order moves from the phone to the kitchen and out the door. If those times drift, you feel it right away in late pickups, backed-up screens, and stressed staff.\n\nThe good news is you do not need a fancy system to start. You need one clear definition, a simple way to record it, and a habit of checking it at the same times every day.",
+  "sections": [
+    {
+      "id": "what-should-restaurant-ticket-times-measure",
+      "h2": "What should restaurant ticket times measure?",
+      "body": "Start with one simple definition: **restaurant ticket times** are the minutes from when the order is confirmed to when the kitchen says it is ready. That gives you a real number you can watch day by day.\n\nFor pickup and delivery orders, you can also break the time into two parts:\n- **Order-to-ticket time:** how long it takes to get the order into the kitchen.\n- **Ticket-to-ready time:** how long the kitchen needs after it sees the ticket.\n\nIf you use an AI phone host like ROAL, the order arrives as a clean ticket on the kitchen screen, which helps keep the first part consistent. That matters because a messy call, a missed modifier, or a handwritten note can add extra minutes before cooking even starts.\n\nHere is a practical example. Say lunch pickup orders usually take 14 minutes from ticket to ready, and a few tickets are taking 22 minutes. That gap is worth looking at. It may mean the problem is one item, one station, or one rush hour, not the whole kitchen.\n\nUse a simple line at the pass or on the screen: \"Ticket in at 12:08, ready at 12:22.\" That is enough to start seeing patterns."
+    },
+    {
+      "id": "how-do-i-track-ticket-times-during-a-busy-shift",
+      "h2": "How do I track ticket times during a busy shift?",
+      "body": "You do not need a big spreadsheet on day one. You need a repeatable habit that your team can actually follow when it gets loud.\n\nTry this setup:\n1. Pick one person to note the time when the order is confirmed.\n2. Have the kitchen mark the time when the ticket is started or acknowledged.\n3. Mark the ready time when the order reaches the expo or pickup shelf.\n4. Review the differences at the end of the shift.\n\nIf your team uses a kitchen screen, a clean ticket makes this easier. ROAL sends the order to the kitchen screen with items, sizes, modifiers, notes, name, phone, and ready time, so the kitchen has less to decode.\n\nA practical logging sheet can be very simple:\n\n| Order type | Order confirmed | Ticket seen | Ready | Total time |\n|---|---:|---:|---:|---:|\n| Pizza pickup | 12:03 | 12:04 | 12:18 | 15 min |\n| Sandwich delivery | 12:10 | 12:11 | 12:21 | 11 min |\n| Pasta pickup | 12:14 | 12:16 | 12:31 | 17 min |\n\nAt the end of the shift, circle the slowest two orders and ask what was different. Was it a big modifier list? A missing item? A busy fryer? That is where the answer usually is."
+    },
+    {
+      "id": "which-numbers-matter-most-for-your-kitchen",
+      "h2": "Which numbers matter most for your kitchen?",
+      "body": "Not every ticket time number helps you run the line better. Focus on the few that change decisions.\n\nThe most useful numbers are:\n- **Average ticket time** for lunch, dinner, and late night.\n- **Peak-hour ticket time** during your busiest hour.\n- **Ticket time by item group** such as pizza, wings, sandwiches, or family platters.\n- **Ticket time by order size** such as one item, two items, or large custom orders.\n\nHere is a worked example you can copy. Say your average order is $28, your lunch rush runs from 12:00 to 1:30, and your kitchen is taking 18 minutes on average during that hour. If dinner drops to 13 minutes, you know lunch is the pressure point. Plug in your own order value and your own times.\n\nYou can also watch how ticket times change when the phone rings a lot. If your staff is answering questions, taking orders, and dealing with walk-ins at once, the screen may fill up while nobody notices. That is why many owners pair call answering with kitchen tracking. ROAL can handle hours, address, parking, menu questions, pickup and delivery orders, and it sends the order to the kitchen screen as a ticket.\n\nA quick checklist for the manager shift:\n- Look at the slowest hour.\n- Look at the slowest menu item.\n- Look at the biggest modifier pileup.\n- Look at whether the order was taken clearly the first time."
+    },
+    {
+      "id": "how-do-phone-orders-affect-ticket-times",
+      "h2": "How do phone orders affect ticket times?",
+      "body": "Phone orders can help or hurt kitchen speed depending on how they are taken. A clear order makes the kitchen faster. A rushed or incomplete order wastes time at the line and at the expo.\n\nThat is why the person answering the phone matters. A script like this keeps the order tight: \"Thanks for calling. I can take your pickup order now. Please tell me the items, sizes, and any changes.\" The caller hears a simple process, and the kitchen gets a cleaner ticket.\n\nROAL is built for that kind of flow. It answers the restaurant’s phone, takes pickup and delivery orders from the live menu, confirms the order back, speaks the caller’s language, and sends a clean ticket to the kitchen screen. It also does not offer sold-out items, which helps avoid kitchen rework.\n\nIf you want to see whether phone handling is slowing you down, compare these two cases for one lunch period:\n- Orders taken by hurried staff with unclear notes.\n- Orders taken from a structured script with items, sizes, modifiers, and notes captured the same way every time.\n\nEven a small change matters. If an order takes 2 extra minutes to clarify and you handle 20 phone orders in a rush, that is 40 minutes of added friction across the shift. You may not feel it on one call, but the kitchen feels it by 1:00 p.m."
+    },
+    {
+      "id": "what-slows-ticket-times-down-in-a-real-restaurant",
+      "h2": "What slows ticket times down in a real restaurant?",
+      "body": "Most slow ticket times come from a few common problems, not from one giant failure. The trick is to find the one that shows up again and again.\n\nCommon slowdowns include:\n- Too many modifiers on one order.\n- A ticket that is hard to read.\n- One station getting hit harder than the others.\n- The same item being sold in a rush but prepped too late.\n- Staff stopping to answer the phone every few minutes.\n\nHere is a simple way to sort it out. For three busy shifts, write down the slowest five tickets and note what they had in common. If three of them were custom pies, your pizza line may need a better prep rhythm. If two were allergy-sensitive calls, those should be handed to staff with a summary, which ROAL can do.\n\nA practical table for your review meeting:\n\n| Slow ticket | What was on it? | What caused the delay? | Fix to test tomorrow |\n|---|---|---|---|\n| 24 min | Large order, many modifiers | Kitchen paused to clarify | Use clearer modifier capture |\n| 21 min | Wings and fries | Fryer backed up | Pre-portion more during rush |\n| 19 min | Allergy question | Staff had to verify details | Route special calls to staff |\n\nKeep the fix small. One change at a time tells you what actually helped."
+    },
+    {
+      "id": "how-should-i-use-ticket-times-to-make-the-next-shift-faster",
+      "h2": "How should I use ticket times to make the next shift faster?",
+      "body": "Ticket times are useful only if you act on them. The goal is not to collect numbers. The goal is to make the next rush smoother.\n\nUse a short end-of-shift routine:\n1. Write down the average ticket time for lunch or dinner.\n2. Mark the slowest menu item.\n3. Note one reason the kitchen got delayed.\n4. Choose one fix for the next shift.\n\nFor example, if your average lunch ticket time was 16 minutes and the slowest stretch was 12:15 to 12:45, you might decide to prep one more tray of your top item before noon. If the delay came from repeat phone questions, you might move those calls to an AI phone host or tighten the greeting.\n\nThis is also where tools help. You can compare your ticket times with [restaurant phone order costs](/tools/phone-host-cost-calculator) and think about whether a per-order model fits your volume better than a fixed monthly plan. Many AI phone tools charge a monthly fee whether or not orders come in, while ROAL charges per completed phone order, with no monthly fee and no setup fee.\n\nIf you want to test the flow before changing anything live, you can [build a free test host](/try) from your website or menu. Keep the test short. Call it, place one real menu order, and see how the kitchen ticket looks. Then decide what to keep and what to change."
+    }
+  ],
+  "takeaways": [
+    "Measure ticket time from confirmed order to ready order, then split it into smaller steps.",
+    "Track the slowest hours and menu items, not just the overall average.",
+    "Clean phone orders reduce clarification delays at the kitchen screen.",
+    "Use one small fix per shift so you can tell what improved speed."
+  ],
+  "faq": [
+    {
+      "q": "What is a good restaurant ticket time?",
+      "a": "There is no single good number for every restaurant. A sandwich shop, pizza shop, and family restaurant will have different targets based on the menu and the rush. Start by measuring your own average ticket times at lunch and dinner, then look for the slowest items and the biggest spikes."
+    },
+    {
+      "q": "How do I track ticket times without a POS report?",
+      "a": "You can track them with a simple sheet, a kitchen screen, or even a notes app. Mark when the order is confirmed, when the ticket is seen, and when the order is ready. After a few shifts, patterns show up fast enough to act on."
+    },
+    {
+      "q": "What slows down restaurant ticket times the most?",
+      "a": "Common causes are unclear phone orders, too many modifiers, one busy station, and repeated questions during rush periods. Special requests and allergy-sensitive calls can also add time if they have to be re-checked. The best fix is to identify the repeat cause, not guess."
+    },
+    {
+      "q": "Can an AI phone host help with ticket times?",
+      "a": "Yes, if it captures the order cleanly and sends it straight to the kitchen screen. ROAL answers the phone, takes pickup and delivery orders from the live menu, collects names and phone numbers, quotes a ready time, and sends a clean ticket to the kitchen. It does not take card numbers, and tricky calls still go to staff."
+    }
+  ],
+  "words": 1423,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

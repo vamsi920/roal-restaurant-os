@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-host-unanswered-questions",
+  "keyword": "ai phone unknown question",
+  "category": "ai-basics",
+  "title": "When the AI does not know the answer",
+  "seoTitle": "When an AI phone host does not know the answer",
+  "description": "What should happen when an AI phone host gets a question it cannot answer? See how to route calls, set expectations, and manage follow-up.",
+  "question": "What should my restaurant do when the AI phone host doesn't know the answer?",
+  "answer": "Send the call to staff or have the host take a message when the question is about allergies, catering, complaints, or anything not in the menu, hours, or address. With ROAL, unknown questions go to an inbox, and once you answer them, the host remembers them for future calls.",
+  "summary": "You’ll learn how to handle unknown calls without losing the order or confusing the caller.",
+  "intro": "When an AI phone host does not know the answer, it should say so clearly and hand the call to your team or collect a message. That is the right move for allergy questions, catering details, manager requests, and anything that needs a human decision.\n\nFor a restaurant, the goal is not to pretend the host knows everything. It is to answer the easy stuff fast, keep the caller moving, and make the hard stuff land with staff in a clean way. ROAL works that way: it handles menu, hours, address, parking, pickup and delivery orders, and sends the rest to an inbox for follow-up.",
+  "sections": [
+    {
+      "id": "which-questions-should-the-ai-answer-and-which-should-go-to-",
+      "h2": "Which questions should the AI answer, and which should go to staff?",
+      "body": "A good rule is simple: let the phone host handle facts from your public info and routine order taking. Send anything that needs judgment, a promise, or a special exception to staff.\n\n**Good for the phone host:**\n- Hours, address, parking, and menu questions\n- Pickup and delivery orders from the live menu\n- Reservation requests\n- Basic order status questions that you choose to publish in FAQs\n\n**Better for staff:**\n- Allergy-sensitive questions\n- Catering requests\n- Complaints or refund requests\n- Manager requests\n- Questions about items that are not on the menu or may be sold out\n\nA useful script line is: “Let me get that to the team so we can answer you correctly.” That keeps the caller calm and avoids a wrong answer. ROAL also avoids offering items marked sold out, which helps reduce mistakes on busy shifts."
+    },
+    {
+      "id": "what-should-the-host-say-when-it-does-not-know-the-answer",
+      "h2": "What should the host say when it does not know the answer?",
+      "body": "The best response is short, polite, and direct. It should not ramble or guess. If the caller hears a confident wrong answer, that creates a bigger problem than a quick handoff.\n\nUse a line like: “I’m not sure on that one, but I can pass it to the team.” Another good line is: “I want to make sure you get the right answer, so I’m sending this to staff.”\n\nA simple step list for unknown questions:\n1. Acknowledge the question.\n2. Say it needs a staff answer.\n3. Capture the caller’s name and phone number if helpful.\n4. Send a summary to staff.\n5. Let the caller know someone will follow up if needed.\n\nFor example, if someone asks, “Can you make the pasta dairy-free for my child?” the host should not guess. It should route that to staff with the exact question. That is safer and easier for your kitchen or manager."
+    },
+    {
+      "id": "how-does-roal-handle-unknown-questions",
+      "h2": "How does ROAL handle unknown questions?",
+      "body": "ROAL sends questions it could not answer to an inbox, and the owner answers once so the host knows it from then on. That means each new question can become part of the restaurant’s own knowledge over time.\n\nA practical example: say a caller asks about a special parking arrangement that is not on the website. The host can send that question to the inbox. You reply once with the correct answer, and then the next caller can get it without extra work.\n\nThat workflow matters because many restaurant questions repeat. A few examples you may want in your FAQ are:\n- “Do you validate parking?”\n- “Can I add extra sauce?”\n- “Do you have gluten-free options?”\n- “What is the best number for a large catering order?”\n\nThe point is not to make the host guess. It is to create a clean memory for your restaurant, so your team answers once and moves on."
+    },
+    {
+      "id": "how-do-i-keep-callers-from-getting-frustrated",
+      "h2": "How do I keep callers from getting frustrated?",
+      "body": "Most callers do not mind a handoff if it is fast and clear. They get frustrated when they have to repeat themselves, wait too long, or hear a made-up answer.\n\nUse this call flow:\n- Answer the easy question right away if it is in your menu, hours, or address.\n- If it is a hard question, say so in one sentence.\n- Collect the caller’s name and phone number when needed.\n- Summarize the question before you transfer it or send it to staff.\n\nA good line is: “I can help with the basics, but for that one I’m sending a note to the team.” That sounds natural and honest.\n\nHere is a quick checklist for your own restaurant:\n- Are hours and address correct on your website and Google Maps link?\n- Is your menu readable in text or PDF form?\n- Do you have a short FAQ for common special requests?\n- Do staff know who handles inbox questions?\n\nROAL can read the menu, hours, and address from public pages during setup, so keeping those current helps the host answer more calls without friction."
+    },
+    {
+      "id": "what-should-i-do-before-going-live-with-unknown-questions",
+      "h2": "What should I do before going live with unknown questions?",
+      "body": "Before you forward your number to an AI phone host, test the gray areas. Don’t just test pizza prices and pickup time. Test the calls that usually cause trouble.\n\nTry these sample questions:\n- “Is there parking nearby?”\n- “Can you hold the sauce on this order?”\n- “Do you take reservation requests for Friday?”\n- “Can I talk to the manager?”\n- “What if I have a peanut allergy?”\n\nThen write down the answers you want the host to give, and the ones that should go to staff. If you use ROAL, you can test-call it right in the browser before you claim the host, and you can upload a menu in any format.\n\nA simple prep table may help:\n\n| Question type | What the host should do |\n|---|---|\n| Hours, address, parking | Answer directly |\n| Pickup or delivery order | Take the order |\n| Allergy-sensitive request | Hand to staff |\n| Catering inquiry | Hand to staff |\n| Complaint | Hand to staff |\n\nThat small prep saves time later, especially during a rush."
+    },
+    {
+      "id": "how-much-does-a-missed-unknown-question-really-cost",
+      "h2": "How much does a missed unknown question really cost?",
+      "body": "A lost or botched call can mean a missed order, a frustrated caller, or extra staff time fixing a mistake. The cost depends on your own numbers, so use your figures and plug them in.\n\nHere is a simple worked example using made-up sample numbers you can swap out:\n- Say your average order is $28.\n- Say one unclear call a day turns into a lost order or a confused remake.\n- That is about $28 a day in order value, or about $840 in a 30-day month.\n\nNow compare that with your phone setup. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. That makes it easier to use the phone host for the easy calls while staff handle the tricky ones.\n\nIf you want a rough way to think about it, compare your order value, your labor time, and your current call coverage. Then decide where an unknown-question handoff protects the most revenue."
+    },
+    {
+      "id": "what-should-i-tell-my-staff-so-follow-up-is-easy",
+      "h2": "What should I tell my staff so follow-up is easy?",
+      "body": "The best follow-up happens when staff get one clean note instead of a vague message. Tell your team to look for the caller’s name, phone number, the exact question, and what the host already handled.\n\nA simple internal note format:\n- Caller name:\n- Callback number:\n- Question:\n- Order details, if any:\n- Urgency:\n\nFor example: “Maria called asking if the kitchen can remove dairy from a pasta order for her child. No order placed yet. Please call back.” That is much better than “call about pasta.”\n\nROAL also keeps call history with transcripts and recordings, plus an inbox for questions it could not answer. That makes it easier to review patterns later and add new FAQs or menu notes.\n\nIf you want to try a test setup for your own restaurant, [build a free test host](/try) from your website and see how it handles your real questions before you forward calls."
+    }
+  ],
+  "takeaways": [
+    "Unknown questions should be handed to staff, not guessed.",
+    "Use short, honest language that keeps the caller moving.",
+    "ROAL sends unanswered questions to an inbox so you can teach the host once.",
+    "Test allergy, catering, complaint, and manager calls before going live.",
+    "Keep your hours, address, and menu current so fewer calls become unknown."
+  ],
+  "faq": [
+    {
+      "q": "What should an AI phone host do when it doesn't know the answer?",
+      "a": "It should say it needs help, avoid guessing, and route the question to staff or an inbox. That is especially important for allergies, complaints, catering, and manager requests. A short honest response works best for callers."
+    },
+    {
+      "q": "Can ROAL answer questions it has not seen before?",
+      "a": "Not right away. Questions it could not answer go to an inbox, and the owner answers once so the host knows it from then on. That helps build a better restaurant-specific phone host over time."
+    },
+    {
+      "q": "Should I let the AI handle allergy questions?",
+      "a": "Only if you have clearly written safe answers in your menu and FAQ, and even then many allergy-sensitive calls should go to staff. When in doubt, route the call to a person. It is safer to avoid guessing on food allergies."
+    },
+    {
+      "q": "How do I prepare for unknown calls before going live?",
+      "a": "Test the questions that usually cause trouble, like parking, reservations, catering, and special requests. Write down which ones the host should answer and which ones should go to staff. Make sure your hours, address, menu, and FAQs are current before forwarding calls."
+    }
+  ],
+  "words": 1256,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

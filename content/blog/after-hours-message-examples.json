@@ -1,0 +1,77 @@
+{
+  "slug": "after-hours-message-examples",
+  "keyword": "restaurant after hours message",
+  "category": "guest-experience",
+  "title": "After-hours phone message examples for restaurants",
+  "seoTitle": "Restaurant after-hours phone message examples | ROAL",
+  "description": "Need an after-hours phone message for your restaurant? Use practical voicemail examples, call-forwarding tips, and closing-time wording.",
+  "question": "What should I say in a restaurant after hours message so callers know hours, ordering options, and what happens next?",
+  "answer": "A good restaurant after hours message should be short, clear, and specific. Tell callers your hours, whether pickup or delivery orders can be taken online or by phone tomorrow, and what to do for urgent needs like catering, allergy questions, or manager requests. Keep it polite, and make sure the message matches your real hours and your current process.",
+  "summary": "Write a clear after-hours message that fits your hours, order flow, and call-forwarding setup.",
+  "intro": "When your restaurant is closed, the phone still needs an answer. A good restaurant after hours message tells callers your hours, what they can do next, and when they can expect a callback.\n\nIt should sound like your place: short, polite, and useful. If you use [phone greeting templates](/tools/phone-greeting-templates), you can turn one of these examples into your own message in a few minutes.",
+  "sections": [
+    {
+      "id": "what-should-a-restaurant-after-hours-message-say",
+      "h2": "What should a restaurant after-hours message say?",
+      "body": "A strong after-hours message does four things: it says you are closed, gives your hours, tells callers how to place or check an order, and explains what happens with urgent questions. That keeps people from hanging up confused.\n\nUse this simple structure:\n1. Greet the caller.\n2. Say the restaurant is currently closed.\n3. Share today’s hours or next opening time.\n4. Tell them where to leave a message or how to order later.\n5. Mention urgent items like catering, allergies, or manager requests.\n\nExample line: \"Thanks for calling Mario’s Pizza. We’re closed right now and reopen at 11 a.m. tomorrow. Please call back then for pickup orders, or leave your name and number after the tone.\""
+    },
+    {
+      "id": "can-you-give-me-short-after-hours-message-examples",
+      "h2": "Can you give me short after-hours message examples?",
+      "body": "Yes. Short works best when callers just want to know whether you are open and what to do next. Keep the message under 20 seconds if you can.\n\nHere are three ready-to-use examples you can swap for your own restaurant:\n\n| Situation | Example message |\n|---|---|\n| Simple closure | \"Thanks for calling Rosa’s Deli. We’re closed right now. Our hours are 10 a.m. to 8 p.m. daily. Please call back when we reopen, or leave a message after the tone.\" |\n| Takeout spot | \"Thanks for calling. We’re closed for the night and reopen at 11 a.m. tomorrow. For pickup orders, please call during business hours. If you need to leave your name and number, please do so now.\" |\n| Delivery + pickup | \"Thanks for calling Tony’s Kitchen. We’re closed right now. We take pickup and delivery orders during open hours only. Please call back tomorrow, or leave a message and we’ll return it as soon as we can.\""
+    },
+    {
+      "id": "how-do-i-leave-a-voicemail-greeting-for-orders-and-questions",
+      "h2": "How do I leave a voicemail greeting for orders and questions?",
+      "body": "A voicemail greeting should do more than say “leave a message.” Tell the caller exactly what information you want and which calls should not wait. That saves time when you call back.\n\nA useful restaurant voicemail script:\n\"You’ve reached Ocean Grill. We’re closed right now. Please leave your name, phone number, and a brief message about your order, reservation request, or question. For allergy-sensitive questions, catering, or manager requests, leave those details too, and we’ll get back to you during business hours.\"\n\nQuick checklist before you record:\n- Your restaurant name is clear.\n- Your hours are current.\n- You ask for name and phone number.\n- You mention orders, reservations, and special requests.\n- You say when callers should expect a reply.\n\nIf you want more wording ideas, see [restaurant voicemail greeting examples](/blog/restaurant-voicemail-greeting-examples)."
+    },
+    {
+      "id": "what-if-callers-still-want-to-place-an-order-after-hours",
+      "h2": "What if callers still want to place an order after hours?",
+      "body": "Some callers will keep asking for food even when you are closed. Be direct. Do not promise a callback unless someone on your team will truly handle it.\n\nA good response is:\n\"We’re closed now, but we can take your order during business hours tomorrow. If you’d like, leave your name and number and we’ll call you back.\"\n\nIf your restaurant uses [after-hours calls](/use-cases/after-hours), you can also route those calls to a phone host that can answer basic questions, take notes, and collect a message for staff. ROAL can answer questions about hours, address, parking, and the menu, and it can take pickup and delivery orders from the live menu when the restaurant chooses to forward calls to it.\n\nFor a quick math example, say you usually miss 6 after-hours orders a week and your average order is $28. Plug in your own numbers: 6 × $28 = $168 in weekly order value that may have gone to voicemail or a hang-up. That is not profit, but it helps you see the size of the opportunity."
+    },
+    {
+      "id": "how-should-i-set-up-call-forwarding-after-close",
+      "h2": "How should I set up call forwarding after close?",
+      "body": "The message only helps if calls land in the right place. Many owners use call forwarding after close, or only when the line is busy. The codes vary by carrier and phone system, so confirm with your provider and test with a real call.\n\nHere is the basic idea for common setups:\n- Landlines and some carriers: *72 plus the forwarding number to forward all calls, *73 to turn it off.\n- AT&T and T-Mobile GSM lines: **21*number# forwards all calls, ##21# turns it off, **61*number# forwards unanswered calls, and **67*number# forwards busy calls.\n- Verizon Wireless: *72 / *73 for all calls, and *71 for busy/no-answer forwarding.\n- Business VoIP systems: forwarding is usually set in the web portal.\n\nAlways test after you change it. Call your restaurant from a mobile phone and make sure the after-hours message or forwarding route works the way you expect. If you want a reference sheet, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-can-roal-handle-after-hours-calls-without-sounding-robot",
+      "h2": "How can ROAL handle after-hours calls without sounding robotic?",
+      "body": "ROAL is an AI phone host for restaurants, so it can answer the phone, speak the caller’s language, and handle common after-hours questions from your live menu and public info. You choose the host’s voice and name, and if a question is too tricky, it goes to your inbox for staff to answer once.\n\nA practical after-hours setup looks like this:\n1. Forward calls only after close or when busy.\n2. Let ROAL answer hours, address, parking, and menu questions.\n3. Let it take pickup or delivery orders from the live menu.\n4. Have it hand allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary.\n5. Keep payment for pickup or your usual payment method, since it does not take card numbers over the phone.\n\nOwners can start from their website, Google Maps link, or “Name, City” at /try, then test-call it in the browser before going live. If you want to see the details first, read [How it works](/how-it-works) or check [Pricing](/pricing)."
+    },
+    {
+      "id": "what-should-i-record-if-i-just-want-one-clean-after-hours-me",
+      "h2": "What should I record if I just want one clean after-hours message?",
+      "body": "If you want one message that covers the basics, use this format and swap in your own hours.\n\n\"Thanks for calling Harbor Grill. We’re closed right now. Our hours are Monday through Sunday, 11 a.m. to 9 p.m. If you’re calling about pickup, delivery, catering, or a reservation request, please call back during business hours. For allergy-sensitive questions or a message for the manager, please leave your name, phone number, and details after the tone.\"\n\nBefore you record, check these items:\n- Hours are correct for weekdays, weekends, and holidays.\n- The message matches your current order flow.\n- The phone number on the line still belongs to the restaurant.\n- The greeting is short enough that callers do not tune out.\n- Someone on staff knows who checks the messages and when.\n\nIf you want more examples for other call types, the [restaurant phone scripts collection](/blog/restaurant-phone-scripts-collection) is a useful next stop."
+    }
+  ],
+  "takeaways": [
+    "Keep the after-hours message short, specific, and tied to your real hours.",
+    "Tell callers whether to call back, leave a message, or wait for a return call.",
+    "Include name, phone number, and urgent request details in every voicemail script.",
+    "Test call forwarding after you change it, and confirm the code with your carrier.",
+    "ROAL can answer after-hours menu and hours questions, while tricky calls go to staff."
+  ],
+  "faq": [
+    {
+      "q": "What is the best after-hours message for a restaurant?",
+      "a": "The best message says the restaurant is closed, gives the hours for the next opening, and tells callers exactly what to do next. For example: “Thanks for calling Bella Pasta. We’re closed right now and reopen at 11 a.m. tomorrow. Please call back during business hours, or leave your name and number after the tone.”"
+    },
+    {
+      "q": "Should I let callers leave a voicemail after hours?",
+      "a": "Yes, if someone on your team checks messages regularly. Ask for the caller’s name, phone number, and reason for calling so staff can respond without guessing. If you do not check voicemail often, a better option is forwarding calls to a phone host or a staff line that is actually monitored."
+    },
+    {
+      "q": "What should I say for allergy or manager requests after hours?",
+      "a": "Ask callers to leave their name, number, and the full details of the issue. Say that allergy-sensitive questions and manager requests will be reviewed during business hours. That keeps the message clear and avoids promising an immediate answer when no one is there."
+    },
+    {
+      "q": "Can I forward my restaurant phone after hours?",
+      "a": "Usually yes, but the setup depends on your carrier or phone system. Many landlines and some carriers use *72 to forward all calls and *73 to turn it off, while some mobile carriers use different codes for unanswered or busy calls. Confirm the code with your provider and test the call after you change it."
+    }
+  ],
+  "words": 1132,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

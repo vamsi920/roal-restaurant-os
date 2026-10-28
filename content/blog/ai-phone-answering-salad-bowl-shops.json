@@ -1,0 +1,76 @@
+{
+  "slug": "ai-phone-answering-salad-bowl-shops",
+  "keyword": "salad shop catering orders",
+  "category": "restaurant-types",
+  "title": "AI phone answering for salad shop catering orders",
+  "seoTitle": "AI phone answering for salad shop catering orders",
+  "description": "AI phone answering for salad shop catering orders helps independent shops take calls, quote ready times, and route catering questions fast.",
+  "question": "How can I handle salad shop catering orders without tying up my counter staff?",
+  "answer": "An AI phone host can answer your restaurant’s phone, take pickup and delivery orders from your live menu, and hand catering requests to staff with a summary. For salad shops, that means it can capture build-your-own bowls, modifiers, names, and phone numbers, while tricky questions and allergy-sensitive requests go to your team.",
+  "summary": "Use an AI phone host to take salad shop catering and phone orders with less phone stress and cleaner tickets.",
+  "intro": "AI phone answering for salad shop catering orders means a phone host can answer the call, gather the order, and send it to the kitchen without pulling your team off the line. For a salad or bowl shop, that is especially useful when callers want large trays, multiple dressings, or custom builds.\n\nROAL is built for that kind of work. It reads your live menu, takes pickup and delivery orders, and hands catering questions and allergy-sensitive calls to staff with a summary. The owner keeps the restaurant’s existing number and can forward calls only when busy, unanswered, or all the time.",
+  "sections": [
+    {
+      "id": "what-kinds-of-salad-shop-calls-should-an-ai-phone-host-take",
+      "h2": "What kinds of salad shop calls should an AI phone host take?",
+      "body": "A salad shop gets a mixed bag of calls. Some are simple pickup orders. Some are catering requests for office lunches, school events, or family gatherings. Some are just hours, parking, or “Do you have gluten-free dressing?” calls.\n\nAn AI phone host like ROAL can handle the straightforward ones and pass the rest to your staff. It can take items, sizes, modifiers, and notes from your live menu. It also collects the caller’s name and phone, quotes a ready time, and confirms the order back before sending a clean ticket to the kitchen screen.\n\nFor catering, use clear menu groups so the phone host can make sense of your offers. Example:\n- Salad trays\n- Grain bowls\n- Protein add-ons\n- Dressings on the side\n- Utensils and serving ware\n\nA simple phone line helps. Example script: “Would you like the catering trays, or are you ordering individual bowls for pickup?” That question saves time and keeps the order organized.\n\nIf you already get a lot of catering calls, [the catering use case](/use-cases/catering) is worth a look."
+    },
+    {
+      "id": "how-should-you-set-up-salad-and-bowl-menus-for-phone-orders",
+      "h2": "How should you set up salad and bowl menus for phone orders?",
+      "body": "Phone ordering works best when the menu is easy to hear and easy to choose from. That means fewer open-ended questions and more clear choices. If your menu has 12 greens, 9 proteins, and 15 toppings, the phone host still needs a clean structure.\n\nStart by organizing your menu like this:\n1. Base: salad, grain bowl, wrap, or tray.\n2. Size: half tray, full tray, regular bowl, large bowl.\n3. Protein: chicken, tofu, salmon, steak, falafel, or none.\n4. Toppings: pick a few common ones first.\n5. Dressing: on the side or mixed in.\n6. Notes: no onions, extra napkins, utensils, or allergy note.\n\nROAL reads menus from your website, Google Maps link, menu PDFs, menu photos, or an upload. That matters for salad shops because menus often change with seasonal produce. If a topping is sold out, the host does not offer it.\n\nA helpful cashier-style line is: “I can help with the bowl base first, then we’ll build the rest.” That keeps the call moving.\n\nIf you want a better phone flow for menu-heavy shops, [menu and hours questions](/use-cases/menu-questions) is a good related read."
+    },
+    {
+      "id": "how-do-catering-calls-get-handled-without-slowing-down-the-l",
+      "h2": "How do catering calls get handled without slowing down the line?",
+      "body": "Catering calls usually take longer than a normal lunch order. The caller may ask about tray counts, delivery windows, setup needs, or whether utensils are included. Those questions can tie up your staff right when the counter is busy.\n\nWith ROAL, the caller can start with the basics and the tricky parts can be sent to staff with a summary. The host can take reservation requests too, but for catering it is especially useful as a first line of response. It speaks the caller’s language, confirms the order back, and can tell the caller when the order should be ready.\n\nHere is a practical workflow:\n- Caller asks for catering.\n- Phone host gathers date, time, location, name, phone, and order.\n- Phone host flags allergy-sensitive questions or manager requests.\n- Staff gets a summary instead of starting from scratch.\n\nExample phone line: “I can take the order details now and flag your setup question for the team.”\n\nIf your team already handles a lot of event food, [catering inquiries](/use-cases/catering) explains how a phone host fits into that flow without replacing your people on the floor."
+    },
+    {
+      "id": "what-does-the-cost-look-like-for-a-salad-shop",
+      "h2": "What does the cost look like for a salad shop?",
+      "body": "Cost matters a lot in a salad shop, because many orders are small and margins can be tight. Delivery apps commonly take roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often roughly $79 to $599, whether or not you get orders.\n\nROAL is different. It charges $0.90 per completed phone order, meaning a confirmed order whose ticket reaches the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nHere is a simple example. Say your average salad order is $28. If you get 100 completed phone orders in a month, the ROAL fee would be $90. Plug in your own order count and average ticket size to compare it against delivery app commission or a staffed phone line.\n\nFor a quick comparison, [the pay-per-order pricing page](/compare/monthly-ai-phone-plans) can help you think through the tradeoffs."
+    },
+    {
+      "id": "how-do-you-forward-calls-and-keep-your-current-number",
+      "h2": "How do you forward calls and keep your current number?",
+      "body": "You do not need to give up your restaurant number. The setup is simple: paste your website, Google Maps link, or business name and city into /try, or upload your menu in any format. ROAL reads the public menu, prices, hours, and address, then builds a phone host in about a minute.\n\nAfter that, you claim the host, get a dedicated phone line for that location, and forward your existing number to it. You can forward all calls, or only when busy or unanswered. Forwarding can be turned off any time.\n\nA few common phone system notes:\n- Many landlines use *72 to forward all calls and *73 to turn it off.\n- Some mobile carriers use **21*number# for all calls and ##21# to stop it.\n- Many carriers also have codes for busy or unanswered calls.\n- Business VoIP systems often use a web portal.\n\nCodes vary by carrier and plan, so confirm with your provider and test with a call. If you want a reference while you set it up, see [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-should-your-team-expect-after-the-call-comes-in",
+      "h2": "What should your team expect after the call comes in?",
+      "body": "The best phone setup does more than answer. It gives your team a clean handoff. ROAL sends live tickets to the kitchen screen with status updates like new, preparing, and ready. It also stores call history with transcripts and recordings, so your staff can check what was said if a caller calls back.\n\nThat helps in a salad shop where details matter. A caller may want no cheese, dressing on the side, or an allergy note passed along. The phone host can capture the note and the kitchen can see it. If the host cannot answer a question, it lands in an inbox, and the owner answers once so the host knows it from then on.\n\nA simple staff checklist:\n- Check the kitchen screen for new tickets.\n- Read notes before starting prep.\n- Watch for allergy-sensitive flags.\n- Use the call transcript if a customer says something changed.\n- Review missed questions in the inbox.\n\nIf you run more than one salad shop, multi-location menus and call handling can be managed from one dashboard. ROAL also lets the owner pick the host’s voice and name, which makes the phone feel closer to your shop’s style than a generic menu system."
+    },
+    {
+      "id": "what-is-the-easiest-way-to-start-without-overcommitting",
+      "h2": "What is the easiest way to start without overcommitting?",
+      "body": "Start small. Use your real menu, your real hours, and one location first. Test a few common calls: a lunch pickup order, a catering request, and a question about parking or hours. That will show you how the phone host handles the calls your team actually gets.\n\nA practical rollout plan:\n1. Put your menu online in a clean format if it is not already there.\n2. Add common modifiers and catering options.\n3. Test-call the host in the browser.\n4. Review the kitchen ticket format.\n5. Forward calls during lunch rush or whenever you want.\n\nFor salad and bowl shops, the value is usually not abstract. It is the difference between a phone ringing while the line is backed up and a clean order going straight to the kitchen screen. ROAL is pre-launch, so the safe way to judge it is by the calls it can handle for your shop, not by big promises.\n\nIf you want to try it, [build a free test host](/try) from your website and see how it reads your menu before you ever forward a call."
+    }
+  ],
+  "takeaways": [
+    "An AI phone host can take salad shop orders and route catering questions to staff.",
+    "Clean menu structure matters more when bowls, toppings, and dressings are highly customizable.",
+    "Pay-per-completed-order pricing can be easier to compare than monthly phone fees for low-margin shops.",
+    "You can keep your current restaurant number and forward calls only when needed."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take salad and bowl catering orders?",
+      "a": "Yes. It can collect the order details, name, phone number, and ready time, then send a clean ticket to the kitchen screen. If the caller has a special request or allergy-sensitive question, it can hand that to staff with a summary."
+    },
+    {
+      "q": "How does ROAL know my salad shop menu?",
+      "a": "ROAL reads your menu from public pages like your website, menu PDFs, menu photos, or a Google Maps link. You can also upload a menu in any format. The owner can review and update the menu in the dashboard."
+    },
+    {
+      "q": "Will it take card numbers over the phone?",
+      "a": "No. It does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "Can I keep my current phone number?",
+      "a": "Yes. You keep your own number and forward it to the ROAL line. You can forward all calls, or only when busy or unanswered, and turn forwarding off any time."
+    }
+  ],
+  "words": 1379,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

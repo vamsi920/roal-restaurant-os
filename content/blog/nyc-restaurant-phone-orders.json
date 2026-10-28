@@ -1,0 +1,71 @@
+{
+  "slug": "nyc-restaurant-phone-orders",
+  "keyword": "nyc restaurant phone orders",
+  "category": "local",
+  "title": "NYC restaurant phone orders: a practical guide",
+  "seoTitle": "NYC restaurant phone orders guide | ROAL",
+  "description": "Understand how NYC restaurant phone orders work, what to say on the phone, and how to route calls without slowing down walk-ins.",
+  "question": "How should I handle NYC restaurant phone orders without slowing down my front counter?",
+  "answer": "Use a clear phone process, collect the right details, and route calls so busy staff can keep service moving. ROAL is an AI phone host for restaurants that answers calls, takes pickup and delivery orders from your live menu, handles common questions, and sends a clean ticket to the kitchen screen.",
+  "summary": "You’ll learn a simple way to handle NYC restaurant phone orders without tying up your staff.",
+  "intro": "New York City restaurant phone orders work best when the call is short, clear, and tied to your live menu. A good setup lets you take pickup and delivery orders, answer common questions, and keep the line moving even when the counter is busy.\n\nFor many independent spots, the real problem is not the phone itself. It is the time it pulls from the people making food, packing bags, and helping dine-in guests. That is why some owners use an AI phone host like ROAL, especially when they want the phone answered, the order written cleanly, and the kitchen kept in the loop.",
+  "sections": [
+    {
+      "id": "what-do-nyc-customers-usually-call-about",
+      "h2": "What do NYC customers usually call about?",
+      "body": "In New York City, phone calls often come in for a few repeat reasons: pickup orders, delivery orders, hours, address, parking, and menu questions. That means your phone script should be short and practical, not long and fancy.\n\nA simple human script works like this:\n\n\"Thanks for calling. Pickup or delivery?\"\n\nThen collect the details in the same order every time:\n- Name\n- Phone number\n- Pickup or delivery\n- Items, sizes, modifiers, and notes\n- Ready time\n\nIf someone asks something common, answer it fast and get back to the order. Example:\n\n\"We’re open until 10 tonight. If you want, I can take your order now.\"\n\nFor neighborhood spots in [New York City](/locations/new-york-city), this matters because many callers are hungry, rushed, and standing outside or in a cab. The more you make them repeat themselves, the more likely they are to hang up. Keep one printed cheat sheet near the phone with hours, address, parking notes, and the top-selling items."
+    },
+    {
+      "id": "how-should-i-structure-a-phone-order-so-the-kitchen-gets-it-",
+      "h2": "How should I structure a phone order so the kitchen gets it right?",
+      "body": "A clean phone order should sound like a ticket, not a conversation that wanders. The goal is to move from greeting to order to confirmation in a way your kitchen can read quickly.\n\nUse this order-taking flow:\n1. Greet the caller.\n2. Confirm pickup or delivery.\n3. Take items one by one.\n4. Ask about size, modifiers, and notes.\n5. Repeat the order back.\n6. Give a ready time.\n7. Confirm name and phone.\n\nExample line:\n\n\"So that’s one large pepperoni pizza, well done, no onions, and one Caesar salad. Ready in about 20 minutes. Is that right?\"\n\nIf your shop uses ROAL, it follows that same structure and sends a clean ticket to the kitchen screen. It also takes reservation requests, speaks the caller’s language, and hands allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary. That is useful when your team is busy and you do not want a rushed phone call to turn into a mistaken order.\n\nChecklist for the kitchen side:\n- Item names match your menu\n- Sizes are written clearly\n- Modifiers are easy to spot\n- Notes are separated from items\n- Ready time is visible"
+    },
+    {
+      "id": "what-should-i-do-when-the-phone-rings-during-a-rush",
+      "h2": "What should I do when the phone rings during a rush?",
+      "body": "Rush periods are where phone orders can either help you or hurt you. If the person answering the phone is also boxing slices, checking tickets, or helping a line of customers, the call becomes a bottleneck.\n\nA practical setup is to forward calls only when needed. On many landlines and some carriers, you can use *72 to forward all calls and *73 to turn it off. On GSM mobile carriers, **21*number# often forwards all calls and ##21# turns it off; **61*number# can forward unanswered calls and **67*number# can forward busy calls. Verizon Wireless often uses *72 and *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle it in the web portal. Codes vary by carrier and plan, so confirm with your carrier and test with a call.\n\nThat means you can keep your main number and still route calls when the line gets hot. ROAL gives each location its own phone line automatically, and you forward your existing number to it. You can forward all calls, or only when busy or unanswered, and turn forwarding off any time.\n\nIf you want a quick internal rule, use this:\n- Lunch rush: forward unanswered calls\n- Dinner rush: forward busy calls\n- Slow periods: answer normally"
+    },
+    {
+      "id": "how-do-i-compare-phone-orders-with-delivery-apps-and-monthly",
+      "h2": "How do I compare phone orders with delivery apps and monthly AI plans?",
+      "body": "Phone orders are worth looking at in plain numbers. Delivery apps commonly charge restaurants roughly 15% to 30% commission per order. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, billed monthly.\n\nHere is a simple example you can swap for your own numbers:\n\n| Example | Number |\n|---|---:|\n| Average phone order | $28 |\n| Completed phone orders in a month | 200 |\n| Gross phone order sales | $5,600 |\n| ROAL cost at $0.90 each | $180 |\n\nIf your average order is different, plug in your own number. The point is to compare the cost of answering the phone against the cost of losing orders to voicemail, a busy line, or a pricey commission model. For a deeper comparison, see [phone orders vs delivery apps](/compare/delivery-apps) and [pricing](/pricing)."
+    },
+    {
+      "id": "how-do-i-set-up-roal-for-my-restaurant",
+      "h2": "How do I set up ROAL for my restaurant?",
+      "body": "Setup is designed to be fast. The owner pastes the restaurant website, Google Maps link, or just the name and city at /try. ROAL reads the menu, prices, hours, and address from public pages, menu PDFs, or menu photos and builds a phone host in about a minute.\n\nA simple setup checklist:\n- Paste your website, Google Maps link, or name and city\n- Review the menu and hours it found\n- Upload a menu if needed\n- Test-call it in the browser\n- Pick the host’s voice and name\n- Claim the host and go live\n- Forward your existing number to ROAL\n\nYou keep your own number. You can forward all calls or only busy and unanswered calls. If a question comes in that the host cannot answer, it lands in an inbox. You answer once, and the host knows it from then on.\n\nThe owner dashboard includes a kitchen screen with live tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That matters if you run more than one location or change items often. If you want to test it, you can [build a free test host](/try) from your website with no sign-up needed."
+    },
+    {
+      "id": "what-should-i-tell-staff-when-the-phone-host-hands-off-a-cal",
+      "h2": "What should I tell staff when the phone host hands off a call?",
+      "body": "Not every call should be handled automatically. Some calls need a person. That includes catering, allergy-sensitive questions, complaints, and manager requests. The right move is to hand those off with a short summary so staff does not need to listen to the whole call from scratch.\n\nA useful handoff note looks like this:\n\n\"Caller asked about a large catering order for tomorrow at noon. They also asked about gluten concerns and want a manager call back.\"\n\nThat gives the team the context they need. It also keeps the phone host focused on the calls it can handle well.\n\nUse this staff checklist:\n- Check the inbox for unanswered questions\n- Review the call summary before calling back\n- Confirm the order against the kitchen ticket\n- Update hours or menu items if something changed\n- Mark sold-out items in the menu editor so they are not offered\n\nThis is where ROAL fits well for many independent shops. It can take pickup and delivery orders from your live menu, but it will not offer items marked sold out. It also does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it. That keeps the process simple for staff and clear for the caller."
+    }
+  ],
+  "takeaways": [
+    "Use a short phone script and collect the same details every time.",
+    "Forward calls only when needed so the counter team can keep working.",
+    "Compare phone order costs against delivery app commission and monthly phone-plan fees.",
+    "Keep sold-out items out of the live menu and send tricky calls to staff."
+  ],
+  "faq": [
+    {
+      "q": "How do I take NYC restaurant phone orders faster?",
+      "a": "Use one fixed order flow: greeting, pickup or delivery, items, modifiers, name, phone, and ready time. Repeat the order back before you hang up so the kitchen gets a clean ticket. A phone host like ROAL can follow that flow automatically from your live menu."
+    },
+    {
+      "q": "Can I forward my restaurant phone to an AI phone host?",
+      "a": "Yes. You can forward your existing number to ROAL and keep your own number. Many carriers and phone systems support forwarding by code or in a web portal, but the exact steps depend on your carrier and plan, so always confirm and test with a call."
+    },
+    {
+      "q": "Does ROAL take credit card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it, which keeps phone orders simple and avoids extra payment handling on the call."
+    },
+    {
+      "q": "What happens if the phone host cannot answer a question?",
+      "a": "The question goes to an inbox, and you answer it once. After that, the phone host knows it from then on. For calls that need a person, such as complaints, allergy-sensitive questions, catering, or manager requests, ROAL sends a summary to staff."
+    }
+  ],
+  "words": 1282,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

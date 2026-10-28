@@ -1,0 +1,82 @@
+{
+  "slug": "virtual-host-restaurant",
+  "keyword": "virtual host restaurant",
+  "category": "ai-basics",
+  "title": "What a virtual host does for a restaurant",
+  "seoTitle": "Virtual host for restaurants | ROAL",
+  "description": "See what a virtual host does for a restaurant, what it can take off staff, and where a person still needs to step in.",
+  "question": "What does a virtual host do for a restaurant?",
+  "answer": "A virtual host for a restaurant answers calls, takes pickup and delivery orders from the live menu, handles common questions about hours, address, parking, and menu items, and sends clean tickets to the kitchen. It can also take reservation requests, collect caller details, and pass tricky issues to staff with a summary. It does not take card numbers over the phone.",
+  "summary": "See exactly what a virtual host can handle, what it should pass to staff, and how to set one up on your restaurant phone line.",
+  "intro": "A virtual host for a restaurant answers the phone, takes orders, and handles common questions when your team is busy. It is a phone host that can work from your live menu, send a clean ticket to the kitchen, and pass the hard stuff to staff.\n\nFor an owner, the real question is simple: what can it do on a normal day, and what still needs a person? Here is the practical version, with examples you can use at your counter or on your phone system.",
+  "sections": [
+    {
+      "id": "what-does-a-virtual-host-actually-do-on-a-restaurant-call",
+      "h2": "What does a virtual host actually do on a restaurant call?",
+      "body": "A virtual host handles the common calls that slow a small kitchen down. It can answer hours, address, parking, menu questions, pickup orders, delivery orders, reservation requests, and basic status questions. With ROAL, the caller hears a natural phone host that speaks their language, takes items, sizes, modifiers, and notes, then sends the finished order to the kitchen screen.\n\nA simple phone script example sounds like this: \"Thanks for calling. I can help with pickup, delivery, hours, and menu questions.\" That one line sets the tone fast. It also helps callers know what to expect before they start ordering.\n\nFor a pizza shop, that might mean:\n- taking a large pepperoni with extra cheese\n- asking for no onions on one topping\n- collecting the customer name and phone\n- quoting a ready time\n- confirming the full order back before ending the call\n\nIf you want a broader overview of phone help for restaurants, see [How it works](/how-it-works) or [What is AI phone answering for restaurants?](/blog/what-is-ai-phone-answering-restaurants)."
+    },
+    {
+      "id": "which-restaurant-tasks-can-it-handle-without-staff-help",
+      "h2": "Which restaurant tasks can it handle without staff help?",
+      "body": "A good virtual host takes the repetitive work that your team already does many times a day. ROAL can answer from your public menu and store details, and it can learn more after you answer a question once. It also does not offer sold-out items, which matters when the rush starts and the kitchen is updating the board.\n\nHere is a practical task list owners can compare against their own front counter:\n\n1. Answer hours, address, parking, and menu questions.\n2. Take pickup and delivery orders from the live menu.\n3. Capture modifiers like \"no mayo,\" \"extra sauce,\" or \"well done.\"\n4. Collect the caller's name and phone number.\n5. Quote a ready time.\n6. Confirm the full order back to the caller.\n7. Hand off allergy-sensitive, complaint, catering, or manager requests with a summary.\n\nA useful script line is: \"I can take that order now, and if you need anything special like an allergy note, I’ll pass it to the team.\" That keeps the call moving while still protecting the cases that need a person. ROAL also sends questions it could not answer to your inbox, so you answer once and it knows it for next time."
+    },
+    {
+      "id": "what-does-a-virtual-host-do-for-the-kitchen-and-front-counte",
+      "h2": "What does a virtual host do for the kitchen and front counter?",
+      "body": "The biggest benefit is not just the call. It is the cleaner handoff. A virtual host turns a phone order into a readable ticket on the kitchen screen, so the team does not have to replay a rushed call or ask the cashier to decipher handwriting.\n\nROAL’s dashboard shows live tickets in three stages: new, preparing, and ready. It also keeps call history with transcripts and recordings, plus a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That is useful when someone asks, \"Did they want peppers on the side or on the pie?\" You can check the record instead of guessing.\n\nWorked example, using easy numbers you can swap for your own:\n- Say your average phone order is $28.\n- If 10 phone orders come in during a busy dinner shift, that is $280 in order value.\n- If the host removes five minutes of phone interruptions per order, that is 50 minutes the counter and kitchen can use for service.\n\nYou should plug in your own numbers, because every place is different. A deli with lots of sandwiches will use a host differently from a pizza shop or family restaurant. For a closer look at order taking, see [Pickup order taking](/use-cases/pickup-orders)."
+    },
+    {
+      "id": "how-do-i-put-one-on-my-restaurant-number-without-losing-my-l",
+      "h2": "How do I put one on my restaurant number without losing my line?",
+      "body": "You do not need to give up your current number. With ROAL, each location gets its own phone line automatically, and you forward your existing number to it. You can forward all calls, or only when busy or unanswered, and turn forwarding off any time.\n\nA basic setup checklist looks like this:\n- paste your restaurant website, Google Maps link, or \"Name, City\" at /try\n- let ROAL read the menu, prices, hours, and address from public pages\n- test-call it in the browser with no sign-up needed\n- claim the host when you are ready\n- forward your existing number to the new line\n\nFor call forwarding, the exact code depends on your carrier or phone system, so always confirm with them and test with a real call. On many landlines and some carriers, \u0000*72\u0000 forwards all calls and \u0000*73\u0000 turns it off. On some mobile carriers, forwarding codes can be different. Business VoIP systems usually set this in the web portal.\n\nIf you want the carrier-by-carrier basics, use [Call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-does-a-virtual-host-cost-compared-with-other-options",
+      "h2": "What does a virtual host cost compared with other options?",
+      "body": "Cost matters in restaurants because margins are tight and call volume changes by daypart. ROAL charges $0.90 per completed phone order, which means a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nThat is different from many AI phone tools that charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in. Human answering services usually bill per minute or per call. Delivery apps commonly take roughly 15-30% commission per order, which can become expensive on busy weeks.\n\nSimple example, using round numbers you can replace:\n- 40 completed phone orders in a month x $0.90 = $36\n- If your average order is $32, that is $1,280 in phone order value moving through the host\n- Compare that with a monthly plan or a commission model using your own numbers\n\nIf you want to compare different pricing styles, [Pricing](/pricing) and [Pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) are the two pages to check first. A separate tool can help you plug in your own math too: [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "when-should-staff-still-answer-instead-of-the-virtual-host",
+      "h2": "When should staff still answer instead of the virtual host?",
+      "body": "A virtual host should help your team, not replace good judgment. ROAL can hand off catering requests, complaints, allergy-sensitive questions, and manager requests to staff with a summary. That is the right move when the call needs judgment, policy, or a personal touch.\n\nUse this simple rule: if the answer affects safety, exceptions, refunds, large event planning, or a customer complaint, send it to a person. If the caller wants normal menu items, hours, address, parking, or a routine pickup order, the host can usually handle it.\n\nHere are examples of calls that should land with staff:\n- \"Can you do a 40-person lunch drop-off tomorrow?\"\n- \"My order was wrong and I want to talk to a manager.\"\n- \"My child has a nut allergy. What can you guarantee?\"\n- \"Can you hold the room for a birthday party?\"\n\nA useful staff note template is: \"Caller name, phone number, what they need, and the exact concern.\" That summary saves time and keeps the next step clear. If you want more owner-friendly examples of where phone help fits, see [Short-staffed shifts](/use-cases/short-staffed) and [Reservation requests](/use-cases/reservations)."
+    },
+    {
+      "id": "how-do-i-test-it-before-i-trust-it-on-busy-nights",
+      "h2": "How do I test it before I trust it on busy nights?",
+      "body": "Test calls matter because every menu has quirks. ROAL lets owners test-call the host right in the browser before going live, and it also lets you upload a menu in any format. Start with the calls you get most often, then add the tricky ones after you hear how it responds.\n\nA practical test list for an owner or manager:\n1. Ask for your hours and address.\n2. Order a common item with a modifier.\n3. Order something that is sold out and see if it refuses it.\n4. Ask about parking.\n5. Ask a reservation question.\n6. Try an allergy-sensitive question and confirm it hands off to staff.\n7. Ask a question the host does not know yet and check the inbox follow-up.\n\nROAL is pre-launch, so the smart way to think about it is as a tool you can test, shape, and review before you send real calls its way. Pick the voice and name you want, check the transcript after the test, and make sure the kitchen ticket looks right. If you want to start with your own menu, [build a free test host](/try)."
+    },
+    {
+      "id": "what-should-a-busy-owner-remember-before-going-live",
+      "h2": "What should a busy owner remember before going live?",
+      "body": "A virtual host is best when it matches how your restaurant already runs. It should answer the routine calls, keep the phone line open for orders, and hand the edge cases to staff. It should not take card numbers over the phone, and it should not try to force every call into the same path.\n\nKeep this short checklist nearby when you go live:\n- your menu is current\n- hours and address are correct\n- forwarding is tested from your main line\n- sold-out items are marked correctly\n- staff know which calls get handed off\n- the kitchen screen is visible and used\n\nFor a small restaurant, the win is usually simpler than people think: fewer missed details, cleaner tickets, and less pressure on the counter during rushes. ROAL was built by Venkata Vamsi in Jersey City, NJ, and it is set up for US restaurants like pizza shops, delis, family spots, and takeout counters. If your phone is a steady source of work, a virtual host can make that work easier to handle without changing your whole setup."
+    }
+  ],
+  "takeaways": [
+    "A virtual host answers common restaurant calls, takes orders, and sends clean kitchen tickets.",
+    "It should hand off allergy, complaint, catering, and manager calls to staff.",
+    "You can keep your existing number and forward calls to the host line.",
+    "ROAL charges per completed order, not a monthly fee.",
+    "Test the menu, hours, sold-out items, and kitchen ticket before going live."
+  ],
+  "faq": [
+    {
+      "q": "What does a virtual host do for a restaurant?",
+      "a": "It answers the phone, handles common menu and store questions, takes pickup and delivery orders, collects the caller’s name and phone number, and sends the order to the kitchen. It can also take reservation requests and pass special or sensitive calls to staff. It does not take card numbers over the phone."
+    },
+    {
+      "q": "Can a virtual host take restaurant orders from the phone?",
+      "a": "Yes. ROAL can take items, sizes, modifiers, and notes from the restaurant’s live menu, then confirm the order back and send a clean ticket to the kitchen screen. It also skips sold-out items. Payment still happens at pickup or however the restaurant already takes payment."
+    },
+    {
+      "q": "How does call forwarding work for a restaurant phone line?",
+      "a": "You keep your current number and forward it to the host line. Many landlines and some carriers use *72 to forward all calls and *73 to turn it off, while mobile and VoIP systems may use different codes or portal settings. Always confirm with your carrier and test a real call before relying on it."
+    },
+    {
+      "q": "How much does a virtual host for a restaurant cost?",
+      "a": "ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are free. That can be easier to compare against monthly AI phone plans, human answering services, or delivery app commissions using your own order volume."
+    }
+  ],
+  "words": 1586,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

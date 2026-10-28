@@ -1,0 +1,72 @@
+{
+  "slug": "phone-orders-ticket-format",
+  "keyword": "restaurant order ticket format",
+  "category": "phone-orders",
+  "title": "What a clean restaurant order ticket format looks like",
+  "seoTitle": "Restaurant order ticket format | ROAL",
+  "description": "See the restaurant order ticket format that keeps phone orders clear, from items and modifiers to names, times, and kitchen notes.",
+  "question": "What should a clean restaurant order ticket format include for phone orders?",
+  "answer": "A clean restaurant order ticket format should show the caller’s name, phone number, order type, items, sizes, modifiers, notes, and a clear ready time. It should be short enough for the kitchen to read at a glance, but complete enough that staff do not need to call back for basics. For phone orders, ROAL sends that ticket to the kitchen screen after confirming the order with the caller.",
+  "summary": "You’ll learn how to format phone order tickets so your kitchen can read them fast and make fewer mistakes.",
+  "intro": "A clean restaurant order ticket format should show the kitchen exactly what to make, for whom, and when. For phone orders, that usually means a short header, a clear item list, and only the notes the kitchen truly needs.\n\nIf the ticket is messy, the order slows down. If it is clean, staff can glance at it, start cooking, and keep the line moving.",
+  "sections": [
+    {
+      "id": "what-should-be-on-a-clean-phone-order-ticket",
+      "h2": "What should be on a clean phone order ticket?",
+      "body": "A good phone order ticket is simple. It should not read like a transcript of the whole call. It should read like a kitchen instruction sheet.\n\nUse this basic structure:\n\n1. Customer name\n2. Phone number\n3. Pickup or delivery\n4. Items and sizes\n5. Modifiers and special notes\n6. Ready time\n7. Order total, if your team wants it on the ticket\n\nHere is a plain example you can copy into your own format:\n\n| Field | Example |\n| --- | --- |\n| Name | Maria G. |\n| Phone | 555-0134 |\n| Order type | Pickup |\n| Item 1 | 2 Large Pepperoni Pizzas |\n| Item 2 | 1 Caesar Salad, no croutons |\n| Notes | Extra napkins |\n| Ready time | 20 minutes |\n\nThe big goal is clarity. A cook should not have to guess whether “large” means one size or another, or whether “no onions” applies to one item or the whole order. ROAL takes items, sizes, modifiers, and notes, then sends a clean ticket to the kitchen screen so staff can work from the same details the caller confirmed."
+    },
+    {
+      "id": "how-do-you-keep-the-ticket-short-but-still-accurate",
+      "h2": "How do you keep the ticket short but still accurate?",
+      "body": "Short tickets are easier to cook from. But short does not mean missing details. The trick is to keep only the information that changes the food or the handoff.\n\nA useful rule is: if the kitchen would need to ask a question before making the order, it belongs on the ticket. If it only helps with conversation, it can stay off.\n\nUse this checklist before you print or display a ticket:\n\n- Is the customer name clear?\n- Did you include pickup or delivery?\n- Are sizes listed for every item that needs one?\n- Are modifiers attached to the correct item?\n- Are allergy-sensitive notes visible?\n- Did you remove anything the customer did not actually confirm?\n- Is the ready time easy to spot?\n\nExample: say a customer orders “two chicken heroes, one with no mayo, one with extra pickles.” A clean ticket should separate those as two lines, not one line that says “two chicken heroes, changes noted.” That small difference saves time and confusion.\n\nIf your restaurant uses handwritten tickets now, this is where the mess usually starts. A rushed note like “chix hero x2, diff mods” may mean something to the person who took the call, but not to the cook on the line. A clean format removes that guesswork."
+    },
+    {
+      "id": "what-does-a-kitchen-friendly-ticket-look-like-during-a-rush",
+      "h2": "What does a kitchen-friendly ticket look like during a rush?",
+      "body": "During a rush, the best ticket format is the one that can be read in three seconds. That means big enough labels, clean spacing, and no extra chatter.\n\nA kitchen-friendly ticket often looks like this:\n\n| Section | What it should show |\n| --- | --- |\n| Top line | Name, phone, order type |\n| Middle | Each item on its own line |\n| Modifier line | Only the changes tied to that item |\n| Bottom | Ready time and any important notes |\n\nWorked example: say your average phone order is $28 and you take 12 phone orders in a busy evening. That is $336 in orders to keep organized. If one messy ticket causes even one remake, the kitchen loses time and the guest waits longer. Plug in your own average check and your own call volume to see why cleaner tickets matter.\n\nFor rush periods, keep these formatting habits:\n\n- Use one line per item.\n- Put modifiers directly under the item.\n- Do not bury allergy notes in a paragraph.\n- Keep delivery instructions separate from food instructions.\n- Make the ready time visible at the top or bottom, not hidden in the middle.\n\nIf you want to compare phone orders against other channels, see [Phone orders vs delivery apps](/compare/delivery-apps). Delivery apps commonly take roughly 15-30% commission per order, so a clean phone order ticket helps protect the margin you keep on direct orders."
+    },
+    {
+      "id": "how-should-special-requests-and-allergy-notes-appear",
+      "h2": "How should special requests and allergy notes appear?",
+      "body": "Special requests need to be specific, but not messy. The kitchen needs to know what changes the food, while the front end needs to keep the wording true to the caller.\n\nA good rule is to label special notes by type:\n\n- **Item modifier:** no onions, extra cheese, sauce on the side\n- **Preparation note:** well done, toasted, cut in four\n- **Safety note:** allergy-sensitive request, cross-contact concern\n- **Service note:** call on arrival, leave at door, ring bell\n\nExample ticket line:\n\n| Item | Notes |\n| --- | --- |\n| Turkey wrap | no tomato, dressing on side |\n| Fries | well done |\n| Soup | call customer when ready |\n\nDo not combine unrelated notes into one long sentence. “No tomato, call when ready, and customer says they are allergic to dairy” is too crowded. Split it out so the kitchen sees what matters.\n\nROAL is set up to hand allergy-sensitive questions and manager requests to staff with a summary, which helps keep the ticket clean while still passing the important detail to the team. That matters because not every question should be answered by the phone host alone."
+    },
+    {
+      "id": "what-should-you-leave-off-the-ticket",
+      "h2": "What should you leave off the ticket?",
+      "body": "A clean ticket is also about what you do not print or display. The kitchen does not need every word from the call. It needs the order, not the conversation.\n\nLeave off these extras unless your team truly uses them:\n\n- Small talk\n- Repeated confirmations\n- Long explanations about why the customer is ordering\n- Pricing chatter that does not affect prep\n- Questions the customer asked about hours, parking, or the menu\n\nInstead, keep the ticket focused on the order itself. If a caller asks, “Are you open late on Fridays?” that belongs in the call history, not on a food ticket. If the caller asks, “Can I add a side of marinara?” and the answer is yes, the ticket should show the side of marinara and nothing else.\n\nA practical test:\n\n1. Hand the ticket to a cook.\n2. Ask whether they can start the order without asking a second question.\n3. If not, add the missing field.\n4. If yes, remove any extra wording that is not helping.\n\nThat kind of cleanup is especially useful for [Getting phone orders onto the kitchen display](/blog/phone-orders-kitchen-display). A display screen works best when the ticket is already clean before it hits the line. ROAL’s dashboard includes live tickets with new, preparing, and ready status, which helps staff track the order after it lands."
+    },
+    {
+      "id": "how-do-you-set-up-a-better-ticket-format-with-your-team",
+      "h2": "How do you set up a better ticket format with your team?",
+      "body": "You do not need a complicated system to improve ticket format. Start with a one-page standard and train everyone on the same order.\n\nA simple team setup looks like this:\n\n1. Decide the exact fields you want on every phone order ticket.\n2. Pick where the ready time appears.\n3. Decide how to label modifiers and allergy notes.\n4. Remove any fields the kitchen never uses.\n5. Test the format with three real orders and fix confusing parts.\n\nIf you already use a phone host, ask whether it can match the way your kitchen likes to read tickets. ROAL lets the owner read the live menu, prices, hours, and address from public pages, then build the phone host in about a minute. The owner can test-call it in the browser before going live, which makes it easier to check whether the ticket looks right.\n\nHere is a simple checklist to review after each test order:\n\n- The name is spelled clearly enough to read.\n- Each item appears on its own line.\n- Modifier details sit under the correct item.\n- The ready time matches what was confirmed on the call.\n- The ticket is short enough for the line to scan quickly.\n\nIf your kitchen wants a pay-per-order model instead of a monthly fee, see [Pricing](/pricing). ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "takeaways": [
+    "A clean restaurant order ticket format should show the name, number, items, modifiers, notes, and ready time.",
+    "Keep one line per item and put modifiers directly under the right item.",
+    "Leave out small talk and unrelated call details so the kitchen can move faster.",
+    "Use the same format for every phone order so staff do not have to guess.",
+    "If your team takes phone orders often, a cleaner ticket can reduce back-and-forth and confusion."
+  ],
+  "faq": [
+    {
+      "q": "What fields should be on a restaurant order ticket?",
+      "a": "At minimum, a restaurant order ticket should include the customer name, phone number, order type, items, sizes, modifiers, notes, and ready time. Some kitchens also like the total on the ticket, but the food details matter most. Keep the format consistent so staff can read it fast."
+    },
+    {
+      "q": "How do I format modifiers on a phone order ticket?",
+      "a": "Put each modifier directly under the item it belongs to. For example, list “Burger” on one line and “no onions, add bacon” on the next line under that item. That keeps changes tied to the right food and reduces mistakes."
+    },
+    {
+      "q": "Should allergy notes go on the ticket?",
+      "a": "Yes, if the caller mentions an allergy-sensitive request, it should be visible to the kitchen and handled carefully. Keep the note short and specific, like “allergy-sensitive request: dairy.” If the question needs staff attention, send it to the team with a summary."
+    },
+    {
+      "q": "Can an AI phone host create a clean order ticket?",
+      "a": "Yes. ROAL takes the order from the restaurant’s live menu, confirms the details with the caller, and sends a clean ticket to the kitchen screen. It also handles menu questions, hours, address, parking, reservation requests, and other calls that need staff attention."
+    }
+  ],
+  "words": 1375,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

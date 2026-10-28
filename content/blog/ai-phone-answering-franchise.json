@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-answering-franchise",
+  "keyword": "franchise restaurant phone ordering",
+  "category": "restaurant-types",
+  "title": "Phone answering for franchise restaurant orders",
+  "seoTitle": "Franchise restaurant phone ordering | ROAL",
+  "description": "Franchise restaurant phone ordering gets easier with one shared playbook, clear call rules, and an AI phone host for orders.",
+  "question": "How do I handle franchise restaurant phone ordering without missing calls or creating chaos across locations?",
+  "answer": "Use one standard call flow for every location, then let each store keep its own hours, menu, and phone line rules. An AI phone host like ROAL can answer the phone, take pickup and delivery orders from the live menu, send clean tickets to the kitchen screen, and pass tricky calls to staff with a summary.",
+  "summary": "You’ll learn how to standardize franchise phone ordering across locations without losing local control.",
+  "intro": "Franchise restaurant phone ordering works best when every location follows the same call flow, but each store still keeps its own menu, hours, and phone number. The goal is simple: answer faster, take cleaner orders, and keep the kitchen from getting confused.\n\nFor a pizza shop, deli, family restaurant, or takeout counter with more than one location, the phone can get messy fast. One store is slammed, another has a special, and a caller just wants to know what’s available. A phone host like [ROAL](/how-it-works) can handle the routine calls and send the important ones to staff.",
+  "sections": [
+    {
+      "id": "what-should-every-franchise-location-say-on-the-phone",
+      "h2": "What should every franchise location say on the phone?",
+      "body": "The biggest mistake is letting each store answer the phone its own way. That sounds harmless, but it creates bad habits: different greetings, different order questions, and different ways of quoting ready times. A franchise needs one plain script that works at every location.\n\nUse a short opening line that gives the caller confidence and gets to the point fast:\n\n\"Thanks for calling. Are you ordering pickup or delivery today?\"\n\nThen keep the flow the same at every store:\n\n1. Ask for pickup or delivery.\n2. Take the items, sizes, modifiers, and notes.\n3. Confirm the name and phone number.\n4. Give a ready time.\n5. Read the order back once before ending the call.\n\nThat structure matters because it reduces back-and-forth. It also makes training easier when you have managers, counter staff, and a centralized owner. If a caller asks about hours, address, parking, or the menu, the same answer should come from every location’s phone host or staff member. You can keep a simple internal checklist for each store:\n\n- Current hours\n- Address and parking note\n- Top sellers and common modifiers\n- Sold-out items\n- Allergen-sensitive escalation rule\n- Manager handoff rule\n\nROAL follows this kind of structure for each location and keeps questions it cannot answer in an inbox so you can teach it once and move on."
+    },
+    {
+      "id": "how-do-you-keep-menus-and-prices-consistent-across-locations",
+      "h2": "How do you keep menus and prices consistent across locations?",
+      "body": "Franchise phone ordering falls apart when the caller hears one price on the phone and a different price at the counter. The fix is not more talking. It is a single source of truth for the menu, prices, and store hours.\n\nROAL reads public pages, menu PDFs, menu photos, and the restaurant website from the owner’s setup page, then builds a phone host from that information. If you run multiple stores, you can also manage multi-location menus in the dashboard so the right location shows the right items. That matters when one store has a lunch special and another does not.\n\nA practical way to manage this is to split the menu into three buckets:\n\n| Bucket | What goes here | Phone rule |\n|---|---|---|\n| Core menu | Items every location sells | Always offer it |\n| Location-specific items | Special items at one store only | Only offer at that store |\n| Sold-out items | Anything you cannot make right now | Do not offer it |\n\nHere is a simple example you can swap for your own numbers. Say your best-selling combo is $28 at Store A and $30 at Store B because of local pricing. The caller should hear the correct location price before they confirm. If you also upsell a drink or side, keep it modest and relevant: \"Would you like to add a side salad for this order?\"\n\nThat keeps the call clean and avoids the usual franchise problem where staff quote from memory instead of from the live menu."
+    },
+    {
+      "id": "what-should-happen-when-one-store-is-busy-and-another-is-ope",
+      "h2": "What should happen when one store is busy and another is open?",
+      "body": "Busy hours are where franchise restaurant phone ordering either works well or gets buried. You do not want staff at the counter answering calls while tickets pile up, but you also do not want callers going to voicemail.\n\nA good setup is to forward the restaurant’s existing number only when busy or unanswered. ROAL gives each location its own phone line automatically, and the owner forwards the current number to it. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nHere is the basic logic to use:\n\n1. Keep the main number on the store as normal.\n2. Forward when the phone is busy or no one answers.\n3. Let the phone host take pickup and delivery orders.\n4. Route reservation requests, complaints, allergy-sensitive questions, and manager requests to staff.\n\nThat last step matters. A franchise caller who has a catering question or a complaint should not get trapped in a long phone loop. They should reach a person with a short summary. ROAL does that.\n\nIf you need to set up forwarding manually, codes vary by carrier and plan, so confirm with your carrier and test with a call. On many landlines and some carriers, \u0001 dials \u000172\u0001 then the forwarding number for all calls and \u0001 dials \u000173\u0001 to turn it off. On some GSM mobile carriers, \u0001**21*number#\u0001 forwards all calls and \u0001##21#\u0001 turns it off; \u0001**61*number#\u0001 forwards unanswered calls and \u0001**67*number#\u0001 forwards busy calls. Verizon Wireless often uses \u0001*72\u0001 / \u0001*73\u0001, and \u0001*71\u0001 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal."
+    },
+    {
+      "id": "how-do-you-handle-pickup-delivery-and-payment-without-confus",
+      "h2": "How do you handle pickup, delivery, and payment without confusion?",
+      "body": "The cleaner the order flow, the fewer mistakes in the kitchen. For franchise restaurant phone ordering, the caller should hear one process every time, whether they are ordering from a city store or a suburban one.\n\nA phone host should collect the order details, ask for the caller’s name and phone number, and quote a ready time. ROAL does that from the live menu and sends a clean ticket to the kitchen screen. It can also speak the caller’s language and confirm the order back before ending the call.\n\nUse a simple order checklist like this:\n\n- Item name\n- Size or portion\n- Modifier or topping\n- Special note\n- Name\n- Phone number\n- Pickup or delivery\n- Ready time\n\nFor payment, keep one rule across the whole group: the host never takes card numbers over the phone. Payment happens at pickup or however the restaurant already takes it. That protects your team from improvising and keeps the process consistent.\n\nA worked example helps. Say a caller orders a $28 meal deal, adds a $4 side, and asks for pickup in 20 minutes. The host confirms the total order, repeats the ready time, and sends the ticket straight to the kitchen screen. If the caller asks for a sold-out item, the host should not offer it. If the caller asks for something unusual, like a custom allergy request, the host should hand it to staff with a short summary instead of guessing.\n\nThat is the sweet spot: routine orders handled fast, edge cases handled by people."
+    },
+    {
+      "id": "how-do-franchise-owners-keep-local-control-without-losing-co",
+      "h2": "How do franchise owners keep local control without losing consistency?",
+      "body": "Multi-location restaurants need consistency, but they also need local freedom. A store in one neighborhood may have different hours, parking, or specials than another. The trick is to standardize the rules while leaving the location-specific details editable.\n\nROAL’s dashboard is built for that kind of setup. You can review call history with transcripts and recordings, edit the menu and hours, manage FAQs, see upsell suggestions, and keep multi-location menus organized. If a caller asks a question the phone host could not answer, it lands in an inbox. You answer it once, and the host knows it from then on.\n\nA good franchise control sheet looks like this:\n\n| Rule | Central | Local store |\n|---|---|---|\n| Greeting | Same everywhere | No changes |\n| Menu format | Same structure | Local items allowed |\n| Hours | Shared template | Store-specific hours |\n| Ready-time rules | Same wording | Local prep times |\n| Escalations | Same handoff rule | Staff contact for that store |\n\nThis is especially useful for franchise managers who are tired of repeating the same answers. The host can answer hours, address, parking, and menu questions, while staff only handle what needs a human. That keeps the phone from becoming a full-time interruption.\n\nIf you want to compare phone approaches, see [AI phone host vs hiring phone staff](/compare/hiring-phone-staff) and [AI phone host vs a press-1 phone menu](/compare/phone-menu-ivr)."
+    },
+    {
+      "id": "what-does-the-cost-look-like-compared-with-delivery-apps-or-",
+      "h2": "What does the cost look like compared with delivery apps or monthly tools?",
+      "body": "Franchise owners often ask whether phone orders are worth the trouble. The simplest answer is to compare the cost of taking the order by phone with the cost of losing that order to a delivery app or a paid monthly phone tool.\n\nDelivery apps commonly charge restaurants roughly 15-30% commission per order. Many AI phone tools charge a fixed monthly fee per location, often in the rough range of $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call. ROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nHere is a simple example you can plug your own numbers into:\n\n- Say a completed phone order averages $30.\n- Say your store gets 200 completed phone orders in a month.\n- ROAL would bill 200 x $0.90 = $180 for those completed orders.\n\nNow compare that with your own current setup. If your store currently pays a monthly flat fee for phone coverage, or if too many callers drift to delivery apps, the real question is not just price. It is whether the phone is helping the store capture more direct orders with less staff stress.\n\nYou can also use the [AI phone host cost calculator](/tools/phone-host-cost-calculator) or the [delivery app commission calculator](/tools/delivery-commission-calculator) to plug in your own numbers. The math is easier when you use your actual average order size and call volume."
+    },
+    {
+      "id": "how-do-you-launch-it-across-locations-without-a-messy-rollou",
+      "h2": "How do you launch it across locations without a messy rollout?",
+      "body": "A franchise rollout should be boring in the best way. Start with one location, confirm the call flow, then copy the same setup across the rest of the group.\n\nHere is a practical rollout plan:\n\n1. Pick one store with normal call volume.\n2. Paste the restaurant website, Google Maps link, or \"Name, City\" at /try.\n3. Review the menu, hours, and address the system reads.\n4. Test-call the host in the browser and adjust the greeting or FAQs.\n5. Claim the host, then forward the store’s existing number.\n6. Add the next location only after the first one feels right.\n\nROAL is built by Venkata Vamsi in Jersey City, NJ, and the first restaurants using it are in Jersey City and Hoboken, but it works for any US restaurant. That means a multi-location owner can keep the setup simple and still tailor each store’s details.\n\nA few final checks make the rollout smoother:\n\n- Make sure each location’s hours are correct.\n- Make sure sold-out items are removed or marked correctly.\n- Make sure parking and address details are clear.\n- Make sure staff know which calls should reach them.\n- Make sure forwarding is tested with a real call.\n\nIf you want to try it, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Use one phone script across all franchise locations, but keep each store’s hours, address, and menu details current.",
+    "Forward the existing number only when busy or unanswered, and test the setup with a real call.",
+    "Let the phone host handle routine orders and route special cases, complaints, and allergy-sensitive questions to staff.",
+    "Keep payment rules simple: no card numbers over the phone, and no sold-out items offered.",
+    "Compare phone costs using your own order volume, not someone else’s averages."
+  ],
+  "faq": [
+    {
+      "q": "How should a franchise restaurant answer the phone for orders?",
+      "a": "Use the same short greeting and order flow at every location. Ask whether the caller wants pickup or delivery, take the items and modifiers, confirm the name and phone number, and give a ready time. That keeps the call fast and makes training much easier."
+    },
+    {
+      "q": "Can a franchise restaurant forward calls only when busy?",
+      "a": "Yes, on many phone systems you can forward only when busy or unanswered, but the exact code depends on the carrier or system. Always confirm with your carrier and test the setup with a real call. Business VoIP systems usually set forwarding in the web portal."
+    },
+    {
+      "q": "How does ROAL handle different locations in a franchise?",
+      "a": "Each location gets its own phone line automatically after the owner claims the host, and the restaurant forwards its existing number to that line. ROAL reads the menu, hours, and address from public pages or uploaded menus, and you can manage multi-location menus in the dashboard."
+    },
+    {
+      "q": "Does ROAL take credit card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes orders, names, phone numbers, ready times, and special notes, then sends a clean ticket to the kitchen screen. Payment happens at pickup or however the restaurant already takes it."
+    }
+  ],
+  "words": 1797,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

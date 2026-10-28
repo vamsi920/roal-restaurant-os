@@ -1,0 +1,86 @@
+{
+  "slug": "refund-requests-phone-restaurant",
+  "keyword": "restaurant refund request",
+  "category": "operations",
+  "title": "How to handle restaurant refund requests by phone",
+  "seoTitle": "Restaurant refund requests by phone | ROAL",
+  "description": "Handle refund requests by phone with a calm script, clear steps, and a clean handoff so staff can fix the issue quickly.",
+  "question": "How should I handle a restaurant refund request over the phone?",
+  "answer": "Take the complaint calmly, confirm the order details, and decide whether the caller needs a remake, a refund, or a manager callback. Do not promise money on the spot unless that is your policy; instead, get the name, phone number, order items, and a short summary for the person who will fix it. For tricky calls, an AI phone host like ROAL can collect the details and hand the issue to staff with a clear summary.",
+  "summary": "You’ll know how to answer refund and remake calls, document the issue, and hand it off without slowing the line.",
+  "intro": "A restaurant refund request should be handled calmly, quickly, and the same way every time. The goal is to listen, gather the facts, and get the problem to the right person without turning one bad order into a bigger mess.\n\nFor phone calls, that means a short script, a clear decision tree, and a clean handoff to staff when needed. If you use an AI phone host like ROAL, it can take the details, pass along complaints, and keep the call moving while your team stays on the line for service.",
+  "sections": [
+    {
+      "id": "what-should-i-say-first-on-a-refund-or-remake-call",
+      "h2": "What should I say first on a refund or remake call?",
+      "body": "Start with a calm line that does not argue. People usually call upset because something was missing, wrong, cold, or late. Your first job is to lower the temperature and get the facts.\n\nUse a simple script like this: **\"I’m sorry about that. Let me get the order details so we can fix it.\"** Then ask for the caller’s name, phone number, order time, and the item that was wrong. If they are still talking fast, keep them moving with short prompts.\n\nA practical checklist for the first 30 seconds:\n- Confirm the name on the order\n- Confirm pickup or delivery\n- Ask for the item or items with the problem\n- Ask what happened: missing, wrong, cold, damaged, or delayed\n- Repeat the issue back once\n\nThat repeat-back matters. Example: “So the chicken parm was left out, and the caller wants a remake for pickup in about 20 minutes.” That one sentence is easier for the person on duty to act on than a long, angry explanation."
+    },
+    {
+      "id": "when-do-you-refund-remake-or-ask-a-manager",
+      "h2": "When do you refund, remake, or ask a manager?",
+      "body": "Not every restaurant refund request should be handled the same way. A missing side is different from a whole wrong order. A spilled soup is different from a complaint about taste. You need a simple internal rule so staff do not guess.\n\nHere is an owner-friendly decision table you can adapt to your own policy:\n\n| Situation | Common response | What to say |\n|---|---|---|\n| One missing item | Remake or credit | \"We can remake that item or note it for a manager.\" |\n| Whole order wrong | Remake or refund | \"I’m sending this to the kitchen and manager now.\" |\n| Food arrived damaged | Remake | \"I’m sorry. We’ll get the details to the team.\" |\n| Customer wants money back | Manager decision | \"I’m passing this to the manager to review.\" |\n| Allergy-sensitive complaint | Staff handoff now | \"Please hold for a staff member right away.\" |\n\nIf you want a number-based example, say the caller spent **$28 on a takeout order** and one entrée was missing. Your policy might be to remake the entrée, or offer a store credit, or have the manager call back. Plug in your own price point and policy. The key is to keep the script consistent so the front counter, phone, and kitchen all hear the same rule."
+    },
+    {
+      "id": "how-do-i-take-the-details-without-wasting-the-caller-s-time",
+      "h2": "How do I take the details without wasting the caller’s time?",
+      "body": "Most upset callers do not want a long conversation. They want to know you heard them and that someone will fix it. So keep the questions short and only ask what your staff needs.\n\nA good phone script looks like this:\n1. \"What name is the order under?\"\n2. \"About what time was it placed?\"\n3. \"Was it pickup or delivery?\"\n4. \"Which item was wrong or missing?\"\n5. \"Do you want a remake, or should a manager call you back?\"\n\nIf the caller wants a refund, write down the exact request. Do not guess. If they say, “I just want my money back,” that is not the same as “I want the item remade.”\n\nYou should also capture the tone of the issue. A short note like **\"customer upset, says fries were missing, wants callback\"** is often enough for staff to take the next step. ROAL does this kind of handoff for complaints by collecting the caller’s name, phone, and a summary, then sending the issue to staff. For a busy phone line, that can save a lot of back-and-forth."
+    },
+    {
+      "id": "what-should-the-kitchen-or-manager-see-on-the-ticket",
+      "h2": "What should the kitchen or manager see on the ticket?",
+      "body": "The handoff should be short, clean, and useful. Staff do not need the whole phone conversation. They need enough detail to act fast.\n\nA strong internal note includes:\n- Caller name\n- Callback number\n- Order time\n- Pickup or delivery\n- Problem item\n- Caller’s requested fix\n- Any deadline, like “needs by 6:30”\n\nExample ticket note:\n**Maria, 555-0148, 5:10 p.m. pickup, wrong sandwich, wants remake, will return in 15 minutes.**\n\nThat is much better than a vague note like “customer issue.” It tells the manager who to call, what to check, and how urgent it is. If the order was already sent out, the kitchen can compare the ticket to what left the line. If the caller is still on the way, the person on duty can start the remake before they arrive.\n\nThis is where a phone host can help. ROAL sends a clean ticket to the kitchen screen and can hand complaints to staff with a summary. It also keeps call history, so you can review what was said if the caller comes back later."
+    },
+    {
+      "id": "how-do-refunds-work-when-you-take-orders-by-phone",
+      "h2": "How do refunds work when you take orders by phone?",
+      "body": "Phone orders create a simple problem: the person calling may think the restaurant can reverse a charge on the spot, but your actual process may be different. You should be clear about what you can and cannot do during the call.\n\nROAL never takes card numbers over the phone. That is a good model for a lot of restaurants, because it keeps the call focused on the order and the issue. If a caller asks for money back, the right answer is usually to send the issue to the owner or manager who handles payment disputes and store policy.\n\nA useful script line is: **\"I can take the details and have the manager review it. I’m not able to process payment changes on this call.\"**\n\nUse this quick policy sheet for staff:\n- Small issue: remake, credit, or note for pickup\n- Large issue: manager review\n- Payment question: route to the person who handles it\n- Angry caller: collect details, then end politely\n\nIf you are comparing the cost of fixing the issue to the cost of losing the customer, do the math with your own numbers. Say a **$32 order** needs a remake. That may be cheaper than a bad review, but every shop should decide its own threshold. The important part is consistency."
+    },
+    {
+      "id": "how-can-i-keep-refund-calls-from-slowing-down-the-dinner-rus",
+      "h2": "How can I keep refund calls from slowing down the dinner rush?",
+      "body": "Refund and remake calls usually hit at the worst time: during dinner, at close, or when the dining room is full. You need a system that protects the line without making the caller feel ignored.\n\nA practical flow for busy periods:\n1. Answer with a short apology and fact-finding script\n2. Log the issue in one pass\n3. Send the complaint to staff or manager\n4. Tell the caller when they should expect a callback or remake\n5. Move on to the next call\n\nIf your team is short-staffed, this matters even more. A refund call that drags on for three minutes can block three more orders. That is why many owners use a phone host for routine calls and hand off the tricky ones. ROAL can handle the first part of the conversation, collect the order history, and route the complaint to staff with a summary.\n\nHere is a time-saving version of the promise you can make: **\"I’ve got the details. A manager will review this and call you back.\"** That line is honest, fast, and better than making up a solution while the kitchen is backed up."
+    },
+    {
+      "id": "what-should-i-train-staff-to-do-the-same-way-every-time",
+      "h2": "What should I train staff to do the same way every time?",
+      "body": "The biggest mistake is having one person be generous, another person be defensive, and a third person do nothing. Customers notice that. So write a tiny playbook and keep it near the phone.\n\nYour training checklist:\n- Use the same opening apology every time\n- Never argue about what the caller experienced\n- Ask for the order details before making any promise\n- Know who can approve a remake or refund\n- Write one clear summary for the kitchen or manager\n- Close the call with a next step and timeframe\n\nA useful close is: **\"Thanks for letting us know. I’m sending this to the team now.\"** If the caller is calm, you can add, “We’ll review it and follow up as needed.” If the caller is still upset, keep the line short and professional.\n\nThis is also a good place to use the ROAL dashboard. Owners can review call history, listen to recordings, and see how complaints were handled. That helps you spot patterns, like repeat issues with a certain item, a certain shift, or a certain delivery window. If you want to see what setup looks like, you can [build a free test host from your website](/try)."
+    },
+    {
+      "id": "what-should-i-have-ready-before-the-next-refund-call-comes-i",
+      "h2": "What should I have ready before the next refund call comes in?",
+      "body": "You do not need a huge system. You need a small, clear one that works on a busy day. Put these items in place before the next complaint call arrives.\n\n**Refund-call prep checklist:**\n- A short apology script\n- A simple decision rule for remake vs. refund vs. manager review\n- A place to write the caller’s name and number\n- A way to send the summary to the kitchen or manager\n- A callback policy with a time window\n- A note on who handles payment questions\n\nIf you use call forwarding when busy or unanswered, confirm the codes with your carrier or phone system first and test with a real call. Codes vary by carrier and plan. For many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some mobile carriers, different codes may apply. A quick test matters more than assuming it is working.\n\nROAL is built for restaurant phone work like this: it answers the phone, takes the order details, and sends a clean ticket to the kitchen screen. When a call turns into a complaint, it can hand it to staff instead of forcing the caller to repeat everything."
+    },
+    {
+      "id": "should-refund-and-remake-calls-go-through-an-ai-phone-host",
+      "h2": "Should refund and remake calls go through an AI phone host?",
+      "body": "For a lot of independent restaurants, the answer is yes for the first step and no for the final decision. An AI phone host is useful when you want the caller to be heard, the facts to be captured, and the line to keep moving.\n\nIt helps most when the call is routine at first, then turns into a complaint. For example, ROAL can answer the phone, collect the caller’s name, phone, and order details, and hand off allergy-sensitive questions, complaints, and manager requests with a summary. It does not take card numbers over the phone, and it does not replace your staff’s judgment on refunds.\n\nUse it as a filter, not a replacement for your own policy. That way, your team handles the decisions, while the phone host handles the first pass.\n\nIf you want more on related call handling, see [complaint handoffs from your phone host](/blog/ai-host-complaint-handoff) and [after-hours calls](/use-cases/after-hours)."
+    }
+  ],
+  "takeaways": [
+    "Answer fast, apologize once, and ask for the order details before you promise anything.",
+    "Use a simple remake/refund/manager rule so staff handle complaints the same way.",
+    "Write a clean ticket with name, number, order time, and the customer’s requested fix.",
+    "A phone host can collect the facts and hand off the complaint while your team keeps working."
+  ],
+  "faq": [
+    {
+      "q": "What do I say when a customer calls for a refund?",
+      "a": "Start with a short apology and a fact-finding line: \"I’m sorry about that. Let me get the order details so we can fix it.\" Then ask for the name on the order, the time, and what was wrong. Do not promise a refund on the spot unless that is your store policy."
+    },
+    {
+      "q": "Should I refund or remake a bad order?",
+      "a": "That depends on your policy and the size of the problem. A missing side may be handled with a remake or credit, while a whole wrong order may need manager review. Pick one rule for your team and use it the same way every time."
+    },
+    {
+      "q": "How do I document a refund request over the phone?",
+      "a": "Write down the caller’s name, phone number, order time, pickup or delivery, the problem item, and what the caller wants done. A short summary like \"wrong sandwich, wants remake, callback needed\" is usually enough for staff to act on quickly."
+    },
+    {
+      "q": "Can an AI phone host handle complaint calls?",
+      "a": "It can handle the first part of the call: greeting, details, and handoff. ROAL can collect the caller’s information, take a summary of the problem, and send complaint and manager requests to staff. It does not take card numbers over the phone, so payment changes stay with your team."
+    }
+  ],
+  "words": 1799,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

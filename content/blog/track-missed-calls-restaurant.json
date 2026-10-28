@@ -1,0 +1,72 @@
+{
+  "slug": "track-missed-calls-restaurant",
+  "keyword": "track missed calls restaurant",
+  "category": "missed-calls",
+  "title": "How to track missed calls at your restaurant",
+  "seoTitle": "Track missed calls at your restaurant | ROAL",
+  "description": "Track missed calls with call logs, forwarding, transcripts, and a simple weekly review process that shows where orders are lost.",
+  "question": "How do I track missed calls at my restaurant?",
+  "answer": "Track missed calls by using your phone system’s call log, call forwarding settings, voicemail history, and a simple daily review of unanswered calls. For a restaurant, the most useful setup is to forward unanswered or busy calls to a phone host, then review call history, transcripts, and tickets so you can see what was missed and what turned into orders.",
+  "summary": "Set up a simple process to see which calls were missed, why they were missed, and what to do next.",
+  "intro": "Missed calls at a restaurant usually show up in a few places: your phone log, voicemail, and any forwarded-call history. The easiest way to track them is to compare those records with your kitchen tickets and ask, “Did this call become an order, a question, or nothing at all?”\n\nFor an independent restaurant, that matters because a missed call is often a pickup order, a delivery order, or a customer asking about hours, parking, or the menu. ROAL can help here by answering the phone, taking orders from your live menu, and keeping call history and transcripts in one place, but you still want a simple tracking system you can check every day.",
+  "sections": [
+    {
+      "id": "what-counts-as-a-missed-call-at-a-restaurant",
+      "h2": "What counts as a missed call at a restaurant?",
+      "body": "A missed call is any call your team does not answer in time, plus any call that reaches voicemail or gets forwarded because no one picked up. For tracking, separate them into three buckets:\n\n- **Missed order call**: someone wanted pickup or delivery.\n- **Missed question call**: hours, address, parking, menu, or allergen question.\n- **Missed staff call**: vendor, manager, reservation, catering, or complaint.\n\nA simple phone script helps your staff note what happened: “Sorry we missed your call. Can I take your name and number so we can call you back?” If you use ROAL, those call types can land in call history with transcripts and recordings, and tricky calls can go to staff with a summary. That makes it easier to see which misses are costing you orders and which ones just need a quick callback."
+    },
+    {
+      "id": "how-do-i-see-missed-calls-on-my-restaurant-phone-line",
+      "h2": "How do I see missed calls on my restaurant phone line?",
+      "body": "Start with your phone system’s call log. Look for unanswered calls, busy calls, and calls forwarded to voicemail. Then match those times with your front counter notes and kitchen tickets.\n\nUse this quick checklist each day:\n\n1. Check unanswered calls from lunch and dinner.\n2. Count how many reached voicemail.\n3. Review any forwarded calls that were not taken by staff.\n4. Match missed call times to ticket times.\n5. Write down the reason if you know it: busy, after-hours, short-staffed, wrong menu question, or no answer.\n\nIf your restaurant uses ROAL, the dashboard includes call history with transcripts and recordings, plus live kitchen tickets. That gives you a cleaner record than voicemail alone. It also helps you see whether the call became an order, a reservation request, or a question the host could not answer."
+    },
+    {
+      "id": "what-s-the-easiest-setup-to-track-missed-calls-every-day",
+      "h2": "What’s the easiest setup to track missed calls every day?",
+      "body": "The easiest setup is a simple three-part routine: forward unanswered calls, log the calls, and review them once a day. You do not need a complicated system.\n\nUse this restaurant-friendly setup:\n\n| Step | What to do | Example |\n|---|---|---|\n| 1 | Forward unanswered calls | Let calls ring your main line, then route no-answer calls elsewhere |\n| 2 | Keep a call log | Write down time, caller name, and what they wanted |\n| 3 | Review daily | Compare missed calls with tickets and callbacks |\n\nA practical phone script for staff: “I see we missed your call. Were you looking to place an order or ask a question?” That one question helps you sort the call fast. If you want a cleaner system, ROAL gives each location its own phone line automatically once you claim the host, and you can forward your existing number to it for all calls or only when busy or unanswered."
+    },
+    {
+      "id": "how-do-call-forwarding-codes-help-me-track-missed-calls",
+      "h2": "How do call forwarding codes help me track missed calls?",
+      "body": "Call forwarding helps because it sends unanswered calls somewhere you can actually capture them. On many landlines and some carriers, *72 usually forwards all calls and *73 turns it off. On some mobile carriers, codes like **21*number# or **61*number# may forward unanswered calls, while **67*number# may forward busy calls. Verizon Wireless often uses *72, *73, and *71 for busy/no-answer forwarding.\n\nUse this checklist before relying on any code:\n\n- Confirm the exact code with your carrier or phone system.\n- Test it with a real call from a different phone.\n- Check whether it forwards all calls, unanswered calls, or busy calls.\n- Turn it off when you do not need it.\n\nBusiness VoIP systems usually handle forwarding in the web portal instead of a dial code. If you want a central place to review what came in, ROAL’s call history and kitchen ticket view can be easier than trying to piece together forwarding records from memory."
+    },
+    {
+      "id": "how-can-i-tell-whether-missed-calls-are-costing-me-money",
+      "h2": "How can I tell whether missed calls are costing me money?",
+      "body": "Use a simple example and plug in your own numbers. Say your average pickup order is $28. If you miss 4 order calls on a busy night, that is $112 in order value before you count repeat visits or add-ons.\n\nHere is a plain way to estimate it:\n\n| Example number | Your number |\n|---|---|\n| Missed order calls per day | 4 |\n| Average order value | $28 |\n| Estimated daily order value missed | $112 |\n\nNow swap in your own numbers. If you miss mostly questions, the cost may be lower right away, but those calls still affect repeat business. Delivery apps commonly take roughly 15-30% commission per order, and many AI phone tools charge a fixed monthly fee whether or not orders come in. ROAL uses a per-completed-order price of $0.90, with no monthly fee, no setup fee, and no per-minute fee, so it can be a different fit for owners who want to pay mainly when a confirmed order reaches the kitchen screen."
+    },
+    {
+      "id": "what-should-i-do-after-i-track-the-missed-calls",
+      "h2": "What should I do after I track the missed calls?",
+      "body": "Once you know the pattern, fix the right bottleneck. If most misses happen at lunch, you may need better call coverage. If they happen after hours, set expectations and route those calls. If they happen during a rush, use a phone host or a tighter callback routine.\n\nA useful weekly review looks like this:\n\n- Count missed calls by time of day.\n- Count how many were order calls.\n- Count how many were simple menu or hours questions.\n- Note any repeated questions you could answer automatically.\n- Check whether staff are calling back fast enough.\n\nROAL can help with the easy repeat questions about hours, address, parking, and the menu, and it takes pickup and delivery orders from your live menu. It also hands off catering, complaints, allergy-sensitive questions, and manager requests with a summary, so staff can focus on the calls that really need a person. If you want to try it, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Track missed calls by time, type, and outcome, not just by count.",
+    "Compare call logs with kitchen tickets so you know which calls became orders.",
+    "Use forwarding only after you test it with a real call from another phone.",
+    "Review missed calls daily during busy service and weekly for patterns.",
+    "A phone host like ROAL can handle routine questions and order calls, while staff handle the tricky ones."
+  ],
+  "faq": [
+    {
+      "q": "How do I check missed calls on a restaurant phone line?",
+      "a": "Check your call log for unanswered calls, busy calls, and forwarded calls that went to voicemail. Then match those times with your ticket times and any callback notes. If your setup includes ROAL, review call history, transcripts, and live tickets together so you can see what happened with each call."
+    },
+    {
+      "q": "What is the best way to track missed calls from busy service?",
+      "a": "Use call forwarding for unanswered or busy calls, then review the log after the rush. A simple daily sheet with time, caller name, and reason for the call is enough for many small restaurants. If you use a phone host, make sure staff know which calls still need a human callback."
+    },
+    {
+      "q": "Can I use call forwarding to catch missed restaurant calls?",
+      "a": "Yes. Many restaurants forward unanswered or busy calls to another line or to a phone host. Codes and settings vary by carrier and system, so confirm with your provider and test the setup with a real call. Forwarding can usually be turned off when you do not need it."
+    },
+    {
+      "q": "What should I do with missed order calls?",
+      "a": "Call them back fast if you can, or route them to a system that can take the order right away. For a restaurant, the most useful outcome is turning the missed call into a completed pickup or delivery ticket. If the call was about hours, address, or menu details, make sure your phone setup answers those questions clearly next time."
+    }
+  ],
+  "words": 1037,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

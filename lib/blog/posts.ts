@@ -11,9 +11,10 @@ import { whyRestaurantsMissCallsContent } from "./posts/why-restaurants-miss-cal
 import { validateAllBlogAeo } from "./validate-aeo";
 import { validateAllBlogLinks } from "./validate-links";
 import { validateAllBlogSeo } from "./validate-seo";
+import { BLOG_AUTHOR, GENERATED_POSTS } from "./generated";
 import type { BlogPost } from "./types";
 
-export const BLOG_POSTS: BlogPost[] = [
+const HANDWRITTEN_POSTS: BlogPost[] = [
   {
     slug: "why-restaurants-miss-calls-dinner-rush",
     title: "Why pickup calls go unanswered at rush",
@@ -125,6 +126,12 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: "2026-05-21",
     content: whenAiShouldHandOffToStaffContent,
   },
+];
+
+/** Every post, published or scheduled. Pages read published ones through lib/blog/index.ts. */
+export const BLOG_POSTS: BlogPost[] = [
+  ...HANDWRITTEN_POSTS.map((p) => (p.content ? { ...p, content: { ...p.content, author: BLOG_AUTHOR } } : p)),
+  ...GENERATED_POSTS,
 ];
 
 validateAllBlogAeo();

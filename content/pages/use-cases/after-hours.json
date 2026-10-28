@@ -1,0 +1,123 @@
+{
+  "slug": "after-hours",
+  "label": "After-hours calls",
+  "h1": "After-hours calls, answered and turned into orders",
+  "seoTitle": "After-hours restaurant calls, answered | ROAL",
+  "description": "Handle after-hours calls with a warm phone host that answers menu questions, takes pickup orders, and sends clean tickets when your doors are closed.",
+  "lead": "When the dining room is closed, the phone still rings. ROAL can answer after-hours calls, take orders from your live menu, and send clear tickets for the next prep run.",
+  "question": "How can an AI phone host handle after-hours calls for my restaurant?",
+  "answer": "ROAL answers your restaurant phone after hours, so callers can still place pickup or delivery orders, ask about hours or the menu, and leave reservation or manager requests. It reads your live menu, skips sold-out items, and sends a clean ticket to the kitchen screen. You stay in control of the forwarding and can turn it off any time.",
+  "pains": [
+    {
+      "title": "Voicemail fills up fast",
+      "body": "After closing, callers still want to order dinner, ask about tomorrow’s hours, or check if the chicken tikka is still on the menu. Voicemail makes them wait for a callback that may not come until the next day."
+    },
+    {
+      "title": "Late orders get lost in text threads",
+      "body": "A voicemail or missed call is easy to forget during cleanup. By morning, the caller may already have ordered somewhere else, and your team has to piece together the details."
+    },
+    {
+      "title": "The phone rings during cleanup",
+      "body": "Closing time is busy enough with cashing out, wiping down the line, and locking up. Answering every late call can pull staff away from prep, dishes, and the last pickups at the door."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers when you are closed",
+      "body": "ROAL can pick up after-hours calls and give callers a real response instead of a voicemail greeting. It can share hours, address, parking, and menu details right away."
+    },
+    {
+      "title": "Takes simple orders from the live menu",
+      "body": "If someone wants a pepperoni pizza, chicken lo mein, or two bacon cheeseburgers for pickup, the phone host can collect the items, sizes, modifiers, and name, then quote a ready time."
+    },
+    {
+      "title": "Sends the kitchen a clean ticket",
+      "body": "The order lands on the kitchen screen with the details your team needs. That makes it easier to start the next day with a clear prep list instead of a pile of phone messages."
+    },
+    {
+      "title": "Keeps the owner in control",
+      "body": "You can forward all calls or only unanswered and busy calls. If a question is too specific, the host can send it to your inbox for a one-time answer, then learn it for next time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, are you still open?"
+    },
+    {
+      "who": "host",
+      "line": "We’re closed right now, but I can help with the menu and take an order for pickup."
+    },
+    {
+      "who": "caller",
+      "line": "Can I get a large pepperoni pizza and an order of garlic knots?"
+    },
+    {
+      "who": "host",
+      "line": "Absolutely. One large pepperoni pizza and one garlic knots. Any changes on the pizza?"
+    },
+    {
+      "who": "caller",
+      "line": "Half pepperoni, half mushroom. Name is Maria."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Large pepperoni, half mushroom, plus garlic knots, under Maria. I’m showing a ready time of 20 minutes."
+    },
+    {
+      "who": "caller",
+      "line": "Perfect."
+    },
+    {
+      "who": "host",
+      "line": "Thanks. Your order is set, and we’ll have it ready at about 8:20 pm."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 8:20 pm",
+    "lines": [
+      "Large pepperoni pizza",
+      "Half mushroom",
+      "1 garlic knots",
+      "Name: Maria",
+      "Phone: caller number captured"
+    ],
+    "note": "Set aside extra napkins."
+  },
+  "sections": [
+    {
+      "h2": "What after-hours calls usually sound like",
+      "body": "After-hours calls are often simple and urgent. Someone is driving home and wants to place a pickup order. Someone else just realized they need dinner for four and is asking if you still have rice, noodles, wings, or a family meal. Some callers only want hours for tomorrow, parking info, or to ask whether a menu item is still available.\n\nA phone host is useful here because it can keep the call moving without making the caller wait on hold or listen to a long phone menu. It can answer the basic questions first, then take the order if that is what the caller wants. If the issue needs a person, like a complaint or a manager request, it can pass along a summary so your team is not starting from zero.\n\nIf you want to see the setup flow, start at [How it works](/how-it-works) or browse [Use cases](/use-cases)."
+    },
+    {
+      "h2": "A simple after-hours setup for a busy restaurant",
+      "body": "You do not need to rebuild your whole phone system. Most owners start by pasting their website, Google Maps link, or restaurant name and city into [Build a free test host](/try). ROAL reads the menu, prices, hours, and address from public pages or a menu upload, then builds a phone host you can test in the browser.\n\nWhen you are ready, you claim the host and forward calls from your existing number. Many owners choose all calls after closing, while others forward only unanswered or busy calls during a rush. If you use a landline or mobile phone plan, forwarding codes vary by carrier, so it is smart to confirm the code and test with a real call.\n\nThis setup fits a small team because the restaurant keeps its own number, and forwarding can be turned off any time. For owners comparing costs, the [Pricing](/pricing) page explains the order-based model."
+    },
+    {
+      "h2": "What to keep ready before you turn it on",
+      "body": "After-hours calls work best when the menu is clean and the most common questions are easy to answer. Make sure your late-night items, sizes, add-ons, and sold-out items are current. If you only sell pickup after 9 pm, say that clearly. If parking is tight or the entrance is around the corner, add that too.\n\nA good rule is to think about the calls you get most often after dinner. For example: “Do you still have fried rice?” “Can I get a calzone with no onions?” “What time do you open tomorrow?” “Do you take reservations for Saturday?” Those are the kinds of calls a phone host can handle well when your staff is busy or already gone home.\n\nIf you want more restaurant phone help, the [FAQ](/faq) page covers common owner questions, and the [glossary](/glossary) explains basic phone terms without jargon."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Will ROAL answer calls only after closing time?",
+      "a": "Yes, you can forward calls when you are closed, or only when the line is busy or unanswered. That gives you more control than sending every call away all day. You decide when the phone host should pick up."
+    },
+    {
+      "q": "Can it take pickup orders after hours?",
+      "a": "Yes. ROAL can take pickup and delivery orders from your live menu, collect the caller’s name and phone number, and quote a ready time. It also confirms the order back before ending the call."
+    },
+    {
+      "q": "What if the caller asks a hard question?",
+      "a": "If the host cannot answer something, it sends the question to your inbox with the call details. You answer once, and then the host knows it for future calls."
+    },
+    {
+      "q": "Does it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles payment."
+    },
+    {
+      "q": "How do I start with after-hours calls?",
+      "a": "Start by testing a host at /try with your website, Google Maps link, or restaurant name and city. Then claim the host, forward your existing number, and test a few real after-hours scenarios like a pizza order, a question about hours, and a request for tomorrow."
+    }
+  ]
+}

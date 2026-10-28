@@ -4,8 +4,25 @@
     {
       "name": "roal-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "-p", "3020"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3020"
+      ],
       "port": 3020
+    },
+    {
+      "name": "roal-prod",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "start",
+        "-p",
+        "3030"
+      ],
+      "port": 3030
     }
   ]
 }

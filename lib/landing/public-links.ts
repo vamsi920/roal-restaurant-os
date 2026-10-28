@@ -1,5 +1,7 @@
 /** Canonical public routes + homepage hash anchors. */
 
+import { SEO_LINKS } from "@/lib/seo/site-pages";
+
 export const PUBLIC_HOME_HASH_IDS = ["features", "how", "command-center", "pricing", "faq", "try"] as const;
 
 export type PublicHomeHashId = (typeof PUBLIC_HOME_HASH_IDS)[number];
@@ -44,8 +46,10 @@ export function parsePublicHref(href: string): ParsedPublicHref {
   return { path, hash, search };
 }
 
+const SEO_ROUTES = new Set(SEO_LINKS.map((l) => l.path));
+
 export function isPublicMarketingRoute(path: string): boolean {
-  return (PUBLIC_MARKETING_ROUTES as readonly string[]).includes(path);
+  return (PUBLIC_MARKETING_ROUTES as readonly string[]).includes(path) || SEO_ROUTES.has(path);
 }
 
 export function isKnownPublicHomeHash(hash: string): boolean {

@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-phone-answering-best-practices",
+  "keyword": "restaurant phone answering best practices",
+  "category": "guest-experience",
+  "title": "Restaurant phone answering best practices",
+  "seoTitle": "Restaurant phone answering best practices | ROAL",
+  "description": "Use better phone scripts, call flow, forwarding, and order-taking setup to cut missed calls and keep busy service moving.",
+  "question": "What are the best practices for answering restaurant phone calls?",
+  "answer": "Restaurant phone answering best practices are to answer quickly, use a short script, confirm the order details back, and route tricky calls to staff with a summary. For busy restaurants, that also means forwarding the phone when needed, keeping hours and menu info current, and using a system that can take pickup orders, quote ready times, and handle common questions consistently.",
+  "summary": "You’ll learn a practical phone system that keeps orders clear, callers calm, and staff focused during busy shifts.",
+  "intro": "Restaurant phone answering best practices start with speed, clarity, and a simple script. The goal is to get the caller the right answer fast, take the order cleanly, and keep your line from tying up the counter.\n\nFor a pizza shop, deli, or family restaurant, that means one person or one phone host should handle the basics the same way every time: greeting, order taking, hours, address, and handoff for anything sensitive. ROAL is built for that kind of front desk work, but the same habits help even if you still use staff or forwarding.",
+  "sections": [
+    {
+      "id": "what-should-a-restaurant-say-when-they-answer-the-phone",
+      "h2": "What should a restaurant say when they answer the phone?",
+      "body": "Your greeting should be short, warm, and clear. Callers do not want a speech. They want to know they reached the right place and can place the order.\n\nA good script sounds like this: \"Thank you for calling Main Street Pizza. How can I help you today?\" If the line is busy, a softer version helps: \"Thanks for calling. I’ll be right with you.\"\n\nUse the same structure every time:\n1. Say the restaurant name.\n2. Offer help.\n3. Ask what they need.\n4. Move straight into the order or question.\n\nA few practical tips:\n- Don’t ask three questions at once.\n- Don’t force callers to repeat themselves.\n- If you need to put them on hold, say why and for how long.\n\nFor more wording ideas, keep a few [phone greeting templates](/tools/phone-greeting-templates) handy, and match your tone to your place. A slice shop should sound different from a white-tablecloth room. If you want a deeper look at tone, read [the tone of voice your phone line should have](/blog/restaurant-tone-of-voice-phone)."
+    },
+    {
+      "id": "how-do-you-take-pickup-orders-without-missing-details",
+      "h2": "How do you take pickup orders without missing details?",
+      "body": "The best practice is to collect the order in the same order every time: items, sizes, modifiers, notes, name, phone number, and ready time. That keeps the kitchen ticket clean and cuts down on callbacks.\n\nUse a step-by-step flow:\n1. Item and size.\n2. Modifiers and extras.\n3. Special notes.\n4. Customer name and callback number.\n5. Ready time.\n6. Read the order back.\n\nExample script line: \"Got it — one large pepperoni, well done, with extra cheese. Is that for pickup under Mike, and is this the best number to reach you?\"\n\nHere is a simple way to think about the economics. Say your average pickup order is $28. If the order gets taken cleanly on the phone, it can be more valuable than sending that caller away or forcing them to wait on hold. Plug in your own average order size, then compare it with your labor cost or outside fee.\n\nROAL does this part directly from the restaurant’s live menu. It takes items, sizes, modifiers, notes, name, phone, and ready time, then sends a clean ticket to the kitchen screen. It also does not offer items marked sold out, which helps avoid awkward call-backs."
+    },
+    {
+      "id": "how-should-you-handle-hours-directions-parking-and-menu-ques",
+      "h2": "How should you handle hours, directions, parking, and menu questions?",
+      "body": "A lot of restaurant calls are not orders. They are quick questions. Best practice is to answer those fast so the caller can either place the order or move on.\n\nKeep a short FAQ list by the phone with only the questions you hear all the time:\n- What are your hours today?\n- What is your address?\n- Where do we park?\n- Do you have gluten-free, vegetarian, or dairy-free options?\n- Is item X still available?\n\nA useful script line is: \"We’re at 42 Oak Street, parking is on the side street, and kitchen closes at 9:30 tonight. What can I start for you?\"\n\nThat is why it helps to keep your website, menu PDF, and Google Maps link current. ROAL reads those public pages and builds the phone host from them, so hours and address questions are based on what you already show customers. If your menu changes often, update it in one place and keep the phone answer aligned.\n\nIf you want a tighter checklist, use this:\n- Hours checked today\n- Address and cross streets confirmed\n- Parking note written in one sentence\n- Top allergens or special items listed clearly\n- Sold-out items removed or marked"
+    },
+    {
+      "id": "when-should-a-restaurant-forward-calls-instead-of-answering-",
+      "h2": "When should a restaurant forward calls instead of answering live?",
+      "body": "Use forwarding when the line gets busy, the front counter is slammed, or no one can answer reliably. The best practice is to decide this before the rush starts, not after missed calls stack up.\n\nCommon forwarding setups look like this:\n- Forward all calls when you are closed.\n- Forward unanswered calls after a few rings.\n- Forward busy calls when the line is tied up.\n\nOn many landlines and some carriers, code patterns like *72 and *73 are used for all-call forwarding on and off. On some mobile carriers, codes such as **21*number# and ##21# may apply for all calls, while **61*number# and **67*number# are often used for unanswered or busy forwarding. Verizon Wireless, AT&T, and T-Mobile can differ by plan and device, and business VoIP systems usually use a web portal. Always confirm with your carrier and test with a live call.\n\nA practical setup is to keep your main number, then forward it when you need backup. ROAL gives each location its own phone line automatically, and the restaurant forwards its existing number to it. That can be all calls, or only when busy or unanswered, and it can be turned off any time. For exact carrier steps, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-do-you-handle-calls-that-need-a-person-right-away",
+      "h2": "How do you handle calls that need a person right away?",
+      "body": "Not every call should be closed by the phone host. Best practice is to hand off the tricky ones fast, with a short summary, so staff does not need to listen to the whole call again.\n\nSend to staff when the caller mentions:\n- A catering request\n- A complaint\n- A severe allergy question\n- A manager request\n- A reservation request that needs human judgment\n\nA clean handoff script can sound like this: \"I’m going to pass this along with your name and number so the manager can review it.\"\n\nKeep a simple transfer note format for staff:\n| Item | What to capture |\n| --- | --- |\n| Caller name | First and last if possible |\n| Phone | Best callback number |\n| Need | Catering, complaint, allergy, manager, reservation |\n| Short summary | One or two sentences |\n| Timing | Today, tomorrow, or specific time |\n\nThis matters because the restaurant phone should not create extra work. The best phone system reduces it. ROAL sends these calls to staff with a summary, and questions it cannot answer land in an inbox so the owner can answer once and the host knows it from then on."
+    },
+    {
+      "id": "what-should-you-measure-so-the-phone-line-actually-helps-the",
+      "h2": "What should you measure so the phone line actually helps the restaurant?",
+      "body": "A phone line should save time and protect sales, not just ring in the background. The easiest way to manage it is to track a few simple numbers by hand or in a dashboard.\n\nLook at:\n- Call history with transcripts and recordings\n- Live kitchen tickets: new, preparing, ready\n- Top questions callers ask\n- Common menu changes or sold-out items\n- Upsell opportunities like size upgrades or add-ons\n\nA worked example helps. Say your restaurant gets 10 phone orders in a busy shift, and your average order is $24. That means the shift brings in about $240 from phone orders. Plug in your own average ticket and call volume to estimate what the phone line is worth to you.\n\nAnother example: if you use delivery apps for a $28 order, a commission of roughly 15-30% is often taken by the platform. That can mean about $4.20 to $8.40 on that order, before you think about labor or other costs. The point is not to choose one channel forever. It is to know what each call path costs you.\n\nROAL’s dashboard is built for this kind of review. You can see live tickets, call transcripts, recordings, menu edits, FAQs, and multi-location menus in one place."
+    },
+    {
+      "id": "how-can-a-small-restaurant-set-up-better-phone-answering-thi",
+      "h2": "How can a small restaurant set up better phone answering this week?",
+      "body": "Start simple. You do not need a full rework. You need a clear script, current menu info, and one reliable way to handle overflow.\n\nUse this checklist this week:\n1. Write your greeting.\n2. Confirm hours, address, and parking note.\n3. Remove sold-out items from the menu copy.\n4. Decide when calls should forward.\n5. Prepare a handoff plan for catering, complaints, allergies, and manager calls.\n6. Make sure callers can reach a real answer during rushes.\n\nIf you want to test a better setup, [build a free test host from your website](/try). ROAL can read your menu, prices, hours, and address from public pages, and you can test-call it in the browser before you ever go live.\n\nFor owners who want to compare options, it can also help to look at [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) and [AI phone host vs hiring phone staff](/compare/hiring-phone-staff). ROAL is priced at $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, no contract, and free calls, questions, and test calls."
+    }
+  ],
+  "takeaways": [
+    "Use a short, repeatable greeting that tells callers they reached the right place.",
+    "Take orders in the same order every time: items, modifiers, name, phone, ready time, and read-back.",
+    "Keep hours, address, parking, and sold-out items current so callers get clear answers fast.",
+    "Forward calls when needed, and confirm the carrier steps before you rely on them.",
+    "Send catering, complaints, allergies, and manager requests to staff with a short summary."
+  ],
+  "faq": [
+    {
+      "q": "What is the best way to answer restaurant phone calls?",
+      "a": "Use a short greeting, then ask what the caller needs. Keep the flow simple so you can move into an order, a question, or a handoff without extra back-and-forth. A script like “Thank you for calling, how can I help?” works because it is clear and fast."
+    },
+    {
+      "q": "What details should a restaurant take on every phone order?",
+      "a": "At minimum, collect the items, sizes, modifiers, notes, customer name, callback number, and ready time. Then read the order back so the caller can correct anything before the ticket goes to the kitchen. That keeps mistakes down and helps the kitchen move faster."
+    },
+    {
+      "q": "How do restaurants answer hours and menu questions by phone?",
+      "a": "Keep a short list of your most common questions and update it when your menu changes. The best answer is brief and direct, like your address, parking note, or today’s closing time. ROAL reads this kind of public information from your website, menu PDFs, menu photos, or Google Maps link when you set it up."
+    },
+    {
+      "q": "When should a restaurant use call forwarding?",
+      "a": "Use forwarding when the line is busy, the restaurant is closed, or nobody can answer consistently. Many carriers and phone systems support forwarding, but the codes and setup steps vary, so always confirm with your carrier and test it with a live call. That way you know the calls go where you expect."
+    }
+  ],
+  "words": 1459,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

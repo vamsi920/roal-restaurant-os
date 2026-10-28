@@ -1,0 +1,115 @@
+{
+  "slug": "short-staffed",
+  "label": "Short-staffed shifts",
+  "h1": "Short-staffed shifts with the phone covered",
+  "seoTitle": "Short-staffed restaurant? Cover the phone | ROAL",
+  "description": "When the kitchen is slammed and the host stand is short, ROAL answers the phone, takes pickup orders, handles menu questions, and sends clean tickets.",
+  "lead": "A short-staffed shift makes the phone harder to keep up with. ROAL gives you a phone host that can answer during the rush, take orders, and handle common questions while your team stays on the floor.",
+  "question": "How can an AI phone host help my restaurant during short-staffed shifts?",
+  "answer": "ROAL can answer the phone when your team is tied up, take pickup and delivery orders from your live menu, and answer common questions about hours, address, parking, and the menu. It can also send a clean ticket to the kitchen screen and pass along allergy-sensitive questions, complaints, and manager requests when needed. That helps keep the line moving when you are one person short.",
+  "pains": [
+    {
+      "title": "The phone rings while everyone is already busy",
+      "body": "On a short-staffed dinner shift, one person is running food, one is on expo, and the phone keeps ringing. Calls pile up right when the dining room and takeout counter need the most attention."
+    },
+    {
+      "title": "Missed calls become missed orders",
+      "body": "A caller wants two chicken parm dinners, a side salad, and extra marinara for pickup at 6:30. If nobody answers, that order may go somewhere else or never get placed at all."
+    },
+    {
+      "title": "Questions slow down the whole shift",
+      "body": "Simple questions about hours, parking, sauces, sold-out items, or whether a gluten-free bun is available can still interrupt the kitchen. Even quick calls can throw off a stretched team."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers when the team is tied up",
+      "body": "ROAL can pick up the phone during busy stretches, so your staff does not have to stop plating, boxing, or seating to answer every ring."
+    },
+    {
+      "title": "Takes real orders from your menu",
+      "body": "It can take items, sizes, modifiers, and notes from the live menu. For example: “one large pepperoni, well-done, half basil, half onions.”"
+    },
+    {
+      "title": "Sends a clean ticket to the kitchen",
+      "body": "Instead of scribbled notes, the order goes to the kitchen screen with a clear ticket. That helps reduce back-and-forth when the shift is already crowded."
+    },
+    {
+      "title": "Handles the calls your team should not have to repeat",
+      "body": "It answers common menu and hours questions, speaks the caller’s language, and sends allergy-sensitive questions or manager requests to staff with a summary."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, are you guys still taking pickup orders?"
+    },
+    {
+      "who": "host",
+      "line": "Yes, we are. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One chicken parm hero, extra sauce, and a side order of fries."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "Also one Caesar salad, no croutons. The name is Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thank you, Maria. I have one chicken parm hero extra sauce, one side fries, and one Caesar salad no croutons for pickup. It will be ready around 7:20 pm."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "1 chicken parm hero",
+      "- extra sauce",
+      "1 Caesar salad",
+      "- no croutons",
+      "1 side fries"
+    ],
+    "note": "Name: Maria"
+  },
+  "sections": [
+    {
+      "h2": "What a short-staffed shift looks like at the phone",
+      "body": "A short-staffed shift usually means the phone rings at the worst possible time: during a lunch rush, when the grill is backed up, or while someone is already helping a line at the counter. The caller may want a simple pickup order, but it still takes time to answer, repeat the order, and explain the ready time.\n\nROAL is built for that exact moment. It answers the call, takes the order from your live menu, and keeps the conversation short and clear. If a caller asks about something unusual, like a sauce swap, a sold-out item, or a reservation request, it can route that to staff with context. If you want to see the setup flow, start at [How it works](/how-it-works)."
+    },
+    {
+      "h2": "What to prepare before a busy night",
+      "body": "The best setup is simple. Make sure your menu items are named the way guests say them, like “buffalo chicken wrap,” “plain slice,” “combo platter,” or “lunch special.” Add common modifiers such as extra cheese, no onions, light sauce, and well-done.\n\nAlso keep your hours, address, parking note, and a few common answers up to date. If your kitchen is short on a certain item, mark it clearly so the phone host does not offer it. That matters a lot on nights when your team is already rushing to keep tickets moving."
+    },
+    {
+      "h2": "A practical fallback for the busiest shifts",
+      "body": "You do not have to send all calls to the phone host. Many owners use forwarding only when busy or unanswered, so the team still picks up when they can. On a rough night, that can mean fewer rings at the counter and fewer people walking away because nobody answered.\n\nIf you want to compare the options for a short-staffed restaurant, take a look at [AI phone host vs hiring phone staff](/compare/hiring-phone-staff) and [Pricing](/pricing). The goal is not to replace your team. It is to keep orders and questions moving when your team is already stretched."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL answer the phone only when my staff is busy?",
+      "a": "Yes. You can forward calls all the time, or only when your line is busy or unanswered, depending on how you set it up. That makes it a good fit for short-staffed shifts where you still want to answer some calls yourself."
+    },
+    {
+      "q": "Will it take pickup orders from my menu?",
+      "a": "Yes. ROAL takes pickup and delivery orders from your live menu, including items, sizes, modifiers, and notes. It also confirms the order back and sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "What if a caller asks about something the phone host does not know?",
+      "a": "Questions it cannot answer go to an inbox, and you can answer once so it knows from then on. It can also hand allergy-sensitive questions, complaints, and manager requests to staff with a summary."
+    },
+    {
+      "q": "Does it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How fast can I set it up before a busy shift?",
+      "a": "You can start at [Build a free test host](/try) by pasting your website, Google Maps link, or restaurant name and city. ROAL reads public menu and hours information, and you can test-call it in the browser before going live."
+    }
+  ]
+}

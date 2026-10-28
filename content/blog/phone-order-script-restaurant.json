@@ -1,0 +1,72 @@
+{
+  "slug": "phone-order-script-restaurant",
+  "keyword": "restaurant phone order script",
+  "category": "phone-orders",
+  "title": "A restaurant phone order script that works",
+  "seoTitle": "Restaurant phone order script that works | ROAL",
+  "description": "Use a practical restaurant phone order script for pickup and delivery calls, with clear lines, steps, and examples for busy teams.",
+  "question": "What restaurant phone order script should I use to take orders clearly and fast?",
+  "answer": "Use a short script that greets the caller, gets the order, confirms sizes and modifiers, quotes a ready time, and reads the order back before ending the call. Keep a simple fallback for busy shifts, and route allergy, complaint, or manager calls to staff. ROAL follows that same structure when it takes pickup and delivery orders from your live menu.",
+  "summary": "Use a clear phone script to take accurate restaurant orders faster and with fewer back-and-forth calls.",
+  "intro": "A good restaurant phone order script is short, clear, and repeatable. It should help your team get the name, order, phone number, and pickup time without sounding rushed.\n\nThe best script for a busy shop is one your staff can use on any call, whether it is a pizza order, a sandwich run, or a delivery order. It should also fit the way your restaurant already works, including sold-out items, notes, and staff handoff for tricky calls.",
+  "sections": [
+    {
+      "id": "what-should-a-restaurant-phone-order-script-include",
+      "h2": "What should a restaurant phone order script include?",
+      "body": "A solid script has the same core pieces on every call. That keeps the order clean and helps the kitchen see exactly what the caller wants.\n\nUse this order of operations:\n1. Greet the caller and name the restaurant.\n2. Ask whether it is pickup or delivery.\n3. Take the items, sizes, modifiers, and notes.\n4. Collect the caller’s name and phone number.\n5. Quote the ready time.\n6. Read the order back.\n\nA simple opener sounds like this: \"Thanks for calling Rosa’s Pizza. Is this for pickup or delivery?\" Then move straight into the order: \"What can I get started for you?\" Avoid long small talk when the phone is busy.\n\nFor a family restaurant, the script can be just as plain: \"Thanks for calling. What would you like today?\" If the caller asks about hours, address, parking, or menu items, answer that first and then return to the order. ROAL does this automatically from the restaurant’s live menu and public pages, which keeps the call moving without extra steps."
+    },
+    {
+      "id": "how-do-i-take-the-order-without-missing-modifiers",
+      "h2": "How do I take the order without missing modifiers?",
+      "body": "The biggest mistakes happen when the caller says an item and the clerk writes only the item name. You want the script to force a pause for size, style, toppings, and special notes.\n\nA useful pattern is:\n- Item name\n- Size or count\n- Modifiers\n- Notes\n- Repeat it back\n\nExample script line: \"Got it — one large pepperoni pizza, well-done, extra cheese, no onions. Anything else on that pizza?\" That extra question catches changes before the ticket goes to the kitchen.\n\nWorked example: say the caller orders a $28 average pickup order at your shop. If they add a soda and a side because you asked about extras, the check may become $34. Plug in your own numbers, but the point is simple: one extra question can protect the order and raise the ticket at the same time.\n\nA quick checklist for staff:\n- Ask size before repeating the item.\n- Ask about toppings, sauce, and cooking style.\n- Confirm any allergy-sensitive note clearly.\n- Do not guess when the caller is vague.\n\nROAL follows this same flow and will not offer items marked sold out."
+    },
+    {
+      "id": "what-should-i-say-when-quoting-the-pickup-time",
+      "h2": "What should I say when quoting the pickup time?",
+      "body": "Pickup time language should be plain. Do not promise a time you cannot hit.\n\nUse a script like: \"We can have that ready in about 25 minutes.\" If the kitchen is packed, say: \"We’re running a little behind; the earliest ready time I can give you is 45 minutes.\" That is better than making the caller guess.\n\nHere is a simple way to handle busy periods:\n1. Check the line or the screen before quoting the time.\n2. Give a clear ready time in minutes.\n3. If the order is large, add a little buffer.\n4. Read the time back in the final confirmation.\n\nExample: if your usual ready time for a small lunch order is 20 minutes, and a caller orders three entrees and appetizers, you might quote 35 minutes. Plug in your own timing. The key is consistency, so the caller knows what to expect and the kitchen knows what was promised.\n\nIf you use [pickup order taking](/use-cases/pickup-orders) or [why you should read back every phone order](/blog/read-back-phone-orders), the same advice applies: quote, confirm, and then send the order."
+    },
+    {
+      "id": "how-do-i-handle-delivery-payment-and-sold-out-items",
+      "h2": "How do I handle delivery, payment, and sold-out items?",
+      "body": "A phone order script should stay inside the limits of your restaurant’s process. It should not make payment harder or promise food you cannot make.\n\nUse these exact lines when needed:\n- \"We can take the order now, and payment happens at pickup.\"\n- \"That item is sold out right now. Would you like something similar instead?\"\n- \"I can note the allergy concern and have the kitchen review it.\"\n\nImportant rule: do not take card numbers over the phone if that is not how your restaurant already takes payment. ROAL does not take card numbers over the phone either. Payment happens at pickup or however the restaurant already handles it.\n\nIf the caller asks for a sold-out item, do not work around it by guessing. Say the item is unavailable and suggest the closest swap. If the caller has a serious allergy question, a complaint, or wants a manager, hand it to staff with a short summary.\n\nA practical mini-template:\n| Situation | What to say |\n| --- | --- |\n| Sold-out item | \"That’s sold out right now.\" |\n| Allergy question | \"I’m going to have staff review that.\" |\n| Manager request | \"I’ll pass that to the team.\" |\n| Payment | \"We’ll take payment at pickup.\" |"
+    },
+    {
+      "id": "can-roal-follow-a-phone-order-script-for-me",
+      "h2": "Can ROAL follow a phone order script for me?",
+      "body": "Yes. ROAL is an [AI phone host for restaurants](/about) that answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen.\n\nIt reads the restaurant website, Google Maps link, or name and city from public pages and builds a phone host in about a minute. The owner can test-call it in the browser before going live, with no sign-up needed. The owner also picks the host’s voice and name.\n\nOn a call, ROAL can take items, sizes, modifiers, notes, the caller’s name, and phone number. It quotes a ready time, confirms the order back, and speaks the caller’s language. Questions it cannot answer go to an inbox, and the owner answers once so the host learns it from then on.\n\nThat matters because a script is only useful if it is followed every time, including during rushes and short-staffed shifts. ROAL is built to keep that structure steady without asking the kitchen to stop and answer the same call over and over."
+    },
+    {
+      "id": "how-should-i-set-up-forwarding-and-test-the-script",
+      "h2": "How should I set up forwarding and test the script?",
+      "body": "Once the script is ready, test the full phone path before you use it on live calls. The owner claims the host, ROAL gives each location its own phone line automatically, and the restaurant forwards its existing number to it. Forward all calls, or only when busy or unanswered, depending on how you want to run the store.\n\nFor call forwarding, the exact code depends on the carrier or phone system. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some mobile carriers, codes like **21*number# or **67*number# may be used. Business VoIP systems usually set forwarding in the web portal. Codes vary, so confirm with your carrier and test with a real call.\n\nUse this test checklist:\n- Call the restaurant number from your cell.\n- Confirm the greeting sounds natural.\n- Place a small order.\n- Place a larger order with a modifier.\n- Ask a menu question.\n- Try an allergy or manager request.\n\nIf you want to compare costs while you test, [pricing](/pricing) is simple: ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, and no per-minute fee. You can also check [call forwarding codes by carrier](/tools/call-forwarding-codes) before you switch the line. When you are ready, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Keep the script short: greet, order, name, phone, time, and read-back.",
+    "Always ask for size, modifiers, and notes before ending the call.",
+    "Quote a ready time you can actually hit, then confirm it back.",
+    "Do not take card numbers over the phone unless that is already your restaurant process.",
+    "Use a test call to check forwarding, menu accuracy, and staff handoff before going live."
+  ],
+  "faq": [
+    {
+      "q": "What is the best script for taking restaurant phone orders?",
+      "a": "The best script is short and repeatable: greet the caller, take the order, ask for sizes and modifiers, collect the name and phone number, quote a ready time, and read the order back. Keep a separate line for sold-out items, allergy questions, and manager requests so staff can handle those quickly."
+    },
+    {
+      "q": "How do I keep callers from ordering items we are sold out of?",
+      "a": "Your script should only offer items that are actually available. If something is sold out, say so plainly and suggest a close substitute. ROAL will not offer items marked sold out when it takes orders from your live menu."
+    },
+    {
+      "q": "Should my staff take card numbers over the phone?",
+      "a": "Only if that is already your restaurant’s normal payment process. ROAL does not take card numbers over the phone; payment happens at pickup or however the restaurant already handles payment. That keeps the phone order simple and avoids payment mistakes."
+    },
+    {
+      "q": "How do I test a phone order script before using it live?",
+      "a": "Call your restaurant number, place a small order, then place a larger order with modifiers and a menu question. Check that the greeting, ready time, and read-back sound right, and confirm that the kitchen gets a clean ticket. If you use forwarding, test that too with a real call."
+    }
+  ],
+  "words": 1225,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

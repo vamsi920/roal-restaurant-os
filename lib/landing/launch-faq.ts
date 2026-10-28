@@ -151,4 +151,7 @@ export const HOME_FAQ = {
 
 export const PRICING_FAQ = faqForPage("pricing");
 
+/** Every launch FAQ entry, for the /faq page. */
+export const ALL_LAUNCH_FAQ: readonly LaunchFaqItem[] = LAUNCH_FAQ_ENTRIES;
+
 export const SECURITY_FAQ = faqForPage("security");

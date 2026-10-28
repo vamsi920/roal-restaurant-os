@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-answering-ice-cream-dessert",
+  "keyword": "dessert shop phone orders",
+  "category": "restaurant-types",
+  "title": "Phone calls at dessert and ice cream shops",
+  "seoTitle": "Dessert shop phone orders and call handling | ROAL",
+  "description": "Dessert shop phone orders can be easier to manage with a clear script, menu rules, and call forwarding for busy shifts.",
+  "question": "How should I handle dessert shop phone orders without tying up the counter?",
+  "answer": "Handle dessert shop phone orders with a short script, a live menu, and a clear handoff for special requests. An AI phone host like ROAL can answer the phone, take pickup and delivery orders from your live menu, quote a ready time, and send a clean ticket to the kitchen screen while forwarding tricky calls to staff.",
+  "summary": "Set up a simple phone flow for dessert and ice cream orders that fits a busy counter.",
+  "intro": "Dessert shop phone orders work best when the phone does not slow down the line. A short script, a clean menu, and one clear order flow help staff stay focused on scooping, boxing, and getting tickets out fast.\n\nIf your shop gets a lot of calls for pints, cakes, sundaes, milkshakes, or late-night pickup, an [AI phone host](/how-it-works) can answer, take the order, and send it to the kitchen screen. ROAL can do that from your live menu, while staff still handle allergy questions, complaints, catering, and anything unusual.",
+  "sections": [
+    {
+      "id": "what-phone-orders-do-dessert-and-ice-cream-shops-get-most-of",
+      "h2": "What phone orders do dessert and ice cream shops get most often?",
+      "body": "Most dessert counters hear the same few call types again and again: pickup pints, cakes, pies, banana splits, milkshakes, and last-minute dessert add-ons for dinner. A lot of calls are simple, but they still break up the line if someone has to stop scooping to answer them.\n\nA practical phone script helps. Try this:\n\n\"Thanks for calling. I can help with pickup and delivery orders. What would you like today?\"\n\nUse a short checklist for every order:\n- Item name\n- Size or portion\n- Flavor or topping choices\n- Notes, like no nuts or extra spoons\n- Name and phone number\n- Pickup time or delivery address\n\nIf a caller asks about a sold-out flavor, the phone host should skip it. If they ask about a special cake request or a sensitive allergy issue, send it to staff with a summary."
+    },
+    {
+      "id": "how-do-i-keep-dessert-phone-orders-accurate",
+      "h2": "How do I keep dessert phone orders accurate?",
+      "body": "Dessert orders get messy when the phone script is loose. One person says \"small sundae,\" another says \"regular,\" and a third wants extra fudge, whipped cream, and no cherries. The fix is to make the order format match how you actually sell items.\n\nA clean order flow usually looks like this:\n\n1. Answer the phone with the same greeting every time.\n2. Ask what item they want first.\n3. Confirm size, flavor, toppings, and notes.\n4. Repeat the order back before finishing.\n5. Collect the caller’s name and phone.\n6. Give a ready time.\n\nFor example, say your average dessert order is $18. If a caller adds one extra pint for $8 and two toppings for $2 each, the ticket becomes $30. Plug in your own numbers and decide which add-ons you want your host to offer.\n\nROAL is built to read the restaurant’s live menu, so it can take items, sizes, modifiers, and notes without making a staff member retype the order later."
+    },
+    {
+      "id": "what-should-the-phone-host-say-about-flavors-toppings-and-so",
+      "h2": "What should the phone host say about flavors, toppings, and sold-out items?",
+      "body": "Dessert menus change fast. One flavor runs out early. One cake is not ready yet. One topping is behind. The phone host should only offer what is on the live menu and should not promise something the kitchen cannot make.\n\nA useful owner rule set looks like this:\n\n| Situation | What the phone host should do |\n|---|---|\n| Flavor is sold out | Do not offer it |\n| Caller wants a custom topping | Take the note if your menu allows it |\n| Caller asks about allergens | Send it to staff with a summary |\n| Caller wants a manager | Hand it to staff |\n| Caller needs catering | Hand it to staff |\n\nA simple line helps callers understand the flow: \"I can check what’s available right now and take the order from the live menu.\"\n\nIf you use ROAL, you can edit the menu, hours, and FAQs in the dashboard. When a caller asks something the host cannot answer, it lands in an inbox. After you answer once, the host knows it from then on."
+    },
+    {
+      "id": "how-do-i-set-up-call-forwarding-without-losing-my-main-numbe",
+      "h2": "How do I set up call forwarding without losing my main number?",
+      "body": "You do not need to give up your existing number. With ROAL, the restaurant keeps its own number, and the owner forwards calls to the host’s phone line when desired. Forwarding can be turned off any time.\n\nCommon ways to set it up include:\n- Many landlines and some carriers: dial *72 plus the forwarding number to forward all calls, and *73 to turn it off\n- GSM mobile carriers on some plans: **21*number# for all calls, ##21# to turn it off, **61*number# for unanswered calls, and **67*number# for busy calls\n- Verizon Wireless: *72 / *73, and *71 for busy/no-answer forwarding\n- Business VoIP systems: usually in the web portal\n\nCodes vary by carrier and plan, so confirm with your carrier and test with a call. If you want a simple starting point, [use the call forwarding codes by carrier](/tools/call-forwarding-codes) and then verify the setup on your line."
+    },
+    {
+      "id": "what-does-roal-do-for-dessert-shop-phone-orders",
+      "h2": "What does ROAL do for dessert shop phone orders?",
+      "body": "ROAL is an [AI phone host](/use-cases/pickup-orders) for restaurants. It answers the phone, takes pickup and delivery orders from the restaurant’s live menu, answers questions about hours, address, parking, and the menu, and sends a clean ticket to the kitchen screen.\n\nFor a dessert shop, that means the phone can handle common orders like:\n- Pints and quarts\n- Cakes and pies\n- Sundaes and shakes\n- Pickup and delivery requests\n- Name, phone, and ready time\n\nSetup is straightforward. The owner pastes the restaurant website, Google Maps link, or \"Name, City\" at /try. ROAL reads the public menu pages, prices, hours, and address, and builds a phone host in about a minute. The owner can test-call it in the browser with no sign-up needed. Owners can also upload a menu in any format."
+    },
+    {
+      "id": "how-should-i-think-about-cost-for-dessert-phone-orders",
+      "h2": "How should I think about cost for dessert phone orders?",
+      "body": "The cost question matters because dessert shops often have busy peaks and slower gaps. Third-party delivery apps commonly take roughly 15-30% commission per order, which can add up fast on a $24 dessert ticket. Human answering services usually bill per minute or per call, and many AI phone tools charge a fixed monthly fee per location whether orders come in or not.\n\nROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. Billed monthly.\n\nHere is a simple example you can swap for your own numbers:\n- Say you get 200 completed phone orders in a month\n- At $0.90 each, the ROAL cost would be $180\n- If your average order is $20, that is $4,000 in phone order sales before food cost and labor\n\nUse your own order count and average ticket to compare options. If you want the math in one place, [the pricing page](/pricing) and [the phone host cost calculator](/tools/phone-host-cost-calculator) can help."
+    },
+    {
+      "id": "what-should-i-keep-in-place-for-busy-nights-and-special-requ",
+      "h2": "What should I keep in place for busy nights and special requests?",
+      "body": "Dessert shops get hit at the wrong time: after dinner, after school events, or right before close. That is where a phone host can help with the repeat work, while staff still handle the calls that need judgment.\n\nKeep these rules on the counter:\n- Allergy-sensitive questions go to staff\n- Complaints go to staff\n- Catering requests go to staff\n- Manager requests go to staff\n- Payment is not taken by phone; payment happens at pickup or however you already take it\n\nA simple closing line helps on the phone: \"I’ve got your order. Your ready time is 7:20, and we’ll take payment at pickup.\"\n\nIf you want to build the setup now, [build a free test host](/try). ROAL lets the owner pick the voice and name, then claim the host and forward calls when ready. The dashboard also keeps call history with transcripts and recordings, plus a kitchen screen with live tickets."
+    }
+  ],
+  "takeaways": [
+    "Use a short, repeatable script for pints, cakes, sundaes, and shakes.",
+    "Keep sold-out items off the phone menu and send allergy issues to staff.",
+    "Forward calls to the host without giving up your main restaurant number.",
+    "Compare per-order pricing with delivery app commissions and monthly phone tools.",
+    "Test the setup first, then decide when to forward all calls or only busy/unanswered calls."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take dessert shop phone orders after hours?",
+      "a": "Yes. It can answer the phone, take pickup or delivery orders from the live menu, and collect the caller’s name and phone. If something is unusual, it can hand the call to staff with a summary so you can follow up later."
+    },
+    {
+      "q": "What if my ice cream flavors change during the day?",
+      "a": "Update the menu so the phone host only offers what is available right now. ROAL reads the restaurant’s menu, prices, hours, and address from public pages, and owners can also upload a menu in any format."
+    },
+    {
+      "q": "Does ROAL take credit card numbers on the phone?",
+      "a": "No. It does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes payment."
+    },
+    {
+      "q": "How do I forward my shop’s calls to an AI phone host?",
+      "a": "You keep your existing number and forward calls to the host’s line. Many carriers and phone systems support call forwarding codes or portal settings, but the exact steps vary, so confirm with your carrier and test with a call before going live."
+    }
+  ],
+  "words": 1194,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

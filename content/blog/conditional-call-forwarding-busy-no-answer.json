@@ -1,0 +1,72 @@
+{
+  "slug": "conditional-call-forwarding-busy-no-answer",
+  "keyword": "conditional call forwarding",
+  "category": "phone-setup",
+  "title": "Conditional call forwarding for busy or unanswered calls",
+  "seoTitle": "Conditional call forwarding for restaurants | ROAL",
+  "description": "Forward calls only when your line is busy or unanswered. Keep your number in place and set a cleaner backup for restaurant calls.",
+  "question": "How do I set up conditional call forwarding for my restaurant phone so calls go to a backup only when I'm busy or don't answer?",
+  "answer": "Conditional call forwarding sends calls to another number only when your line is busy or unanswered, instead of forwarding every call. On many carriers, the codes are different, so confirm with your carrier and test the setup with a real call. For restaurants, it is a practical way to keep your main number while routing overflow calls to ROAL or another backup line.",
+  "summary": "Set up busy-or-unanswered call forwarding the right way for your restaurant.",
+  "intro": "Conditional call forwarding is when your restaurant phone sends calls to another number only if you are busy or do not pick up. It is a good fit for lunch rushes, short-staffed shifts, and times when the counter is too busy to answer.\n\nFor a restaurant, this lets you keep your main number and send overflow calls somewhere useful instead of straight to voicemail. ROAL can be the backup phone host, answering questions, taking orders, and sending a clean ticket to the kitchen screen when your line is tied up.",
+  "sections": [
+    {
+      "id": "what-is-conditional-call-forwarding-and-when-should-a-restau",
+      "h2": "What is conditional call forwarding, and when should a restaurant use it?",
+      "body": "Conditional call forwarding is different from forwarding every call. It only kicks in when your line is busy or when nobody answers in time. That matters in a restaurant because your staff may still want to answer some calls directly during slower hours.\n\nUse it when you want a backup for:\n- lunch rush pickups\n- dinner rush delivery orders\n- after-hours calls\n- shifts where one person is juggling the phone and the front counter\n\nA simple example: say your shop gets a burst of calls from 6:00 to 7:30 p.m. Your host can answer the first ring, but if the line is tied up, the next call forwards to ROAL. ROAL can take the caller’s name, phone, items, modifiers, and ready time, then send the ticket to the kitchen screen. That keeps the phone from backing up while the crew keeps moving.\n\nA useful rule: forward only the calls you are likely to miss. If you can still answer the phone reliably, keep it on your main line. If not, use conditional forwarding rather than sending every call away."
+    },
+    {
+      "id": "should-you-forward-all-calls-or-only-busy-and-unanswered-cal",
+      "h2": "Should you forward all calls or only busy and unanswered calls?",
+      "body": "For many restaurants, the answer is: start with busy or unanswered calls. That gives you a safety net without giving up the phone when the dining room is quiet or a host is available.\n\nHere is a simple way to decide:\n\n| Situation | Best setup |\n|---|---|\n| One person at the counter, steady traffic | Busy/unanswered forwarding |\n| Closed shop or holiday closure | Forward all calls |\n| A manager is off-site but wants every call | Forward all calls |\n| You want staff to answer when they can | Busy/unanswered forwarding |\n\nA worked example helps. Say you usually get 40 calls in a dinner window, and your team answers 28 of them. If 12 go to voicemail or get missed, conditional forwarding can catch those overflow calls. That is often better than forwarding every call, because your staff still handles the easy ones and the backup handles the rest.\n\nIf you use ROAL, the restaurant keeps its own number and can turn forwarding off any time. That makes it easier to test during a busy week and back it out later if your staffing changes."
+    },
+    {
+      "id": "how-do-i-set-up-busy-or-unanswered-forwarding-on-my-line",
+      "h2": "How do I set up busy or unanswered forwarding on my line?",
+      "body": "The exact steps depend on your carrier or phone system, so always confirm with them and test with a real call. Codes and menus vary, but the pattern is usually simple.\n\nUse this checklist:\n1. Decide where unanswered or busy calls should go.\n2. Write down the forwarding number.\n3. Ask your carrier whether your line uses dial codes or a web portal.\n4. Turn on forwarding for busy, unanswered, or both.\n5. Call your own restaurant number from a different phone and watch what happens.\n6. Place a real test order or test question to make sure the backup line behaves the way you want.\n\nCommon US patterns include *72 and *73 on many landlines and some carriers for forward all calls on and off. On some GSM mobile carriers, **61*number# forwards unanswered calls, **67*number# forwards busy calls, **21*number# forwards all calls, and ##21# turns that off. Verizon Wireless often uses *72 and *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle it in the web portal.\n\nIf you want a shortcut, [How to forward your restaurant calls](/blog/how-to-forward-restaurant-calls) and [Call forwarding codes by carrier](/tools/call-forwarding-codes) are good references before you change anything."
+    },
+    {
+      "id": "what-should-i-tell-staff-before-i-turn-forwarding-on",
+      "h2": "What should I tell staff before I turn forwarding on?",
+      "body": "Forwarding works best when the team knows what will happen. If staff expects every call to ring forever, they will think something is broken when unanswered calls start going to the backup.\n\nUse a short staff script:\n- “If the line is busy, the next call may go to our backup host.”\n- “If you hear the phone ring twice and it stops, that call may have forwarded.”\n- “For allergy questions, catering, or manager requests, the backup host will send a summary to us.”\n\nA quick shop-floor checklist:\n- keep the forwarding number near the register\n- make sure managers know how to turn forwarding off\n- tell staff what types of calls should stay with the team\n- remind everyone that card numbers are not taken over the phone\n\nThis matters because restaurants need clear handoffs. ROAL can handle ordinary questions, pickup and delivery orders, reservations, and language matching. It sends tricky calls like catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. That way, the backup line is not trying to do everything; it is just covering the calls your team is likely to miss."
+    },
+    {
+      "id": "how-does-roal-fit-into-conditional-call-forwarding",
+      "h2": "How does ROAL fit into conditional call forwarding?",
+      "body": "ROAL is built for the exact calls a restaurant misses during rush periods. It answers the phone, takes orders from your live menu, answers common questions about hours, address, parking, and the menu, and sends a clean ticket to the kitchen screen.\n\nA typical setup looks like this:\n- your main number stays the same\n- you forward only busy or unanswered calls to the ROAL line\n- staff still answers when available\n- ROAL handles overflow calls and logs the conversation\n\nThat can be especially helpful if you do not want to pay a fixed monthly fee just to have a backup. Many AI phone tools charge a monthly amount per location, even when the phone is quiet. ROAL is priced per completed phone order, with calls, questions, and test calls unlimited and free. For a restaurant owner, that makes it easier to match cost to actual orders instead of paying for idle time.\n\nIf you want to see how it would sound, ROAL can be started from your website, Google Maps link, or restaurant name and city at /try. It reads public menu and hours information, and you can also upload a menu in any format. You can test-call it in the browser before you decide anything."
+    },
+    {
+      "id": "how-do-i-test-forwarding-so-i-do-not-lose-calls",
+      "h2": "How do I test forwarding so I do not lose calls?",
+      "body": "Never turn on forwarding and walk away. Test it the same day, during a calm moment, and then again during a real rush if you can.\n\nUse this simple test plan:\n1. Call your restaurant from your cell phone.\n2. Let the line ring until it should forward.\n3. Confirm the backup number answers or rings as expected.\n4. Ask a real restaurant question, like hours or pickup timing.\n5. Place a sample order with one item, a size, and a modifier.\n6. Confirm the ticket reaches the kitchen screen or the backup destination you planned.\n\nExample test script: “Hi, can I place a pickup order for a large pepperoni with extra cheese?” Then ask, “What time will it be ready?” That gives you a full test of the forwarding path, the menu knowledge, and the handoff.\n\nIf you are using ROAL, also check the owner dashboard later. You can review call history, transcripts, recordings, kitchen tickets, menu edits, hours, FAQs, and upsell suggestions. If a question was not answered, it lands in the inbox, and the host learns from your reply the next time. That makes conditional forwarding more useful over time, because the backup gets smarter about your own restaurant."
+    }
+  ],
+  "takeaways": [
+    "Forward only busy or unanswered calls when you want a backup without changing your main number.",
+    "Always confirm the exact forwarding code or web setting with your carrier or phone system.",
+    "Test with a real call so you know ring timing, forwarding behavior, and ticket handoff are working.",
+    "ROAL can answer overflow calls, take orders, and send clean kitchen tickets while staff keeps the main line.",
+    "Keep forwarding flexible so you can turn it off any time if your staffing changes."
+  ],
+  "faq": [
+    {
+      "q": "What is conditional call forwarding for a restaurant phone?",
+      "a": "Conditional call forwarding sends calls to another number only when your line is busy or not answered. For a restaurant, that means your staff can still take calls when available, while overflow calls go to a backup line. It is useful during rushes and short-staffed shifts."
+    },
+    {
+      "q": "How do I forward calls only when busy or unanswered?",
+      "a": "Use the forwarding method your carrier or phone system supports, then choose busy, unanswered, or both. Many carriers use dial codes, while business VoIP systems often use a web portal. Always confirm the exact code or setting with your provider and test it with a real call."
+    },
+    {
+      "q": "Should I forward my restaurant phone all the time?",
+      "a": "Usually not, unless you are closed or want every call to go somewhere else. Many restaurant owners prefer busy or unanswered forwarding so the main phone still rings when staff is available. That keeps the line useful without sending away calls you could answer in-house."
+    },
+    {
+      "q": "Can ROAL take over when my restaurant is busy?",
+      "a": "Yes. ROAL can answer overflow calls, take pickup and delivery orders from your live menu, answer common questions, and send a clean ticket to the kitchen screen. It also passes along catering, complaint, allergy-sensitive, and manager calls to staff with a summary."
+    }
+  ],
+  "words": 1259,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

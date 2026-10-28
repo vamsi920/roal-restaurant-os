@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-margins-phone-orders",
+  "keyword": "restaurant profit margins takeout",
+  "category": "pricing",
+  "title": "Protecting restaurant profit margins on takeout orders",
+  "seoTitle": "Restaurant profit margins on takeout orders",
+  "description": "Takeout margins start with the phone. Compare phone orders, delivery apps, labor costs, and per-order answering fees before they cut into profit.",
+  "question": "How do phone orders affect restaurant profit margins on takeout, and what can I do about it?",
+  "answer": "Phone orders can help restaurant profit margins on takeout when they replace commission-heavy delivery app orders or save staff time during rushes. But they can also hurt margins if calls are missed, orders are entered wrong, or phone help costs too much per month. The fix is to compare the full cost per completed order and keep the ordering flow simple, accurate, and fast.",
+  "summary": "You will learn how to compare phone order costs and protect takeout margins with a practical, owner-friendly math check.",
+  "intro": "Phone orders can either protect your restaurant profit margins on takeout or quietly eat them up. The difference usually comes down to what each completed order really costs you.\n\nIf your phone is ringing all day, the margin question is simple: are those calls turning into profitable tickets, or are you paying too much in commissions, labor, or missed orders?",
+  "sections": [
+    {
+      "id": "what-does-a-phone-order-really-cost-your-takeout-margin",
+      "h2": "What does a phone order really cost your takeout margin?",
+      "body": "A phone order is not free just because the caller pays at pickup. The real cost includes the labor to answer, the chance of mistakes, and any service fee you pay to handle the call.\n\nUse a simple example and swap in your own numbers:\n\n| Cost item | Example |\n|---|---:|\n| Order total | $28 |\n| Food and packaging cost | $10 |\n| Phone handling cost | $0.90 |\n| Gross profit before labor | $17.10 |\n\nNow compare that with an order taken by staff during a rush. If a worker spends 3 minutes on the phone, that time has a cost even if you do not see it on a bill. If the call takes 5 minutes because the customer is browsing the menu, the cost goes up again.\n\nA better way to think about it is per completed order, not per call. ROAL charges $0.90 per completed phone order, meaning a confirmed order that reaches the kitchen screen. Calls, menu questions, and test calls are free. That makes the cost easy to measure against your own takeout ticket size.\n\nQuick check:\n- Write down your average phone order.\n- Subtract food, packaging, and labor.\n- Add any order-taking fee.\n- See what is left before rent and other overhead.\n\nIf the leftover margin looks thin, the problem may not be the phone itself. It may be the path the order takes from caller to kitchen."
+    },
+    {
+      "id": "when-do-delivery-app-fees-start-hurting-margin-more-than-the",
+      "h2": "When do delivery app fees start hurting margin more than the phone?",
+      "body": "Delivery apps commonly charge restaurants roughly 15-30% commission per order. That can be a big bite out of a takeout ticket, especially on smaller orders.\n\nHere is a simple swap you can use. Say a customer places a $30 order:\n- At 15% commission, you lose $4.50.\n- At 30% commission, you lose $9.00.\n- With a $0.90 phone order fee, the direct ordering cost is much lower.\n\nThat does not mean every phone order is better automatically. You still need accurate tickets and a smooth handoff to the kitchen. But for many independent restaurants, phone orders can preserve more of the sale than commission-based channels.\n\nA practical way to compare is to look at your own mix:\n1. Pick a typical takeout order total.\n2. Estimate your food cost.\n3. Add the channel cost: delivery app commission, phone staff time, or a per-order phone host.\n4. Compare the remaining margin.\n\nIf you want a quick calculator, [compare phone orders with delivery app commissions](/compare/delivery-apps) or use the [delivery app commission calculator](/tools/delivery-commission-calculator).\n\nThe key point: the phone is often a lower-cost way to capture pickup and delivery orders from people who already want your food. The margin challenge is not the call itself. It is letting commission-heavy channels become the default for every order."
+    },
+    {
+      "id": "how-do-you-keep-the-phone-from-stealing-labor-from-the-line",
+      "h2": "How do you keep the phone from stealing labor from the line?",
+      "body": "When the kitchen is busy, every phone call has a labor cost. Someone has to stop what they are doing, answer the call, repeat the menu, take the order, and send it to the kitchen.\n\nThat is where many restaurants lose margin without noticing it. A $28 order can look fine on paper, but if a cook or cashier spends several minutes away from the line, you are paying for that time in slower service or extra payroll.\n\nA cleaner setup is to decide which calls staff should handle and which calls should go to a phone host. For example:\n- Busy dinner rush: forward calls that are unanswered or busy.\n- Slow periods: let staff answer normally.\n- After hours: send calls to a host that can take pickup and delivery orders.\n\nROAL can answer the restaurant's phone, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. It can also handle hours, address, parking, and menu questions, which saves staff from repeating the same details.\n\nUse this script with your team:\n\"If the line is backed up, let the phone host take the order. If the caller needs a manager, allergy help, or something unusual, send it to staff.\"\n\nShort checklist:\n- Decide when calls are forwarded.\n- Decide which calls always go to staff.\n- Keep your menu current.\n- Review call history weekly and fix repeated confusion.\n\nThis protects margin because your team spends more time cooking and less time on routine phone work."
+    },
+    {
+      "id": "what-order-mistakes-quietly-cut-into-takeout-profit-margins",
+      "h2": "What order mistakes quietly cut into takeout profit margins?",
+      "body": "Small phone mistakes can add up fast. A wrong size, missing modifier, forgotten note, or unclear pickup time can turn a profitable order into a remake or refund.\n\nThat is why order accuracy matters as much as order volume. One corrected ticket may not feel expensive, but over a busy week it can become a real margin leak.\n\nHere are the most common trouble spots for takeout phones:\n- sizes and add-ons not repeated back clearly\n- modifiers like no onions, extra sauce, or gluten-sensitive requests missed\n- caller name or phone number written down wrong\n- ready time promised too early\n- sold-out items still being offered\n\nAn AI phone host can reduce some of those problems by reading from the live menu, not offering items marked sold out, collecting the caller's name and phone, and confirming the order back before it sends a ticket.\n\nA simple owner script for staff review:\n\"Before we hang up, repeat the items, sizes, modifiers, and pickup time. If anything sounds off, fix it then.\"\n\nYou can also build a small margin audit:\n1. Look at 10 recent phone tickets.\n2. Mark any remake, missing item, or confusion.\n3. Estimate the cost of each fix.\n4. Compare that to your cost per order.\n\nIf the order-taking process is sloppy, the fees are only part of the problem. Waste is the other part."
+    },
+    {
+      "id": "which-pricing-model-fits-a-busy-takeout-counter-better",
+      "h2": "Which pricing model fits a busy takeout counter better?",
+      "body": "For owners, the biggest pricing question is not just what a tool costs. It is whether the price matches your call volume.\n\nMany AI phone tools charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in. Human answering services usually bill per minute or per call. ROAL uses a per-completed-order model: $0.90 for each confirmed order that reaches the kitchen screen, with no monthly fee, setup fee, per-minute fee, or contract.\n\nThat matters when volume changes. A slower Monday should not cost like a Saturday night. And a busy week should not force you into a flat bill that stays the same even if calls are light.\n\nUse this simple swap with your own numbers:\n\n| Model | What you pay |\n|---|---:|\n| Fixed monthly fee | Same amount every month |\n| Per-minute answering | More minutes, more cost |\n| Per-completed-order | Cost rises only when orders are confirmed |\n\nIf you want to compare options, read [pay per order vs monthly fee for phone AI](/blog/pay-per-order-vs-monthly-fee) or use the [AI phone host cost calculator](/tools/phone-host-cost-calculator).\n\nFor many independent restaurants, the best model is the one that keeps the cost visible and tied to actual orders. That makes it easier to protect margin when the phone is busy and easier to budget when it is quiet."
+    },
+    {
+      "id": "how-do-you-set-up-call-forwarding-without-making-a-mess",
+      "h2": "How do you set up call forwarding without making a mess?",
+      "body": "A good phone setup protects your margin because it keeps calls moving without losing your main number. The restaurant keeps its existing number, and you forward calls only when you want to.\n\nROAL gives each location its own phone line automatically after you claim the host. You can forward your existing number to it for all calls, or only when busy or unanswered. Forwarding can be turned off any time.\n\nThe exact codes depend on the carrier or phone system, so always confirm with your provider and test with a real call. Common examples include:\n- some landlines and carriers use *72 to forward all calls and *73 to turn it off\n- some GSM mobile carriers use **21*number# for all calls and ##21# to turn it off\n- unanswered and busy forwarding codes can vary by carrier and plan\n- business VoIP systems usually handle forwarding in the web portal\n\nA practical setup checklist:\n1. Decide whether to forward all calls or only missed/busy calls.\n2. Write down the forwarding code your carrier supports.\n3. Test one live call from a phone outside the business.\n4. Make sure staff know where the ticket lands.\n5. Confirm your hours and menu are current.\n\nIf you need a carrier cheat sheet, see [call forwarding codes by carrier](/tools/call-forwarding-codes). This setup keeps your main number in place while giving you a cleaner path for takeout calls during rushes."
+    },
+    {
+      "id": "what-should-you-measure-each-week-to-protect-margin",
+      "h2": "What should you measure each week to protect margin?",
+      "body": "You do not need a giant reporting system to keep phone orders profitable. A short weekly review is enough if you focus on the right numbers.\n\nTrack these items:\n- completed phone orders\n- average order size\n- calls that became questions instead of orders\n- missed or forwarded calls during rush\n- remakes, refunds, or complaints tied to phone tickets\n\nIf you use ROAL, the dashboard includes live kitchen tickets, call history with transcripts and recordings, menu editing, hours, FAQs, upsell suggestions, and multi-location menus. That gives you a simple way to spot the same issue more than once.\n\nHere is a weekly owner checklist:\n1. Read five call transcripts.\n2. Check whether the menu was clear.\n3. Look for repeated questions about hours, parking, or toppings.\n4. Fix any sold-out items or price changes.\n5. Review which calls should go to staff and which can stay with the host.\n\nA small example: if your takeout average is $26 and you lose even a few tickets each week because the phone rings out or staff cannot answer, the missed margin can be larger than the cost of the phone solution itself. That is why the goal is not just to answer calls. The goal is to keep more of the right orders.\n\nIf you want to get started, you can [build a free test host from your website](/try) and see how your own menu sounds over the phone."
+    }
+  ],
+  "takeaways": [
+    "Compare phone cost against your own average ticket, not against a guess.",
+    "Delivery app commissions often cost far more per order than a per-order phone host.",
+    "Missed calls, bad modifiers, and remakes can quietly damage takeout margins.",
+    "A simple forwarding setup can protect your main number and reduce rush-hour overload.",
+    "Weekly transcript review helps you fix confusion before it turns into lost profit."
+  ],
+  "faq": [
+    {
+      "q": "Are phone orders better for profit margins than delivery apps?",
+      "a": "Often, yes, because delivery apps commonly take roughly 15-30% commission per order. Phone orders can cost less to process, especially when you handle pickup or local delivery yourself. The better answer depends on your food cost, labor, and how accurate your phone process is."
+    },
+    {
+      "q": "How much should I pay for phone answering for a restaurant?",
+      "a": "That depends on call volume and the pricing model. Human answering services usually bill per minute or per call, while many AI phone tools charge a fixed monthly fee per location. ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract."
+    },
+    {
+      "q": "Can I forward only busy or unanswered calls to an AI phone host?",
+      "a": "Yes, in many setups you can forward all calls, or only calls that are busy or unanswered. The exact code depends on your carrier or phone system, so confirm with them and test a real call. ROAL supports forwarding from your existing number and lets you turn it off any time."
+    },
+    {
+      "q": "Will an AI phone host take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes the order, confirms the details, and sends the ticket to the kitchen screen. Payment happens at pickup or however your restaurant already takes payment."
+    }
+  ],
+  "words": 1699,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

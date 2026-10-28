@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-scheduling-peak-hours",
+  "keyword": "restaurant scheduling peak hours",
+  "category": "staffing",
+  "title": "Staffing your restaurant for peak hours",
+  "seoTitle": "Restaurant scheduling peak hours for staffing",
+  "description": "Make peak-hour scheduling easier with simple staffing rules, call routing, and order triage that protect service when the rush starts.",
+  "question": "How should I schedule staff for peak hours without getting slammed?",
+  "answer": "Start by matching your strongest people to the exact hours your phones, counter, and kitchen get busiest. Build a simple peak-hour plan: heavier coverage, clear phone coverage, and a backup for orders and questions. Tools like ROAL can take pickup and delivery orders, answer common questions, and send clean tickets to the kitchen so your staff can stay focused during the rush.",
+  "summary": "You’ll learn how to staff the rush, protect the phones, and keep orders moving during peak hours.",
+  "intro": "Restaurant scheduling peak hours means putting the right people in the right spots before the rush starts. The goal is simple: fewer missed calls, faster order taking, and a kitchen that can keep up.\n\nFor most independent spots, the rush is not random. It usually hits around lunch, dinner, weekends, and weather events. Once you map those hours, you can schedule around the phone, the counter, and the kitchen instead of hoping the shift will work itself out.",
+  "sections": [
+    {
+      "id": "how-do-i-find-my-real-peak-hours-not-just-guess-them",
+      "h2": "How do I find my real peak hours, not just guess them?",
+      "body": "Start with what you already know from the line, the phone, and the kitchen. Most owners can spot the rush windows without fancy software: the lunch burst, the dinner wave, Friday and Saturday nights, and the time right after a nearby event lets out.\n\nUse a simple 7-day sheet and write down three things for each hour:\n- Phone calls\n- In-store orders\n- Delivery and pickup volume\n\nThen mark the hours when the team starts falling behind. Those are your true peak hours. If 5:30 to 7:30 p.m. is a mess every weekday, that is a staffing problem, not a bad night.\n\nExample you can copy:\n| Hour | Calls | Orders | Notes |\n|---|---:|---:|---|\n| 11 a.m.-1 p.m. | 18 | 26 | Lunch rush, one phone line busy |\n| 5 p.m.-8 p.m. | 30 | 40 | Dinner rush, tickets stack up |\n\nNow plug in your own numbers. The point is not perfection. The point is to see which hours need extra hands, a dedicated phone answerer, or an AI phone host like ROAL so the line does not pile up."
+    },
+    {
+      "id": "how-many-people-should-i-put-on-the-schedule-during-the-rush",
+      "h2": "How many people should I put on the schedule during the rush?",
+      "body": "Use your busiest hour as the test. Ask: who is needed to keep service moving if orders spike and the phone rings at the same time?\n\nA practical rush setup often looks like this:\n1. One person on the phone and order intake.\n2. One person on the counter or pickup window.\n3. One person helping the kitchen with packing, sides, and expo.\n4. A manager or lead who can step in when a call gets weird or a rush hits hard.\n\nIf you are short-staffed, the first place to protect is phone coverage. A missed pickup order during the dinner rush can create a line at the counter and a backup in the kitchen. ROAL can take pickup and delivery orders from your live menu, quote a ready time, and send a clean ticket to the kitchen screen, which helps when you do not have a dedicated phone person.\n\nWorked example: say your dinner rush runs from 5:30 to 8:00 p.m. and you usually need one extra person for 2.5 hours. If you also have one person tied up on the phones, schedule that coverage before you schedule extra prep. The phone should not be the leftover task. It should be part of the rush plan."
+    },
+    {
+      "id": "what-should-i-do-with-the-phone-during-peak-hours",
+      "h2": "What should I do with the phone during peak hours?",
+      "body": "The phone gets expensive during the rush because it interrupts everything else. One ringing phone can slow the line, distract the cashier, and make the kitchen repeat answers.\n\nHere is a simple phone plan for peak hours:\n- Decide who owns the phone before the shift starts.\n- Use one script for order calls, one for questions, and one for tricky calls.\n- Forward overflow calls when the line is busy or unanswered.\n- Keep a clear rule for what staff handles and what gets sent to the manager.\n\nUseful phone lines you can give your team:\n- \"Thanks for calling. I can take your order now, or I can get your name and number if you want a callback.\"\n- \"For allergy questions and manager requests, I’m going to get someone from the restaurant to help.\"\n- \"If you’d like pickup, I can quote a ready time now.\"\n\nIf you use ROAL, it can answer the restaurant’s phone, take items, sizes, modifiers, and notes, and speak the caller’s language. It also sends allergy-sensitive questions and manager requests to staff with a summary, which is helpful during a rush when the team cannot stop to explain every menu detail.\n\nThis is where [short-staffed nights and the phone](/blog/restaurant-staff-shortage-phone) becomes a real scheduling issue, not just a phone issue."
+    },
+    {
+      "id": "how-do-i-schedule-around-pickup-and-delivery-spikes",
+      "h2": "How do I schedule around pickup and delivery spikes?",
+      "body": "Pickup and delivery do not only depend on how many orders come in. They also depend on how fast the kitchen can package, label, and hand out food without slowing the next ticket.\n\nA simple way to schedule around those spikes is to separate the rush into roles:\n- Order taker\n- Kitchen line\n- Expo or packing\n- Front counter or handoff\n\nIf your menu is heavy on pizzas, wings, or family trays, the handoff job matters more than people think. One late pickup can clog the counter and create a second problem: the phone rings again because the guest wants an update.\n\nWorked example:\nSay your peak hour brings 20 pickup orders and 10 delivery orders. If each order needs even a small amount of packaging time, you need someone assigned to that task, not someone who is also taking calls, restocking napkins, and running to the register.\n\nA clean schedule can look like this:\n| Role | Busy-hour job |\n|---|---|\n| Phone/order intake | Answer calls, confirm names, quote ready time |\n| Pack/Expo | Bag food, check items, stage orders |\n| Counter | Greet pickups, manage payment flow |\n| Lead | Fix mistakes, handle exceptions |\n\nROAL fits here because it can take the order and send a clean ticket to the kitchen screen, so your team spends less time repeating the same details."
+    },
+    {
+      "id": "when-should-i-use-call-forwarding-and-how-should-i-test-it",
+      "h2": "When should I use call forwarding, and how should I test it?",
+      "body": "Call forwarding helps when your front line is swamped, but it should be set up carefully. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless often uses *72 and *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle it in the web portal.\n\nBecause codes vary by carrier and plan, always confirm with your carrier and test with a real call.\n\nA simple testing checklist:\n1. Forward the number only for the hours you need it.\n2. Place a test call from a separate phone.\n3. Confirm the call routes where you expect.\n4. Turn forwarding off after the rush or after closing.\n\nA practical use case is forwarding only when busy or unanswered. That lets your team answer what they can while overflow calls go to ROAL or another chosen path. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nIf you want a quick reference, keep [call forwarding codes by carrier](/tools/call-forwarding-codes) open when you train the team."
+    },
+    {
+      "id": "how-can-i-keep-labor-costs-in-line-without-cutting-service",
+      "h2": "How can I keep labor costs in line without cutting service?",
+      "body": "Peak-hour staffing is where labor gets wasted or protected. If you overstaff the wrong role, you pay for idle time. If you understaff the phone, you pay in lost orders, repeated questions, and slower service.\n\nA useful way to think about it is by job, not by headcount. Ask whether each person on shift is doing one of these things:\n- Taking orders\n- Packing food\n- Serving customers\n- Solving exceptions\n\nIf not, that person may be in the wrong place at the wrong time.\n\nWorked example with numbers you can swap out:\nSay your average phone order is $28. If the dinner rush creates 12 confirmed phone orders, that is $336 in order value before you count add-ons. If a fixed labor hour gets spent on the wrong task, you can feel it quickly. Compare that with a pay-per-order phone host like ROAL, which is priced at $0.90 per completed phone order with no monthly fee or setup fee. Plug in your own average ticket and order count to see what fits your shop.\n\nFor a deeper look at the tradeoff, see [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) and [the AI phone host cost calculator](/tools/phone-host-cost-calculator).\n\nIf the rush is the problem, don’t schedule for a perfect day. Schedule for the day when the phone rings, the line forms, and the kitchen is already busy."
+    },
+    {
+      "id": "what-should-i-train-the-team-to-say-during-the-rush",
+      "h2": "What should I train the team to say during the rush?",
+      "body": "Good rush scripts keep the team calm and fast. They also stop staff from improvising the same answer ten times in a row.\n\nGive your team short lines they can use without thinking:\n- \"I’m checking the kitchen now for the soonest ready time.\"\n- \"I can take your pickup order, and I’ll confirm it back to you.\"\n- \"For allergen-sensitive questions, I’m getting the manager.\"\n- \"If we missed your call, please hold for a moment while I check the queue.\"\n\nA short training checklist for peak hours:\n1. Review the top 10 menu items and the common modifiers.\n2. Decide who handles calls, counter, and packing.\n3. Practice one busy-night script before the shift.\n4. Explain what happens when the line backs up.\n5. Tell staff where the live ticket screen is and who watches it.\n\nROAL’s dashboard keeps call history, transcripts, recordings, and live kitchen tickets in one place, which helps owners review what happened after the rush and adjust the next schedule. It also learns answers to questions you only want to explain once.\n\nIf you want to test a phone host against your real menu and hours, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Map your real peak hours from calls, orders, and kitchen pressure.",
+    "Schedule the phone as a core rush role, not an extra task.",
+    "Use call forwarding and a clear script to protect service during overload.",
+    "Match staffing to order flow, especially pickup and delivery spikes.",
+    "ROAL can take orders, answer common questions, and send clean kitchen tickets."
+  ],
+  "faq": [
+    {
+      "q": "How do I schedule staff for restaurant peak hours?",
+      "a": "Start with your busiest lunch and dinner windows, then assign roles by task: phones, counter, packing, and kitchen support. Build the schedule around the hour when service breaks down, not just the hour when doors open. If the phone is part of the rush, protect it with a dedicated person or an AI phone host."
+    },
+    {
+      "q": "What is the best way to cover the phone during a rush?",
+      "a": "Use one person for phones if you can, and give that person a short script. If you do not have enough staff, forward overflow calls when busy or unanswered and make sure the team knows who gets the tricky calls. ROAL can take pickup and delivery orders and send complex questions to staff with a summary."
+    },
+    {
+      "q": "Should I forward my restaurant phone during busy hours?",
+      "a": "Yes, if your team cannot answer quickly and consistently during the rush. Many carriers support forwarding all calls, unanswered calls, or busy calls, but the exact codes vary, so confirm with your carrier and test it. Turn forwarding off when the rush ends if that is what your setup needs."
+    },
+    {
+      "q": "Can an AI phone host help with peak-hour staffing?",
+      "a": "Yes. An AI phone host can reduce the number of routine calls your team has to handle during the rush by taking orders and answering common questions. It will not replace staff for every situation, and it does not take card numbers over the phone, but it can help the team stay focused on service."
+    }
+  ],
+  "words": 1544,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

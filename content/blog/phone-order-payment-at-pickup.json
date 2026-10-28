@@ -1,0 +1,71 @@
+{
+  "slug": "phone-order-payment-at-pickup",
+  "keyword": "phone order payment at pickup",
+  "category": "phone-orders",
+  "title": "Phone order payment at pickup: a simple guide",
+  "seoTitle": "Phone order payment at pickup for restaurants",
+  "description": "Handle phone order payment at pickup with clear call wording, simple payment steps, and a smoother process for your restaurant.",
+  "question": "How should I handle phone order payment at pickup for my restaurant?",
+  "answer": "Take the order on the phone, confirm the total, and tell the guest that payment is due at pickup unless your restaurant already uses another method. Do not take card numbers over the phone if you do not want to; ROAL does not collect card details and can still take the order, quote the ready time, and send a clean ticket to the kitchen. The key is to set the payment expectation clearly on the call and at the counter.",
+  "summary": "You will know how to tell callers when payment is due, what to say, and how to keep pickup orders moving.",
+  "intro": "Phone order payment at pickup is simple: take the order, confirm the total, and ask the guest to pay when they arrive. That works well for many takeout spots, pizza shops, delis, and family restaurants because it keeps the phone call short and the process familiar.\n\nThe main job is to say it clearly, every time. If you use ROAL, the host can take the order, quote the ready time, and hand the ticket to the kitchen screen without taking card numbers over the phone.",
+  "sections": [
+    {
+      "id": "what-should-i-say-when-a-caller-wants-to-pay-at-pickup",
+      "h2": "What should I say when a caller wants to pay at pickup?",
+      "body": "Keep the wording short and calm. The caller needs to hear three things: the order is set, the total is known, and payment happens when they arrive.\n\nA simple line works well:\n\n\"I have your order here. Your total is $28.40, and you can pay when you pick up.\"\n\nIf you want to add a little more detail, use this version:\n\n\"Your order will be ready around 20 minutes. Please pay at pickup when you get here.\"\n\nA quick phone script for your host or staff:\n1. Take the items and any modifiers.\n2. Repeat the full order back.\n3. Quote the total.\n4. Say the ready time.\n5. Confirm payment at pickup.\n\nThis helps with common pickup orders like a large pie, a sandwich combo, or a family dinner. It also cuts down on confusion at the counter because the guest already knows what to expect before they walk in."
+    },
+    {
+      "id": "how-do-i-explain-payment-without-slowing-down-the-call",
+      "h2": "How do I explain payment without slowing down the call?",
+      "body": "You do not need a long speech. The best version is one sentence placed after the total. For many restaurants, that is enough.\n\nTry this:\n- \"Your total is $18.75, and you can pay at pickup.\"\n- \"We’ll have it ready in about 15 minutes, and you can pay when you get here.\"\n- \"Cash or card at pickup is fine.\"\n\nIf your restaurant has a different rule, say it right away. For example: \"We take payment at pickup only for phone orders.\" Or: \"Please pay when you arrive; we’ll have the order under your name.\"\n\nConcrete checklist for the call:\n- Say the total in dollars and cents.\n- Say the name on the order.\n- Say whether the guest can pay by card or cash at the counter.\n- Say the ready time.\n- Repeat the payment line once before hanging up.\n\nROAL can handle the order itself and leave the payment step for pickup, which fits restaurants that prefer not to collect card details over the phone."
+    },
+    {
+      "id": "what-if-i-want-to-avoid-card-numbers-on-the-phone",
+      "h2": "What if I want to avoid card numbers on the phone?",
+      "body": "That is a common setup, and it is often the easiest one for small restaurants. You can take the order by phone, then collect payment when the guest arrives.\n\nWhy owners like this setup:\n- No need to read card numbers over the phone.\n- Less time spent on each call.\n- Fewer mistakes from hearing digits wrong.\n- The counter team can confirm the order in person.\n\nUse a clear line such as:\n\"We’ll take payment when you pick up. No card is needed on the phone.\"\n\nIf a caller asks why, keep it simple:\n\"That’s how we handle pickup orders here.\"\n\nA worked example: say your average phone order is $22. If you take 10 pickup orders a day, that is about $220 in daily order value from phone calls. Plug in your own average check and volume. The point is not the exact number. The point is that pickup payment can be a clean process without adding more work to the call."
+    },
+    {
+      "id": "how-do-i-set-this-up-with-my-current-phone-line",
+      "h2": "How do I set this up with my current phone line?",
+      "body": "You do not need a new number to start. Many restaurants forward their existing line so pickup orders go where they should, while the restaurant keeps its own number.\n\nA simple setup flow:\n1. Decide whether you want all calls forwarded or only calls when busy or unanswered.\n2. Check your carrier or phone system for the right forwarding code or portal steps.\n3. Test the forward with a real call.\n4. Make sure the pickup payment wording is part of the greeting.\n\nPhone forwarding codes vary by carrier and plan, so confirm with your provider before you rely on them. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some mobile carriers, codes like **21*number# or **61*number# may be used. Verizon, AT&T, T-Mobile, Comcast Business, Spectrum, Optimum, RingCentral, and Google Voice can all handle forwarding differently, so always test.\n\nIf you use ROAL, the owner claims the host, the location gets its own phone line automatically, and the restaurant forwards its existing number to it. That keeps pickup order calls separate from the counter’s in-person work."
+    },
+    {
+      "id": "how-should-i-handle-cash-card-and-counter-questions",
+      "h2": "How should I handle cash, card, and counter questions?",
+      "body": "The safest plan is to tell the caller what the restaurant already does. Don’t guess. Keep the wording tied to your own process.\n\nUse one of these versions:\n| Your policy | What to say on the phone |\n|---|---|\n| Cash or card at pickup | \"You can pay when you arrive. We take cash or card at pickup.\" |\n| Cash only at pickup | \"Please pay in cash when you pick up.\" |\n| Card only at pickup | \"Please pay by card when you arrive.\" |\n| Prepay in person only | \"We’ll hold the order and take payment at pickup.\" |\n\nA good front-counter habit is to match the phone script exactly. If the host says payment is at pickup, the cashier should say the same thing.\n\nExample you can swap with your own numbers:\n- Phone total: $31.20\n- Ready time: 25 minutes\n- Name on order: Maria\n- Pickup payment: card at counter\n\nThat is enough for the team to recognize the order fast and avoid a line of questions when the guest walks in."
+    },
+    {
+      "id": "what-should-the-kitchen-and-staff-see-for-pickup-orders",
+      "h2": "What should the kitchen and staff see for pickup orders?",
+      "body": "The kitchen should see the order cleanly, and the front counter should see the payment note clearly. That is where a system like ROAL helps: it sends a clean ticket to the kitchen screen with the order details, while the call history keeps the transcript and recording if staff need to check anything later.\n\nA useful internal note format:\n- Customer name\n- Phone number\n- Items and modifiers\n- Ready time\n- Payment at pickup\n\nExample ticket note:\n\"John, 555-0100, two plain slices, one chicken parm hero, no onions, ready in 20 minutes, pay at pickup.\"\n\nIf you want to reduce mistakes, use this short staff checklist:\n- Confirm the total before hanging up.\n- Put the ready time on the ticket.\n- Mark the order as pay at pickup.\n- Keep the counter script the same for every caller.\n- Send unusual payment questions to staff.\n\nIf you want a quick way to test your phone flow, [build a free test host](/try) and call it from your browser. You can also read [how ROAL works](/how-it-works) or check [pricing](/pricing) before you decide to go live."
+    }
+  ],
+  "takeaways": [
+    "Say the total and payment-at-pickup line in the same breath.",
+    "Keep the phone script short so the call stays fast.",
+    "Match the counter script to the phone script.",
+    "Confirm your forwarding setup with your carrier or phone system before you rely on it."
+  ],
+  "faq": [
+    {
+      "q": "What do I say for phone order payment at pickup?",
+      "a": "Say the total, the ready time, and that payment is due at pickup. A simple line like \"Your total is $18.75, and you can pay when you pick up\" is clear and easy for guests to understand."
+    },
+    {
+      "q": "Should I take card numbers over the phone for pickup orders?",
+      "a": "Only if your restaurant already wants to do that. If you prefer not to, tell callers that payment happens at pickup and keep card handling at the counter."
+    },
+    {
+      "q": "How do I set up call forwarding for phone orders?",
+      "a": "Many landlines and carriers use forwarding codes, while business phone systems often use a web portal. The exact code depends on the carrier and plan, so confirm with your provider and test with a real call before relying on it."
+    },
+    {
+      "q": "Can ROAL take the payment for pickup orders?",
+      "a": "No. ROAL takes the order, confirms the details, quotes the ready time, and sends the ticket to the kitchen screen, but it does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles it."
+    }
+  ],
+  "words": 1123,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

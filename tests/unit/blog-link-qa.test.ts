@@ -42,7 +42,8 @@ describe("blog link QA", () => {
   });
 
   it("related posts resolve to real articles (no dead slugs)", () => {
-    const slugs = new Set(getAllPostSlugs());
+    // Scheduled posts count: unpublished related posts are filtered out at render time.
+    const slugs = new Set(BLOG_POSTS.map((p) => p.slug));
 
     for (const post of BLOG_POSTS) {
       for (const relatedSlug of post.content!.relatedSlugs) {

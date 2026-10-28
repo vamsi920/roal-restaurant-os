@@ -1,0 +1,77 @@
+{
+  "slug": "call-button-google-maps-restaurant",
+  "keyword": "google maps call button restaurant",
+  "category": "marketing",
+  "title": "Google Maps call button for restaurants",
+  "seoTitle": "Google Maps call button for restaurants | ROAL",
+  "description": "See why the Google Maps call button matters for orders, questions, and missed calls, plus what restaurant owners should check next.",
+  "question": "Why does the Google Maps call button matter for my restaurant?",
+  "answer": "The Google Maps call button matters because it turns local search into a phone call at the exact moment a guest is ready to order, ask a question, or book a table. If the number is wrong, unanswered, or buried, that call can turn into a missed order. For many restaurants, making that button work well is a simple way to capture more pickup, delivery, and reservation calls.",
+  "summary": "You’ll learn how to use the Google Maps call button to capture more restaurant calls and turn them into orders.",
+  "intro": "The Google Maps call button matters because it is often the fastest path from “I’m hungry” to a live phone call with your restaurant. For a lot of guests, that button is the first place they tap when they want hours, directions, or to place an order.\n\nIf your number is wrong, your phone rings unanswered, or the call goes to voicemail, that moment is lost. The fix is simple: make sure the call button points to the right number, make that number answer reliably, and make it easy for callers to order, ask questions, or get routed to staff when needed.",
+  "sections": [
+    {
+      "id": "what-does-the-google-maps-call-button-actually-do-for-a-rest",
+      "h2": "What does the Google Maps call button actually do for a restaurant?",
+      "body": "The call button on Google Maps is a direct tap-to-call shortcut. A guest sees your restaurant on Maps, taps the button, and their phone dials your listed number right away. That means the button is not just a contact detail. It is a sales path.\n\nFor a pizza shop, deli, or family restaurant, that call is often about one of three things:\n- placing a pickup order\n- asking about hours, parking, or menu items\n- checking whether you take reservations or catering\n\nA simple example: if someone finds your restaurant at 6:15 p.m. and wants a $28 pickup order, the call button gives them a direct path to order before they move on to another spot. If the number is wrong or the phone keeps ringing, that person may not call back.\n\nUse this quick checklist:\n1. Open your Google Maps listing.\n2. Tap the call button yourself.\n3. Confirm it rings the restaurant number you want customers to use.\n4. Test what happens when nobody answers.\n5. Make sure the voicemail greeting, if you use one, is current and clear.\n\nIf you want a refresher on keeping your public phone details consistent, see [Getting your phone number right on Google](/blog/restaurant-phone-number-google)."
+    },
+    {
+      "id": "why-does-a-working-call-button-matter-so-much-at-dinner-rush",
+      "h2": "Why does a working call button matter so much at dinner rush?",
+      "body": "Dinner rush is when the call button matters most. Guests are often deciding between a few places, and the first restaurant that answers clearly has an advantage. The call is usually short and practical: “Do you have chicken parm tonight?” “What’s the wait?” “Can I get two pies for pickup?”\n\nHere is a simple way to think about it. Say your average pickup order is $28. If 10 people tap your Google Maps call button in a busy evening and only a few turn into completed orders, that is meaningful revenue. Plug in your own average ticket and your own busy-hour call volume to estimate what those calls are worth to you.\n\nA helpful front-counter script for staff is:\n\"Thanks for calling. We can help with pickup, delivery, hours, and menu questions. What can I get started for you?\"\n\nTo make rush-hour calls easier to handle:\n- Keep hours updated on your listing.\n- Keep your menu current.\n- Know your busiest hours.\n- Decide who answers overflow calls.\n- Make sure the phone can forward when needed.\n\nROAL is built for exactly this kind of call flow. It answers the phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen. If the caller has a question the host cannot answer, it sends that to the inbox for staff review."
+    },
+    {
+      "id": "how-can-i-make-the-call-button-turn-into-orders-instead-of-m",
+      "h2": "How can I make the call button turn into orders instead of missed calls?",
+      "body": "A call button only helps if the call gets handled well. The owner’s job is to remove friction. That means the number on Maps should be right, the greeting should be clear, and the person or system answering should know the menu and basic store info.\n\nA practical setup looks like this:\n1. Check the number on Google Maps.\n2. Decide whether all calls go to the restaurant number or only overflow calls.\n3. Make sure hours, address, and parking are easy to answer.\n4. Use a live order-taking process, not a rushed handoff.\n5. Send completed orders straight to the kitchen.\n\nIf you use ROAL, setup is quick. You can paste your restaurant website, Google Maps link, or even just your restaurant name and city at /try. ROAL reads public menu and business info, builds a phone host in about a minute, and lets you test-call it in the browser before you claim it.\n\nA good script for order calls is:\n\"What size would you like, and any toppings or notes? I’ll repeat the order back to make sure it’s right.\"\n\nThat matters because callers do not want to explain the same thing twice. They want a quick answer and a clean handoff. If your restaurant takes card payment only at pickup, that is fine. ROAL does not take card numbers over the phone."
+    },
+    {
+      "id": "what-should-i-check-on-my-google-maps-listing-right-now",
+      "h2": "What should I check on my Google Maps listing right now?",
+      "body": "If you want the call button to work for you, start with the public listing itself. Many problems are small and fixable. The call button may point to the wrong line, an old number, or a line that rings out when you are busy.\n\nUse this table as a quick audit:\n\n| Item | What to check | Why it matters |\n|---|---|---|\n| Phone number | Is it the number you want customers to call? | The call button uses this number. |\n| Hours | Are they current for dine-in, pickup, and holiday changes? | People call before they drive over. |\n| Address | Is the suite, unit, or cross street correct? | Helps callers find you fast. |\n| Menu info | Is the menu current and readable? | Reduces “What do you have?” calls. |\n| Call routing | Does the call ring through when busy? | Prevents lost orders during rush. |\n\nA short owner checklist:\n- Tap your own call button from a phone.\n- Call during lunch and dinner hours.\n- Test after hours.\n- Ask a friend to check whether the right number appears.\n- Confirm the listing matches the number on your website.\n\nIf you want help with the bigger picture of how your number should appear everywhere online, this pairs well with [Where your phone number should appear](/blog/restaurant-phone-number-everywhere) and [Restaurant website must-haves](/blog/restaurant-website-must-haves)."
+    },
+    {
+      "id": "how-do-i-forward-calls-without-losing-control-of-my-number",
+      "h2": "How do I forward calls without losing control of my number?",
+      "body": "Many owners want a better way to handle the call button without giving up their existing number. That is normal. The good news is that in many setups, you can forward calls instead of replacing the number people already know.\n\nROAL gives each location its own phone line automatically, and the owner forwards the restaurant’s existing number to it. That can be all calls, or only calls that are busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nFor general phone setup, codes vary by carrier and plan, so always confirm with your carrier and test with a call. Common examples include:\n- many landlines and some carriers: *72 to forward all calls, *73 to turn it off\n- some GSM mobile carriers: **21*number# to forward all calls, ##21# to turn it off\n- unanswered or busy call options may also be available on some plans\n\nA simple test plan:\n1. Forward calls.\n2. Call your restaurant number from another phone.\n3. Confirm where the call lands.\n4. Test what happens when the line is busy.\n5. Turn forwarding off and confirm it stops.\n\nIf you need carrier-specific steps, [Call forwarding codes by carrier](/tools/call-forwarding-codes) is a useful place to start."
+    },
+    {
+      "id": "what-does-a-good-phone-response-sound-like-for-maps-callers",
+      "h2": "What does a good phone response sound like for Maps callers?",
+      "body": "The best response is short, calm, and specific. People calling from Google Maps usually want a fast answer, not a long menu tree. They want to know whether you are open, whether you can take their order, and how long it will take.\n\nHere are a few example lines you can use or adapt:\n- \"Thanks for calling. Are you looking to place a pickup order or ask a quick question?\"\n- \"We are open now. What can I get started for you?\"\n- \"I can help with hours, address, menu items, and pickup or delivery orders.\"\n- \"I’ll send that to the kitchen and repeat it back before we finish.\"\n\nA strong phone flow should also handle edge cases well:\n- allergy-sensitive questions go to staff with a summary\n- catering requests go to staff\n- complaints go to staff\n- manager requests go to staff\n- sold-out items should not be offered\n\nThat is where ROAL is useful. It can speak the caller’s language, collect items, sizes, modifiers, notes, name, and phone number, then quote a ready time and confirm the order back. If it cannot answer something, it sends it to the inbox so the owner can teach it once. If you want to compare approaches, see [AI phone host vs answering service](/compare/answering-service) or [AI phone host vs hiring phone staff](/compare/hiring-phone-staff)."
+    },
+    {
+      "id": "what-is-the-simplest-next-step-for-a-busy-owner",
+      "h2": "What is the simplest next step for a busy owner?",
+      "body": "Do the simplest thing first: test the call button yourself, then decide what should happen when someone taps it. If the answer is “it should ring and get handled,” make sure the line, greeting, and order-taking process match that goal.\n\nA practical 15-minute plan:\n1. Open your Google Maps listing.\n2. Tap the call button and check the number.\n3. Call during a rush and after hours.\n4. Write down any common questions you hear.\n5. Decide whether you need forwarding, better order capture, or both.\n\nIf you want a faster setup, [build a free test host](/try). You can paste your website or Google Maps link, test-call the host in your browser, and see how it handles menu questions, pickup orders, hours, and address questions before going live.\n\nFor owners who want the cost side, ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. That makes it easier to match cost to actual order volume instead of paying a flat bill every month."
+    }
+  ],
+  "takeaways": [
+    "The Google Maps call button is a direct path to pickup orders, questions, and reservations.",
+    "A wrong or unanswered number can turn a ready-to-order caller into a lost call.",
+    "Forwarding lets you keep your existing number while routing calls where they need to go.",
+    "A clear greeting and a fast order flow matter more than a long phone menu.",
+    "ROAL can answer, take orders, and send clean kitchen tickets while staff handles tricky calls."
+  ],
+  "faq": [
+    {
+      "q": "Why is the call button on Google Maps important for my restaurant?",
+      "a": "Because it is one of the fastest ways for a nearby guest to contact your restaurant. People often use it when they are ready to order, ask about hours, or check if you are open. If the number is wrong or unanswered, the call can be lost."
+    },
+    {
+      "q": "How do I know if my Google Maps phone number is correct?",
+      "a": "Open your listing and tap the call button yourself from a phone. Make sure it rings the number you want customers to use and that the number matches your website and other public pages. It is also smart to test it during lunch, dinner, and after hours."
+    },
+    {
+      "q": "Can I forward my restaurant calls without changing my public number?",
+      "a": "Yes. In many setups, you can forward calls from your existing number to another line while keeping the same number visible to customers. Codes and steps vary by carrier and plan, so confirm with your provider and test before relying on it."
+    },
+    {
+      "q": "What should happen when someone taps the call button after hours?",
+      "a": "That depends on your setup. Some restaurants send after-hours calls to voicemail, while others forward unanswered calls to a phone host that can answer questions and take orders. If you want structured handling, ROAL can answer after-hours questions and take orders from the live menu when the restaurant chooses to forward calls."
+    }
+  ],
+  "words": 1606,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

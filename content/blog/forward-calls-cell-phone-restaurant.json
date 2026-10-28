@@ -1,0 +1,76 @@
+{
+  "slug": "forward-calls-cell-phone-restaurant",
+  "keyword": "restaurant cell phone number forwarding",
+  "category": "phone-setup",
+  "title": "Forwarding restaurant calls to a cell phone",
+  "seoTitle": "Restaurant cell phone number forwarding | ROAL",
+  "description": "Set up restaurant cell phone number forwarding, choose the right codes, and route calls to a cell phone or ROAL without losing your main number.",
+  "question": "How do I use a cell phone as the restaurant line with restaurant cell phone number forwarding?",
+  "answer": "You can forward your restaurant’s main number to a cell phone so calls ring there instead of the desk phone. Many landlines and carriers use codes like *72 to turn forwarding on and *73 to turn it off, but the exact code depends on your carrier or phone system, so you should confirm and test with a real call.",
+  "summary": "Set up call forwarding so your restaurant number rings a cell phone, and know when an AI phone host can take over the busy work.",
+  "intro": "Using a cell phone as the restaurant line usually means forwarding your main number to a mobile phone. That lets the restaurant keep its own number while calls ring on a cell when nobody is at the counter.\n\nFor busy takeout spots, that can be a quick fix. It also works well when you want the cell to ring only when the landline is busy or unanswered, and ROAL can take those calls instead of sending them to voicemail.",
+  "sections": [
+    {
+      "id": "what-does-restaurant-cell-phone-number-forwarding-actually-d",
+      "h2": "What does restaurant cell phone number forwarding actually do?",
+      "body": "Call forwarding sends calls from your restaurant number to another number, like a manager’s cell phone. The customer still dials the restaurant’s regular number. Your business number stays the same, and you decide whether calls always go to the cell or only when the line is busy or unanswered.\n\nThat matters for a pizza shop, deli, or family restaurant because the front counter can stay focused on walk-ins while the phone still gets picked up. A simple setup might look like this:\n\n1. Keep your main restaurant number active.\n2. Forward it to one mobile phone or to an AI phone host.\n3. Test one real call from another phone.\n4. Decide whether you want all calls forwarded or only busy/no-answer calls.\n\nExample: if your restaurant number is already printed on menus, receipts, and Google Maps, you do not need to change it. You only change where the call rings. That is often the easiest way to use a cell phone as the restaurant line without reprinting everything."
+    },
+    {
+      "id": "which-forwarding-code-should-i-use-on-my-phone-system",
+      "h2": "Which forwarding code should I use on my phone system?",
+      "body": "The right code depends on your carrier or phone system, so confirm with them before you rely on it. Common examples in the US include these:\n\n| System | Common code for all calls | Turn off | Busy/no-answer |\n| --- | --- | --- | --- |\n| Many landlines | *72 + number | *73 | depends on carrier |\n| Verizon Wireless | *72 | *73 | *71 for busy/no-answer |\n| AT&T / T-Mobile GSM | **21*number# | ##21# | **61*number# unanswered, **67*number# busy |\n| Business VoIP | Set in the web portal | Portal setting | Portal setting |\n\nIf you run a small restaurant, the safest move is to write the code on paper before you dial it. Then test with one call from a different phone. For a busy shift, many owners prefer unanswered or busy forwarding so the cell only rings when staff cannot answer at the desk. You can also use [call forwarding codes by carrier](/tools/call-forwarding-codes) as a quick reference, then confirm with your carrier and plan."
+    },
+    {
+      "id": "how-do-i-forward-calls-to-a-cell-without-losing-the-restaura",
+      "h2": "How do I forward calls to a cell without losing the restaurant number?",
+      "body": "You keep the restaurant number; you only change where calls land. That is useful if your number is on your storefront, website, and delivery app profiles, because those do not need to change.\n\nHere is a practical setup for a busy shop:\n\n- Keep the main number on your sign and menu.\n- Forward calls to the manager cell during service.\n- Use all-call forwarding when the shop is closed or short-staffed.\n- Use busy/no-answer forwarding when the counter is open but slammed.\n\nA simple script for staff can help too: “Thanks for calling [restaurant name]. If we miss you, your call will ring back to the manager’s cell while we are serving guests.”\n\nIf you want the restaurant number to stay public but not tie up your cell all day, ROAL is a cleaner option. It answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen. For setup details, see [keeping your restaurant number when you add AI](/blog/keep-restaurant-phone-number)."
+    },
+    {
+      "id": "when-is-a-cell-phone-enough-and-when-do-you-need-something-b",
+      "h2": "When is a cell phone enough, and when do you need something better?",
+      "body": "A cell phone is enough when calls are light, the owner is nearby, and you mainly need a backup line. It is less useful when orders come in during a rush, because one person can only handle so many calls at once.\n\nA simple way to compare the options is to look at your call flow:\n\n| Situation | Cell phone forwarding | ROAL |\n| --- | --- | --- |\n| Quiet lunch | Works fine | Works fine |\n| Busy Friday night | One call at a time | Can take orders and questions |\n| Menu questions | Owner answers manually | Answers hours, address, parking, menu |\n| Pickup orders | You type or write them down | Takes items, sizes, modifiers, notes |\n| Tricky calls | You handle them | Hands them to staff with a summary |\n\nIf you are just trying to stop missed calls for a week or two, forwarding to a cell can help. If you want the phone to take orders after hours or during a rush, ROAL may be a better fit because it builds the order from your live menu and sends it to the kitchen screen."
+    },
+    {
+      "id": "how-do-i-test-forwarding-before-i-trust-it-on-a-busy-shift",
+      "h2": "How do I test forwarding before I trust it on a busy shift?",
+      "body": "Testing should be simple and real. Do not assume the code worked just because your phone says it did.\n\nUse this checklist:\n\n1. Turn forwarding on.\n2. Call the restaurant number from a different phone.\n3. Let it ring long enough to reach the forwarded phone.\n4. Check whether caller ID shows the restaurant number or the original caller.\n5. Answer and confirm the audio is clear.\n6. If you used busy/no-answer forwarding, test both a free line and an occupied line.\n7. Turn forwarding off when you are done testing.\n\nA good test script is: “Hi, this is a test call for forwarding. Can you hear me clearly?”\n\nIf the call does not land where you expect, confirm the carrier code, the phone plan, and whether the line is landline, mobile, or VoIP. A shop owner should also save the off code somewhere visible near the register. If you want a deeper walkthrough, see [how to test that call forwarding works](/blog/test-call-forwarding)."
+    },
+    {
+      "id": "how-can-roal-fit-into-a-cell-phone-forwarding-setup",
+      "h2": "How can ROAL fit into a cell phone forwarding setup?",
+      "body": "ROAL can sit behind your restaurant number as the phone host instead of sending every call to a cell. The owner claims the host, ROAL gives each location its own phone line automatically, and the restaurant forwards its existing number to it all the time or only when busy or unanswered.\n\nThat setup is useful when you want the restaurant to keep its own number but stop asking staff to handle every call. On a call, ROAL can take pickup and delivery orders, answer hours and address questions, speak the caller’s language, collect the caller’s name and phone, and hand allergy-sensitive or manager requests to staff with a summary. It does not take card numbers over the phone.\n\nA practical example: if a caller wants a pickup order for two pizzas with modifiers, ROAL can quote the ready time and send a clean ticket to the kitchen screen. If the caller asks about catering, the host can route it to staff instead. Owners can set it up in about a minute from a website, Google Maps link, or restaurant name and city, then test-call it in the browser before going live."
+    },
+    {
+      "id": "what-should-i-watch-for-after-i-set-up-forwarding",
+      "h2": "What should I watch for after I set up forwarding?",
+      "body": "Once forwarding is live, treat it like any other part of the phone line and check it during service. The main risks are missed setup changes, forgotten off codes, and calls going to the wrong phone when staff changes.\n\nKeep this short checklist near the register:\n\n- Confirm the forwarding target phone number.\n- Confirm whether forwarding is all calls, unanswered calls, or busy calls.\n- Test after any carrier or phone system change.\n- Make sure staff know how to turn it off.\n- Check that the caller still gets the right greeting and order flow.\n\nIf you use [Pricing](/pricing) to compare options, remember the cost model matters. Delivery apps commonly take roughly 15-30% commission per order, while many AI phone tools charge a monthly fee whether or not the phone rings. ROAL is billed at $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. For owners who want to keep the restaurant line working without tying up the cell, that difference can matter fast."
+    }
+  ],
+  "takeaways": [
+    "Call forwarding lets you keep your restaurant number while ringing a cell phone instead.",
+    "Codes vary by carrier and phone system, so always confirm and test before service.",
+    "A cell phone works for light call volume; a phone host helps when orders, questions, and rushes stack up.",
+    "ROAL can answer the restaurant line, take orders, and send clean tickets to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "How do I forward my restaurant phone to a cell phone?",
+      "a": "Use your carrier or phone system’s forwarding code or portal, then enter the destination cell number. Many landlines use *72 to start and *73 to stop, while some mobile carriers and VoIP systems use different codes or settings. Always confirm with your carrier and test one real call before you rely on it during service."
+    },
+    {
+      "q": "Can I forward only busy or unanswered calls to my cell?",
+      "a": "Yes, many carriers and phone systems support busy or unanswered forwarding. That is often a better setup for restaurants than sending every call to one cell, because the line only rolls over when staff cannot pick up. Check your carrier instructions, then test both a busy line and an unanswered line."
+    },
+    {
+      "q": "Will forwarding make me lose my restaurant number?",
+      "a": "No. Call forwarding changes where the call rings, not your public number. Your restaurant can keep the same number on your signs, website, and menus while the call lands on a cell phone, a desk phone, or an AI phone host."
+    },
+    {
+      "q": "What is the difference between forwarding calls to a cell and using ROAL?",
+      "a": "Forwarding sends the call to a person’s phone, so someone still has to answer, write down the order, and handle questions. ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, answers common questions, and sends a clean ticket to the kitchen screen. It also hands harder calls to staff with a summary."
+    }
+  ],
+  "words": 1326,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

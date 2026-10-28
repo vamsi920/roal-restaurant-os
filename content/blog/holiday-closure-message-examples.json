@@ -1,0 +1,72 @@
+{
+  "slug": "holiday-closure-message-examples",
+  "keyword": "holiday closed message restaurant",
+  "category": "guest-experience",
+  "title": "Holiday closed message examples for restaurants",
+  "seoTitle": "Holiday closed message examples | ROAL",
+  "description": "Use these holiday closed message examples for a calm phone script, voicemail text, and forwarding steps during busy holidays.",
+  "question": "What should I say on my restaurant phone when we’re closed for a holiday?",
+  "answer": "Use a short message that says you’re closed, when you reopen, and what callers should do next. For example: “Thanks for calling. We’re closed for the holiday and will reopen on Tuesday at 11 AM. Please leave your name and number, or call back then.” If you want, an AI phone host like ROAL can answer with that message, take questions it knows, and send harder calls to staff.",
+  "summary": "You’ll be able to write a clear holiday closure message and set up your phone so guests know what to do next.",
+  "intro": "Holiday closed message restaurant owners need should be short, clear, and calm. Tell callers you are closed, when you reopen, and how to reach you if they need help.\n\nA good message keeps guests from guessing, cuts down on repeated calls, and avoids confusion at the door. If you use ROAL, you can keep the message consistent on the phone while still sending tricky calls to staff.",
+  "sections": [
+    {
+      "id": "what-should-a-holiday-closed-message-say",
+      "h2": "What should a holiday closed message say?",
+      "body": "A good closure message does three things: says you are closed, gives the reopening time, and tells the caller the next step. Keep it plain. No long explanation. No apology essay.\n\nA simple script works well for a pizza shop, deli, or family restaurant:\n\n\"Thanks for calling [Restaurant Name]. We’re closed for the holiday today and will reopen on [day] at [time]. Please call back then, or leave your name and number if you need a callback.\"\n\nUse this checklist before the holiday:\n- Name of the restaurant\n- Holiday closure date\n- Reopening day and time\n- Whether voicemail is available\n- What to do for urgent questions\n\nIf you use an AI phone host, make sure the message matches your real hours. ROAL reads your public hours and menu from your website, Google Maps link, or uploaded menu, so the message stays aligned with what guests see online."
+    },
+    {
+      "id": "which-phone-script-fits-my-restaurant-style",
+      "h2": "Which phone script fits my restaurant style?",
+      "body": "Different restaurants need different tones. A counter-service spot can be brief. A family restaurant may want a warmer line. The goal is the same: tell the caller what happens next.\n\n| Restaurant type | Example closing line |\n|---|---|\n| Pizza shop | \"We’re closed for the holiday and reopen tomorrow at 11 AM. Please call back then for pickup or delivery orders.\" |\n| Deli or sandwich shop | \"Thanks for calling. We’re closed today for the holiday and will be back at 8 AM tomorrow. Please leave your name and number.\" |\n| Family restaurant | \"We’re closed for the holiday today. We reopen on [day] at [time]. We appreciate your call and hope to see you then.\" |\n\nA few useful extras:\n- If you take catering, say whether holiday catering requests go to voicemail or staff.\n- If you are sold out of certain items before the holiday, say so on the live menu and in the message.\n- If you want callers to hear a second option, add: \"For hours and menu questions, please call back when we reopen.\"\n\nROAL can take routine questions like hours, address, parking, and menu items. For holiday closures, it can speak the message you set and hand off allergy-sensitive or manager requests to staff with a summary."
+    },
+    {
+      "id": "how-do-i-handle-pickup-orders-during-a-holiday-closure",
+      "h2": "How do I handle pickup orders during a holiday closure?",
+      "body": "If you are closed, do not leave callers wondering whether pickup is still available. Be direct. If you are not taking orders, say that. If you are open for limited holiday hours, say exactly what is open.\n\nHere is a practical example:\n1. Today is Thanksgiving.\n2. You are fully closed.\n3. You reopen Friday at 10 AM.\n4. Your message says: \"We are not taking pickup orders today. Please call back Friday morning.\"\n\nIf you do have limited hours, use a clear version instead:\n- \"We are open today until 4 PM for pickup only. Delivery is not available.\"\n- \"We are closed after 3 PM today and will reopen tomorrow at 11 AM.\"\n\nThis matters because callers often want a quick answer, not a general greeting. ROAL can confirm items, sizes, modifiers, and notes when you are open, but during closure it should only give the status you want guests to hear. Keep that boundary simple so staff do not get extra cleanup later."
+    },
+    {
+      "id": "should-i-use-voicemail-call-forwarding-or-both",
+      "h2": "Should I use voicemail, call forwarding, or both?",
+      "body": "For many restaurants, the best setup is to forward calls during the holiday and use a clear message for closed hours. That way the caller hears an answer instead of a ring that goes nowhere.\n\nCommon phone setup steps look like this:\n1. Check your carrier or phone system instructions.\n2. Turn on forwarding before the holiday.\n3. Test by calling your restaurant from a mobile phone.\n4. Confirm the message says your real holiday hours.\n5. Turn forwarding off when you reopen.\n\nCodes vary by carrier and plan, so confirm with your phone company first and test with a real call. On many landlines and some carriers, `*72` starts forwarding and `*73` turns it off. On some mobile carriers, `**21*number#` forwards all calls and `##21#` turns it off; `**61*number#` can forward unanswered calls and `**67*number#` can forward busy calls. Verizon Wireless uses `*72` / `*73`, and `*71` for busy/no-answer forwarding.\n\nIf your restaurant uses ROAL, you can forward your existing number to your ROAL line and turn forwarding off any time. That keeps your main number the same while the phone still gets answered during a closure or a busy holiday stretch."
+    },
+    {
+      "id": "how-do-i-write-a-holiday-message-for-after-hours-and-closed-",
+      "h2": "How do I write a holiday message for after-hours and closed days?",
+      "body": "Many owners want one message that works for both after-hours and holiday closure. That is fine, as long as the wording is specific. Do not make callers guess whether you are closed for the night or closed for the day.\n\nTry this structure:\n- First line: thanks for calling\n- Second line: closed status\n- Third line: reopen time\n- Fourth line: next step\n\nExample script:\n\"Thanks for calling [Restaurant Name]. We’re closed for the holiday and will reopen on [day] at [time]. If you need to place an order, please call back then. For urgent questions, leave your name and number.\"\n\nIf you want a softer tone, use:\n\"Thanks for reaching us. We’re closed today for the holiday and will reopen tomorrow at [time]. Please call back then, or leave a message and we’ll return it as soon as we can.\"\n\nYou can also keep a short holiday FAQ ready for staff to reuse:\n- Are you open today?\n- What time do you reopen?\n- Can I place a pickup order now?\n- Is parking available when you reopen?\n- Do you take catering requests during the closure?\n\nThat is the kind of call flow ROAL handles well when the restaurant is open, because it can answer hours, address, parking, menu questions, and take orders from the live menu."
+    },
+    {
+      "id": "how-should-i-explain-holiday-hours-without-upsetting-guests",
+      "h2": "How should I explain holiday hours without upsetting guests?",
+      "body": "Holiday callers are usually trying to solve a meal problem fast. A calm, specific answer goes a long way. Do not over-explain why you are closed. Just give the facts.\n\nA good pattern is:\n1. Say the holiday closure plainly.\n2. Give the exact reopen time.\n3. Offer the next best step.\n\nExample:\n\"We’re closed for the holiday today, and we’ll reopen at 11 AM tomorrow. If you’d like, please call back then for pickup.\"\n\nIf you are short-staffed around the holiday, keep the script honest:\n- \"We’re closed today so our team can observe the holiday.\"\n- \"We’re open with limited holiday hours until 2 PM.\"\n- \"We’re not taking catering orders during the closure, but we can help when we reopen.\"\n\nYou can also use a simple internal checklist:\n- Update hours on your website and Google Maps link\n- Make sure the greeting matches those hours\n- Decide who gets allergy, complaint, or manager calls\n- Confirm your reopen time before the first call comes in\n\nROAL is built to follow the information it reads from your public pages and from what you set in the dashboard, so the less mixed messaging you have, the better the caller experience will be."
+    }
+  ],
+  "takeaways": [
+    "Keep holiday messages short: closed today, reopen time, next step.",
+    "Use one clear script across voicemail, forwarding, and staff phones.",
+    "Update hours before the holiday so callers hear the same answer everywhere.",
+    "For tricky calls like allergy or manager requests, send them to staff with a summary.",
+    "ROAL can handle routine phone questions and orders when you are open, but closed-day messages should stay simple and honest."
+  ],
+  "faq": [
+    {
+      "q": "What is a good holiday closed message for a restaurant phone?",
+      "a": "A good message says you are closed, when you reopen, and what the caller should do next. Example: \"Thanks for calling [Restaurant Name]. We’re closed for the holiday today and will reopen on Tuesday at 11 AM. Please call back then or leave your name and number.\" Keep it short and direct."
+    },
+    {
+      "q": "Should my restaurant say we are closed for the holiday or just closed?",
+      "a": "Say the holiday if it helps the guest understand the timing. \"Closed for the holiday\" feels more helpful than a plain \"closed\" because it answers the caller’s likely question right away. If you are closed for the night only, say that instead so nobody thinks you are shut all day."
+    },
+    {
+      "q": "Can I still take pickup orders during a holiday closure?",
+      "a": "Only if you are truly open for that service. If you are not taking orders, say so clearly so guests do not wait on a callback that will not happen. If you are open with limited hours, say the exact order cutoff time and whether it is pickup only."
+    },
+    {
+      "q": "How do I forward my restaurant phone for a holiday?",
+      "a": "Use your carrier or phone system’s call forwarding setup, then test it with a real call before the holiday. Codes vary by carrier and plan, but many landlines and some carriers use `*72` to forward and `*73` to turn it off. Some mobile carriers use other codes, so always confirm with your provider and test before relying on it."
+    }
+  ],
+  "words": 1219,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

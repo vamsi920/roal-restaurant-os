@@ -1,0 +1,115 @@
+{
+  "slug": "jersey-city",
+  "label": "Jersey City, NJ",
+  "h1": "AI phone host for restaurants in Jersey City, NJ",
+  "seoTitle": "AI phone answering for Jersey City restaurants",
+  "description": "An AI phone host for Jersey City and Hoboken restaurants. It answers calls, takes pickup and delivery orders, and handles hours, menu, and reservation.",
+  "lead": "Built by a founder in Jersey City, this phone host is made for the dinner rush, brunch rush, and late calls that come with local restaurants. It helps independent spots answer more calls without hiring full-time phone staff.",
+  "question": "How can an AI phone answering service help my Jersey City restaurant handle calls better?",
+  "answer": "ROAL answers your restaurant’s phone, takes pickup and delivery orders from your live menu, and handles common questions about hours, address, parking, and the menu. It can also take reservation requests and pass along allergy-sensitive questions, complaints, and manager requests with a summary. You can forward all calls, or only the calls you miss or can’t get to fast enough.",
+  "pains": [
+    {
+      "title": "Commuter-time call spikes",
+      "body": "In Jersey City and Hoboken, calls can stack up around commute hours, lunch, and dinner. A busy line means customers may hang up before they place an order or ask a simple question."
+    },
+    {
+      "title": "Weekend brunch and game nights",
+      "body": "Brunch, dinner, and game-night traffic can make the phone ring nonstop. That is when your staff is already juggling dine-in guests, pickup names, and the window."
+    },
+    {
+      "title": "Too many small questions",
+      "body": "Many calls are not even orders. People ask about hours, parking, menu items, ingredients, or whether they can pick up in 20 minutes."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes orders from your menu",
+      "body": "The phone host can take pickup and delivery orders, including items, sizes, modifiers, and notes. It confirms the order back and sends a clean ticket to the kitchen screen."
+    },
+    {
+      "title": "Handles common questions fast",
+      "body": "It can answer questions about hours, address, parking, and the menu. If it cannot answer something, it sends it to your inbox so you can teach it once."
+    },
+    {
+      "title": "Fits your real call flow",
+      "body": "You can forward all calls, or only when busy or unanswered. That makes it a good fit for small teams on a Friday night or a short-staffed shift."
+    },
+    {
+      "title": "Built for the way restaurants work",
+      "body": "It never takes card numbers over the phone. It can also take reservation requests and route allergy-sensitive questions or complaints to staff with context."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, do you have a pickup order line? I’m in Jersey City and I need dinner for two."
+    },
+    {
+      "who": "host",
+      "line": "Yes. I can help with pickup or delivery. What would you like to order?"
+    },
+    {
+      "who": "caller",
+      "line": "Two plain pizzas, one order of garlic knots, and a Caesar salad. No anchovies on the salad."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two plain pizzas, one garlic knots, and one Caesar salad, no anchovies. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. The name is Sam."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Sam. I have the order for pickup in about 25 minutes. Let me read it back: two plain pizzas, one garlic knots, and one Caesar salad, no anchovies."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "Name: Sam",
+      "2 plain pizzas",
+      "1 garlic knots",
+      "1 Caesar salad, no anchovies",
+      "Ready time: about 25 minutes"
+    ],
+    "note": "No anchovies on salad"
+  },
+  "sections": [
+    {
+      "h2": "Made for Jersey City and Hoboken call patterns",
+      "body": "Independent restaurants here deal with a lot of the same moments: commuters calling on the way home, lunch rushes, Friday dinners, and weekend brunch. In neighborhoods like Downtown Jersey City, Journal Square, The Heights, and Hoboken’s busy waterfront and downtown areas, the phone often rings while the room is already full. A phone host helps catch those calls when your team is busy with tables, takeout, and the window.\n\nIt is especially useful for restaurants that serve fast, repeatable items. Think pizza, burgers, sandwiches, bagels, diners, Chinese takeout, sushi, and halal spots. The host can take a plain order, a custom order, or a quick reservation request without making the caller wait on hold."
+    },
+    {
+      "h2": "A simple setup for owners who do not want more tech work",
+      "body": "To try it, you paste your restaurant website, Google Maps link, or just your restaurant name and city at [Build a free test host](/try). ROAL reads your public menu, hours, and address, then builds a phone host in about a minute. You can test-call it in the browser before you go live.\n\nWhen you are ready, you claim the host and forward your restaurant number to it. Keep your current number. You can forward all calls or only the ones you miss. If your menu changes, you can update it in the dashboard or upload a menu in any format."
+    },
+    {
+      "h2": "A worked example for a busy Friday night",
+      "body": "Say you miss 12 calls on a Friday because the dining room is packed and the phones keep ringing. That could mean lost pickup orders, lost catering questions, and a lot of voicemail tags to sort through later. A phone host gives those callers a live answer right away, even when your team is tied up.\n\nIt can collect the customer’s name and phone, take the order from the live menu, and send the ticket to the kitchen screen. It can also handle the small questions that slow staff down, like whether you are still open, where to park, or whether a dish can be made without a certain ingredient. For pricing details, see [Pricing](/pricing)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Will it answer calls when my staff is too busy to pick up?",
+      "a": "Yes. You can forward calls to the phone host all the time, or only when the line is busy or unanswered. That makes it useful for rush periods without changing how your restaurant already works."
+    },
+    {
+      "q": "Can it take pickup orders from my real menu?",
+      "a": "Yes. It takes items, sizes, modifiers, and notes from your live menu, then confirms the order back to the caller and sends the ticket to the kitchen screen. It does not take card numbers over the phone."
+    },
+    {
+      "q": "What kinds of questions can it handle?",
+      "a": "It can answer common questions about hours, address, parking, and the menu. It can also take reservation requests and hand allergy-sensitive questions, complaints, and manager requests to staff with a summary."
+    },
+    {
+      "q": "Do I need to switch phone numbers?",
+      "a": "No. Your restaurant keeps its own number. ROAL gives each location its own phone line automatically, and you forward your existing number to it."
+    },
+    {
+      "q": "Is this only for Jersey City restaurants?",
+      "a": "No. It was built by a founder in Jersey City, and the first restaurants are in Jersey City and Hoboken, but it can work for any US restaurant. It is still a pre-launch product, so there are no published customer results yet."
+    }
+  ]
+}

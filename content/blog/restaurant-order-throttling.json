@@ -1,0 +1,76 @@
+{
+  "slug": "restaurant-order-throttling",
+  "keyword": "restaurant order throttling",
+  "category": "operations",
+  "title": "Restaurant order throttling when the kitchen is slammed",
+  "seoTitle": "Restaurant order throttling for a busy kitchen | ROAL",
+  "description": "Use restaurant order throttling to slow phone intake when the kitchen is slammed. Get scripts and timing tips that protect service during rushes.",
+  "question": "How do I slow down restaurant order intake when the kitchen is slammed?",
+  "answer": "Use restaurant order throttling by limiting new orders at the phone line, quoting longer ready times, and routing overflow calls to staff only when needed. The key is to protect the kitchen with a simple rule: take fewer orders, set honest ready times, and keep the phone from adding more pressure than the line can handle.",
+  "summary": "You’ll learn how to slow order intake, protect ticket times, and tell callers what to expect without creating chaos.",
+  "intro": "When the kitchen is slammed, restaurant order throttling means slowing how many new orders you take for a short time. The goal is simple: protect the line, keep ticket times honest, and avoid stacking more work than the kitchen can finish.\n\nYou do that by changing how the phone is handled, not by ignoring customers. ROAL can answer the phone, take the order from the live menu, and send a clean ticket to the kitchen screen while you decide when to slow intake, route overflow, or send tricky calls to staff.",
+  "sections": [
+    {
+      "id": "what-does-order-throttling-mean-in-a-restaurant",
+      "h2": "What does order throttling mean in a restaurant?",
+      "body": "Order throttling is just a controlled slowdown in new order intake. You use it when the kitchen is behind, short-staffed, or buried in a big rush. Instead of taking every call at full speed, you put a limit on how many pickup or delivery orders you accept in a window of time.\n\nA practical example: say your kitchen can handle 12 pickup tickets per hour on a normal night, but Friday rush already has 10 tickets stacked up. You might tell callers, “We’re running about 35 minutes right now for new pickup orders,” and only keep taking orders that fit the line. That is better than promising 15 minutes and making the whole room wait.\n\nUse a simple rule sheet:\n- Green: normal intake.\n- Yellow: longer ready times and fewer add-ons.\n- Red: pause new orders for a set time or send overflow to staff.\n\nROAL helps here because it reads the live menu, does not offer sold-out items, and can keep taking orders only from what is actually available. That makes throttling cleaner than trying to do it from memory while tickets pile up."
+    },
+    {
+      "id": "when-should-you-slow-down-phone-orders",
+      "h2": "When should you slow down phone orders?",
+      "body": "You do not need fancy software to know when to throttle. Watch the kitchen and the phone together. If the line is getting buried, the wrong move is to keep saying yes to every caller.\n\nUse these signals as your trigger list:\n- Ticket times are running longer than you want.\n- The prep line is waiting on one station.\n- The counter is busy with walk-ins and pickups.\n- A key cook called out and the team is thin.\n- You already have a lot of future orders stacked on the screen.\n\nA good owner rule is: if the next 30 to 45 minutes are already spoken for, slow intake. For example, if your average order is $28 and you normally take 20 phone orders in a busy hour, you may decide to cut that in half for one rush period so the kitchen can catch up. Plug in your own numbers and your own labor pressure.\n\nUse a calm script for the phone:\n- “Thanks for calling. We’re a little backed up right now, so pickup is running about 45 minutes.”\n- “I can take that order, but the soonest ready time is later than usual.”\n- “We’re limiting new large orders for the next hour.”\n\nThat kind of honesty keeps the call short and keeps the line from getting worse."
+    },
+    {
+      "id": "what-should-the-phone-say-when-you-need-to-slow-intake",
+      "h2": "What should the phone say when you need to slow intake?",
+      "body": "The message should be short, specific, and consistent. Customers do not need a long kitchen explanation. They need to know whether you can take the order, when it will be ready, and whether there is anything you cannot do right now.\n\nHere is a simple call flow you can use:\n1. Greet the caller.\n2. Check the current kitchen load.\n3. Quote the honest ready time.\n4. Take the order only if it fits the current pace.\n5. Confirm the order back and the name.\n\nA few useful lines:\n- “We’re a bit backed up, so pickup is about 40 minutes.”\n- “We can take that order, but we’re not adding large catering orders right now.”\n- “That item is sold out today, but I can still help you choose something else.”\n\nIf you use ROAL, it can quote a ready time, collect the name and phone number, and confirm the order back before sending a clean ticket to the kitchen screen. If the caller asks about a complaint, an allergy-sensitive question, catering, or a manager request, ROAL hands that to staff with a summary. That is useful during throttling because the phone stays controlled while the team stays focused.\n\nKeep one note for your staff: don’t overpromise just to get off the phone. A truthful 10-second quote is better than a bad promise that creates a 45-minute problem."
+    },
+    {
+      "id": "how-do-i-throttle-orders-without-losing-too-much-business",
+      "h2": "How do I throttle orders without losing too much business?",
+      "body": "The trick is not to shut the door. It is to slow the flood and keep the good orders coming in. Most restaurants lose money when they try to do everything at full speed and the kitchen falls apart.\n\nTry this simple priority system:\n- Small pickup orders first.\n- Regular menu items before special requests.\n- Ready times that match your real capacity.\n- Large orders only if the kitchen says yes.\n\nWorked example: say your usual phone mix is 10 small pickup orders and 3 larger orders in a rush hour. If the kitchen is slammed, you can keep the small orders moving and push the large orders to a later window. If one large order normally takes the time of three small ones, that one order may be the reason the whole hour slips. Swap in your own ticket sizes and station limits.\n\nA quick checklist for the manager on duty:\n- Is the screen stacked with future tickets?\n- Is one station behind more than the others?\n- Are callers getting quoted honest ready times?\n- Do we need to stop taking some order types for a while?\n\nThis is also where [What your call logs tell you](/blog/restaurant-data-call-logs) can help. Review which calls came in during the worst rushes, which questions slowed the phone, and which orders were accepted when they should have been delayed. That makes your throttling smarter next time."
+    },
+    {
+      "id": "how-can-roal-help-during-a-slammed-shift",
+      "h2": "How can ROAL help during a slammed shift?",
+      "body": "ROAL is built to answer the restaurant’s phone, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. That matters when the kitchen is slammed because the phone keeps moving without pulling a host or cashier away from the line.\n\nA simple way to use it during rushes:\n- Let ROAL take standard orders.\n- Let staff handle manager calls, allergies, complaints, and catering.\n- Keep sold-out items off the phone so callers are not ordering something you cannot make.\n- Use longer ready times when the kitchen needs breathing room.\n\nBecause the owner can set the host’s voice and name, the call still feels like it belongs to the restaurant. Questions the host cannot answer land in an inbox, and once you answer them, the host learns from that answer going forward. That helps reduce repeat interruptions over time.\n\nROAL is not a card processor, so it does not take card numbers over the phone. Payment still happens at pickup or however your restaurant already handles it. That matters during throttling because you are managing kitchen flow, not changing your payment setup.\n\nIf you want a broader setup walk-through, [How it works](/how-it-works) explains the basics, and [Set up an AI phone host from your website](/blog/set-up-ai-phone-host-one-minute) shows how fast the setup can be from public menu and hours pages."
+    },
+    {
+      "id": "how-do-i-set-the-phone-forward-when-orders-pile-up",
+      "h2": "How do I set the phone forward when orders pile up?",
+      "body": "Phone forwarding is one of the simplest ways to throttle intake. You can send all calls to the phone host, or only forward when the line is busy or unanswered, depending on how your restaurant is set up.\n\nCommon forwarding codes vary by carrier and plan, so always confirm with your carrier and test with a call. On many landlines and some carriers, *72 starts call forwarding and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle this in the web portal.\n\nUse this practical setup checklist:\n1. Decide whether you want all calls forwarded or only busy/no-answer calls.\n2. Confirm the code or portal step with your carrier or phone system.\n3. Test a real call from outside the restaurant.\n4. Make sure staff know when forwarding is on.\n5. Turn it off when the rush passes.\n\nIf you want the code list in one place, use [Call forwarding codes by carrier](/tools/call-forwarding-codes). ROAL also lets the owner forward the restaurant’s existing number to its own line, and that forwarding can be turned off any time. That makes it easier to slow intake without changing your main number."
+    },
+    {
+      "id": "what-should-i-review-after-the-rush-is-over",
+      "h2": "What should I review after the rush is over?",
+      "body": "After the rush, look at the day like a manager, not like a firefighter. You want to know whether the slowdown worked, where the pressure came from, and what to change before the next busy night.\n\nUse this review list:\n- How many calls came in during the peak?\n- Were ready times honest?\n- Did the kitchen recover faster after throttling?\n- Which items caused the most delay?\n- Did staff have to interrupt service to answer the phone?\n\nA useful habit is to compare the busiest 60 minutes against a normal hour. If your normal order flow is 18 calls and you had to throttle to 9, write that down with the reason. Was it staffing? A fryer issue? A party order? A delivery-app pileup? You do not need perfect numbers. You need a clear pattern.\n\nROAL’s dashboard keeps call history with transcripts and recordings, plus live kitchen tickets. That makes the review easier because you can see what was said on the phone and what reached the kitchen screen. If you want a deeper routine, [A weekly review routine for owners](/blog/restaurant-weekly-review-routine) is a good next read.\n\nIf you want to test the idea on your own menu, you can [build a free test host](/try) and see how the phone behaves before you move it live."
+    }
+  ],
+  "takeaways": [
+    "Order throttling means slowing intake on purpose so the kitchen can catch up.",
+    "Use honest ready times, not optimistic guesses.",
+    "Forwarding calls to a phone host can keep the phone moving during rushes.",
+    "Review call logs and kitchen tickets after the rush so the next slowdown is cleaner."
+  ],
+  "faq": [
+    {
+      "q": "What is restaurant order throttling?",
+      "a": "Restaurant order throttling is a temporary slowdown in new order intake when the kitchen is behind, short-staffed, or overloaded. Instead of taking every call at full speed, you quote longer ready times, limit certain order types, or pause intake for a set period. The goal is to protect ticket times and keep the kitchen manageable."
+    },
+    {
+      "q": "How do I tell customers we are backed up without sounding rude?",
+      "a": "Keep it short and calm. Say something like, “We’re a little backed up right now, so pickup is running about 40 minutes,” or “We can take your order, but the soonest ready time is later than usual.” Customers usually handle a clear wait better than a rushed promise that turns out wrong."
+    },
+    {
+      "q": "Should I stop taking large orders when the kitchen is slammed?",
+      "a": "Often, yes, if one large order will slow down the whole line. A large order can tie up prep, packing, and pickup time for everyone else. A good rule is to keep smaller orders moving and only accept large or custom orders when the kitchen says it can handle them."
+    },
+    {
+      "q": "Can ROAL help with throttling during busy periods?",
+      "a": "Yes. ROAL answers the phone, takes pickup and delivery orders from the live menu, quotes a ready time, and sends a clean ticket to the kitchen screen. It also hands allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary, which helps keep the phone from slowing the line during rushes."
+    }
+  ],
+  "words": 1633,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "menu-modifiers-explained",
+  "keyword": "menu modifiers restaurant",
+  "category": "menu",
+  "title": "Menu modifiers explained for restaurant owners",
+  "seoTitle": "Menu modifiers for restaurant owners | ROAL",
+  "description": "Set up menu modifiers for sizes, add-ons, substitutions, and allergy notes so phone orders are clearer and easier for staff to ring in.",
+  "question": "What are menu modifiers for a restaurant, and how should I set them up for phone orders?",
+  "answer": "Menu modifiers are the choices that change a menu item without changing the core item, like size, cheese, toppings, spice level, or side swaps. For phone orders, set them up so callers can order the way you actually make food, and so the kitchen gets a clear ticket with the right notes. Keep the list short, plain, and matched to your live menu.",
+  "summary": "Learn how to set up clear menu modifiers so phone orders are faster, cleaner, and easier for the kitchen to make.",
+  "intro": "Menu modifiers are the extra choices on a dish: size, toppings, sauces, sides, and special notes. For phone orders, good modifiers keep the order accurate and keep the kitchen from guessing.\n\nIf your menu is messy on the phone, callers take longer, staff repeat themselves, and tickets get confusing. A clean set of menu modifiers helps the caller order faster and helps your team make the food right the first time.",
+  "sections": [
+    {
+      "id": "what-counts-as-a-menu-modifier-in-a-restaurant",
+      "h2": "What counts as a menu modifier in a restaurant?",
+      "body": "A menu modifier is any choice that changes how an item is made or served. Think of it as the question after the item name: “Which size?” “Which cheese?” “No onions?” “Which side?”\n\nFor a pizza shop, modifiers might be size, crust, toppings, and half-and-half. For a deli, it might be bread, cheese, toasted or not, and dressings. For a family restaurant, it could be protein temp, side choice, and sauce on the side.\n\nA simple way to separate your menu:\n- **Item:** Chicken parmesan\n- **Modifier:** Add pasta, add salad, no cheese, extra sauce\n- **Note:** “Sauce on the side for one container”\n\nHere’s a clean phone script line: “What size would you like, and do you want any toppings or special instructions?”\n\nIf you use [Making your menu easy to order by phone](/blog/restaurant-menu-for-phone-orders), your menu should match how people speak, not how the kitchen file is organized. That matters because callers usually do not think in station names or prep labels. They think in plain food choices."
+    },
+    {
+      "id": "how-do-i-build-modifiers-that-callers-can-understand-fast",
+      "h2": "How do I build modifiers that callers can understand fast?",
+      "body": "The best menu modifiers are short, specific, and in the same order every time. Start with the choices that matter most to price and prep. Then remove anything that sounds like kitchen jargon.\n\nUse this order when possible:\n1. Size or portion\n2. Main protein or base\n3. Toppings or add-ons\n4. Side choice\n5. Sauce, spice, or temperature\n6. Special notes\n\nExample for a chicken sandwich:\n- Size: regular or large\n- Add-ons: bacon, cheese, avocado\n- Remove: no tomato, no pickles, no mayo\n- Side: fries, salad, chips\n\nA good phone line is: “Do you want the regular or large, and would you like fries or a salad?” That keeps the call moving and reduces back-and-forth.\n\nIf a modifier changes the price, make that clear to the caller. For example: “Add avocado for $2” is easier than “avocado extra.” Keep the names simple so the ticket and the caller match. ROAL reads the live menu and can take items, sizes, modifiers, and notes from that menu, so clean wording helps both the order and the kitchen ticket."
+    },
+    {
+      "id": "which-modifiers-should-i-add-and-which-should-i-leave-off",
+      "h2": "Which modifiers should I add, and which should I leave off?",
+      "body": "Not every possible choice deserves its own modifier. Too many options slow the call down and create errors. Keep the modifiers that affect price, prep, or common customer requests.\n\nUse this quick filter:\n- **Add it** if customers ask for it often.\n- **Add it** if the kitchen needs it to cook correctly.\n- **Skip it** if it is rare, confusing, or already obvious.\n\nExample: a burger shop may need size, cheese, doneness, and side. It probably does not need ten separate notes for every topping combination.\n\n| Keep as a modifier | Leave as a free-form note |\n|---|---|\n| Size | “Make it good” |\n| Cheese choice | Very rare requests |\n| Side choice | Long personal stories |\n| Sauce on side | Special occasion messages |\n| Allergy note | Anything unclear or risky |\n\nA useful script line is: “I can note that, but I want to make sure I get the order right. Can you tell me exactly what you want removed or added?”\n\nIf you run [Building a catering menu callers understand](/blog/catering-menu-guide), treat catering the same way: use repeatable choices, not endless custom text. That keeps the phone order easier for staff and cleaner for the kitchen."
+    },
+    {
+      "id": "how-should-modifiers-affect-price-on-the-phone",
+      "h2": "How should modifiers affect price on the phone?",
+      "body": "Modifiers should change the price only when they actually change your cost or portion. If a choice costs more in the kitchen, the caller should hear it before the order is confirmed.\n\nUse a simple price rule:\n- Base item = listed menu price\n- Sized-up version = base price plus the add-on amount\n- Extra topping = add-on amount\n- Side swap = no change, or a listed upcharge if one exists\n\nWorked example: say your burger is $12, large fries are a $2 upcharge, cheese is $1, and bacon is $3. A caller wants one burger with cheese, bacon, and large fries. The order total before tax would be $18. Plug in your own prices and use the same structure.\n\nA clear phone line is: “That burger with cheese and bacon, plus large fries, comes to $18 before tax. Would you like to go ahead?”\n\nThis matters because callers get frustrated when the final total feels random. It also helps the kitchen ticket match the money. If your menu changes often, update the price labels right away so staff are not explaining old pricing all day. With ROAL, the host uses the live menu, so the cleaner your modifier setup, the fewer corrections your team has to make later."
+    },
+    {
+      "id": "what-should-i-do-about-allergy-notes-substitutions-and-speci",
+      "h2": "What should I do about allergy notes, substitutions, and special requests?",
+      "body": "Some requests belong in modifiers. Others belong in notes and should be sent to staff. The line between the two matters for speed and safety.\n\nUse modifiers for common, safe choices the kitchen already handles, like:\n- No onions\n- Extra sauce\n- Gluten-free crust, if you offer it\n- Dressing on the side\n\nUse notes for anything unusual, sensitive, or unclear:\n- Allergy concerns\n- “Please call me back if this item is unavailable”\n- “Customer wants sauce separate for two orders”\n- “Manager approval needed”\n\nA helpful phone script is: “I can add that as a note, but for allergy-related requests I’m going to pass it to the staff so they can review it.”\n\nThat is also how ROAL handles tricky calls. It can collect items, sizes, modifiers, and notes, and it hands allergy-sensitive questions, catering, complaints, and manager requests to staff with a summary. It does not take card numbers over the phone. Payment happens at pickup or the way your restaurant already takes it.\n\nShort checklist for your menu:\n- Keep common choices in modifiers\n- Put special instructions in notes\n- Make allergy language easy to spot\n- Train staff to review those tickets first"
+    },
+    {
+      "id": "how-do-i-make-menu-modifiers-work-with-phone-orders-and-the-",
+      "h2": "How do I make menu modifiers work with phone orders and the kitchen?",
+      "body": "The goal is not just a pretty menu. The goal is a ticket the kitchen can make without guessing.\n\nHere is a practical setup checklist:\n1. Match modifier names to how staff speak in the kitchen.\n2. Put common choices first.\n3. Keep prices attached to the right options.\n4. Remove sold-out items from the live menu.\n5. Make sure notes go to the kitchen screen in a readable way.\n\nExample workflow:\n- Caller says: “Two turkey clubs, no tomato, one with fries and one with salad.”\n- Phone host confirms: “Two turkey clubs, no tomato, one fries, one salad.”\n- Kitchen ticket shows the same wording.\n\nThat is where ROAL is useful for owners who are busy and do not want extra phone work. It reads the live menu, takes the order, confirms it back, and sends a clean ticket to the kitchen screen.\n\nIf you are comparing options, pay attention to whether the system can handle modifiers cleanly, not just answer the phone. A fast answer is good, but a clean order is what saves time in the kitchen and at pickup."
+    },
+    {
+      "id": "what-is-a-simple-way-to-test-my-modifiers-before-i-go-live",
+      "h2": "What is a simple way to test my modifiers before I go live?",
+      "body": "Before you let real callers use your menu, run a short test from the owner side. You do not need a big project. You need a few real orders and a clear checklist.\n\nTest these five calls:\n1. A plain order with no changes\n2. A common modifier order\n3. A size upgrade with a price change\n4. A special note order\n5. An allergy or manager-request call that should go to staff\n\nUse this test script: “I’d like one pepperoni pizza, large, extra cheese, well done.” Then check whether the ticket shows the size, modifier, and note exactly the way your kitchen needs it.\n\n| Test item | What to check |\n|---|---|\n| Plain item | Right item and price |\n| Modifier | Correct add-on or swap |\n| Note | Clear and readable |\n| Sold-out item | Not offered |\n| Tricky request | Sent to staff with a summary |\n\nIf you want to try this with your own menu, you can [build a free test host](/try). You can paste your website, Google Maps link, or menu, then test-call it in the browser before you claim the host and forward your phone number."
+    }
+  ],
+  "takeaways": [
+    "Menu modifiers should match how customers actually order, not how the kitchen labels things.",
+    "Keep common choices in modifiers and unusual requests in notes.",
+    "Show price changes clearly before the caller confirms the order.",
+    "Test a few real phone orders before going live.",
+    "Clean modifiers make the kitchen ticket easier to read and faster to make."
+  ],
+  "faq": [
+    {
+      "q": "What is the difference between a menu item and a modifier?",
+      "a": "A menu item is the main thing being sold, like a cheeseburger or pepperoni pizza. A modifier changes that item, like size, toppings, side choice, or no onions. For phone orders, keep the item name simple and use modifiers for the choices that change the order."
+    },
+    {
+      "q": "How many menu modifiers should I use?",
+      "a": "Use as many as you need for clear ordering, but not so many that callers get lost. Start with the choices that affect price or prep the most, like size, cheese, toppings, and side options. If a choice is rare or confusing, it is usually better as a note or staff review."
+    },
+    {
+      "q": "Should allergy requests be a modifier or a note?",
+      "a": "Put common, safe requests in modifiers and put allergy-sensitive requests in notes for staff review. Allergy issues should stand out clearly on the ticket so the kitchen can check them. If the request is unclear, send it to staff instead of trying to handle it only on the phone."
+    },
+    {
+      "q": "How do I keep phone orders from getting messy with too many choices?",
+      "a": "Keep the menu simple, use the same modifier order every time, and remove options customers never use. Ask for the most important choices first, then confirm the order back before sending it to the kitchen. A clean live menu and clear tickets matter more than offering every possible variation."
+    }
+  ],
+  "words": 1419,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

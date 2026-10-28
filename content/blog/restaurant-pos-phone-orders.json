@@ -1,0 +1,72 @@
+{
+  "slug": "restaurant-pos-phone-orders",
+  "keyword": "pos phone orders",
+  "category": "operations",
+  "title": "How phone orders should flow into your POS",
+  "seoTitle": "POS phone orders: connect calls to your POS",
+  "description": "See how phone orders should move from call to kitchen ticket. Ask the right questions about your POS setup and keep orders moving smoothly.",
+  "question": "How should phone orders flow into my POS so the kitchen gets the right ticket without extra work?",
+  "answer": "Phone orders should be captured with the caller’s name, phone number, items, modifiers, notes, and a quoted ready time, then turned into a clean kitchen ticket. Your POS should receive the order in the same format your team already uses, so staff can fire it, prep it, and track it without retyping. ROAL takes the call, confirms the order back to the caller, and sends the ticket to the kitchen screen; it does not take card numbers over the phone.",
+  "summary": "Set up phone orders so they land cleanly in your POS and kitchen with less retyping and fewer mistakes.",
+  "intro": "Phone orders and your POS should work like one line, not two separate jobs. The call gets answered, the order gets confirmed, and the kitchen gets a ticket that matches what the caller asked for.\n\nFor a busy pizza shop, deli, or family restaurant, the goal is simple: less time on the phone, fewer missed details, and fewer handwritten scraps. ROAL is built for that flow, and you can compare the setup with [phone orders vs delivery apps](/compare/delivery-apps) or [pickup order taking](/use-cases/pickup-orders).",
+  "sections": [
+    {
+      "id": "what-should-happen-from-the-phone-call-to-the-pos",
+      "h2": "What should happen from the phone call to the POS?",
+      "body": "A clean phone-order flow has one job: turn a spoken order into a ticket your team can use right away. The caller should hear a clear menu, give the items, and then hear the order read back before it goes to the kitchen.\n\nA good flow looks like this:\n1. The phone is answered.\n2. The caller says pickup or delivery.\n3. The host takes the items, sizes, modifiers, and notes.\n4. The host asks for the caller’s name and phone.\n5. The host gives a ready time.\n6. The ticket lands on the kitchen screen.\n\nFor example, if someone orders two large pepperoni pies, one with well-done crust, and a side of garlic knots, that needs to become a ticket the kitchen can read at a glance. If your POS already uses item names, modifiers, and notes, the phone order should match that structure. If not, you want a process that maps the call into the same style every time. That is the kind of clean handoff ROAL is made for."
+    },
+    {
+      "id": "how-do-i-stop-phone-orders-from-becoming-retyping-work",
+      "h2": "How do I stop phone orders from becoming retyping work?",
+      "body": "The biggest headache is not the call itself. It is the retyping after the call. Someone on your team listens, writes things down, then types the same order again into the POS while phones keep ringing.\n\nUse a short field list for every order:\n- Customer name\n- Callback number\n- Pickup or delivery\n- Menu items and sizes\n- Modifiers like extra cheese, no onions, or light sauce\n- Special notes like “cut into squares” or “leave at counter”\n- Ready time or delivery window\n\nHere is a simple example you can swap for your own numbers. Say your average order is $28 and your team spends 3 minutes re-entering each phone order. If your phones get busy, that extra work adds up fast. You do not need fancy math to see the issue: every extra step gives staff more chances to mishear a topping or forget a note. A better setup is one where the order is captured once, then sent as a clean ticket.\n\nIf your menu changes often, keep the menu source current so the phone host speaks from the same live menu your team uses in the store."
+    },
+    {
+      "id": "what-should-i-ask-my-pos-vendor-or-staff-before-changing-the",
+      "h2": "What should I ask my POS vendor or staff before changing the phone flow?",
+      "body": "Before you change anything, ask how phone orders are handled today and where they break. You want the answer in plain language, not a tech lecture.\n\nAsk these questions:\n- Do phone orders go into the same ticket stream as online orders?\n- Can staff see call details with the order?\n- How are modifiers and notes entered today?\n- What happens when the phone is busy and the call is missed?\n- Who fixes order mistakes when the caller says, “That was not what I asked for”?\n\nA quick staff check helps too. Stand next to the person who usually handles the phone and watch one rush period. Write down where the delay happens. Is it the ringing? The note-taking? The retyping? The kitchen having to ask for clarification? That tells you what to fix first.\n\nIf you use a phone host like ROAL, the owner can review call history, transcripts, and recordings in the dashboard, then update the menu, hours, and FAQs from one place. That is useful when staff keeps answering the same questions about parking, closing time, or sold-out items."
+    },
+    {
+      "id": "how-do-i-set-up-forwarding-without-losing-my-current-number",
+      "h2": "How do I set up forwarding without losing my current number?",
+      "body": "You do not have to give up your restaurant number to improve phone orders. With ROAL, the owner claims the host, gets a separate phone line for each location, and forwards the restaurant’s existing number to it. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nFor many shops, the easiest setup is forwarding only when busy or unanswered. That way, your team still picks up live calls when they can, and the phone host covers the rest.\n\nUse this practical checklist before you test:\n- Confirm whether your line is landline, mobile, or business VoIP.\n- Ask your carrier or phone system how forwarding works for your plan.\n- Test with one real call before you make it permanent.\n- Make sure your kitchen knows which screen or device gets the ticket.\n- Decide whether you want all calls forwarded or only missed/busy calls.\n\nCommon carrier codes exist, but they vary by plan and system. For many landlines and some carriers, *72 and *73 are used for all-call forwarding on and off. Some mobile plans use codes like **21*number# or ##21# for all calls, and other codes for busy or unanswered calls. Always confirm with your carrier and test it yourself before relying on it."
+    },
+    {
+      "id": "how-much-should-i-expect-phone-orders-to-cost-me",
+      "h2": "How much should I expect phone orders to cost me?",
+      "body": "Cost matters, especially if you are comparing delivery apps, human answering services, and AI phone tools. Delivery apps commonly charge restaurants roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a monthly fee per location whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nHere is a simple swap-in example:\n| Example | What to plug in |\n|---|---|\n| Average phone order | $28 |\n| Completed phone orders in a month | 400 |\n| ROAL cost at $0.90 each | $360 |\n| Your own average order | Replace $28 with yours |\n| Your own order count | Replace 400 with yours |\n\nThat table is not a promise. It is a way to compare your own numbers. If you want to compare different options, [Pricing](/pricing) and the [AI phone host cost calculator](/tools/phone-host-cost-calculator) can help you think it through."
+    },
+    {
+      "id": "how-do-i-keep-the-kitchen-the-caller-and-the-menu-in-sync",
+      "h2": "How do I keep the kitchen, the caller, and the menu in sync?",
+      "body": "The best phone-order setup is only useful if the caller hears the right menu and the kitchen gets the right ticket. That means your hours, menu items, sold-out items, and common questions need to stay current.\n\nA practical routine for a small restaurant:\n1. Update hours before the week starts.\n2. Mark sold-out items as sold out right away.\n3. Review any questions the host could not answer.\n4. Check the call history for repeat issues.\n5. Fix menu wording that causes confusion.\n\nFor example, if your menu says “large pie” in one place and “18-inch pizza” in another, callers may use either term. Put both in the menu editor so the phone host and your staff stay aligned. If you have family-style trays, lunch specials, or add-on sides, list the exact names callers use.\n\nROAL also handles questions about hours, address, parking, and the menu from public pages and uploaded menus. If a caller asks something tricky, it sends that question to the inbox, and once you answer it, the host knows it from then on. That keeps the phone line useful without making staff repeat the same answer all day."
+    }
+  ],
+  "takeaways": [
+    "Phone orders should flow from call to kitchen ticket with as little retyping as possible.",
+    "Keep item names, sizes, modifiers, and notes consistent between the phone and your POS.",
+    "Forwarding can cover busy or unanswered calls without giving up your restaurant number.",
+    "Compare per-order pricing against delivery app commissions and monthly phone fees using your own numbers.",
+    "ROAL takes orders, confirms them back, and sends a clean ticket to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "How do phone orders get into my POS?",
+      "a": "The goal is to capture the order once, then send a clean ticket into the kitchen flow your team already uses. The order should include items, sizes, modifiers, notes, the caller’s name, and a callback number. If your POS cannot take that directly, you still want the phone process to match your ticket format as closely as possible."
+    },
+    {
+      "q": "Should I forward all calls or only missed calls?",
+      "a": "That depends on your staffing. Many restaurants forward only when busy or unanswered so staff can still take live calls when they are free. If you forward all calls, test carefully so your kitchen and front counter still know what is happening."
+    },
+    {
+      "q": "Does ROAL take card payments on the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it, which keeps the process aligned with your current payment flow."
+    },
+    {
+      "q": "What if the caller asks about something the phone host cannot answer?",
+      "a": "That question goes to the inbox for the owner or staff to answer once. After that, the phone host knows it from then on. The same handoff is used for catering, complaints, allergy-sensitive questions, and manager requests, with a summary for staff."
+    }
+  ],
+  "words": 1232,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

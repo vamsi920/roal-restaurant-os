@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
 import "@/app/landing.css";
 import "@/app/blog-theme.css";
+import "@/app/seo.css";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { JsonLd } from "@/components/seo/json-ld";
+import { graph, organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
 import { SiteNav } from "@/components/landing/site-nav";
 import { RevealObserver } from "@/components/landing/reveal";
 
@@ -15,6 +18,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <JsonLd data={graph(organizationJsonLd(), websiteJsonLd())} />
       <SiteNav />
       <RevealObserver />
       <main id="main" className="site-main min-w-0">

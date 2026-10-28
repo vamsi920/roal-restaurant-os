@@ -1,0 +1,77 @@
+{
+  "slug": "online-menu-accuracy-restaurant",
+  "keyword": "update restaurant menu online",
+  "category": "menu",
+  "title": "How to keep your online menu accurate",
+  "seoTitle": "Keep your restaurant menu accurate online | ROAL",
+  "description": "Keep prices, item names, and sold-out dishes accurate across your online menu. A simple process helps staff and callers get the same answer.",
+  "question": "How do I update restaurant menu online so callers see the right items, prices, and hours?",
+  "answer": "Update the menu on your website, menu PDF, Google listing, and any ordering pages at the same time, then test a real call with a pickup order. Keep one master menu with prices, sizes, modifiers, and sold-out notes so your phone team, staff, and callers all hear the same information.",
+  "summary": "You’ll know how to keep one accurate menu across your website, phone line, and daily specials.",
+  "intro": "Your online menu should match what your kitchen can actually make today. To update restaurant menu online the right way, keep one master menu, change prices and sold-out items everywhere at once, and test the phone order flow after each change.\n\nIf callers hear one price online and another on the phone, staff lose time fixing it. ROAL can read public menu pages and menu uploads, take orders from the live menu, and pass unclear requests to staff with a summary, so your menu stays easier to manage.",
+  "sections": [
+    {
+      "id": "what-should-you-update-first-when-your-menu-changes",
+      "h2": "What should you update first when your menu changes?",
+      "body": "Start with the place customers check most: your website, menu PDF, Google listing, and any online ordering pages you control. Then update the version your staff uses on the phone, because that is where price mistakes turn into front-line problems.\n\nA simple order of operations helps:\n1. Change the item name, size, price, and modifier in your master menu.\n2. Remove or mark sold out items everywhere they appear.\n3. Check hours, holiday hours, and address at the same time.\n4. Place a test call and order one or two items.\n\nExample: if your large pepperoni was $18 yesterday and is $19 today, change that price in every public place before dinner rush. If you sell the lunch special only until 2 p.m., make sure the online menu and phone greeting say that clearly. When ROAL reads your menu from public pages or an uploaded file, the goal is the same: one current menu, not three different versions. For more on phone ordering flow, see [pickup order taking](/use-cases/pickup-orders)."
+    },
+    {
+      "id": "how-do-you-keep-prices-and-sizes-from-drifting-apart",
+      "h2": "How do you keep prices and sizes from drifting apart?",
+      "body": "Price drift usually starts small. A note gets changed in the shop, but the website menu stays old for weeks. Then a caller hears one price, staff sees another, and the order has to be corrected before it reaches the kitchen.\n\nUse one master sheet with these columns:\n- Item name\n- Size\n- Price\n- Included toppings or sides\n- Modifier rules\n- Sold out? yes/no\n- Notes for staff\n\nWorked example: say you have a regular sub for $12, a large for $16, and extra cheese for $1.50. Plug in your own numbers, but keep them in one row set so you can update all three at once. If you run family trays, add clear serving counts. If a caller says, “Can I get the large chicken parm with no onions and extra sauce?” your phone host should repeat the price and note before sending it to the kitchen.\n\nROAL’s menu editor and call history help here because staff can see which items were asked about, what was confirmed, and where questions still need a human answer. That keeps the next update cleaner. You can also review common menu issues in [menu, hours and allergen questions](/use-cases/menu-questions)."
+    },
+    {
+      "id": "what-should-you-say-when-an-item-is-sold-out",
+      "h2": "What should you say when an item is sold out?",
+      "body": "Sold-out items need a clear rule. Don’t leave them on the menu if customers can still order them by mistake. Mark them unavailable on every menu you control, and tell the phone host what to do until the item comes back.\n\nUse a short internal script for staff:\n- “Chicken cutlet is sold out after lunch.”\n- “Fries are available again at 5.”\n- “Please remove the item from the public menu now.”\n\nExample phone line: “We’re out of the spinach pie for tonight, but I can offer the plain pie instead.” That sentence saves time and keeps the caller moving.\n\nFor a practical checklist, do this before a busy shift:\n1. Check prep counts for the top 10 items.\n2. Mark sold-out items on the menu editor or public page.\n3. Confirm your phone greeting does not promise items you do not have.\n4. Tell the kitchen and front counter the same list.\n\nROAL does not offer items marked sold out, so the phone host follows the live menu rather than a stale one. That matters on rush nights, especially for pizza shops, delis, and takeout spots where one missing topping can slow the whole line. If your menu changes often, see [seasonal menu changes and your phone line](/blog/seasonal-menu-changes)."
+    },
+    {
+      "id": "how-do-you-handle-specials-combos-and-family-meals-without-c",
+      "h2": "How do you handle specials, combos, and family meals without confusing callers?",
+      "body": "Specials are useful only if the caller can understand them fast. Keep the wording short, list what comes with the deal, and say whether substitutions cost extra. That is especially important for lunch specials, family meal bundles, and catering trays.\n\nUse this format for each special:\n| Item | What to say on the phone |\n|---|---|\n| Lunch special | “Includes one entree, rice, and a drink until 2 p.m.” |\n| Family meal | “Feeds four to five people, includes bread and salad.” |\n| Combo deal | “Choose one main item and one side.” |\n\nWorked example: if your family deal is $42 and you want to charge $3 more for wings instead of fries, write that plainly. A caller should not have to guess. If they ask, “What comes with the tray?” the answer should be one sentence, not a back-and-forth.\n\nYou can also use the same idea for upsells. A simple line like, “Would you like fries with that?” is fine. But don’t add extra offers that are not on the menu or hard for the kitchen to honor. ROAL can store upsell suggestions and FAQs in the dashboard, which helps keep special items consistent. For more planning help, read [running lunch, dinner and catering menus](/blog/multiple-menus-one-restaurant)."
+    },
+    {
+      "id": "how-should-you-test-a-menu-update-before-the-rush",
+      "h2": "How should you test a menu update before the rush?",
+      "body": "Always test the menu the same way a caller will use it. Do not just look at the website on your laptop and assume it is fine. Place a call, order a real item, and listen for the price, size, and ready time.\n\nA quick test routine:\n1. Pick one item with a modifier, like “large cheese pizza with extra mushrooms.”\n2. Call the restaurant phone line or your phone host.\n3. Confirm the item name, price, and pickup time.\n4. Check the ticket that reaches the kitchen screen.\n5. Fix anything that sounds off before the next shift.\n\nExample script line for your tester: “I’d like a large cheese pie with extra mushrooms for pickup.” If the caller hears the wrong size or a stale price, correct the menu immediately. If the kitchen ticket is unclear, rewrite the modifier text so it prints the way your crew expects.\n\nROAL lets an owner test-call the host in the browser before going live, which is useful when you are updating a menu and want to hear the exact flow. You can also answer unknown questions once in the inbox, and the host will know them next time. That is helpful for items like allergy notes, no-onion requests, or special prep questions. See [how it works](/how-it-works) for the setup flow."
+    },
+    {
+      "id": "how-do-you-keep-hours-address-and-phone-forwarding-current-t",
+      "h2": "How do you keep hours, address, and phone forwarding current too?",
+      "body": "Menu accuracy and contact accuracy belong together. A caller who gets the wrong hours or a dead line will not trust the menu, even if the food is great. When you update restaurant menu online, check the hours, address, parking notes, and call forwarding at the same time.\n\nUse this mini checklist whenever something changes:\n- Holiday hours changed\n- Dining room closed early\n- Delivery pickup moved to a side door\n- New parking note added\n- Phone forwarding turned on or off\n\nIf you forward calls, confirm the setting with your carrier or phone system and test with a real call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some mobile carriers, codes like **21*number# or **61*number# may forward calls, but codes vary by carrier and plan, so always confirm and test. Business VoIP systems usually use a web portal.\n\nROAL gives each location its own phone line automatically after the owner claims the host, and the existing number can be forwarded to it. The restaurant keeps its own number, and forwarding can be turned off any time. That makes it easier to keep one current menu and one current phone flow without changing the number customers already know. For code details, see [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-is-the-easiest-monthly-routine-for-a-clean-menu",
+      "h2": "What is the easiest monthly routine for a clean menu?",
+      "body": "A clean menu stays clean because someone owns it. Pick one person to review changes before lunch and again before dinner, even if it is a five-minute check. That person should compare the printed prep list, the public menu, and the phone host setup.\n\nA practical weekly routine:\n1. Review sold-out items and add them back only when stock is real.\n2. Confirm prices for the top-selling items.\n3. Check special deals, catering trays, and family meals.\n4. Listen to one or two recent call transcripts.\n5. Update FAQs for anything staff answered more than once.\n\nExample: if your kitchen changes the price of a grilled chicken sandwich from $14 to $15, update that once in your master menu and then recheck the website, menu photos, and phone script. If you have more than one location, keep separate menus where needed so a caller in one neighborhood does not hear another store’s items.\n\nROAL’s dashboard includes a menu editor, call history, and multi-location menus, which makes this kind of review more manageable. If you want to try a phone host from your website or menu page, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Keep one master menu and push every change everywhere at once.",
+    "Mark sold-out items quickly so callers do not order what you cannot make.",
+    "Test the phone flow after every menu update, especially prices and modifiers.",
+    "Keep hours, address, and call forwarding in the same review as menu changes.",
+    "Use clear special-item wording so staff and callers hear the same thing."
+  ],
+  "faq": [
+    {
+      "q": "How often should I update my restaurant menu online?",
+      "a": "Update it any time prices, hours, sold-out items, or specials change. For busy takeout shops, that can mean daily checks and a quick review before the rush. The important part is not the calendar date; it is making sure the online version matches what the kitchen can actually serve."
+    },
+    {
+      "q": "What should I include on an online menu for phone orders?",
+      "a": "Include item names, sizes, prices, modifier options, special notes, and whether something is sold out. Also make sure your hours, address, and pickup instructions are current. If callers need to place orders by phone, the menu should be written so a staff member or phone host can repeat it clearly."
+    },
+    {
+      "q": "How do I stop callers from ordering sold-out items?",
+      "a": "Remove the item or mark it unavailable everywhere you control, then test the phone flow. If you use an AI phone host like ROAL, it follows the live menu and does not offer items marked sold out. You should still update the public menu and tell staff the same thing."
+    },
+    {
+      "q": "Can I change my menu without changing my restaurant phone number?",
+      "a": "Yes. With ROAL, the restaurant keeps its own number and forwards calls to the host’s line. You can turn forwarding on or off any time through your carrier or phone system, and you should always test a real call after making changes."
+    }
+  ],
+  "words": 1502,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

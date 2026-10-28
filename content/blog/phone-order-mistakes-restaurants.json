@@ -1,0 +1,72 @@
+{
+  "slug": "phone-order-mistakes-restaurants",
+  "keyword": "phone order mistakes restaurant",
+  "category": "phone-orders",
+  "title": "Common phone order mistakes restaurant owners make",
+  "seoTitle": "Phone order mistakes restaurant owners should avoid",
+  "description": "See the most common phone order mistakes restaurant owners make and how to fix them with clearer scripts, checks, and call handling.",
+  "question": "What are the most common phone order mistakes restaurant owners make, and how do I stop them?",
+  "answer": "The most common phone order mistakes restaurant owners make are skipping a full read-back, missing modifiers, rushing pickup times, forgetting the caller’s name and number, and not sending a clear ticket to the kitchen. The fix is a simple phone order process: take the order in order, confirm every detail, quote a realistic ready time, and hand off a clean ticket or written note the kitchen can trust.",
+  "summary": "You’ll learn how to cut common phone order errors with a simple script, a tighter handoff, and a better kitchen check.",
+  "intro": "The most common phone order mistakes restaurant owners make are rushed notes, missed modifiers, and a weak read-back. They lead to wrong food, longer waits, and more callbacks.\n\nThe good news is that most of these mistakes are easy to prevent with a simple script and a clear handoff to the kitchen. If you want a baseline, [How to take phone orders at a restaurant](/blog/how-to-take-phone-orders-restaurant) is a good companion read.",
+  "sections": [
+    {
+      "id": "why-do-phone-orders-go-wrong-so-often",
+      "h2": "Why do phone orders go wrong so often?",
+      "body": "Phone orders go wrong when the person taking the call is also juggling the line, pickup counter, and kitchen questions. The caller speaks fast, the staff member writes even faster, and small details get lost.\n\nHere are the most common failure points in a restaurant phone order:\n- The order is taken before the caller’s name and callback number.\n- Sizes, crusts, sides, sauces, or spice levels are not confirmed.\n- The staff member says “OK” too early and skips the read-back.\n- The ready time is guessed instead of checked against the line.\n- The ticket reaches the kitchen with messy handwriting or missing notes.\n\nA simple example: say a caller orders a large pepperoni pizza with extra cheese, light sauce, well-done. If “extra cheese” or “well-done” is missed, the kitchen may still make a good pizza, but not the one the customer wanted. That becomes a remade order, a refund, or a complaint. The fix is not more pressure. It is a stricter order flow."
+    },
+    {
+      "id": "what-details-get-missed-most-on-the-phone",
+      "h2": "What details get missed most on the phone?",
+      "body": "The details that get missed most are usually the ones that sound small in the moment but matter at the make line. For pizza and takeout spots, it is often toppings, sizes, crusts, and special notes. For delis and family restaurants, it is sides, bread choice, dressing, and substitutions.\n\nUse this quick checklist during the call:\n1. Name and phone number.\n2. Pickup or delivery.\n3. Every item, size, and modifier.\n4. Allergy-sensitive note or special request.\n5. Ready time.\n\nA good phone line sounds like this: “Let me read that back to make sure I have it right.” Then you repeat the order slowly, including the details the caller may assume were obvious. If you use [phone order form template](/blog/phone-order-form-template-restaurant), make sure it has separate lines for size, modifiers, notes, and contact info.\n\nROAL handles this kind of structure automatically by taking items, sizes, modifiers, notes, name, and phone, then confirming the order back before sending the ticket to the kitchen screen. That matters because most mistakes happen when the call is captured in a hurry and the kitchen gets a partial version."
+    },
+    {
+      "id": "how-should-you-read-back-an-order-the-right-way",
+      "h2": "How should you read back an order the right way?",
+      "body": "A read-back is the best safety check you have. It is also where many restaurants rush and accidentally create the next mistake.\n\nUse this simple read-back order:\n1. Caller name.\n2. Item list.\n3. Sizes and modifiers.\n4. Notes and substitutions.\n5. Ready time.\n6. Total, if you already quote totals on the phone.\n\nExample script: “So I have Mike, a large cheese pizza with extra mushrooms and light sauce, plus a small order of wings extra crispy, pickup in 20 minutes. Is that right?”\n\nIf the caller corrects you, repeat the full order again, not just the changed part. That helps catch another issue hiding nearby. For example, if the caller says, “Actually, make the wings mild,” you should restate the full ticket: “Got it. Large cheese pizza with extra mushrooms and light sauce, and small wings mild, pickup in 20 minutes.”\n\nIf your team forgets to read back, use a posted script near the phone. One line is enough: “Read every order back before you hang up.” That small habit can save a lot of make-room confusion."
+    },
+    {
+      "id": "how-do-you-stop-pickup-time-mistakes",
+      "h2": "How do you stop pickup time mistakes?",
+      "body": "Pickup time mistakes happen when the front counter promises too soon. That creates pressure in the kitchen and frustration at pickup.\n\nUse a basic ready-time rule:\n- Check the line before giving a time.\n- Add a little buffer during a rush.\n- Tell the caller if the time is an estimate.\n- Never promise a time the kitchen cannot meet.\n\nWorked example: say your usual pickup time is 15 minutes for a simple order and 25 minutes during dinner rush. If a caller orders two pizzas, wings, and a salad at 6:45 p.m., you may need to quote the rush time, not the off-peak time. Plug in your own numbers based on your kitchen.\n\nA useful line is: “Right now I’m quoting 25 minutes for pickup. If that changes, we’ll let you know when you arrive.” That is clearer than saying “about 15” when the room is already stacked.\n\nThe same thinking applies to delivery. [Phone orders for delivery](/blog/phone-delivery-orders-restaurant) should always include address and timing checks before you quote a window. If you are using ROAL, it can quote a ready time, confirm the order back, and send the clean ticket to the kitchen screen so the handoff is not left to memory."
+    },
+    {
+      "id": "what-should-your-kitchen-handoff-look-like",
+      "h2": "What should your kitchen handoff look like?",
+      "body": "A perfect call can still turn into a bad order if the kitchen never sees the right ticket. The handoff should be easy to read, complete, and fast.\n\nA kitchen-ready ticket should show:\n- Caller name.\n- Phone number.\n- Pickup or delivery.\n- Items with sizes and modifiers.\n- Special notes.\n- Ready time.\n\n| Good ticket | Risky ticket |\n|---|---|\n| “Tony, 555-0198, pickup 7:10, lg pep extra chz, wings mild, no onions” | “Tony order 2 items” |\n| Clear notes and contact info | Missing name or callback number |\n| Easy to start making right away | Staff has to call back to clarify |\n\nA practical shop-floor habit is to ask, “Could the kitchen make this ticket without asking me anything?” If the answer is no, the phone process needs work.\n\nROAL’s dashboard includes live kitchen tickets, call history with transcripts and recordings, and a menu editor. That helps owners review where orders get confused, especially during rushes. If questions could not be answered on the call, they land in an inbox so the owner can answer once and the phone host knows it from then on."
+    },
+    {
+      "id": "how-can-you-reduce-mistakes-without-adding-more-labor",
+      "h2": "How can you reduce mistakes without adding more labor?",
+      "body": "Many owners think the answer is hiring another phone person. Sometimes that helps, but it is often expensive to keep a dedicated caller on shift.\n\nOther common options have tradeoffs:\n- Delivery apps often take roughly 15-30% commission per order.\n- Human answering services often bill by the minute or by the call.\n- Many AI phone tools charge a monthly fee whether or not orders come in.\n\nIf you want a different model, ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. That can make more sense for a shop that gets busy at dinner but quiet during the afternoon.\n\nA practical comparison for your own store:\n1. Estimate your monthly phone order count.\n2. Multiply by your current handling cost.\n3. Compare that to your labor, commission, or monthly software spend.\n4. Decide whether the biggest problem is cost, accuracy, or speed.\n\nUse [pricing](/pricing) if you want to see the pricing model clearly, or compare it with your current setup using the [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    }
+  ],
+  "takeaways": [
+    "Most phone order mistakes come from rushed details, not bad food.",
+    "A read-back is the fastest way to catch missing sizes, modifiers, and notes.",
+    "Pickup time mistakes usually happen when the front counter guesses instead of checking the line.",
+    "A clean kitchen ticket prevents phone errors from becoming kitchen errors.",
+    "ROAL can take orders, confirm them, and send them to the kitchen screen, but it does not take card numbers."
+  ],
+  "faq": [
+    {
+      "q": "What is the biggest mistake restaurants make on phone orders?",
+      "a": "The biggest mistake is not confirming the full order before ending the call. Missing one modifier or size can turn a correct order into a complaint. A slow, complete read-back is the easiest fix."
+    },
+    {
+      "q": "How do I make sure the kitchen gets the right phone order?",
+      "a": "Use a ticket that includes the caller name, phone number, items, sizes, modifiers, notes, and ready time. If the kitchen can start cooking without asking follow-up questions, your handoff is probably good. A clean screen ticket is better than handwritten scraps."
+    },
+    {
+      "q": "Should staff take payment over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone, and many restaurants prefer to keep payment at pickup or use their usual payment process. That keeps the call shorter and reduces risk. If you already have a payment flow, keep using it."
+    },
+    {
+      "q": "How can I handle allergy or special request calls safely?",
+      "a": "Do not guess on allergy-sensitive questions. If the caller asks something tricky, hand it to staff with a summary so a person can answer carefully. For simple notes like no onions or sauce on the side, the phone host or staff should record them exactly as said."
+    }
+  ],
+  "words": 1187,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

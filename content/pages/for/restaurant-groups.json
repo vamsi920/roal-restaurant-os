@@ -1,0 +1,123 @@
+{
+  "slug": "restaurant-groups",
+  "label": "Multi-location groups",
+  "h1": "An AI phone host for multi-location restaurant groups",
+  "seoTitle": "AI phone answering for multi-location restaurant groups",
+  "description": "ROAL answers calls and takes pickup orders for multi-location groups. It uses each location’s live menu, gives the right store, and sends kitchen tickets.",
+  "lead": "When you run more than one location, calls get messy fast. ROAL answers at each store, takes pickup orders, and sends a clean ticket to the right kitchen.",
+  "question": "How can an AI phone host handle calls and pickup orders across multiple restaurant locations?",
+  "answer": "ROAL is a phone host for multi-location groups. It can give each location its own phone line, answer calls with the right store’s hours and menu, take pickup orders from the live menu, and send the ticket to that kitchen screen. You can forward all calls, or only busy and unanswered calls, so your team still keeps control.",
+  "pains": [
+    {
+      "title": "Calls go to the wrong store",
+      "body": "A caller asks for the downtown location, but the phone rings at the suburban store. That leads to confusion, wrong hours, and missed orders."
+    },
+    {
+      "title": "One rush hour can spill into every location",
+      "body": "Friday dinner, lunch peak, and holiday weekends can hit each store at once. Staff end up choosing between the phone, the line, and the grill."
+    },
+    {
+      "title": "Each store needs its own menu and hours",
+      "body": "One location may be out of chicken wings, another may close earlier, and a third may have different lunch specials. If the phone answer is stale, orders and expectations get mixed up."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Routes callers to the right location",
+      "body": "ROAL can give each store its own phone line and answer with that location’s details. That helps callers hear the right hours, address, parking, and menu."
+    },
+    {
+      "title": "Takes pickup orders while your team is busy",
+      "body": "When the front counter is packed, the phone host can still take items, sizes, modifiers, and names. It then sends a clean ticket to the kitchen screen."
+    },
+    {
+      "title": "Keeps questions organized",
+      "body": "If a caller asks something the host cannot answer, it saves the question for staff. Once you answer it in the dashboard, the host can use that answer from then on."
+    },
+    {
+      "title": "Lets you stay in control",
+      "body": "You can forward all calls, or only busy and unanswered calls. If you want to stop forwarding, you can turn it off any time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, is this the Smith Street location?"
+    },
+    {
+      "who": "host",
+      "line": "Yes, this is the Smith Street store. How can I help?"
+    },
+    {
+      "who": "caller",
+      "line": "Can I place a pickup order for 6:30?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What would you like?"
+    },
+    {
+      "who": "caller",
+      "line": "One pepperoni pizza, a half tray of chicken parm, and a Caesar salad. No onions on the salad."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One pepperoni pizza, one half tray chicken parm, and one Caesar salad, no onions. What name should I put it under?"
+    },
+    {
+      "who": "caller",
+      "line": "Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your pickup order is set for 6:30 pm. I’ll read it back once more: one pepperoni pizza, one half tray chicken parm, and one Caesar salad, no onions."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:30 pm",
+    "lines": [
+      "Maria · (phone on file)",
+      "1 pepperoni pizza",
+      "1 half tray chicken parm",
+      "1 Caesar salad · no onions",
+      "Ready time: 6:30 pm"
+    ],
+    "note": "Caller asked for Smith Street location"
+  },
+  "sections": [
+    {
+      "h2": "A simple setup for every location",
+      "body": "For multi-location groups, the first job is making sure each store has the right hours, address, and menu. ROAL can read public menu pages, menu PDFs, menu photos, or a website link, then build a phone host in about a minute. That matters when one location has lunch specials, another has a different close time, and a third is sold out of a few items. If you use the same brand voice across stores, you can still give each location its own phone host name and voice. That keeps the call familiar without mixing up the stores. A good test is to place a real order for each location, such as a plain cheese pie at one store and a combo platter at another. If the call sounds right, the ticket should also land in the right kitchen."
+    },
+    {
+      "h2": "What to forward, and when to forward it",
+      "body": "Many owners start by forwarding only busy or unanswered calls. That keeps the front desk in charge when someone is free, while the phone host catches the rush. On a Friday night, that might mean calls stack up during a dinner rush, but the phone still gets answered when the line is full. You can also forward all calls if you want a fully handled line for a location. ROAL works best when your forwarding plan matches your real store flow. For example, a lunch-only deli may need different coverage than a dinner-heavy pizza shop. If you already have a house number people know, you keep it. ROAL sits behind it and can be turned off any time."
+    },
+    {
+      "h2": "A better way to handle repeat questions",
+      "body": "Multi-location groups hear the same questions over and over: What are your hours today? Which store has parking? Is the chicken soup available at the Uptown location? Does the Bay Street store still have the lunch special? ROAL answers the common ones and sends the rest to staff with a summary. That helps you keep the phone calm without making the caller repeat everything later. Over time, the dashboard also helps you tighten each store’s menu and hours notes. If a caller asks about an item the host could not answer, you answer it once and it can be learned for later calls. That is useful when each location has its own small differences but the brand should still feel consistent."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can each restaurant location have its own phone host?",
+      "a": "Yes. ROAL gives each location its own phone line automatically. That helps callers reach the right store and hear the right hours, address, and menu."
+    },
+    {
+      "q": "Can ROAL take pickup orders for different locations?",
+      "a": "Yes. It takes pickup orders from the live menu, including items, sizes, modifiers, and notes, then sends a clean ticket to the kitchen screen. The order goes to the location the caller reached."
+    },
+    {
+      "q": "What happens if a caller asks for a store-specific question?",
+      "a": "ROAL can answer common questions like hours, address, parking, and menu items. If it cannot answer a question, it sends it to staff in an inbox with a summary."
+    },
+    {
+      "q": "Do we have to change our restaurant number?",
+      "a": "No. You keep your existing number. You forward calls to ROAL, either all calls or only when the line is busy or unanswered."
+    },
+    {
+      "q": "How is pricing handled for groups with multiple locations?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract, and calls and test calls are free."
+    }
+  ]
+}

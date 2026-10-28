@@ -1,0 +1,81 @@
+{
+  "slug": "keep-restaurant-phone-number",
+  "keyword": "keep my phone number ai answering",
+  "category": "phone-setup",
+  "title": "Keeping your restaurant number when adding AI answering",
+  "seoTitle": "Keep your restaurant number with AI answering",
+  "description": "Keep your restaurant phone number when you add AI answering, with forwarding steps, setup checks, and examples for owners.",
+  "question": "How do I keep my restaurant phone number when I add AI answering?",
+  "answer": "You can keep your restaurant’s existing number by forwarding it to the new phone line the AI phone host gives you. The restaurant keeps the same public number, and you can forward all calls or only unanswered or busy calls, then turn forwarding off any time if you want to change it.",
+  "summary": "You’ll know how to keep your current number, set forwarding, and check that calls still reach your restaurant.",
+  "intro": "Yes, you can keep your restaurant number when you add AI answering. Your existing number stays the one customers already know, and calls can be forwarded to the AI phone host’s line behind the scenes.\n\nThat matters for takeout spots, delis, pizza shops, and family restaurants that have had the same number for years. With ROAL, each location gets its own phone line automatically, and you forward your current number to it so the restaurant keeps the number on the sign, menus, and Google listing.",
+  "sections": [
+    {
+      "id": "can-i-keep-the-number-customers-already-call",
+      "h2": "Can I keep the number customers already call?",
+      "body": "Yes. You do not need to replace your restaurant’s public number when you add an AI phone host. The usual setup is simple: your current number stays in place, and calls are forwarded to the new line ROAL gives your location.\n\nThat means regular callers still dial the same number they already know. To them, nothing changes on the outside. Behind the scenes, the calls go to the phone host, which can answer questions, take pickup and delivery orders from your live menu, and send a clean ticket to the kitchen screen.\n\nA good way to explain it to staff is:\n> “We’re keeping the same number. We’re just sending the calls somewhere else when needed.”\n\nFor a small shop, that can be especially helpful during the lunch rush or when one person is stuck on the line. If a call needs a manager, catering help, or something sensitive, the host can hand it to staff with a summary. ROAL also lets the owner pick the voice and name, so it sounds like a real part of the restaurant, not a switchboard.\n\nIf you want a broader view of setup options, see [How it works](/how-it-works) and [Questions owners ask](/faq)."
+    },
+    {
+      "id": "how-do-i-forward-my-restaurant-number-without-making-a-mess",
+      "h2": "How do I forward my restaurant number without making a mess?",
+      "body": "Start by checking what kind of phone system you have. On many landlines and some carriers, you dial *72 and then the forwarding number to send all calls, and *73 to turn it off. On many GSM mobile carriers, **21*number# forwards all calls, ##21# turns it off, **61*number# forwards unanswered calls, and **67*number# forwards busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually handle this in the web portal.\n\nUse this simple process:\n1. Write down your current restaurant number.\n2. Get the forwarding number ROAL gives your location.\n3. Decide whether you want all calls forwarded, or only busy / unanswered calls.\n4. Set the forwarding code or portal setting.\n5. Call your restaurant from a cell phone and check that the host answers.\n6. Place a test order and confirm the kitchen gets a clean ticket.\n\nBecause codes can vary by carrier and plan, always confirm with your carrier and test with a real call. If you need the exact code list in one place, keep [Call forwarding codes by carrier](/tools/call-forwarding-codes) open while you set it up.\n\nA quick script for the person setting it up:\n> “I’m forwarding our main line to our new restaurant answering line. Please confirm the code for my plan.”"
+    },
+    {
+      "id": "should-i-forward-all-calls-or-only-some-calls",
+      "h2": "Should I forward all calls or only some calls?",
+      "body": "That depends on how you want the restaurant to run. Many owners start with unanswered or busy-call forwarding, because the line still rings normally first. If nobody picks up, or the line is busy, the call rolls to the AI phone host.\n\nHere is a practical way to choose:\n\n| Setup choice | Best for | What happens |\n|---|---|---|\n| All calls forwarded | Short-staffed shifts, heavy lunch rush | Every call goes to the host first |\n| Busy forwarding | One phone line, constant ring | Calls go to the host only when the line is busy |\n| No-answer forwarding | Staff answers most calls | Calls go to the host after a few rings |\n| All calls off | Testing or a manual change | Calls stay on the normal line |\n\nFor many independent restaurants, busy or no-answer forwarding is the safest first step. You keep the familiar ringing pattern for staff, while still catching the calls that would otherwise go to voicemail or be lost.\n\nA front-counter example:\n> “If we’re slammed with tickets, the caller still gets answered and the order still gets written down.”\n\nROAL also lets the owner turn forwarding off any time, so you can switch back if your schedule changes or you want to compare setups. If you are weighing this against staffing, the [phone staff cost calculator](/tools/phone-staff-cost-calculator) can help you plug in your own numbers."
+    },
+    {
+      "id": "what-should-i-tell-staff-before-i-switch-the-line",
+      "h2": "What should I tell staff before I switch the line?",
+      "body": "Keep the handoff short and practical. Most problems happen when the team does not know which calls are going where, or when someone thinks the main number changed. Before you switch, tell the team what to expect and who is checking the inbox for questions the host could not answer.\n\nUse this 4-point staff checklist:\n- The public restaurant number stays the same.\n- Forwarding is only sending calls to the new line.\n- The host can take orders, reservation requests, and basic menu questions.\n- Manager calls, allergy-sensitive questions, catering, and complaints still go to staff with a summary.\n\nA useful line for the shift lead:\n> “If the host gets something unusual, it sends us the summary so we can handle it.”\n\nIt also helps to show the team the dashboard. ROAL includes live tickets on the kitchen screen, plus call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That means staff can see what came in, what was quoted, and what the caller asked for.\n\nIf your menu changes often, upload the latest version before you go live. ROAL reads menus from public pages or from a file you upload, then builds the phone host in about a minute. For owners who want to test the flow first, [Build a free test host](/try) lets you call it in the browser with no sign-up needed."
+    },
+    {
+      "id": "what-happens-to-orders-quotes-and-tricky-calls",
+      "h2": "What happens to orders, quotes, and tricky calls?",
+      "body": "The point of keeping your number is not just convenience. It is to keep the order flow clean. When the host answers, it can take items, sizes, modifiers, and notes, collect the caller’s name and phone, quote a ready time, and confirm the order back. It also speaks the caller’s language and skips items marked sold out.\n\nHere is a simple example you can swap for your own numbers:\n- Say your average pickup order is **$28**.\n- If a caller wants two pizzas, a side, and a drink, the host can take the items and send the ticket to the kitchen.\n- If a call needs extra help, the host hands it to staff with a summary instead of trying to guess.\n\nThat matters for allergy-sensitive questions and complaints. You do not want a machine making up an answer. ROAL is set up to pass those calls to people. It also does **not** take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it.\n\nA good kitchen note from the host might look like this:\n> “Two large pepperoni, one gluten-free crust, no onions, ready in 25 minutes.”\n\nIf you are comparing this to delivery apps, remember that delivery apps commonly charge roughly 15-30% commission per order. ROAL is priced per completed phone order, billed monthly, with no monthly fee, no setup fee, no per-minute fee, and no contract. You can see the full breakdown on [Pricing](/pricing)."
+    },
+    {
+      "id": "how-do-i-test-the-setup-before-i-trust-it-on-a-busy-night",
+      "h2": "How do I test the setup before I trust it on a busy night?",
+      "body": "Do not wait for dinner rush to find out something is off. Test the forwarding first, then test the call flow, then test a real order. A ten-minute check can save a lot of stress later.\n\nUse this test plan:\n1. Call your restaurant from a cell phone.\n2. Confirm the forwarding path sends the call to the host.\n3. Ask for your hours, address, and parking.\n4. Place a small pickup order with one modifier.\n5. Ask a menu question that should be answered from the public info.\n6. Ask one unusual question so you can confirm it lands with staff.\n7. Check the kitchen screen for the ticket.\n\nA front-of-house script you can use:\n> “I’m testing the new phone setup. Please ring the restaurant number and make sure it reaches the host.”\n\nIf the line does not behave the way you want, turn forwarding off, fix the setting, and test again. That is one reason the setup is low-risk to try. ROAL gives each location its own line automatically, so the restaurant can keep the number customers already know while changing the back end.\n\nIf you want the exact steps for your phone system, the related posts on [Forwarding calls from RingCentral](/blog/forward-calls-ringcentral), [Forwarding calls with Google Voice](/blog/forward-calls-google-voice), and [How to test that call forwarding works](/blog/test-call-forwarding) are useful references."
+    },
+    {
+      "id": "what-does-a-clean-rollout-look-like-for-one-location-or-many",
+      "h2": "What does a clean rollout look like for one location or many?",
+      "body": "A clean rollout is simple: keep the number, forward it, test it, and watch the first few calls. If you run more than one location, do the same thing for each store number so each place keeps its own identity and its own flow.\n\nA good rollout checklist:\n- Keep the existing public number.\n- Forward only the line you want to automate.\n- Confirm the host knows the current hours, address, menu, and sold-out items.\n- Make sure the staff inbox is monitored.\n- Test one pickup order and one question call.\n- Confirm the forwarding can be turned off any time.\n\nFor owners who want a simple comparison, think of it this way:\n\n| Option | What you keep | What changes |\n|---|---|---|\n| Keep current number + forward it | Your familiar restaurant number | Calls route to the AI phone host |\n| Replace the number | Nothing public stays the same | Customers must learn a new number |\n| Use voicemail | Your number stays public | Callers leave messages instead of ordering |\n\nIf you are adding ROAL, the owner claims the host, chooses the voice and name, and forwards the current number to the new line. That is the core setup. For a closer look at what the host handles, [Use cases](/use-cases) is a good place to compare rush hour, after-hours, reservations, and menu questions.\n\nIf you are ready to try it, [build a free test host from your website](/try)."
+    },
+    {
+      "id": "takeaways-for-owners-who-want-to-keep-the-same-number",
+      "h2": "Takeaways for owners who want to keep the same number",
+      "body": "- You can keep your restaurant’s public number and still add AI answering behind the scenes.\n- Forwarding can be set for all calls, or only unanswered and busy calls, depending on your phone system.\n- Test the setup with a real call before a busy shift.\n- Tricky calls should still go to staff with a summary.\n- ROAL gives each location its own line automatically, while the restaurant keeps its number."
+    }
+  ],
+  "takeaways": [
+    "You can keep your current restaurant number and forward it to the new line.",
+    "Start with busy or no-answer forwarding if you want a gentle rollout.",
+    "Test the setup with a real call before you go live.",
+    "ROAL can take orders, questions, and reservation requests, but card payments still happen the normal way."
+  ],
+  "faq": [
+    {
+      "q": "Can I keep my restaurant number when I add AI answering?",
+      "a": "Yes. The usual setup is to forward your existing restaurant number to the new line the AI phone host gives you. Customers keep calling the same number they already know, while the calls are handled by the host in the background."
+    },
+    {
+      "q": "Should I forward all calls or only unanswered calls?",
+      "a": "Either can work. If your team wants to keep answering first, use no-answer or busy forwarding. If the restaurant is short-staffed or the line is often tied up, forwarding all calls may be simpler."
+    },
+    {
+      "q": "Will the AI phone host take credit card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes the order, confirms it, and sends the ticket to the kitchen screen. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "q": "How do I turn call forwarding off if I need to?",
+      "a": "That depends on your carrier or phone system. Many landlines and some carriers use *73, many GSM carriers use ##21#, and some VoIP systems use their portal settings. Always confirm with your carrier and test with a call after you change it."
+    }
+  ],
+  "words": 1762,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

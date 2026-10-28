@@ -1,0 +1,175 @@
+{
+  "slug": "voicemail",
+  "label": "AI phone host vs voicemail",
+  "h1": "AI phone host vs voicemail",
+  "seoTitle": "AI phone host vs voicemail for restaurants | ROAL",
+  "description": "Compare an AI phone host and voicemail for your restaurant. See cost, rush-hour handling, order taking, and when voicemail is still the simpler choice.",
+  "lead": "Voicemail is cheap and simple. ROAL is for when you want the phone to take pickup orders, answer menu questions, and send a clean ticket to the kitchen.",
+  "question": "Should my restaurant use an AI phone host or just voicemail?",
+  "answer": "If most callers only need to leave a message, voicemail is the simplest choice. But if you miss calls during dinner rush, take pickup orders by phone, or answer the same menu questions again and again, an AI phone host like ROAL can do more than voicemail. ROAL costs $0.90 per completed order, while voicemail does not take orders at all.",
+  "pains": [
+    {
+      "title": "Voicemail loses the order, not just the call",
+      "body": "A caller may hang up when they hear a beep, especially if they wanted a quick pickup order for a burger, pizza, or lunch combo. By the time you check messages, that order may be gone."
+    },
+    {
+      "title": "Rush-hour messages pile up fast",
+      "body": "At 7:00 pm on a Friday, voicemail can collect a long list of missed calls, but it does not answer them. Someone still has to listen, call back, and try to take the order later."
+    },
+    {
+      "title": "It cannot help with menu questions",
+      "body": "Voicemail cannot say whether you serve chicken tikka masala, whether fries are included, or what time you close. It only records what the caller says after the beep."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes the order while the phone is ringing",
+      "body": "ROAL can answer, take items, sizes, modifiers, and notes, then quote a ready time. That helps when a caller wants “two plain slices, one pepperoni slice, and a large Coke.”"
+    },
+    {
+      "title": "Sends a ticket instead of a message",
+      "body": "The order goes to the kitchen screen as a clean ticket. Your team sees the food right away instead of listening to a voicemail and rewriting it by hand."
+    },
+    {
+      "title": "Handles common questions before they become missed calls",
+      "body": "ROAL can answer hours, address, parking, and menu questions. That helps when callers ask, “Are you still open?” or “Do you have gluten-free crust?”"
+    },
+    {
+      "title": "Keeps voicemail as the backup, if you want it",
+      "body": "Voicemail can still make sense for very small shops, owners who only need messages, or times when you do not want any phone automation. ROAL is better when you want the phone to do actual work."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One large pepperoni pizza, one medium plain cheese pizza, and an order of garlic knots."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One large pepperoni pizza, one medium plain cheese pizza, and one garlic knots. Any changes?"
+    },
+    {
+      "who": "caller",
+      "line": "Add extra mozzarella to the pepperoni, and no garlic on the knots. My name is Sam."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Sam. I have extra mozzarella on the large pepperoni and no garlic on the knots. I’ll have it ready at 7:20 pm."
+    },
+    {
+      "who": "caller",
+      "line": "Perfect."
+    },
+    {
+      "who": "host",
+      "line": "Great. Your order is confirmed for 7:20 pm."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "1 large pepperoni pizza",
+      "- extra mozzarella",
+      "1 medium plain cheese pizza",
+      "1 garlic knots",
+      "- no garlic",
+      "Name: Sam"
+    ],
+    "note": "Confirm ready time at 7:20 pm."
+  },
+  "sections": [
+    {
+      "h2": "When voicemail is the better choice",
+      "body": "Voicemail can be the better choice if you only want a message box on the phone. It is simple, familiar, and has no per-order cost. For a very small restaurant that rarely misses calls, or a shop that prefers to call people back later, voicemail may be enough.\n\nVoicemail also fits some owners who do not want callers talking to a phone host at all. If you only need to catch a name, number, and message after hours, that is a valid use. It does not try to take orders, answer menu questions, or keep up during a dinner rush.\n\nThe tradeoff is plain: voicemail waits for the caller, while a phone host helps the caller right away. If your phone is often busy during lunch, Friday night, or holiday takeout, that difference matters."
+    },
+    {
+      "h2": "What to ask before you switch",
+      "body": "Start with your busiest call types. Do people ask for pickup orders, reservation requests, hours, delivery area, or allergen questions? If the answer is yes, voicemail may be too limited.\n\nNext, think about your menu. If you sell items like chicken parm heroes, half-and-half pizzas, biryani, wings, or sushi rolls, callers often need sizes, add-ons, and notes. A phone host can collect those details. Voicemail cannot.\n\nAlso think about staff time. A voicemail message still has to be heard, written down, and handled later. A phone host can turn the call into a kitchen ticket right away. If you want, you can [build a free test host](/try) and call it with your real menu before you decide."
+    },
+    {
+      "h2": "A simple cost example",
+      "body": "Say you miss 20 calls on a busy Friday. With voicemail, those calls are just messages. Someone still has to listen and call back, and some callers will not wait.\n\nWith ROAL, only completed orders are billed at $0.90 each. If 12 of those calls turn into confirmed orders, that would be 12 × $0.90, or $10.80 for those orders. That is an example only, not a promise.\n\nThe point is not that voicemail has no value. The point is that voicemail stops at the beep. ROAL is built to keep the sale moving by taking the order, confirming it, and sending it to the kitchen."
+    }
+  ],
+  "table": {
+    "otherName": "Voicemail",
+    "rows": [
+      {
+        "label": "Cost model",
+        "roal": "$0.90 per completed order",
+        "other": "Usually built into your phone line or voicemail system"
+      },
+      {
+        "label": "Setup",
+        "roal": "Paste your site, Google Maps link, or name and city at /try",
+        "other": "Turn voicemail on and record a greeting"
+      },
+      {
+        "label": "Rush-hour capacity",
+        "roal": "Can answer and take orders while staff is busy",
+        "other": "Calls go to a message after the beep"
+      },
+      {
+        "label": "Menu knowledge",
+        "roal": "Reads your menu, prices, hours, and address from public pages or an uploaded menu",
+        "other": "Does not know your menu unless the caller says it"
+      },
+      {
+        "label": "Kitchen tickets",
+        "roal": "Sends a clean ticket to the kitchen screen",
+        "other": "Leaves a voicemail that staff must listen to and rewrite"
+      },
+      {
+        "label": "Languages",
+        "roal": "Can speak the caller’s language",
+        "other": "Depends on the greeting and caller"
+      },
+      {
+        "label": "After hours",
+        "roal": "Can still answer, take questions, and capture orders if you forward calls",
+        "other": "Can record a message, but not serve the caller"
+      },
+      {
+        "label": "Handoff to staff",
+        "roal": "Hands special cases to staff with a summary",
+        "other": "Staff must review the message later"
+      },
+      {
+        "label": "Best for",
+        "roal": "Restaurants that want phone orders and fewer missed sales",
+        "other": "Restaurants that only want messages and the simplest setup"
+      }
+    ]
+  },
+  "verdict": "Pick voicemail if you want the most basic, lowest-effort backup for messages only. Pick ROAL if you want the phone to help take orders, answer common questions, and reduce the work of missed calls. For many busy restaurants, the choice comes down to whether the phone should just record messages or actually help serve guests.",
+  "faq": [
+    {
+      "q": "Does voicemail take the order for me?",
+      "a": "No. Voicemail records a message after the beep. The caller has to leave the order, and your team has to listen and write it up later. ROAL can take the order and send a ticket to the kitchen."
+    },
+    {
+      "q": "Is voicemail cheaper than ROAL?",
+      "a": "Usually yes on paper, because voicemail is often already part of your phone service. But voicemail does not complete orders. ROAL charges $0.90 per completed order, so you only pay when a confirmed order reaches the kitchen screen."
+    },
+    {
+      "q": "What if I only want after-hours messages?",
+      "a": "Voicemail can be a good fit for that. If you only need a simple message box overnight, voicemail is easy and familiar. If you want to keep taking orders after hours, ROAL is the stronger option."
+    },
+    {
+      "q": "Can ROAL and voicemail work together?",
+      "a": "Yes. Many owners may want to forward calls to ROAL when busy or unanswered, and keep voicemail as a backup. You can turn forwarding off any time if you want to go back to voicemail-only handling."
+    },
+    {
+      "q": "What kind of restaurant is voicemail best for?",
+      "a": "Voicemail can work for very small places that rarely miss calls or only want messages. If you run a pizza shop, diner, takeout counter, or any place with steady phone orders, a phone host is usually the better fit."
+    }
+  ]
+}

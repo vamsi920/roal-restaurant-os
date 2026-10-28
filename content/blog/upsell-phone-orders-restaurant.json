@@ -1,0 +1,72 @@
+{
+  "slug": "upsell-phone-orders-restaurant",
+  "keyword": "upsell phone orders",
+  "category": "menu",
+  "title": "How to upsell phone orders politely",
+  "seoTitle": "Upsell phone orders politely | ROAL",
+  "description": "Use polite scripts, smart add-on ideas, and good timing to upsell phone orders without slowing the call or making guests feel pushed.",
+  "question": "How do I upsell phone orders without sounding pushy?",
+  "answer": "Upsell phone orders by offering one helpful add-on at the right moment, using short, specific language. Keep it tied to the caller’s meal, like extra sauce, a side, a drink, or a family-size upgrade, and stop after one clear suggestion. The goal is to make ordering easier and a little better, not to pressure the guest.",
+  "summary": "You’ll learn polite phone upsell scripts, timing, and simple order add-ons that fit real restaurant calls.",
+  "intro": "Upselling phone orders works best when it feels like service, not selling. The polite way is to suggest one useful add-on after the main order is set, then let the caller say yes or no.\n\nFor a pizza shop, deli, or family restaurant, that might be a drink, fries, extra ranch, or a bigger size. The trick is to keep it short, relevant, and easy to decline. If you want a phone host to follow your menu and house rules, ROAL can take orders from your live menu and show upsell suggestions in the dashboard.",
+  "sections": [
+    {
+      "id": "when-should-you-suggest-an-add-on-on-the-phone",
+      "h2": "When should you suggest an add-on on the phone?",
+      "body": "Timing matters more than the offer itself. The best moment is after the caller has placed the main items, but before you confirm the total and ready time. That way the upsell feels like a helpful reminder, not a sales pitch.\n\nA simple phone flow:\n1. Take the main order.\n2. Repeat it back.\n3. Offer one matching add-on.\n4. If they say no, move on.\n\nExample: a caller orders two pepperoni pizzas. A polite upsell line is: \"Would you like to add garlic knots or a 2-liter with that?\" That is better than listing five extras. It saves time and keeps the call moving.\n\nFor takeout spots, the best add-ons are the ones people already expect. Think drinks, fries, sauces, bread, soups, or dessert. For family meals, offer the larger size only once: \"I can switch that to the family tray if you want more for the table.\""
+    },
+    {
+      "id": "what-should-you-say-so-it-sounds-helpful-not-pushy",
+      "h2": "What should you say so it sounds helpful, not pushy?",
+      "body": "Use short, plain language. Avoid hype, long menus, or repeated asking. The caller should hear one clear suggestion and be able to answer in one word.\n\nUse these phrases:\n- \"Would you like to add a side with that?\"\n- \"Want to make that a large for another dollar amount?\"\n- \"We can add extra sauce if you’d like.\"\n- \"Would a drink make that a full meal?\"\n\nWhat to avoid:\n- \"You really should...\"\n- \"Everybody gets...\"\n- \"While I have you, let me add...\"\n- Two or three upsells in a row\n\nA good rule is one offer per order unless the caller asks for more. If they sound rushed, skip the upsell entirely. That is still good service. For example, a caller ordering lunch for pickup may only want speed. A caller ordering dinner for a family may welcome a suggestion for extra sides or a bigger tray.\n\nIf you use an [AI phone host](/use-cases/pickup-orders), keep the script just as plain. ROAL can take items, modifiers, and notes, then follow your menu without sounding stiff."
+    },
+    {
+      "id": "which-add-ons-work-best-for-phone-orders",
+      "h2": "Which add-ons work best for phone orders?",
+      "body": "Start with the items that fit the main order naturally. The best upsells are easy to understand and easy to prepare.\n\n| Main order | Good polite upsell |\n|---|---|\n| Pizza | Garlic knots, wings, 2-liter, extra ranch |\n| Deli sandwich | Chips, pickle, soup, cookie |\n| Burger | Fries upgrade, drink, extra cheese |\n| Family meal | Extra side, bigger tray, dessert |\n| Wings | Celery, dip, fries, extra sauce |\n\nKeep the upsell close to the order. If someone orders wings, ask about ranch or blue cheese. If they order a sandwich, ask about chips or soup. If they order dinner for four, suggest a dessert or a larger tray.\n\nWorked example: say your average phone order is $28. If a caller adds a $5 side or drink, the new order becomes $33. Plug in your own numbers and think in small steps. A modest add-on that feels natural is usually better than chasing a big upgrade that annoys the caller.\n\nFor menu ideas that fit phone ordering, see [menu descriptions that help callers order](/blog/menu-descriptions-that-sell) and [making your menu easy to order by phone](/blog/restaurant-menu-for-phone-orders)."
+    },
+    {
+      "id": "how-do-you-keep-the-order-fast-during-a-rush",
+      "h2": "How do you keep the order fast during a rush?",
+      "body": "Speed is everything when the phone is ringing and the kitchen is busy. During a rush, the upsell should be one sentence, not a speech.\n\nUse this rush-hour checklist:\n- Ask only one add-on question.\n- Skip upsells for obvious hurry-up callers.\n- Offer the easiest item to add to the ticket.\n- Confirm the final order once, then move to ready time.\n\nExample script: \"Your order is two cheese pizzas and a salad. Would you like to add a 2-liter?\" If the caller says no, answer: \"No problem. Your total is...\" Then finish the call.\n\nIf your staff is short, a phone host can help keep the line moving. ROAL answers the restaurant's phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen. It also gives you upsell suggestions in the dashboard, so your team can keep the same playbook on every call.\n\nIf you want more phone-order ideas for busy hours, the [rush-hour phone orders](/use-cases/rush-hour) page is a useful place to start."
+    },
+    {
+      "id": "how-do-you-set-upsell-rules-for-your-own-menu",
+      "h2": "How do you set upsell rules for your own menu?",
+      "body": "Your upsell should match your kitchen, not some generic list. Start by picking three to five add-ons that are simple, profitable, and already in stock often.\n\nA practical setup:\n1. Pick one add-on per main category.\n2. Tie each add-on to a spoken script.\n3. Mark items that should not be suggested when sold out.\n4. Review the menu weekly and update prices or notes.\n\nIf you sell pizza, you might pair pies with wings, knots, or soda. If you run a deli, pair sandwiches with chips, soup, or a cookie. If you run a family restaurant, pair entrees with a side salad or dessert. Keep it consistent so your staff, or your AI phone host, does not have to improvise.\n\nROAL reads the restaurant’s live menu and does not offer items marked sold out. That matters for polite upselling, because nothing frustrates a caller more than being offered something you cannot make. Use your upsells as part of the menu, not as random extras.\n\nA simple rule: if the add-on does not make sense with the main order, leave it out."
+    },
+    {
+      "id": "how-can-you-test-whether-the-upsell-is-polite-enough",
+      "h2": "How can you test whether the upsell is polite enough?",
+      "body": "The best test is to read the script out loud and imagine a tired customer answering the phone. If the line feels long, awkward, or repetitive, shorten it.\n\nUse this quick test:\n- Can the caller answer yes or no in one breath?\n- Does the add-on fit the meal?\n- Would you say it to a regular customer face-to-face?\n- Does the offer stop after one ask?\n\nTry this side-by-side:\n- Too pushy: \"Would you like fries, a drink, dessert, and extra sauce?\"\n- Better: \"Would you like fries or a drink with that?\"\n\nYou can also test with real calls. A setup through ROAL takes about a minute from a restaurant website, Google Maps link, or name and city. The owner can test-call it in the browser before going live, and then decide which upsell line feels right. If a question comes up that the host cannot answer, it lands in the inbox so staff can reply once and the host learns it for next time.\n\nNear the end, try [build a free test host](/try) and listen for whether the upsell feels natural with your own menu."
+    }
+  ],
+  "takeaways": [
+    "Use one short upsell question after the main order, not a sales pitch.",
+    "Match the add-on to the meal: sides, drinks, sauces, desserts, or size upgrades.",
+    "Skip the upsell when the caller sounds rushed or the kitchen is slammed.",
+    "Keep sold-out items out of your suggestions.",
+    "Test your script out loud before using it on real calls."
+  ],
+  "faq": [
+    {
+      "q": "What is the best upsell script for phone orders?",
+      "a": "The best script is short and specific. Try: \"Would you like to add a side or a drink with that?\" It should fit the order, be easy to say yes or no to, and stop after one question."
+    },
+    {
+      "q": "When should I ask about an upsell on the phone?",
+      "a": "Ask after the caller has ordered the main items, but before you confirm the total and ready time. That is the cleanest moment because the order is already in progress and the add-on feels natural."
+    },
+    {
+      "q": "What items are easiest to upsell on phone orders?",
+      "a": "The easiest items are things people already expect to add: drinks, fries, chips, bread, sauces, soup, dessert, and family-size upgrades. Choose items that are quick for the kitchen and easy for the caller to understand."
+    },
+    {
+      "q": "Can an AI phone host handle upsells politely?",
+      "a": "Yes, if the script is simple and tied to your menu. ROAL can take orders from the live menu, follow your house rules, and show upsell suggestions in the dashboard. It still does not take card numbers, and unusual calls go to staff."
+    }
+  ],
+  "words": 1157,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

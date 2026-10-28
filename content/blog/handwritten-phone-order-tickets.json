@@ -1,0 +1,76 @@
+{
+  "slug": "handwritten-phone-order-tickets",
+  "keyword": "handwritten order tickets restaurant",
+  "category": "phone-orders",
+  "title": "How to move off handwritten order tickets",
+  "seoTitle": "Handwritten order tickets for restaurants | ROAL",
+  "description": "Handwritten order tickets slow kitchens down. Switch to clean phone tickets, cut errors, and keep calls organized.",
+  "question": "How do I move off handwritten order tickets in my restaurant without making service harder?",
+  "answer": "Start by putting every phone order into a clean digital ticket instead of handwriting it on slips. Keep the same phone number, forward calls to an AI phone host like ROAL, and let it capture items, notes, name, phone, and ready time before sending the ticket to the kitchen screen.",
+  "summary": "You’ll know how to replace handwritten phone tickets with a cleaner phone-order flow your kitchen can actually use.",
+  "intro": "Handwritten order tickets restaurant teams use every day can be hard to read, easy to lose, and slow to hand off. Moving off them means giving the phone order a cleaner path from caller to kitchen screen.\n\nFor most independent restaurants, the simplest switch is to keep the same number, forward calls, and use a phone host that takes the order, confirms it, and sends a clear ticket. ROAL does that for pickup and delivery orders, and it can answer menu, hours, address, and parking questions too.",
+  "sections": [
+    {
+      "id": "why-handwritten-phone-order-tickets-cause-trouble-in-a-busy-",
+      "h2": "Why handwritten phone order tickets cause trouble in a busy kitchen",
+      "body": "A handwritten ticket looks simple until the rush starts. One crowded line, a smudged note, or a rushed scratch-out can turn into the wrong pizza, the wrong size, or a missing side.\n\nCommon pain points are easy to spot:\n- Hard-to-read handwriting at the pass\n- Missing phone numbers when a customer needs a callback\n- Notes written out of order, like toppings and modifiers mixed together\n- Tickets that sit on a counter instead of reaching the kitchen fast\n\nA clean phone order flow fixes those handoff problems. Instead of writing while the phone rings, the order is captured once and sent in a standard format. If you want a reference for what that should look like, see [what a clean phone order ticket looks like](/blog/phone-orders-ticket-format).\n\nExample: say your staff takes a $28 average phone order. If the ticket is messy and the kitchen has to call back to clarify a topping, that order takes longer than it should. You can plug in your own average order and compare it to the time your team spends deciphering slips. The issue is not just speed; it is accuracy, especially when the dining room is full and the phone keeps ringing."
+    },
+    {
+      "id": "what-should-replace-the-handwritten-ticket-at-the-counter",
+      "h2": "What should replace the handwritten ticket at the counter?",
+      "body": "You do not need a complicated setup to replace a handwritten ticket. You need a clear path from phone to kitchen.\n\nA practical replacement usually has these pieces:\n1. The caller reaches your restaurant number as usual.\n2. The phone host answers and takes the order from your live menu.\n3. The host collects name, phone number, items, sizes, modifiers, and notes.\n4. The host gives a ready time and confirms the order back.\n5. A clean ticket lands on the kitchen screen.\n\nThat last step matters. A kitchen screen gives the staff one place to look instead of chasing sticky notes, loose slips, and voice memos. ROAL is built for that flow: it answers the phone, takes pickup and delivery orders, and sends a clean ticket to the kitchen screen.\n\nQuick checklist for your replacement setup:\n- Menu and prices are current\n- Hours and address are accurate\n- Sold-out items are marked so they are not offered\n- Kitchen staff know where to watch for new tickets\n- Someone can handle odd cases that need a human\n\nIf you want to compare options, the [ROAL pricing page](/pricing) shows the order-based model, and the [how it works page](/how-it-works) shows the setup flow in plain English."
+    },
+    {
+      "id": "how-do-you-keep-your-existing-number-and-switch-calls-safely",
+      "h2": "How do you keep your existing number and switch calls safely?",
+      "body": "Most owners worry about losing their number or making a bad switch during the dinner rush. You do not have to give up your current line.\n\nWith ROAL, the owner claims the host, ROAL gives each location its own phone line automatically, and then the restaurant forwards its existing number to it. You can forward all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nA safe way to switch:\n- Set up the host from your website, Google Maps link, or restaurant name and city at /try\n- Test-call it in the browser before going live\n- Pick the voice and name\n- Forward calls during a slow period first\n- Watch a few real calls and listen to the transcripts\n\nExample call script for your staff when training:\n\"If the line is busy, the phone host will take the order and send it to the kitchen screen. If a caller asks about catering, allergies, or a manager, it passes that to us with a summary.\"\n\nFor forwarding codes, follow your carrier’s instructions and test with a real call. The exact steps vary by phone system, landline, or mobile plan, so confirm before you switch the whole store. If you want a simple reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-should-the-phone-host-collect-so-the-kitchen-does-not-h",
+      "h2": "What should the phone host collect so the kitchen does not have to ask twice?",
+      "body": "A good phone-order flow does more than take a name. It should collect the details the kitchen needs the first time.\n\nROAL can take items, sizes, modifiers, and notes; collect the caller’s name and phone; quote a ready time; and confirm the order back. It also speaks the caller’s language, which helps when the front counter is busy and the caller is not comfortable speaking English.\n\nUse this simple checklist for every order:\n- Item names and sizes\n- Toppings or modifiers\n- Special notes, like no onions or extra crisp\n- Caller name and callback number\n- Pickup or delivery\n- Ready time\n\nExample script line you can use in staff training:\n\"Please say the size, crust, and any changes one at a time so the ticket prints clean.\"\n\nIt helps to think about the messy tickets you get now. If a handwritten slip often says \"large pie, half pepperoni, extra sauce, no cheese\" but leaves out the phone number or time, the kitchen has to guess less with a structured ticket. ROAL also does not offer items marked sold out, which cuts down on a common source of callbacks.\n\nFor tricky calls, ROAL hands off catering requests, complaints, allergy-sensitive questions, and manager requests to staff with a summary. It does not take card numbers over the phone. Payment happens at pickup or however you already handle it."
+    },
+    {
+      "id": "what-does-the-math-look-like-compared-with-handwriting-every",
+      "h2": "What does the math look like compared with handwriting every ticket?",
+      "body": "When owners compare options, they usually want a simple cost picture. That is fair. You can compare your current manual process to a phone host with a few numbers you already know.\n\nHere is a rough example you can swap for your own:\n| Item | Example number | Use your number |\n| --- | --- | --- |\n| Average phone order | $28 | ___ |\n| Phone orders per day | 20 | ___ |\n| Completed phone orders per month | 600 | ___ |\n| ROAL cost per completed order | $0.90 | ___ |\n| Monthly ROAL cost at 600 orders | $540 | ___ |\n\nNow compare that with the time your staff spends answering the phone, writing tickets, and re-reading unclear notes. A handwritten flow can seem free, but it usually pulls attention away from prep, packing, and the counter.\n\nIf you want to compare models, keep these broad market facts in mind: delivery apps commonly take roughly 15-30% commission per order, many AI phone tools charge a fixed monthly fee per location, and human answering services usually bill per minute or per call. ROAL is different because it charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nIf you want a simple calculator for your own numbers, use the [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "how-do-you-handle-the-calls-that-should-not-stay-in-the-phon",
+      "h2": "How do you handle the calls that should not stay in the phone host?",
+      "body": "Replacing handwritten tickets does not mean forcing every call into the same box. Some calls still need a person, and that is normal.\n\nROAL passes certain calls to staff with a summary, including:\n- Catering questions\n- Complaint calls\n- Allergy-sensitive questions\n- Manager requests\n\nThat matters because these calls often need judgment, not just order-taking. The phone host can gather the basics and hand off the rest so your team starts with context instead of an empty voicemail.\n\nA practical handoff script for staff:\n\"Thanks for holding. I see the caller’s name, number, and the issue. I can take it from here.\"\n\nYou should also decide how you want to treat sold-out items and notes. Keep your menu current, and use the menu editor so the host does not offer items you cannot make. If a caller asks a question the host cannot answer, it goes to an inbox. You answer once, and the host learns it from then on.\n\nThat is especially useful for family restaurants, pizza shops, delis, and takeout spots where the same questions repeat all week: parking, hours, sauce options, or whether a menu item is available on certain days. You can also point staff to the [phone greeting templates](/tools/phone-greeting-templates) if you want a better handoff line for rush periods."
+    },
+    {
+      "id": "what-is-the-cleanest-first-step-to-move-off-paper-slips",
+      "h2": "What is the cleanest first step to move off paper slips?",
+      "body": "The best first step is not buying hardware. It is cleaning up your menu and testing the call flow before you switch anything live.\n\nA simple rollout plan:\n1. Pull your current menu, hours, address, and parking details together.\n2. Paste your website, Google Maps link, or \"Name, City\" at /try, or upload a menu in any format.\n3. Test-call the host in the browser and listen for awkward spots.\n4. Fix menu names, sizes, and sold-out items.\n5. Claim the host and forward the restaurant’s existing number.\n6. Watch the first few tickets and adjust wording where needed.\n\nROAL is built to make that start quick. It reads public menu pages, PDFs, and menu photos to build a phone host in about a minute, then lets you test it before you go live. For owners who want a little more background, [about ROAL](/about) explains who built it and where it started, and [ROAL facts](/facts) collects the basics in one place.\n\nIf you are ready to stop relying on handwritten slips for phone orders, [build a free test host from your website](/try).\n\nThe goal is simple: cleaner tickets, fewer back-and-forth calls, and a kitchen that gets a readable order instead of a rushed note."
+    }
+  ],
+  "takeaways": [
+    "Handwritten tickets slow kitchens down because they are easy to misread, lose, or leave incomplete.",
+    "A cleaner replacement is a phone host that takes the order and sends a standard ticket to the kitchen screen.",
+    "ROAL can answer calls, take pickup and delivery orders, and pass tricky calls to staff with a summary.",
+    "You can keep your existing number by forwarding calls and turn forwarding off any time."
+  ],
+  "faq": [
+    {
+      "q": "What is the best replacement for handwritten phone order tickets?",
+      "a": "The best replacement is a clean digital ticket that comes from a phone-order flow, not a handwritten slip. The caller places the order, the system captures the details, and the kitchen sees one readable ticket. That reduces mistakes and saves time during the rush."
+    },
+    {
+      "q": "Can I keep my restaurant phone number if I switch off handwritten tickets?",
+      "a": "Yes. With ROAL, you keep your existing number and forward calls to the new phone line it gives your location. You can forward all calls or only busy and unanswered calls, and you can turn forwarding off any time."
+    },
+    {
+      "q": "Does ROAL take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It collects the order details and sends the ticket to the kitchen screen, and payment happens at pickup or however your restaurant already handles it."
+    },
+    {
+      "q": "How much does it cost to move away from handwritten order tickets with ROAL?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "words": 1598,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

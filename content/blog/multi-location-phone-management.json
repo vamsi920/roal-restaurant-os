@@ -1,0 +1,77 @@
+{
+  "slug": "multi-location-phone-management",
+  "keyword": "multi location restaurant phone system",
+  "category": "operations",
+  "title": "Managing calls across multiple restaurant locations",
+  "seoTitle": "Multi-location restaurant phone management | ROAL",
+  "description": "Handle calls across every location with one system for routing, menus, and order flow. Keep each store organized without adding front counter work.",
+  "question": "How do I manage phones across multiple locations without losing orders or confusing callers?",
+  "answer": "Use one phone setup for the group, but give each location its own line, menu, hours, and call handling rules. Forward each store's existing number to its line, then send live orders, questions, and manager issues to the right place with a clean kitchen ticket and call summary.",
+  "summary": "Set up a clear phone workflow for each location so calls reach the right store and orders stay organized.",
+  "intro": "A multi location restaurant phone system works best when each store gets its own phone line, menu, and call flow. That keeps orders, hours, and kitchen tickets tied to the right location instead of getting mixed up.\n\nWith ROAL, you can set up each location from a website, Google Maps link, or name and city, then forward your existing number to the right line. ROAL answers calls, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen. [Use case: multiple locations](/use-cases/multi-location)",
+  "sections": [
+    {
+      "id": "what-should-each-location-s-phone-setup-handle",
+      "h2": "What should each location’s phone setup handle?",
+      "body": "Start by thinking about the jobs the phone has to do at each store. A good multi location restaurant phone system should answer routine questions, take orders, and send the right details to the right kitchen without forcing staff to repeat the same information all day.\n\nFor each location, make sure the phone setup can handle:\n- Hours and holiday closures\n- Address and parking questions\n- Pickup and delivery orders from that store’s menu\n- Reservation requests, if you take them\n- Catering, allergy-sensitive questions, complaints, and manager requests sent to staff\n\nA simple owner script helps when you train staff or test the line: \"Thanks for calling. Are you ordering from the Main Street store or the River Road store?\" If callers reach the wrong line, your system should make that correction easy instead of sending them back to voicemail. ROAL can do this with separate location lines and location-specific menus, which is why it fits groups that want order flow to stay clean."
+    },
+    {
+      "id": "how-do-i-route-calls-without-making-customers-guess",
+      "h2": "How do I route calls without making customers guess?",
+      "body": "The easiest setup is to let each location keep its own published number, then forward that number to the phone host line for that store. That way the restaurant keeps its own number, and you can turn forwarding on only when you want it.\n\nA practical routing plan looks like this:\n1. Give each location its own line.\n2. Forward the store number to that line when calls should be handled there.\n3. Send unanswered or busy calls only if that matches your staffing pattern.\n4. Confirm the forwarding with a live test call from your cell phone.\n\nPhone setup codes vary by carrier and plan, so check with your provider before you rely on a code. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. Some mobile carriers use codes such as **21*number# for all calls and **61*number# or **67*number# for unanswered or busy calls, while Verizon Wireless often uses *72 / *73 and *71. Business VoIP systems usually handle this in the web portal. For a quick reference, see [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-do-you-keep-menus-hours-and-sold-out-items-separate",
+      "h2": "How do you keep menus, hours, and sold-out items separate?",
+      "body": "This is where many groups get tripped up. One location runs out of an item, another still has it, and the caller gets the wrong answer. Your phone setup should treat each store as its own menu and hours source, even if the restaurant group is the same.\n\nROAL reads public pages like a website, menu PDF, menu photos, Google Maps link, or a name and city, then builds a phone host in about a minute. If you upload a menu, you can keep each location current without rebuilding everything from scratch. The host also does not offer items marked sold out.\n\nUse this simple checklist for every store:\n- Confirm the store address and parking note\n- Confirm hours, including lunch breaks or early closings\n- Remove or mark sold-out items\n- Check that prices match the menu you want callers to hear\n- Save common answers for questions the host could not answer\n\nIf you want to see how the menu side works, [ROAL facts](/facts) explains what the host reads and what it sends to the kitchen."
+    },
+    {
+      "id": "what-does-a-good-multi-location-call-flow-sound-like",
+      "h2": "What does a good multi-location call flow sound like?",
+      "body": "Call flow should feel natural, not robotic. The caller should hear a clear answer, place the order, and know which store is handling it before the call ends. If a caller needs a person, the host should hand it off with a useful summary instead of forcing staff to start over.\n\nHere is a simple call flow you can use:\n- Greet the caller and identify the location\n- Answer hours, address, and menu questions first\n- Take the order with items, sizes, modifiers, and notes\n- Collect the caller's name and phone\n- Quote a ready time\n- Confirm the order back\n- Send a clean ticket to the kitchen screen\n\nExample script line: \"Your pickup order will be ready in about 20 minutes at the Bayview location.\" If the caller asks about an allergy, a large catering order, or a manager, the host should hand that off to staff with the summary. ROAL also speaks the caller's language, which helps when the same group serves different neighborhoods."
+    },
+    {
+      "id": "how-much-should-a-multi-location-setup-cost-to-run",
+      "h2": "How much should a multi-location setup cost to run?",
+      "body": "The right setup should be easy to compare with what you already spend. Delivery apps commonly take roughly 15-30% commission per order, while many AI phone tools charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in. Human answering services usually bill per minute or per call.\n\nROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing happens monthly.\n\nWorked example: say one location gets 200 completed phone orders in a month. At $0.90 per order, that would be $180 for that location. Plug in your own order count and compare it with your current phone labor, answering service bill, and delivery app commission. You can compare that against [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans)."
+    },
+    {
+      "id": "what-should-i-review-every-week-across-all-locations",
+      "h2": "What should I review every week across all locations?",
+      "body": "Once your stores are live, keep the review process simple. The goal is not to babysit the phones. The goal is to make sure each location still sounds right and the kitchen is getting clean tickets.\n\nA weekly owner checklist:\n- Listen to a few call recordings from each store\n- Scan call history and transcripts for missed answers\n- Check that hours are correct for each location\n- Review the kitchen screen for new, preparing, and ready tickets\n- Update FAQs when a question keeps coming up\n- Make sure any sold-out items are still marked correctly\n\nIf the host cannot answer a question, it goes to your inbox. You answer it once, and the host knows it from then on. That is helpful for small chains because you do not have to retrain the whole team every time a store changes a menu note or parking instruction. If your group is still deciding who owns this work, [restaurant types](/for/restaurant-groups) can help you think through the fit."
+    },
+    {
+      "id": "how-can-owners-roll-this-out-without-a-big-tech-project",
+      "h2": "How can owners roll this out without a big tech project?",
+      "body": "Keep the rollout small. Start with one or two locations, test the phone flow, then add the rest. The best setup is the one your managers can actually maintain on a busy Friday night.\n\nA simple rollout plan:\n1. Pick one location with the most call volume.\n2. Paste the website, Google Maps link, or name and city into /try.\n3. Test-call the host in the browser with no sign-up needed.\n4. Claim the host and forward the store number to its line.\n5. Repeat for the next location after the first one sounds right.\n\nROAL was built by Venkata Vamsi, a founder in Jersey City, NJ, and the first restaurants using it are in Jersey City and Hoboken, but it works for any US restaurant. If you want to try a test setup from your own site, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Give each location its own line, menu, and hours.",
+    "Forward the existing store number to the right line and test it.",
+    "Use one weekly review to catch wrong hours, sold-out items, and common questions.",
+    "Keep tricky calls, complaints, allergy questions, and manager requests with staff.",
+    "Compare per-order pricing with delivery apps and monthly phone plans before you commit."
+  ],
+  "faq": [
+    {
+      "q": "Can one phone system handle several restaurant locations?",
+      "a": "Yes. The key is to give each location its own line, menu, hours, and call handling rules. That keeps orders and questions tied to the right store instead of mixing them together."
+    },
+    {
+      "q": "How do I forward each store’s number to an AI phone host?",
+      "a": "Most restaurants forward the existing number to the host’s line, either for all calls or only when busy or unanswered. Many landlines and carriers use forwarding codes, while business VoIP systems usually use a web portal. Always confirm the code with your carrier and test with a live call."
+    },
+    {
+      "q": "What happens if a caller asks about catering or a complaint?",
+      "a": "Those calls should go to staff with a short summary. ROAL handles routine ordering and common questions, but tricky calls like catering, complaints, allergy-sensitive questions, and manager requests are handed off instead of being guessed at."
+    },
+    {
+      "q": "Does a multi location restaurant phone system replace my regular number?",
+      "a": "No. The restaurant keeps its own number. With ROAL, the owner forwards the existing number to the location’s line, and that forwarding can be turned off any time."
+    }
+  ],
+  "words": 1253,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

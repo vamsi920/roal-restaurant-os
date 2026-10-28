@@ -1,0 +1,77 @@
+{
+  "slug": "phone-orders-vs-online-ordering",
+  "keyword": "phone orders vs online ordering",
+  "category": "phone-orders",
+  "title": "Phone orders vs online ordering: keeping both working",
+  "seoTitle": "Phone orders vs online ordering | ROAL",
+  "description": "Balance phone orders vs online ordering without confusion. See when each channel helps and how to route orders more cleanly.",
+  "question": "Should I keep phone orders and online ordering, or switch to only one?",
+  "answer": "Keep both. Phone orders help customers who want to ask questions, order quickly, or need help with sizes, modifiers, and special requests, while online ordering helps with repeat, simple orders. The best setup is usually to let both channels work together, then send every confirmed order into one clear kitchen workflow.",
+  "summary": "You’ll learn how to keep phone orders and online ordering working together without confusing staff or losing orders.",
+  "intro": "Phone orders vs online ordering is not an either-or choice for most restaurants. Keep both, and use each one for the kind of customer it handles best.\n\nPhone orders are still important for people who want to ask about hours, parking, menu items, allergies, or a quick pickup time. Online ordering is useful for repeat customers and simple orders. The goal is to make both channels land in the same kitchen flow, not create two separate headaches.",
+  "sections": [
+    {
+      "id": "why-keep-both-phone-orders-and-online-ordering",
+      "h2": "Why keep both phone orders and online ordering?",
+      "body": "A lot of independent restaurants do better when they keep both channels open. A phone order can handle questions, special requests, and last-minute changes. Online ordering is convenient for customers who already know what they want and just want to tap and go.\n\nThink about the customer at dinner rush who calls and says, \"Can you make that no onions and add extra sauce?\" That is a phone order all day. Then think about the regular who always gets the same two pizzas and wants to place the order while walking to the car. That is a good online order.\n\nA simple rule helps:\n- Use the phone for questions, modifications, and anything with a little back-and-forth.\n- Use online ordering for repeat, simple, and predictable orders.\n- Keep both open so customers can choose the channel that feels easiest.\n\nIf you want a side-by-side breakdown, see [AI phone host vs online ordering](/compare/online-ordering)."
+    },
+    {
+      "id": "which-orders-are-better-on-the-phone",
+      "h2": "Which orders are better on the phone?",
+      "body": "Phone orders are often the better fit when the customer needs help deciding, has a special request, or wants to confirm details before paying. That includes family combos, larger pickup orders, allergy-sensitive questions, and delivery orders where the address or timing needs a quick check.\n\nA phone host like ROAL can take items, sizes, modifiers, and notes, then repeat the order back before sending a clean ticket to the kitchen screen. It also speaks the caller’s language and can hand off catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary.\n\nUse this kind of script line if you answer the phone yourself:\n\"Thanks for calling. I can help with pickup or delivery. What can I get started for you?\"\n\nA quick checklist for phone-only cases:\n- The caller asks about ingredients, hours, parking, or the menu.\n- The order has many changes.\n- The caller wants to add notes or request a specific ready time.\n- The caller needs a person for a complaint or a manager request.\n\nFor more on menu and hours questions, see [menu, hours and allergen questions](/use-cases/menu-questions)."
+    },
+    {
+      "id": "which-orders-are-better-online",
+      "h2": "Which orders are better online?",
+      "body": "Online ordering works well when the customer already knows the menu and wants speed. It is also a strong choice for simple, repeatable orders that do not need much explanation. That can reduce back-and-forth for your staff during a rush.\n\nHere is a practical way to think about it:\n\n| Order type | Better channel | Why |\n|---|---|---|\n| Same order every week | Online | Fast and repeatable |\n| Custom pizza with many toppings | Phone | Easier to confirm details |\n| Large office lunch | Phone | More room for special instructions |\n| Single sandwich or dinner combo | Online | Quick checkout |\n| Allergy-sensitive question | Phone | Needs a human-style handoff |\n\nIf your online menu is clean and current, it can support a lot of volume. But it should not replace the phone. Some customers still want to ask, \"Do you have this tonight?\" or \"Can I swap that side?\" Keep the online path for speed, and keep the phone for the conversations that need it."
+    },
+    {
+      "id": "how-do-i-keep-both-channels-from-confusing-the-kitchen",
+      "h2": "How do I keep both channels from confusing the kitchen?",
+      "body": "The main risk of running phone orders and online ordering together is not demand. It is messy handoff. The fix is one kitchen flow and one source of truth for the order.\n\nROAL sends a clean ticket to the kitchen screen when a phone order is confirmed. That matters because the person taking the call and the person making the food do not need to guess what was said. The owner can also review call history, transcripts, and recordings later in the dashboard.\n\nA simple operating setup:\n1. Keep the menu current in one place.\n2. Make sure sold-out items are removed or marked unavailable.\n3. Confirm every phone order back to the caller before ending the call.\n4. Send confirmed orders to the same kitchen workflow your staff already watches.\n5. Train staff to check both channels, especially during rushes.\n\nUse this line when confirming a phone order:\n\"Just to make sure I have it right: one large pepperoni, one salad with dressing on the side, pickup in 20 minutes.\"\n\nThat kind of repeat-back cuts down on mistakes, whether the order came in by phone or online."
+    },
+    {
+      "id": "what-does-keeping-both-cost-compared-with-one-channel",
+      "h2": "What does keeping both cost compared with one channel?",
+      "body": "The cost question usually comes down to volume and labor. Delivery apps commonly take roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are free. That can make it easier to keep the phone open without paying for quiet hours the same way you would with a fixed monthly plan.\n\nHere is a simple example you can swap for your own numbers:\n- Say you get 400 phone orders in a month.\n- At $0.90 each, that is $360 for completed phone orders.\n- If your average order is $28, then 400 orders represent $11,200 in sales.\n\nPlug in your own order count and average ticket. The point is not that one channel should replace the other. The point is that the phone can stay useful without becoming a fixed monthly burden."
+    },
+    {
+      "id": "how-can-i-launch-both-without-adding-more-work",
+      "h2": "How can I launch both without adding more work?",
+      "body": "The fastest way is to start with what you already have. With ROAL, the owner pastes the restaurant website, Google Maps link, or just the name and city at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute. You can also upload a menu in any format.\n\nFrom there, the owner test-calls it right in the browser, with no sign-up needed. When it is ready to go live, the owner claims the host, ROAL gives each location its own phone line automatically, and the restaurant forwards its existing number to it. That forwarding can be all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nA practical launch checklist:\n- Verify hours, address, parking notes, and menu items.\n- Decide which calls should ring staff first and which should forward.\n- Pick the host’s name and voice.\n- Test a few orders before going live.\n- Tell staff where to see live tickets and call history.\n\nIf you want to try it, [build a free test host](/try)."
+    },
+    {
+      "id": "what-should-i-tell-staff-and-regulars-so-both-channels-work",
+      "h2": "What should I tell staff and regulars so both channels work?",
+      "body": "Staff do not need a big speech. They need a short, clear process. Tell them that phone orders and online ordering are both accepted, but confirmed orders should follow the same kitchen path.\n\nYou can use a simple in-store note or staff script:\n\"If a customer calls, take the order, confirm it, and send it through the same kitchen flow as online orders. If they have a complaint, allergy concern, or manager request, send it to staff right away.\"\n\nFor regulars, keep it even simpler:\n- If you want speed and your order is simple, use online ordering.\n- If you want to ask a question or change something, call us.\n- If you need delivery timing, allergy help, or a special request, call us.\n\nROAL can answer routine questions about hours, address, parking, and the menu, while tricky calls go to staff with a summary. That keeps the phone useful without forcing every customer into the same channel. The best setup is usually the one that feels easy for the customer and clean for the kitchen."
+    }
+  ],
+  "takeaways": [
+    "Keep both phone orders and online ordering so customers can choose the easiest path.",
+    "Use the phone for questions, custom orders, allergies, and bigger requests.",
+    "Use online ordering for repeat, simple orders that do not need much back-and-forth.",
+    "Make sure both channels feed one clean kitchen process.",
+    "ROAL can handle phone orders and send confirmed tickets to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "Should a restaurant offer both phone orders and online ordering?",
+      "a": "Yes. Most independent restaurants do best when they keep both open. Phone orders help with questions, changes, and special requests, while online ordering helps with simple repeat orders and customers who want speed."
+    },
+    {
+      "q": "Are phone orders better than online ordering for custom meals?",
+      "a": "Usually yes. Phone orders are better when the customer needs to explain sizes, modifiers, notes, or allergy concerns. A phone host can repeat the order back before sending it to the kitchen, which helps reduce mistakes."
+    },
+    {
+      "q": "How do I stop phone orders and online orders from getting mixed up?",
+      "a": "Put both channels into one kitchen workflow. Keep the menu current, confirm every phone order back to the caller, and make sure staff knows where to see live tickets. ROAL sends a clean ticket to the kitchen screen for confirmed phone orders."
+    },
+    {
+      "q": "Is there a cheaper way to keep phone orders open than hiring phone staff?",
+      "a": "Often yes. Human answering services usually bill per minute or per call, and many AI phone tools charge a fixed monthly fee. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, and no contract."
+    }
+  ],
+  "words": 1334,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

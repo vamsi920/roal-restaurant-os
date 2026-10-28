@@ -1,0 +1,122 @@
+{
+  "slug": "thai",
+  "label": "Thai restaurants",
+  "h1": "An AI phone host for Thai restaurants",
+  "seoTitle": "AI phone answering for Thai restaurants | ROAL",
+  "description": "ROAL answers Thai restaurant calls, takes pickup orders from the live menu, handles hours and menu questions, and sends clean tickets to the kitchen.",
+  "lead": "Busy lunch rush. Curry on the stove. Phone ringing again. ROAL is a phone host for Thai restaurants that answers calls and takes pickup orders when your staff is tied up.",
+  "question": "How does ROAL help with Thai restaurant phone orders during a rush?",
+  "answer": "ROAL answers the restaurant phone, reads the live menu, and takes pickup or delivery orders for Thai restaurants. It can handle common calls like pad thai, green curry, fried rice, hours, address, parking, and menu questions, then send a clean ticket to the kitchen screen. If a caller asks something sensitive or too specific, it passes it to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings while the kitchen is busy",
+      "body": "During lunch, one person may be plating drunken noodles, packing soups, and trying to answer the phone at the same time. That is when orders get missed or rushed."
+    },
+    {
+      "title": "Thai orders often need small changes",
+      "body": "Callers ask for mild spice, no fish sauce, extra basil, sticky rice instead of jasmine, or shrimp instead of chicken. Those details are easy to mishear on a loud line."
+    },
+    {
+      "title": "Simple questions repeat all day",
+      "body": "People call to ask if you are open, where to park, whether you have pad see ew, or if the curry paste has peanuts. Those calls still take time, even when they are not orders."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes pickup orders from your live menu",
+      "body": "ROAL can take items, sizes, modifiers, and notes for Thai restaurant phone orders. A caller can order pad thai with chicken, mild spice, and extra lime, then get a ready time."
+    },
+    {
+      "title": "Answers the common Thai restaurant questions",
+      "body": "It can handle hours, address, parking, and menu questions. If someone asks about soups, noodles, vegetarian options, or a specific dish, it uses the menu you give it."
+    },
+    {
+      "title": "Handles rush moments without forcing a phone menu",
+      "body": "No press-1 maze. If Friday dinner is stacked with calls for basil fried rice and red curry, ROAL keeps answering while staff keeps cooking."
+    },
+    {
+      "title": "Sends clean tickets to the kitchen",
+      "body": "Orders go to the kitchen screen with the name, phone number, items, notes, and ready time. That helps the front of house and kitchen stay on the same page."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One pad thai with chicken, mild, and one green curry with tofu. Also an order of crab rangoon."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Pad thai with chicken, mild. Green curry with tofu. And crab rangoon. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s all. My name is Maya, and I’ll pick it up."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maya. What’s the best phone number for the order?"
+    },
+    {
+      "who": "caller",
+      "line": "718-555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thanks. Your pickup order will be ready around 6:40 pm. I have pad thai with chicken, mild, green curry with tofu, and crab rangoon for Maya at 718-555-0148."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "Maya · 718-555-0148",
+      "Pad thai · chicken · mild",
+      "Green curry · tofu",
+      "Crab rangoon"
+    ],
+    "note": "Confirm no peanuts if the caller asks about allergies."
+  },
+  "sections": [
+    {
+      "h2": "What Thai restaurants usually need from a phone host",
+      "body": "Thai restaurant calls are rarely simple. A caller may want pad thai with chicken, green curry with tofu, or drunken noodles with beef. Then they add mild spice, no onions, extra basil, or rice on the side.\n\nThat is why the phone host has to do more than answer the phone. It needs to listen carefully, repeat the order back, and keep the ticket clear for the kitchen. It should also handle the common questions that come in all day: hours, address, parking, menu items, and whether a dish can be made vegetarian.\n\nFor owners, the goal is simple. Keep the line open when the dining room is busy, the wok is hot, and the front counter is short-staffed."
+    },
+    {
+      "h2": "A simple setup for a Thai restaurant",
+      "body": "To start, go to [Build a free test host](/try) and paste your restaurant website, Google Maps link, or just your name and city. ROAL reads the public menu, hours, and address, and you can also upload a menu in any format.\n\nThen test-call the host in your browser. Try real items from your menu, like pad thai, massaman curry, tom yum soup, or mango sticky rice. Make sure the voice, name, and order flow feel right before you go live.\n\nWhen you are ready, you keep your own restaurant number. ROAL gives the location its own phone line, and you forward calls to it when you want. You can forward all calls, or only when the phone is busy or not answered."
+    },
+    {
+      "h2": "What to tell your staff before turning it on",
+      "body": "Make a short list of the items and questions your team hears most. For a Thai restaurant, that might include lunch specials, spice levels, peanut questions, vegetarian swaps, and pickup timing.\n\nAlso mark anything that should not be sold. If a dish is out, ROAL should not offer it. If a caller asks about an allergy-sensitive order or wants to speak with a manager, it can hand that off with a short summary.\n\nIf you want to see how other phone order setups compare, you can also read [Pickup order taking](/use-cases/pickup-orders) and [How it works](/how-it-works)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take Thai pickup orders with spice changes and special notes?",
+      "a": "Yes. It can take items, sizes, modifiers, and notes, then repeat the order back before sending it to the kitchen. That includes common Thai requests like mild, no fish sauce, extra basil, or swapping proteins when your menu allows it."
+    },
+    {
+      "q": "Does it answer hours, address, and parking questions too?",
+      "a": "Yes. ROAL can answer common questions about hours, address, parking, and the menu. If it cannot answer something, it sends the question to your inbox so you can teach it once."
+    },
+    {
+      "q": "Will it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How do I turn it on for my restaurant number?",
+      "a": "You claim the host, then forward your existing number to ROAL. You can forward all calls, or only calls that are busy or unanswered, and turn forwarding off any time."
+    },
+    {
+      "q": "What does it cost for Thai restaurants?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order that reaches the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract, and calls and test calls are free."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "holiday-hours-restaurant",
+  "keyword": "restaurant holiday hours announcement",
+  "category": "operations",
+  "title": "Restaurant holiday hours announcements that work",
+  "seoTitle": "Restaurant holiday hours announcement | ROAL",
+  "description": "Make a clear restaurant holiday hours announcement, update callers before they call, and route holiday calls the right way.",
+  "question": "How should I handle a restaurant holiday hours announcement so callers know my hours before they call?",
+  "answer": "Put your holiday hours in your phone greeting, website, Google listing, and voicemail backup before the busy week starts. Say the date, the special hours, and whether pickup or delivery orders are still being taken. If you use an AI phone host like ROAL, update the hours once and it can answer those calls for you from the same public info.",
+  "summary": "You’ll know how to tell callers your holiday hours clearly and set up your phone so staff spend less time repeating them.",
+  "intro": "Holiday hours should be said before the phone rings, not after. A clear restaurant holiday hours announcement saves time, cuts confusion, and keeps callers from guessing whether you are open.\n\nThe goal is simple: make the hours easy to hear, easy to find, and hard to misunderstand. That means your greeting, website, Google info, and backup call flow should all say the same thing.",
+  "sections": [
+    {
+      "id": "what-should-a-restaurant-holiday-hours-announcement-say",
+      "h2": "What should a restaurant holiday hours announcement say?",
+      "body": "Keep it short and specific. Callers do not need a speech. They need the date, the hours, and what they can still do.\n\nA good phone line sounds like this: \"Thanks for calling Mario’s Pizza. We’re open on Christmas Eve from 11 a.m. to 8 p.m., closed on Christmas Day, and back to normal hours on December 26. You can still place pickup orders while we’re open.\" \n\nUse these parts every time:\n- Holiday name or date\n- Special open and close time\n- Whether pickup and delivery orders are available\n- Any changes to dine-in, reservations, or catering\n- A simple repeat of the next normal day\n\nIf you have a second location, do not copy the same message blindly. One shop may close early while the other stays open later. ROAL can read hours from your public pages and answer basic questions about hours and address, but it still helps to make the holiday wording exact. If the message is for a busy season like Thanksgiving week or New Year’s Eve, keep the recording fresh and remove it right after the holiday ends."
+    },
+    {
+      "id": "where-should-callers-hear-the-holiday-hours-first",
+      "h2": "Where should callers hear the holiday hours first?",
+      "body": "Start with the phone greeting, because that is where the caller is already looking for an answer. Then mirror the same message everywhere else.\n\nUse this order:\n1. Phone greeting or holiday message\n2. Website hours page or homepage banner\n3. Google Maps listing hours\n4. Voicemail backup message\n5. Staff script at the counter\n\nA caller should not hear one thing on the phone and another thing online. That creates extra calls and annoyed customers. For example, if you are closed at 6 p.m. on New Year’s Eve, put that exact time in the phone message and on the website.\n\nA simple staff script helps too: \"We’re on holiday hours today, so we close at 6. If you’d like pickup, please call before then.\" \n\nIf you use [How it works](/how-it-works), the key idea is that ROAL reads your public hours and address when you set it up. So if your holiday hours are already posted clearly, the phone host can answer many of those calls for you. The cleaner your source info, the fewer corrections your team has to make later."
+    },
+    {
+      "id": "how-do-i-write-the-message-so-it-does-not-sound-confusing",
+      "h2": "How do I write the message so it does not sound confusing?",
+      "body": "Short sentences work best. Avoid long lists, jokes, and too many exceptions. Most callers are trying to place an order, not listen to a holiday speech.\n\nUse this simple structure:\n- Greeting\n- Holiday hours\n- What happens next\n- Closing\n\nExample script:\n\"Thanks for calling Rosa’s Deli. We’re open today until 7 p.m. for pickup only. We’ll be closed tomorrow for the holiday and reopen Friday at 10 a.m. If you’d like to place an order, please stay on the line.\"\n\nIf you need a more detailed message, split it into parts. Say the closure first, then the special opening hours, then the ordering rules. Do not bury the open hours at the end. That is the detail people care about most.\n\nChecklist before you record it:\n- Read it out loud once\n- Make sure the date is correct\n- Make sure the closing time is exact\n- Remove extra words like \"just\" or \"kind of\"\n- Ask a staff member to call and listen back\n\nIf your menu changes during the holiday, update that too. ROAL can answer menu, hours, parking, and address questions from public pages, and it can hand off allergy-sensitive questions, complaints, and manager requests to staff with a summary."
+    },
+    {
+      "id": "how-can-i-route-holiday-calls-without-making-customers-wait",
+      "h2": "How can I route holiday calls without making customers wait?",
+      "body": "Holiday calls usually fall into a few buckets: takeout orders, basic questions, special requests, and messages that need staff. Your phone setup should separate those quickly.\n\nA practical setup looks like this:\n- Regular orders go to your live order line\n- Holiday-hour questions get answered in the greeting or by the phone host\n- Catering, complaint, allergy-sensitive, and manager requests go to staff\n- After-hours calls go to voicemail or a fallback message\n\nIf you use call forwarding, confirm the code with your carrier or phone system first and test it with a real call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# often forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Codes can vary, so always test.\n\nThat matters during holidays because staffing changes fast. If the dining room is closed early, you may want calls to ring differently after a certain time. If you use ROAL, you can forward all calls or only busy/unanswered calls, and turn forwarding off whenever you want. Your restaurant keeps its own number."
+    },
+    {
+      "id": "what-should-i-do-a-week-before-the-holiday",
+      "h2": "What should I do a week before the holiday?",
+      "body": "Do the work early, while the schedule is still calm. A holiday-hours update takes less time than answering the same question all day.\n\nUse this prep list:\n1. Decide holiday open and close times\n2. Update website hours and holiday banner\n3. Update Google Maps hours\n4. Record the phone message\n5. Tell staff the exact script\n6. Test the line from your own cell phone\n7. Set a reminder to remove the holiday message after the date passes\n\nIf you use ROAL, you can paste your website, Google Maps link, or \"Name, City\" into /try and build a test phone host in about a minute. You can also upload a menu in any format. Owners can test-call it right in the browser with no sign-up needed, which is useful before a holiday rush.\n\nExample: say you expect 40 pickup calls on New Year’s Eve. If your message saves even 30 seconds per caller, that is 20 minutes of staff time. Plug in your own call volume and your own labor rate to see what it means for your shop. The point is not a fancy number. The point is to keep the phone from slowing down the front counter when the line is already busy."
+    },
+    {
+      "id": "how-do-i-keep-holiday-hours-updated-after-the-rush-starts",
+      "h2": "How do I keep holiday hours updated after the rush starts?",
+      "body": "Do a same-day check before lunch and again before dinner. Holiday hours often change because of weather, staff shortages, or supply problems. The message should match what is actually happening right now.\n\nA good same-day routine:\n- Check the recorded message\n- Check the hours on the website\n- Check Google Maps hours\n- Check the live menu for sold-out items\n- Ask staff whether anything changed since opening\n\nIf something changes, update the phone message first. That is where the caller is waiting. Then update the website and Google listing.\n\nROAL has a dashboard with live tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That matters on holiday weeks because it gives you one place to see what callers asked and what the kitchen is handling.\n\nA useful owner habit is to review the first few calls after a holiday update. Listen for one thing: did the caller clearly hear the holiday hours, or did they still need to ask? If they still ask, shorten the message and move the open time higher in the script. Keep it plain. Keep it current. Keep it easy for the customer to act on."
+    }
+  ],
+  "takeaways": [
+    "Say the holiday date, special hours, and ordering options in the first sentence or two.",
+    "Put the same holiday hours on the phone, website, Google listing, and voicemail.",
+    "Test your call forwarding with a real call before the holiday rush starts.",
+    "Use one short script for staff so everyone says the same thing.",
+    "Update the message again if the holiday plan changes during the day."
+  ],
+  "faq": [
+    {
+      "q": "What should a restaurant holiday hours announcement include?",
+      "a": "It should include the holiday or date, the special open and close times, and whether pickup, delivery, dine-in, or reservations are still available. Keep it short so callers hear the key detail fast. If anything changes by daypart, say that plainly too."
+    },
+    {
+      "q": "Should I put holiday hours on my phone greeting or voicemail?",
+      "a": "Yes, put the holiday hours in your phone greeting first, and use voicemail as a backup if needed. Most callers want the answer before they decide to leave a message. The same hours should also be on your website and Google listing."
+    },
+    {
+      "q": "How do I update holiday hours without confusing customers?",
+      "a": "Use one exact version of the hours everywhere, and remove it as soon as the holiday ends. Read the script out loud and make sure the date, opening time, and closing time all match. If you have more than one location, update each one separately."
+    },
+    {
+      "q": "Can ROAL answer questions about my holiday hours?",
+      "a": "Yes. ROAL can answer questions about hours, address, parking, and the menu from your public pages, and it can take pickup and delivery orders from the live menu. It also hands off allergy-sensitive questions, complaints, and manager requests to staff with a summary."
+    }
+  ],
+  "words": 1257,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

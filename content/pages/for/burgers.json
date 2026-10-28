@@ -1,0 +1,115 @@
+{
+  "slug": "burgers",
+  "label": "Burger joints",
+  "h1": "An AI phone host for burger joints",
+  "seoTitle": "AI phone answering for burger joints | ROAL",
+  "description": "ROAL answers burger joint calls, takes pickup orders from your live menu, handles rush hours, and sends clean tickets to the kitchen screen.",
+  "lead": "Your phone rings when the grill is loud and the counter is packed. ROAL answers with a friendly phone host for burger joints and takes pickup orders from your live menu.",
+  "question": "How does AI phone answering for burger joints handle pickup orders during a rush?",
+  "answer": "ROAL answers your burger joint’s phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common burger-shop calls like hours, address, parking, sold-out items, and ready times. If a caller asks about allergies, catering, or a manager, it passes that along with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings right when the line is deep",
+      "body": "Friday dinner rush is a bad time for a long call about fries, toppings, and sauces. The order gets missed or the cashier has to stop working the counter."
+    },
+    {
+      "title": "Burger orders need a lot of little details",
+      "body": "A simple cheeseburger can turn into double patty, no onion, add bacon, extra pickles, side of onion rings, and a Coke. That is easy to mix up when the shop is busy."
+    },
+    {
+      "title": "Voicemail does not take the order",
+      "body": "A caller wants a quick pickup order, not a callback later. By the time someone checks messages, the customer may have already ordered somewhere else."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers calls with your burger menu",
+      "body": "ROAL reads your live menu, prices, hours, and address from your public pages or an uploaded menu. It can answer common questions like parking, pickup timing, and what comes on a burger."
+    },
+    {
+      "title": "Takes pickup orders clearly",
+      "body": "It collects items, sizes, modifiers, and notes. It can say things like no tomato, add cheese, well-done patty, and extra ranch on the side."
+    },
+    {
+      "title": "Sends the kitchen a clean ticket",
+      "body": "The order lands on the kitchen screen as a ticket with the caller’s name, phone, and ready time. That makes it easier for the grill, fryer, and counter team to stay in sync."
+    },
+    {
+      "title": "Lets you decide when calls roll over",
+      "body": "Forward all calls, or only busy and unanswered calls. If you want to test it first, you can build a free test host at [Try ROAL](/try) before you go live."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One bacon cheeseburger, medium fries, and a small Coke. The burger well done, no onion, extra pickles."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One bacon cheeseburger, well done, no onion, extra pickles, plus medium fries and a small Coke. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. Under Sam."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Sam. Your pickup order will be ready around 7:20 pm. I have one bacon cheeseburger, medium fries, and a small Coke, with no onion and extra pickles."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "Name: Sam",
+      "1 bacon cheeseburger — well done",
+      "No onion, extra pickles",
+      "1 medium fries",
+      "1 small Coke"
+    ],
+    "note": "Confirm bun, cheese, and sauce at prep if your shop needs it."
+  },
+  "sections": [
+    {
+      "h2": "Built for the way burger shops answer the phone",
+      "body": "Burger joints get the same calls over and over. People ask for pickup, ask what comes on the burger, or ask if the fries are ready yet. They call during lunch, after school, and right when dinner starts. ROAL is made for that kind of phone traffic. It answers in plain language, uses your live menu, and keeps the order moving while your team stays on the grill and at the counter.\n\nIf you have items like cheeseburgers, bacon burgers, sliders, onion rings, milkshakes, and combo meals, ROAL can take those details one by one. It can also help with the common stuff that slows staff down: address, parking, hours, and ready time. When the caller asks for something it cannot confidently handle, it can hand it to your team with a summary."
+    },
+    {
+      "h2": "A simple setup for a busy owner",
+      "body": "You do not need a long setup day. At [Try ROAL](/try), paste your restaurant website, Google Maps link, or just your name and city. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute. You can test-call it in the browser before you send any calls to it.\n\nWhen you are ready, you claim the host and forward your existing number. Some owners forward all calls. Others forward only when the line is busy or unanswered. You keep your own number, and you can turn forwarding off any time. That makes it easier to try it on a Friday without changing the way your shop works."
+    },
+    {
+      "h2": "A worked example for a Friday rush",
+      "body": "Say your shop gets 12 missed calls on a Friday evening, with half of them asking for pickup orders and the rest asking about hours, parking, or whether the kitchen is still open. That is a lot of repeat work for a small team. ROAL can handle the routine calls while your staff keeps moving.\n\nA caller might order two double cheeseburgers, one without onion and one with no pickles, plus curly fries and two milkshakes. ROAL can collect the name, phone number, and ready time, then send a clean ticket to the kitchen screen. It also keeps call history, transcripts, and recordings in the dashboard, so you can review what people asked and update your menu answers later."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take burger pickup orders over the phone?",
+      "a": "Yes. It takes pickup orders from your live menu, including items, sizes, modifiers, and notes. It also collects the caller’s name and phone number and gives a ready time."
+    },
+    {
+      "q": "What if a customer asks about toppings or sides?",
+      "a": "ROAL can handle common burger-shop questions from your menu, like cheese choices, bacon, fries, onion rings, and milkshakes. If it runs into something it cannot answer, it sends it to staff with a summary."
+    },
+    {
+      "q": "Can I choose when it answers calls?",
+      "a": "Yes. You can forward all calls, or only when the line is busy or unanswered. That lets you use it during lunch and dinner rush, or after hours, depending on how you want to run the shop."
+    },
+    {
+      "q": "Does ROAL take card numbers on the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How much does it cost for burger joints?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order that reaches the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract, and calls and test calls are free."
+    }
+  ]
+}

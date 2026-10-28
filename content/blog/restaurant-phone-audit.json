@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-phone-audit",
+  "keyword": "restaurant phone audit",
+  "category": "missed-calls",
+  "title": "Do a restaurant phone audit in 15 minutes",
+  "seoTitle": "Restaurant phone audit in 15 minutes | ROAL",
+  "description": "Use a restaurant phone audit to spot missed calls, slow greetings, and lost orders in 15 minutes, then fix the biggest leaks fast.",
+  "question": "How do I do a 15-minute restaurant phone audit to find missed calls and lost orders?",
+  "answer": "A restaurant phone audit is a quick check of how your phone is handled from first ring to finished ticket. In 15 minutes, you can test the greeting, note where calls get missed, confirm call forwarding, and see whether orders and questions are getting to the right person. The goal is to spot the biggest leaks, not to fix everything at once.",
+  "summary": "You’ll learn how to check your restaurant phone flow, spot missed-call problems, and fix the biggest leaks fast.",
+  "intro": "A restaurant phone audit takes 15 minutes and shows you where calls are getting lost. Start with a live test of your greeting, answer speed, and call forwarding, then check whether orders, questions, and callbacks are being handled the right way.\n\nYou do not need special software for the first pass. You just need a phone, a note pad, and a few sample calls from your own number, plus a quick look at missed calls and voicemail. If you want a deeper setup later, ROAL can answer calls, take pickup and delivery orders from your live menu, and send clean tickets to the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-should-i-check-first-during-a-15-minute-phone-audit",
+      "h2": "What should I check first during a 15-minute phone audit?",
+      "body": "Start with the parts that cost money the fastest: missed calls, slow pickup, and unclear forwarding. For a pizza shop, deli, or family restaurant, a caller who hangs up after three rings may just order somewhere else.\n\nUse this quick checklist:\n- Call your restaurant from your cell phone.\n- Count how long it takes before someone answers.\n- Listen for a clear greeting: restaurant name, friendly tone, and a simple offer to help.\n- Ask one menu question, one hours question, and one pickup order question.\n- Hang up and check whether the call showed up in voicemail or on the missed-call log.\n\nExample script line to listen for: \"Thanks for calling Tony’s Deli, how can I help you?\"\n\nIf the greeting is weak, write the exact words down. If nobody answers, note whether the phone rings into voicemail or just stops. That small detail matters when you compare your phone setup later."
+    },
+    {
+      "id": "how-do-i-test-whether-calls-are-being-forwarded-the-right-wa",
+      "h2": "How do I test whether calls are being forwarded the right way?",
+      "body": "Many restaurants think the phone is ringing in the store when it is really going somewhere else. That is why forwarding deserves its own spot in the audit.\n\nCheck these four things:\n1. Confirm where the main number goes when the line is busy.\n2. Confirm where it goes when nobody answers.\n3. Test after hours.\n4. Test again from a different phone so you know the setup is real.\n\nFor many landlines and some carriers, `*72` forwards all calls and `*73` turns it off. On some GSM mobile carriers, `**21*number#` forwards all calls and `##21#` turns it off, while `**61*number#` forwards unanswered calls and `**67*number#` forwards busy calls. Verizon Wireless often uses `*72` / `*73`, and `*71` for busy or no-answer forwarding. Business VoIP systems usually handle forwarding in the web portal.\n\nCodes vary by carrier and plan, so always confirm with your carrier and test with a real call. If you want a quick reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-does-a-missed-call-audit-look-like-for-a-busy-restauran",
+      "h2": "What does a missed-call audit look like for a busy restaurant?",
+      "body": "A missed-call audit is simple: look at the calls you did not answer and ask what those callers likely wanted. In many restaurants, those calls are pickup orders, delivery questions, hours, or reservation requests.\n\nUse this table to sort 10 recent missed calls:\n\n| Call type | What the caller likely wanted | Did you call back? | Was anything lost? |\n|---|---|---:|---|\n| Pickup order | Food now or for later | Yes / No | Order or not |\n| Delivery question | Menu, area, timing | Yes / No | Sale or not |\n| Hours question | Open, close, holiday hours | Yes / No | Visit or not |\n| Reservation request | Table time | Yes / No | Booking or not |\n| Manager request | Complaint or issue | Yes / No | Service recovery or not |\n\nIf you want to estimate the cost, use your own numbers. Say your average pickup order is $28 and you miss 3 order calls in a week. That is $84 in sales before you even think about repeat visits. Plug in your own average order and your own missed calls. For a fuller breakdown, see [the math on a missed pickup call](/blog/missed-call-lost-revenue-math)."
+    },
+    {
+      "id": "are-your-menu-hours-and-answers-easy-to-give-over-the-phone",
+      "h2": "Are your menu, hours, and answers easy to give over the phone?",
+      "body": "A phone audit is not only about answering. It is also about whether your team can answer common questions fast and clearly.\n\nAsk these three sample questions from your cell phone:\n- \"What are your hours today?\"\n- \"Do you have chicken parm?\"\n- \"Is parking available nearby?\"\n\nNow score each answer as clear, slow, or confusing. If the answer changes by person, that is a problem. If staff keeps putting callers on hold to check the menu, that slows down the line and the kitchen.\n\nA clean phone setup should make the caller feel taken care of right away. ROAL reads your menu, hours, address, and parking from public pages or an uploaded menu, then answers those basics for you. It can also take orders from the live menu and send a clean ticket to the kitchen screen. If a caller asks something tricky, it passes that to staff with a summary. That keeps the hard stuff with a human and the routine stuff moving."
+    },
+    {
+      "id": "how-do-i-know-if-my-phone-pricing-is-hurting-me",
+      "h2": "How do I know if my phone pricing is hurting me?",
+      "body": "A phone audit should also check what your current setup costs when you compare it to the calls you actually get. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, even in slow months. Human answering services usually bill per minute or per call. Delivery apps commonly take roughly 15-30% commission per order.\n\nNow compare that to a pay-per-order model. ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nTry a simple example with your own numbers:\n- Say you complete 120 phone orders in a month.\n- Multiply 120 by $0.90.\n- Your ROAL fee would be $108 for that month.\n\nUse your own order count, not mine. If your volume is low, a fixed monthly fee may be hard to justify. If your phone volume is uneven, pay-per-order can be easier to line up with what the phone actually brings in. You can compare the math with [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans)."
+    },
+    {
+      "id": "what-should-i-do-after-the-audit-finds-weak-spots",
+      "h2": "What should I do after the audit finds weak spots?",
+      "body": "Do not try to fix every issue in one night. Pick the top two leaks that are costing you the most calls and handle those first.\n\nA practical 24-hour fix list looks like this:\n1. Rewrite the phone greeting so it says the restaurant name and a simple offer to help.\n2. Confirm forwarding for busy hours and after-hours calls.\n3. Put hours, address, and parking into one place staff can read fast.\n4. Decide who handles allergies, complaints, and manager requests.\n5. Set a backup for missed calls so someone calls back quickly.\n\nIf your team is short-staffed, an AI phone host can take routine pickup and delivery orders, answer common questions, and hand off special cases to staff. ROAL also gives each location its own phone line automatically once the owner claims the host, and the restaurant keeps its own number by forwarding calls to it. That can help when the counter is slammed and the phone is piling up.\n\nIf you want to test the idea without a big setup, [build a free test host from your website](/try). You can paste your website, Google Maps link, or restaurant name and city, then call it in the browser before you decide anything."
+    },
+    {
+      "id": "what-does-a-good-phone-audit-scorecard-look-like",
+      "h2": "What does a good phone audit scorecard look like?",
+      "body": "Use a simple scorecard so you can repeat the audit next month and see what changed. You do not need fancy software. You just need the same checks each time.\n\n| Check | Pass | Needs work |\n|---|---|---|\n| Answers within a few rings |  |  |\n| Greeting is clear and friendly |  |  |\n| Hours are correct |  |  |\n| Menu questions are answered fast |  |  |\n| Pickup orders are taken without confusion |  |  |\n| Allergy, complaint, and manager calls are routed right |  |  |\n| Missed calls get a callback plan |  |  |\n\nWrite down one sentence for each row. Example: \"Hours were correct, but the staff had to check the menu twice.\" That kind of note is useful because it tells you exactly what to change.\n\nROAL’s dashboard also keeps call history with transcripts and recordings, plus live tickets, menu editing, FAQs, and upsell suggestions. That makes it easier to review what happened after the phone stops ringing. The point is simple: see the problem, fix the problem, then check again."
+    }
+  ],
+  "takeaways": [
+    "A 15-minute restaurant phone audit can show you where calls, orders, and callbacks are getting lost.",
+    "Test the greeting, forwarding, missed calls, menu questions, and after-hours handling with real calls.",
+    "Use your own average order value and missed-call count to estimate what the phone may be costing you.",
+    "Compare fixed monthly phone tools to pay-per-order pricing before you switch anything.",
+    "If routine calls are the problem, an AI phone host like ROAL can handle basics and send harder calls to staff."
+  ],
+  "faq": [
+    {
+      "q": "What is a restaurant phone audit?",
+      "a": "A restaurant phone audit is a short check of how your calls are answered, forwarded, and handled from start to finish. It helps you spot missed calls, weak greetings, slow callbacks, and orders that do not make it to the kitchen. For a small restaurant, it is one of the fastest ways to find lost sales."
+    },
+    {
+      "q": "How do I test missed calls at my restaurant?",
+      "a": "Call your restaurant from your cell phone, let it ring, and see what happens when nobody answers. Check whether it goes to voicemail, to another line, or nowhere useful. Then look at the missed-call log and see whether someone called back or not."
+    },
+    {
+      "q": "What should a restaurant phone greeting say?",
+      "a": "It should say the restaurant name, sound friendly, and invite the caller to place an order or ask a question. A simple line like \"Thanks for calling Tony’s Pizza, how can I help you?\" is clear and easy for staff to use. The key is consistency so callers know they reached the right place."
+    },
+    {
+      "q": "How much does missed call handling cost a restaurant?",
+      "a": "It depends on your average order size and how many calls you miss. Use your own numbers: if your average pickup order is $28 and you miss a few order calls, those sales add up quickly. The real cost is not only the first order, but the repeat visits that may never happen."
+    }
+  ],
+  "words": 1370,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

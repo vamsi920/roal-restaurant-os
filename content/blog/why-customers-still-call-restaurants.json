@@ -1,0 +1,77 @@
+{
+  "slug": "why-customers-still-call-restaurants",
+  "keyword": "why people still call restaurants",
+  "category": "phone-orders",
+  "title": "Why customers still call restaurants today",
+  "seoTitle": "Why customers still call restaurants | ROAL",
+  "description": "Why people still call restaurants: faster ordering, special requests, older regulars, and pickup timing. See what owners can do.",
+  "question": "Why do customers still call restaurants to order instead of using apps or websites?",
+  "answer": "Customers still call restaurants because it feels faster, easier, and more personal for pickup, special requests, and quick questions about hours or menu items. Many callers also want to order from a regular place they trust, especially when they need changes, want to confirm timing, or prefer paying at pickup. That is why restaurants still need a good phone plan alongside online ordering.",
+  "summary": "You’ll learn why calls still matter and how to handle them without tying up the counter.",
+  "intro": "Customers still call restaurants to order because the phone is still the quickest path for many pickup and delivery orders. They call when they want something simple, something changed, or something checked before they drive over.\n\nFor an independent restaurant, that means the phone is not old-fashioned. It is part of the order flow. The goal is to make those calls easier to answer, easier to take, and easier to send to the kitchen, whether you do it yourself or with [ROAL](/about).",
+  "sections": [
+    {
+      "id": "why-do-people-still-call-instead-of-ordering-online",
+      "h2": "Why do people still call instead of ordering online?",
+      "body": "The short answer is convenience. A caller can ask a question, change an item, and confirm timing in one call. That matters for pizza shops, delis, takeout spots, and family restaurants where customers want a quick answer before they commit.\n\nCommon reasons people still call:\n- They want to make sure an item is available.\n- They need modifiers, like no onions or extra sauce.\n- They are ordering for pickup and want a ready time.\n- They do not want to create an account or fill out a form.\n- They are calling from the car and need the order done fast.\n\nA simple phone line still helps when the customer says, \"Can I add fries, make the sandwich toasted, and tell me when it’ll be ready?\" That is a normal restaurant call, not a special case. For many owners, the phone is where the easiest orders still come from. If you want to compare channels, see [phone orders vs online ordering](/blog/phone-orders-vs-online-ordering)."
+    },
+    {
+      "id": "what-kinds-of-orders-usually-come-in-by-phone",
+      "h2": "What kinds of orders usually come in by phone?",
+      "body": "Phone orders are often the ones with a small twist. The caller might want a substitution, an extra side, or a note for the kitchen. They may also be ordering for a group and need help spelling a name or repeating the list.\n\nA practical way to think about it:\n\n| Call type | What the caller usually needs |\n|---|---|\n| Pickup order | Items, modifiers, name, ready time |\n| Delivery order | Address, gate code, apartment, timing |\n| Menu question | Hours, prices, sold-out items, ingredients |\n| Reservation request | Date, time, party size, phone number |\n| Special request | Allergy note, no cheese, extra sauce, cut in halves |\n\nFor example, say a caller wants two cheesesteaks, one with no onions and one with mushrooms, plus a side of fries. That order can be handled in one conversation, then sent to the kitchen as a clean ticket. ROAL does that by reading the live menu and sending the order to the kitchen screen, but the basic idea is the same even if you take calls yourself: get the item, the changes, the name, and the ready time in one pass. For more on phone specifics, [menu, hours and allergen questions](/use-cases/menu-questions) is a useful read."
+    },
+    {
+      "id": "how-much-money-can-one-missed-call-leave-on-the-table",
+      "h2": "How much money can one missed call leave on the table?",
+      "body": "You do not need fancy math to see the point. Use your own numbers.\n\nSay your average phone order is $28. If 3 calls in a rush period go unanswered, that is $84 in possible sales right there. If your average order is $42, then 3 missed calls is $126. Plug in your own average ticket and your own busy-hour call volume.\n\nA quick checklist for your shift:\n- Know your average phone order amount.\n- Estimate how many calls you miss during rush.\n- Multiply the two.\n- Compare that number to the cost of answering those calls well.\n\nThis is also why many owners look at [phone orders vs delivery apps](/compare/delivery-apps). Delivery apps commonly take roughly 15-30% commission per order, while phone orders can be a cleaner path when the customer is willing to call. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, and no per-minute fee. That makes it easier to compare cost against the orders actually completed."
+    },
+    {
+      "id": "what-should-your-staff-say-when-the-phone-rings",
+      "h2": "What should your staff say when the phone rings?",
+      "body": "Your phone script should be short and repeatable. The goal is to get the order moving, not to improvise every time.\n\nTry a line like:\n\"Thanks for calling. What can I get started for you?\"\n\nThen follow the same order every time:\n1. Take the items.\n2. Ask for sizes and modifiers.\n3. Repeat any notes.\n4. Ask for the name and phone number.\n5. Give the ready time.\n6. Read the order back once.\n\nIf you handle calls at the counter, keep a small cheat sheet near the register with the top menu items, common add-ons, and the current wait time. That helps the person on the line avoid long pauses. If you want more ready-made language, [phone greeting templates](/tools/phone-greeting-templates) can help you tighten the first sentence.\n\nOne useful habit: say the ready time in plain words. For example, \"It’ll be ready in about 25 minutes.\" That is easier for the caller than a long explanation. If the caller asks for something you cannot confirm, say, \"Let me check that for you,\" or hand it to staff right away."
+    },
+    {
+      "id": "how-does-roal-handle-the-calls-owners-do-not-want-to-interru",
+      "h2": "How does ROAL handle the calls owners do not want to interrupt staff with?",
+      "body": "ROAL answers the restaurant's phone, takes pickup and delivery orders from the live menu, answers common questions about hours, address, parking, and the menu, and sends a clean ticket to the kitchen screen. The owner picks the host's voice and name, and can test-call it right in the browser before going live.\n\nA call flow looks like this:\n- Caller asks for the restaurant.\n- The host takes the order or answers the question.\n- If the question is something unusual, it lands in the inbox for staff.\n- If it is a catering request, complaint, allergy-sensitive question, or manager request, it is handed to staff with a summary.\n- The order ticket goes to the kitchen screen when confirmed.\n\nROAL also speaks the caller's language and does not offer items marked sold out. It does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it. That matters for owners who want the phone answered without making the phone line a risk point. If you want to see how setup works, [How it works](/how-it-works) is the place to start."
+    },
+    {
+      "id": "how-should-you-set-up-call-forwarding-without-making-it-mess",
+      "h2": "How should you set up call forwarding without making it messy?",
+      "body": "A simple forwarding setup usually works best: keep your restaurant's existing number, and forward calls to the phone host when you need backup. ROAL gives each location its own phone line automatically after the owner claims the host, and forwarding can be turned off any time.\n\nCommon forwarding patterns:\n- Forward all calls during service hours.\n- Forward only when busy.\n- Forward only when unanswered.\n- Turn forwarding off after close.\n\nFor many carriers and phone systems, the exact code or setting varies. On some landlines and carriers, *72 starts call forwarding and *73 turns it off. On some mobile carriers, codes like **21*number# or **61*number# may be used, while Verizon Wireless often uses *72, *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle this in the web portal. Always confirm with your carrier and test with a real call.\n\nA simple test checklist:\n- Call the restaurant number from your cell.\n- Confirm the call reaches the forwarded line.\n- Place one test order.\n- Check that the ticket appears where it should.\n- Turn forwarding off when you are done testing.\n\nIf you need carrier-specific help, [call forwarding codes by carrier](/tools/call-forwarding-codes) is a practical reference."
+    },
+    {
+      "id": "what-should-an-owner-do-next-if-the-phone-is-still-important",
+      "h2": "What should an owner do next if the phone is still important?",
+      "body": "Start with the part that hurts most. If the pain is missed calls, short-staffed shifts, or long hold times, fix that first. If the pain is wrong orders, tighten the script and the ticket handoff. If the pain is too many menu questions, make sure your hours, address, parking notes, and top items are easy to find.\n\nA small owner checklist:\n- Review the menu items people call about most.\n- Decide which calls staff should always take.\n- Set a clear ready-time rule.\n- Make sure the kitchen sees clean tickets.\n- Keep your menu and hours current.\n\nFor owners who want a simple way to test the idea, ROAL can be built from a website, Google Maps link, or restaurant name and city at /try, with no sign-up needed for the test call. You can also [Build a free test host](/try) and see how your own menu sounds over the phone.\n\nThe bigger point is simple: people still call because the phone solves real restaurant problems fast. If you make that line easier to answer, you protect orders, reduce friction, and give regulars a way to reach you the way they already want to."
+    }
+  ],
+  "takeaways": [
+    "People still call because phone orders are fast, flexible, and familiar.",
+    "The best phone script is short: take items, modifiers, name, phone, and ready time.",
+    "Missed calls can add up quickly when your average order value is decent.",
+    "ROAL can answer the restaurant phone, take orders, and send clean kitchen tickets.",
+    "Use forwarding only where it helps, and always test it with a real call."
+  ],
+  "faq": [
+    {
+      "q": "Why do customers still call restaurants to order food?",
+      "a": "They call because it is often faster than typing, especially when they want a quick pickup order, a special request, or a timing check. A phone call also lets them ask questions and place the order in one step."
+    },
+    {
+      "q": "Are phone orders still worth it for a small restaurant?",
+      "a": "Yes. Phone orders often bring in regulars and higher-comfort callers who prefer speaking to a person. They also work well for changes, substitutions, and local customers who already know your menu."
+    },
+    {
+      "q": "What should I ask on a phone order?",
+      "a": "Ask for the items, sizes, modifiers, any special notes, the caller's name, and a phone number. Then give a ready time and read the order back once so the caller can confirm it."
+    },
+    {
+      "q": "How can I stop the phone from disrupting the counter?",
+      "a": "Use call forwarding when you need backup, and send routine calls to an AI phone host or a designated staff member. Keep a short script and a clear process for special requests so the front counter stays focused."
+    }
+  ],
+  "words": 1386,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

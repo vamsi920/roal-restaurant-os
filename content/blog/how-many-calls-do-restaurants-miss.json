@@ -1,0 +1,77 @@
+{
+  "slug": "how-many-calls-do-restaurants-miss",
+  "keyword": "how many calls do restaurants miss",
+  "category": "missed-calls",
+  "title": "How many calls do restaurants miss?",
+  "seoTitle": "How many calls do restaurants miss?",
+  "description": "Restaurants miss more calls than many owners expect during rushes, shift changes, and after hours. See how to estimate your own total.",
+  "question": "How many calls do restaurants miss, and how can I tell what it’s costing me?",
+  "answer": "Restaurants commonly miss calls during lunch rush, dinner rush, and after-hours when the line is busy or no one can get to the phone. The real number depends on your staffing, your call volume, and whether you use forwarding or voicemail. You can estimate it by tracking missed calls for a few days, then multiplying the missed calls by your average order value and your chance to take the order if someone answered.",
+  "summary": "Learn how to estimate missed calls, what they may cost, and how to cut them down with practical steps.",
+  "intro": "Restaurants miss phone calls every day, especially when the line is busy, the counter is packed, or the phone rings after close. The exact number depends on your shop, but many owners are missing more calls than they realize.\n\nIf you take pickup orders by phone, every missed call is a customer who may hang up, try a delivery app, or order somewhere else. A simple count for one week will show you where the problem is and what it may be worth.",
+  "sections": [
+    {
+      "id": "how-many-calls-are-restaurants-missing-in-a-normal-day",
+      "h2": "How many calls are restaurants missing in a normal day?",
+      "body": "There is no single number that fits every restaurant. A slow lunch spot may miss only a few calls a day. A busy pizza shop, deli, or family restaurant can miss a lot more during rushes, shift changes, and after-hours.\n\nThe easiest way to estimate it is to break the day into blocks. Use a simple tally sheet near the register or a note on your phone.\n\n1. Count total rings during each block.\n2. Mark calls that went to voicemail, busy signal, or no answer.\n3. Mark calls answered after the caller had already hung up.\n4. Separate lunch, dinner, and late-night calls.\n\nExample you can copy: say you get 40 calls on a weekday, and 8 go unanswered or to voicemail. That is 8 missed calls for that day. If you do that for five days, you have a better weekly picture. You can plug in your own numbers instead of guessing.\n\nFor a deeper look at the cost side, use [the missed call cost calculator](/tools/missed-call-calculator)."
+    },
+    {
+      "id": "why-do-restaurants-miss-so-many-phone-calls",
+      "h2": "Why do restaurants miss so many phone calls?",
+      "body": "Most missed calls are not because the phone system is broken. They happen because the team is busy doing restaurant work.\n\nCommon reasons:\n- The phone rings while someone is taking an in-person order.\n- The kitchen is backed up and nobody can stop.\n- The front counter is helping walk-ins.\n- Calls come in during lunch or dinner rush.\n- The line is forwarded to voicemail after hours.\n- The person who usually answers is on break or off the floor.\n\nA quick owner test is to stand near the phone for 30 minutes at lunch and count how often it rings more than twice before someone answers. If that happens a lot, you are probably missing more calls than your call log suggests.\n\nA useful phone script for staff is simple: “Thank you for calling. I’m taking another order right now, but I’ll be with you as soon as I can.” That does not solve the missed call problem, but it helps you hear the pain point clearly. For more on that, see [why callers hang up on restaurants](/blog/why-callers-hang-up-on-restaurants)."
+    },
+    {
+      "id": "what-does-one-missed-restaurant-call-cost",
+      "h2": "What does one missed restaurant call cost?",
+      "body": "The cost depends on what the caller wanted. A missed call for a quick question may be worth nothing today but still hurt tomorrow if the caller never comes back. A missed pickup order is easier to estimate.\n\nUse this simple math:\n- Average order value = say $28\n- Orders missed from calls = say 6 in a week\n- Weekly sales missed = 6 x $28 = $168\n\nThen swap in your own numbers. If your average ticket is $22, your result changes. If you miss 3 orders a week instead of 6, your result changes again.\n\nThat is only the order value. It does not include repeat business, larger modifiers, or add-ons the caller might have ordered if someone had answered. It also does not include the time staff spend cleaning up voicemail, calling back, or answering the same menu questions again and again.\n\nIf you want a broader view, compare the cost of missed calls with [phone staff cost](/tools/phone-staff-cost-calculator) and [AI phone host cost](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "how-do-you-find-out-your-real-missed-call-rate",
+      "h2": "How do you find out your real missed-call rate?",
+      "body": "You do not need fancy software to start. You need one clean week of tracking and a few notes from the phones.\n\nTry this 5-step method:\n1. Pick one week that includes a busy day.\n2. Check your call history each day.\n3. Count answered calls, missed calls, and voicemail calls.\n4. Note the time of each missed call.\n5. Compare the miss times with rush periods and closing time.\n\nIf your phone system shows call logs, use that. If not, write down each missed call when you notice it. Even a rough count is better than guessing.\n\nHere is a simple owner checklist:\n- Do we miss more calls at lunch or dinner?\n- Do we miss more on weekends?\n- Do we miss more when one staff member is off?\n- Do we miss more after closing?\n- Do we have one phone line or several?\n\nROAL keeps call history with transcripts and recordings in the dashboard, so you can see what came in and what the caller needed. That makes it easier to spot patterns without asking staff to remember every ring."
+    },
+    {
+      "id": "what-should-you-do-when-the-phone-is-already-busy",
+      "h2": "What should you do when the phone is already busy?",
+      "body": "The goal is not to make the phone ring less. The goal is to make sure the caller still gets help.\n\nA practical setup for many shops is:\n- Forward all calls during open hours if the line is too busy.\n- Forward only unanswered calls if you still want staff to pick up first.\n- Turn forwarding off when you need to test or make changes.\n\nOn many landlines and some carriers, *72 starts forwarding all calls and *73 turns it off. On some mobile carriers, codes differ by plan and network. Business VoIP systems usually use a web portal. Always confirm the code with your carrier and test it with a real call.\n\nA good staff fallback line is: “Thanks for calling. We’re on another line right now, but I can help you with your order in just a moment.” That works better than letting the phone ring until the caller gives up.\n\nIf you want a more detailed setup guide, use [call forwarding codes by carrier](/tools/call-forwarding-codes) and [restaurant phone greeting templates](/tools/phone-greeting-templates)."
+    },
+    {
+      "id": "can-an-ai-phone-host-help-with-missed-calls-without-adding-m",
+      "h2": "Can an AI phone host help with missed calls without adding monthly fees?",
+      "body": "An AI phone host can help when you need someone to answer the phone, take pickup and delivery orders, answer common questions, and send the ticket to the kitchen screen. ROAL does that from the restaurant’s live menu, and the owner can test-call it in the browser before going live.\n\nThe pricing model matters. Some AI phone tools charge a fixed monthly fee per location, even when call volume is light. ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free.\n\nA simple way to think about it:\n- If you miss a lot of order calls, answering more of them may pay for itself quickly.\n- If you only get a few order calls, pay-per-order can be easier to budget.\n- If you already have staff on the floor, the phone host can cover overflow, not replace your team.\n\nROAL also gives each location its own phone line automatically when the owner claims the host, and the restaurant keeps its own number by forwarding calls to it. For a side-by-side look, see [AI phone host vs hiring phone staff](/compare/hiring-phone-staff)."
+    },
+    {
+      "id": "what-should-you-do-this-week-to-stop-losing-phone-orders",
+      "h2": "What should you do this week to stop losing phone orders?",
+      "body": "Start with the simplest actions first. You do not need a full system overhaul to make a dent in missed calls.\n\nA one-week action plan:\n1. Track missed calls by time of day.\n2. Write down your average order value.\n3. Check whether busy or unanswered forwarding is set up.\n4. Review the most common questions callers ask.\n5. Decide which calls staff should handle and which can be automated.\n\nIf callers mostly ask about hours, address, parking, menu items, or pickup orders, those are the easiest calls to solve first. If callers ask about catering, allergies, or manager issues, those should go to staff with a short summary.\n\nThis is where ROAL can help if you want a simple trial. It reads the menu, prices, hours, and address from public pages, and the owner can add or correct details before going live. [Build a free test host](/try) from your website, Google Maps link, or restaurant name and city.\n\nFinal owner checklist:\n- Know your missed-call count.\n- Know your average ticket.\n- Know your busiest hours.\n- Know which calls must reach staff.\n- Know how you want the phone handled after hours."
+    }
+  ],
+  "takeaways": [
+    "Missed restaurant calls are usually highest during rushes and after-hours.",
+    "A simple weekly tally can show your real missed-call rate.",
+    "Use your average order value to estimate what missed calls may cost.",
+    "Forwarding, better call handling, and an AI phone host can reduce the damage.",
+    "ROAL can answer routine calls, take orders, and send clean tickets to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "How many calls do restaurants miss in a day?",
+      "a": "It varies by shop, shift, and staffing. Some restaurants miss only a few calls, while busy takeout spots can miss many more during rush hours and after closing. The best way to know is to count answered and missed calls for one full week."
+    },
+    {
+      "q": "How do I calculate the cost of missed calls at my restaurant?",
+      "a": "Multiply your missed order calls by your average order value. For example, if you miss 6 order calls in a week and your average order is $28, the weekly missed sales from those calls are about $168. Use your own numbers so the estimate fits your restaurant."
+    },
+    {
+      "q": "What is the best way to reduce missed restaurant calls?",
+      "a": "Start by setting up forwarding for busy or unanswered calls, then track when misses happen. If the problem is rush-hour overflow, an AI phone host can answer routine calls, take orders, and pass harder questions to staff. That keeps the phone useful without adding a big fixed monthly bill."
+    },
+    {
+      "q": "Can ROAL answer questions and take orders for my restaurant?",
+      "a": "Yes. ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, answers questions about hours, address, parking, and the menu, and sends a clean ticket to the kitchen screen. It also hands allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary."
+    }
+  ],
+  "words": 1349,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

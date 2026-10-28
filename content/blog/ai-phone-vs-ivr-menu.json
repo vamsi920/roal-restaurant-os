@@ -1,0 +1,76 @@
+{
+  "slug": "ai-phone-vs-ivr-menu",
+  "keyword": "ai vs ivr",
+  "category": "comparisons",
+  "title": "AI vs IVR for restaurant phone calls",
+  "seoTitle": "AI vs IVR for restaurant phone calls | ROAL",
+  "description": "Compare AI vs IVR for restaurant phones and see how an AI phone host differs from a press-1 menu, what callers hear, and what owners save.",
+  "question": "Should my restaurant use an AI phone host or a press-1 phone menu?",
+  "answer": "A press-1 phone menu is cheaper to set up, but it makes callers listen, choose options, and often repeat themselves. An AI phone host can answer naturally, take pickup and delivery orders from your live menu, quote a ready time, and send the ticket to the kitchen screen. For many independent restaurants, the better choice is the one that reduces missed calls without making customers work for it.",
+  "summary": "You will be able to compare AI vs IVR and choose the phone setup that fits your restaurant.",
+  "intro": "When owners compare **ai vs ivr**, the short answer is simple: an AI phone host sounds more like a person and can take orders, while a press-1 menu routes callers through recorded options. For a restaurant, that usually means less friction for the caller and fewer calls that end with “I’ll just order somewhere else.”\n\nA press-1 menu can still work for very simple needs, but it is clumsy for pickup orders, menu questions, and busy nights. ROAL is built for that restaurant flow: it answers the phone, reads the live menu, and sends a clean ticket to the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-is-the-real-difference-between-ai-vs-ivr-on-a-restauran",
+      "h2": "What is the real difference between AI vs IVR on a restaurant phone?",
+      "body": "IVR means an interactive voice response menu, usually the classic “press 1 for orders” setup. The caller has to listen, choose a number, and often repeat details to a staff member later.\n\nAn AI phone host lets the caller speak naturally. For example, a customer can say, “I want two large pepperoni pies, one with extra cheese, and a Caesar salad,” and the host can take the order, confirm the ready time, and collect the caller’s name and phone.\n\nFor a restaurant owner, the practical difference is this:\n- IVR routes calls.\n- An AI phone host handles the conversation.\n- IVR is built around menus of options.\n- ROAL is built around restaurant tasks like pickup orders, hours, address, and allergy-sensitive questions.\n\nIf your phone gets a lot of simple questions, [menu, hours and allergen questions](/use-cases/menu-questions) are much easier to handle with a phone host than with a press-1 tree."
+    },
+    {
+      "id": "how-does-a-press-1-menu-feel-to-a-customer-calling-for-food",
+      "h2": "How does a press-1 menu feel to a customer calling for food?",
+      "body": "A press-1 menu can work when the caller already knows exactly what they want and has patience. But many restaurant callers are in a car, at work, or calling with one hand while wrangling kids. They do not want a long menu of options.\n\nA typical script sounds like this:\n“Press 1 for pickup, press 2 for delivery, press 3 for hours, press 4 to repeat this menu.”\n\nThat may seem organized, but it adds steps before the order even starts. In a restaurant setting, those steps often create three problems:\n- Callers hang up before placing the order.\n- Staff still has to answer edge cases and special requests.\n- The phone rings again because the caller chose the wrong option.\n\nA better caller experience is a short greeting and a direct start: “Thanks for calling. What can I get started for you?” That is the kind of opening ROAL uses when it is taking orders, questions, or reservation requests."
+    },
+    {
+      "id": "which-setup-is-better-for-pickup-orders-and-busy-nights",
+      "h2": "Which setup is better for pickup orders and busy nights?",
+      "body": "For most independent restaurants, the best test is simple: what happens when the line gets busy? A press-1 menu can keep calls moving, but it still pushes the caller through a fixed path. That is fine for a bank. It is less fine for a pizza shop at 6:30 p.m.\n\nAn AI phone host can collect items, sizes, modifiers, and notes in one call. It can also quote a ready time and confirm the order back before sending a clean ticket to the kitchen screen.\n\nUse this quick checklist for your own store:\n- Do callers often ask about sold-out items, hours, or parking?\n- Do you take pickup orders by phone?\n- Do you need staff to handle allergy-sensitive questions or complaints?\n- Do you want one system for all calls, or only when busy/unanswered?\n\nROAL can take calls all the time or only when your existing number is forwarded. The restaurant keeps its own number, and forwarding can be turned off any time."
+    },
+    {
+      "id": "what-does-the-money-look-like-for-ai-vs-ivr",
+      "h2": "What does the money look like for AI vs IVR?",
+      "body": "A press-1 menu usually has a lower setup burden, but the real cost question is what happens after that. Many AI phone tools for restaurants charge a fixed monthly fee per location, often roughly $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nHere is a simple example you can swap for your own numbers:\n- Say you complete 300 phone orders in a month.\n- At $0.90 each, that is $270.\n- If your average phone order is $28, that is $8,400 in order value.\n\nUse your own order count and average ticket size. The main point is to compare a per-order model with a flat monthly plan, and with the cost of a phone menu that may still need staff backup."
+    },
+    {
+      "id": "what-should-a-restaurant-owner-ask-before-choosing-either-op",
+      "h2": "What should a restaurant owner ask before choosing either option?",
+      "body": "Before you pick AI vs IVR, write down your real phone needs. A press-1 menu is best at routing. An AI phone host is best at handling the conversation.\n\nUse this owner checklist:\n1. List the top 10 reasons people call your shop.\n2. Mark which calls need a human right away.\n3. Mark which calls are simple: hours, address, parking, menu questions.\n4. Mark which calls are repeatable: pickup orders, reservation requests, callback requests.\n5. Decide whether you want callers to press buttons or speak naturally.\n\nIf you want a no-pressure test, ROAL lets you paste your restaurant website, Google Maps link, or “Name, City” at /try. It reads public menu and store info, builds a phone host in about a minute, and lets you test-call it in the browser with no sign-up needed. You can also upload a menu in any format."
+    },
+    {
+      "id": "how-do-you-set-up-call-forwarding-without-making-a-mess",
+      "h2": "How do you set up call forwarding without making a mess?",
+      "body": "If you move from a press-1 menu to an AI phone host, forwarding is usually the handoff point. The exact codes depend on your carrier or phone system, so always confirm with them and test with a real call.\n\nCommon examples:\n- Many landlines and some carriers use *72 to forward all calls and *73 to turn it off.\n- On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off.\n- **61*number# can forward unanswered calls, and **67*number# can forward busy calls.\n- Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding.\n- Business VoIP systems usually set forwarding in the web portal.\n\nA practical restaurant test:\n- Call your main number from a cell phone.\n- Confirm the greeting sounds right.\n- Try an order, a question, and a staff-only issue.\n- Make sure tricky calls land with your team, along with a summary.\n\nROAL also keeps an inbox for questions it could not answer. Once you answer it once, the host knows it from then on."
+    },
+    {
+      "id": "when-does-ivr-still-make-sense-and-when-should-you-switch",
+      "h2": "When does IVR still make sense, and when should you switch?",
+      "body": "A press-1 menu can still make sense if you only need basic routing, you rarely take phone orders, and your staff is always available to pick up the rest. Some owners also like it because it feels familiar.\n\nBut if your calls include orders, modifier requests, multilingual callers, or after-hours questions, a phone menu starts to look like extra friction. In those cases, an AI phone host is usually the better fit because it does the work the caller is actually trying to do.\n\nA simple rule of thumb:\n- Choose IVR if your goal is routing only.\n- Choose an AI phone host if your goal is to take the order.\n- Choose both only if you have a very specific reason.\n\nIf you want a modern restaurant setup without a long phone maze, ROAL is built for that job. It answers, takes orders from the live menu, and passes the rest to staff when needed."
+    }
+  ],
+  "takeaways": [
+    "IVR routes callers; an AI phone host handles the conversation.",
+    "For restaurants, phone orders and menu questions are usually better handled by speech than by button pressing.",
+    "ROAL charges per completed phone order, not a monthly fee.",
+    "Owners can test a host from a website, Google Maps link, or restaurant name before going live."
+  ],
+  "faq": [
+    {
+      "q": "What is the main difference between ai vs ivr for a restaurant?",
+      "a": "IVR is a press-1 menu that routes callers through recorded choices. An AI phone host lets callers speak naturally, take orders, ask questions, and get a quoted ready time. For restaurants, that usually means less friction and a more natural phone experience."
+    },
+    {
+      "q": "Is a press-1 phone menu cheaper than an AI phone host?",
+      "a": "At the start, it often looks cheaper because it is just a phone tree. But restaurants still need to think about lost calls, staff time, and the caller experience. Many AI phone tools charge a monthly fee, while ROAL charges $0.90 per completed phone order instead of a monthly fee."
+    },
+    {
+      "q": "Can ROAL handle pickup orders and questions about hours?",
+      "a": "Yes. ROAL answers the restaurant phone, takes pickup and delivery orders from the live menu, and answers questions about hours, address, parking, and menu items. It also sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "How do I forward my restaurant number to an AI phone host?",
+      "a": "That depends on your carrier or phone system. Many landlines and some carriers use *72 to forward all calls and *73 to turn it off, while some mobile carriers and VoIP systems use different codes or portal settings. Always confirm with your carrier and test with a real call."
+    }
+  ],
+  "words": 1229,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "new-jersey-restaurant-owners-guide",
+  "keyword": "new jersey restaurant owner",
+  "category": "local",
+  "title": "A New Jersey restaurant owner's tech guide",
+  "seoTitle": "New Jersey restaurant owner tech guide | ROAL",
+  "description": "A practical guide for any New Jersey restaurant owner handling phone orders, call forwarding, and menu questions without adding more staff.",
+  "question": "How can a New Jersey restaurant owner handle more phone orders without adding another phone person?",
+  "answer": "A New Jersey restaurant owner can reduce missed calls by forwarding the restaurant line to an AI phone host that answers hours, menu, and order questions, then takes pickup and delivery orders from the live menu. ROAL also sends clean tickets to the kitchen screen, while tricky calls go to staff with a summary. It keeps the restaurant’s existing number and can be turned off any time.",
+  "summary": "You’ll know how to set up phone handling, forwarding, and order flow for a New Jersey restaurant.",
+  "intro": "If you are a New Jersey restaurant owner, the phone can either help the night or wear out your staff. A simple setup can take pressure off the counter, answer common questions, and turn more calls into orders.\n\nROAL is one way to do that. It answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen, which fits the way many local spots already work.",
+  "sections": [
+    {
+      "id": "what-should-a-new-jersey-restaurant-owner-fix-first-on-the-p",
+      "h2": "What should a New Jersey restaurant owner fix first on the phone?",
+      "body": "Start with the calls that slow your team down most. For many restaurants in Jersey City, Hoboken, Newark, and nearby towns, it is the same few things: people asking for hours, parking, menu prices, and whether a dish is still available.\n\nA good first step is to make those answers easy before you try anything fancy. A phone host should be able to say, \"We’re open until 10 tonight, and pickup is on the side entrance,\" or \"That item is sold out, but I can offer the chicken parm instead.\" That keeps the caller moving.\n\nUse this quick checklist:\n- Confirm hours, address, and parking are current.\n- Check the live menu for sold-out items.\n- Decide what staff should handle, like allergy-sensitive calls or manager requests.\n- Make sure the kitchen can see new tickets in the right place.\n\nIf you use ROAL, it reads public menu pages, menu PDFs, menu photos, and your website, then builds a phone host in about a minute from /try. That matters for busy owners because you can test-call it in the browser before you decide to go live."
+    },
+    {
+      "id": "how-do-you-forward-calls-without-giving-up-your-number",
+      "h2": "How do you forward calls without giving up your number?",
+      "body": "You do not need to abandon the number regulars already know. The common setup is to keep your existing restaurant number and forward calls to the new phone line only when you want to.\n\nThe exact code depends on the carrier and phone system, so always confirm with your provider and test with a real call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually set this in the web portal.\n\nA simple owner plan looks like this:\n1. Choose whether all calls forward or only unanswered/busy calls.\n2. Test the forwarding on a slow afternoon.\n3. Call in from another phone and listen to the full path.\n4. Make sure staff know how to turn forwarding off if needed.\n\nROAL gives each location its own phone line automatically after you claim the host, and you can turn forwarding off any time. That is useful for a New Jersey restaurant owner who wants control, not a permanent change."
+    },
+    {
+      "id": "what-should-the-phone-host-actually-handle",
+      "h2": "What should the phone host actually handle?",
+      "body": "The phone host should take the jobs that are repeatable and clear, not the ones that need a human judgment call. ROAL can take items, sizes, modifiers, and notes; collect the caller’s name and phone; quote a ready time; confirm the order back; and speak the caller’s language.\n\nIt also handles reservation requests, which can be helpful for smaller family restaurants that do not want the front counter tied up. For anything messy, it should pass the call to staff with a summary. That includes catering, complaints, allergy-sensitive questions, and manager requests.\n\nHere is a practical split for your team:\n- Phone host: \"Two plain slices, one pepperoni pie, no onions, ready for pickup.\"\n- Staff: \"I have a severe allergy question and need a manager.\"\n- Staff: \"We need a catering quote for a large office order.\"\n- Phone host: \"I can take your name and number and send this to the kitchen now.\"\n\nOne important limit: it does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it. That is a good fit for owners who want help with order flow, not a change to how they collect money."
+    },
+    {
+      "id": "how-much-does-phone-help-cost-compared-with-other-options",
+      "h2": "How much does phone help cost compared with other options?",
+      "body": "For many owners, the real question is not whether to answer the phone. It is what that answer costs each month.\n\nThird-party delivery apps commonly charge restaurants roughly 15-30% commission per order. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call. ROAL uses a different setup: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nA simple example can help. Say your average phone order is $28. Plug in your own number, but for example:\n- 20 completed phone orders in a month = $18 in ROAL order fees.\n- 100 completed phone orders in a month = $90 in ROAL order fees.\n\nNow compare that with a fixed monthly plan or a per-minute phone service. If your phone volume swings with weather, school nights, or football weekends, pay-per-order can be easier to live with.\n\nFor a quick cost check, use ROAL’s [AI phone host cost calculator](/tools/phone-host-cost-calculator) and the [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) page. The right fit depends on your call volume, but a New Jersey restaurant owner should always price the phone the same way they price labor: against actual use."
+    },
+    {
+      "id": "how-do-you-train-the-host-on-your-menu-hours-and-local-quest",
+      "h2": "How do you train the host on your menu, hours, and local questions?",
+      "body": "You do not need a long setup project. ROAL can read your website, Google Maps link, or just your restaurant name and city at /try, then build a first version from public pages. You can also upload a menu in any format.\n\nAfter that, make a short list of the things your staff answers all day. Think like a caller from the neighborhood. For example:\n- \"Do you have parking?\"\n- \"What time do you close on Friday?\"\n- \"Can I add extra mozzarella?\"\n- \"Is the soup sold out yet?\"\n\nA good owner checklist is:\n- Verify hours for weekdays, weekends, and holidays.\n- Check the address format and pickup instructions.\n- Add common menu modifiers and house notes.\n- Mark sold-out items so the phone host does not offer them.\n- Write one line for allergy-sensitive calls and manager handoffs.\n\nIf the host cannot answer a question, it lands in an inbox. You answer once, and the host learns it from then on. That is useful for local details that do not live neatly on a menu, like where to park, which door to use for pickup, or whether you are on the side street after 5 p.m."
+    },
+    {
+      "id": "what-should-a-busy-new-jersey-owner-watch-after-launch",
+      "h2": "What should a busy New Jersey owner watch after launch?",
+      "body": "Once the phone is live, watch the same things you would watch in the kitchen: what comes in, what gets delayed, and what needs a cleaner process.\n\nROAL includes a dashboard with live kitchen tickets marked new, preparing, and ready, plus call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That means you can review what callers asked, see what the host sent to the kitchen, and adjust the menu when something changes.\n\nA simple weekly review can look like this:\n1. Open the call history and spot repeated questions.\n2. Check whether any item names need to be clearer.\n3. Look for delays between order and ticket creation.\n4. Update hours for holidays or special events.\n5. Confirm sold-out items are still marked correctly.\n\nIf you run more than one spot, this becomes even more valuable because each location can keep its own menu and line. If you want to test a setup without commitment, you can [build a free test host](/try) from your website, then decide whether it fits your operation. For background, the [New Jersey location page](/locations/new-jersey) explains where ROAL is focused now, including Jersey City and Hoboken."
+    }
+  ],
+  "takeaways": [
+    "Forwarding calls lets you keep your existing restaurant number and still route calls where they need to go.",
+    "A phone host should handle repeat questions and orders, while staff handle allergy, catering, and manager requests.",
+    "ROAL charges per completed phone order, not a monthly fee, setup fee, or per-minute fee.",
+    "Clean menu data matters because it keeps the host from offering sold-out items.",
+    "Use carrier-specific forwarding codes only after confirming them with your provider and testing a real call."
+  ],
+  "faq": [
+    {
+      "q": "How does a New Jersey restaurant owner forward calls to an AI phone host?",
+      "a": "Most owners keep their current number and forward calls to the new line using their carrier’s call forwarding setup. The exact code or portal depends on the carrier or phone system, so confirm with them and test with a real call. ROAL supports forwarding all calls or only busy/unanswered calls, and you can turn it off any time."
+    },
+    {
+      "q": "Can the phone host take pickup and delivery orders from my live menu?",
+      "a": "Yes. ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen. It collects items, sizes, modifiers, notes, the caller’s name, and phone number, then confirms the order back."
+    },
+    {
+      "q": "Will it take credit card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it. That keeps the phone part focused on ordering and customer questions."
+    },
+    {
+      "q": "What if the phone host cannot answer a question?",
+      "a": "The question goes to an inbox for staff to answer once. After you answer it, the host knows it from then on. That is helpful for local details like parking, pickup instructions, or special house policies."
+    }
+  ],
+  "words": 1282,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

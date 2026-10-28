@@ -1,0 +1,115 @@
+{
+  "slug": "hoboken",
+  "label": "Hoboken, NJ",
+  "h1": "AI phone host for restaurants in Hoboken, NJ",
+  "seoTitle": "AI phone answering for Hoboken restaurants | ROAL",
+  "description": "ROAL is an AI phone host for Hoboken restaurants. It answers calls, takes pickup and delivery orders, handles menu questions, and sends clean kitchen tickets.",
+  "lead": "Hoboken restaurants get busy fast, especially around commuter hours, weekend brunch, and game nights. ROAL answers the phone, takes orders, and keeps your line open when the room is full.",
+  "question": "How can an AI phone host help my Hoboken restaurant answer calls without missing orders?",
+  "answer": "ROAL is an AI phone host for restaurants that answers calls, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It also handles hours, address, parking, menu, reservation, and basic allergy questions. If a caller needs a manager or asks something it cannot answer, it sends the details to your team.",
+  "pains": [
+    {
+      "title": "The phone rings during the lunch and dinner rush",
+      "body": "In Hoboken, calls often pile up when commuters are grabbing dinner fast or when brunch service gets busy. A missed call can turn into a missed pickup order or a caller who gives up."
+    },
+    {
+      "title": "Staff are juggling the room and the phone",
+      "body": "Your team may be plating food, taking in-person orders, and answering the same questions again and again. That slows service and makes the phone feel like one more fire to put out."
+    },
+    {
+      "title": "Simple questions still interrupt the kitchen",
+      "body": "People call to ask about hours, whether you have parking nearby, what is in a dish, or if they can place a pickup order for later. Those calls matter, but they can pull staff away from guests in the dining room."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers in a plain, restaurant way",
+      "body": "ROAL picks up with your restaurant name and speaks clearly. It can take items, sizes, modifiers, and notes, then confirm the order back to the caller."
+    },
+    {
+      "title": "Handles common Hoboken call traffic",
+      "body": "It is useful during commuter-heavy windows, weekend brunch, and busy nights when phones ring more than the front counter can handle. You can also forward only unanswered or busy calls."
+    },
+    {
+      "title": "Sends clean kitchen tickets",
+      "body": "Completed orders go to the kitchen screen with the details your staff needs. That helps the line stay organized when pickup orders come in back-to-back."
+    },
+    {
+      "title": "Fits the way owners already work",
+      "body": "You keep your existing number. The setup starts from your website, Google Maps link, or just your restaurant name and city, and you can test-call it in the browser before going live."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order for 7:15?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What would you like to order?"
+    },
+    {
+      "who": "caller",
+      "line": "Two plain slices, one pepperoni slice, and an order of garlic knots."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two plain slices, one pepperoni slice, and one garlic knots. Any changes?"
+    },
+    {
+      "who": "caller",
+      "line": "Make the pepperoni slice well done, please. The name is Mark."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Mark. That will be ready around 7:15. I have two plain slices, one pepperoni slice well done, and one garlic knots for pickup."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:15 pm",
+    "lines": [
+      "Name: Mark",
+      "2 plain slices",
+      "1 pepperoni slice · well done",
+      "1 garlic knots",
+      "Ready time: 7:15 pm"
+    ],
+    "note": "No changes on the plain slices"
+  },
+  "sections": [
+    {
+      "h2": "Why this matters in Hoboken and nearby Jersey City",
+      "body": "A lot of restaurant phone traffic in this area comes in waves. There are commuter windows, lunch rushes, weekend brunch, and evening spikes when people are heading out for dinner or staying in for a game night. That is exactly when the front desk is busy and the phone is most likely to ring and ring.\n\nFor independent owners, the problem is not just missed calls. It is interruptions. Someone asks about hours, then parking, then whether a dish has shrimp, and now the host or cashier is away from guests. An AI phone host keeps that first layer of phone work moving while your team stays on the floor or on the line.\n\nIf you want to see how it fits your setup, start with [How it works](/how-it-works) or try a live test at [Build a free test host](/try)."
+    },
+    {
+      "h2": "What to tell the phone host before you go live",
+      "body": "Keep your menu simple and current. Make sure items, sizes, add-ons, sold-out items, and any special notes are easy to read on your website or in a menu file. If you sell common late-night items like pizza slices, sandwiches, bowls, noodle dishes, or brunch plates, the host can use those details to take cleaner orders.\n\nAlso decide how you want calls routed. Many owners send all calls to the host during peak hours, then switch to forwarding only when busy or unanswered during quieter times. If you change hours for holidays, or you close early for a private event, update that first so callers hear the right info.\n\nIf a caller asks for a manager, has an allergy-sensitive question, or needs something unusual, the host can pass it along with a summary. That is often the best way to handle calls that should not be rushed."
+    },
+    {
+      "h2": "A simple example of a Friday night setup",
+      "body": "Say your restaurant starts getting slammed after 6 pm. The dining room is full, takeout is steady, and the phone keeps ringing for pickup orders and menu questions. Instead of sending staff back and forth, you forward the line when busy and let the host take the routine calls.\n\nA caller might ask for two chicken sandwiches, one side salad, and no onions, or a couple of plain slices and a soda for pickup. The host can collect the name, phone number, items, modifiers, and ready time, then confirm it back before sending the ticket.\n\nThat is a good fit for Hoboken shops that see a lot of quick orders from the neighborhood and nearby Jersey City restaurants serving the same kind of rush. See the local page for [ROAL in Hoboken, NJ](/locations/hoboken) if you want a city-specific view."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Will this replace my regular phone number?",
+      "a": "No. You keep your restaurant’s existing number. You forward calls to the host when you want, and you can turn forwarding off any time."
+    },
+    {
+      "q": "Can it take pickup orders over the phone?",
+      "a": "Yes. It can take items, sizes, modifiers, notes, the caller’s name, and phone number, then send a clean ticket to the kitchen screen. It also confirms the order back before ending the call."
+    },
+    {
+      "q": "What if a caller asks something the host does not know?",
+      "a": "It sends that question to your inbox with the call details. After you answer it once, the host can use that answer from then on."
+    },
+    {
+      "q": "Does it work for busy brunch and dinner rushes?",
+      "a": "Yes. That is one of the main use cases for Hoboken restaurants. It helps when the phone is ringing while staff are handling tables, takeout, and the line."
+    },
+    {
+      "q": "How does pricing work?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract."
+    }
+  ]
+}

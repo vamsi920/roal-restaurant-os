@@ -1,0 +1,115 @@
+{
+  "slug": "holidays",
+  "label": "Holiday rushes",
+  "h1": "Holiday rushes without a ringing phone",
+  "seoTitle": "Holiday rush phone orders for restaurants | ROAL",
+  "description": "See how an AI phone host helps restaurants handle holiday rush calls, pickup orders, hours questions, and busy-line overflow without losing the dinner rush.",
+  "lead": "Holiday weeks bring more calls than usual. People want pickups, last-minute reservations, catering, and quick answers while your team is already slammed.",
+  "question": "How can an AI phone host help with holiday rushes in my restaurant?",
+  "answer": "A phone host can answer during the holiday rush, take pickup or delivery orders from your live menu, answer common questions, and send clean tickets to the kitchen. It can also handle busy-line and unanswered calls, so your staff can stay on orders, the pass, and guests in the dining room. You still control the menu, hours, and what the host can say.",
+  "pains": [
+    {
+      "title": "The phone rings while the line is already full",
+      "body": "On Thanksgiving Eve, Christmas Eve, New Year’s Eve, or a packed Friday before a holiday, calls stack up fast. A guest may just want two large pies, while your team is boxing food and taking care of walk-ins."
+    },
+    {
+      "title": "Simple questions take up the same time as orders",
+      "body": "People call to ask, “Are you open late tonight?”, “Do you have trays for pickup?”, or “Do you still have baked ziti?” Those calls feel small, but they still pull someone off the line."
+    },
+    {
+      "title": "Holiday orders need careful notes",
+      "body": "During rushes, mistakes happen when callers want extra sauce, no onions, gluten-free pasta, or a specific pickup time. If the notes are missed, the whole holiday pickup feels off."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers the phone when your team cannot",
+      "body": "ROAL can pick up busy-line and unanswered calls during holiday spikes. That helps you keep the counter moving while callers still get a clear answer."
+    },
+    {
+      "title": "Takes real orders from your live menu",
+      "body": "The phone host can take items, sizes, modifiers, and notes from the menu you already use. It confirms the name, phone number, and ready time before sending the ticket to the kitchen screen."
+    },
+    {
+      "title": "Handles common holiday questions",
+      "body": "It can answer hours, address, parking, and menu questions for the night. If something is unusual, it sends it to staff with a summary instead of guessing."
+    },
+    {
+      "title": "Keeps special holiday requests organized",
+      "body": "If a caller asks for a catering tray, a complaint, an allergy-sensitive order, or a manager, the host can route it to your team. That keeps the urgent calls from getting lost in the rush."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, are you still taking pickup orders for tonight?"
+    },
+    {
+      "who": "host",
+      "line": "Yes, we are. I can help with that."
+    },
+    {
+      "who": "caller",
+      "line": "Great. Two large pepperoni pizzas, one extra cheese, and a side of wings. Extra ranch."
+    },
+    {
+      "who": "host",
+      "line": "Sure. Any changes on the wings, like mild or hot?"
+    },
+    {
+      "who": "caller",
+      "line": "Mild, please. Under Maria. Can I pick it up at 6:30?"
+    },
+    {
+      "who": "host",
+      "line": "Yes. Two large pepperoni pizzas, one extra cheese, one side of mild wings, extra ranch, under Maria, for 6:30 pickup. I’ll send that in now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:30 pm",
+    "lines": [
+      "Maria",
+      "2 large pepperoni pizzas",
+      "1 large extra cheese pizza",
+      "1 side mild wings",
+      "Extra ranch"
+    ],
+    "note": "Holiday rush: caller asked for 6:30 pickup."
+  },
+  "sections": [
+    {
+      "h2": "What to set up before the holiday rush starts",
+      "body": "Before the busy week hits, make sure your menu, hours, address, and holiday notes are current. If you close early on Christmas Eve, open later on New Year’s Day, or stop taking pickups after a certain time, put that in the host settings. That way, callers hear the right answer without your team repeating it all night.\n\nIt also helps to think through the calls you get every year. For many restaurants, those are pizza trays, pasta pans, wings, catering platters, coffee orders, dessert pickups, and last-minute “Are you open?” calls. If those items are on your live menu, the host can take them without making your counter staff stop mid-rush."
+    },
+    {
+      "h2": "A simple holiday phone plan for busy nights",
+      "body": "A good setup is to forward calls only when the line is busy or unanswered, then turn it off when the rush passes. That way, your staff still handles the calls they can get to, and the phone host catches the rest.\n\nIf you want, you can also forward all calls during peak holiday windows, like the dinner rush on December 23 or the lunch rush before a long weekend. Keep a short checklist at the host stand: what time to forward, when to stop, and who should check the inbox for special requests. If a caller asks about a sold-out item, the host will not offer it."
+    },
+    {
+      "h2": "A worked example from a real holiday night",
+      "body": "Say it is 5:45 pm on Christmas Eve and your dining room is full. One caller wants two chicken parm heroes, one caprese salad, and a 7:15 pickup. Another wants to know if you still have pumpkin cheesecake. A third caller needs a catering tray for tomorrow.\n\nThe phone host can take the first order, answer the dessert question using your live menu, and pass the catering request to staff with a summary. Your team stays focused on service, and the phone still gets answered with a calm voice instead of a busy signal or voicemail."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL handle holiday pickup orders from the phone?",
+      "a": "Yes. ROAL can take pickup and delivery orders from your live menu, collect the caller’s name and phone number, quote a ready time, and send the ticket to the kitchen screen. It can handle modifiers and notes too."
+    },
+    {
+      "q": "What happens if the caller asks about a sold-out item?",
+      "a": "ROAL does not offer items marked sold out. That helps avoid confusion during holiday rushes when the kitchen is already running low on popular items like wings, trays, or desserts."
+    },
+    {
+      "q": "Can I use it only during busy holiday hours?",
+      "a": "Yes. You can forward all calls, or only busy and unanswered calls, and turn forwarding off any time. Many owners use it just for the dinner rush, the pre-holiday weekend, or the days they know will be packed."
+    },
+    {
+      "q": "Does it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How fast can I get started before a holiday rush?",
+      "a": "You can paste your website, Google Maps link, or restaurant name and city at /try. ROAL reads your public menu, prices, hours, and address and builds a phone host in about a minute, and you can test-call it in the browser right away."
+    }
+  ]
+}

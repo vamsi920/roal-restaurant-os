@@ -1,0 +1,77 @@
+{
+  "slug": "parking-directions-callers",
+  "keyword": "restaurant parking information",
+  "category": "guest-experience",
+  "title": "What to say about parking on restaurant calls",
+  "seoTitle": "Restaurant parking information for callers | ROAL",
+  "description": "Answer parking questions faster with clear directions, pickup tips, and simple phone scripts. Help guests park and arrive without confusion.",
+  "question": "What should I say when callers ask for restaurant parking information?",
+  "answer": "Give the caller the simplest route, the best place to park, and any timing detail they need, such as street parking, a lot, or where to enter for pickup. Keep it short and specific: “Park on the side street, come in through the front door, and call us when you arrive.” If the answer changes by time of day or location, have your phone host read the current parking note from your public info and send edge cases to staff.",
+  "summary": "You’ll know how to give clear parking directions on the phone without slowing down service.",
+  "intro": "Callers asking for restaurant parking information usually want one thing: where to leave the car and how to get inside fast. Give them the shortest useful answer, not a long explanation.\n\nIf you run a pizza shop, deli, family restaurant, or takeout counter, parking questions can eat up time during a rush. A good phone script, a clear website note, and an AI phone host like ROAL can handle the simple questions and pass the tricky ones to staff.",
+  "sections": [
+    {
+      "id": "what-parking-information-should-your-staff-say-first",
+      "h2": "What parking information should your staff say first?",
+      "body": "Start with the easiest answer a driver needs. Tell them whether there is street parking, a lot, a shared lot, or curbside pickup, then add one useful direction point.\n\nUse a simple order:\n1. Where to park\n2. Which door to use\n3. What to do when they arrive\n\nExample phone line: “You can park on the side street or in the lot behind the building. Use the front door for pickup.”\n\nIf your parking changes by time, say that clearly:\n- “Street parking is easiest after 6 p.m.”\n- “The lot fills up during dinner, so try the rear entrance.”\n- “For pickup, use the left side door and ring the bell.”\n\nThis is also where ROAL helps. It can answer address and parking questions from your public pages, so the caller gets a fast answer without tying up the line."
+    },
+    {
+      "id": "how-do-you-write-parking-directions-that-are-easy-to-follow",
+      "h2": "How do you write parking directions that are easy to follow?",
+      "body": "Write directions like you would text them to a friend who has never been there. Use landmarks, not vague words. “Behind the red brick building” is better than “around back.”\n\nA useful parking note has three parts:\n- The best place to park\n- The best entrance to use\n- One backup option if the first choice is full\n\nExample you can copy and edit:\n- Best parking: “Park in the shared lot next to the store.”\n- Entrance: “Come in through the front door facing Main Street.”\n- Backup: “If the lot is full, use street parking on Oak Avenue.”\n\nIf you have a tight downtown spot, mention what matters most. Say whether there is quick curb pickup, whether parking is metered, or whether guests should arrive a few minutes early. Keep it plain. The goal is to cut confusion, not impress anyone."
+    },
+    {
+      "id": "what-should-you-put-on-your-website-and-google-maps-page",
+      "h2": "What should you put on your website and Google Maps page?",
+      "body": "Your phone host can only repeat what is easy to find, so make the parking details visible online. Put the same wording in your website footer, contact page, and public business listing where possible.\n\nA good parking block looks like this:\n| Item | Example wording |\n| --- | --- |\n| Parking | Street parking on Pine Street and a small lot behind the restaurant |\n| Entrance | Front door for dine-in, side door for pickup |\n| Pickup note | Call when you arrive and we’ll bring the order out if needed |\n| Backup | If the lot is full, use the municipal lot two blocks north |\n\nUse the same words everywhere. If your website says “rear lot” but your front desk says “back entrance,” callers may get lost. ROAL reads public pages like your website, Google Maps link, menu PDFs, and menu photos to build the phone host, so clear public info matters.\n\nFor owners who want a fast setup, [Build a free test host](/try) can be a quick way to see how your public info sounds on the phone."
+    },
+    {
+      "id": "how-can-an-ai-phone-host-handle-parking-questions-without-sl",
+      "h2": "How can an AI phone host handle parking questions without slowing your team?",
+      "body": "Parking questions are often simple, but they come at the worst times: lunch rush, Friday night, or right when a driver is circling the block. An AI phone host can answer the routine version of the question and leave the unusual ones to staff.\n\nROAL answers questions about hours, address, parking, and the menu, and it can take pickup and delivery orders from the live menu. It also keeps a clean ticket on the kitchen screen, so the phone answer and the order stay tied together.\n\nA practical example:\n- Caller asks: “Where should I park for pickup?”\n- Phone host says: “You can use the side street or the lot behind the building. Please come in through the front door.”\n- If the caller asks something tricky, like a blocked driveway or a special delivery setup, the question can land in the owner inbox with the context.\n\nThat saves your staff from repeating the same directions all day. It also helps when the answer changes by location, because each location can have its own phone line and its own details."
+    },
+    {
+      "id": "what-should-staff-say-when-parking-is-tight-or-changing-by-t",
+      "h2": "What should staff say when parking is tight or changing by time of day?",
+      "body": "Not every restaurant has easy parking. Some spots are great at lunch and painful at dinner. Some lots are shared. Some streets have loading restrictions. In those cases, the best answer is honest and specific.\n\nUse a short script and update it by time block:\n- “Before 5 p.m., street parking is usually open on Elm Street.”\n- “After 5 p.m., the lot behind the building is the best option.”\n- “On game nights, please plan extra time for parking.”\n\nIf your answer changes often, make a small checklist for whoever answers the phone:\n1. Is the front lot open?\n2. Is street parking available right now?\n3. Is there a better pickup door for tonight?\n4. Did the caller mention mobility needs?\n\nIf you use ROAL, update the parking note in the dashboard when the situation changes. The owner can also answer unknown questions once, and then the host learns it from then on. That keeps the answer consistent without making you rewrite everything from scratch."
+    },
+    {
+      "id": "how-do-parking-questions-connect-to-pickup-delivery-and-rese",
+      "h2": "How do parking questions connect to pickup, delivery, and reservations?",
+      "body": "Parking questions are not separate from the rest of the phone call. They often show up right before a pickup order, a reservation request, or a delivery question.\n\nThat means your answer should match the call type.\n\nHere is a simple guide:\n| Call type | What the caller wants | Best parking answer |\n| --- | --- | --- |\n| Pickup order | Fast arrival and easy handoff | “Use the side door and call when you arrive.” |\n| Delivery driver | Quick stop and safe access | “Use the loading spot on the side if it’s open.” |\n| Reservation | Dinner arrival and table timing | “Street parking is best after 6 p.m.” |\n| Busy holiday night | Lowest-friction arrival | “Please allow extra time for parking.” |\n\nThis matters because the phone answer should help the visit go smoothly, not just satisfy the question. ROAL can speak the caller’s language, quote a ready time, take names and phone numbers, and hand tough questions to staff with a summary. It does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "id": "how-much-time-and-money-can-clearer-parking-info-save",
+      "h2": "How much time and money can clearer parking info save?",
+      "body": "Clear parking info does not sound dramatic, but it can reduce repeat calls and confused arrivals. That matters more than people think, especially if your line is busy and your team is short-staffed.\n\nHere is a simple example you can swap with your own numbers:\n- Say you get 12 parking questions on a Friday night.\n- If each one takes 45 seconds, that is 9 minutes of phone time.\n- If your staff is also taking orders, those 9 minutes can feel much longer during a rush.\n\nNow compare the cost of other options:\n- Delivery apps commonly take roughly 15-30% commission per order.\n- Many AI phone tools charge a fixed monthly fee whether orders come in or not.\n- Human answering services usually bill by the minute or by the call.\n- ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nThat does not mean every call should be automated. It means the simple parking question can be handled without wasting staff time, while complicated calls still go to a person. If you want to compare options for your own shop, the [Pricing](/pricing) page explains the model plainly."
+    }
+  ],
+  "takeaways": [
+    "Give callers the parking answer first, then the entrance, then the backup option.",
+    "Write parking directions in plain language with landmarks and time-of-day notes.",
+    "Keep the same parking wording on your website, maps listing, and phone script.",
+    "ROAL can answer routine parking questions and pass unusual ones to staff.",
+    "Clear parking info helps pickup, reservations, and delivery flow more smoothly."
+  ],
+  "faq": [
+    {
+      "q": "What should I say when a customer asks where to park?",
+      "a": "Say the best place to park, the door they should use, and one backup option. For example: “You can park in the lot behind the building or on the side street. Please use the front door for pickup.” Keep it short so the caller can move on quickly."
+    },
+    {
+      "q": "Should I put parking directions on my website?",
+      "a": "Yes. Put the parking note on your contact page, footer, or location page so callers can find it before they dial. Use the same words your staff uses on the phone. That keeps the answer consistent and reduces confusion."
+    },
+    {
+      "q": "Can an AI phone host answer parking questions?",
+      "a": "Yes. ROAL answers questions about hours, address, parking, and the menu, using the restaurant’s public information. If a question is unusual or needs staff judgment, it goes to the owner inbox with context."
+    },
+    {
+      "q": "What if parking changes at night or during busy hours?",
+      "a": "Say that clearly in your script and on your public pages. For example: “Street parking is best before 5 p.m., and the rear lot is easier after 5 p.m.” If the answer changes often, update the note in your dashboard so callers hear the latest version."
+    }
+  ],
+  "words": 1298,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

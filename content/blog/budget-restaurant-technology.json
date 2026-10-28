@@ -1,0 +1,77 @@
+{
+  "slug": "budget-restaurant-technology",
+  "keyword": "restaurant technology budget",
+  "category": "pricing",
+  "title": "Budgeting for restaurant technology",
+  "seoTitle": "Restaurant technology budget | ROAL",
+  "description": "Set a realistic restaurant technology budget by comparing monthly tools, phone costs, and call forwarding setup. Simple numbers for owners.",
+  "question": "How do I build a restaurant technology budget without overspending?",
+  "answer": "Start by listing every tool you pay for each month, then separate fixed fees from per-order or per-minute charges. For phone orders, compare your current cost of missed calls, staff time, and delivery app commissions against a per-order phone host like ROAL, which charges $0.90 for each completed order and no monthly fee.",
+  "summary": "Build a practical tech budget by separating fixed costs, variable costs, and phone-order costs.",
+  "intro": "A restaurant technology budget should start with the bills you pay every month and the costs that rise when orders pick up. The goal is simple: keep the tools that save labor, protect orders, and help the kitchen work faster, while cutting the ones that quietly eat margin.\n\nFor many independent restaurants, the biggest surprise is phone cost. Delivery apps take a big slice of each order, human answering services often bill by the minute or call, and some AI phone tools charge a monthly fee even when the phone is quiet. A clear restaurant technology budget helps you see what is worth keeping and what is not.",
+  "sections": [
+    {
+      "id": "what-should-go-into-a-restaurant-technology-budget",
+      "h2": "What should go into a restaurant technology budget?",
+      "body": "A good budget is not just “software.” It should cover every tool that touches orders, calls, or operations. For a pizza shop, deli, or takeout spot, that often means phone handling, online ordering, menu updates, payment tools, kitchen screens, and any service that helps guests find your hours and address.\n\nStart with a simple checklist:\n- Phone costs: forwarding, answering, voicemail, or an AI phone host\n- Order tools: online ordering, pickup order handling, delivery app fees\n- Operations: kitchen display, tablets, printers, menu editing\n- Admin: call history, recordings, reservation requests, FAQs\n\nIf you want a quick way to frame the phone part, use this line at the counter or in the office: “Which tool is taking the order, and what does that order cost me to process?” That question keeps the budget tied to real work, not just monthly subscriptions. If you want a broader view of the total stack, see [restaurant tech costs that add up every month](/blog/restaurant-tech-stack-cost)."
+    },
+    {
+      "id": "how-do-fixed-monthly-fees-compare-with-per-order-pricing",
+      "h2": "How do fixed monthly fees compare with per-order pricing?",
+      "body": "This is the part many owners miss. Some tools charge the same amount every month, whether you get 20 calls or 200. Other tools charge only when they actually complete an order. That difference matters a lot in slow weeks, weather swings, and seasonal dips.\n\nHere is a simple example you can swap with your own numbers:\n\n| Pricing model | Example cost | Best for |\n|---|---:|---|\n| Fixed monthly fee | $79, $199, or $599 per location | Shops that want predictable billing |\n| Per-minute or per-call | Depends on call volume and length | Owners who want help only when calls happen |\n| Per completed order | $0.90 per completed order | Restaurants that want cost tied to confirmed orders |\n\nIf you take 300 completed phone orders in a month, a per-order phone host at $0.90 would cost $270. If you only take 100 orders, it would cost $90. Plug in your own order count and compare that to the fixed monthly tools you already pay for. For a deeper comparison, see [pay per order vs monthly AI phone plans](/blog/per-minute-vs-per-order-pricing)."
+    },
+    {
+      "id": "how-much-do-delivery-apps-take-from-your-budget",
+      "h2": "How much do delivery apps take from your budget?",
+      "body": "Delivery apps commonly charge restaurants roughly 15-30% commission per order. That is not a small line item. On a $30 order, that can mean about $4.50 to $9.00 gone before food cost, labor, and overhead.\n\nTry this quick math with your own average order:\n1. Write down your average delivery-app order total.\n2. Multiply by your typical commission rate.\n3. Compare that number to what it would cost to take the same order by phone or on your own ordering flow.\n\nExample: say your average order is $28 and the commission is 20%. That is $5.60 per order. If 100 orders a month come through that channel, the commission is about $560. If you have a phone host that takes pickup and delivery orders from your live menu and sends a clean ticket to the kitchen screen, some of those orders may shift back to your own phone line. That can make a real difference in the monthly budget, even before you count labor. If you want the math laid out more fully, use [delivery app commissions: the per-order math](/blog/delivery-app-commission-math)."
+    },
+    {
+      "id": "what-does-the-phone-really-cost-when-calls-are-missed-or-han",
+      "h2": "What does the phone really cost when calls are missed or handed to staff?",
+      "body": "Phone cost is not only the bill from a service. It is also the time your team spends stopping prep, wiping hands, and answering the same questions again and again. If calls go to voicemail, the hidden cost is orders that never make it to the kitchen.\n\nA useful way to budget the phone is to split it into three buckets:\n- Direct cost: the service fee, call charges, or per-order fee\n- Labor cost: the minutes your staff spend on the phone\n- Lost-opportunity cost: missed pickup orders, catering requests, or reservation requests\n\nYou can estimate staff time with a simple test. Say the phone rings 40 times in a dinner rush and each answered call takes 2 minutes. That is 80 minutes of interrupted work. Plug in your own wage rate and you get a rough labor number. If you want to compare that with staffing the phone, see [the real cost of staffing the phone](/blog/cost-of-phone-staff-restaurant). If you want a quick calculator, use [the phone staff cost calculator](/tools/phone-staff-cost-calculator)."
+    },
+    {
+      "id": "how-do-i-budget-for-call-forwarding-and-setup-without-surpri",
+      "h2": "How do I budget for call forwarding and setup without surprises?",
+      "body": "The good news is that call forwarding is usually simple. The important part is to confirm the code with your carrier and test it with a real call. On many landlines and some carriers, *72 starts forwarding all calls and *73 turns it off. On GSM mobile carriers such as AT&T and T-Mobile, **21*number# often forwards all calls and ##21# turns it off; **61*number# often forwards unanswered calls and **67*number# often forwards busy calls. Verizon Wireless commonly uses *72 and *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle this in the web portal.\n\nUse this checklist before you budget:\n- Confirm the code with your carrier or phone system\n- Test forwarding during a quiet time\n- Make sure your restaurant keeps its own number\n- Decide whether to forward all calls or only when busy/unanswered\n- Re-test after a plan change or phone system change\n\nROAL uses this kind of setup too: the restaurant claims the host, gets a separate location line, and forwards the existing number to it. Forwarding can be turned off any time. If you need carrier codes in one place, [call forwarding codes by carrier](/tools/call-forwarding-codes) is the cleanest starting point."
+    },
+    {
+      "id": "how-can-an-ai-phone-host-fit-into-the-budget",
+      "h2": "How can an AI phone host fit into the budget?",
+      "body": "A phone host should be budgeted like a labor-saving tool, not like a mystery subscription. ROAL is priced at $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing happens monthly.\n\nThat makes it easy to compare against other common costs. Use this simple swap test:\n- If you get 150 completed phone orders in a month, the cost is $135.\n- If you get 400 completed phone orders, the cost is $360.\n- If a month is quiet, the bill falls with it.\n\nROAL can answer hours, address, parking, and menu questions, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. It also takes reservation requests and hands tricky calls like allergy-sensitive questions, complaints, catering, or manager requests to staff with a summary. It does not take card numbers over the phone, so payment stays where your restaurant already handles it. For a direct cost comparison, see [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "what-should-i-build-into-next-month-s-budget-after-i-go-live",
+      "h2": "What should I build into next month’s budget after I go live?",
+      "body": "Once the new tool is running, your budget should be reviewed against actual call volume and order volume. Do not judge it only by whether the phone rings less. Judge it by whether the kitchen gets cleaner tickets, staff gets fewer interruptions, and more calls turn into confirmed orders.\n\nA simple monthly review works well:\n1. Count completed phone orders.\n2. Count calls that became questions, reservations, or staff handoffs.\n3. Note any hours, menu, or parking questions that were answered without staff time.\n4. Compare the total to your old phone setup.\n5. Adjust forwarding rules if needed.\n\nIf you want a place to start, [build a free test host](/try) from your website, Google Maps link, or restaurant name and city. You can test-call it in the browser before you go live, which makes budgeting easier because you see the flow before you spend anything beyond normal usage. That is especially helpful for owners who want the budget to be tied to actual orders, not a guess.\n\nFor owners who want to keep things simple, ROAL also gives each location its own phone line automatically, and the dashboard keeps call history, transcripts, recordings, menu edits, hours, FAQs, upsell suggestions, and multi-location menus in one place."
+    }
+  ],
+  "takeaways": [
+    "Separate fixed monthly bills from per-order costs before you compare tools.",
+    "Use real order counts and average order value to estimate phone and delivery costs.",
+    "Budget phone work as labor, not just software, because interruptions are expensive.",
+    "For many shops, per-order pricing is easier to match with actual volume than monthly fees.",
+    "Always confirm call forwarding codes with your carrier and test with a real call."
+  ],
+  "faq": [
+    {
+      "q": "What should a restaurant technology budget include?",
+      "a": "It should include every tool that affects orders or phone work: answering, forwarding, online ordering, kitchen screens, menu updates, and delivery app costs. For a small restaurant, the phone line and order flow are often the most important parts to track because they touch labor and revenue every day."
+    },
+    {
+      "q": "Is a monthly AI phone plan or per-order pricing better for restaurants?",
+      "a": "It depends on your volume, but per-order pricing is often easier to budget when calls rise and fall. A fixed monthly fee can make sense if your volume is steady, while per-order pricing ties cost to actual completed orders. Compare the monthly total against your expected order count before you choose."
+    },
+    {
+      "q": "How much do delivery apps usually cost a restaurant?",
+      "a": "Delivery apps commonly charge roughly 15-30% commission per order. The exact amount depends on the order and the arrangement, but the main point is that the cost scales fast as order value rises. Use your average ticket size and current commission rate to estimate your monthly total."
+    },
+    {
+      "q": "How do I forward my restaurant calls without losing my number?",
+      "a": "In many cases, you forward your existing number to a separate line and keep the original number active. Codes vary by carrier and phone system, so confirm the steps with your provider and test with a real call. If you use ROAL, forwarding can be turned off any time and the restaurant keeps its own number."
+    }
+  ],
+  "words": 1390,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

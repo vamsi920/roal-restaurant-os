@@ -1,0 +1,124 @@
+{
+  "slug": "caribbean",
+  "label": "Caribbean restaurants",
+  "h1": "An AI phone host for Caribbean restaurants",
+  "seoTitle": "AI phone answering for Caribbean restaurants | ROAL",
+  "description": "ROAL answers calls for Caribbean restaurants, takes pickup orders, answers menu and hours questions, and sends clean tickets to the kitchen screen.",
+  "lead": "Busy lunch line. Fried chicken running out. A phone ringing for jerk chicken, oxtail, and patties. ROAL answers the call and takes the pickup order while your team keeps moving.",
+  "question": "How can ROAL answer calls and take pickup orders for my Caribbean restaurant?",
+  "answer": "ROAL is an AI phone host made for restaurants. It answers your Caribbean restaurant’s calls, takes pickup and delivery orders from your live menu, and handles questions about hours, address, parking, and the menu. It can also send reservation requests, catering calls, allergy-sensitive questions, and manager requests to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings during the rush",
+      "body": "Friday dinner gets crowded fast. One person is plating oxtail, another is packing rice and peas, and the phone keeps ringing for curry goat, patties, and call-in pickup orders."
+    },
+    {
+      "title": "Orders come in while the line is moving",
+      "body": "Callers may want extra gravy, no cabbage, mild sauce, or plantains swapped for fries. When the person answering is also helping in the kitchen, details can get missed."
+    },
+    {
+      "title": "Customers call with simple questions all day",
+      "body": "Many calls are not even orders. People ask about closing time, parking, whether jerk chicken is ready, or if a dish has peanuts or coconut."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers with your menu and hours",
+      "body": "Paste your website, Google Maps link, or restaurant name and city. ROAL reads the public menu, prices, hours, and address, then builds a phone host in about a minute."
+    },
+    {
+      "title": "Takes clear pickup orders",
+      "body": "It can capture items, sizes, modifiers, and notes. That means jerk chicken, oxtail, curry goat, brown stew chicken, plantains, rice and peas, and patties can all be ordered by phone with a clean read-back."
+    },
+    {
+      "title": "Sends the order to the kitchen screen",
+      "body": "Each confirmed order becomes a ticket with the caller’s name, phone number, and ready time. Your kitchen sees what is new, preparing, and ready."
+    },
+    {
+      "title": "Lets you stay in control",
+      "body": "You choose the voice and name. If a caller asks something unusual, ROAL sends it to your inbox, and you answer once so it knows next time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get for you today?"
+    },
+    {
+      "who": "caller",
+      "line": "Two jerk chicken dinners, please. One with rice and peas, one with white rice. Also a side of plantains."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two jerk chicken dinners, one with rice and peas, one with white rice, plus one side of plantains. Any extras?"
+    },
+    {
+      "who": "caller",
+      "line": "Can I get one dinner mild, and add extra gravy on both?"
+    },
+    {
+      "who": "host",
+      "line": "Yes. What name should I put on the order, and what number can we reach you at?"
+    },
+    {
+      "who": "caller",
+      "line": "It’s Maria, 555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your pickup order should be ready at 6:40 pm. I’ll read it back now: two jerk chicken dinners, one rice and peas, one white rice, one side of plantains, one dinner mild, extra gravy on both."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "Maria · 555-0148",
+      "2 jerk chicken dinners",
+      "1 rice and peas",
+      "1 white rice",
+      "1 side plantains",
+      "Notes: one dinner mild, extra gravy on both"
+    ],
+    "note": ""
+  },
+  "sections": [
+    {
+      "h2": "Built for Caribbean menu calls",
+      "body": "Caribbean restaurants get a different kind of phone traffic. People call for jerk chicken, oxtail, curry goat, curry chicken, brown stew chicken, patties, sorrel, and rice and peas. They often ask for small changes too, like no cabbage, extra gravy, mild spice, or an extra side of plantains.\n\nROAL is built for those calls. It answers in a warm way, takes the order, and confirms the details back before sending the ticket to the kitchen screen. If a dish is sold out, it will not offer it. If a question needs a person, it passes it to your team with a summary."
+    },
+    {
+      "h2": "A simple setup for busy owners",
+      "body": "You do not need to start with a long setup. At /try, you can paste your website, Google Maps link, or just your restaurant name and city. ROAL reads the menu, prices, hours, and address from public pages, and you can also upload a menu in any format.\n\nThen you test-call it in the browser and hear how it sounds before going live. When you are ready, you claim the host and forward your existing number to it. You can forward all calls, or only calls when you are busy or do not answer. The restaurant keeps its own number."
+    },
+    {
+      "h2": "A worked example for a Friday rush",
+      "body": "Say your dining room is full and you are packing orders at the counter. A caller wants two jerk chicken dinners, one oxtail dinner, and a box of beef patties for later pickup. ROAL can take the order while your staff keeps working, then quote a ready time and send the ticket straight to the kitchen.\n\nThat helps when the phone rings during the exact moments you need both hands. It also helps after hours, when a caller wants to know tomorrow’s opening time or if you have curry goat on the menu. You still stay in control of the final setup, the voice, and the hours."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pickup orders for Caribbean food like jerk chicken and oxtail?",
+      "a": "Yes. ROAL takes pickup and delivery orders from your live menu. It can handle items, sizes, modifiers, and notes, then confirm the order back before sending the ticket to the kitchen screen."
+    },
+    {
+      "q": "What if my restaurant gets a lot of calls during dinner rush?",
+      "a": "You can forward all calls, or only calls when the line is busy or unanswered. That is useful when the phone rings during dinner service and staff are already plating, packing, or at the grill."
+    },
+    {
+      "q": "Will it answer questions about my hours and address?",
+      "a": "Yes. ROAL can answer questions about hours, address, parking, and the menu using the information it reads from your public pages. If it does not know something, it sends the question to your inbox."
+    },
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How do I get started if I am not very technical?",
+      "a": "Go to /try and paste your restaurant website, Google Maps link, or restaurant name and city. ROAL builds a phone host in about a minute, and you can test-call it in the browser before you go live."
+    }
+  ]
+}

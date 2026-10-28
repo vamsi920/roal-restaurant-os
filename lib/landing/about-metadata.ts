@@ -5,7 +5,7 @@ export function buildAboutPageMetadata(): Metadata {
   return buildPublicPageMetadata({
     title: "About ROAL — An AI phone host for restaurants",
     description:
-      "Why we built ROAL: busy restaurants miss calls, and every missed call is a missed order. ROAL answers, takes the order from your live menu, and sends the ticket to the kitchen.",
+      "About ROAL, the AI phone host for restaurants, built in Jersey City. It answers calls, takes orders from your live menu and sends the ticket to the kitchen.",
     canonicalPath: "/about",
   });
 }

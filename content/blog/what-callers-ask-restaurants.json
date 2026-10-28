@@ -1,0 +1,76 @@
+{
+  "slug": "what-callers-ask-restaurants",
+  "keyword": "common restaurant phone questions",
+  "category": "guest-experience",
+  "title": "Common restaurant phone questions callers ask",
+  "seoTitle": "Common restaurant phone questions | ROAL",
+  "description": "Get a practical look at common restaurant phone questions, with scripts, checklists, and setup tips for hours, menu, pickup, and reservations.",
+  "question": "What are the common restaurant phone questions callers ask most often?",
+  "answer": "The most common restaurant phone questions are about hours, location, parking, menu items, order status, pickup or delivery, and reservations. Many callers also ask about allergies, sold-out items, large orders, and whether they can place an order in another language. A restaurant phone host should answer the simple stuff right away and send the tricky stuff to staff with a clear summary.",
+  "summary": "Know the questions callers ask most and set up your phone line to answer them fast.",
+  "intro": "Callers usually want the same few things: your hours, your address, your menu, and whether they can place an order now. They also ask about parking, delivery, pickup timing, reservations, allergies, and sold-out items.\n\nIf your phone rings all day, those questions can pile up fast. A clear phone script, a current menu, and an AI phone host like ROAL can handle the routine calls and hand off the rest to staff.",
+  "sections": [
+    {
+      "id": "what-are-the-common-restaurant-phone-questions",
+      "h2": "What are the common restaurant phone questions?",
+      "body": "Most restaurant calls fall into a few repeat topics. That is true for pizza shops, takeout spots, delis, family restaurants, and busy lunch counters.\n\nHere is the short list owners hear most often:\n- What are your hours today?\n- Are you open right now?\n- What is your address?\n- Do you have parking?\n- Can I place a pickup order?\n- Do you deliver?\n- What is on the menu?\n- Do you have gluten-free, vegan, or allergy-safe options?\n- How long is the wait?\n- Can I make a reservation?\n- Is this item sold out?\n- Can I speak to a manager?\n- Do you do catering or large orders?\n\nA good phone host should answer the simple ones fast and clearly. ROAL does that from your public menu, hours, and address. For a busy owner, that means fewer repetitive interruptions and fewer missed details on orders.\n\nUse a simple phone line script for the common questions:\n\"Thanks for calling. Our hours today are 11 to 9. We’re at 123 Main Street, and pickup is available now. How can I help with your order?\""
+    },
+    {
+      "id": "how-should-staff-answer-hours-address-and-parking-questions",
+      "h2": "How should staff answer hours, address, and parking questions?",
+      "body": "These questions should be short and exact. If callers have to ask twice, they may hang up or move on.\n\nKeep a small reference card by the phone with these fields:\n1. Today’s hours\n2. Holiday hours, if different\n3. Street address and nearest cross street\n4. Parking notes, like lot, street parking, or meter rules\n5. Where pickup customers should enter\n\nExample script:\n\"We’re open until 10 tonight. The address is 48 Washington Avenue. There’s street parking out front, and pickup is at the side door.\"\n\nIf you use ROAL, it reads hours and address from the pages you already have online, then answers those questions on the call. If your hours change, update the source page or menu page as soon as you can. For parking, add one plain note, such as:\n- Free lot behind the building\n- Metered street parking\n- Use the side entrance for pickup\n\nThat small detail saves back-and-forth on the phone and helps callers feel confident they found the right place."
+    },
+    {
+      "id": "what-do-callers-ask-about-the-menu-and-sold-out-items",
+      "h2": "What do callers ask about the menu and sold-out items?",
+      "body": "Menu questions are usually about ingredients, sizes, toppings, sides, and substitutions. Callers often want to know what is in a dish before they order, especially if they are ordering for a group.\n\nA useful way to handle this is to separate the call into three parts:\n1. Confirm the item\n2. Confirm the size or quantity\n3. Confirm any modifiers or notes\n\nExample:\n\"One large pepperoni pizza, extra cheese, no onions, and cut into eight slices.\"\n\nIf a caller asks for something you do not have, the answer should be simple and direct:\n\"That item is sold out right now. I can help you pick another option.\"\n\nROAL will not offer items marked sold out, which helps reduce confusion before the order reaches the kitchen screen. That matters on busy nights, because the person taking the call is not always the person checking the line.\n\nA quick menu question checklist:\n- Can I customize this item?\n- What sizes do you have?\n- Does it come with fries, salad, or sauce?\n- Is there a spicy version?\n- Is this item available right now?\n- Do you have a vegan, dairy-free, or gluten-free option?\n\nIf your menu is messy, clean it up once in a while. A phone host can only answer well if the menu it reads is current."
+    },
+    {
+      "id": "how-do-callers-place-pickup-and-delivery-orders-by-phone",
+      "h2": "How do callers place pickup and delivery orders by phone?",
+      "body": "Phone orders are where speed matters most. People calling for pickup or delivery usually want one simple thing: get the order placed without repeating themselves.\n\nA clean call flow works best:\n1. Greet the caller\n2. Take the first item\n3. Confirm size, modifiers, and notes\n4. Ask for the caller’s name and phone\n5. Give the ready time\n6. Read the full order back\n\nExample script:\n\"Absolutely. I have a medium margherita pizza, a Caesar salad with dressing on the side, and one order of wings. Can I get your name and phone number? Your pickup time is about 25 minutes.\"\n\nROAL takes items, sizes, modifiers, notes, name, phone, and ready time, then confirms the order back before sending a clean ticket to the kitchen screen. It never takes card numbers over the phone. Payment happens at pickup or however the restaurant already takes it.\n\nIf you want to think about the labor side, compare a phone order to a delivery app order. Delivery apps commonly take roughly 15-30% commission per order, while ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Plug in your own average ticket to see what fits your shop."
+    },
+    {
+      "id": "what-should-you-say-about-reservations-catering-and-complain",
+      "h2": "What should you say about reservations, catering, and complaints?",
+      "body": "Not every caller is placing a small order. Some want a table, a tray, or help with a problem.\n\nUse a simple handoff rule:\n- Reservations: take the request or pass it to staff if your policy needs a person to confirm\n- Catering: collect the date, headcount, food type, and phone number\n- Complaints: get the caller’s name, order details, and a short summary\n- Allergy-sensitive questions: move them to staff right away\n- Manager requests: send them to staff with the reason for the call\n\nExample script for catering:\n\"Thanks. I’ll note the date, number of people, and best callback number. What kind of food are you looking for?\"\n\nExample script for a complaint:\n\"I’m sorry that happened. I’m sending this to the team now with your order details so someone can review it.\"\n\nROAL hands these calls to staff with a summary when the question is too sensitive or too detailed for the phone host to answer safely. That is the right balance for a busy restaurant. The host handles the routine stuff, while your team handles the calls that need judgment.\n\nA short internal checklist for these calls:\n- Who called?\n- What did they want?\n- What time or date matters?\n- Is this urgent?\n- Who on staff should see it?"
+    },
+    {
+      "id": "how-do-you-set-up-answers-for-multilingual-callers-and-speci",
+      "h2": "How do you set up answers for multilingual callers and special requests?",
+      "body": "A lot of restaurants hear callers in more than one language. Some callers also need extra care around allergies, substitutions, or family orders.\n\nThe best setup is simple:\n1. Choose the host’s voice and name\n2. List the questions staff wants answered first\n3. Add menu notes for common substitutions\n4. Mark sold-out items clearly\n5. Tell staff which calls should be handed off\n\nROAL speaks the caller’s language and can take reservations, pickup orders, and delivery orders from the live menu. If a question is too tricky, it goes to the inbox, and the owner answers once so the host knows it next time.\n\nFor special requests, use plain language on the menu and in staff notes. Example:\n- No peanuts in this kitchen note\n- Extra sauce available on request\n- Sauces on the side\n- Call staff for allergy questions\n\nA practical test is to call your own store and ask the questions that worry you most. Try these:\n- \"Do you have anything without dairy?\"\n- \"Can I change the side on that combo?\"\n- \"Is this dish available tonight?\"\n- \"Can I order in Spanish?\"\n\nIf the answer sounds clumsy, fix the menu note or the greeting. Small changes make a big difference on the phone."
+    },
+    {
+      "id": "how-can-owners-reduce-repeat-questions-without-adding-more-w",
+      "h2": "How can owners reduce repeat questions without adding more work?",
+      "body": "The best way to cut repeat calls is to make your phone answers match the store reality. That means your hours, address, menu, and sold-out items need to be current everywhere the caller might look.\n\nUse this simple monthly reset:\n- Check today’s hours\n- Review your top 10 menu items\n- Update sold-out items\n- Review parking and pickup notes\n- Listen to a few call recordings\n- Update FAQs for the questions you hear most\n\nIf you want a number to think with, use this example: say your average phone order is $28. Then compare your phone handling cost to your current setup. If a human answering service bills by the minute or call, and a monthly AI phone plan charges even when the phone is quiet, your cost can be hard to predict. ROAL’s pay-per-completed-order model makes the math easier to follow.\n\nYou can also use the dashboard to keep things tight: kitchen screen with live tickets, call history with transcripts and recordings, menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That helps owners answer the same question once, then let the system remember it.\n\nIf you want a simple next step, [build a free test host from your website](/try) and call it with your own common questions. You can test it in the browser before you forward anything."
+    }
+  ],
+  "takeaways": [
+    "Most caller questions are about hours, address, parking, menu items, orders, reservations, and sold-out food.",
+    "A clear script and a current menu reduce confusion on pickup and delivery calls.",
+    "ROAL can answer routine questions, take orders, and hand sensitive calls to staff with a summary.",
+    "Keep parking, hours, and substitutions in plain language so callers do not have to ask twice."
+  ],
+  "faq": [
+    {
+      "q": "What are the most common restaurant phone questions?",
+      "a": "The most common restaurant phone questions are about hours, address, parking, menu items, order status, pickup, delivery, and reservations. Callers also ask about sold-out items, allergies, catering, and how long the wait will be. These are the questions to script first."
+    },
+    {
+      "q": "How should a restaurant answer phone questions quickly?",
+      "a": "Use short, exact answers and keep your hours, address, and parking notes in one place. A good answer gives the caller what they need in one sentence, then moves them to the order or the next step. For example: \"We’re open until 9, and pickup is at the side door.\""
+    },
+    {
+      "q": "Can ROAL handle menu and hours questions?",
+      "a": "Yes. ROAL answers questions about hours, address, parking, and the menu from public pages and uploaded menus. If it cannot answer a question, it places it in the inbox so the owner can reply once and teach the host for later."
+    },
+    {
+      "q": "What happens if a caller has an allergy question or a complaint?",
+      "a": "Those calls should go to staff. ROAL hands off allergy-sensitive questions, complaints, catering, and manager requests with a short summary so the team can respond directly. That keeps the phone host focused on the routine calls it can handle well."
+    }
+  ],
+  "words": 1506,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

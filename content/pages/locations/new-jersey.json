@@ -1,0 +1,115 @@
+{
+  "slug": "new-jersey",
+  "label": "New Jersey",
+  "h1": "AI phone host for restaurants in New Jersey",
+  "seoTitle": "AI phone answering for New Jersey restaurants",
+  "description": "AI phone answering for New Jersey restaurants. ROAL answers calls, takes pickup orders, shares hours and menu info, and sends clean tickets to the kitchen.",
+  "lead": "Busy nights in Jersey City and Hoboken mean the phone rings at the worst times. ROAL answers like a trained phone host, so your staff can keep serving guests.",
+  "question": "How can an AI phone answering service help my New Jersey restaurant handle calls without missing orders?",
+  "answer": "ROAL is an AI phone host for restaurants in New Jersey. It answers calls, takes pickup and delivery orders from your live menu, answers common questions, and sends a clean ticket to the kitchen screen. You can forward all calls, or only the ones you miss or are too busy to answer, and turn forwarding off any time.",
+  "pains": [
+    {
+      "title": "The phone rings during rush service",
+      "body": "Lunch near the PATH, weeknight takeout, and weekend brunch can stack up fast. One missed call can turn into a lost pickup order or a long voicemail chain."
+    },
+    {
+      "title": "Staff are juggling the counter and the line",
+      "body": "Your team may be boxing up sandwiches, slicing pizza, plating entrees, or calling out names at the same time. Answering the phone breaks the flow."
+    },
+    {
+      "title": "People call with the same questions all day",
+      "body": "Guests ask about hours, parking, menu items, allergens, and whether an item is still available. Those calls are important, but they repeat over and over."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers in your restaurant’s voice",
+      "body": "You pick the host’s name and voice. It can greet callers, handle the basics, and stay polite and brief when the line is busy."
+    },
+    {
+      "title": "Takes real orders, not just messages",
+      "body": "ROAL can take items, sizes, modifiers, and notes from your live menu. It quotes a ready time and confirms the order back before sending it to the kitchen screen."
+    },
+    {
+      "title": "Handles common New Jersey call patterns",
+      "body": "It is useful when commuters call ahead on their way home, when brunch phone traffic jumps on the weekend, or when game nights create a short burst of pickup orders."
+    },
+    {
+      "title": "Gives you a simple backup for staff gaps",
+      "body": "If the call is about catering, a complaint, a reservation request, or a menu question the host cannot answer, it can hand it to staff with a summary."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One chicken parm hero, no onions, and a side order of fries."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One chicken parm hero, no onions, and one side fries. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. It’s for Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. I have your pickup order for about 20 minutes. I’ll read it back: one chicken parm hero, no onions, and one side fries."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "1 chicken parm hero",
+      "No onions",
+      "1 side fries",
+      "Name: Maria",
+      "Phone: captured"
+    ],
+    "note": "Confirm before making if chicken cutlet is unavailable."
+  },
+  "sections": [
+    {
+      "h2": "A better way to answer phones in a busy New Jersey shift",
+      "body": "In Jersey City and Hoboken, the phone does not wait for you to finish the rush. It rings when the dining room is full, when delivery tickets are printing, and when someone is trying to find a table for a small group. A phone host helps with the calls that keep interrupting service. It can answer hours, menu questions, parking questions, pickup orders, and reservation requests without pulling a server off the floor. If you run a spot with burgers, noodles, slices, breakfast, or grilled platters, the pattern is the same: the phone is busiest when the team is already busy. You can [build a free test host](/try) and check how it handles your real menu before you turn it on."
+    },
+    {
+      "h2": "What to give the host before you go live",
+      "body": "Keep your menu clean and easy to read. Items should have clear names, sizes, common modifiers, and any sold-out items marked correctly. That matters for classic New Jersey call orders like a bacon, egg and cheese at breakfast, a plain pie for pickup, chicken tikka with no spice, or extra sauce on the side. Also make sure your hours, address, and parking notes are current. If your restaurant closes between lunch and dinner, or has a different schedule on Friday and Saturday, the host should know that. Owners can paste a website, Google Maps link, or even just the restaurant name and city, then test-call it in the browser."
+    },
+    {
+      "h2": "How forwarding works for a local restaurant",
+      "body": "ROAL gives each location its own phone line and your restaurant keeps its own number. You can forward all calls, or only forward when busy or unanswered. On many carriers, call forwarding is set with simple codes, but the exact code depends on the phone line and plan, so always confirm with your carrier and test a real call. If you want to compare options first, see the [Questions owners ask](/faq) and [How it works](/how-it-works). For owners in Jersey City, Hoboken, and across New Jersey, that means you can keep your current number, keep your staff focused, and still answer the calls that come in during the lunch rush, after work, or on a packed weekend."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is this only for Jersey City and Hoboken?",
+      "a": "No. ROAL was built by a founder in Jersey City, and the first restaurants are there and in Hoboken, but it can work for any US restaurant. This page is for New Jersey owners who want a local fit and a simple setup."
+    },
+    {
+      "q": "Will it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles payment."
+    },
+    {
+      "q": "Can it handle sold-out items and special requests?",
+      "a": "Yes, if your menu is kept up to date. It will not offer items marked sold out, and it can take modifiers and notes such as no onions, sauce on the side, or allergy-sensitive requests that need staff review."
+    },
+    {
+      "q": "What happens if the host does not know something?",
+      "a": "That question goes to your inbox with the call details. You answer it once, and the host can use that answer from then on."
+    },
+    {
+      "q": "How much does it cost?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ]
+}

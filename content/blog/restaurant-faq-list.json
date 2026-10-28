@@ -1,0 +1,76 @@
+{
+  "slug": "restaurant-faq-list",
+  "keyword": "restaurant faq",
+  "category": "guest-experience",
+  "title": "Restaurant FAQ list for phone hosts and staff",
+  "seoTitle": "Restaurant FAQ list for phone hosts and staff",
+  "description": "Build a strong FAQ for hours, menu, parking, orders, and reservations so your phone host can answer fast and keep staff focused.",
+  "question": "What restaurant FAQ should I give my phone host so it can answer callers well?",
+  "answer": "Start with the questions guests ask most: hours, address, parking, menu items, pricing, pickup and delivery, reservations, and sold-out items. Add your own rules for allergies, catering, busy times, and what to do when a caller needs a manager. A good restaurant FAQ keeps the phone host accurate and helps it hand off the tricky calls with a clear summary.",
+  "summary": "You’ll know which FAQ questions to add, how to write them, and how to keep them current.",
+  "intro": "A strong restaurant FAQ is the fastest way to help a phone host answer common calls well. It should cover hours, address, parking, menu basics, pickup, delivery, reservations, and the questions your staff hears all day.\n\nFor a restaurant owner, the goal is simple: fewer repeat calls to the counter and more clear answers for guests. ROAL can read your public menu, hours, and address, and you can add the rest in your own words so the host sounds like your shop.",
+  "sections": [
+    {
+      "id": "what-questions-should-be-in-a-restaurant-faq",
+      "h2": "What questions should be in a restaurant FAQ?",
+      "body": "Start with the questions that slow your team down every day. For most pizza shops, delis, takeout spots, and family restaurants, the core restaurant FAQ is the same.\n\nUse this starter list and edit it for your own place:\n- What are your hours today?\n- What is your address?\n- Is there parking nearby?\n- Do you offer pickup and delivery?\n- What is on the menu?\n- What sizes, toppings, or sides can I choose?\n- Are any items sold out right now?\n- Do you take reservations?\n- Do you take catering orders?\n- What should I do if I have an allergy question?\n\nIf you use ROAL, the host can answer questions about hours, address, parking, and the menu from the information it reads from your public pages. For the rest, you can add your own FAQ entries and let the host send anything it cannot answer to your inbox. A useful test line is: \"We’re open until 9 tonight, and pickup orders are ready from the front counter.\""
+    },
+    {
+      "id": "how-do-i-write-faq-answers-in-plain-restaurant-language",
+      "h2": "How do I write FAQ answers in plain restaurant language?",
+      "body": "Keep the answers short and useful. Guests on the phone do not want a paragraph. They want a direct answer, then the next step.\n\nA good pattern is: answer first, then the action. For example:\n- \"Yes, we do pickup. Tell me what you’d like and I’ll get it started.\"\n- \"Parking is on the side street behind the building.\"\n- \"We can take a reservation for six or fewer.\"\n- \"Please tell me about the allergy, and I’ll connect you with staff.\"\n\nWrite the FAQ the way your team actually talks. If your staff says \"counter pickup\" instead of \"carryout,\" use that. If your guests ask for \"large pie\" instead of \"18-inch pizza,\" include both terms. That helps the host sound natural and cuts down on confusion.\n\nA practical checklist for each FAQ entry:\n1. Use one short sentence for the answer.\n2. Add one extra detail only if it helps the order.\n3. Avoid slang that tourists or first-time callers may not know.\n4. If the answer changes by day, say so clearly.\n5. If the answer is safety-related, route it to staff."
+    },
+    {
+      "id": "which-order-details-should-the-faq-cover",
+      "h2": "Which order details should the FAQ cover?",
+      "body": "Your FAQ should help the host handle common order questions without guessing. That means covering the details guests usually ask before they place an order.\n\nMake sure your FAQ explains:\n- Sizes and portions, like small, medium, large, or family tray\n- Common modifiers, like no onions, extra cheese, gluten-free crust, or dressing on the side\n- What to do when an item is sold out\n- Whether drinks, sides, or desserts can be added\n- Whether the guest can schedule a ready time\n\nHere is a simple worked example. Say your average order is $28. If a caller asks whether they can add fries and a drink, the host should know those items are available and can quote the full order with the add-ons. If your restaurant does not allow substitutions on a lunch special, write that down plainly: \"No swaps on the lunch special; add-ons are extra.\" \n\nROAL is built to take items, sizes, modifiers, and notes from the live menu. It also does not offer items marked sold out. That means your FAQ should match the menu and rules your staff actually uses, so the phone host and kitchen stay on the same page. If you want to compare how that differs from a press-1 setup, see [AI phone host vs a press-1 phone menu](/compare/phone-menu-ivr)."
+    },
+    {
+      "id": "what-should-the-faq-say-about-hours-holiday-changes-and-busy",
+      "h2": "What should the FAQ say about hours, holiday changes, and busy times?",
+      "body": "Hours are one of the most common phone questions, and they change more than owners expect. Your FAQ should cover regular hours, holiday hours, and what happens when the kitchen is slammed.\n\nUse clear wording like:\n- \"We’re open Monday through Saturday from 11 a.m. to 9 p.m.\"\n- \"Holiday hours may change; please check before calling for a late pickup.\"\n- \"During the dinner rush, pickup times may be a little longer.\"\n- \"If we are busy, the host will still take your order and quote the best ready time we can give.\"\n\nIf a caller asks whether their food will be ready in 10 minutes, the host should not guess. It should quote a ready time from the order flow and be honest if the timing is tight. That is better than making a promise the kitchen cannot keep.\n\nA simple owner checklist for this section:\n1. List regular hours by day.\n2. Add holiday hours separately.\n3. Note any lunch break or close-to-close gap.\n4. Include the parking note if guests often ask for it.\n5. Keep the wording short enough that it can be read out loud without stumbling.\n\nYou can also pair this with [after-hours call examples](/blog/after-hours-message-examples) if you want a backup message for closed times."
+    },
+    {
+      "id": "how-should-i-handle-reservations-catering-allergies-and-mana",
+      "h2": "How should I handle reservations, catering, allergies, and manager calls?",
+      "body": "Not every call should be handled the same way. Some calls need staff, not a script. Your restaurant FAQ should make that decision clear.\n\nFor example:\n- Reservations: let the host collect the name, phone, party size, and time request.\n- Catering: have the host take the caller’s name, phone, event date, and basic request, then send it to staff with a summary.\n- Allergies: route sensitive questions to staff right away.\n- Complaints: route to staff with the key facts, not a long back-and-forth.\n- Manager requests: collect the reason and hand it off.\n\nA useful script line is: \"I can take the details and have the team review it right away.\" That keeps the guest moving without making promises the host should not make.\n\nROAL handles these handoffs by sending a summary to staff when a call needs a person. It also speaks the caller’s language, which helps when a guest is more comfortable ordering in another language. For special situations like catering, reservations, or allergy-sensitive calls, the FAQ should tell the host when to continue and when to pass it along."
+    },
+    {
+      "id": "how-often-should-i-update-the-faq-and-who-should-own-it",
+      "h2": "How often should I update the FAQ, and who should own it?",
+      "body": "Your FAQ should be owned by the restaurant, not left as a one-time setup task. Menus change, hours change, parking changes, and sold-out items change all the time.\n\nA good rhythm is:\n1. Check the FAQ when you update the menu.\n2. Review it after holiday hours change.\n3. Add new questions from call history each week.\n4. Remove anything the host no longer needs.\n5. Make one person responsible for the final answer.\n\nIf you use ROAL, unanswered questions land in an inbox. You answer once, and the host knows it from then on. That is a practical way to improve the FAQ without rewriting everything at once.\n\nHere is a simple table you can copy into your own notes:\n\n| Question | Who answers it | Update when |\n|---|---|---|\n| Hours and address | Host | When hours change |\n| Parking | Host | When parking changes |\n| Menu and pricing | Host | When menu changes |\n| Allergy questions | Staff | When policies change |\n| Catering requests | Staff | When service rules change |\n| Sold-out items | Host | Daily |\n\nIf your team is still setting up call forwarding, keep [call forwarding codes by carrier](/tools/call-forwarding-codes) handy and always test with a real call before you rely on it."
+    },
+    {
+      "id": "what-s-the-fastest-way-to-build-a-restaurant-faq-for-roal",
+      "h2": "What’s the fastest way to build a restaurant FAQ for ROAL?",
+      "body": "The fastest path is to start with what your guests already ask, then fill in the gaps from your menu and house rules. You do not need a giant document. You need clear answers to the most common questions.\n\nUse this quick setup process:\n1. Paste your website, Google Maps link, or \"Name, City\" at /try.\n2. Let ROAL read your menu, prices, hours, and address from public pages or your uploaded menu.\n3. Add your top 10 FAQs in plain language.\n4. Test-call the host in the browser and listen for awkward spots.\n5. Claim the host, forward your restaurant’s number, and keep your existing line.\n\nThat setup is built for busy owners who do not want a long project. You can test it right in the browser with no sign-up needed. If you want to see the setup path and pricing together, the most useful next stops are [How it works](/how-it-works) and [Pricing](/pricing).\n\nROAL is priced at $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. If you want to try it now, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "A strong restaurant FAQ should focus on hours, menu, parking, orders, reservations, and handoffs.",
+    "Write answers in short, plain restaurant language that staff would actually say on the phone.",
+    "Keep allergy, catering, complaint, and manager calls routed to staff with a summary.",
+    "Update the FAQ whenever your menu or hours change, not just once at setup."
+  ],
+  "faq": [
+    {
+      "q": "What should be included in a restaurant FAQ for a phone host?",
+      "a": "Include the questions guests ask most often: hours, address, parking, menu items, sizes, modifiers, pickup, delivery, reservations, catering, and sold-out items. Add special instructions for allergies, complaints, and manager requests so the host knows when to pass the call to staff. Keep each answer short and easy to read aloud."
+    },
+    {
+      "q": "How do I make sure my restaurant FAQ stays accurate?",
+      "a": "Assign one person to review it whenever the menu or hours change. Use call history to find new questions and add them to the FAQ. With ROAL, unanswered questions land in an inbox, so you can answer once and the host will use that answer going forward."
+    },
+    {
+      "q": "Should my restaurant FAQ include pricing?",
+      "a": "Yes, if pricing is public and changes often enough that guests ask about it. Keep the answer simple, like the price of a size, combo, or common add-on. If pricing changes a lot, make sure it matches the current menu so callers do not get the wrong number."
+    },
+    {
+      "q": "Can a phone host handle allergy questions from the FAQ?",
+      "a": "It can collect the details and send the call to staff, but it should not guess on safety-sensitive questions. The FAQ should tell the host to hand off allergy calls with a summary. That keeps the guest moving and lets your team give the right answer."
+    }
+  ],
+  "words": 1474,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

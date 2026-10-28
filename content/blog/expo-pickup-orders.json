@@ -1,0 +1,76 @@
+{
+  "slug": "expo-pickup-orders",
+  "keyword": "expo station pickup orders",
+  "category": "operations",
+  "title": "How to handle pickup orders at the expo station",
+  "seoTitle": "Expo station pickup orders: a practical guide",
+  "description": "Practical steps for handling expo station pickup orders when the counter gets slammed, with scripts, checks, and a phone setup that helps.",
+  "question": "How do I run expo when pickup orders stack up at the expo station?",
+  "answer": "When pickup orders stack up, run expo with one clear ticket queue, one person calling the board, and one simple handoff to the pickup shelf or counter. Stop the phone from interrupting the line by forwarding busy or unanswered calls, then use a phone host like ROAL to take pickup orders, confirm details, and send a clean kitchen ticket.",
+  "summary": "You’ll learn how to keep expo moving, protect the line, and handle pickup calls without losing track of tickets.",
+  "intro": "When pickup orders stack up at the expo station, the fix is to slow the flow of new work, not the whole kitchen. Give expo one clear order queue, one place for completed tickets, and one person responsible for pickup handoff.\n\nThe fastest relief usually comes from getting phone orders out of the way of the line. If your phone is ringing while expo is already buried, a phone host like ROAL can take pickup orders, answer simple questions, and send a clean ticket to the kitchen screen while your team stays on food.",
+  "sections": [
+    {
+      "id": "what-should-expo-do-first-when-pickup-orders-start-piling-up",
+      "h2": "What should expo do first when pickup orders start piling up?",
+      "body": "Expo is not the place to improvise. When pickup orders stack up, the first job is to sort what is already in motion before taking any more work.\n\nUse this order every time:\n1. Clear the board into three buckets: new, preparing, ready.\n2. Put pickup tickets in time order, not by who called loudest.\n3. Call out only the next needed action: “Fry up the next chicken sandwich,” or “Fire the next two pies.”\n4. Separate dine-in from pickup if they are sharing the same rail.\n5. Move ready orders to one pickup spot only.\n\nA simple expo line can help:\n- “I’ve got three pickup orders ready to box, and two more in the window.”\n- “Hold the next add-on until I call it.”\n- “This one is for pickup at 6:40, not now.”\n\nIf your team uses a kitchen screen, keep the screen visible to expo and do not bury ready tickets under new ones. ROAL’s kitchen screen shows live tickets with new, preparing, and ready states, which makes that handoff easier when the counter gets busy. For more on the pickup side, see [pickup order taking](/use-cases/pickup-orders)."
+    },
+    {
+      "id": "how-do-you-keep-pickup-calls-from-breaking-the-line",
+      "h2": "How do you keep pickup calls from breaking the line?",
+      "body": "When the front counter is slammed, the phone can become the whole problem. A ringing phone pulls expo away from the board, and one missed detail on a pickup order can create another remake.\n\nA better setup is to forward calls when busy or unanswered, so the line keeps moving. On many landlines and some carriers, *72 then the forwarding number sends all calls, and *73 turns it off. On some mobile carriers, **21*number# forwards all calls, **61*number# forwards unanswered calls, and **67*number# forwards busy calls; Verizon Wireless commonly uses *72, *73, and *71 for busy or no-answer forwarding. Codes vary, so confirm with your carrier and test with a real call.\n\nA practical phone script for a busy shift:\n- “Thanks for calling. We’re taking orders now. I’ll get this one down clearly.”\n- “For pickup, I need your name, phone, items, and when you want it ready.”\n- “Please hold one moment while I confirm the kitchen time.”\n\nIf your team is too short to answer well, ROAL can answer the restaurant’s phone, take pickup orders from the live menu, and send the ticket to the kitchen screen. That keeps expo focused on plates, boxes, and timing instead of the handset."
+    },
+    {
+      "id": "what-info-must-expo-confirm-before-the-order-leaves-the-shel",
+      "h2": "What info must expo confirm before the order leaves the shelf?",
+      "body": "Pickup mistakes usually happen at the handoff, not the cook line. Expo should confirm the same few details every time so the wrong bag does not walk out the door.\n\nUse this pickup checklist:\n- Name on the order\n- Phone number if two orders have the same name\n- Item count and modifiers\n- Sauces, sides, utensils, and drinks\n- Ready time or delay if the food is still being boxed\n- Allergy or special note if the kitchen flagged one\n\nA good handoff line is:\n“Order for Maria, two plain cheeseburgers, one fries, one no onion, ready to go.”\n\nIf you want a simple printed or screen-based check, use a table like this:\n\n| Check item | Example |\n|---|---|\n| Name | Maria |\n| Items | 2 burgers, 1 fries |\n| Modifiers | No onion |\n| Ready time | 6:35 |\n| Pickup spot | Front counter |\n\nThis is also where a clean kitchen ticket matters. ROAL collects the caller’s name and phone, confirms the order back, and sends the ticket to the kitchen screen. That means expo gets a clearer starting point instead of trying to decode a rushed phone note."
+    },
+    {
+      "id": "how-do-you-decide-what-gets-boxed-first-when-the-expo-rail-i",
+      "h2": "How do you decide what gets boxed first when the expo rail is full?",
+      "body": "When the rail is full, boxing in the wrong order wastes time. Start with the orders closest to leaving the building, then work backward by heat, hold time, and size.\n\nA useful rule:\n1. Finished hot items first if they are about to be handed off.\n2. Smaller pickup orders before larger ones when both are ready.\n3. Cold items and sauces can be added while the last hot item is finishing.\n4. Recheck every order against the kitchen ticket before sealing the bag.\n\nWorked example: say you have three pickup orders. One is a $18 lunch wrap order ready in 2 minutes, one is a $28 family dinner ready now, and one is a $42 pizza order with one pie still in the oven. Pick the $28 order first, because it is ready and can leave immediately. Then finish the $18 order if it will be boxed fast, and keep the $42 order moving without blocking the station.\n\nYou can swap in your own numbers:\n- Order A: ready now, 2 items\n- Order B: ready in 3 minutes, 4 items\n- Order C: ready now, but needs condiments checked\n\nIf pickup orders are piling up every night, compare the labor cost of extra phone work against other options in [phone staff cost calculator](/tools/phone-staff-cost-calculator) and [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "how-can-you-reduce-expo-chaos-before-the-rush-starts",
+      "h2": "How can you reduce expo chaos before the rush starts?",
+      "body": "The best time to fix expo is before the first stack of tickets hits the board. A short setup routine can stop a bad rush from becoming a bad night.\n\nBefore service, make sure you have:\n- One clear place for ready pickup orders\n- Boxes, bags, napkins, sauces, and utensils within arm’s reach\n- A marker or label system for names and times\n- A rule for who answers pickup questions and who stays on the line\n- A clear backup plan for the phone when the counter gets slammed\n\nA short pre-rush line for the team can help:\n“Pickup orders go to the right shelf, dine-in stays on the left, and only expo calls ready orders.”\n\nIf you use a phone host, connect that plan to the phone. ROAL can take pickup and delivery orders from your live menu, answer hours, address, parking, and menu questions, and hand allergy-sensitive or manager requests to staff with a summary. That means fewer interruptions when expo is already juggling labels, runners, and the next box.\n\nFor managers, a simple rule works well: if the phone line starts competing with the window, shift more calls to forwarded pickup handling and let the kitchen keep working."
+    },
+    {
+      "id": "what-numbers-should-you-watch-so-expo-problems-show-up-early",
+      "h2": "What numbers should you watch so expo problems show up early?",
+      "body": "Expo trouble usually shows up in a few numbers before it becomes obvious on the floor. Watch the numbers that tell you when orders are backing up and when pickup is slowing the room.\n\nKeep an eye on:\n- How many tickets are in new, preparing, and ready\n- How long ready orders sit before pickup\n- How often the phone rings during the busiest 30 minutes\n- How many pickup orders need a correction at handoff\n\nA simple weekly review can look like this:\n\n| Metric | What to watch | What to do |\n|---|---|---|\n| Ready-ticket wait | Orders sitting too long | Move pickup shelf closer |\n| Phone interruptions | Calls during rush | Forward busy calls |\n| Remakes | Wrong item or modifier | Tighten expo check |\n| Missed questions | Hours, menu, parking | Add FAQ answers |\n\nIf the same problem keeps repeating, do one small fix at a time. For example, if pickup customers keep asking where to stand, move the shelf or counter sign first. If the real problem is the phone, use [call forwarding codes by carrier](/tools/call-forwarding-codes) to set up a safer backup and test it with a real call.\n\nROAL also keeps call history with transcripts and recordings, so owners can review what callers asked and where the handoff got messy."
+    },
+    {
+      "id": "what-is-the-simplest-way-to-protect-expo-on-a-short-staffed-",
+      "h2": "What is the simplest way to protect expo on a short-staffed shift?",
+      "body": "Short-staffed shifts are where expo gets overwhelmed fastest. The goal is not perfection. The goal is to keep orders moving without burning out the person at the station.\n\nUse this short-staffed plan:\n1. Limit who touches the pickup board.\n2. Send the phone to a backup path when the room is slammed.\n3. Put one person on sealing and labeling, not on answering random questions.\n4. Keep pickup calls, catering questions, and manager requests from landing on expo unless they truly need a human.\n\nA helpful script for the staff member at the station:\n- “I’m on expo only. Phone questions go to the host.”\n- “If it is a pickup change, bring me the ticket, not the caller.”\n- “Ready orders go to the right shelf only.”\n\nThis is where ROAL can help without taking control away from your team. It can answer the phone, take orders, and hand off tougher calls to staff with a summary. It does not take card numbers over the phone, so payment still happens at pickup or however you already handle it.\n\nIf you want to see whether a phone host fits your shop, [build a free test host from your website](/try). It is a quick way to check your menu, hours, and pickup flow before you decide whether to use it on real calls."
+    }
+  ],
+  "takeaways": [
+    "Expo gets easier when the order queue, pickup shelf, and handoff script are all simple.",
+    "Busy-call forwarding can keep the phone from stealing attention from the line.",
+    "A clean kitchen ticket helps expo box the right order the first time.",
+    "ROAL can take pickup orders, answer common questions, and send tickets to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "How do I run expo when pickup orders are backing up?",
+      "a": "Sort tickets into new, preparing, and ready, then box in pickup-ready order instead of by who called first. Keep one clear pickup shelf and one person calling the board so the rest of the line can keep moving."
+    },
+    {
+      "q": "What should expo check before handing out a pickup order?",
+      "a": "Check the name, item count, modifiers, sauces, and ready time. If two orders have the same name, confirm the phone number or one extra detail before handing it over."
+    },
+    {
+      "q": "Should I forward the phone when expo gets too busy?",
+      "a": "Yes, if the phone is pulling staff away from the line. Many carriers and phone systems support forwarding all calls, unanswered calls, or busy calls, but codes vary, so confirm with your carrier and test it."
+    },
+    {
+      "q": "Can ROAL take pickup orders during a rush?",
+      "a": "Yes. ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, answers common questions, and sends a clean ticket to the kitchen screen. It does not take card numbers, and tricky calls can still go to staff."
+    }
+  ],
+  "words": 1557,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

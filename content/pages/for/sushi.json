@@ -1,0 +1,123 @@
+{
+  "slug": "sushi",
+  "label": "Sushi and Japanese",
+  "h1": "An AI phone host for sushi and Japanese restaurants",
+  "seoTitle": "AI phone answering for sushi and Japanese restaurants | ROAL",
+  "description": "ROAL answers sushi and Japanese restaurant calls, takes pickup orders from the live menu, handles hours and menu questions, and sends clean kitchen tickets.",
+  "lead": "Busy dinner rush. One hand on the fryer, one hand on the sushi bar. ROAL answers the phone, takes pickup orders, and handles common questions so your team can keep plating.",
+  "question": "Can an AI phone host take sushi and Japanese pickup orders and answer menu questions for my restaurant?",
+  "answer": "Yes. ROAL is a phone host for sushi and Japanese restaurants that answers calls, takes pickup and delivery orders from your live menu, and answers questions about hours, address, parking, and the menu. It can handle items like spicy tuna rolls, shrimp tempura rolls, chicken teriyaki, miso soup, and gyoza, then send a clean ticket to the kitchen screen.",
+  "pains": [
+    {
+      "title": "Friday nights stack up fast",
+      "body": "Sushi spots get slammed when people call for pickup during dinner. If the phone rings while you are rolling maki or packing bento boxes, calls can pile up quickly."
+    },
+    {
+      "title": "Menu questions repeat all day",
+      "body": "Callers often ask if the spicy tuna roll has mayo, whether the teriyaki comes with rice, or if the kitchen can leave out cucumber. That takes time away from the line."
+    },
+    {
+      "title": "Busy nights lead to missed pickup orders",
+      "body": "A short-staffed shift can make it hard to answer every call. Missed calls can mean fewer pickup orders for rolls, ramen, donburi, and dinner specials."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes real pickup orders",
+      "body": "ROAL can take items, sizes, modifiers, and notes from your live menu. It confirms the order back before sending it to the kitchen."
+    },
+    {
+      "title": "Handles common sushi questions",
+      "body": "It answers questions about hours, address, parking, and menu items. If it cannot answer something, it sends it to staff with a summary."
+    },
+    {
+      "title": "Keeps the kitchen moving",
+      "body": "Orders land as clean tickets on the kitchen screen with the caller name, phone, and ready time. That helps the team start prep without listening to voicemail."
+    },
+    {
+      "title": "Works for busy rush moments",
+      "body": "You can forward all calls, or only busy and unanswered calls, so the host catches the rush when lunch, dinner, or takeout traffic spikes."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One spicy tuna roll, one shrimp tempura roll, and chicken teriyaki."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes?"
+    },
+    {
+      "who": "caller",
+      "line": "No cucumber on the spicy tuna roll, and extra teriyaki sauce on the chicken."
+    },
+    {
+      "who": "host",
+      "line": "Sure. What name and phone number should I put on the order?"
+    },
+    {
+      "who": "caller",
+      "line": "Alex, 201-555-0188."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Alex. Your pickup order should be ready in about 25 minutes: one spicy tuna roll no cucumber, one shrimp tempura roll, and one chicken teriyaki with extra sauce."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:25 pm",
+    "lines": [
+      "Alex · 201-555-0188",
+      "1 spicy tuna roll · no cucumber",
+      "1 shrimp tempura roll",
+      "1 chicken teriyaki · extra teriyaki sauce",
+      "Ready time: 7:25 pm"
+    ],
+    "note": "No cucumber on spicy tuna."
+  },
+  "sections": [
+    {
+      "h2": "What sushi and Japanese restaurants need on the phone",
+      "body": "A sushi and Japanese restaurant phone host has to stay calm during the exact moments that get busy: Friday night pickup rushes, lunch bento orders, and quick questions about ingredients. Callers may ask for spicy tuna rolls, California rolls, salmon sashimi, chicken katsu, beef teriyaki, miso soup, edamame, or a party tray. They may also want simple changes like no avocado, sauce on the side, or extra wasabi and ginger.\n\nROAL is built for that kind of call. It reads your live menu, so it can take the items you actually sell and avoid items marked sold out. If a caller asks about allergy-sensitive details, a manager request, or a catering tray, it can pass that along with a clear summary. If you want to compare phone options, start with [How it works](/how-it-works) or the [Questions owners ask](/faq)."
+    },
+    {
+      "h2": "A practical setup for a busy sushi counter",
+      "body": "You do not need a big tech setup to try it. At [Build a free test host](/try), paste your restaurant website, Google Maps link, or your name and city. ROAL reads your menu, prices, hours, and address from public pages or uploads, then builds a test host in about a minute.\n\nFor many owners, the simplest plan is to forward only busy or unanswered calls first. That way, the host catches the dinner rush without changing how the front counter already works. You keep your restaurant number, and forwarding can be turned off any time. This is helpful if your team already handles walk-ins, delivery bags, and sushi bar guests at the same time."
+    },
+    {
+      "h2": "How pickup orders sound on a real call",
+      "body": "A good sushi phone order is short, clear, and repeatable. The host asks for the order, checks modifiers, gets the name and phone number, gives a ready time, and reads the order back. That matters when the line is moving and the chef needs one clean ticket instead of a long voicemail.\n\nExample: a caller asks for two salmon avocado rolls, one miso soup, and one beef teriyaki lunch special. The host can confirm no spicy mayo, note extra ginger, and quote a pickup time. The order then appears as a kitchen ticket with the caller details, so the team can start prep without stopping to re-listen to a message."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take sushi and Japanese pickup orders from the live menu?",
+      "a": "Yes. ROAL takes pickup and delivery orders from your live menu, including items, sizes, modifiers, and notes. It also confirms the order back before sending it to the kitchen screen."
+    },
+    {
+      "q": "Will it answer common menu questions?",
+      "a": "Yes. It can answer questions about hours, address, parking, and the menu. If a caller asks something it cannot answer, the question goes to your inbox and ROAL learns from your reply."
+    },
+    {
+      "q": "Does it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How do I try it before going live?",
+      "a": "Paste your restaurant website, Google Maps link, or name and city at /try. You can test-call the host in the browser before you claim it."
+    },
+    {
+      "q": "What if I only want it to answer when we are busy?",
+      "a": "That works. You can forward all calls, or only when the line is busy or unanswered. Many owners use that setup during dinner rushes, short-staffed shifts, or holiday spikes."
+    }
+  ]
+}

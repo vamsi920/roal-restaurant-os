@@ -1,0 +1,77 @@
+{
+  "slug": "order-status-calls",
+  "keyword": "where is my order call restaurant",
+  "category": "guest-experience",
+  "title": "How to handle “Where is my order?” calls",
+  "seoTitle": "Handle “Where is my order?” calls | ROAL",
+  "description": "Handle where is my order calls with clear scripts and quick steps. Give callers a fast answer and keep your team focused during a busy shift.",
+  "question": "How should my restaurant handle a where is my order call restaurant call without tying up the counter?",
+  "answer": "Answer the call fast, confirm the caller’s name, phone number, and order details, then check the kitchen screen or order log before giving a clear update. If the order is not ready yet, say the real ready time and keep the caller informed. For busy shifts, an [AI phone host](/how-it-works) like ROAL can answer pickup and delivery order calls, quote ready times from your live menu, and send clean tickets to the kitchen screen.",
+  "summary": "You’ll know what to say, what to check, and how to set up a simple system for order-status calls.",
+  "intro": "“Where’s my order?” calls are usually simple. The caller wants a quick status check, a real ready time, and no back-and-forth.\n\nFor a restaurant, those calls can still break the flow at the counter. The best fix is a short script, a clear place to check orders, and a backup plan for busy moments.",
+  "sections": [
+    {
+      "id": "what-should-i-say-when-someone-asks-where-their-order-is",
+      "h2": "What should I say when someone asks where their order is?",
+      "body": "Start with a calm, direct line. The goal is to confirm the order and give one clear update.\n\nUse a script like this:\n- “Thanks for calling. Let me check that for you.”\n- “What name is the order under?”\n- “What did you order, and about what time did you place it?”\n- “I have it here. It’s in progress and should be ready in about 10 minutes.”\n\nIf you use ROAL, this same kind of question can be handled at the phone line while your team keeps cooking and packing. The important part is to avoid guessing. If the order is not visible yet, say so plainly: “I’m checking the kitchen now” is better than giving a made-up update.\n\nA good owner rule: never answer with “soon” unless you can say what soon means. Give a real number of minutes or a real status. If the order is already ready, say: “Your order is ready now. You can pick it up at the front.”"
+    },
+    {
+      "id": "what-details-do-i-need-before-i-check-the-order",
+      "h2": "What details do I need before I check the order?",
+      "body": "Before you look in the kitchen or on the order screen, collect the minimum details that make the search fast.\n\nUse this checklist:\n1. Name on the order\n2. Phone number used for the order\n3. Order type: pickup or delivery\n4. Time the order was placed\n5. One item from the order, if needed\n\nIf your shop gets a lot of similar names, ask for the phone number first. That saves time. A caller might say, “It’s for Mike,” but you may have three Mikes in one hour.\n\nExample: say you took 40 orders today and 8 of them are for common names like Maria, John, or Mike. A phone number makes the search faster. Plug in your own flow: if your staff takes 20 seconds to confirm the name and 40 seconds to hunt for the right ticket, that’s a full minute gone on one call.\n\nA simple line helps: “Can I get the name and phone number on the order so I can pull it up right away?”"
+    },
+    {
+      "id": "how-do-i-keep-order-status-calls-from-slowing-down-the-front",
+      "h2": "How do I keep order-status calls from slowing down the front counter?",
+      "body": "When the phone rings during a rush, the front counter gets pulled in two directions. One person is helping walk-ins, one is packing food, and now someone wants a status update.\n\nA better process is to give one person a clear job or use an AI phone host like ROAL to answer common order questions. ROAL can answer questions about hours, address, parking, and the menu, and it can take pickup and delivery orders from the live menu. It also sends a clean ticket to the kitchen screen, which helps keep the order flow organized.\n\nTry this split:\n- Counter staff handles in-person guests.\n- Kitchen checks cooking progress.\n- One phone process handles order updates.\n\nIf you still answer the phone yourself, use a short script and a visible order log. For example: “Thanks for waiting. I’m checking the ticket now.” Then either give the ready time or hand the question to the right person immediately.\n\nThe goal is not perfect speed. The goal is no confusion. A clear update is better than three people guessing."
+    },
+    {
+      "id": "what-if-the-order-is-late-missing-or-wrong",
+      "h2": "What if the order is late, missing, or wrong?",
+      "body": "These calls need a different tone. The caller is frustrated, and they want a fix, not a speech.\n\nA simple repair script:\n- “I’m sorry about that. Let me check the order right now.”\n- “Can you tell me the name on the order and what’s missing?”\n- “I see the issue. I’m sending this to the kitchen now.”\n- “Your replacement item will be ready in about 8 minutes.”\n\nKeep the update concrete. If the order is missing fries, say fries. If the delivery bag is missing a drink, say drink. If you need to ask staff, do it right away and give the caller a real next step.\n\nA quick checklist for the manager or shift lead:\n- Confirm the ticket\n- Check the bag against the ticket\n- Decide whether to remake, add, or refund based on your store policy\n- Call the guest back if needed\n\nROAL sends tricky calls like complaints and manager requests to staff with a summary, which is helpful when the line is busy and the guest needs a human decision."
+    },
+    {
+      "id": "how-can-i-reduce-repeat-calls-about-the-same-order",
+      "h2": "How can I reduce repeat calls about the same order?",
+      "body": "Most repeat calls happen because the first answer was unclear. The fix is to say three things every time: status, time, and pickup point.\n\nUse this exact structure:\n1. Status: “It’s being made now.”\n2. Time: “It should be ready in 12 minutes.”\n3. Pickup point: “You can pick it up at the front counter.”\n\nIf you want to tighten the process, post a small note by the phone: “Ask for name, phone number, order time, and one item.” That helps new staff and keeps answers consistent.\n\nYou can also build a simple order-status sheet with columns like this:\n\n| Name | Phone | Order time | Status | Ready time |\n|---|---:|---:|---|---:|\n| Maria | 201-555-0101 | 12:14 | cooking | 12:32 |\n| John | 201-555-0122 | 12:20 | packed | now |\n\nIf your team uses ROAL, the call history and transcripts in the dashboard can help you see what callers asked and what the host said back. That makes it easier to improve your wording and your menu notes over time."
+    },
+    {
+      "id": "when-should-i-send-the-caller-to-a-person-instead",
+      "h2": "When should I send the caller to a person instead?",
+      "body": "Not every order-status call should stay on the phone line. Some calls need staff judgment right away.\n\nSend it to a person when the caller asks about:\n- Allergies or ingredients that need a careful answer\n- A complaint about cold, missing, or incorrect food\n- Catering orders or large group changes\n- A manager request\n- A refund or store-specific policy question\n\nA good transfer line is simple: “I’m going to bring in someone from the restaurant who can help with that.”\n\nThis is also where a phone host is useful. ROAL can handle regular pickup and delivery calls, reservations, and common menu questions, then hand off the harder stuff with a summary. That means staff sees the caller’s issue without starting from scratch.\n\nIf you want one practical rule, use this: routine status update first, human handoff second. That keeps the line moving and protects your team’s time."
+    },
+    {
+      "id": "how-do-i-set-up-a-better-phone-flow-for-order-questions",
+      "h2": "How do I set up a better phone flow for order questions?",
+      "body": "Start with the basics you already have, then make the phone line match your real operation.\n\nA practical setup looks like this:\n1. Confirm your hours, address, parking notes, and menu are current.\n2. Make sure kitchen staff can see live tickets.\n3. Decide who answers complaints and manager requests.\n4. Set a clear voicemail or backup path for after-hours calls.\n5. Test your own phone flow during a rush.\n\nROAL is built for this kind of setup. An owner can paste a website, Google Maps link, or restaurant name and city at /try, test-call the host in the browser, and go live by forwarding the restaurant’s existing number. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nIf you want to compare options, look at [pricing](/pricing), [call forwarding codes by carrier](/tools/call-forwarding-codes), and [AI phone host vs answering service](/compare/answering-service). A small setup change can save a lot of back-and-forth on “Where’s my order?” calls.\n\n[Build a free test host](/try) from your website and see how your order-status calls sound before you use it live."
+    }
+  ],
+  "takeaways": [
+    "Give a clear status, a real ready time, and the pickup point every time.",
+    "Ask for the name, phone number, order time, and one item before searching.",
+    "Send allergy, complaint, catering, and manager requests to staff with a summary.",
+    "Use live tickets and a short script to cut repeat calls.",
+    "ROAL can answer routine order questions and pass the hard ones to the team."
+  ],
+  "faq": [
+    {
+      "q": "What is the best script for a customer asking where their order is?",
+      "a": "Use a short script: “Thanks for calling. What name is the order under?” Then confirm the order, check the ticket, and give a real ready time. Keep it calm and specific. If you do not have the order in front of you yet, say you are checking rather than guessing."
+    },
+    {
+      "q": "Should I answer order-status calls myself or have staff do it?",
+      "a": "During slow periods, a trained staff member can handle them. During rushes, the call can interrupt packing and counter service, so a phone host or a dedicated caller-response process works better. The key is that the person answering knows how to check the order quickly and give one clear update."
+    },
+    {
+      "q": "Can an AI phone host handle where is my order calls?",
+      "a": "An AI phone host can help with routine order calls by answering the phone, taking pickup and delivery orders from the live menu, and giving basic restaurant information. It can also collect the caller’s name and phone, quote a ready time, and send a clean ticket to the kitchen screen. Harder issues like complaints or allergy-sensitive questions should go to staff."
+    },
+    {
+      "q": "What should I do if the order is late or wrong?",
+      "a": "Apologize first, then confirm the order details and check the kitchen right away. Give the caller one next step, such as a new ready time or a staff handoff. If the issue involves a refund, allergy, or manager decision, move it to a person who can resolve it on the spot."
+    }
+  ],
+  "words": 1251,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

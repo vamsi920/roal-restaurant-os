@@ -1,0 +1,77 @@
+{
+  "slug": "game-day-phone-orders-restaurant",
+  "keyword": "game day restaurant orders",
+  "category": "missed-calls",
+  "title": "Game day restaurant phone orders: plan for the rush",
+  "seoTitle": "Game day restaurant orders | ROAL",
+  "description": "Plan for game day restaurant orders with a simple call plan, staffing tips, phone scripts, and a backup when lines get busy.",
+  "question": "How do I handle game day restaurant orders without getting buried on the phone?",
+  "answer": "Plan ahead for the spike with a clear phone script, extra pickup timing, and a backup for busy or unanswered calls. Use your live menu, set a simple call-forwarding plan, and route orders to a phone host like ROAL so callers can place pickup or delivery orders while your team stays focused on the kitchen.",
+  "summary": "You’ll know how to prepare your phone, staff, and order flow for a busy game day.",
+  "intro": "Game day restaurant orders come in fast, often all at once before kickoff, at halftime, and again when the game ends. The best way to handle them is to prepare your phone flow before the rush starts.\n\nThat means deciding who answers, what they say, how long the quoted ready time should be, and what happens when the line is busy. A setup like ROAL can answer the phone, take pickup and delivery orders from your live menu, and send a clean ticket to the kitchen screen when your team is slammed.",
+  "sections": [
+    {
+      "id": "what-should-i-prepare-before-the-game-starts",
+      "h2": "What should I prepare before the game starts?",
+      "body": "Start with the basics your staff can follow under pressure. On a busy game day, the goal is not perfect. The goal is fast, clear, and repeatable.\n\nUse this simple prep list:\n- Check that your menu, hours, address, and parking info are current.\n- Mark any sold-out items before the rush starts.\n- Decide your game-day ready-time range, such as 25 to 40 minutes for pickup, based on your own kitchen speed.\n- Tell the person answering the phone what details must be collected every time: name, phone number, items, sizes, modifiers, and notes.\n- Put the phone on a charger and keep a pen or tablet nearby if you still write orders by hand.\n\nA short opener helps a lot. Try: \"Thanks for calling. We’re on a game day rush right now, so I’ll take your order as quickly as I can.\" That one line sets the tone and buys you a few seconds to gather the order correctly.\n\nIf you use ROAL, it can read the live menu from your site or uploaded menu, answer basic questions, and send tickets to the kitchen screen so your staff can keep moving. The point is to reduce back-and-forth when the line gets hot."
+    },
+    {
+      "id": "how-do-i-route-calls-when-the-line-gets-busy",
+      "h2": "How do I route calls when the line gets busy?",
+      "body": "Game day is where missed calls turn into missed sales. If your phone rings nonstop, use a simple forwarding plan so callers still reach someone.\n\nA practical setup looks like this:\n1. Forward all calls to the main line or phone host during the rush.\n2. Or forward only unanswered calls if you still want staff to answer first.\n3. Test the setup with a real call before kickoff.\n4. Turn forwarding off after the rush if needed.\n\nPhone forwarding codes vary by carrier and plan, so confirm with your carrier and test it. On many landlines and some carriers, *72 starts forwarding and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding.\n\nIf you want a quick refresher, keep [call forwarding codes by carrier](/tools/call-forwarding-codes) bookmarked. For owners who want a simpler backup than voicemail, [AI phone host vs voicemail](/compare/voicemail) explains the difference in plain English.\n\nA useful phone script for staff is: \"We’re in a game day rush, so I’m going to confirm your order and quote the ready time now.\" That keeps the call moving and avoids long pauses."
+    },
+    {
+      "id": "what-should-the-order-flow-sound-like-on-the-phone",
+      "h2": "What should the order flow sound like on the phone?",
+      "body": "A good game day call has the same rhythm every time. The caller should hear confidence, not scrambling.\n\nHere’s a clean order flow you can copy:\n- Greet the caller.\n- Confirm pickup or delivery.\n- Take the items, sizes, modifiers, and notes.\n- Ask for the caller’s name and phone number.\n- Quote a ready time.\n- Read the order back once.\n- Confirm payment timing if needed.\n\nExample script:\n\"Hi, thanks for calling. Is this for pickup or delivery?\"\n\"What size do you want on that?\"\n\"Any toppings or modifiers?\"\n\"May I have your name and phone number?\"\n\"Your order should be ready in about 35 minutes.\"\n\"Let me read that back to make sure I have it right.\"\n\nKeep one extra rule in mind: do not promise items that are sold out. If wings are low, say so right away and offer what is still available. ROAL does this automatically from the menu you give it, which helps reduce awkward corrections.\n\nFor a family restaurant or deli, this matters because game day orders are often simple but large. A caller might want three sandwiches, two fries, and extra pickles. The faster your script captures the order, the faster the kitchen can start."
+    },
+    {
+      "id": "how-do-i-staff-for-the-spike-without-overstaffing",
+      "h2": "How do I staff for the spike without overstaffing?",
+      "body": "You do not need a huge team for one busy day. You need the right person in the right spot and a backup for the phone.\n\nA simple staffing plan:\n- One person handles phones, if possible.\n- One person focuses on packing and checking tickets.\n- One person stays on the line or fryer during peak minutes.\n- A manager watches for special requests and complaints.\n\nUse this quick checklist before kickoff:\n- Phone tested\n- Menu updated\n- Sold-out items marked\n- Ready-time target set\n- Kitchen screen visible\n- Caller name and number required\n- Backup plan for unanswered calls\n\nIf you are short-staffed, a phone host can absorb a lot of the noise. ROAL answers questions about hours, address, parking, and menu items, takes pickup and delivery orders from the live menu, and hands allergy-sensitive questions or manager requests to staff with a summary.\n\nThat does not replace your team. It protects your team from spending the whole rush answering the same questions over and over. For owners who want a broader playbook, [rush-hour phone orders](/use-cases/rush-hour) and [short-staffed shifts](/use-cases/short-staffed) are good next reads."
+    },
+    {
+      "id": "what-does-game-day-cost-me-if-i-miss-calls",
+      "h2": "What does game day cost me if I miss calls?",
+      "body": "You can estimate the cost with a simple example and swap in your own numbers.\n\nSay your average phone order is $28. If you miss 10 game day calls and even 6 of those would have become orders, that is $168 in order value before repeat visits or add-ons. If your average order is $40, the same 6 recovered calls would be $240. Use your own average check and your own likely conversion rate.\n\nHere is a quick table you can fill in:\n\n| Example item | Plug in your number |\n|---|---:|\n| Average phone order | $28 |\n| Missed calls during rush | 10 |\n| Likely orders lost | 6 |\n| Estimated lost sales | $168 |\n\nDelivery apps also take a meaningful cut on many orders, often roughly 15-30% commission. And many AI phone tools charge a fixed monthly fee whether or not orders come in. ROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nIf you want to compare different phone approaches, [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) and [phone orders vs delivery apps](/compare/delivery-apps) are useful side-by-side reads."
+    },
+    {
+      "id": "how-do-i-keep-the-kitchen-from-getting-buried",
+      "h2": "How do I keep the kitchen from getting buried?",
+      "body": "The phone is only half the problem. The real stress shows up when too many orders hit the kitchen at once.\n\nA cleaner ticket flow helps. ROAL sends a clean ticket to the kitchen screen, which gives your cooks a readable order instead of a rushed phone note. That matters most when game day orders are coming in fast and the line is already busy.\n\nUse this kitchen-side checklist:\n- New tickets should be easy to spot.\n- Preparing tickets should be visible to the expo or manager.\n- Ready tickets should be separate from new ones.\n- One person should watch for special notes, allergies, or catering-sized orders.\n- Sold-out items should be updated quickly so the phone host does not offer them.\n\nA practical example: if two large wings orders and four pizzas land in ten minutes, your kitchen needs a clear sequence. The first ticket should move to preparing right away. The second should not be lost under a stack of slips. That is why a clean screen matters more than a messy pile of paper.\n\nIf you are a pizza shop, deli, or takeout spot, this is especially important because game day often pushes the same core items. When the order flow is tight, your team spends less time decoding and more time cooking."
+    },
+    {
+      "id": "how-should-i-set-up-the-phone-before-kickoff",
+      "h2": "How should I set up the phone before kickoff?",
+      "body": "You do not need a complicated setup to start. You need a phone that answers, a menu that matches reality, and a backup plan if the rush gets too loud.\n\nA simple setup path looks like this:\n1. Paste your website, Google Maps link, or \"Name, City\" at /try.\n2. Let ROAL read your public menu, prices, hours, and address.\n3. Test-call the host in your browser.\n4. Claim the host when you are happy.\n5. Forward your existing number to it for all calls, or only when busy or unanswered.\n\nOwners keep their own number. Forwarding can be turned off any time. You also choose the host’s voice and name, which helps the call feel like it belongs to your restaurant.\n\nHere is a good pre-game script for your staff if you are still answering some calls manually: \"We’re running a game day setup, so I’m going to confirm your order and ready time now.\" That keeps the call short and clear.\n\nIf you want to build a free test host from your website, [start here](/try). You can also read more about [how it works](/how-it-works) or check [pricing](/pricing) before the rush hits."
+    }
+  ],
+  "takeaways": [
+    "Prepare your menu, hours, sold-out items, and ready-time target before the game starts.",
+    "Use one repeatable phone script so every caller gets the same quick flow.",
+    "Forward busy or unanswered calls to keep orders from falling through the cracks.",
+    "A clean kitchen ticket matters as much as a fast answer on the phone.",
+    "ROAL can take pickup and delivery orders, answer common questions, and send tickets to the kitchen screen."
+  ],
+  "faq": [
+    {
+      "q": "What is the best way to handle game day restaurant orders?",
+      "a": "Use a short phone script, set a realistic ready time, and make sure someone or something answers the phone when your line gets busy. Keep sold-out items updated and send orders straight to the kitchen in a clean format. That keeps the rush organized instead of turning into missed calls and confusion."
+    },
+    {
+      "q": "Should I forward my restaurant phone during a game day rush?",
+      "a": "Yes, if your team is getting buried. You can forward all calls or only unanswered and busy calls, depending on your setup and carrier. Always confirm the exact code with your carrier and test it with a real call before the rush starts."
+    },
+    {
+      "q": "How does ROAL help with game day restaurant orders?",
+      "a": "ROAL answers the phone, takes pickup and delivery orders from your live menu, answers common questions, and sends a clean ticket to the kitchen screen. It also hands tricky calls like complaints, allergy-sensitive questions, catering requests, and manager requests to staff with a summary. It does not take card numbers over the phone."
+    },
+    {
+      "q": "How much does ROAL cost for completed phone orders?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reaches the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "words": 1519,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

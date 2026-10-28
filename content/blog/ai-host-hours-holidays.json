@@ -1,0 +1,72 @@
+{
+  "slug": "ai-host-hours-holidays",
+  "keyword": "ai phone holiday hours",
+  "category": "operations",
+  "title": "Setting AI phone holiday hours for your restaurant",
+  "seoTitle": "Setting AI phone holiday hours for your restaurant | ROAL",
+  "description": "Set AI phone holiday hours for your restaurant, forward calls, and keep holiday closures clear for guests and staff.",
+  "question": "How do I set holiday hours and closures for my restaurant's AI phone host?",
+  "answer": "Set holiday hours in the phone host so callers hear the right message before they place an order, ask about pickup, or request a table. On closed days, use a clear holiday greeting, list any special hours, and route edge cases like catering or manager requests to staff with a summary. Also confirm your call forwarding settings with your carrier or phone system and test with a real call.",
+  "summary": "You’ll know how to set holiday hours, close the phone cleanly, and keep staff informed when the schedule changes.",
+  "intro": "Holiday hours should be set before the rush hits. Your phone host should say whether you are open, closed, or on special hours, and it should do that in plain language that matches the day.\n\nFor a restaurant, the goal is simple: keep callers from guessing. When the hours are wrong, people keep calling back, staff waste time repeating the same answer, and pickup orders get messy. Tools like [ROAL](/about) can read your hours from your public pages, but you still want a clear holiday plan for Christmas, New Year’s, Thanksgiving, and any local closure.",
+  "sections": [
+    {
+      "id": "what-hours-should-your-phone-host-say-on-holidays",
+      "h2": "What hours should your phone host say on holidays?",
+      "body": "Start with the exact message a caller needs. Do not make people guess whether you are open for pickup, delivery, or dine-in.\n\nUse a simple structure:\n1. Say the holiday or special date.\n2. Say whether you are open or closed.\n3. If open, say the hours.\n4. If closed, say when you reopen.\n5. If callers can still place pickup orders by phone at another time, say that clearly.\n\nExample script line:\n\"Thanks for calling Mama Rosa’s. We’re closed today for the holiday and will reopen tomorrow at 11 a.m.\"\n\nIf you are open with shorter hours, keep it short:\n\"Thanks for calling Tony’s Pizza. We’re open today from 12 to 8 p.m. for pickup and delivery.\"\n\nA good holiday greeting should answer the first question before the caller asks it. That matters because a lot of holiday calls are about one thing only: are you open right now? If your phone host can also answer address, parking, and menu questions, that helps reduce extra calls, but the holiday hours message still needs to be the first thing people hear. You can also keep a small backup note for the counter staff so everyone says the same thing."
+    },
+    {
+      "id": "how-do-i-update-holiday-hours-without-breaking-normal-hours",
+      "h2": "How do I update holiday hours without breaking normal hours?",
+      "body": "Do not rewrite your regular hours just because of one holiday. Keep your normal schedule intact, then add a special holiday message or temporary closure for the specific date.\n\nA practical workflow:\n- Leave your standard hours alone.\n- Add the holiday date and special message.\n- Double-check the reopening date and time.\n- Test the greeting from an outside phone.\n- Remove or end the holiday message once business returns to normal.\n\nWorked example: say your regular hours are 11 a.m. to 10 p.m. every day. For Thanksgiving, you close at 4 p.m. and reopen Friday at 11 a.m. Your caller-facing message should say that, not just \"short hours.\" Keep the reopening time exact so the next caller does not have to ask twice.\n\nIf you use ROAL, the owner can paste the restaurant website, Google Maps link, or Name, City at /try, and ROAL reads public hours and address information from what is already posted. That is helpful for setup, but holiday changes still belong in your operating routine. A short owner checklist works best:\n- Update the special hours.\n- Confirm the phone greeting.\n- Tell the shift lead.\n- Test one live call.\n\nThis is the kind of task that takes five minutes when it is written down and an hour when it is handled from memory."
+    },
+    {
+      "id": "what-should-callers-hear-when-you-are-closed",
+      "h2": "What should callers hear when you are closed?",
+      "body": "When you are closed, the message should be calm, direct, and useful. Do not overtalk it. Closed callers usually want one of three things: hours, a future order, or a message to staff.\n\nA strong closed-day message can sound like this:\n\"Thanks for calling Bella’s Deli. We’re closed for the holiday and reopen Friday at 10 a.m. If you need to leave a catering request or a message for the manager, please stay on the line.\"\n\nThat last sentence matters because some calls should still reach staff. ROAL can hand catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary, which is helpful when a holiday caller has a special need. For a deli, pizza shop, or family restaurant, this keeps the phone from becoming a dead end.\n\nUse this quick closed-message checklist:\n- State that you are closed.\n- Give the reopen time.\n- Offer a path for urgent staff requests.\n- Keep it under 20 to 25 seconds.\n- Do not promise service you cannot provide.\n\nIf a caller asks about the menu while you are closed, a phone host should still be able to answer basic questions from the live menu and public pages. But if the request is tricky, like a custom catering order or a late holiday exception, it should go to staff with a summary instead of guessing."
+    },
+    {
+      "id": "how-should-call-forwarding-change-on-busy-holiday-days",
+      "h2": "How should call forwarding change on busy holiday days?",
+      "body": "Holiday hours are only part of the setup. You also need to decide where the call goes when the line is busy or unanswered.\n\nCommon options in the US include forwarding all calls, forwarding unanswered calls, or forwarding busy calls. The exact codes depend on your carrier or phone system, so always confirm with them and test with a real call. As a rough reference, many landlines and some carriers use *72 to forward all calls and *73 to turn it off. On some GSM carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nUse this decision table:\n\n| Situation | What to do |\n| --- | --- |\n| Holiday rush, staff can still answer some calls | Forward only unanswered or busy calls |\n| Staff is off-site or closed early | Forward all calls to the phone host |\n| You want the counter to handle most calls | Keep forwarding off, but test the backup path |\n\nFor owners, the practical rule is simple: the forwarding setup should match the day. On a holiday lunch rush, you may want the phone host to catch overflow. On a closed day, you may want all calls routed to the holiday message. Then test one call from a cell phone and one from a landline if you have both available."
+    },
+    {
+      "id": "how-do-holiday-hours-affect-pickup-and-delivery-orders",
+      "h2": "How do holiday hours affect pickup and delivery orders?",
+      "body": "Holiday hours should make it easy for callers to place a valid order, not just hear a recording.\n\nA phone host should only take orders during the hours you actually want them. If you are closing early, it should quote a ready time that fits the schedule. If an item is sold out, it should not offer it. If the caller asks about payment, it should not take card numbers over the phone; payment happens at pickup or however the restaurant already takes it.\n\nExample you can swap for your own numbers:\n- Your kitchen closes at 8 p.m.\n- Your last pickup slot is 7:30 p.m.\n- Your average order is $28.\n- On a holiday, you may want the host to stop accepting new pickup orders after 7:15 p.m. so the kitchen can finish on time.\n\nA useful phone line is:\n\"We can take that for 7:30 pickup. If you want anything added, please tell me now and I’ll note it for the kitchen.\"\n\nThis is where a clean ticket matters. ROAL sends a clean ticket to the kitchen screen, which helps the kitchen see items, sizes, modifiers, and notes without having to re-listen to the call. If you already run a busy takeout counter, that can save a lot of holiday back-and-forth. It also helps when callers speak another language, because the host speaks the caller’s language and confirms the order back before ending the call."
+    },
+    {
+      "id": "what-is-the-best-holiday-workflow-for-a-small-restaurant",
+      "h2": "What is the best holiday workflow for a small restaurant?",
+      "body": "For a small shop, the best plan is not complicated. It is repeatable. One person should own the hours update, one person should know where the calls go, and the kitchen should know the cutoff time.\n\nUse this simple holiday workflow:\n1. Decide open, closed, or limited hours.\n2. Update the holiday message.\n3. Confirm forwarding with your carrier or phone system.\n4. Tell staff the cutoff for pickup and delivery.\n5. Test a real call before service starts.\n\nIf you want a simple script for the counter, use this:\n\"We’re on holiday hours today. Pickup ends at 7:30, and the phone will say our closing time if you call after that.\"\n\nOwners who use [ROAL](/how-it-works) can keep the normal menu, hours, and address in one place, then make holiday changes in their operating routine as needed. The dashboard also gives you call history with transcripts and recordings, which is useful when someone says, \"I called earlier and was told something different.\"\n\nFor owners comparing tools, the main question is cost. Many AI phone tools charge a fixed monthly fee per location even when no orders come in, and human answering services usually bill per minute or per call. ROAL uses per completed phone order pricing, with no monthly fee, no setup fee, and no per-minute fee. That makes holiday surges easier to think through because you are not paying for idle time in the same way."
+    }
+  ],
+  "takeaways": [
+    "Set holiday hours as a separate special schedule, not a replacement for your normal hours.",
+    "Keep the closed-day message short, clear, and specific about reopening time.",
+    "Match call forwarding to the holiday situation and test it with a real call.",
+    "Use one owner checklist so the kitchen, counter, and phone host all say the same thing.",
+    "Keep tricky calls routed to staff with a summary instead of forcing the phone host to guess."
+  ],
+  "faq": [
+    {
+      "q": "Should my restaurant phone say closed on holidays or just ring through?",
+      "a": "If you are closed, the phone should say so clearly before the caller waits through a long ring. Give the reopen time and, if needed, offer a path for staff requests such as catering or manager messages. That saves time for both guests and your team."
+    },
+    {
+      "q": "Can an AI phone host answer holiday hours and still take orders?",
+      "a": "Yes, if you set the hours correctly. It should tell callers whether you are open, take pickup or delivery orders only during the times you choose, and quote a ready time that fits the kitchen schedule. If you are closed, it should not take new orders as if you were open."
+    },
+    {
+      "q": "How do I forward calls only when I’m busy or unanswered?",
+      "a": "That depends on your carrier or phone system. Many carriers and landlines support busy or unanswered forwarding codes, while business VoIP systems usually set it in a web portal. Confirm the exact code with your provider and test it from another phone before a holiday shift."
+    },
+    {
+      "q": "What should happen if a caller asks a hard question on a holiday?",
+      "a": "Hard questions should go to staff with a summary. That includes catering, complaints, allergy-sensitive questions, and manager requests. A phone host should answer the easy stuff like hours, address, parking, and menu questions, but hand off the tricky calls."
+    }
+  ],
+  "words": 1471,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

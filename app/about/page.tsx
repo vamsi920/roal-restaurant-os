@@ -5,6 +5,8 @@ import { ClosingCta } from "@/components/landing/home/closing-cta";
 import { PageHero } from "@/components/landing/page-hero";
 import { SiteShell } from "@/components/landing/site-shell";
 import { buildAboutPageMetadata } from "@/lib/landing/about-metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import { founderJsonLd, graph, organizationJsonLd } from "@/lib/seo/json-ld";
 import { PRICING_RATE_AMOUNT } from "@/lib/landing/pricing-core";
 
 export const metadata = buildAboutPageMetadata();
@@ -46,7 +48,7 @@ export default function AboutPage() {
             <span className="tone-muted">Built for the restaurant</span> that can&apos;t get to the phone.
           </>
         }
-        lead="ROAL is a small team building an AI phone host for independent restaurants. It answers, takes pickup orders from your live menu, and sends the ticket to your kitchen."
+        lead="ROAL is a small Jersey City company building an AI phone host for independent restaurants. It answers, takes pickup orders from your live menu, and sends the ticket to your kitchen."
       >
         <Link href="/try" className="btn-primary btn-lg">
           Try it on your menu
@@ -94,6 +96,31 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="section" id="founder" aria-labelledby="about-founder">
+        <div className="wrap">
+          <div className="prose-card seo-prose reveal">
+            <p className="pill">
+              <span className="pill__dot" aria-hidden />
+              Founder
+            </p>
+            <h2 id="about-founder" className="h2 mt-5">
+              Venkata Vamsi, Jersey City
+            </h2>
+            <p className="lead mt-4">
+              I&apos;m Vamsi, and I build ROAL from Jersey City, NJ. A restaurant&apos;s phone rings most exactly when
+              nobody can get to it, and ROAL is my answer to that.
+            </p>
+            <p className="mt-4 text-pretty leading-relaxed">
+              ROAL is starting with restaurants in Jersey City and Hoboken, and it works for any restaurant in the US. I
+              write the guides on <Link href="/blog">the ROAL blog</Link>, and I read every email:{" "}
+              <a href="mailto:vamsi@tryroal.com">vamsi@tryroal.com</a>. The plain facts about the product are on{" "}
+              <Link href="/facts">the fact sheet</Link>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <JsonLd data={graph(organizationJsonLd(), founderJsonLd())} />
       <ClosingCta />
     </SiteShell>
   );

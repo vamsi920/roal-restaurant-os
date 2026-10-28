@@ -1,0 +1,71 @@
+{
+  "slug": "forward-calls-att-business",
+  "keyword": "att call forwarding business",
+  "category": "phone-setup",
+  "title": "AT&T business call forwarding for restaurants",
+  "seoTitle": "AT&T business call forwarding for restaurants | ROAL",
+  "description": "Set up AT&T business call forwarding for restaurant lines, including busy and no-answer options, test calls, and when to use ROAL.",
+  "question": "How do I set up call forwarding on an AT&T business line for my restaurant?",
+  "answer": "On many AT&T mobile business lines, you can forward all calls by dialing **21*number# and turn it off with ##21#. For unanswered calls, use **61*number#, and for busy calls, use **67*number#, but codes can vary by plan, so confirm with AT&T and test it with a real call. If you run a restaurant, use forwarding to send overflow calls to a manager, a second line, or a phone host like ROAL.",
+  "summary": "You’ll learn the common AT&T forwarding codes, how to test them, and how to set up restaurant call coverage without losing your main number.",
+  "intro": "Forwarding calls on an AT&T business line is usually done from the phone itself or from your carrier settings. On many AT&T mobile business lines, **21*number# forwards all calls, ##21# turns it off, and **61*number# or **67*number# can forward unanswered or busy calls.\n\nFor a restaurant, that matters because lunch rush, dinner rush, and after-hours calls all need a plan. You can forward to another phone, to a manager, or to an AI phone host like ROAL, while keeping your restaurant’s main number the same.",
+  "sections": [
+    {
+      "id": "what-code-should-i-use-on-an-at-t-business-line",
+      "h2": "What code should I use on an AT&T business line?",
+      "body": "The exact code depends on the line type and plan, so start by confirming with AT&T or your account admin. For many AT&T GSM mobile lines, these are the common codes:\n\n| What you want | Common code |\n|---|---|\n| Forward all calls | **21*number# |\n| Turn off all-call forwarding | ##21# |\n| Forward when unanswered | **61*number# |\n| Forward when busy | **67*number# |\n\nFor some landlines and older setups, you may hear **72 to forward all calls and **73 to cancel. Those codes are common on some carriers, but not every AT&T business line uses them. The safest move is to test once before you rely on it during service.\n\nRestaurant example: if your host stand phone is tied up and you want calls to go to a manager’s mobile, enter the forwarding code with that manager’s 10-digit number. Then place a test call from your cell so you can hear the ring and confirm the phone is actually forwarding."
+    },
+    {
+      "id": "how-do-i-forward-only-busy-or-unanswered-calls-at-lunch-rush",
+      "h2": "How do I forward only busy or unanswered calls at lunch rush?",
+      "body": "Busy/no-answer forwarding is often the best fit for restaurants. You keep the main number ringing in-house first, but backup calls go somewhere useful instead of hitting voicemail.\n\nA simple restaurant setup looks like this:\n\n1. Keep the main line ringing on the host phone.\n2. Set unanswered forwarding to a backup number after a few rings, if your line supports it.\n3. Set busy forwarding to a manager, expo phone, or a phone host.\n4. Test during a slow moment, then again when the line is busy.\n\nExample you can swap: say your main line gets 10 calls during dinner service and 3 of them would otherwise go unanswered. If those 3 are pickup orders with a $28 average order, that is $84 in order value you may want routed somewhere useful. Use your own average order, your own call count, and your own rush window."
+    },
+    {
+      "id": "should-i-forward-calls-to-voicemail-another-staff-phone-or-r",
+      "h2": "Should I forward calls to voicemail, another staff phone, or ROAL?",
+      "body": "That depends on what happens when the phone rings. If a call is simple, like hours, address, parking, or menu questions, a phone host can answer it. If the call needs a manager, allergy help, a complaint, or a catering request, it should reach staff with a summary.\n\nROAL can answer the restaurant’s phone, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. It can also hand off tricky calls to staff. That means forwarding can be part of your coverage plan, not just a way to dodge voicemail.\n\nUse this quick rule:\n- Simple, repeatable questions: route to the phone host.\n- Busy/no-answer overflow: route to the phone host or backup phone.\n- Manager-only issues: route to staff with a clear handoff.\n\nIf you already have a strong front-counter team, you may want to forward only overflow calls. If you are short-staffed, more calls can go to the phone host so your team stays focused on the line, the grill, and pickup orders."
+    },
+    {
+      "id": "how-do-i-test-forwarding-without-confusing-customers",
+      "h2": "How do I test forwarding without confusing customers?",
+      "body": "Test it when you are closed or during a slow 10-minute window. You want to know two things: does the phone forward, and does the caller experience sound normal.\n\nUse this test checklist:\n- Call the restaurant from your cell phone.\n- Let it ring until the forward should trigger.\n- Confirm the backup phone or host answers.\n- Ask for a real restaurant detail, like hours or parking.\n- Place a test pickup order if the system supports it.\n- Turn forwarding off and test the main line again.\n\nA good script for the person answering is: “Thanks for calling [restaurant name]. I can help with hours and pickup orders.” If you are testing ROAL, it can read the menu from your website or menu upload, then you can ask a question like “What sizes do you have?” or “Can I get extra sauce on the side?”\n\nKeep a small note with the exact code you used. That saves time when you need to turn forwarding on before dinner and off after the rush."
+    },
+    {
+      "id": "what-should-i-tell-staff-before-i-switch-the-line",
+      "h2": "What should I tell staff before I switch the line?",
+      "body": "Tell your team exactly what is changing and when. A phone change is easy to mess up if the host stand, manager, and kitchen do not know who is getting which calls.\n\nUse a simple handoff plan:\n\n1. Name the backup number or phone host.\n2. Decide which calls should forward all the time and which should forward only when busy.\n3. Assign one person to check forwarded calls for the first shift.\n4. Tell staff how to handle names, phone numbers, and ready times.\n5. Write down who can turn forwarding off if service gets weird.\n\nExample script for staff: “If the phone rings and I’m on the line, let the forward go through. If it’s a catering request or a complaint, send it to me right away.”\n\nIf you use [How it works](/how-it-works) with ROAL, the owner can claim the host, forward the restaurant’s existing number to it, and keep the restaurant number the same. Forwarding can be turned off any time, which helps if you want to switch back for a holiday or a special event."
+    },
+    {
+      "id": "what-if-the-at-t-code-does-not-work-on-my-business-line",
+      "h2": "What if the AT&T code does not work on my business line?",
+      "body": "That happens. Codes can vary by carrier, line type, and plan, and some business numbers are managed through a web portal instead of a keypad code. If the code does not work, do not keep guessing on a live dinner shift.\n\nTry this fallback order:\n\n| Step | What to do |\n|---|---|\n| 1 | Confirm the line type with AT&T or your phone admin |\n| 2 | Check whether forwarding is set in a business portal |\n| 3 | Test the common code again with the full 10-digit number |\n| 4 | Ask whether busy/no-answer forwarding is supported |\n| 5 | Place a real test call after any change |\n\nFor restaurants, the backup plan matters more than the exact code. If the line cannot forward the way you want, you can still route overflow to another phone, or use an AI phone host to handle calls, questions, and orders while staff focuses on service. ROAL is set up from your website, Google Maps link, or restaurant name and city, then you can test-call it in the browser before you send any live calls over."
+    }
+  ],
+  "takeaways": [
+    "Many AT&T business lines use **21*number# for all-call forwarding, but you should confirm your exact plan before relying on it.",
+    "Busy and unanswered forwarding are often better for restaurants than sending every call away from the main line.",
+    "Always place a real test call after setup, especially before lunch or dinner service.",
+    "ROAL can answer routine restaurant calls, take orders, and pass tricky calls to staff with a summary."
+  ],
+  "faq": [
+    {
+      "q": "How do I turn off call forwarding on an AT&T business line?",
+      "a": "On many AT&T mobile lines, ##21# turns off all-call forwarding. Some landlines and older setups use **73, but the exact cancel code can vary, so confirm with your carrier or admin. After you turn it off, place one test call to make sure the restaurant’s main line rings again."
+    },
+    {
+      "q": "Can I forward only unanswered calls on AT&T business service?",
+      "a": "Often, yes. A common code on AT&T GSM mobile lines is **61*number# for unanswered calls, and **67*number# for busy calls. Business plans can differ, so test the feature with a real call before service starts."
+    },
+    {
+      "q": "Should a restaurant forward all calls or only busy calls?",
+      "a": "Most restaurants do better with busy or unanswered forwarding rather than sending every call elsewhere. That keeps the main line active for in-house staff while overflow calls still get handled. If you are short-staffed, you may want more calls routed to a phone host so pickup orders and questions are still covered."
+    },
+    {
+      "q": "Can ROAL answer forwarded calls for my restaurant?",
+      "a": "Yes. ROAL can answer the restaurant’s phone, take pickup and delivery orders from the live menu, answer common questions, and send a clean ticket to the kitchen screen. It can also hand off allergy-sensitive questions, complaints, catering, and manager requests to staff. You can [Build a free test host](/try) from your website before you forward any live calls."
+    }
+  ],
+  "words": 1115,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

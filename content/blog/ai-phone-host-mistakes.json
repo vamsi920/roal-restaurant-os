@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-host-mistakes",
+  "keyword": "ai phone ordering mistakes",
+  "category": "ai-basics",
+  "title": "What to check for AI phone ordering mistakes",
+  "seoTitle": "AI phone ordering mistakes to check | ROAL",
+  "description": "Check the most common AI phone ordering mistakes restaurants make, including menu details, hours, orders, forwarding, and staff handoff.",
+  "question": "What ai phone ordering mistakes should I check before I trust an AI phone host with my restaurant calls?",
+  "answer": "Check whether the phone host is quoting the right menu items, sizes, modifiers, hours, and ready times, and whether it can hand off allergy, catering, complaint, and manager calls to staff with a clear summary. Also test call forwarding, sold-out items, language support, and order tickets to make sure the system fits how your restaurant actually works.",
+  "summary": "You will know how to test an AI phone host for real restaurant calls before you turn it on.",
+  "intro": "AI phone ordering mistakes usually show up in the same places: wrong menu details, bad hours, weak order handoff, or a clumsy transfer to staff. The fix is to test the phone host the way a real caller would, using your own menu and your own rush-hour rules.\n\nFor a busy pizza shop, deli, or family restaurant, the goal is simple. The phone host should answer clearly, take the order correctly, and send the kitchen a clean ticket. ROAL is built for that flow, but like any [AI phone host](/blog/what-is-ai-phone-answering-restaurants), you still want to check the basics before you rely on it.",
+  "sections": [
+    {
+      "id": "what-should-i-test-first-on-my-menu-and-hours",
+      "h2": "What should I test first on my menu and hours?",
+      "body": "Start with the details callers ask for most. That means hours, address, parking, pickup timing, and the top items on your menu. If the phone host gets those wrong, people lose trust fast.\n\nUse this quick test list:\n- Ask for today’s hours.\n- Ask for the address and parking.\n- Ask for your most common item with sizes and toppings.\n- Ask for one item you know is often modified, like no onion or extra cheese.\n- Ask for a sold-out item, if you have one marked that way.\n\nA good script line sounds like this: \"Can I get a large pepperoni, extra cheese, no onion, for pickup?\" The host should repeat back the order in a way your kitchen can use. With ROAL, the host reads the live menu from your public pages or an uploaded menu, then builds a phone host in about a minute. That makes the first check easy: if the menu on your site is messy, the phone host may repeat that mess."
+    },
+    {
+      "id": "how-do-i-check-for-wrong-order-details-before-a-ticket-hits-",
+      "h2": "How do I check for wrong order details before a ticket hits the kitchen?",
+      "body": "The biggest AI phone ordering mistake is a correct-sounding order that is actually wrong. A caller might say “large” and the host should not turn that into “medium.” A caller might ask for a side, a modifier, or a note, and the kitchen ticket needs to show it clearly.\n\nDo a real-world order test with numbers you can swap for your own:\n1. Pick one item priced at, say, $12.\n2. Add one size change, one modifier, and one special note.\n3. Add a second item priced at, say, $9.\n4. Ask for pickup and have the host quote the ready time.\n5. Listen to the confirmation before you end the call.\n\nYour check should end with a ticket that matches what you said. For example, if you ordered a $12 pasta with extra sauce and no cheese plus a $9 salad, the ticket should show both items, the changes, the caller’s name, and the phone number. ROAL sends a clean ticket to the kitchen screen, but you should still compare the spoken recap with the screen the first few times. If your restaurant uses special notes like “ring doorbell” or “leave in the vestibule,” make sure those land where staff can see them."
+    },
+    {
+      "id": "what-do-i-do-when-the-host-cannot-answer-a-question",
+      "h2": "What do I do when the host cannot answer a question?",
+      "body": "A lot of phone tools fail here. They either make up an answer or just drop the caller. For a restaurant, that is a problem because callers ask about allergens, catering, parking, holidays, and menu swaps all the time.\n\nThe right behavior is simple: the host should pass the tricky call to staff with a short summary. A good handoff sounds like this: \"I’m sending this to the restaurant team. The caller needs help with an allergy-sensitive question and wants to know if the dish can be made without nuts.\" \n\nUse this handoff checklist:\n- Allergy-sensitive question\n- Catering request\n- Complaint or upset caller\n- Manager request\n- Anything the host cannot confirm from your menu or FAQs\n\nROAL routes those calls to staff with a summary, and unanswered questions land in an inbox. That matters because you can answer once and the host knows it from then on. The practical check is to place one weird call yourself. Ask something you do not expect the host to know, then confirm that it did not guess and that staff can see the summary. That is far better than a confident wrong answer."
+    },
+    {
+      "id": "how-can-i-tell-if-call-forwarding-is-set-up-the-right-way",
+      "h2": "How can I tell if call forwarding is set up the right way?",
+      "body": "A common phone ordering mistake is not the AI at all. It is the forwarding setup. If calls are not reaching the host, or they are still going to voicemail, you will think the system is broken when the problem is the phone line.\n\nCheck these points:\n- Is forwarding on for all calls, or only when busy or unanswered?\n- Is the number entered correctly?\n- Does the restaurant still keep its own number?\n- Did you test from a real phone after turning forwarding on?\n\nMany carriers and phone systems use different codes or portal settings. On many landlines and some carriers, \u0000*72\u0000 forwards all calls and \u0000*73\u0000 turns it off. On some GSM mobile carriers, \u0000**21*number#\u0000 forwards all calls and \u0000##21#\u0000 turns it off; \u0000**61*number#\u0000 forwards unanswered calls and \u0000**67*number#\u0000 forwards busy calls. Verizon Wireless uses \u0000*72\u0000 / \u0000*73\u0000, and \u0000*71\u0000 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Codes vary by carrier and plan, so always confirm with your carrier and test with a call.\n\nROAL lets the owner forward the existing number to the host and turn forwarding off any time. That keeps your main number in place while you test the flow."
+    },
+    {
+      "id": "what-should-i-check-for-language-accents-and-busy-shift-call",
+      "h2": "What should I check for language, accents, and busy-shift calls?",
+      "body": "Restaurants often serve callers who do not speak English first, or who speak with a heavy accent, or who call during a loud lunch rush. That is where bad phone systems get sloppy. They mishear the order, miss the name, or fail when the line gets noisy.\n\nTest with three real scenarios:\n1. A quiet call from you in a normal voice.\n2. A call from someone speaking faster than usual.\n3. A call during kitchen noise or a busy background.\n\nIf your restaurant gets callers in another language, place a test call in that language if you can. The host should speak the caller’s language and still collect the order details clearly. ROAL can speak the caller’s language, but you should still listen for these basics: did it confirm the name, phone number, items, and ready time without confusion?\n\nA good owner check is simple: have one team member listen to the live call while another compares the transcript later. If the transcript and the ticket match what the caller said, you are on the right track. If not, tighten the menu wording or the FAQs before going live."
+    },
+    {
+      "id": "how-do-i-compare-the-cost-to-mistakes-from-other-order-chann",
+      "h2": "How do I compare the cost to mistakes from other order channels?",
+      "body": "When you compare phone ordering mistakes, cost matters too. A bad setup can send callers to delivery apps, and those apps commonly take roughly 15% to 30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee whether or not orders come in.\n\nHere is a simple way to compare using your own numbers:\n| Option | Example cost structure | What to watch |\n| --- | --- | --- |\n| Delivery apps | Commission per order | High fees on every order |\n| Human answering service | Per minute or per call | Cost can rise with call volume |\n| Monthly AI phone plan | Fixed monthly fee | Pay even in slow weeks |\n| ROAL | $0.90 per completed phone order | No monthly fee, no setup fee, no per-minute fee |\n\nSay your average phone order is $28. If a channel costs a fixed monthly fee but only handles a few orders, the math can feel heavy. If you want a rough way to think about it, plug in your own average order value, monthly call volume, and current phone or delivery costs. The point is not to pick the cheapest-looking tool. The point is to pick the one that gets the order right and fits your volume.\n\nIf you want to compare your current call flow against a pay-per-order setup, [build a free test host from your website](/try) and make a few test calls before you change anything live."
+    }
+  ],
+  "takeaways": [
+    "Test the menu, hours, and address first, not the fancy features.",
+    "Make sure the host repeats back items, sizes, modifiers, notes, and ready time.",
+    "Check that allergy, catering, complaint, and manager calls reach staff with context.",
+    "Confirm your call forwarding works from a real phone, not just in theory.",
+    "Compare costs using your own average order value and call volume."
+  ],
+  "faq": [
+    {
+      "q": "How do I know if an AI phone host is taking orders correctly?",
+      "a": "Place a real test order with one or two items, a modifier, a note, and a pickup request. Then compare what you said with the spoken recap and the kitchen ticket. If the ticket shows the correct items, name, phone number, and ready time, that is a good sign."
+    },
+    {
+      "q": "What are the biggest ai phone ordering mistakes for restaurants?",
+      "a": "The biggest mistakes are wrong menu details, wrong hours, missed modifiers, poor handoff for tricky calls, and forwarding that is set up incorrectly. Another common one is a host that guesses instead of asking for help. For a restaurant, a clean ticket and a correct recap matter more than a clever voice."
+    },
+    {
+      "q": "Should I let an AI phone host take allergy questions?",
+      "a": "It should not guess on allergy-sensitive questions. The safer setup is for the host to hand those calls to staff with a short summary. That way the caller gets a real answer from your team, and the phone host does not pretend to know something it cannot confirm."
+    },
+    {
+      "q": "How do I check call forwarding for my restaurant phone?",
+      "a": "First confirm whether your carrier or phone system uses a code or a web portal. Many landlines and some carriers use \u0000*72\u0000 to forward all calls and \u0000*73\u0000 to turn it off, while some mobile carriers use different codes. Always confirm with your carrier and place a live test call before you rely on it."
+    }
+  ],
+  "words": 1321,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

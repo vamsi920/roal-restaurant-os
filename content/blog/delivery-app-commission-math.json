@@ -1,0 +1,82 @@
+{
+  "slug": "delivery-app-commission-math",
+  "keyword": "delivery app commission per order",
+  "category": "pricing",
+  "title": "Delivery app commission per order: the real math",
+  "seoTitle": "Delivery app commission per order: the real math | ROAL",
+  "description": "Break down delivery app commission per order and compare it with direct phone sales. See when a pay-per-order phone setup makes sense.",
+  "question": "How do I figure out the delivery app commission per order and decide if it is worth it for my restaurant?",
+  "answer": "Start by multiplying your average delivery ticket by the app’s commission rate, then subtract fees, packaging, and food cost to see what is left. Delivery apps commonly take roughly 15-30% commission per order, so a $30 order can lose $4.50 to $9 before other costs. Compare that with a phone order model, where ROAL charges $0.90 per completed phone order.",
+  "summary": "You will be able to calculate delivery app commission per order and compare it with other order-taking costs.",
+  "intro": "Delivery app commission per order is usually the first number to check when delivery sales feel busy but the money feels thin. The basic math is simple: take your order total, multiply by the commission rate, and see what that order really costs you.\n\nFor many independent restaurants, the harder part is not the math. It is seeing how that commission compares with phone orders, pickup orders, and your own labor. That is where per-order pricing can be easier to judge, especially if you are also looking at [Pay per order vs monthly AI phone plans](/blog/per-minute-vs-per-order-pricing) and [How much does AI phone answering cost a restaurant?](/blog/ai-phone-answering-cost-restaurant).",
+  "sections": [
+    {
+      "id": "what-does-delivery-app-commission-per-order-actually-mean",
+      "h2": "What does delivery app commission per order actually mean?",
+      "body": "A delivery app commission per order is the share of the ticket the app keeps before the money reaches your restaurant. In the market, that is often roughly 15-30% of the order subtotal, though the exact rate depends on your agreement and the service level.\n\nHere is the simple version:\n- Order subtotal: what the customer bought\n- Commission: the percentage the app takes\n- Other costs: food, packaging, refunds, promos, and any extra fees\n- Net: what is left for the restaurant after the app takes its cut\n\nFor example, say a customer places a $28 order. If the commission is 20%, the app keeps $5.60 from that order. On a $40 order, 20% is $8.00. If you are trying to understand why delivery feels busy but not profitable, this is the first line to check.\n\nA quick owner script for staff: “Before we quote delivery, let’s look at the total and make sure the margin still works.”"
+    },
+    {
+      "id": "how-do-i-calculate-the-commission-on-a-real-order",
+      "h2": "How do I calculate the commission on a real order?",
+      "body": "Use a simple formula and plug in your own numbers.\n\n**Formula:**\nOrder total × commission rate = commission amount\n\n**Worked example:**\n- Average order: $32\n- Commission rate: 25%\n- Commission: $32 × 0.25 = $8.00\n\nThat means the app keeps eight dollars from that one order before you even think about food cost, packaging, and labor. If your food and packaging on that order are $14, you are now comparing $32 in sales against $22 in direct costs plus the commission. The real margin can get tight fast.\n\nUse this quick checklist on your own orders:\n1. Write down your average delivery ticket.\n2. Write down the commission rate.\n3. Multiply the two.\n4. Add packaging and any extra fees.\n5. Compare what stays with you to what you expected.\n\nA practical phone line for your counter team: “What is the order total before we send it out?” That one question helps you spot low-margin tickets before they leave the door."
+    },
+    {
+      "id": "when-is-a-delivery-app-order-more-expensive-than-a-phone-ord",
+      "h2": "When is a delivery app order more expensive than a phone order?",
+      "body": "A delivery app order is usually more expensive than a phone order when the commission takes a large share of the ticket, especially on smaller orders. The smaller the cart, the more painful the percentage feels.\n\nTake this example and swap in your own numbers:\n- Average delivery app order: $24\n- Commission: 20%\n- App cost per order: $4.80\n- If the same order comes in by phone through ROAL: $0.90 per completed phone order\n\nThat is a difference of $3.90 on that one completed order, before you even look at labor. On a $50 order, 20% is $10.00, so the gap becomes even wider.\n\nThis is why many owners compare their order sources side by side. A [phone orders vs delivery apps](/compare/delivery-apps) comparison helps, but the key is to look at your own ticket size. If your customers often place smaller orders, percentage-based commission can bite harder than a flat per-order cost.\n\nShort checklist:\n- Compare small orders and large orders separately\n- Look at delivery, not just pickup\n- Include packaging\n- Look at weekly volume, not one good night"
+    },
+    {
+      "id": "what-should-i-compare-besides-the-commission-rate",
+      "h2": "What should I compare besides the commission rate?",
+      "body": "The commission number is important, but it is not the whole bill. Owners should also check the extras that change the real cost per order.\n\nHere is a practical comparison table:\n\n| Cost item | What to look for |\n|---|---|\n| Commission | Usually a percentage of the order subtotal |\n| Extra fees | Setup, marketing, service, or other charges |\n| Packaging | Boxes, bags, seals, utensils |\n| Refunds/credits | Orders that are adjusted after the fact |\n| Labor | Time spent taking, confirming, and fixing orders |\n\nWhen you compare order channels, ask three questions:\n1. How much of the order do I keep?\n2. How much staff time does it take?\n3. What happens when the phone is busy and someone gives up?\n\nROAL can help on the phone side because it answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen. It does not take card numbers over the phone, so payment still happens at pickup or however you already take it.\n\nA useful staff script: “We need the full ticket, not just the items, before we say yes.”"
+    },
+    {
+      "id": "how-can-i-compare-delivery-apps-monthly-tools-and-per-order-",
+      "h2": "How can I compare delivery apps, monthly tools, and per-order pricing?",
+      "body": "A lot of restaurant software is priced in ways that sound similar but behave very differently.\n\n- Delivery apps commonly take a percentage of each order\n- Many AI phone tools charge a fixed monthly fee per location, whether or not orders come in\n- Human answering services usually bill per minute or per call\n- ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract\n\nFor owners, the cleanest way to compare is to use the same order volume across each option. Say you handle 120 completed phone orders in a month. At $0.90 per completed order, that is $108 for ROAL that month. If you had 200 completed orders, that would be $180. If you had 50, it would be $45.\n\nThat kind of math is easier to manage than a fixed monthly charge when call volume swings. It also pairs well with [Usage-based pricing for small businesses, explained](/blog/usage-based-pricing-small-business) and [AI phone host cost calculator](/tools/phone-host-cost-calculator).\n\nUse this comparison worksheet:\n1. Estimate your monthly order count.\n2. Multiply by the per-order fee.\n3. Compare that to any monthly fee.\n4. Add labor and missed-call impact.\n5. Pick the option that matches your actual volume."
+    },
+    {
+      "id": "how-do-i-lower-order-taking-cost-without-hurting-service",
+      "h2": "How do I lower order-taking cost without hurting service?",
+      "body": "The best way to lower cost is to remove waste from the ordering process, not to make the call harder for customers. If the phone is ringing while your line cooks are slammed, a phone host can take routine orders, answer menu and hours questions, and hand off trickier calls to staff with a summary.\n\nThat matters because not every call should be handled the same way. For example:\n- Routine pickup order: can be taken by an AI phone host\n- Reservation request: can be captured and passed along\n- Allergy-sensitive question: should be handed to staff\n- Manager complaint: should go to a person\n\nA simple script for staff to use when reviewing tickets: “If the order is clear and complete, send it. If it needs judgment, send it to the team.”\n\nROAL is set up so the owner pastes a website, Google Maps link, or name and city, then ROAL reads the public menu, prices, hours, and address and builds a phone host in about a minute. The owner can test-call it in the browser with no sign-up needed. After that, each location gets its own phone line, and the restaurant can forward calls to it all the time or only when busy or unanswered. For setup help, see [How it works](/how-it-works).\n\nA quick checklist for lower cost:\n- Keep the live menu current\n- Make sure sold-out items are marked sold out\n- Use a clear call forward plan\n- Review common questions in the inbox\n- Let staff handle special cases"
+    },
+    {
+      "id": "what-is-the-smartest-way-to-run-the-numbers-before-you-switc",
+      "h2": "What is the smartest way to run the numbers before you switch?",
+      "body": "Use your own tickets, not a guess. The fastest way is to compare one week of orders by channel and write the numbers on paper or a spreadsheet.\n\nTry this simple worksheet:\n\n| Number to plug in | Your restaurant |\n|---|---|\n| Average delivery order | $___ |\n| Delivery app commission | ___% |\n| Commission cost per order | $___ |\n| Packaging and extras | $___ |\n| Completed phone orders per month | ___ |\n| Per-order phone host cost | $0.90 |\n\nThen answer these questions:\n- What is my average delivery order worth?\n- What does the app keep from each one?\n- How many phone orders would I need to make a per-order model worthwhile?\n- Which orders are small enough that a percentage fee hurts most?\n\nIf you want a fast starting point, use [Delivery app commission calculator](/tools/delivery-commission-calculator) and then compare that against your phone side with ROAL or [What counts as a completed order on your bill](/blog/what-counts-as-completed-order).\n\nA helpful closing script for your team: “Let’s compare the real cost per order, not just the headline fee.” That keeps the focus on margin, not just volume.\n\nIf you want to test a phone host against your menu, [build a free test host from your website](/try)."
+    },
+    {
+      "id": "how-should-i-think-about-call-forwarding-and-phone-setup",
+      "h2": "How should I think about call forwarding and phone setup?",
+      "body": "If you route calls to a phone host, forwarding should be easy to turn on and off. On many landlines and some carriers, dial *72 and then the forwarding number to forward all calls, and *73 to turn it off. On GSM mobile carriers, codes can differ; for example, some plans use **21*number# for all calls and ##21# to turn it off, while others use **61*number# for unanswered calls and **67*number# for busy calls.\n\nThe important part is not memorizing codes. It is confirming them with your carrier and testing with a real call. Codes vary by carrier and plan, and business VoIP systems usually handle forwarding in the web portal.\n\nUse this setup checklist:\n1. Confirm your carrier’s forwarding code.\n2. Test forwarding with one real call.\n3. Decide if you want all calls or only busy/unanswered calls.\n4. Make sure staff know how to turn it off.\n5. Check that your kitchen screen gets the ticket cleanly.\n\nROAL keeps the restaurant’s existing number in place and gives each location its own phone line automatically, so the setup stays simple for multi-location operators too. If you want more background on the pricing model, see [Pricing](/pricing)."
+    }
+  ],
+  "takeaways": [
+    "Delivery app commission per order is usually a percentage of the ticket, so small orders can be especially expensive.",
+    "A $28 order at 20% commission costs $5.60 before packaging, labor, and other fees.",
+    "ROAL charges $0.90 per completed phone order, which makes it easier to compare against percentage-based delivery costs.",
+    "Compare actual ticket sizes and order volume, not just the headline rate.",
+    "Always test phone forwarding with your carrier before you rely on it."
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate delivery app commission per order?",
+      "a": "Multiply the order subtotal by the commission rate. For example, a $30 order at 20% commission costs $6.00. Then add packaging and any extra fees to see the real cost to your restaurant."
+    },
+    {
+      "q": "Is a flat per-order phone fee better than a delivery app commission?",
+      "a": "It depends on the order size and volume, but a flat fee is easier to predict. A delivery app commonly takes roughly 15-30% per order, while ROAL charges $0.90 per completed phone order. Smaller orders usually feel the commission more sharply."
+    },
+    {
+      "q": "Does ROAL take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes the order, confirms it, and sends the ticket to the kitchen screen; payment happens at pickup or however your restaurant already handles payment."
+    },
+    {
+      "q": "How do I forward my restaurant phone to a phone host?",
+      "a": "On many carriers, forwarding can be turned on with a code like *72 or a carrier-specific mobile code, but the exact steps depend on your phone system and plan. Confirm the code with your carrier, test with a real call, and make sure you know how to turn forwarding off."
+    }
+  ],
+  "words": 1680,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

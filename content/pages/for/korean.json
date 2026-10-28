@@ -1,0 +1,123 @@
+{
+  "slug": "korean",
+  "label": "Korean restaurants",
+  "h1": "An AI phone host for Korean restaurants",
+  "seoTitle": "AI phone answering for Korean restaurants | ROAL",
+  "description": "ROAL answers calls for Korean restaurants, takes pickup orders from your live menu, handles hours and menu questions, and sends clean kitchen tickets.",
+  "lead": "Busy dinner rush, lunch takeout, and late pickups can stack up fast. ROAL is a phone host for Korean restaurants that answers calls, takes orders, and helps keep the front counter calm.",
+  "question": "How can an AI phone host help with korean restaurants phone orders?",
+  "answer": "ROAL answers your restaurant phone, takes pickup and delivery orders from your live menu, and handles common questions about hours, address, parking, and menu items. It can collect names, phone numbers, modifiers, and notes, then send a clean ticket to the kitchen screen. If a caller asks about sold-out items, allergy-sensitive questions, or a manager issue, it passes that along to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings during the dinner rush",
+      "body": "When the grill is busy and the front counter is packed, calls for bulgogi, bibimbap, kimbap, or kimchi jjigae can go unanswered. That can mean missed pickup orders and extra stress for the staff."
+    },
+    {
+      "title": "Order details get rushed or mixed up",
+      "body": "Korean takeout orders often need sizes, spice level, add-ons, and special notes. If someone is writing them down in a hurry, it is easy to miss a side dish, sauce request, or pickup name."
+    },
+    {
+      "title": "Simple questions still take time",
+      "body": "Callers ask about hours, parking, whether the short rib is available, or if a dish has shrimp or sesame. Those calls are common, but they interrupt the kitchen when the line is already moving."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers the phone like a host",
+      "body": "ROAL picks up when you are busy or after hours, so callers hear a clear greeting instead of a busy signal or voicemail. You choose the host's voice and name."
+    },
+    {
+      "title": "Takes real pickup orders",
+      "body": "It can take items, sizes, modifiers, and notes from your live menu, like spicy level, extra rice, no onion, or sauce on the side. It also confirms the order back before sending it to the kitchen."
+    },
+    {
+      "title": "Handles Korean restaurant questions",
+      "body": "It can answer common calls about hours, location, parking, and menu basics. If it cannot answer something, it saves the question for you and learns from your reply."
+    },
+    {
+      "title": "Sends a clean ticket to the kitchen",
+      "body": "The order appears as a live ticket with the caller name, phone number, items, and notes. That helps the kitchen start prep without trying to decode a scribbled note."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One beef bulgogi, one spicy pork, and one kimchi pancake."
+    },
+    {
+      "who": "host",
+      "line": "Any changes on those?"
+    },
+    {
+      "who": "caller",
+      "line": "Make the bulgogi extra rice, and the pork mild, please."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Pickup for Mina Park. It will be ready around 25 minutes. Let me read it back: one beef bulgogi with extra rice, one spicy pork mild, and one kimchi pancake."
+    },
+    {
+      "who": "caller",
+      "line": "Yes, that is right."
+    },
+    {
+      "who": "host",
+      "line": "Thanks. We will have it ready around 25 minutes."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "Mina Park · (555) 014-8821",
+      "1 beef bulgogi · extra rice",
+      "1 spicy pork · mild",
+      "1 kimchi pancake",
+      "Ready time: about 25 minutes"
+    ],
+    "note": "Confirm sauces and utensils at pickup"
+  },
+  "sections": [
+    {
+      "h2": "A better way to handle Korean takeout calls",
+      "body": "Korean restaurants often get the same phone questions over and over: \"Are you open?\", \"Do you have galbi today?\", \"Can I pick up in 20 minutes?\" During lunch, after work, and on Friday nights, those calls can pile up while the kitchen is already moving. ROAL is made for that kind of phone traffic.\n\nIt answers with a warm greeting, takes pickup orders from your live menu, and sends a clean ticket to the kitchen screen. It can collect the caller's name and phone number, confirm the order back, and quote a ready time. If a caller asks about parking, hours, or a menu item, it can handle that too. If it cannot answer, it leaves the question in your inbox for you to review once and teach it."
+    },
+    {
+      "h2": "Set it up from your menu, website, or Google Maps",
+      "body": "You do not need to build anything complicated. At [Build a free test host](/try), paste your restaurant website, Google Maps link, or \"Name, City.\" ROAL reads your public menu, prices, hours, and address, then builds a phone host in about a minute. You can also upload a menu in any format.\n\nThat matters for Korean restaurants because menus often change. Maybe lunch has soon tofu and bibimbap specials, dinner adds galbi and hot pot, or sold-out items change by the hour. ROAL uses the menu you give it, and it does not offer items marked sold out. You can test-call it right in the browser before you forward your number."
+    },
+    {
+      "h2": "A simple way to think about cost and call flow",
+      "body": "ROAL bills $0.90 per completed phone order, which means a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nGoing live is straightforward. Claim the host, then forward your existing number to ROAL so it can answer all calls, or only when you are busy or do not pick up. The restaurant keeps its own number, and you can turn forwarding off any time. If you want a quick comparison, [compare ROAL to voicemail](/compare/voicemail) or [see pricing](/pricing)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take a Korean pickup order over the phone?",
+      "a": "Yes. It can take items, sizes, modifiers, and notes from your live menu, then send a clean ticket to the kitchen screen. It also asks for the caller's name and phone number and confirms the order back."
+    },
+    {
+      "q": "Can it handle questions about hours, parking, and the menu?",
+      "a": "Yes. ROAL can answer common questions about hours, address, parking, and menu basics. If it runs into a question it cannot answer, it saves it for you in the inbox."
+    },
+    {
+      "q": "What happens if an item is sold out?",
+      "a": "ROAL does not offer items that are marked sold out on your menu. That helps avoid taking an order you cannot make."
+    },
+    {
+      "q": "Does it take card numbers on the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How do I turn it on for my restaurant number?",
+      "a": "You claim the host, then forward your existing number to ROAL. You can forward all calls, or only when busy or unanswered, and turn it off any time. Codes vary by carrier, so confirm with your carrier and test with a call."
+    }
+  ]
+}

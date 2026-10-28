@@ -1,0 +1,123 @@
+{
+  "slug": "delis",
+  "label": "Delis and sandwich shops",
+  "h1": "An AI phone host for delis and sandwich shops",
+  "seoTitle": "AI phone answering for delis and sandwich shops | ROAL",
+  "description": "ROAL is an AI phone host for delis and sandwich shops. It answers pickup order calls, reads your live menu, and sends clean tickets to the kitchen.",
+  "lead": "Busy lunch rush? ROAL answers calls for your deli or sandwich shop and takes pickup orders from your live menu. It also handles hours, address, parking, and menu questions.",
+  "question": "How can an AI phone host help with deli and sandwich shop phone orders?",
+  "answer": "ROAL answers your restaurant phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common deli calls like “Do you have pastrami?” or “What time can I pick up two turkey clubs?” and it can pass along allergy-sensitive or manager requests to staff with a summary. You can start from your website, Google Maps link, or menu at [How it works](/how-it-works).",
+  "pains": [
+    {
+      "title": "The lunch rush hits all at once",
+      "body": "A sandwich shop can go from quiet to a line at the counter and the phone ringing at the same time. A caller asking about roast beef, tuna salad, or a chopped cheese can slow down the people already in the shop."
+    },
+    {
+      "title": "Voicemail does not take the order",
+      "body": "If the phone rolls to voicemail, the caller may hang up and call the next deli down the street. That is especially common when someone wants a quick pickup order before work or during a short lunch break."
+    },
+    {
+      "title": "Small menu changes create more calls",
+      "body": "Delis often have daily specials, sold-out breads, or different prices for hero sizes, wraps, and combos. When staff are busy slicing meat or packing trays, it is hard to answer every question clearly."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes real sandwich orders",
+      "body": "ROAL can collect items, sizes, modifiers, and notes. It can handle orders like a chicken cutlet hero, extra pickles, no onion, and a side of macaroni salad."
+    },
+    {
+      "title": "Answers the everyday questions",
+      "body": "It can tell callers your hours, address, parking details, and menu basics. That helps when someone asks, “Are you open?” or “Can I park out front for pickup?”"
+    },
+    {
+      "title": "Sends a clean kitchen ticket",
+      "body": "When the order is confirmed, ROAL sends it to the kitchen screen as a ticket. The team sees the name, phone number, items, and ready time in one place."
+    },
+    {
+      "title": "Fits the way independent shops work",
+      "body": "You can forward all calls, or only when busy or unanswered. The shop keeps its own number, and you can turn forwarding off any time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Two turkey clubs. One on rye, one on wheat. Both no tomato. And a small house salad."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two turkey clubs, one on rye and one on wheat, both no tomato, plus one small house salad. Any drinks or sides?"
+    },
+    {
+      "who": "caller",
+      "line": "No drinks. Put extra pickles on both sandwiches, please. Name is Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. I have two turkey clubs, no tomato, extra pickles, plus one small house salad. Pickup in about 20 minutes. Is that right?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes, that works."
+    },
+    {
+      "who": "host",
+      "line": "Perfect. Your order is confirmed for Maria, ready in about 20 minutes."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 12:20 pm",
+    "lines": [
+      "Maria · (973) 555-0148",
+      "2 turkey clubs: one rye, one wheat",
+      "No tomato, extra pickles",
+      "1 small house salad",
+      "Ready in about 20 minutes"
+    ],
+    "note": "No drinks"
+  },
+  "sections": [
+    {
+      "h2": "What a deli phone host should say yes to",
+      "body": "A deli phone host should be ready for the calls that happen all day long: pickup orders, menu questions, hours, and “Are you still open?” questions. It should sound natural when someone asks for a bacon, egg, and cheese on a roll, a roast beef hero, a tuna melt, or a chopped chicken cutlet wrap. It should also handle simple changes like extra mayo, no onions, toasted bread, or “cut it in half.”\n\nROAL is built for that exact kind of call. It reads your live menu and can answer from what you actually sell. If a caller asks for something sold out, it will not offer it. If the question gets too specific, it can hand it to staff with a short summary so the counter does not have to start from scratch."
+    },
+    {
+      "h2": "A practical setup for a busy sandwich shop",
+      "body": "The easiest way to start is to use your website, Google Maps link, or just your restaurant name and city at [Build a free test host](/try). ROAL builds a phone host in about a minute. You can test-call it right in the browser before you send any real calls to it.\n\nFor a deli, it helps to make sure the menu is clear on hero sizes, bread choices, add-ons, and common sides. If you sell breakfast sandwiches in the morning and subs at lunch, keep those sections easy to read. If you have a few daily specials, add them in plain language. That way callers hear the same menu your staff would say out loud."
+    },
+    {
+      "h2": "What happens when the phone rings during lunch",
+      "body": "Think of the common rush moment: one person is asking for three Italian combos at the register, another is asking for change, and the phone keeps ringing. ROAL can take the call, collect the name and phone number, confirm the order, and give a ready time without pulling someone away from the slicer or the grill.\n\nThat matters most for quick pickup orders. Many deli customers want speed more than anything. They want to call, order, and pick up without waiting on hold. ROAL helps keep that flow moving while your team stays on the food."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take deli pickup orders over the phone?",
+      "a": "Yes. It can take pickup orders from your live menu, including items, sizes, modifiers, notes, the caller’s name, and phone number. It then sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "Will it handle common sandwich shop questions?",
+      "a": "Yes. It can answer questions about hours, address, parking, and menu items. It can also pass along allergy-sensitive questions, complaints, and manager requests with a summary."
+    },
+    {
+      "q": "Does it take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How do I start if I am not tech savvy?",
+      "a": "You can start by pasting your website, Google Maps link, or restaurant name and city. ROAL reads the public menu and builds the phone host quickly, and you can test-call it in the browser before going live."
+    },
+    {
+      "q": "What if I only want some calls forwarded?",
+      "a": "You can forward all calls, or only when the phone is busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time. If you use a landline, mobile carrier, or VoIP line, confirm the correct forwarding code with your provider and test it with a call."
+    }
+  ]
+}

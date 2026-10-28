@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-answering-steakhouses",
+  "keyword": "steakhouse phone reservations",
+  "category": "restaurant-types",
+  "title": "Steakhouse phone reservations and takeout",
+  "seoTitle": "Steakhouse phone reservations and takeout | ROAL",
+  "description": "Steakhouse phone reservations can handle dinner bookings, pickup orders, and menu questions while keeping calls moving during the rush.",
+  "question": "How should a steakhouse handle phone reservations and takeout calls without tying up the host stand?",
+  "answer": "A steakhouse should use a simple phone process that separates reservations from takeout, asks for the right details, and sends order notes straight to the kitchen. An AI phone host like ROAL can answer common questions, take pickup and delivery orders from the live menu, and pass reservation requests or special calls to staff when needed.",
+  "summary": "You’ll know how to set up steakhouse phone reservations and takeout calls with a simple, clear phone flow.",
+  "intro": "Steakhouse phone reservations should be quick, clear, and easy for staff to manage. The same phone line can also handle takeout, as long as the call flow asks for the right details and sends the order to the kitchen cleanly.\n\nFor many steakhouses, the phone gets busy at the same time guests are trying to book a table and place a dinner order. ROAL can answer those calls, take pickup and delivery orders from the live menu, and pass reservation requests to staff with a summary. It works best when you keep the script short and the rules simple.",
+  "sections": [
+    {
+      "id": "what-details-should-a-steakhouse-ask-on-every-phone-call",
+      "h2": "What details should a steakhouse ask on every phone call?",
+      "body": "A steakhouse call should start with the reason for the call, then collect only the details that matter. For reservations, that usually means name, date, time, party size, and a callback number. For takeout, it means name, phone, items, modifiers, pickup time, and any notes that affect the kitchen.\n\nUse a short script so callers do not drift into a long story. Example line: \"Thanks for calling. Is this a reservation or a takeout order?\" That one sentence saves time and helps you route the call correctly.\n\nA simple call checklist:\n- Reservation: name, date, time, party size, phone\n- Takeout: name, phone, items, sizes, modifiers, pickup time\n- Special notes: allergies, sauces on the side, no onions, extra utensils\n- Final step: repeat the details back before ending the call\n\nIf you use ROAL, it can collect these details and send a clean ticket to the kitchen screen for orders. For reservation requests, it can gather the basics and hand the call to staff when needed."
+    },
+    {
+      "id": "how-do-you-separate-dinner-reservations-from-takeout-orders",
+      "h2": "How do you separate dinner reservations from takeout orders?",
+      "body": "Steakhouses do best when reservations and takeout follow different paths. A reservation is a table problem. A takeout order is a kitchen problem. Mixing the two makes the front desk slower and creates errors.\n\nA practical split looks like this:\n\n| Call type | What to ask first | What happens next |\n|---|---|---|\n| Reservation | Name, time, party size | Confirm details and pass to staff if needed |\n| Takeout | Name, phone, order items | Quote ready time and send to kitchen |\n| Question only | Hours, address, parking, menu | Answer quickly and end the call |\n\nExample script line: \"For a table, I’ll get your name and time. For takeout, I’ll take the order and give you a pickup time.\" That makes the call feel organized without sounding stiff.\n\nIf your restaurant takes both dine-in and takeout, keep the phone host trained on both flows. ROAL can answer questions about hours, address, parking, and the menu, then take the order or reservation request from there. If the call gets tricky, it can send a summary to staff instead of guessing."
+    },
+    {
+      "id": "what-should-a-steakhouse-say-about-menu-items-modifiers-and-",
+      "h2": "What should a steakhouse say about menu items, modifiers, and sold-out items?",
+      "body": "Steakhouse orders often have more details than people expect. A guest may want a different temperature, sauce on the side, no butter, or a side swap. The phone script should make room for those notes without turning into a long interrogation.\n\nA useful rule: ask for the item first, then the modifier, then the note. Example: \"I have your ribeye. What size would you like? Any sides or changes?\" That order keeps the call moving.\n\nUse a simple modifier checklist:\n- Size or cut\n- Temperature, if your restaurant wants it taken by phone\n- Side dish choice\n- Sauce or topping changes\n- Allergy-sensitive notes\n\nIf an item is sold out, do not offer it. ROAL follows that rule from the live menu, so the caller only hears items that are actually available. That matters on busy dinner nights when the kitchen runs low on popular cuts.\n\nFor a clean handoff, repeat the order in plain language: \"That’s one 12-ounce ribeye, medium rare, mashed potatoes, and no mushrooms.\" A clear repeat-back is one of the easiest ways to avoid mistakes."
+    },
+    {
+      "id": "how-do-you-price-phone-ordering-versus-delivery-apps-and-mon",
+      "h2": "How do you price phone ordering versus delivery apps and monthly tools?",
+      "body": "Phone orders can be easier on the margin than app-driven orders, especially for a steakhouse ticket. Delivery apps commonly charge roughly 15-30% commission per order. That can add up fast on larger checks.\n\nHere is a simple way to compare a phone order to delivery app commission:\n\nSay a steakhouse order averages $28. If a delivery app takes 15%, that is $4.20. At 30%, that is $8.40. Plug in your own average ticket and you will see how much each order may cost you in commission.\n\nROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. That can be easier to forecast if your phone volume goes up and down.\n\nMany AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call. For a steakhouse with slow lunches and busy dinner rushes, it helps to compare the full cost, not just the headline price. You can use the [AI phone host cost calculator](/tools/phone-host-cost-calculator) and the [monthly AI phone plans comparison](/compare/monthly-ai-phone-plans) to plug in your own numbers."
+    },
+    {
+      "id": "how-should-you-set-up-call-forwarding-for-a-steakhouse",
+      "h2": "How should you set up call forwarding for a steakhouse?",
+      "body": "Once the phone host is ready, the owner claims it and forwards the restaurant’s existing number to it. That can be all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nThe exact steps depend on the carrier or phone system, so always confirm with your provider and test it with a live call. Common examples include these:\n\n- Many landlines and some carriers: dial *72 plus the forwarding number to forward all calls, and *73 to turn it off\n- Verizon Wireless: *72 / *73 for all calls, and *71 for busy or no-answer forwarding\n- AT&T and T-Mobile GSM lines: **21*number# to forward all calls, ##21# to turn it off, **61*number# for unanswered calls, and **67*number# for busy calls\n- Business VoIP systems: often set forwarding in the web portal\n\nFor reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes). Then make a test call from a cell phone and from a landline, if you have one.\n\nIf you want the phone host to answer only after a few rings during dinner rush, that is often the easiest place to start. It keeps the front of house in control while still catching the calls that would otherwise go unanswered."
+    },
+    {
+      "id": "what-should-the-front-desk-and-kitchen-see-after-the-call-en",
+      "h2": "What should the front desk and kitchen see after the call ends?",
+      "body": "A steakhouse phone call should end with a clean record, not a scribbled note. The front desk needs to know what was ordered or requested. The kitchen needs to see the ticket fast and in order.\n\nROAL includes a kitchen screen with live tickets marked new, preparing, and ready. It also keeps call history with transcripts and recordings, which helps you check what the caller said if a note needs review.\n\nHere is a simple post-call checklist:\n- Confirm the caller’s name and phone number\n- Confirm the full order or reservation request\n- Check for allergy-sensitive notes or special requests\n- Make sure the ready time was quoted clearly\n- Watch the ticket move to the kitchen screen\n\nExample of a useful closing line: \"You’re all set for 6:30 pickup. We’ll have your order ready then.\" That kind of line is short, calm, and easy for the guest to remember.\n\nQuestions the host could not answer go to an inbox. The owner answers once, and the host knows it from then on. That matters for steakhouse-specific questions about parking, private dining, holiday hours, or which cuts are available that night. If you want a fast starting point, you can [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Steakhouse phone reservations work best when the call first separates reservations from takeout.",
+    "Ask for the few details the kitchen or host stand actually needs, then repeat them back.",
+    "A live menu helps avoid offering sold-out items by phone.",
+    "ROAL can take orders, answer common questions, and send clean tickets to the kitchen screen.",
+    "Forwarding can be turned on only when needed, so you keep control of the restaurant number."
+  ],
+  "faq": [
+    {
+      "q": "How do I answer steakhouse phone reservations without slowing down takeout orders?",
+      "a": "Start with one question that separates the call type: reservation or takeout. Then follow a short script for each path. Reservations need name, date, time, party size, and phone. Takeout needs name, phone, items, modifiers, and pickup time."
+    },
+    {
+      "q": "Should a steakhouse take table reservations by phone?",
+      "a": "Yes, if your restaurant seats guests by reservation, phone is still one of the easiest ways to collect that information. The key is to keep the process short and consistent. If the call needs a special note or staff review, pass it along with a clear summary."
+    },
+    {
+      "q": "Can an AI phone host take steak orders with modifiers?",
+      "a": "Yes. ROAL can take items, sizes, modifiers, and notes from the restaurant’s live menu. It can also collect the caller’s name and phone number, quote a ready time, and confirm the order back before sending it to the kitchen screen."
+    },
+    {
+      "q": "How much does it cost to handle steakhouse phone reservations and takeout with ROAL?",
+      "a": "ROAL is $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free, and billing is monthly."
+    }
+  ],
+  "words": 1261,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

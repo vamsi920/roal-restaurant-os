@@ -1,0 +1,76 @@
+{
+  "slug": "cashier-phone-and-counter",
+  "keyword": "cashier answering phone and register",
+  "category": "staffing",
+  "title": "Cashier answering phone and register: a practical fix",
+  "seoTitle": "Cashier answering phone and register | ROAL",
+  "description": "A practical guide to cashier answering phone and register work: scripts, call forwarding, order triage, and when ROAL can help.",
+  "question": "How should I handle a cashier answering phone and register at the same time?",
+  "answer": "Use a simple rule: the register comes first for the guest standing in front of you, and the phone gets a fast, consistent script so calls do not drag the line. If the phone is busy, forward calls to an AI phone host like ROAL, which can take pickup and delivery orders, answer common questions, and send a clean ticket to the kitchen screen.",
+  "summary": "You’ll learn how to keep the counter moving while protecting phone orders and guest service.",
+  "intro": "A cashier answering phone and register at the same time needs a system, not just a faster pace. The best fix is to give the front counter a short script, a clear priority order, and a backup for busy calls.\n\nFor many independent restaurants, the phone and the register collide right when the line builds up. A cashier can only do one thing at a time. That is where an AI phone host like ROAL can help by taking orders, handling common questions, and sending tickets to the kitchen screen while your cashier stays on the guests in front of them.",
+  "sections": [
+    {
+      "id": "what-should-the-cashier-do-first-when-the-phone-rings",
+      "h2": "What should the cashier do first when the phone rings?",
+      "body": "The rule should be simple: the guest at the counter gets first attention, then the cashier handles the phone as soon as they can do it cleanly. That keeps face-to-face service steady and avoids mistakes at the register.\n\nA short script helps. Train the cashier to say: \"Hi, thanks for calling. I’m helping a guest right now. I’ll be with you in just a moment.\" If the line is short, they can pick up right away. If the line is long, the cashier should not try to take a full order while ringing up a pickup, bagging food, and answering questions at once.\n\nUse this quick decision list:\n- If a guest is standing at the register, finish that sale first.\n- If the phone is ringing and the line is building, let it ring through to your backup.\n- If the caller only needs hours, address, or parking, that can be handled fast.\n- If the caller wants a full pickup or delivery order, let the phone host take it when the counter is busy.\n\nThat last point matters. ROAL can answer common questions and take orders from the restaurant’s live menu, so your cashier is not forced to choose between the line and the phone."
+    },
+    {
+      "id": "how-do-i-stop-phone-orders-from-slowing-the-counter",
+      "h2": "How do I stop phone orders from slowing the counter?",
+      "body": "The easiest way is to separate simple calls from order calls. A cashier can answer a quick question in 20 seconds, but a full order can tie up the register, the waiting line, and the kitchen all at once.\n\nSet up a front-counter rule like this:\n1. Greet the guest in front.\n2. Check if the caller only needs basic info.\n3. If the caller wants to place an order, move them to the backup line or phone host.\n4. Return to the register after the call is handled.\n\nHere is a practical example. Say your cashier is ringing up a $18 lunch order and the phone rings with a $32 pickup order. If the cashier takes the call themselves, the counter line can stall. If ROAL answers, it can collect the items, sizes, modifiers, name, phone, and ready time, then send the ticket to the kitchen screen. Your cashier keeps ringing up the guests in front.\n\nUse a note on the counter or kitchen wall:\n- Cashier handles the guest standing here.\n- Phone host handles order calls when we are busy.\n- Manager handles complaints, catering, allergy-sensitive questions, and special escalations.\n\nThat simple split reduces stress fast."
+    },
+    {
+      "id": "what-phone-script-works-when-the-counter-is-busy",
+      "h2": "What phone script works when the counter is busy?",
+      "body": "The best scripts are short and repeatable. Your cashier should not sound rushed, and they should not promise more than they can do.\n\nTry these lines:\n- \"Thanks for calling. I’m at the register right now. Can I get you a quick answer, or would you like to place an order?\"\n- \"I can help with hours and address right away. For a full order, our phone host can take it for you while I’m helping the counter.\"\n- \"One moment, please. I’m finishing with a guest and then I’ll check that for you.\"\n\nA quick script table can make training easier:\n\n| Call type | Cashier response | Best next step |\n|---|---|---|\n| Hours or address | Give the answer right away | Keep at counter |\n| Menu question | Answer if simple | Hand off if detailed |\n| Pickup order | Keep the line moving | Send to phone host |\n| Delivery order | Do not juggle it at the register | Send to phone host |\n| Complaint or manager request | Acknowledge and escalate | Staff follow-up |\n\nROAL is useful here because it can speak the caller’s language, answer common questions, and hand off tricky calls to staff with a summary. That means your cashier is not forced to play phone operator all shift."
+    },
+    {
+      "id": "when-should-i-forward-calls-instead-of-letting-the-cashier-a",
+      "h2": "When should I forward calls instead of letting the cashier answer?",
+      "body": "Forward calls when the front counter is busy enough that the cashier would have to split attention. That can be during lunch rush, dinner rush, weekend peaks, or whenever one person is covering both the till and the phone.\n\nYou do not need to change your main number. ROAL gives each location its own phone line automatically, and you forward your existing number to it. You can forward all calls, or only calls when busy or unanswered, depending on your carrier or phone system.\n\nA practical setup looks like this:\n- Keep the restaurant number on your sign, website, and receipts.\n- Forward calls during rush periods.\n- Let the cashier answer only when the floor is calm.\n- Turn forwarding off any time if you want to take calls directly.\n\nCommon forwarding codes vary by carrier and plan, so confirm with your provider and test it. On many landlines and some carriers, *72 starts call forwarding and *73 turns it off. Some mobile carriers use different codes, and business VoIP systems usually set it in a web portal. The point is not the code itself; the point is having a backup when the counter is slammed.\n\nThat backup keeps the cashier focused on the guest in front of them instead of racing between two jobs."
+    },
+    {
+      "id": "how-does-this-affect-labor-cost-and-order-cost",
+      "h2": "How does this affect labor cost and order cost?",
+      "body": "When one cashier is answering the phone and running the register, the real cost is not just labor. It is missed time, lost clarity, and orders that may be rushed or forgotten. The cost of the fix depends on how you handle phone volume.\n\nHere is a simple example you can plug your own numbers into:\n- Say your average phone order is $28.\n- Say you get 40 completed phone orders in a month.\n- That is $1,120 in phone order sales.\n\nNow compare a few common options:\n\n| Option | Common pricing pattern | What to watch |\n|---|---|---|\n| Delivery apps | Often about 15-30% commission per order | Can take a large cut of each ticket |\n| Monthly AI phone plans | Often about $79 to $599 per location | You pay the same even when calls are light |\n| Human answering services | Usually per minute or per call | Cost can rise with busy periods |\n| ROAL | $0.90 per completed phone order | No monthly fee, no setup fee, no per-minute fee |\n\nWith ROAL, the charge is tied to a confirmed order that reaches the kitchen screen. Calls, questions, and test calls are free. If you want to compare it with your own setup, use your average order size and monthly call count, then plug those into [the phone host cost calculator](/tools/phone-host-cost-calculator) or [the phone staff cost calculator](/tools/phone-staff-cost-calculator).\n\nFor many owners, the key question is simple: do you want the cashier stuck between two tasks, or do you want a system that handles the phone when the line builds?"
+    },
+    {
+      "id": "what-does-a-clean-handoff-to-the-kitchen-look-like",
+      "h2": "What does a clean handoff to the kitchen look like?",
+      "body": "A cashier juggling the counter and the phone often creates messy order notes. Someone hears the order while ringing up another guest, then repeats it to the kitchen from memory. That is where mistakes creep in.\n\nA cleaner process is:\n1. The caller gives the order once.\n2. The phone host collects items, sizes, modifiers, and notes.\n3. It confirms the order back to the caller.\n4. It collects name and phone.\n5. It gives a ready time.\n6. It sends a clean ticket to the kitchen screen.\n\nThat matters for prep flow. If a guest orders two pizzas, one with extra cheese and no onions, plus a side order and a note about parking, the kitchen should not have to decode a rushed scribble. The ticket should be readable and complete.\n\nROAL also skips sold-out items, so callers do not get promised something the kitchen cannot make. It does not take card numbers over the phone either. Payment still happens at pickup or however your restaurant already takes it.\n\nA simple manager checklist:\n- Review the kitchen screen every shift.\n- Check that hours and menu are current.\n- Make sure notes are visible.\n- Keep an eye on questions that land in the inbox.\n\nThat keeps the counter calmer and the kitchen cleaner."
+    },
+    {
+      "id": "how-do-i-train-staff-without-making-the-counter-feel-more-cr",
+      "h2": "How do I train staff without making the counter feel more crowded?",
+      "body": "Training works best when it is short and tied to real work. Do not hand the cashier a long manual. Give them a few lines, a priority rule, and a manager backup path.\n\nUse this 10-minute training outline:\n- Show the cashier the one-sentence rule for the phone.\n- Practice the busy-time script out loud.\n- Explain which calls they can answer and which should be forwarded.\n- Show where kitchen tickets appear.\n- Review how to escalate complaints, catering, allergies, and manager requests.\n\nFor a new hire, you can say: \"If the guest is standing here, serve the guest here. If the phone is simple, answer it. If the phone is a full order during rush, let the host take it.\" That is easier to remember than a stack of policies.\n\nIf your team changes often, store the script where everyone can see it. A laminated card by the register works. So does a short note in the back office. You can also share a link to [training for new staff to take phone orders](/blog/train-staff-phone-orders) so the manager does not have to repeat the same lesson every week.\n\nROAL can help reduce the amount of phone training needed because the host keeps learning from unanswered questions in the inbox. The staff answers once, and the host knows it from then on."
+    }
+  ],
+  "takeaways": [
+    "A cashier should serve the guest at the register first and use a short script for phone calls.",
+    "Forward busy calls to an AI phone host so the counter does not stall during rushes.",
+    "Use a clean handoff process so phone orders become readable kitchen tickets.",
+    "Keep the restaurant’s main number and test forwarding with your carrier before a busy shift."
+  ],
+  "faq": [
+    {
+      "q": "How do I handle a cashier answering phone and register during rush hour?",
+      "a": "Give the cashier a priority rule: the guest at the counter comes first, and the phone gets a short script or a backup host. During rush, forward calls so pickup and delivery orders do not slow the register line. That keeps service steadier and reduces mistakes."
+    },
+    {
+      "q": "Should my cashier take full phone orders at the counter?",
+      "a": "Usually no, not when the line is active. A full order can pull the cashier away from ringing up guests, bagging food, and answering walk-ins. A better setup is to let a phone host take the order and send a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "Can I forward calls only when my cashier is busy?",
+      "a": "Yes, on many phone systems and carriers you can forward all calls, unanswered calls, or busy calls. The exact codes and settings vary, so confirm with your carrier and test it with a call. That gives you a simple backup without changing your main number."
+    },
+    {
+      "q": "Does ROAL take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes pickup and delivery orders, answers common questions, and sends the order to the kitchen screen, while payment happens at pickup or however your restaurant already handles it."
+    }
+  ],
+  "words": 1653,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

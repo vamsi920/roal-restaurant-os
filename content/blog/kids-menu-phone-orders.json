@@ -1,0 +1,77 @@
+{
+  "slug": "kids-menu-phone-orders",
+  "keyword": "kids menu restaurant",
+  "category": "menu",
+  "title": "Handling kids' menu questions on restaurant calls",
+  "seoTitle": "Kids' menu restaurant phone questions",
+  "description": "Handle kids' menu questions on the phone with clear scripts, menu setup tips, and simple handoff rules for staff.",
+  "question": "How should I answer kids menu restaurant questions on the phone without slowing down service?",
+  "answer": "Keep the answer short, clear, and consistent. Tell callers what kid-sized items you have, what comes with them, and whether you can make small changes like plain pasta, no spice, or sauce on the side. If the caller asks about allergies, special requests, or anything unclear, hand it to staff with a summary so the kitchen can confirm it.",
+  "summary": "You’ll know how to answer kids menu calls clearly, train staff, and set up your menu so callers get fast answers.",
+  "intro": "Kids menu questions on the phone are usually simple, but they can still slow down a busy line. The best answer is short: say what kid meals you have, what sides come with them, and what changes are allowed.\n\nThat keeps the caller moving and keeps your crew from repeating the same answers all night. If you use an AI phone host like ROAL, it can read those menu details from your public pages or menu upload, answer basic questions, and pass harder calls to staff with a clean summary.",
+  "sections": [
+    {
+      "id": "what-do-callers-usually-want-to-know-about-a-kids-menu",
+      "h2": "What do callers usually want to know about a kids menu?",
+      "body": "Most callers are asking the same few things. They want to know if you have a kids menu at all, what items are on it, what the portion size looks like, and whether it comes with fries, a drink, or another side. They may also ask if the meal can be made mild, plain, or without a sauce.\n\nA good phone answer gives the caller the useful facts right away. You do not need to read the whole menu. Just give the item, the side, and the obvious change options.\n\nUse a script like this:\n- “Yes, we do have a kids menu.”\n- “We have chicken fingers, grilled cheese, and buttered pasta.”\n- “Each kids meal comes with fries or applesauce.”\n- “We can do plain noodles or sauce on the side.”\n\nIf you want a place to keep these answers organized, the menu and FAQ tools in [How it works](/how-it-works) and [Questions owners ask](/faq) are a good place to start. ROAL can use those details so the same answer is available every time, even when the line is busy."
+    },
+    {
+      "id": "how-should-i-script-kids-menu-answers-for-the-phone",
+      "h2": "How should I script kids menu answers for the phone?",
+      "body": "Write the answer the way your staff would say it out loud. Keep it under 20 seconds if possible. A caller usually does not want a long explanation; they want to know what their child can eat and whether it will be easy to order.\n\nA simple script can follow this order:\n1. Say yes or no.\n2. Name the kids items.\n3. Mention what comes with them.\n4. Say what small changes are allowed.\n5. Offer to take the order.\n\nExample script:\n\"Yes, we have a kids menu. We have chicken fingers, grilled cheese, and pasta. Kids meals come with fries or applesauce. We can do plain, no spice, or sauce on the side. What would you like to order?\"\n\nIf your menu changes by day, write down the standard items and the exceptions. That keeps the answer clean and avoids confusion. For phone greeting ideas that still sound natural, [Phone greeting templates](/tools/phone-greeting-templates) can help you shape the first few words of the call. If you use ROAL, you can also edit these answers in the dashboard so they match the current menu."
+    },
+    {
+      "id": "what-if-the-caller-asks-about-allergies-or-special-diets",
+      "h2": "What if the caller asks about allergies or special diets?",
+      "body": "Kids menu calls often turn into allergy calls fast. A parent may ask about gluten, dairy, egg, nuts, or whether a fried item shares oil with other menu items. That is not a call to guess on. It is a call to slow down and hand the question to someone who can confirm it.\n\nA safe phone flow is:\n- Give the menu item only if you know it.\n- Do not guess on ingredients.\n- Do not promise a special prep unless the kitchen can do it.\n- Send the question to staff with the caller’s name and phone.\n\nExample wording:\n\"I want to make sure we get that right for you. I’m sending this to the restaurant team now so they can confirm the ingredients.\"\n\nIf your menu has clear allergen notes, that helps a lot. You can pair this with your own menu labels and a post like [Allergen labeling on your menu](/blog/allergen-menu-labeling). ROAL is built to hand off allergy-sensitive questions to staff with a summary, so the caller is not left hanging and your team can answer with the right detail."
+    },
+    {
+      "id": "should-you-list-kids-menu-items-in-a-way-the-phone-host-can-",
+      "h2": "Should you list kids menu items in a way the phone host can read?",
+      "body": "Yes. The cleaner your menu is, the easier it is for callers to get a fast answer. ROAL reads public pages, menu PDFs, menu photos, and uploaded menus, so the wording matters. If the kids menu is buried inside a long lunch menu, split it out if you can.\n\nA good kids menu entry looks like this:\n\n| Item | What the caller should hear |\n|---|---|\n| Chicken fingers | Comes with fries or applesauce |\n| Grilled cheese | Served with fries |\n| Buttered pasta | Plain or with marinara |\n| Kids burger | With fries; no spicy seasoning |\n\nYou do not need fancy language. Use plain item names and plain side choices. If a meal is only available at certain times, say so right on the menu.\n\nFor example, if you have three kids meals and each one comes with a side, make that obvious. If the caller can swap fries for applesauce, write that too. That saves time on the phone and reduces back-and-forth. ROAL can answer from the live menu, so the details should match what your kitchen actually serves."
+    },
+    {
+      "id": "how-do-kids-menu-questions-fit-into-pickup-orders",
+      "h2": "How do kids menu questions fit into pickup orders?",
+      "body": "A lot of kids menu calls are really pickup orders in disguise. The parent starts by asking about the kids meal, then adds one adult entree, one drink, and maybe a note like “no ketchup” or “extra napkins.” Your phone setup should make that easy.\n\nHere is a practical flow:\n1. Confirm the kids item.\n2. Confirm the side.\n3. Ask for any simple modifier, like plain or sauce on the side.\n4. Collect the caller’s name and phone.\n5. Quote the ready time.\n6. Read the order back before sending it to the kitchen.\n\nExample with numbers you can swap:\n- Say a $10 kids meal\n- Add a $16 adult entree\n- Add a $3 drink\n- Total example: $29 before tax and any local fees your restaurant already uses\n\nThat kind of call is a good fit for ROAL, because it can take items, sizes, modifiers, notes, name, phone, and ready time, then send a clean ticket to the kitchen screen. It does not take card numbers over the phone. Payment stays at pickup or wherever you already take it. For restaurants that get a lot of family calls, that can keep the line moving during dinner rush."
+    },
+    {
+      "id": "how-do-i-handle-kids-menu-calls-when-the-line-is-busy",
+      "h2": "How do I handle kids menu calls when the line is busy?",
+      "body": "When the line is busy, the main goal is not to talk longer. The goal is to get the caller an answer and keep the phone from tying up your counter staff. That is where call forwarding and a phone host can help.\n\nA simple busy-shift setup:\n- Forward all calls when you are slammed, or only forward unanswered calls.\n- Confirm the forwarding code with your carrier or phone system.\n- Test it with one real call.\n- Make sure someone can still see the ticket or callback if the caller has a special request.\n\nFor many carriers and plans, forwarding codes vary. Some lines use *72 to forward all calls and *73 to turn it off. Some mobile carriers use codes like **21*number# for all calls, **61*number# for unanswered calls, and **67*number# for busy calls. Business VoIP systems usually let you set this in the portal. Always confirm with your carrier and test it.\n\nROAL gives each location its own phone line automatically after you claim the host, and you can forward your existing number to it or turn forwarding off any time. That makes it easier to keep answering questions like “Do you have a kids menu?” even when your team is in the weeds."
+    },
+    {
+      "id": "what-should-i-check-before-i-rely-on-the-phone-for-kids-menu",
+      "h2": "What should I check before I rely on the phone for kids menu questions?",
+      "body": "Before you lean on the phone, make sure the answers match what your kitchen can actually do. A caller with kids is usually in a hurry, so a wrong answer creates a headache fast.\n\nUse this quick checklist:\n- The kids menu is listed on your website or uploaded menu.\n- Portion names are simple and readable.\n- Sides are listed clearly.\n- Any plain, mild, or sauce-on-the-side options are written down.\n- Allergy questions have a staff handoff rule.\n- Sold-out items are marked so they are not offered.\n\nOne useful habit is to keep a short FAQ for common phone questions. For example: “Do you have a kids menu?”, “Can I get plain pasta?”, and “Do the kids meals come with fries?” If your answers change seasonally, update them once and keep them consistent.\n\nROAL has a menu editor, call history with transcripts and recordings, and an inbox for questions it could not answer yet. That means you can answer a tricky kids menu question once, and the phone host learns it from then on. If you want to test the flow, you can [Build a free test host](/try) from your website or menu file and call it right in the browser."
+    }
+  ],
+  "takeaways": [
+    "Keep kids menu answers short: item, side, and allowed changes.",
+    "Do not guess on allergy questions; hand them to staff with a summary.",
+    "Make your menu easy to read so the phone host can answer from it.",
+    "Use clear forwarding rules during rushes so calls still get answered.",
+    "ROAL can take kids meal orders, quote ready times, and send tickets to the kitchen."
+  ],
+  "faq": [
+    {
+      "q": "What should I say when someone asks if we have a kids menu?",
+      "a": "Say yes or no right away, then name the items and sides. A good example is: “Yes, we have a kids menu. We have chicken fingers, grilled cheese, and pasta, and each meal comes with fries or applesauce.” Keep it short so the caller can order fast."
+    },
+    {
+      "q": "How do I answer kids menu allergy questions on the phone?",
+      "a": "Do not guess. If you are not sure about ingredients or shared fryers, hand the call to staff with the caller’s name and phone. If you do know the answer from your menu or kitchen notes, give only that confirmed fact and nothing extra."
+    },
+    {
+      "q": "Should kids menu items be separate on my menu?",
+      "a": "Yes, if possible. Separate kids items are easier for callers to understand and easier for an AI phone host to read. Use simple names and list what comes with each meal, like fries, applesauce, or plain pasta."
+    },
+    {
+      "q": "Can ROAL take a kids menu order over the phone?",
+      "a": "Yes. ROAL can take items, sizes, modifiers, notes, the caller’s name and phone, and a ready time, then send a clean ticket to the kitchen screen. It does not take card numbers over the phone, and tricky questions like allergies go to staff."
+    }
+  ],
+  "words": 1441,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

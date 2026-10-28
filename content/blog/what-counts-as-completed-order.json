@@ -1,0 +1,72 @@
+{
+  "slug": "what-counts-as-completed-order",
+  "keyword": "completed order billing",
+  "category": "pricing",
+  "title": "What counts as a completed order on your bill",
+  "seoTitle": "Completed order billing | ROAL",
+  "description": "See what counts as a completed order billing event, how ROAL charges, and how to track phone orders before each monthly bill.",
+  "question": "What counts as a completed order on my bill for restaurant phone orders?",
+  "answer": "A completed order on a completed order billing plan means a phone order was confirmed and its ticket reached the kitchen screen. For ROAL, that is the point that counts toward billing. Calls, questions, and test calls are free, and the restaurant is billed monthly only for completed phone orders.",
+  "summary": "You’ll know exactly when a phone order counts on your bill and how to check it.",
+  "intro": "A completed order on your bill usually means the caller placed an order, the order was confirmed, and the ticket made it to the kitchen screen. For ROAL, that is the billing event: a confirmed phone order whose ticket reached the kitchen screen.\n\nThat matters because not every call is an order. Questions, wrong numbers, reservation requests, and test calls do not count as completed orders. If you know that line clearly, it is much easier to compare pricing and keep your monthly bill predictable.",
+  "sections": [
+    {
+      "id": "what-does-a-completed-order-mean-in-plain-english",
+      "h2": "What does a completed order mean in plain English?",
+      "body": "For a restaurant owner, the cleanest definition is simple: the call turned into a real order that your kitchen can make. With ROAL, that means the phone host took the items, sizes, modifiers, and notes, confirmed the details back to the caller, and sent a clean ticket to the kitchen screen.\n\nA few examples help:\n- A caller orders two pepperoni pies and a soda, the host confirms it, and the ticket lands in the kitchen. That counts.\n- A caller asks about your hours or parking. That does not count.\n- A caller asks about an allergy and the host hands it to staff with a summary. That does not count unless it becomes a confirmed order and reaches the kitchen.\n- A caller places a pickup order, but hangs up before confirmation. That does not count.\n\nA useful phone script line is: \"I’ve got your order here and I’m sending it to the kitchen now.\" That moment is the right mental checkpoint for completed order billing."
+    },
+    {
+      "id": "what-should-be-counted-and-what-should-not",
+      "h2": "What should be counted and what should not?",
+      "body": "If you want to check billing the easy way, make a simple owner rule. Count only what became a confirmed kitchen ticket. Do not count the rest.\n\n| Call type | Counts as completed order? | Why |\n|---|---:|---|\n| Pickup or delivery order confirmed and sent to kitchen | Yes | It became a real ticket |\n| Caller asks for hours, address, or menu info | No | It is a question, not an order |\n| Reservation request | No | It is a request, not a kitchen order |\n| Complaint or manager request | No | It gets sent to staff with a summary |\n| Allergy-sensitive question | No, unless it becomes an order | It is handled carefully by staff |\n| Test call | No | ROAL test calls are free |\n\nIf you run a pizza shop or takeout counter, this matters on busy nights. A call can be long and still not be billable. That is normal. The billing line should be tied to the order reaching your kitchen, not to time spent on the phone."
+    },
+    {
+      "id": "how-do-you-compare-this-to-other-pricing-models",
+      "h2": "How do you compare this to other pricing models?",
+      "body": "A completed order billing model is different from fixed monthly pricing and different from per-minute billing. That can make the math easier for busy shops that get many question calls but fewer actual orders.\n\nHere is a simple worked example. Say your restaurant gets 300 phone calls in a month:\n- 120 are real confirmed orders\n- 90 are menu, hours, and address questions\n- 40 are reservation or manager requests\n- 50 are test calls, wrong numbers, or hangups\n\nUnder a completed order model, only the 120 real orders count. With ROAL’s pricing, that would be 120 x $0.90 = $108 for the month. Plug in your own order count to estimate your bill.\n\nThat is different from a monthly fee model, where you may pay the same amount even in a slow month. Human answering services usually bill per minute or per call, which can be harder to predict when callers ask a lot of questions. Delivery apps commonly take a percentage of each order, which can be much higher than a per-order phone billing model."
+    },
+    {
+      "id": "how-can-you-keep-your-bill-predictable",
+      "h2": "How can you keep your bill predictable?",
+      "body": "The best way to avoid surprises is to know your order flow and watch your call history. ROAL includes call history with transcripts and recordings, so you can review how many calls became actual kitchen tickets.\n\nUse this short checklist each week:\n- Check the number of confirmed phone orders.\n- Compare that count to the kitchen tickets you expected.\n- Review any calls that ended as questions, complaints, or handoffs.\n- Make sure sold-out items are marked correctly so the host does not offer them.\n- Confirm that ready times, modifiers, and phone numbers are being captured the way your staff wants.\n\nYou can also set a simple internal rule for your team: if the order is not confirmed and not sent to the kitchen, it is not complete. That keeps everyone on the same page when a caller changes items at the last second or hangs up before the final confirmation."
+    },
+    {
+      "id": "what-happens-when-the-caller-asks-something-tricky",
+      "h2": "What happens when the caller asks something tricky?",
+      "body": "Not every call should become a billable order, and not every call should be forced into an order. ROAL is built to hand off catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary.\n\nThat matters because tricky calls often need a human decision. For example:\n- A caller says they have a severe allergy.\n- A guest wants a catering quote.\n- Someone is upset about a previous order.\n- A caller asks for a manager.\n\nIn those cases, the phone host can gather the details and pass them on, but the call should not count as a completed order unless a real order is confirmed and reaches the kitchen. A practical staff script is: \"I’m sending that to the team now, and we’ll handle it from there.\" That keeps the billing definition clean and keeps the guest experience calm.\n\nIf you run multiple locations, this definition becomes even more important. Each location should count completed orders the same way, so the bill matches the kitchen work your team actually received."
+    },
+    {
+      "id": "how-do-you-set-this-up-and-explain-it-to-your-team",
+      "h2": "How do you set this up and explain it to your team?",
+      "body": "When you use ROAL, setup is quick. The owner pastes a restaurant website, Google Maps link, or \"Name, City\" at /try, ROAL reads public menu and location details, and the owner can test-call it right in the browser with no sign-up needed. After that, the owner claims the host and forwards the restaurant’s existing number so calls go to the phone host when wanted.\n\nUse this 4-step owner checklist:\n1. Decide what your team means by a completed order: confirmed and sent to the kitchen.\n2. Make sure the menu and sold-out items are accurate.\n3. Review a few call recordings and tickets in the dashboard.\n4. Tell staff how to handle handoffs, complaints, and allergy questions.\n\nA good front-counter note is: \"Only confirmed phone orders that reach the kitchen count as completed orders.\" That one sentence keeps billing conversations simple when someone asks why a question call did not show up on the bill. If you want to test the setup, [build a free test host](/try) from your website and listen to how it handles your menu."
+    }
+  ],
+  "takeaways": [
+    "A completed order is a confirmed phone order whose ticket reached the kitchen screen.",
+    "Questions, reservations, complaints, and test calls do not count as completed orders.",
+    "The cleanest billing rule is to count only real kitchen tickets.",
+    "ROAL bills monthly at $0.90 per completed phone order, with no monthly fee or setup fee.",
+    "Use call history and kitchen tickets to check your monthly count."
+  ],
+  "faq": [
+    {
+      "q": "Does a phone call count as a completed order if the customer hangs up?",
+      "a": "No, not if the order was not confirmed and sent to the kitchen. A hangup before confirmation is just an incomplete call. For billing, the clean line is whether the ticket reached the kitchen screen."
+    },
+    {
+      "q": "Do questions about hours or the menu count on my bill?",
+      "a": "No. Questions are free on ROAL and do not count as completed orders. Only confirmed phone orders whose ticket reached the kitchen screen count toward billing."
+    },
+    {
+      "q": "What if a caller orders, then changes the order before it is sent?",
+      "a": "If the order is still confirmed and the final ticket reaches the kitchen, it counts as a completed order. If the caller never confirms or the ticket never reaches the kitchen, it does not count. Keep the final confirmation as your checkpoint."
+    },
+    {
+      "q": "How can I track completed order billing each month?",
+      "a": "Use your call history, transcripts, and kitchen tickets to review how many orders were confirmed and sent. Compare that count to your bill. If you want a simple estimate, multiply your completed phone orders by the per-order price and plug in your own monthly volume."
+    }
+  ],
+  "words": 1122,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

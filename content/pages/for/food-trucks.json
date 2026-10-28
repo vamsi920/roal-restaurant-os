@@ -1,0 +1,123 @@
+{
+  "slug": "food-trucks",
+  "label": "Food trucks",
+  "h1": "An AI phone host for food trucks",
+  "seoTitle": "AI phone answering for food trucks | ROAL",
+  "description": "ROAL answers food truck calls, takes pickup orders, and sends clean tickets to the kitchen screen. Built for busy lunch rushes and missed calls.",
+  "lead": "Your truck gets slammed at lunch. Phones ring while you grill, wrap, and hand out orders. ROAL answers calls, takes pickup orders, and sends them straight to the kitchen screen.",
+  "question": "How can an AI phone host help a food truck take pickup orders without slowing down the line?",
+  "answer": "ROAL is an AI phone host for food trucks. It answers the truck’s phone, takes pickup orders from your live menu, answers questions about hours, location, parking, and the menu, and sends a clean ticket to your kitchen screen. You can forward calls when you are busy, then turn it off any time. Learn more on the [food trucks page](/for/food-trucks).",
+  "pains": [
+    {
+      "title": "The line is moving, but the phone keeps ringing",
+      "body": "A busy lunch rush can make every call feel like one more interruption. When the same person is wrapping tacos and answering questions, orders get rushed or missed."
+    },
+    {
+      "title": "Customers call to ask where you are parked",
+      "body": "Food truck callers often want the current spot, the service window, or whether you are still open. If nobody picks up, they may call the next truck instead."
+    },
+    {
+      "title": "Pickup orders get mixed up in the rush",
+      "body": "A phone order for two birria tacos, no onion, extra salsa, and one horchata needs a clean read-back. In a noisy truck, it is easy to miss a note or forget a name."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers calls while you work the window",
+      "body": "ROAL picks up the phone, so you can keep serving the line. It can handle simple questions like your location, hours, and what is on the menu today."
+    },
+    {
+      "title": "Takes pickup orders from your menu",
+      "body": "Callers can order items like carne asada fries, chicken tacos, a veggie burrito, or a combo plate. ROAL collects the name, phone number, and ready time, then confirms the order back."
+    },
+    {
+      "title": "Sends a clean ticket to the kitchen screen",
+      "body": "The ticket shows items, sizes, modifiers, and notes in one place. That helps keep orders readable when the truck is loud and moving fast."
+    },
+    {
+      "title": "Lets you forward calls only when you want",
+      "body": "You can forward all calls, or only when you are busy or do not answer. If a caller asks about something ROAL cannot handle, it can pass it to staff with a summary."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, are you parked on Main Street today?"
+    },
+    {
+      "who": "host",
+      "line": "Yes. We’re here until 2:30 pm. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Can I place a pickup order? Two chicken tacos, one carne asada burrito, and a horchata."
+    },
+    {
+      "who": "host",
+      "line": "Of course. Any changes to the tacos or burrito?"
+    },
+    {
+      "who": "caller",
+      "line": "No onion on the tacos, extra salsa, and no cheese on the burrito."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two chicken tacos, no onion, extra salsa. One carne asada burrito, no cheese. One horchata. What name should I put on it, and when would you like it ready?"
+    },
+    {
+      "who": "caller",
+      "line": "Maria. Around 12:20."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your pickup order will be ready around 12:20 pm. I’ve sent it to the kitchen now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 12:20 pm",
+    "lines": [
+      "Maria · (555) 010-2244",
+      "2 chicken tacos — no onion, extra salsa",
+      "1 carne asada burrito — no cheese",
+      "1 horchata",
+      "Ready: 12:20 pm"
+    ],
+    "note": "Caller asked for pickup at the truck window."
+  },
+  "sections": [
+    {
+      "h2": "Built for the lunch rush at a food truck",
+      "body": "Food trucks get the worst timing for phone calls. You may be at the window, cashing out a customer, or trying to keep the grill moving. ROAL answers the phone during those rush moments so callers still get help. It can take pickup orders, give your current hours, and explain where the truck is parked.\n\nThat matters for trucks that change spots. A caller may ask, “Are you at the brewery lot today?” or “Do you still have the lunch special?” ROAL can answer from your live menu and public info. If you want, you can forward calls only when you are busy, instead of sending every call away. That keeps your truck reachable without pulling you off the line."
+    },
+    {
+      "h2": "Make your menu easy to order by phone",
+      "body": "Phone orders work best when your menu is simple to say and simple to repeat. If you sell tacos, burritos, bowls, fries, or platters, ROAL can take items, sizes, modifiers, and notes. It also skips items that are marked sold out, so callers do not order something you cannot make.\n\nA good setup is to keep common call items clear. For example: 3 tacos with your top proteins, one wet burrito, a side of rice and beans, and drinks like agua fresca or horchata. If customers often ask for extra salsa, no cilantro, or no onions, those notes are easy to capture. You can add answers for parking, pickup window instructions, and the best number to call the truck back."
+    },
+    {
+      "h2": "A simple setup for owners who are busy",
+      "body": "You do not need a long setup day. At [Build a free test host](/try), paste your website, Google Maps link, or just your name and city. ROAL reads your menu, hours, and address from public pages, then builds a phone host in about a minute. You can test-call it in the browser with no sign-up needed.\n\nWhen you are ready, claim the host and forward your truck’s existing number to it. If you want examples for daily use, the [pickup orders page](/use-cases/pickup-orders) shows the flow from ring to ticket. You keep your own number, and you can turn forwarding off any time. The result is a cleaner phone line during the busiest parts of the day."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pickup orders for a food truck?",
+      "a": "Yes. It can take pickup orders from your live menu, collect the caller’s name and phone number, and quote a ready time. It then confirms the order back and sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "Will it answer questions about where the truck is parked?",
+      "a": "Yes, if that information is in your public pages or setup details. It can also answer common questions about hours, address, parking, and menu items."
+    },
+    {
+      "q": "What happens if the caller asks something tricky?",
+      "a": "ROAL can pass harder calls to staff with a summary. That can include allergy-sensitive questions, complaints, catering requests, or a manager request."
+    },
+    {
+      "q": "How do I send calls to it?",
+      "a": "You forward your existing number to the ROAL phone line. You can send all calls, or only calls when you are busy or do not answer. Call forwarding codes depend on your carrier, so it is best to confirm and test with a call."
+    },
+    {
+      "q": "How does pricing work for food truck phone orders?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reaches the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract."
+    }
+  ]
+}

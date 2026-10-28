@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-ai-tools-list",
+  "keyword": "ai tools for restaurants",
+  "category": "ai-basics",
+  "title": "AI tools restaurants can use today",
+  "seoTitle": "AI tools restaurants can use today | ROAL",
+  "description": "Explore practical AI tools for restaurants, from phone hosts to menu help and call forwarding, so a small shop can save time.",
+  "question": "What AI tools for restaurants can a small restaurant use today without a big tech setup?",
+  "answer": "A small restaurant can start with AI tools that answer calls, take pickup and delivery orders, handle menu and hour questions, and send clean tickets to the kitchen. ROAL does that by phone, and owners can try it from their website, Google Maps link, or name and city before going live. For the rest, start with simple tools for call forwarding, menu updates, and order tracking.",
+  "summary": "You’ll know which AI tools a small restaurant can use now and how to pick the right one.",
+  "intro": "Small restaurants can use AI tools for restaurants today to answer phones, take orders, and handle common questions without adding more front-desk work. The best place to start is usually the phone, because that is where orders and repeat customers still come in.\n\nKeep it simple. Pick tools that save time right away, fit your current setup, and do not force you into a long contract or a full tech project.",
+  "sections": [
+    {
+      "id": "what-should-a-small-restaurant-use-ai-for-first",
+      "h2": "What should a small restaurant use AI for first?",
+      "body": "Start with the jobs that interrupt your staff the most. For many independent restaurants, that means phone calls, order taking, menu questions, and reservation requests.\n\nA practical order looks like this:\n1. Answer the phone.\n2. Take pickup or delivery orders from the live menu.\n3. Confirm the name, phone number, and ready time.\n4. Send the ticket to the kitchen screen.\n5. Hand off special calls to staff when needed.\n\nA phone host like ROAL can do these restaurant-specific tasks. It answers questions about hours, address, parking, and the menu, and it does not offer items marked sold out. It can also hand allergy-sensitive questions, complaints, catering requests, and manager requests to staff with a summary.\n\nUse a simple script in your own head when you test tools: \"I’d like a large pepperoni, extra cheese, and two side orders of garlic knots for pickup.\" If the tool can handle items, sizes, modifiers, and notes without confusing the caller, it is doing useful work for a restaurant."
+    },
+    {
+      "id": "which-ai-tools-help-with-phone-calls-and-orders",
+      "h2": "Which AI tools help with phone calls and orders?",
+      "body": "For a small restaurant, the most useful AI tool is often an AI phone host. It sits on the phone line, answers common questions, and takes orders directly from your live menu.\n\nHere is what to compare:\n\n| Tool type | Best for | What to ask before using |\n|---|---|---|\n| AI phone host | Orders, hours, reservations, menu questions | Does it use my live menu and send tickets to the kitchen? |\n| Human answering service | Overflow calls and simple message taking | How are calls priced, per minute or per call? |\n| Voicemail | After-hours backup | Does it lose orders when callers hang up? |\n| Press-1 phone menu | Basic routing | Will customers stay on the line? |\n\nMany AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not calls become orders. Human answering services usually bill per minute or per call. ROAL is different: it charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nA useful test question is: \"Can you quote a ready time and repeat my order back clearly?\" That matters more than fancy features."
+    },
+    {
+      "id": "how-do-i-set-up-ai-tools-without-a-tech-person",
+      "h2": "How do I set up AI tools without a tech person?",
+      "body": "The easiest setup is the one your team can do fast. With ROAL, the owner pastes the restaurant website, Google Maps link, or just the name and city at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute.\n\nThat means you do not need a long setup project to start testing. The owner can also upload a menu in any format. Then they can test-call it right in the browser, with no sign-up needed.\n\nUse this quick checklist before you go live:\n- Check that hours are correct.\n- Check that the address and parking details are correct.\n- Check that sold-out items are marked out.\n- Check that the menu names sound like your menu.\n- Check that the voice and name feel right for your restaurant.\n\nIf your restaurant has a printed menu, take a photo or upload the file and compare the details line by line. That is usually where small mistakes hide."
+    },
+    {
+      "id": "how-do-i-send-calls-to-an-ai-phone-host-and-keep-my-number",
+      "h2": "How do I send calls to an AI phone host and keep my number?",
+      "body": "You do not need to give up your restaurant number. With ROAL, the owner claims the host, ROAL gives each location its own phone line automatically, and then the owner forwards the restaurant’s existing number to it.\n\nYou can forward all calls, or only when the line is busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nCommon forwarding methods vary by carrier and phone system, so always confirm with your provider and test with a real call. On many landlines and some carriers, *72 starts forwarding and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off, **61*number# forwards unanswered calls, and **67*number# forwards busy calls. Verizon Wireless often uses *72/*73, with *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nA simple example: if your phones ring busy during the dinner rush, forward unanswered calls only. If you are closed, turn forwarding off and use the AI host only when you want that coverage."
+    },
+    {
+      "id": "what-does-a-good-restaurant-phone-script-sound-like",
+      "h2": "What does a good restaurant phone script sound like?",
+      "body": "A good restaurant phone script sounds short, clear, and normal. The caller should know they reached a real restaurant line, not a maze.\n\nHere are examples you can borrow:\n- \"Thanks for calling. Would you like pickup, delivery, or a reservation?\"\n- \"I have your order: one large pepperoni, extra cheese, and two garlic knots for pickup.\"\n- \"Your total will be handled the same way you usually take payment. We do not take card numbers over the phone.\"\n- \"I’m sending your order to the kitchen now, and your ready time is 25 minutes.\"\n\nThat last line matters because the host should confirm the order back before it ends the call. It should collect the caller’s name and phone number, repeat the items, sizes, modifiers, and notes, and give a ready time the kitchen can work with.\n\nFor tricky calls, the best script is a handoff. For example: \"One moment while I get a staff member for that allergy question.\" ROAL can pass those calls to staff with a summary, which helps keep the front counter from getting stuck on one long conversation."
+    },
+    {
+      "id": "how-do-i-compare-cost-before-i-buy-anything",
+      "h2": "How do I compare cost before I buy anything?",
+      "body": "Do the math with your own numbers, not guesses. The point is to see which tool fits your order flow.\n\nUse this simple example and swap in your own numbers:\n- Say your average phone order is $28.\n- If you get 50 completed phone orders in a month, that is 50 × $0.90 = $45 with ROAL.\n- If you get 300 completed phone orders, that is 300 × $0.90 = $270.\n\nNow compare that with other common pricing styles:\n- Delivery apps often take roughly 15% to 30% per order.\n- Many AI phone tools charge a monthly fee even in slow months.\n- Human answering services often bill by minute or by call.\n\nA small restaurant should ask one question first: \"What do I pay when the phone is quiet?\" With ROAL, calls, questions, and test calls are unlimited and free; you only pay for completed orders that reach the kitchen screen.\n\nIf you already use [call forwarding codes by carrier](/tools/call-forwarding-codes), put the forwarding plan in writing for your team so nobody has to guess during a rush."
+    },
+    {
+      "id": "what-should-i-test-before-i-let-it-handle-real-calls",
+      "h2": "What should I test before I let it handle real calls?",
+      "body": "Test it like a busy owner would. Do not start with one easy call and call it done.\n\nRun these checks:\n1. Call after you have updated one menu item.\n2. Call during a rush and see if the host stays calm.\n3. Ask about hours, parking, and your address.\n4. Order a common item with one modifier and one note.\n5. Ask a question the host should send to staff.\n\nA good test line is: \"I need a gluten-free pizza, no onions, and I’m allergic to nuts. Can someone call me back about that?\" The host should not try to guess. It should hand the call to staff with a summary.\n\nROAL also keeps an inbox for questions it could not answer. Once the owner answers that question, the host learns it from then on. That is useful for the little things that come up in real life, like special parking notes, holiday hours, or a new lunch combo.\n\nIf you want a simple place to start, [build a free test host](/try) from your website and compare the call transcript to how your staff would handle the same order."
+    }
+  ],
+  "takeaways": [
+    "Start with phone calls, order taking, and menu questions before anything fancy.",
+    "Choose tools that fit a small restaurant’s real workflow and pricing.",
+    "Keep your own number and use call forwarding only where it helps.",
+    "Test with real menu items, modifiers, and special requests.",
+    "Use a tool that sends a clean kitchen ticket, not just a message."
+  ],
+  "faq": [
+    {
+      "q": "What are the best AI tools for restaurants that are small and busy?",
+      "a": "The best starting point is usually an AI phone host, because it handles orders, hours, address questions, and reservations on the line. For a small restaurant, that is often more useful than broad software that does many things but does not take calls. ROAL is built for that phone-first workflow."
+    },
+    {
+      "q": "How much do AI phone tools for restaurants usually cost?",
+      "a": "Many AI phone tools for restaurants charge a monthly fee per location, often in the rough range of $79 to $599. Some charge even if the phone is quiet. ROAL uses pay-per-completed-order pricing at $0.90, with no monthly fee, no setup fee, and no contract."
+    },
+    {
+      "q": "Can an AI phone host take pickup orders from my menu?",
+      "a": "Yes, if it is built for restaurant calls and uses your live menu. ROAL takes items, sizes, modifiers, and notes, then sends a clean ticket to the kitchen screen. It also confirms the order back to the caller before the call ends."
+    },
+    {
+      "q": "How do I forward my restaurant phone to an AI host?",
+      "a": "Most restaurants forward the existing number to the host line, either all the time or only when busy or unanswered. The exact code depends on your carrier or phone system, so confirm with them and test with a real call. ROAL supports forwarding while letting you keep your restaurant’s number."
+    }
+  ],
+  "words": 1343,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

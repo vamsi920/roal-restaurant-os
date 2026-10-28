@@ -20,7 +20,9 @@ export function buildBlogIndexMetadata(): Metadata {
 export function buildBlogArticleMetadata(post: BlogPost): Metadata {
   const content = post.content;
   const seo = content?.seo;
-  const title = seo?.title ?? `${post.title} | ROAL Journal`;
+  const rawTitle = seo?.title ?? `${post.title} | ROAL`;
+  // Keep titles inside what search results show (~60 chars).
+  const title = rawTitle.length > 60 ? rawTitle.replace(/\s*[|—-]\s*ROAL( Journal)?$/, "") : rawTitle;
   const description = seo?.description ?? post.excerpt;
   const canonicalPath = getBlogCanonicalPath(post.slug);
   const publishedTime = blogPublishedInstant(post.publishedAt);
@@ -33,6 +35,7 @@ export function buildBlogArticleMetadata(post: BlogPost): Metadata {
     description,
     canonicalPath,
     openGraphType: "article",
+    ogImage: `/blog/${post.slug}/opengraph-image`,
     keywords: tags,
     article: {
       publishedTime,

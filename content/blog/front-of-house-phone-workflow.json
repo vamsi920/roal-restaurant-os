@@ -1,0 +1,77 @@
+{
+  "slug": "front-of-house-phone-workflow",
+  "keyword": "front of house phone workflow",
+  "category": "operations",
+  "title": "Front-of-house phone workflow for busy restaurants",
+  "seoTitle": "Front-of-house phone workflow | ROAL",
+  "description": "Set up a front-of-house phone workflow with clear greetings, order taking, hold rules, handoffs, and forwarding for busy shifts.",
+  "question": "How do I set up a front of house phone workflow that holds up in a busy restaurant?",
+  "answer": "Start with a simple phone flow: answer fast, identify the caller’s need, take the order or question, quote a ready time, and send anything tricky to staff with a summary. Use clear rules for busy hours, unanswered calls, and handoffs so the front of house team is not improvising on every ring. ROAL can answer the restaurant’s phone, take pickup and delivery orders from the live menu, and send clean tickets to the kitchen screen.",
+  "summary": "You will be able to set up a simple phone flow that handles orders, questions, and handoffs without slowing down the front counter.",
+  "intro": "A front of house phone workflow that holds up is one that is simple, repeatable, and easy to train. It should tell your team what to say, what to collect, and when to hand off the call.\n\nFor a busy pizza shop, deli, or family restaurant, the goal is not fancy. The goal is to keep orders accurate, keep the counter moving, and make sure the kitchen gets a clean ticket every time.",
+  "sections": [
+    {
+      "id": "what-should-the-phone-flow-be-from-hello-to-ticket",
+      "h2": "What should the phone flow be from hello to ticket?",
+      "body": "A good front of house phone workflow has the same steps on every call. That keeps the team calm when the dining room is full and the line is building.\n\nUse this simple order of operations:\n1. Greet the caller.\n2. Find out whether they want pickup, delivery, a menu question, a reservation, or something else.\n3. Take the details in a fixed order.\n4. Repeat the order back.\n5. Give the ready time or next step.\n6. Send the ticket or hand off the call.\n\nA useful script line is: \"Thanks for calling. Is this for pickup, delivery, or a question about the menu?\" That one line keeps the call moving. If the caller wants food, ask for items, sizes, modifiers, and notes in that order. If they want a question answered, keep it short and practical: hours, address, parking, menu items, or allergies that your staff can safely handle.\n\nA clean workflow also means the person answering does not improvise. Write the flow on one sheet and keep it near the phone. If you use an AI phone host like ROAL, the same logic can run on every call while staff stays focused on service."
+    },
+    {
+      "id": "what-details-should-staff-always-collect-on-phone-orders",
+      "h2": "What details should staff always collect on phone orders?",
+      "body": "The fastest way to reduce mistakes is to collect the same details every time. Phone orders go wrong when the caller is rushed and the team asks things in a different order on every call.\n\nUse this checklist for every pickup or delivery order:\n- Caller name\n- Phone number\n- Pickup or delivery\n- Items and sizes\n- Modifiers and notes\n- Ready time\n- Any special instructions\n\nFor example, if a caller says, \"I need two pies and a salad,\" the follow-up should be specific: \"What sizes for the pies, and do you want any toppings or crust changes?\" Then confirm the full order back before hanging up.\n\nHere is a simple script you can reuse: \"I have one large plain pie, one medium pepperoni with extra cheese, and a Caesar salad. Your name is Maria, and the phone number is 555-1234. We will have it ready at 6:20.\" That kind of repeat-back is what protects the kitchen and the customer.\n\nROAL does this kind of intake on the live menu, including items, sizes, modifiers, notes, names, phone numbers, and ready time. It also will not offer items marked sold out, which keeps the conversation closer to what the kitchen can actually make."
+    },
+    {
+      "id": "how-do-you-handle-busy-hours-unanswered-calls-and-holds",
+      "h2": "How do you handle busy hours, unanswered calls, and holds?",
+      "body": "Busy-hour rules matter more than perfect scripts. If the workflow breaks during the rush, the whole front of house feels it.\n\nSet three rules in writing:\n- When the phone should ring to staff.\n- When calls should forward because the team is busy.\n- What happens if nobody answers.\n\nA good hold script is short: \"Thanks for holding. I’ll be right with you.\" If the line is too busy, route the call somewhere else instead of making the caller wait forever. Many restaurants forward calls only when busy or unanswered, which is a practical way to protect the counter during rush periods.\n\nIf you need to forward your restaurant’s number, confirm the code with your carrier or phone system and test it with a real call. Codes vary by carrier and plan. On many landlines, *72 forwards all calls and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off. Verizon Wireless often uses *72 / *73 and *71 for busy or no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Always confirm before relying on it.\n\nA workable setup is to test during a slow period, then again during a rush, and make sure the kitchen still gets the ticket where it needs to go."
+    },
+    {
+      "id": "what-should-staff-say-when-a-call-is-not-a-simple-order",
+      "h2": "What should staff say when a call is not a simple order?",
+      "body": "Not every call should be handled the same way. Some calls are fine for the front of house. Others should go straight to staff with a summary.\n\nSend the call to staff when it involves:\n- Catering\n- Complaints\n- Allergy-sensitive questions\n- Manager requests\n- Anything the caller says is urgent or unusual\n\nA useful handoff line is: \"Let me get someone for you and pass along the details.\" That is better than trying to guess.\n\nHere is a simple handoff summary template:\n- Caller name\n- Phone number\n- What they need\n- What time it matters\n- Any order number or address, if relevant\n\nFor example: \"Caller is Daniel, phone 555-0188. He wants to ask about a large catering order for Friday at noon. He needs a manager call back.\" That is much easier for staff than a vague note like \"call back about catering.\"\n\nROAL can route these harder calls to staff with a summary, while still handling the easy ones. That matters because the front of house should not be stuck solving every edge case while the line keeps ringing."
+    },
+    {
+      "id": "how-do-you-keep-pickup-and-delivery-orders-accurate",
+      "h2": "How do you keep pickup and delivery orders accurate?",
+      "body": "Accuracy comes from a predictable workflow, not from hoping people remember everything. For pickup and delivery, the goal is to make the order sound the same way every time it leaves the phone.\n\nUse a final confirm step before ending the call. The caller should hear the full order, the name, the phone number, and the ready time. If there is a mistake, this is the moment to catch it.\n\nA simple final line is: \"Just to confirm, that’s a large cheese pizza, a small garlic knots, and a chicken parm hero. Under Sam, phone number 555-0144, ready at 7:10.\" That one recitation can save the kitchen from remakes.\n\nIf you want to compare the cost of phone orders with delivery apps, the math is easy to swap into your own numbers. Say a $28 average order. If a delivery app charges 20% commission, that order costs $5.60 in commission before you even think about food and labor. Plug in your own average ticket and the commission your restaurant actually pays. Phone orders keep you in control of the order flow and the guest relationship.\n\nROAL sends a clean ticket to the kitchen screen once the order is confirmed, which helps the front and back of house stay in sync without a lot of extra retyping."
+    },
+    {
+      "id": "what-does-a-practical-phone-setup-look-like-for-a-small-team",
+      "h2": "What does a practical phone setup look like for a small team?",
+      "body": "Small teams need a setup that is simple to maintain. If the workflow depends on one experienced person remembering everything, it will break the first night they are off.\n\nA practical setup often looks like this:\n1. Set one main greeting.\n2. Decide who answers during normal hours.\n3. Decide what forwards when the line is busy.\n4. Set the handoff rules for questions staff must answer.\n5. Keep a single source for hours, address, parking, and menu updates.\n\nFor a restaurant owner, the most useful workflow is one that can be updated quickly. If the hours change for a holiday, the caller should hear the new hours right away. If a menu item is sold out, the phone flow should not keep selling it. If the caller wants to place an order in another language, the host should be able to speak the caller’s language.\n\nROAL is built around that kind of practical setup. The owner can paste a website, Google Maps link, or restaurant name and city at /try, test-call the host in the browser, and then claim it when ready. Each location gets its own phone line automatically, and the restaurant keeps its existing number by forwarding calls to it."
+    },
+    {
+      "id": "how-do-you-roll-this-out-without-confusing-the-staff",
+      "h2": "How do you roll this out without confusing the staff?",
+      "body": "The rollout should be short, clear, and easy to train. Do not hand the team a long policy they will never read.\n\nUse this rollout checklist:\n- Put the greeting in writing.\n- Mark which calls stay with the front of house.\n- Mark which calls go to staff.\n- Test the forwarding setup.\n- Test one real pickup order.\n- Review the first few call transcripts and recordings.\n\nIf you want to estimate whether a phone workflow is worth it, use a simple example with your own numbers. Say you take 8 completed phone orders in a day and your average order is $24. That is $192 in daily phone-order sales. Now compare that with your labor, delivery-app commission, or monthly phone-plan cost. You can plug in your real numbers and see where the pressure is coming from.\n\nYou can also use the call history to spot what guests ask most often, which menu items need clearer wording, and where staff still needs support. If you want a deeper look at setup, [Setting up a restaurant phone system](/blog/restaurant-phone-system-setup) is a useful next read. If you want to estimate cost, [AI phone host cost calculator](/tools/phone-host-cost-calculator) can help.\n\nIf you want to see the flow in action, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "A front of house phone workflow should follow the same steps on every call.",
+    "Collect the same order details every time: name, number, items, modifiers, and ready time.",
+    "Use clear handoff rules for catering, complaints, allergy questions, and manager requests.",
+    "Forward calls during busy times only if that protects the counter and still gets orders answered.",
+    "ROAL can answer calls, take orders from the live menu, and send a clean kitchen ticket."
+  ],
+  "faq": [
+    {
+      "q": "What is the best front of house phone workflow for a restaurant?",
+      "a": "The best workflow is a fixed one: greet the caller, identify the reason for the call, collect order details in the same order every time, confirm everything back, and send the ticket or hand off the call. That keeps the front counter from improvising under pressure. The simpler the steps, the easier it is to train new staff."
+    },
+    {
+      "q": "How should a restaurant answer the phone during rush hours?",
+      "a": "Use a short greeting and a clear rule for busy periods. If staff can take the call, collect pickup or delivery details quickly and confirm the order back. If the line is too busy, forward the call or route it to a phone host so the counter does not get stuck juggling rings and tickets at the same time."
+    },
+    {
+      "q": "What details should be taken for a phone order?",
+      "a": "At minimum, collect the caller’s name, phone number, items, sizes, modifiers, notes, and ready time. Then repeat the order back before ending the call. That final confirm step catches mistakes before the kitchen starts cooking."
+    },
+    {
+      "q": "How does ROAL fit into a front of house phone workflow?",
+      "a": "ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, answers common questions, and sends a clean ticket to the kitchen screen. It also handles harder calls by passing them to staff with a summary. Owners can set it up quickly from a website, Google Maps link, or restaurant name and city."
+    }
+  ],
+  "words": 1511,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

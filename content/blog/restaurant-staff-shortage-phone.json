@@ -1,0 +1,76 @@
+{
+  "slug": "restaurant-staff-shortage-phone",
+  "keyword": "restaurant staff shortage",
+  "category": "staffing",
+  "title": "How to handle the restaurant staff shortage on busy nights",
+  "seoTitle": "Restaurant staff shortage on busy nights | ROAL",
+  "description": "A practical guide to handling a restaurant staff shortage on busy nights with better call routing, order capture, and simple phone setup.",
+  "question": "How should I handle the restaurant staff shortage when the phone keeps ringing on short-staffed nights?",
+  "answer": "Route the phone so busy or unanswered calls go to an AI phone host that can take pickup and delivery orders, answer common questions, and send a clean ticket to the kitchen. Keep staff focused on cooking, packing, and service while the host handles routine calls and sends tougher requests to the team with a summary.",
+  "summary": "You’ll learn how to keep phone orders organized on short-staffed nights without pulling your team off the line.",
+  "intro": "A restaurant staff shortage shows up fast on the phone. Calls stack up, the counter gets loud, and someone ends up taking orders with wet hands or half a conversation.\n\nThe fix is not more scrambling. It is a clear phone plan: let routine calls get handled by an AI phone host like ROAL, keep tricky calls for staff, and make sure the kitchen gets a clean ticket instead of a rushed note on scrap paper.",
+  "sections": [
+    {
+      "id": "what-should-happen-to-the-phone-when-you-are-short-staffed",
+      "h2": "What should happen to the phone when you are short-staffed?",
+      "body": "When the crew is thin, the phone should stop interrupting cooks and cashiers for every hour question or pickup order. A good rule is simple: let routine calls be handled automatically, and only pull a person in when the call really needs judgment.\n\nA practical split looks like this:\n\n- **Send to the phone host:** hours, address, parking, menu questions, pickup orders, delivery orders, and reservation requests.\n- **Send to staff:** allergy-sensitive questions, complaints, catering, and manager requests.\n- **Keep for the kitchen:** only confirmed orders that are ready to cook.\n\nA helpful script for staff at the counter is: \"I’m on a rush right now, so I’m going to let our phone host take your order and send it to the kitchen.\" That one line keeps the team from trying to juggle both jobs.\n\nROAL is built for that kind of shift. It answers the restaurant’s phone, takes orders from the live menu, and sends a clean ticket to the kitchen screen. Questions it cannot answer go to an inbox so the owner can answer once and the host knows it from then on."
+    },
+    {
+      "id": "which-calls-should-the-phone-host-handle-and-which-should-no",
+      "h2": "Which calls should the phone host handle, and which should not?",
+      "body": "The biggest mistake during a restaurant staff shortage is trying to automate everything. Some calls are routine. Others need a human.\n\nHere is an owner-friendly way to sort them:\n\n| Call type | Let the phone host handle it? | Notes |\n|---|---:|---|\n| Menu, hours, address, parking | Yes | Good fit for quick answers |\n| Pickup order | Yes | Takes items, sizes, modifiers, and notes |\n| Delivery order | Yes | Uses the live menu and confirms the order |\n| Reservation request | Yes | Can take the request and pass it along |\n| Allergy-sensitive question | No | Send to staff with a summary |\n| Complaint | No | A person should hear it |\n| Catering request | No | Usually needs details and follow-up |\n| Manager request | No | Route it to staff |\n\nA useful example: a caller says, \"Do you have gluten-free pizza, and can you make sure it is safe for my child?\" That should go to staff, not stay with the phone host.\n\nA cleaner call sounds like: \"What size pie do you want, what toppings, and what name should I put on the order?\" That is the kind of routine order-taking that saves time on a short-staffed night."
+    },
+    {
+      "id": "how-do-i-route-calls-without-changing-my-restaurant-number",
+      "h2": "How do I route calls without changing my restaurant number?",
+      "body": "You do not need to give up your current number to get help on the phone. With ROAL, the owner claims the host, each location gets its own phone line automatically, and the restaurant forwards its existing number to it.\n\nThat forwarding can be set for all calls, or only when busy or unanswered. In plain terms, your number stays yours. You just decide when the backup takes over.\n\nA simple setup checklist:\n\n1. Paste your restaurant website, Google Maps link, or \"Name, City\" at [Build a free test host](/try).\n2. Let ROAL read the menu, prices, hours, and address from public pages or upload a menu.\n3. Test-call it in the browser. No sign-up needed for the test.\n4. Claim the host when you want to go live.\n5. Forward your restaurant’s existing number to the ROAL line.\n6. Test one real call before a rush starts.\n\nIf you are setting up forwarding yourself, check your carrier or phone system instructions first. Codes vary by carrier and plan, so confirm with your provider and test with a call. For common examples, see [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-does-the-money-side-look-like-on-a-bad-night",
+      "h2": "What does the money side look like on a bad night?",
+      "body": "A restaurant staff shortage is expensive even before you count overtime. The real cost is often missed calls, lost pickup orders, and staff time pulled away from prep.\n\nHere is a simple way to compare options using numbers you can swap for your own:\n\n- Say your average phone order is **$28**.\n- Say the phone host confirms **20 orders** in a month.\n- ROAL charges **$0.90 per completed phone order**.\n\nThat would be **20 × $0.90 = $18** for those completed orders, billed monthly. There is no monthly fee, setup fee, per-minute fee, or contract.\n\nNow compare that with common alternatives:\n\n| Option | Typical pricing pattern |\n|---|---|\n| Delivery apps | Often roughly 15-30% commission per order |\n| AI phone tools | Often a fixed monthly fee per location, commonly around $79 to $599 |\n| Human answering services | Usually billed per minute or per call |\n\nFor a rough local check, use [the AI phone host cost calculator](/tools/phone-host-cost-calculator) and [the delivery app commission calculator](/tools/delivery-commission-calculator). The point is not to guess your exact cost. The point is to compare your own order volume against the pricing you already pay to keep the phone covered."
+    },
+    {
+      "id": "how-do-i-keep-the-kitchen-calm-when-calls-come-in",
+      "h2": "How do I keep the kitchen calm when calls come in?",
+      "body": "The kitchen should get a clean, readable ticket, not a messy message. On short-staffed nights, that matters as much as the order itself because confusion slows food down.\n\nROAL sends a clean ticket to the kitchen screen with the order details it captured. It takes items, sizes, modifiers, notes, the caller’s name and phone, and a quoted ready time. It also confirms the order back before sending it through.\n\nA good kitchen-facing checklist is:\n\n- Item names match the live menu.\n- Modifiers are easy to read.\n- Notes are kept short and specific.\n- The ticket shows the caller’s name and phone.\n- Out-of-stock items are not offered.\n\nFor staff, a useful handoff line is: \"The host already confirmed the order and sent it to the screen, so we only need to focus on cooking.\" That helps keep the front of house from repeating the order three times.\n\nIf your team uses a menu board or printed menu, keep it aligned with the live menu the host sees. That way the kitchen, the counter, and the phone are all speaking the same language."
+    },
+    {
+      "id": "how-do-i-roll-this-out-without-confusing-the-team",
+      "h2": "How do I roll this out without confusing the team?",
+      "body": "A new phone plan should feel like relief, not another project. Start with one location, one busy period, and one simple rule: the phone host handles the routine stuff, staff handles the rest.\n\nHere is a rollout plan that works for many independent spots:\n\n1. Pick the busiest time when interruptions hurt most.\n2. Tell the team which calls the host will answer.\n3. Tell them which calls still ring through to a person.\n4. Test a pickup order, a delivery order, an hours question, and an allergy question.\n5. Listen to the first few call recordings and adjust wording in the FAQ or menu.\n6. Keep one person responsible for checking the inbox once or twice a day.\n\nIf you want a softer introduction, use this line with the team: \"We are not replacing anybody. We are moving routine calls off the line so the crew can work faster and fewer orders get missed in the rush.\"\n\nROAL also gives the owner a voice choice and a host name, so it can sound like part of your restaurant instead of a random system. For owners who want to understand the setup before trying it, [How it works](/how-it-works) is a good place to look, and [restaurant staffing short shifts](/use-cases/short-staffed) shows the use case in plain terms."
+    },
+    {
+      "id": "what-should-i-do-before-the-next-short-staffed-night-hits",
+      "h2": "What should I do before the next short-staffed night hits?",
+      "body": "The best time to fix a restaurant staff shortage on the phone is before the next dinner rush. Build a simple phone plan now, while the line is quiet enough to test.\n\nUse this quick checklist:\n\n- Confirm your hours, address, parking, and menu are current.\n- Decide which calls should always go to staff.\n- Set forwarding for busy or unanswered calls.\n- Test the order flow with a real menu item.\n- Make sure the kitchen screen is easy to read.\n- Tell the team who checks the inbox for unanswered questions.\n\nIf you want to try a phone host without a big setup, [build a free test host from your website](/try). You can paste your site, Google Maps link, or restaurant name and city, then test-call it in the browser before you decide to go live.\n\nThat is often the simplest way to take pressure off the phone while keeping control of your restaurant’s number, menu, and staff time."
+    }
+  ],
+  "takeaways": [
+    "A restaurant staff shortage gets easier when routine phone calls are separated from calls that need a person.",
+    "Forward your existing number instead of changing it, and test busy or unanswered routing before a rush.",
+    "Use a clean kitchen ticket, not a rushed scribble, so staff can stay focused on food.",
+    "Compare per-order pricing with what you already spend on delivery apps, answering services, or monthly phone tools."
+  ],
+  "faq": [
+    {
+      "q": "How can I handle the phone during a restaurant staff shortage?",
+      "a": "Use a phone plan that sends routine calls to a phone host and saves staff for exceptions. Let the host handle hours, menu questions, pickup and delivery orders, and reservation requests. Send allergy-sensitive questions, complaints, catering, and manager requests to the team with a summary."
+    },
+    {
+      "q": "Will I have to change my restaurant’s phone number?",
+      "a": "No. The restaurant keeps its own number. The owner forwards that number to the host’s line, either for all calls or only when busy or unanswered, and can turn forwarding off any time."
+    },
+    {
+      "q": "How much does ROAL cost for completed orders?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reaches the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are free."
+    },
+    {
+      "q": "Can an AI phone host take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it. That keeps phone ordering simple and avoids extra steps for the caller."
+    }
+  ],
+  "words": 1426,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

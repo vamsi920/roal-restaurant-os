@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-host-learns-menu",
+  "keyword": "ai learn restaurant menu",
+  "category": "ai-basics",
+  "title": "How an AI phone host learns your restaurant menu",
+  "seoTitle": "How AI learns your restaurant menu | ROAL",
+  "description": "See how an AI phone host learns your restaurant menu from your website, PDFs, photos, and edits so it can take orders and answer questions.",
+  "question": "How does an AI phone host learn my restaurant menu?",
+  "answer": "An AI phone host learns your restaurant menu by reading the public menu details you already have online, plus any menu files or photos you upload. For ROAL, the owner can paste a website, Google Maps link, or name and city at /try, then review the menu, prices, hours, and address before going live. After that, the host can take orders from the live menu, skip sold-out items, and send unanswered questions to staff.",
+  "summary": "See how to give an AI phone host your menu, check it, and keep it current.",
+  "intro": "An AI phone host learns your restaurant menu by reading the menu information you already have online or by upload. It then uses that live menu to take pickup and delivery orders, answer common questions, and send a clean ticket to the kitchen.\n\nFor a busy restaurant owner, the key is not “teaching” in a technical sense. It is making sure the menu source is clear, current, and easy for the phone host to read. That is where a tool like ROAL fits in: it reads your public pages and menu files, then lets you test the host in the browser before you send calls to it.",
+  "sections": [
+    {
+      "id": "what-does-it-mean-for-an-ai-phone-host-to-learn-your-menu",
+      "h2": "What does it mean for an AI phone host to learn your menu?",
+      "body": "It means the phone host reads the items, prices, sizes, modifiers, and notes it needs to take an order correctly. For a pizza shop, that could be small, medium, and large pies, crust choices, extra cheese, and topping notes. For a deli, it could be sandwiches, bread choices, add-ons, and sides.\n\nThe important part is that the host is not guessing from scratch. It is using the menu you already want callers to hear. If your menu is on your website, in a PDF, or even in menu photos, ROAL can read those public pages or uploaded files and build a phone host in about a minute. Then you can test it right in the browser before you claim the host.\n\nA simple way to think about it:\n- The menu tells the host what to sell.\n- The hours tell it when you are open.\n- The address tells it where to send people.\n- The sold-out list tells it what not to offer.\n\nIf the host cannot answer something, it sends the question to your inbox so you can answer once and use that answer going forward. That matters for things like special sauces, limited-time items, or store rules."
+    },
+    {
+      "id": "what-menu-sources-should-i-give-it-first",
+      "h2": "What menu sources should I give it first?",
+      "body": "Start with the cleanest source you have. If your website menu is current, use that. If your menu lives in a PDF or a photo menu, upload it. If you do not have a polished site, ROAL can also start from a Google Maps link or from your restaurant name and city at /try.\n\nHere is the order I would use in a real restaurant:\n1. Use the public menu page if it is current.\n2. Add your uploaded menu if the website is missing items or prices.\n3. Check your hours and address.\n4. Add FAQs like parking, pickup instructions, or where to enter.\n5. Mark sold-out items so the host does not offer them.\n\nA practical example: say your menu has a $28 specialty pie, a $14 small cheese, $2 toppings, and $1 extra sauce. The host should be able to quote those pieces back clearly. If your website says one price and your PDF says another, fix the source first. The host can only work with the menu you give it.\n\nA quick owner checklist:\n- Are prices current?\n- Are sizes written the same way everywhere?\n- Are toppings and modifiers easy to read?\n- Are hours and address correct?\n- Are any sold-out items removed or marked?"
+    },
+    {
+      "id": "how-do-i-keep-the-menu-accurate-after-launch",
+      "h2": "How do I keep the menu accurate after launch?",
+      "body": "Menu accuracy is the whole game. Once the host is live, you want a simple routine for changes so callers do not hear old prices or items that are gone.\n\nA good weekly habit is:\n- Review the menu editor for price changes.\n- Update hours for holidays or special closures.\n- Add new FAQs when a caller asks the same thing twice.\n- Mark sold-out items as sold out before the rush starts.\n- Check the call history for questions the host could not answer.\n\nROAL’s dashboard includes a menu editor, hours, FAQs, upsell suggestions, and live kitchen tickets. That means you can keep the menu tied to what is actually happening in the store, not what used to be on the old printout behind the counter.\n\nA worked example: say you change your chicken parm price from $16 to $17 and stop selling garlic knots after 8 p.m. Update both in the menu editor before dinner service. Then test a call and ask, “Do you still have garlic knots?” The host should answer based on the current menu. If it does not, you know where to fix it.\n\nFor a busy owner, the goal is not perfection. The goal is a short, repeatable update process that takes a few minutes and prevents order mistakes."
+    },
+    {
+      "id": "what-does-the-caller-hear-and-what-does-the-kitchen-get",
+      "h2": "What does the caller hear, and what does the kitchen get?",
+      "body": "A good phone host should sound like a front counter person, not a maze. It should greet the caller, take the order, repeat it back, ask for a name and phone number, and give a ready time. Then it sends a clean ticket to the kitchen screen.\n\nHere is a realistic script line it might use: “Thanks for calling. What can I get started for you?”\n\nAnd when the order is placed, it should confirm details like this: “So that is one large pepperoni, one small plain pie, extra sauce on the side, under Maria, and a 20-minute pickup time.”\n\nThat is what makes the menu learning useful. The host is not just memorizing item names. It is turning the menu into an order flow your staff can use.\n\nROAL can also handle reservation requests, speak the caller’s language, and hand off catering, complaints, allergy-sensitive questions, or manager requests to staff with a summary. It does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it.\n\nIf you want to compare phone order paths, see [pickup order taking](/use-cases/pickup-orders) and [menu, hours and allergen questions](/use-cases/menu-questions)."
+    },
+    {
+      "id": "how-should-i-handle-sold-out-items-specials-and-tricky-quest",
+      "h2": "How should I handle sold-out items, specials, and tricky questions?",
+      "body": "This is where many phone mistakes happen, so keep the rules simple. Sold-out items should not be offered. Specials should be written clearly. Allergy-sensitive questions, complaints, and manager requests should go to staff with a summary.\n\nUse this short operating rule:\n- If it is on the live menu, the host can sell it.\n- If it is sold out, remove it or mark it sold out.\n- If the question is unusual, hand it to staff.\n- If the caller wants card payment over the phone, do not take it.\n\nExample: a caller asks, “Can you make the pizza gluten-free?” If that is not a standard option in the menu, the host should not improvise. It should pass the question along. Same with a caller asking about a severe allergy. Better to have staff answer than to guess.\n\nIf you want a deeper look at these edge cases, the related posts on [what AI phone hosts get wrong, and how to check](/blog/ai-phone-host-mistakes) and [when the AI doesn't know the answer](/blog/ai-phone-host-unanswered-questions) are useful reads.\n\nA simple menu safety checklist:\n- Sold-out items hidden or blocked\n- Specials written with prices and limits\n- Allergy questions routed to staff\n- Manager requests summarized\n- No card numbers taken over the phone"
+    },
+    {
+      "id": "how-much-does-menu-learning-change-the-cost-of-phone-orders",
+      "h2": "How much does menu learning change the cost of phone orders?",
+      "body": "Menu learning matters because it helps the host complete more usable orders and fewer messy calls. That is especially helpful when you compare phone orders with delivery apps, monthly AI phone plans, or human answering services.\n\nHere is a simple example with numbers you can swap for your own:\n- Say your average phone order is $28.\n- Say you get 100 completed phone orders in a month.\n- That is $2,800 in order value.\n\nNow compare common cost patterns:\n| Option | Common pricing pattern | What it means for you |\n|---|---|---|\n| Delivery apps | Roughly 15-30% commission per order | You give up a slice of each order |\n| Human answering services | Per minute or per call | Cost can vary with call length and volume |\n| Many AI phone tools | Fixed monthly fee per location | You pay even in slower months |\n| ROAL | $0.90 per completed phone order | You pay when a confirmed order reaches the kitchen screen |\n\nThat does not mean one option is always best. It means the menu needs to be accurate so the phone host can actually complete the order and send it through cleanly. ROAL bills monthly, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nIf you want to run your own numbers, use [the AI phone host cost calculator](/tools/phone-host-cost-calculator) and compare it with your current phone setup."
+    },
+    {
+      "id": "how-do-i-get-roal-live-without-messing-up-my-current-number",
+      "h2": "How do I get ROAL live without messing up my current number?",
+      "body": "Going live is straightforward, but it should still be done carefully. The owner claims the host, ROAL gives each location its own phone line automatically, and the restaurant forwards its existing number to that line. You can forward all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nA practical rollout looks like this:\n1. Build the host from your website, Google Maps link, or restaurant name and city.\n2. Test-call it in the browser.\n3. Review the menu, hours, and address.\n4. Claim the host and choose the voice and name.\n5. Forward your existing number when you are ready.\n6. Watch the kitchen screen and call history for the first few days.\n\nFor call forwarding, confirm the right code with your carrier or phone system and test with a real call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On many GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off, **61*number# forwards unanswered calls, and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set this in the web portal.\n\nIf you want to try it now, [build a free test host from your website](/try). ROAL was built by Venkata Vamsi, a founder in Jersey City, NJ, and it works for any US restaurant."
+    }
+  ],
+  "takeaways": [
+    "An AI phone host learns your menu by reading your website, PDFs, photos, or uploaded files.",
+    "The best setup is a clean live menu, correct hours, correct address, and clear sold-out rules.",
+    "Test the host before forwarding calls so you can catch bad prices or missing items.",
+    "ROAL can take orders, answer common questions, and send a clean ticket to the kitchen screen.",
+    "Tricky calls should go to staff, and card numbers should not be taken over the phone."
+  ],
+  "faq": [
+    {
+      "q": "How does an AI phone host read my menu?",
+      "a": "It reads the menu details you already have online or upload, such as items, prices, sizes, and modifiers. For ROAL, the owner can paste a website, Google Maps link, or restaurant name and city, and the host is built from public pages and menu files. After that, you can test the host and fix anything that needs attention."
+    },
+    {
+      "q": "What if my menu changes often?",
+      "a": "Keep a simple update routine in the menu editor so prices, hours, and sold-out items stay current. If you change specials by day or by time, update those before the rush. The host should always follow the live menu, not an old printout."
+    },
+    {
+      "q": "Can an AI phone host handle allergy questions?",
+      "a": "It can recognize that allergy-sensitive questions need a careful handoff. ROAL passes those calls to staff with a summary instead of guessing. That keeps the conversation safer when the caller needs special handling."
+    },
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it, which keeps the phone order focused on the menu and the ticket."
+    }
+  ],
+  "words": 1628,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

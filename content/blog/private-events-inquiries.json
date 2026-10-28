@@ -1,0 +1,71 @@
+{
+  "slug": "private-events-inquiries",
+  "keyword": "restaurant private event inquiry",
+  "category": "guest-experience",
+  "title": "Handling restaurant private event inquiries",
+  "seoTitle": "Restaurant private event inquiries | ROAL",
+  "description": "Use a clear phone script and checklist to handle private event inquiries, route the right calls, and keep your team aligned.",
+  "question": "How should I handle a restaurant private event inquiry on the phone?",
+  "answer": "Treat a restaurant private event inquiry like a lead, not a normal order. Ask for the date, party size, time, contact info, and whether they want a room, catering, or a full buyout, then hand the details to staff with a clear summary. If you use an AI phone host like ROAL, it can collect the basics and send tricky event calls to your team.",
+  "summary": "You’ll know what to ask, what to write down, and when to hand a private event call to staff.",
+  "intro": "A restaurant private event inquiry should be handled with a short script, a clear intake form, and a fast handoff to the right person. The goal is to get the basics on the first call so the guest feels taken care of and your staff does not have to chase details later.\n\nFor most independent spots, the phone is where event leads start. A good phone host can collect the date, party size, and callback number, then send a clean summary to your team. ROAL can do that on the phone, while still handing catering, manager requests, and other tricky calls to staff.",
+  "sections": [
+    {
+      "id": "what-should-i-ask-on-a-private-event-call",
+      "h2": "What should I ask on a private event call?",
+      "body": "Start with the facts you need to qualify the request. Keep it short. You do not need a full sales pitch on the phone. You need enough to know whether the event fits your space, your timing, and your staffing.\n\nUse a simple order to the questions:\n1. Date and day of week\n2. Desired start time and how long they need the space\n3. Guest count\n4. Type of event: birthday, office lunch, rehearsal dinner, family gathering, and so on\n5. Whether they want dine-in, a private room, catering, or a buyout\n6. Best callback number and name\n7. Any food needs, like vegetarian, allergy-sensitive, or kids' meals\n\nA useful script line is: \"I can help with that. What date are you looking at, how many guests, and what kind of event is it?\"\n\nIf you use ROAL, it can take reservation requests and hand the rest to staff with a summary. That works well for owners who want the phone answered but still want a person to close the event details."
+    },
+    {
+      "id": "how-do-i-separate-event-leads-from-regular-orders",
+      "h2": "How do I separate event leads from regular orders?",
+      "body": "Not every caller asking about a party is ready to book food today. Some just want pricing. Some want to know if you have a room. Some are comparing a few places. So the phone process should split into two paths: event lead or regular order.\n\nHere is a practical way to do it:\n- If they want 2 to 12 people and a table, gather reservation details.\n- If they want 15 or more people, collect event details.\n- If they ask about trays, platters, or delivery for a group, mark it as catering.\n- If they ask about a manager, a deposit, or custom timing, send it to staff.\n\nExample phone line: \"For a party that size, I can take the details and have our team follow up with the options.\"\n\nA clean handoff matters. Your team should receive the caller's name, phone number, date, headcount, and the main request. With ROAL, those harder calls can land in the inbox with a summary, so staff can reply once and know the context.\n\nThis also helps during rush hours. The phone can keep moving while event leads still get captured instead of slipping into voicemail."
+    },
+    {
+      "id": "what-details-should-go-in-the-event-inquiry-note",
+      "h2": "What details should go in the event inquiry note?",
+      "body": "Write the note the way your manager would want to see it. Keep it short, readable, and specific. A messy note slows everyone down. A good note tells the team what the caller wants and what to do next.\n\nUse this checklist for every restaurant private event inquiry:\n- Name\n- Callback number\n- Date and time requested\n- Guest count\n- Event type\n- Dining style: dine-in, catering, pickup, delivery, or buyout\n- Food concerns, like allergies or vegetarian items\n- Any special timing needs\n- Who should follow up\n\nA solid summary might look like this:\n\"Mia Chen, 555-0100, wants Saturday at 7 p.m. for 22 guests. Birthday dinner. Asking about a semi-private area. Vegetarian guest in the group. Please call back today.\"\n\nThat is the kind of summary that saves time. It gives your team enough detail to reply without calling back for basics.\n\nIf your restaurant uses [reservation requests](/use-cases/reservations) and event calls differently, keep the language clear on the phone. Say, \"I can take the request now and send it to our team for review.\""
+    },
+    {
+      "id": "how-do-i-price-a-private-event-without-confusing-the-caller",
+      "h2": "How do I price a private event without confusing the caller?",
+      "body": "Price questions are normal, but the phone is usually not the best place to quote a full event package unless you already have fixed rates. A better approach is to give a simple range or explain what will happen next.\n\nIf you have a small private room fee, a food minimum, or a catering tray menu, say that clearly. If you do not have set pricing, say you need staff to confirm the details.\n\nExample script: \"We can take the request now. For final pricing, our team will confirm based on the date, guest count, and menu choice.\"\n\nYou can also prepare a simple internal pricing sheet:\n| Item | Example number |\n| --- | --- |\n| Room fee | $150 |\n| Food minimum | $500 |\n| Deposit | $100 |\n| Typical party size | 18 guests |\n\nUse your own numbers here. The point is to give the phone host or staff something consistent to say.\n\nROAL is useful here because it can capture the request, not invent pricing. It knows the menu and hours from your public pages and can route harder questions to your team. That keeps the caller moving without guessing."
+    },
+    {
+      "id": "how-do-i-keep-private-event-calls-from-interrupting-the-kitc",
+      "h2": "How do I keep private event calls from interrupting the kitchen?",
+      "body": "Event calls can burn time fast if the phone rings all day. The kitchen should not have to stop for every room rental question or party quote. Build one path for the phone and one path for the team.\n\nA simple workflow:\n1. The phone host answers the call.\n2. It gathers the event basics.\n3. It flags questions it cannot answer.\n4. Staff gets one summary instead of a long voicemail.\n5. The caller gets a follow-up from the right person.\n\nThis is where a [phone menu and owner workflow](/blog/restaurant-phone-answering-best-practices) matters. If the caller asks about large groups, deposits, or manager approval, the phone should not guess. It should hand off.\n\nUse this handoff line: \"I’m going to pass this to our team so they can help with the event details.\"\n\nThat keeps the front of house calm. It also helps when you are short staffed. ROAL can answer the phone, take the basics, and send a summary to the inbox, while your staff focuses on service. The caller still gets a real response, just not from the wrong person at the wrong time."
+    },
+    {
+      "id": "what-should-i-do-after-the-call-so-the-lead-does-not-go-cold",
+      "h2": "What should I do after the call so the lead does not go cold?",
+      "body": "The follow-up matters as much as the first call. A private event inquiry often needs a second step, and that step should happen fast. If you wait too long, the caller may book somewhere else.\n\nSet up a simple follow-up rule:\n- Same day for time-sensitive events\n- Next business day for general requests\n- Immediate reply for allergies, large groups, or manager questions\n\nYour response can be short:\n\"Thanks for calling. We have your request for Friday at 6 p.m. for 14 guests. Our team is reviewing it now and will call you back at this number.\"\n\nIf you use [call history and transcripts](/how-it-works), keep the note in one place so anyone on the team can see what was said. That helps if the same caller rings again and asks, \"Did you get my event request?\"\n\nYou can also track these leads by type:\n| Lead type | Next step |\n| --- | --- |\n| Small birthday dinner | Reserve table or call back |\n| Large party | Manager review |\n| Catering tray request | Staff quote |\n| Buyout inquiry | Owner approval |\n\nIf you want to test this setup, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Ask for date, guest count, event type, and callback number right away.",
+    "Use one short script for simple requests and a handoff for pricing, deposits, and manager approval.",
+    "Write event notes so staff can reply without calling the guest back for basics.",
+    "A phone host like ROAL can collect the lead and route harder questions to your team."
+  ],
+  "faq": [
+    {
+      "q": "What should I ask on a restaurant private event inquiry call?",
+      "a": "Ask for the date, time, guest count, event type, callback number, and any food or allergy notes. If they mention a room, catering, or a buyout, flag that for staff. Keep the script short so you do not lose the caller."
+    },
+    {
+      "q": "Should I quote private event pricing over the phone?",
+      "a": "Only if you already have clear prices or policies. If pricing depends on the date, headcount, or menu, tell the caller your team will confirm it. That avoids confusion and keeps the call moving."
+    },
+    {
+      "q": "How do I handle a private event inquiry when I’m busy?",
+      "a": "Take the basics and route the rest to staff. A clean summary with the caller’s name, number, date, and party size is better than making them wait on hold. ROAL can collect that information and send it to your team."
+    },
+    {
+      "q": "What’s the difference between a reservation request and a private event inquiry?",
+      "a": "A reservation request is usually for a table or a small group. A private event inquiry is for a larger party, a special space, catering, or a buyout. If the guest is unsure, ask how many people are coming and what kind of setup they want."
+    }
+  ],
+  "words": 1241,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -8,11 +8,11 @@ const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
 describe("blog responsive (prompt 12)", () => {
-  it("uses roster dates and ROAL Team bylines only (no fake customers)", () => {
+  it("uses roster dates and the founder byline only (no fake customers)", () => {
     for (const post of getAllPosts()) {
       expect(isValidBlogPublishedDate(post.publishedAt)).toBe(true);
-      const author = post.content?.author ?? "ROAL Team";
-      expect(author).toBe("ROAL Team");
+      const author = post.content?.author ?? "Venkata Vamsi";
+      expect(author).toBe("Venkata Vamsi");
     }
     const roster = read("lib/blog/posts.ts");
     expect(roster).not.toMatch(/publishedAt:\s*"2025-/);

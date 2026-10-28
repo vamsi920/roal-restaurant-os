@@ -1,0 +1,76 @@
+{
+  "slug": "accessibility-phone-orders",
+  "keyword": "accessible ordering restaurant",
+  "category": "guest-experience",
+  "title": "Phone ordering and accessibility for restaurants",
+  "seoTitle": "Accessible restaurant phone ordering basics | ROAL",
+  "description": "See how restaurants can make phone ordering more accessible with clear scripts, language support, and simple steps for a smoother caller experience.",
+  "question": "How can I make phone ordering more accessible in my restaurant?",
+  "answer": "Make phone ordering easier by giving callers a real person or phone host who can answer the phone, take pickup and delivery orders, repeat details clearly, and handle questions without forcing them into a phone menu. Use simple scripts, keep menu and hours up to date, and route allergy, complaint, and manager calls to staff with a summary.",
+  "summary": "You’ll learn how to make restaurant phone ordering easier for more callers, including people who need a simpler, more accessible experience.",
+  "intro": "Phone ordering can be one of the easiest ways to make a restaurant more accessible. A caller can speak naturally, ask follow-up questions, and place an order without wrestling with an app or a complicated menu.\n\nFor an accessible ordering restaurant, the goal is simple: make it easy for more people to place an order, ask about hours, or get help fast. That can mean better phone scripts, clearer menu wording, and an AI phone host like ROAL that answers the call, takes the order, and sends a clean ticket to the kitchen.",
+  "sections": [
+    {
+      "id": "what-makes-phone-ordering-more-accessible-for-guests",
+      "h2": "What makes phone ordering more accessible for guests?",
+      "body": "Accessibility is not only about ramps and restrooms. On the phone, it means a caller can get what they need without confusion, pressure, or extra steps.\n\nFor a restaurant, the biggest barriers are usually these:\n- Long hold times\n- Hard-to-use phone menus\n- Fast speech, slang, or unclear menu reading\n- Callers who need to repeat themselves many times\n- Language barriers\n- Staff who are too busy to take a full order carefully\n\nA more accessible phone flow is usually shorter and clearer. A caller should be able to say, “I want pickup for 6:30,” and get a straight answer. A good phone host can also repeat the order back, confirm the ready time, and collect the caller’s name and phone number without making the process feel rushed.\n\n### A simple example\nA caller says, “I need two pies, one plain and one pepperoni, plus a side of wings.” The right response is: “Sure. I’ll take that order now, confirm the sizes, and give you a ready time.” That is easier than making the caller press buttons, wait on hold, or explain the order twice."
+    },
+    {
+      "id": "how-do-i-make-my-restaurant-phone-line-easier-to-use",
+      "h2": "How do I make my restaurant phone line easier to use?",
+      "body": "Start with the basics: clear greeting, clear menu, clear hours, clear pickup rules. If your caller can understand the first 10 seconds, the rest usually goes better.\n\nUse this checklist:\n1. Say your restaurant name right away.\n2. State whether you are taking pickup, delivery, or both.\n3. Keep hours and address current.\n4. Make sure sold-out items are not offered.\n5. Use simple item names and sizes.\n6. Confirm the order before ending the call.\n\nA helpful phone greeting is short. Try: “Thanks for calling Marco’s Pizza. We’re taking pickup and delivery orders now.” If you use an AI phone host like ROAL, it can answer with your chosen name and voice, speak the caller’s language, and pull menu details from your live menu so the caller hears current items and prices.\n\nFor owners who want a stronger phone setup, [phone greeting templates](/tools/phone-greeting-templates) can help you standardize how the line starts."
+    },
+    {
+      "id": "what-should-the-caller-hear-when-they-place-an-order",
+      "h2": "What should the caller hear when they place an order?",
+      "body": "The caller should hear a calm, step-by-step flow that feels like a skilled counter person. Each step should reduce confusion, not add to it.\n\nA good order flow looks like this:\n- Greeting\n- Pickup or delivery choice\n- Item, size, modifier, and note\n- Name and phone number\n- Ready time\n- Order repeat-back\n- Final confirmation\n\nExample script line: “Got it. One large cheese pizza, half pepperoni, extra well done, for pickup at 6:20. Can I get your name and phone number?” That script works because it is plain, specific, and easy to repeat.\n\nROAL is built to handle those exact steps on the phone. It takes items, sizes, modifiers, and notes from the restaurant’s live menu, then sends a clean ticket to the kitchen screen. It also does not take card numbers over the phone, so payment stays where your restaurant already handles it—at pickup or in your normal payment flow.\n\n### Keep these details ready\n| Item | Why it matters |\n|---|---|\n| Sizes | Helps prevent wrong orders |\n| Modifiers | Reduces back-and-forth |\n| Name and phone | Needed if staff must follow up |\n| Ready time | Sets expectations clearly |\n| Sold-out items | Avoids disappointment |"
+    },
+    {
+      "id": "how-do-i-handle-language-allergies-and-special-requests",
+      "h2": "How do I handle language, allergies, and special requests?",
+      "body": "Accessible phone ordering means helping callers without making them feel like a problem. Some callers need another language, while others need allergy-sensitive help or manager attention.\n\nHere’s a practical rule: if the question changes the kitchen process, it should go to staff with a summary. ROAL handles that handoff for allergy-sensitive questions, complaints, catering requests, and manager requests.\n\nUse a simple staff note like this: “Caller asked about a sesame allergy and wants to know whether the kitchen can keep the order separate.” That saves time and gives your team the key point fast.\n\nFor multilingual callers, the phone host should speak the caller’s language when possible. That is useful for takeout spots, pizza shops, delis, and family restaurants where callers may not be comfortable ordering in English. If the answer is not in the menu or FAQs, the question can go to the inbox, and the owner can answer once so the phone host knows it from then on.\n\nIf you want to build out the common questions first, [the restaurant FAQ list every phone host needs](/blog/restaurant-faq-list) is a useful place to start."
+    },
+    {
+      "id": "how-do-i-support-guests-who-do-not-want-to-use-apps",
+      "h2": "How do I support guests who do not want to use apps?",
+      "body": "Some guests simply do better with a phone call. They may be in the car, not want to type, have limited data, or just prefer to talk to someone.\n\nThat matters for accessibility because a phone call removes a lot of friction. There is no download, no password, and no tiny menu screen. The caller can ask, “What time do you close?” or “Do you still have lasagna?” and get an answer right away.\n\nA useful way to think about it is this: every step you remove makes the order easier for someone. The phone can be the most accessible ordering channel when it is handled well.\n\nIf you are comparing options, delivery apps commonly take roughly 15-30% commission per order, while many monthly AI phone tools charge a fixed fee whether or not calls come in. ROAL uses pay-per-completed-order pricing: $0.90 for each confirmed order whose ticket reaches the kitchen screen. That can be easier to match to actual phone demand.\n\nFor a side-by-side view, see [phone orders vs delivery apps](/compare/delivery-apps) or [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans)."
+    },
+    {
+      "id": "how-do-i-set-up-an-accessible-phone-host-without-adding-work",
+      "h2": "How do I set up an accessible phone host without adding work?",
+      "body": "You do not need a big project to get started. ROAL is built so an owner can paste a website, Google Maps link, or just “Name, City” at /try, then let it read the menu, prices, hours, and address from public pages. Owners can also upload a menu in any format.\n\nA practical setup flow:\n1. Check the menu for clear item names and sizes.\n2. Confirm hours, address, and parking details.\n3. Test-call the host in the browser.\n4. Claim the host when it sounds right.\n5. Forward the restaurant’s existing number to the new line.\n6. Test a real pickup order before going live.\n\nOwners keep their own number. Forwarding can be turned off any time. The dashboard also gives you call history, transcripts, recordings, a menu editor, hours, FAQs, and live kitchen tickets.\n\nA short test-call script is useful: “Hi, I’d like pickup for two at 7, one with no onions, and I need the address again.” If the host handles that smoothly, it is much easier for a real caller to use."
+    },
+    {
+      "id": "what-should-i-measure-to-know-if-phone-ordering-is-easier-fo",
+      "h2": "What should I measure to know if phone ordering is easier for guests?",
+      "body": "You do not need fancy tracking to see whether the phone experience is improving. Start with basic signs that the system is clearer for callers and easier for your staff.\n\nTrack these by hand or in your dashboard:\n- How often callers ask for the address or hours\n- How often staff must re-enter order details\n- How often allergy or special requests need follow-up\n- How many calls end with a completed kitchen ticket\n- Which questions land in the inbox and get added to FAQs\n\nHere is a simple worked example you can swap for your own numbers: say your average phone order is $28. If your restaurant gets 20 phone orders in a busy day, that is $560 in phone order volume before fees. If even a few calls were being missed or rushed before, a clearer phone flow can make those calls easier to complete.\n\nUse [the missed call cost calculator](/tools/missed-call-calculator) if you want to estimate your own phone volume, and [ROAL’s pricing](/pricing) if you want to compare pay-per-order costs against your current setup.\n\n### Quick owner checklist\n- Are callers hearing your hours and address clearly?\n- Are sold-out items blocked from the menu?\n- Are notes like “no cheese” or “well done” being captured correctly?\n- Are special requests going to staff with enough detail?\n- Can a caller place an order without being rushed?"
+    }
+  ],
+  "takeaways": [
+    "Accessible ordering means clear phone steps, not just a shorter wait.",
+    "A good phone flow should confirm items, sizes, modifiers, name, phone, and ready time.",
+    "Language support, allergy handoffs, and clear hours help more callers place orders successfully.",
+    "ROAL can answer the phone, take the order, and send a clean ticket to the kitchen without taking card numbers."
+  ],
+  "faq": [
+    {
+      "q": "What is the easiest way to make my restaurant phone ordering more accessible?",
+      "a": "Use a short, clear greeting and a simple order flow. The caller should be able to say what they want, hear the order repeated back, and get a ready time without extra steps. Keeping hours, address, and menu details current also helps a lot."
+    },
+    {
+      "q": "How can I help callers who speak another language?",
+      "a": "Use a phone host that can speak the caller’s language when possible, and keep the most common menu answers ready. If a question is too detailed or sensitive, route it to staff with a short summary so the caller is not left stuck on the line."
+    },
+    {
+      "q": "Should my restaurant take card payments over the phone?",
+      "a": "No, not if you do not already do that as part of your normal process. ROAL does not take card numbers over the phone; payment happens at pickup or however your restaurant already handles it."
+    },
+    {
+      "q": "How do I keep phone ordering clear for allergy-sensitive guests?",
+      "a": "Do not guess. If the caller asks an allergy-sensitive question, send it to staff with a summary so someone can answer carefully. Also make sure the phone host does not offer items that are marked sold out, and keep the menu wording clean and current."
+    }
+  ],
+  "words": 1412,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

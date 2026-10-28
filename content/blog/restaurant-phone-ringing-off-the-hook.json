@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-phone-ringing-off-the-hook",
+  "keyword": "restaurant phone ringing off the hook",
+  "category": "missed-calls",
+  "title": "When your restaurant phone is ringing off the hook",
+  "seoTitle": "Restaurant phone ringing off the hook | ROAL",
+  "description": "When calls pile up, orders and service can slip. Use a simple system for forwarding, order taking, and overflow help during the rush.",
+  "question": "What should I do when the restaurant phone is ringing off the hook?",
+  "answer": "When the restaurant phone is ringing off the hook, first route overflow calls somewhere reliable, then use a clear order-taking script for pickup, delivery, and common questions. If staff cannot keep up, forward busy or unanswered calls to an AI phone host like ROAL so callers still get help, orders, and a clean ticket to the kitchen screen.",
+  "summary": "You’ll learn how to handle a ringing phone, protect orders, and set up a simple overflow system.",
+  "intro": "When the restaurant phone is ringing off the hook, the first job is not to “handle it better.” It is to stop the calls from turning into missed orders, rushed answers, and a stressed-out counter.\n\nFor a pizza shop, deli, or family restaurant, the fix is usually simple: use a clear greeting, forward overflow calls, and make sure someone or something can take pickup and delivery orders when the line gets busy.",
+  "sections": [
+    {
+      "id": "what-should-you-do-first-when-the-phone-will-not-stop-ringin",
+      "h2": "What should you do first when the phone will not stop ringing?",
+      "body": "Start with the calls that matter most: pickup orders, delivery orders, reservation requests, and menu questions that block a sale. Put one person on the phone during your busy window if you can. If you cannot, set up overflow so unanswered or busy calls go somewhere useful instead of to voicemail.\n\nUse a short script so the caller knows they reached the right place:\n\n\"Thanks for calling Tony’s Pizza. How can I help with your order today?\"\n\nA simple triage list helps:\n\n1. Pickup order\n2. Delivery order\n3. Reservation request\n4. Hours, address, parking, or menu question\n5. Catering, allergy, complaint, or manager request\n\nIf your front counter is busy, do not ask the person taking calls to memorize everything. Keep a notepad with the basics: top sellers, sizes, modifiers, and the day’s specials. If you use ROAL, it can answer the phone, take orders from your live menu, and send a clean ticket to the kitchen screen when the call is completed. That helps when the line is busy and staff are already stretched.\n\nA quick owner check: if three calls in a row go unanswered during lunch, you do not have a phone problem. You have a routing problem."
+    },
+    {
+      "id": "how-do-you-stop-missed-calls-without-changing-your-whole-set",
+      "h2": "How do you stop missed calls without changing your whole setup?",
+      "body": "You usually do not need a new phone number or a full phone system change. In many cases, you can forward your existing restaurant line so calls still reach you when the main line is busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nCommon forwarding options vary by carrier and plan, so always confirm with your carrier and test with a real call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless commonly uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nA practical setup for a busy restaurant looks like this:\n\n- Forward all calls during your rush window, or\n- Forward only when busy / unanswered if you still want to answer some calls yourself\n- Test from a mobile phone after setup\n- Check whether caller ID still shows the incoming number\n- Confirm where the forwarded calls land after hours\n\nIf you are using ROAL, each location gets its own phone line automatically once you claim the host. You can forward your existing number to that line and keep your current restaurant number in place."
+    },
+    {
+      "id": "what-should-a-phone-script-say-during-a-lunch-rush",
+      "h2": "What should a phone script say during a lunch rush?",
+      "body": "A good script keeps the call moving. It should ask for the order, confirm the details, and avoid long back-and-forth. The goal is not a perfect conversation. The goal is a clean order and a caller who feels taken care of.\n\nUse this order flow:\n\n1. Greeting\n2. Pickup or delivery\n3. Items, sizes, modifiers, and notes\n4. Caller name and phone number\n5. Ready time\n6. Read the order back\n\nHere is a simple script line you can adapt:\n\n\"I can take that for you now. What size would you like, and any toppings or notes?\"\n\nFor example, say your average pickup order is $28. If you lose just 10 calls that would have turned into orders, that is 10 x $28 = $280 in missed sales before you even count repeat business. Plug in your own average order size and your own busy-hour call volume.\n\nKeep a tiny cheat sheet near the phone:\n\n| What to ask | Example wording |\n|---|---|\n| Size | \"Small, medium, or large?\" |\n| Modifiers | \"Any onions, no cheese, extra sauce?\" |\n| Notes | \"Any allergies or special instructions?\" |\n| Ready time | \"It will be ready in about 20 minutes.\" |\n\nROAL is built to follow that same flow on the phone. It can take items, sizes, modifiers, notes, and caller details, then confirm the order back and quote a ready time."
+    },
+    {
+      "id": "how-do-you-handle-hours-menu-questions-and-sold-out-items",
+      "h2": "How do you handle hours, menu questions, and sold-out items?",
+      "body": "Many calls are not even orders. They are questions that interrupt the line: Are you open? What is the address? Is there parking? Do you have gluten-free crust? That is why your phone flow needs the basics ready before the rush starts.\n\nMake a small list of the top questions people ask at your restaurant:\n\n- Hours today\n- Address and directions\n- Parking or pickup instructions\n- Menu items and prices\n- What is sold out\n- Reservation requests\n- Allergy-sensitive questions\n\nA good phone response sounds like this:\n\n\"Yes, we are open until 9. Our address is on Main Street, and pickup is at the front door. I can also help with the menu.\"\n\nIf an item is sold out, the caller should not order it. That is why your menu needs to stay current. Update the menu before service if you run out of a key item. If you use ROAL, the owner can edit the menu and hours in the dashboard, and the host will not offer items marked sold out.\n\nFor trickier calls, do not force the phone host to guess. Allergy-sensitive questions, catering requests, complaints, and manager requests should go to staff with a summary. That saves time and keeps the conversation in the right hands. Questions the host cannot answer go to an inbox, and once you answer them, the host knows it from then on."
+    },
+    {
+      "id": "what-does-the-money-side-look-like-when-calls-are-piling-up",
+      "h2": "What does the money side look like when calls are piling up?",
+      "body": "When the phone rings constantly, the real cost is not just staff stress. It is the order that never gets placed, the caller who gives up, and the extra commission you pay when customers switch to delivery apps.\n\nHere is a simple way to compare your options. Use your own numbers.\n\n| Option | Common cost pattern | What it means |\n|---|---|---|\n| Delivery apps | Roughly 15-30% commission per order | Convenient, but expensive per order |\n| Human answering service | Usually per minute or per call | Better than voicemail, but variable cost |\n| Monthly AI phone tools | Often roughly $79 to $599 per location | Fixed monthly fee whether or not orders come in |\n| ROAL | $0.90 per completed phone order | You pay when a confirmed order reaches the kitchen screen |\n\nExample: say you get 200 completed phone orders in a month. At $0.90 each, that would be 200 x $0.90 = $180. Plug in your own order count.\n\nCompare that with a fixed monthly fee or a commission model and you can see why the math matters. A restaurant with heavy phone volume often wants a cost tied to completed orders, not a high bill every month whether calls came in or not. ROAL bills monthly, with no setup fee, no monthly fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    },
+    {
+      "id": "how-do-you-put-overflow-calls-to-work-without-losing-control",
+      "h2": "How do you put overflow calls to work without losing control?",
+      "body": "Overflow only helps if it is set up clearly. Decide which calls should still reach your team and which calls can be handled by a phone host. For many restaurants, the best split is simple: staff answer when they can, and overflow catches busy or unanswered calls.\n\nUse this checklist before you turn it on:\n\n- Confirm your hours are correct\n- Check the menu and prices\n- Make sure sold-out items are marked\n- Decide who gets complaints and manager requests\n- Pick the voice and name for the host\n- Test-call from a mobile phone\n- Confirm the kitchen screen receives the ticket\n\nA practical owner rule: if the phone rings more than your counter can handle, it is better to route overflow than to let it ring out. That protects pickup orders, delivery orders, and reservations.\n\nROAL also gives you a call history with transcripts and recordings, plus a kitchen screen with live tickets marked new, preparing, and ready. That matters because you need to see what happened after the call, not just hope it was taken correctly.\n\nIf you want a quick starting point, [build a free test host](/try) from your website, Google Maps link, or restaurant name and city. You can test-call it right in the browser before you ever forward your line."
+    },
+    {
+      "id": "what-is-the-simplest-plan-for-a-small-restaurant-with-one-bu",
+      "h2": "What is the simplest plan for a small restaurant with one busy line?",
+      "body": "The simplest plan is the one your team will actually use. Start with one phone number, one clear greeting, and one overflow path. Do not overload the system with rules no one remembers during a rush.\n\nA good small-restaurant setup looks like this:\n\n1. Keep your main restaurant number\n2. Forward unanswered or busy calls to the overflow line\n3. Use a short greeting and order script\n4. Keep hours, address, and menu current\n5. Route tricky calls to staff with a summary\n\nFor a pizza shop or deli, this often solves the biggest problem: the line stays useful even when the counter is slammed. For multi-location owners, the next step is to keep each store’s menu and hours separate so callers reach the right location. ROAL supports multi-location menus in the dashboard, which is helpful when one store has different hours or specials than another.\n\nOwners who want a plain overview can also read [How it works](/how-it-works) and [Pricing](/pricing) before deciding what setup fits. The main thing is to pick a system that fits a real shift, not an ideal one. If your Friday lunch rush is the problem, build for Friday lunch first, then tighten the rest later."
+    }
+  ],
+  "takeaways": [
+    "A ringing phone is a routing problem as much as a staffing problem.",
+    "Use a short script, a clear overflow setup, and current menu and hours.",
+    "Forward busy or unanswered calls to protect pickup and delivery orders.",
+    "ROAL can take orders, answer common questions, and send clean kitchen tickets.",
+    "Cost should be tied to completed orders, not wasted calls or long hold times."
+  ],
+  "faq": [
+    {
+      "q": "What do I do when my restaurant phone is ringing too much?",
+      "a": "Start by routing overflow calls to a place that can actually handle them. Keep a short script for pickup orders, delivery orders, and common questions, and make sure your hours and menu are current. If staff cannot keep up, forward busy or unanswered calls so callers still get help."
+    },
+    {
+      "q": "Should I forward all calls or only busy calls?",
+      "a": "That depends on your staff and your rush pattern. If someone can answer most calls, busy or unanswered forwarding may be enough. If the front counter is overwhelmed during peak times, forwarding all calls during that window may be simpler, but always test it and confirm with your carrier or phone system."
+    },
+    {
+      "q": "Can an AI phone host take orders for my restaurant?",
+      "a": "Yes, an AI phone host can take pickup and delivery orders from your live menu, collect the caller’s name and phone number, quote a ready time, and send a clean ticket to the kitchen screen. It should not take card numbers over the phone, and tricky calls should still go to staff with a summary."
+    },
+    {
+      "q": "How much does it cost to handle overflowing restaurant calls?",
+      "a": "Costs vary by setup. Delivery apps commonly take rough commission percentages, human answering services often charge per minute or per call, and some AI phone tools charge a fixed monthly fee per location. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract."
+    }
+  ],
+  "words": 1629,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

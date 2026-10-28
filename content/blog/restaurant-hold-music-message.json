@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-hold-music-message",
+  "keyword": "restaurant on hold message",
+  "category": "phone-setup",
+  "title": "Restaurant on-hold messages that keep callers informed",
+  "seoTitle": "Restaurant on-hold messages that keep callers informed",
+  "description": "Write a clear on-hold message with music that fits your brand, plus call forwarding steps and a simple setup plan for callers.",
+  "question": "What should I put on a restaurant on hold message, and how do I set it up without annoying callers?",
+  "answer": "A good restaurant on hold message should be short, clear, and useful: say the restaurant name, ask the caller to stay on the line, and give one quick option such as ordering online or calling back during open hours. Keep the music calm and the message brief. If you use call forwarding, test it after setup so calls still reach the right place.",
+  "summary": "You’ll know what to say, what music to use, and how to set up hold messages without frustrating callers.",
+  "intro": "A restaurant on hold message should be short, calm, and useful. It should tell callers they reached the right place, give them a reason to stay on the line, and keep the music from feeling harsh or rushed.\n\nFor a busy pizza shop, deli, or family restaurant, the goal is simple: keep the caller comfortable until someone answers. If you use an [AI phone host](/how-it-works), hold is often less important because the host can answer the phone, take orders, and answer questions right away. But you still need a good setup for calls that are forwarded, busy lines, or after-hours periods.",
+  "sections": [
+    {
+      "id": "what-should-a-restaurant-on-hold-message-say",
+      "h2": "What should a restaurant on hold message say?",
+      "body": "A good hold message does three things: confirms the caller reached your restaurant, tells them what to do next, and stays brief. Most owners do not need a long script. The shorter it is, the less likely the caller is to hang up.\n\nHere is a simple structure you can use:\n\n1. Greet the caller with the restaurant name.\n2. Ask them to stay on the line.\n3. Give one useful reminder, like hours, pickup, or that a staff member will be with them soon.\n4. Repeat only if the hold lasts long enough to need it.\n\nExample script:\n\n\"Thanks for calling Mario’s Pizza. Please stay on the line and we’ll be with you shortly. You can also ask about pickup, delivery, or today’s specials when we answer.\"\n\nIf you want a fuller version, keep it simple:\n\n\"Thanks for calling Mario’s Pizza. Our team is helping other guests right now. Please stay on the line, and we’ll take your order, answer questions, or help with pickup as soon as possible.\"\n\nFor restaurants, the message should sound like your staff sounds. Not formal. Not salesy. Just clear."
+    },
+    {
+      "id": "how-long-should-the-message-be-before-music-starts",
+      "h2": "How long should the message be before music starts?",
+      "body": "Keep the first message short. In most restaurants, callers want to know they got through and that someone will answer. Long recordings make people think the line is dead or that no one is available.\n\nA practical setup looks like this:\n\n| Hold part | What to do |\n|---|---|\n| First message | 10-20 seconds, with the restaurant name and a short instruction |\n| Music | Calm background music, not loud or busy |\n| Repeat message | Only after a reasonable gap, so the caller is not interrupted too often |\n\nIf you are a takeout spot, the script should be even tighter. Example: \"Thanks for calling Asha’s Kitchen. Please stay on the line. We’ll help with pickup orders, hours, and menu questions shortly.\"\n\nIf your call volume is high, hold messaging can become a queue signal. But the caller still should not feel trapped. Keep enough silence between messages that the music can do its job. If the message repeats too often, callers may hang up before ordering.\n\nA good rule for owners: if your own staff would find the recording annoying, callers will too."
+    },
+    {
+      "id": "what-kind-of-music-works-best-for-restaurant-hold-time",
+      "h2": "What kind of music works best for restaurant hold time?",
+      "body": "The best hold music is background music, not a performance. It should be steady, soft, and easy to ignore. You want callers focused on staying on the line, not on the music itself.\n\nA few practical choices:\n\n- Calm instrumental music usually works better than loud vocals.\n- Avoid aggressive beats, sharp volume changes, or music that sounds like a nightclub.\n- Match the tone of your place. A diner can be more casual; a family restaurant should feel warm and relaxed.\n- Keep volume lower than the voice recording so callers can hear the message clearly.\n\nIf your restaurant already uses a music feed in the dining room, that does not always work for hold. Dining-room music can be too loud or too energetic on the phone. Callers need something easier on the ear.\n\nHere is a simple check before you go live:\n\n- Call your own line from a cell phone.\n- Put the call on hold.\n- Listen for 20 to 30 seconds.\n- Ask: can I hear the message clearly, and would I stay on the line?\n\nIf the answer is no, change the volume first. Then shorten the message. Then try again."
+    },
+    {
+      "id": "how-do-i-set-up-call-forwarding-and-hold-for-my-restaurant",
+      "h2": "How do I set up call forwarding and hold for my restaurant?",
+      "body": "Hold messages often come into play when your main number forwards to another line or system. The exact steps depend on your carrier or phone system, so always confirm with them and test the line yourself.\n\nHere is the basic setup process many owners use:\n\n1. Decide when calls should forward: all calls, busy calls, or unanswered calls.\n2. Set the forwarding rule with your carrier or phone system.\n3. Make sure the forwarded line has a hold message or a live answer.\n4. Test from an outside phone.\n5. Confirm that the caller can still hear your message, music, or phone host clearly.\n\nCommon US forwarding codes vary by carrier and plan. On many landlines and some carriers, *72 then the forwarding number turns on forwarding, and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# can forward unanswered calls and **67*number# can forward busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle this in the web portal.\n\nFor restaurants, the safest move is simple: confirm the code with your carrier, then place a real test call from another phone. If you want a step-by-step, use [How to forward your restaurant calls](/blog/how-to-forward-restaurant-calls) or the [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-should-i-say-to-callers-who-are-waiting-for-pickup-or-o",
+      "h2": "What should I say to callers who are waiting for pickup or orders?",
+      "body": "Use hold time to set expectations. That helps callers stay calm, especially during a rush. You do not need a long explanation. You just need a clear promise about what happens next.\n\nA practical hold message can include one useful detail:\n\n- Pickup orders are welcome.\n- Delivery questions can be answered.\n- Hours and menu questions can be handled.\n- Special requests can be passed to staff.\n\nExample script for a busy takeout spot:\n\n\"Thanks for calling Valley Deli. Please stay on the line. We can help with pickup orders, menu questions, and hours as soon as we answer.\"\n\nExample for a family restaurant:\n\n\"Thanks for calling Sofia’s Kitchen. Our team is helping other guests right now. Please stay on the line for pickup, delivery, or reservation requests.\"\n\nIf you are using ROAL, you may not need a hold message for routine calls because the [phone host answers and takes orders](/how-it-works). It can take items, sizes, modifiers, notes, and caller details, then send a clean ticket to the kitchen screen. But you may still want a short hold setup for edge cases, forwarded calls, or times when staff still handles part of the call flow."
+    },
+    {
+      "id": "how-do-i-keep-hold-messages-from-costing-me-orders",
+      "h2": "How do I keep hold messages from costing me orders?",
+      "body": "The real risk is not the hold message itself. It is making callers wait too long, too often, or without clear direction. Restaurants lose business when the caller feels ignored.\n\nUse this checklist to protect your order flow:\n\n- Keep the first message short.\n- Lower the music volume.\n- Make sure staff answers forwarded calls quickly.\n- Use a backup system for busy times.\n- Test both lunch rush and slower periods.\n\nHere is a simple example. Say your average order is $28. Plug in your own number. If 10 callers hang up because the hold setup is clumsy, that is potentially about $280 in sales at risk. If your average order is $18, the same 10 callers would be about $180. The exact impact depends on your menu and your call volume, so use your own numbers.\n\nYou can also compare setup choices in plain terms:\n\n| Option | What the caller experiences | What you need to manage |\n|---|---|---|\n| Long hold message + music | More waiting, more chance of hang-up | Music, message, and timing |\n| Short hold message + live pickup | Less frustration | Staff available to answer |\n| AI phone host | Direct answer for orders and questions | Menu, hours, and call routing |\n\nIf you want a rough cost lens, compare your phone setup with [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans). ROAL uses per-completed-order pricing, with no monthly fee or setup fee, which can be easier to match to actual call volume."
+    },
+    {
+      "id": "what-is-a-practical-setup-for-a-small-restaurant-today",
+      "h2": "What is a practical setup for a small restaurant today?",
+      "body": "For many independent restaurants, the simplest setup is the one that keeps the line clear and the caller moving. You do not need a big phone system to sound professional.\n\nA practical plan looks like this:\n\n1. Write one short hold message.\n2. Choose calm music that is easy to hear.\n3. Set forwarding only where it makes sense: all calls, busy calls, or unanswered calls.\n4. Test the whole path from an outside phone.\n5. Keep a backup for hard questions, catering, allergies, and manager requests.\n\nThat last part matters. Some calls should not stay on hold forever. Allergy-sensitive questions, complaints, catering jobs, and manager requests should go to staff with a summary. ROAL does this when it takes over the call, and questions it cannot answer go to an inbox so the owner can answer once and teach the system from there.\n\nIf you want the fastest setup path, ROAL lets an owner paste a restaurant website, Google Maps link, or name and city at /try, then test-call the host in the browser with no sign-up needed. The owner can also upload a menu in any format. For owners who are comparing choices, the [phone greeting templates](/tools/phone-greeting-templates) and [restaurant phone glossary](/glossary) can help with the language.\n\nIf you want to try the setup yourself, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Keep a restaurant on hold message short, clear, and calm.",
+    "Use music that is soft and easy to ignore, not loud or busy.",
+    "Test forwarding and hold from an outside phone before you rely on it.",
+    "Special calls like allergies, complaints, and catering should go to staff with a summary.",
+    "ROAL can answer routine calls and send clean kitchen tickets, which can reduce the need for hold in the first place."
+  ],
+  "faq": [
+    {
+      "q": "What is the best restaurant on hold message?",
+      "a": "The best restaurant on hold message is short and useful. Say the restaurant name, ask the caller to stay on the line, and give one quick expectation, like help with pickup orders, hours, or menu questions. Keep it calm and avoid long speeches."
+    },
+    {
+      "q": "How long should a restaurant hold message be?",
+      "a": "Usually only 10 to 20 seconds before the music takes over is enough. If the message is too long, callers may hang up before someone answers. Keep repeats spaced out so the caller is not interrupted too often."
+    },
+    {
+      "q": "What music should restaurants use on hold?",
+      "a": "Use calm instrumental music or another low-key background track. Avoid loud vocals, sharp volume changes, or anything that sounds busy or stressful. The music should support the message, not distract from it."
+    },
+    {
+      "q": "How do I forward my restaurant phone calls?",
+      "a": "Call forwarding depends on your carrier or phone system. Many landlines and some carriers use *72 to forward all calls and *73 to turn it off, while some mobile carriers use other codes such as **21*number#. Always confirm the exact code with your carrier and test it with a real call."
+    }
+  ],
+  "words": 1567,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

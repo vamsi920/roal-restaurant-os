@@ -1,0 +1,71 @@
+{
+  "slug": "ai-phone-answering-caterers",
+  "keyword": "catering phone answering service",
+  "category": "restaurant-types",
+  "title": "AI phone answering for catering calls",
+  "seoTitle": "Catering phone answering service | ROAL",
+  "description": "An AI phone host can handle catering calls, share menus, hours, and pricing, and route special requests to staff.",
+  "question": "How can a catering phone answering service help me handle catering calls without adding more front-desk work?",
+  "answer": "A catering phone answering service can answer your line, take catering requests, collect the caller’s name and phone number, and pass the details to your staff with a clean summary. With ROAL, routine questions about hours, address, parking, and menu items are handled too, while tricky calls like allergy-sensitive questions or manager requests go to staff.",
+  "summary": "You’ll learn how to route catering calls, set up forwarding, and decide whether an AI phone host fits your shop.",
+  "intro": "A catering phone answering service helps your shop answer catering calls, collect the basics, and hand the rest to your staff. For a busy deli, pizza shop, or family restaurant, that means fewer missed catering requests and less time spent repeating the same details.\n\nROAL is an AI phone host for restaurants that can take catering requests, answer common questions, and send a clean ticket to the kitchen screen or to staff when the call needs a human. It is worth understanding how that works before you forward your number or change how your team answers the phone.",
+  "sections": [
+    {
+      "id": "what-should-a-catering-phone-answering-service-actually-do",
+      "h2": "What should a catering phone answering service actually do?",
+      "body": "A good catering phone answering service should do the small jobs fast and the important jobs carefully. For caterers, that usually means taking the caller’s name, phone number, event date, item list, sizes, modifiers, and any notes. It should also answer the basics, like hours, address, parking, and what is on the menu.\n\nROAL does that for restaurants, and it also understands when to hand a call to staff. For example, if someone asks about a large office order, allergy-sensitive food, or a manager approval, the call can go to your team with a summary instead of forcing the caller to repeat everything.\n\nA simple phone script line for catering calls is:\n\"Thanks for calling. I can help with the order details and get your request to the kitchen.\"\n\nHere is a quick checklist for a catering line:\n- Ask for the event date and pickup or delivery time.\n- Ask for the guest count.\n- Confirm the caller’s name and phone number.\n- Repeat the order back before ending the call.\n- Send staff anything involving special timing, allergies, or a manager decision.\n\nIf you want a deeper breakdown of use cases, see [catering inquiries](/use-cases/catering)."
+    },
+    {
+      "id": "how-does-roal-handle-catering-calls-from-start-to-finish",
+      "h2": "How does ROAL handle catering calls from start to finish?",
+      "body": "ROAL is set up from public information first. The owner pastes a restaurant website, Google Maps link, or just the name and city at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute. The owner can test-call it in the browser before going live.\n\nOnce live, the host answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and can also take reservation requests. For catering, it can collect the details your staff needs and then send a clean ticket or handoff summary to the right place. It speaks the caller’s language, which matters when you serve a mixed neighborhood or a wide pickup area.\n\nA practical workflow looks like this:\n1. Caller asks for a catering order.\n2. The host asks the date, time, guest count, and items.\n3. The host confirms sizes, modifiers, and notes.\n4. The host collects name and phone.\n5. The host repeats the order and quotes the ready time.\n6. If the call needs staff, it sends a summary instead.\n\nOne useful owner note: the host does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "id": "how-much-does-a-catering-phone-answering-service-cost",
+      "h2": "How much does a catering phone answering service cost?",
+      "body": "The price model matters more than the headline price. Human answering services usually bill per minute or per call. Many AI phone tools for restaurants charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nHere is a simple example you can swap for your own numbers:\n- Say you get 120 completed phone orders in a month.\n- At $0.90 each, that is $108.\n- If you had 40 catering-related orders inside that total, the cost still scales with completed orders, not idle time.\n\nThat is different from paying a flat monthly amount even during slower weeks. It is also different from delivery apps, which commonly charge roughly 15% to 30% commission per order. For a restaurant owner, the key question is not just \"What does it cost?\" It is \"What do I pay when the phone is quiet?\" You can compare the numbers with [pricing](/pricing)."
+    },
+    {
+      "id": "how-do-i-forward-my-catering-line-without-losing-my-main-num",
+      "h2": "How do I forward my catering line without losing my main number?",
+      "body": "You do not need to give up your existing number. When you claim the host, ROAL gives each location its own phone line automatically, and you forward your restaurant’s existing number to it. You can forward all calls, or only when busy or unanswered, and turn forwarding off any time.\n\nThe exact forwarding steps depend on your carrier or phone system. On many landlines and some carriers, *72 starts forwarding all calls and *73 turns it off. On GSM mobile carriers, codes often differ, such as **21*number# for all calls and ##21# to turn it off, with **61*number# for unanswered calls and **67*number# for busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually set it in the web portal.\n\nUse this quick setup checklist:\n- Confirm the forwarding code with your carrier.\n- Test from another phone after setup.\n- Make sure the ring time is long enough for your team.\n- Decide whether to forward all calls or just busy/unanswered calls.\n- Keep your old number active so regular customers still reach you the same way.\n\nBecause codes vary by carrier and plan, always confirm and test with a call. If you want carrier-specific help, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-should-i-expect-on-the-call-and-what-should-still-go-to",
+      "h2": "What should I expect on the call, and what should still go to staff?",
+      "body": "A catering phone answering service should make the easy part easy and escalate the hard part. ROAL can take items, sizes, modifiers, notes, caller name, phone number, and ready time. It can also answer common menu and store questions, and it will not offer items marked sold out.\n\nSome calls should still go to staff. That includes complaints, allergy-sensitive questions, and manager requests. Catering is often about detail, so handoff matters. If the caller wants a custom tray, a rush timeline, or a special accommodation, staff should see the summary and decide what is possible.\n\nA simple script your team can use when they take over:\n\"I have your name, number, and order details here. I’m checking that with the kitchen now.\"\n\nHere is a small owner checklist for call handling:\n- Does the host ask the right follow-up question when a tray is unclear?\n- Does it repeat the order back before ending the call?\n- Does it hand off allergy-sensitive requests?\n- Does it stop offering sold-out items?\n- Does it send the kitchen a clean ticket?\n\nROAL also gives you call history with transcripts and recordings, so you can review what callers asked and update the menu or FAQs from the dashboard when needed."
+    },
+    {
+      "id": "how-do-i-decide-if-this-fits-my-catering-business",
+      "h2": "How do I decide if this fits my catering business?",
+      "body": "Start with your busiest pain point. If your team is missing calls during the lunch rush, repeating the same catering answers, or getting pulled off prep to quote orders, a phone host can help. If your catering business mostly runs through known accounts and staff already have a clean process, you may only need it for overflow, after-hours, or weekends.\n\nA useful way to think about it is by call type:\n\n| Call type | Good fit for ROAL? | Why |\n|---|---:|---|\n| Hours, address, parking | Yes | Repeated questions that can be answered once and learned |\n| Standard catering request | Yes | Can collect details and hand off cleanly |\n| Allergy or special approval | Staff | Needs human judgment |\n| Complaint | Staff | Needs a person right away |\n| Card payment by phone | No | ROAL does not take card numbers over the phone |\n\nROAL is built by Venkata Vamsi in Jersey City, and it is already aimed at independent restaurants that want something practical, not fancy. If you are in Jersey City or Hoboken, you can also look at [ROAL in Jersey City, NJ](/locations/jersey-city) or [ROAL in Hoboken, NJ](/locations/hoboken). For the fastest first step, [build a free test host from your website](/try) and see how it handles your menu and catering questions before you change your live line."
+    }
+  ],
+  "takeaways": [
+    "A catering phone answering service should collect event details, not just answer the phone.",
+    "ROAL can handle routine catering questions and hand tricky calls to staff with a summary.",
+    "You keep your existing number and forward calls only when you want to.",
+    "Pricing is per completed order, not a flat monthly fee or per-minute bill."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take catering orders for a restaurant?",
+      "a": "Yes. ROAL can take pickup and delivery orders from the live menu, and it can collect catering request details such as the caller’s name, phone number, items, sizes, modifiers, notes, and ready time. If the call needs staff attention, it passes along a summary instead."
+    },
+    {
+      "q": "Will I have to change my restaurant’s main phone number?",
+      "a": "No. ROAL gives each location its own phone line automatically, and you forward your existing number to it. You can forward all calls or just busy or unanswered calls, and turn forwarding off any time."
+    },
+    {
+      "q": "Does a catering phone answering service take card payments over the phone?",
+      "a": "ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment. That keeps payment handling with your existing process."
+    },
+    {
+      "q": "How much does ROAL cost for catering orders?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "words": 1353,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

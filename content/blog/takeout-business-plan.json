@@ -1,0 +1,72 @@
+{
+  "slug": "takeout-business-plan",
+  "keyword": "takeout restaurant business plan",
+  "category": "operations",
+  "title": "Planning a takeout-first restaurant business plan",
+  "seoTitle": "Takeout restaurant business plan for owners | ROAL",
+  "description": "Plan a takeout restaurant business plan with menu, phone orders, staffing, and call forwarding tips for independent owners.",
+  "question": "How do I build a takeout restaurant business plan that actually works for phone orders and pickup?",
+  "answer": "Start with a menu built for speed, a clear phone order flow, and a kitchen that can handle pickup without slowing dine-in service. Price orders so delivery apps do not eat your margin, set up call forwarding and a backup plan for busy hours, and make sure someone can answer menu, hours, and allergy questions fast. Tools like ROAL can answer the phone, take pickup and delivery orders, and send clean tickets to the kitchen screen.",
+  "summary": "You’ll be able to map a takeout-first plan around menu, staffing, phone setup, and order flow.",
+  "intro": "A takeout-first restaurant needs a menu, phone setup, and kitchen flow built for pickup from day one. That is the core of a strong takeout restaurant business plan.\n\nThe goal is simple: make phone orders easy to place, easy to fire, and easy to hand off at pickup. If you want help with the phone side, ROAL can answer calls, take orders from your live menu, and send tickets to the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-should-a-takeout-first-menu-look-like",
+      "h2": "What should a takeout-first menu look like?",
+      "body": "A takeout-first menu should travel well, be quick to ring in, and be easy to repeat over the phone. Keep the menu tight enough that your staff can answer questions without guessing, but broad enough to cover your core sales.\n\nUse this filter for each item:\n- Holds quality for 15–30 minutes\n- Has simple sizes or portions\n- Needs only a few common modifiers\n- Can be packed without special handling\n\nExample: if you sell 40 items now, your takeout-first menu might start with 18–25 items that are best for pickup. A sandwich shop can trim to a few hot sandwiches, a few cold ones, sides, drinks, and a couple of desserts. A pizza shop can keep pies, slices, wings, salads, and a few add-ons.\n\nA useful phone script line is: “What size would you like, and do you want any toppings or sides?” That keeps the order moving.\n\nAlso mark sold-out items clearly. ROAL reads the live menu you provide and does not offer items marked sold out, which saves awkward calls and corrections at the counter."
+    },
+    {
+      "id": "how-do-i-price-takeout-orders-without-losing-money",
+      "h2": "How do I price takeout orders without losing money?",
+      "body": "Your pricing has to cover food, labor, packaging, and phone handling. If delivery apps are part of your mix, remember that they often take roughly 15–30% commission per order. That can change the math fast, especially on low-margin items.\n\nUse a simple example and swap in your own numbers:\n\n| Example item | Price |\n|---|---:|\n| Average phone order | $28 |\n| Packaging and bags | $1.25 |\n| Food cost | $9.00 |\n| Labor to prep and pack | $4.00 |\n| Net before overhead | $13.75 |\n\nNow compare channels. A $28 order sent through a delivery app with a 25% commission would lose $7.00 right away, before food and labor. A phone order keeps that commission out of the equation.\n\nROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, and no per-minute fee. That makes it easier to compare against flat monthly AI phone tools or human answering services that charge per call or per minute. Plug in your own average order size and your real food cost before you decide where takeout should sit in your business."
+    },
+    {
+      "id": "what-phone-setup-do-i-need-before-opening-day",
+      "h2": "What phone setup do I need before opening day?",
+      "body": "Phone setup matters because takeout lives or dies on speed. You need a main line, a backup plan for busy periods, and a clear way to route calls when no one can pick up.\n\nA practical setup checklist:\n- Keep your existing restaurant number\n- Decide whether to forward all calls or only busy/unanswered calls\n- Test the forwarding with a real call before service starts\n- Make sure staff know who handles ticket issues\n- Decide what happens after hours\n\nOn many landlines and some carriers, *72 then the forwarding number can forward all calls, and *73 can turn it off. On GSM mobile carriers, **21*number# often forwards all calls and ##21# turns it off; **61*number# often forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless often uses *72 / *73 and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal. Codes vary by carrier and plan, so always confirm with your carrier and test with a call.\n\nIf you use ROAL, each location gets its own phone line automatically after you claim the host, and you can forward your existing number to it when you’re ready. Forwarding can be turned off any time."
+    },
+    {
+      "id": "how-should-the-kitchen-and-pickup-flow-work",
+      "h2": "How should the kitchen and pickup flow work?",
+      "body": "A takeout-first business needs a clean handoff from caller to kitchen to pickup shelf. The fastest way to lose money is to have good orders coming in and bad ticket flow going out.\n\nSet the flow in three steps:\n1. Call comes in.\n2. Order is confirmed and sent to the kitchen screen.\n3. Order is packed and staged for pickup.\n\nA good kitchen checklist for each ticket:\n- Name on the order\n- Item count matches the ticket\n- Modifiers are visible\n- Ready time is clear\n- Special notes are easy to spot\n\nIf your average phone order takes 12 minutes to prep, you do not want three more minutes lost to staff re-typing the order. That is where a clean ticket matters. ROAL sends a ticket to the kitchen screen with the order details, so the caller’s name, phone number, items, modifiers, notes, and ready time are already captured.\n\nTry a simple staff script: “This is for pickup at 6:20, under Maria.” That gives the kitchen and the front counter one clean version of the order."
+    },
+    {
+      "id": "who-answers-the-phone-when-the-line-gets-busy",
+      "h2": "Who answers the phone when the line gets busy?",
+      "body": "In a takeout-first plan, the phone is part of the operation, not an afterthought. If the phone rings while the grill is full or the counter is slammed, you need a fallback that does not force a manager to stop everything.\n\nGood fallback options include:\n- A trained front-of-house employee\n- A shared manager duty during peak times\n- A phone host that can handle common order questions\n- A clear inbox for questions the host cannot answer\n\nROAL can answer hours, address, parking, and menu questions, take pickup and delivery orders from the live menu, and hand catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. It also speaks the caller’s language and can take reservation requests. It does not take card numbers over the phone; payment still happens at pickup or however your restaurant already takes it.\n\nA useful rule: if the issue changes the price, safety, or policy, send it to staff. For example, allergy-sensitive calls should be reviewed by your team. For routine orders, a phone host can keep the line moving while your staff stays on service."
+    },
+    {
+      "id": "how-do-i-know-whether-takeout-first-is-paying-off",
+      "h2": "How do I know whether takeout-first is paying off?",
+      "body": "Measure the business in a way that matches how takeout actually works. Don’t just look at total sales. Look at order size, ticket timing, and how often the phone turns into completed orders.\n\nA simple weekly scorecard can look like this:\n- Number of completed phone orders\n- Average order value\n- Busy-hour call volume\n- Average ready time quoted to the caller\n- Number of questions that needed staff help\n\nHere is a worked example you can change:\nIf your average phone order is $28 and you complete 100 phone orders in a month, that is $2,800 in phone-order sales. If you use ROAL at $0.90 per completed order, your phone order cost would be $90 for the month. Replace the $28 and 100 with your own numbers.\n\nYou can also compare takeout against delivery apps and other phone options. The point is not to make every order huge. The point is to keep the channel profitable and predictable.\n\nIf you want a place to start, [build a free test host from your website](/try) and see how your menu and hours sound on a real call."
+    }
+  ],
+  "takeaways": [
+    "Build the menu for speed, travel, and easy phone ordering.",
+    "Price takeout with packaging, labor, and channel costs in mind.",
+    "Set up call forwarding and test it with a real call before opening.",
+    "Keep a clear kitchen ticket flow from phone order to pickup.",
+    "Use a phone host for routine orders and send tricky calls to staff."
+  ],
+  "faq": [
+    {
+      "q": "What should be in a takeout restaurant business plan?",
+      "a": "A takeout restaurant business plan should cover menu design, order flow, pricing, packaging, staffing, phone setup, and pickup handling. It should also explain how you will answer calls during rushes and what happens when the kitchen is busy. Keep it practical and tied to your real service flow."
+    },
+    {
+      "q": "How many menu items should a takeout-first restaurant have?",
+      "a": "There is no perfect number, but a takeout-first menu is usually smaller than a full dine-in menu. Start with the items that travel well, are easy to pack, and can be made consistently during a rush. If a dish causes delays or quality problems on pickup, consider leaving it off the takeout menu."
+    },
+    {
+      "q": "How do I set up call forwarding for my restaurant?",
+      "a": "Call forwarding depends on your carrier or phone system. On many landlines and some carriers, *72 and *73 are common for forward on and off; on some mobile carriers, codes like **21*number# and ##21# may apply. Confirm with your carrier and test with a real call before relying on it."
+    },
+    {
+      "q": "Can an AI phone host take payment over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or through whatever payment process your restaurant already uses. It can take the order, confirm it, and send a clean ticket to the kitchen screen."
+    }
+  ],
+  "words": 1193,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

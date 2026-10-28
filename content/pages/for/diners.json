@@ -1,0 +1,123 @@
+{
+  "slug": "diners",
+  "label": "Diners and breakfast spots",
+  "h1": "An AI phone host for diners and breakfast spots",
+  "seoTitle": "AI phone answering for diners and breakfast spots | ROAL",
+  "description": "ROAL is an AI phone host for diners and breakfast spots. It answers calls, takes pickup orders from your live menu, and sends clean kitchen tickets.",
+  "lead": "Your breakfast rush starts before the line opens. ROAL answers calls, takes pickup orders, and helps callers who want eggs, pancakes, bacon, bagels, or coffee to go.",
+  "question": "How can an AI phone host help my diner or breakfast spot take pickup orders without missing the morning rush?",
+  "answer": "ROAL answers your restaurant’s phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common diner calls like hours, address, parking, and simple menu questions, then pass along allergy-sensitive or manager requests. You can let it answer all calls or only busy and unanswered calls.",
+  "pains": [
+    {
+      "title": "The phone rings while the grill is slammed",
+      "body": "Sunday brunch, school-day breakfast, and the first hour after opening can stack up fast. A missed call can mean one less coffee, omelet, or Taylor ham, egg and cheese order."
+    },
+    {
+      "title": "Order takers get stuck repeating the same questions",
+      "body": "People often call for the same things: “What time do you open?”, “Do you have home fries?”, “Can I get a bacon egg and cheese on an everything bagel?”, or “Where do I park?”"
+    },
+    {
+      "title": "Voicemail does not help in the breakfast rush",
+      "body": "Callers usually want a quick yes, a ready time, and a simple pickup total. If they hit voicemail, they often move on to the next diner."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes real breakfast orders",
+      "body": "ROAL can take items, sizes, modifiers, and notes from your live menu. That includes requests like no onions, extra crispy bacon, rye toast instead of white, or decaf coffee."
+    },
+    {
+      "title": "Handles the common diner questions",
+      "body": "It answers hours, address, parking, and menu questions so your staff can stay on the line only when needed. If the caller asks something it cannot answer, it sends the question to your inbox."
+    },
+    {
+      "title": "Fits the way breakfast spots actually work",
+      "body": "You can forward all calls, or only the calls you miss when the counter is busy. That helps during the morning rush, after the lunch shift starts, and on weekends when the dining room fills up."
+    },
+    {
+      "title": "Sends a kitchen-ready ticket",
+      "body": "ROAL sends a clean ticket to the kitchen screen with the order details and a ready time. That keeps pickup orders easier to see when the expo counter is moving fast."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Two bacon egg and cheese sandwiches, one on an everything bagel and one on rye. Also a side of home fries."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes?"
+    },
+    {
+      "who": "caller",
+      "line": "Make one sandwich with no cheese, and add ketchup packets."
+    },
+    {
+      "who": "host",
+      "line": "Okay. What name should I put on the order?"
+    },
+    {
+      "who": "caller",
+      "line": "Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your order will be ready in about 15 minutes. I have two bacon egg and cheese sandwiches, one on an everything bagel and one on rye, one with no cheese, plus a side of home fries and ketchup packets. Is that correct?"
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:15 am",
+    "lines": [
+      "2 bacon egg and cheese sandwiches",
+      "1 on everything bagel",
+      "1 on rye, no cheese",
+      "1 side home fries",
+      "Name: Maria"
+    ],
+    "note": "Add ketchup packets"
+  },
+  "sections": [
+    {
+      "h2": "Built for the breakfast rush",
+      "body": "Diners and breakfast spots get the same calls over and over: opening time, weekend hours, parking, and pickup orders for eggs, pancakes, and sandwiches. ROAL is built for that kind of phone traffic. It answers in a warm, simple way and keeps the line moving when your counter staff is busy with in-person guests.\n\nA good setup starts with your real menu. Include the items people call for most, like omelets, French toast, pancakes, breakfast platters, bagels, muffins, home fries, and coffee. If a dish is sold out, ROAL will not offer it. If a caller asks for something special, it can note it clearly for the kitchen."
+    },
+    {
+      "h2": "A simple setup for owners who are not tech people",
+      "body": "You do not need a big setup project. Paste your restaurant website, Google Maps link, or just your restaurant name and city at [Build a free test host](/try). ROAL reads the menu, prices, hours, and address from public pages, and you can test-call it right in the browser.\n\nIf you already have a printed menu photo or PDF, you can upload that too. Then claim the host, pick a voice and name, and forward your existing number when you are ready. You can forward all calls, or only the calls that are busy or unanswered, and turn forwarding off any time."
+    },
+    {
+      "h2": "A worked example from a real breakfast morning",
+      "body": "Say a diner misses 12 calls on a Friday morning. One caller wants two western omelets. Another wants a sausage biscuit and black coffee. A third asks if the parking lot is open and whether pickup is ready in 10 minutes. ROAL can answer those calls, take the orders, and send each one as a clean ticket.\n\nThat matters because breakfast orders are fast, repetitive, and time-sensitive. Callers usually want to know what is available, how long it will take, and whether they can grab the food on the way to work. If your host already knows the menu, it can save your staff from juggling the phone while the grill, toast station, and register are all busy."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pickup orders for breakfast sandwiches and platters?",
+      "a": "Yes. ROAL can take items, sizes, modifiers, and notes from your live menu, then send a kitchen ticket. That works for common diner orders like eggs any style, bacon egg and cheese, pancakes, omelets, bagels, and home fries."
+    },
+    {
+      "q": "What if someone asks about parking, hours, or where to enter?",
+      "a": "ROAL can answer hours, address, parking, and menu questions. If it does not know something, the question goes to your inbox, and when you answer it once, the host knows it from then on."
+    },
+    {
+      "q": "Can I use it only when the line gets busy?",
+      "a": "Yes. You can forward all calls, or only when busy or unanswered. That is useful for the morning rush, weekend brunch, or any time your counter staff is tied up."
+    },
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. It does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How is this different from voicemail or a press-1 menu?",
+      "a": "Voicemail asks callers to wait and leave a message, and a press-1 menu can slow people down. ROAL answers in a natural way, takes the order, and sends the details to the kitchen so breakfast calls can move faster."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "slug": "read-call-transcripts-restaurant",
+  "keyword": "call transcripts restaurant",
+  "category": "operations",
+  "title": "How to read restaurant call transcripts",
+  "seoTitle": "How to read restaurant call transcripts | ROAL",
+  "description": "Use call transcripts to spot missed details, fix menu issues, and improve pickup order handling without slowing down service.",
+  "question": "How do I read call transcripts for my restaurant without wasting time?",
+  "answer": "Read restaurant call transcripts by checking the caller’s request, the exact items and modifiers, the quoted ready time, and any handoff notes for staff. Look for repeat questions about hours, menu items, parking, allergies, and sold-out items so you can fix what callers keep asking. A good transcript should help you tighten the menu, train staff, and clean up order mistakes.",
+  "summary": "You’ll learn a simple way to review call transcripts and turn them into better orders, fewer mistakes, and cleaner phone workflows.",
+  "intro": "Call transcripts show you what callers asked, what your team or phone host answered, and where the order or conversation got stuck. For a restaurant, that means faster fixes on menu confusion, missed details, and busy-shift problems.\n\nIf you use an AI phone host like ROAL, the transcript is one of the most useful parts of the dashboard. It helps you see the exact words around pickup orders, delivery questions, reservations, and calls that need staff help. It is plain evidence you can act on.",
+  "sections": [
+    {
+      "id": "what-should-you-look-for-first-in-a-restaurant-call-transcri",
+      "h2": "What should you look for first in a restaurant call transcript?",
+      "body": "Start with the parts that affect the ticket. A useful transcript should show the caller’s name, phone number, order items, sizes, modifiers, notes, and ready time. For example, you want to see something like: “Large pepperoni, well done, no onions, pickup in 20 minutes.”\n\nA quick review order works well:\n1. Confirm who called.\n2. Check what they wanted.\n3. Check whether the order was repeated back clearly.\n4. Check whether the quoted ready time makes sense.\n5. Check whether staff got the ticket they needed.\n\nIf a transcript shows a call for “that chicken sandwich” and no one clarified which version, that is a problem. If it shows “gluten allergy” and the call was sent to staff with a summary, that is useful. ROAL keeps these transcripts with call history, so you can open a call after a rush and see exactly what happened instead of guessing.\n\nThe fastest habit is to read one transcript from each type of call: pickup order, menu question, reservation request, and a call that needed staff help. That gives you a simple picture of how your phone is actually used."
+    },
+    {
+      "id": "how-do-transcripts-help-you-find-order-mistakes-and-missed-d",
+      "h2": "How do transcripts help you find order mistakes and missed details?",
+      "body": "Most order mistakes start with a small gap in the transcript. Maybe the caller said “large fries,” but the note never included the size. Maybe they asked for “extra sauce,” but nobody wrote it down. Reading transcripts helps you catch those gaps before they become refunds, remakes, or upset customers.\n\nLook for these common red flags:\n- A modifier appears in the conversation but not in the final ticket.\n- The host had to ask the same question twice.\n- The caller changed the order at the end.\n- The transcript shows a sold-out item request that should have been blocked.\n- The ready time was quoted, but the kitchen could not match it.\n\nExample: say your average pickup order is $28. If you see three calls in one night where customers had to be called back because the transcript was missing a side or size, that is worth fixing. Plug in your own average check and count your own errors.\n\nYou can also use transcripts to clean up item names. If callers keep saying “grandma pie” and your menu says “house special pizza,” that is a sign to clarify wording on the menu or in FAQs. ROAL’s menu editor and call history make that easier to spot because you can compare the question with the response."
+    },
+    {
+      "id": "how-do-you-read-transcripts-for-menu-questions-hours-and-sta",
+      "h2": "How do you read transcripts for menu questions, hours, and staff handoffs?",
+      "body": "Not every call should end in an order. Many calls are simple questions about hours, address, parking, delivery zone, or allergens. When you read these transcripts, you are looking for repeat confusion. That tells you what needs to be clearer on the website, in the menu, or in the phone host’s answers.\n\nA good transcript for a menu question might include: “Are your wings boneless or bone-in?” followed by a clean answer and no need to interrupt staff. A staff handoff might say: “Caller has a severe peanut allergy and wants the manager to confirm fryer risk.” That is a good handoff because it gives staff the summary they need.\n\nUse this short checklist:\n- Did the caller get a direct answer?\n- Did the host stay within what it could answer?\n- Did anything sensitive go to staff with a summary?\n- Did the transcript show a question the host could not answer?\n\nThis is where [menu, hours and allergen questions](/use-cases/menu-questions) matter most. If the same question appears again and again, update your FAQ or menu wording. ROAL stores unanswered questions in an inbox so you can answer once and have the host learn it from then on. That saves repeat work and makes future transcripts cleaner."
+    },
+    {
+      "id": "how-can-transcripts-help-you-coach-staff-and-tighten-the-pho",
+      "h2": "How can transcripts help you coach staff and tighten the phone script?",
+      "body": "A transcript is not just a record. It is a training tool. It shows whether the person or phone host used a clear greeting, asked for the caller’s name and phone number, repeated the order back, and quoted a ready time without rushing.\n\nA simple script line to look for is: “Let me repeat that back to make sure I got it right.” If that line is missing, or if the call jumps straight to the ticket without confirmation, that is a coaching point.\n\nTry this review routine once or twice a week:\n1. Read three good transcripts.\n2. Read three messy ones.\n3. Mark where the conversation got unclear.\n4. Write one script fix.\n5. Test the fix on the next shift.\n\nIf your staff handles overflow calls, transcripts also show who needs more help with menu knowledge, allergy questions, and reservation requests. That matters on busy nights when the front counter is packed. A phone host can take some of that load, but staff still need to know what happened when a call is handed over.\n\nROAL’s call history makes this practical because you can open a transcript next to the ticket and see whether the order and the kitchen note match. That is much easier than trying to remember a rush from the night before."
+    },
+    {
+      "id": "how-do-you-use-transcripts-to-compare-phone-orders-with-othe",
+      "h2": "How do you use transcripts to compare phone orders with other order channels?",
+      "body": "A transcript gives you a clean phone-only view, which makes it easier to compare with delivery apps, online ordering, and walk-in orders. The point is not to chase every channel. The point is to see where the phone is helping or hurting your mix.\n\nHere is a simple worked example you can swap for your own numbers:\n- Say you read 20 transcripts from one week.\n- 12 are clean pickup orders.\n- 5 are menu questions that should have been answered faster.\n- 3 are handoffs for allergies, catering, or manager requests.\n\nThat tells you the phone is doing three different jobs. It is taking orders, answering questions, and routing sensitive issues. If you see a lot of “Do you have X?” questions, that may be a sign your menu wording needs work. If you see many calls that end with “I’ll just order on the app,” that may point to confusion on the phone.\n\nIf you want to compare your call handling costs, use [the phone host cost calculator](/tools/phone-host-cost-calculator). If you want a broader view of your phone workflows, [How it works](/how-it-works) is a good place to check the setup. Reading transcripts alongside other channels helps you spot where the phone is simplest, and where it needs clearer answers or better routing."
+    },
+    {
+      "id": "what-should-you-change-after-you-review-transcripts-each-wee",
+      "h2": "What should you change after you review transcripts each week?",
+      "body": "The real value is not reading transcripts. It is changing something after you read them. Pick one or two fixes at a time so your team can actually keep up.\n\nA practical weekly checklist:\n- Update one FAQ that keeps coming up.\n- Fix one menu item name that callers mishear.\n- Remove one sold-out item from the menu if it still shows up in calls.\n- Tighten one greeting or confirmation line.\n- Add one staff note for allergy or catering handoffs.\n\nYou can also use transcripts to decide whether forwarding should stay on all the time or only during busy periods. If your call history shows many unanswered rings during lunch, that is a sign to route more calls away from the counter. Use [call forwarding codes by carrier](/tools/call-forwarding-codes) to confirm the right steps for your line, and always test with a real call.\n\nFor owners who want a fast setup, ROAL can build a phone host from a website, Google Maps link, or “Name, City” in about a minute. Then you can test-call it in the browser before you go live. If you want to try that workflow, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Read transcripts for order details first: items, sizes, modifiers, notes, caller name, phone, and ready time.",
+    "Use repeated questions to fix menu wording, hours, parking, and allergen answers.",
+    "Treat messy transcripts as coaching notes, not just records.",
+    "Review a few transcripts each week and make one or two changes right away."
+  ],
+  "faq": [
+    {
+      "q": "What is the best way to read restaurant call transcripts?",
+      "a": "Start by checking whether the transcript includes the caller’s request, the full order, the quoted ready time, and any staff handoff notes. Then scan for repeat questions, missing modifiers, and unclear confirmations. That gives you the fastest picture of where the call went well and where it needs work."
+    },
+    {
+      "q": "What details should be in a restaurant call transcript?",
+      "a": "A good transcript should show the caller’s name and phone number, the order items, sizes, modifiers, notes, and the ready time. It should also show whether the caller asked about hours, parking, menu items, reservations, or allergies. If the call needed staff help, the summary should be easy to read."
+    },
+    {
+      "q": "How often should I review call transcripts?",
+      "a": "Most owners can get value from a short weekly review. Pick a few order calls, a few menu questions, and any tricky handoffs. The goal is to spot patterns and make one small change, not to read every line from every call."
+    },
+    {
+      "q": "Can call transcripts help with allergies and manager requests?",
+      "a": "Yes. They show whether the phone host or staff recognized the issue and handed it off with a clear summary. That matters for allergy-sensitive questions, catering, complaints, and manager requests. A clean transcript makes it easier for staff to act fast and avoid confusion."
+    }
+  ],
+  "words": 1325,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,3 +1,4 @@
+import { mdInline } from "@/components/seo/markdown";
 import type { BlogFaqItem } from "@/lib/blog/types";
 
 type Props = {
@@ -46,7 +47,7 @@ export function BlogArticleFaq({ items }: Props) {
               itemProp="acceptedAnswer"
               itemType="https://schema.org/Answer"
             >
-              <span itemProp="text">{item.answer}</span>
+              <span itemProp="text">{mdInline(item.answer, `faq${index}`)}</span>
             </dd>
           </div>
         ))}

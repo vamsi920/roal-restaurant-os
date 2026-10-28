@@ -1,0 +1,76 @@
+{
+  "slug": "ai-phone-buyer-checklist",
+  "keyword": "ai phone answering checklist",
+  "category": "comparisons",
+  "title": "AI phone answering checklist for restaurant owners",
+  "seoTitle": "AI phone answering checklist for restaurants | ROAL",
+  "description": "Use this AI phone answering checklist to compare features, pricing, setup, and call handling before choosing a phone host for your restaurant.",
+  "question": "What should I check before I choose an AI phone answering service for my restaurant?",
+  "answer": "Start with the basics: can it take pickup and delivery orders from your live menu, answer hours and address questions, and send a clean ticket to the kitchen? Then check setup time, call forwarding, pricing, language support, and how it handles allergy questions, complaints, and manager requests. A good fit should save time without replacing your staff on the hard calls.",
+  "summary": "You’ll know how to compare AI phone hosts, phone setup, pricing, and order handling before you choose one.",
+  "intro": "An ai phone answering checklist should start with the calls your restaurant gets most: orders, hours, directions, and busy-line calls. The right phone host should handle those cleanly and send a clear ticket to the kitchen.\n\nUse this checklist to compare tools in plain English. It will help you spot what matters, what to test, and what to ask before you forward your restaurant number.",
+  "sections": [
+    {
+      "id": "what-should-i-check-first-on-an-ai-phone-answering-checklist",
+      "h2": "What should I check first on an AI phone answering checklist?",
+      "body": "Start with the calls that affect service right away. For a pizza shop, deli, or family restaurant, that usually means pickup orders, delivery orders, hours, address, parking, and menu questions. If a tool cannot handle those basics, the rest does not matter much.\n\nHere is a simple owner checklist:\n- Can it take orders from my live menu?\n- Can it answer hours, address, parking, and menu questions?\n- Can it collect the caller’s name and phone?\n- Can it quote a ready time?\n- Can it speak the caller’s language?\n- Can it hand off allergy-sensitive questions, catering, complaints, and manager requests?\n\nA practical example: if a caller wants “two large pepperoni pizzas, one extra cheese, no onions,” the phone host should capture items, sizes, modifiers, and notes without asking you to repeat the order later. ROAL is built for that kind of restaurant call, and it also sends a clean ticket to the kitchen screen. That is the kind of workflow to look for when you compare [AI phone host vs a press-1 phone menu](/compare/phone-menu-ivr)."
+    },
+    {
+      "id": "how-do-i-test-order-taking-before-i-go-live",
+      "h2": "How do I test order-taking before I go live?",
+      "body": "Do not rely on a sales demo alone. Ask for a real test call with your actual menu, your hours, and your address. ROAL lets an owner paste a restaurant website, Google Maps link, or even just the restaurant name and city at /try, then test-call the host right in the browser with no sign-up needed.\n\nUse this test script with your own menu items:\n1. Order a common item.\n2. Add one modifier.\n3. Remove one topping.\n4. Ask about a sold-out item.\n5. Ask for a reservation request.\n6. Ask a question the host should send to staff.\n\nA good test is not just whether it talks back. It is whether it gets the order right. For example, if your menu says a hero can be toasted and the caller asks for “one turkey hero, toasted, no tomato,” the host should reflect that back clearly before ending the call. Also check that sold-out items are not offered. That small detail matters on a busy night.\n\nIf you want a simple starting point, compare this workflow with [pickup order taking](/use-cases/pickup-orders) and your own counter process."
+    },
+    {
+      "id": "what-pricing-questions-should-i-ask-before-i-sign-up",
+      "h2": "What pricing questions should I ask before I sign up?",
+      "body": "Pricing needs to match how your phone actually works. Some AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not you get orders. Human answering services usually bill by the minute or by the call. Delivery apps often take roughly 15-30% commission on each order.\n\nROAL uses a different model: $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. Billed monthly, that can be easier to compare against what you already spend on the phone.\n\nHere is a quick worked example you can swap:\n- Say you get 300 completed phone orders in a month.\n- At $0.90 each, that would be $270.\n- If you get 120 completed orders, that would be $108.\n\nThat does not mean it is always cheaper than every other option. It means you should plug in your own call volume and compare the total. If your menu is simple and your order volume changes week to week, [pricing](/pricing) matters as much as features. Ask how you are billed, when you are billed, and what happens on test calls."
+    },
+    {
+      "id": "how-should-it-connect-to-my-existing-phone-number",
+      "h2": "How should it connect to my existing phone number?",
+      "body": "The best setup is the one that does not force you to change your restaurant number. ROAL gives each location its own phone line automatically after you claim the host, then you forward your existing number to it. You can forward all calls, or only calls when the line is busy or unanswered, and turn forwarding off any time.\n\nBefore you change anything, make a small setup checklist:\n- Confirm your carrier or phone system.\n- Ask whether forwarding works for all calls, busy calls, or no-answer calls.\n- Test from a cell phone and from the restaurant line.\n- Keep your old number active.\n- Write down the exact forwarding code you used.\n\nFor many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some mobile carriers, codes can differ, and business VoIP systems often use a web portal instead of a keypad code. Codes vary by carrier and plan, so always confirm with your carrier and test with a call. A simple test is enough: call your restaurant number, make sure it forwards, and listen for the host greeting before you go live.\n\nIf you want the broader setup flow, [How it works](/how-it-works) is the right place to check next."
+    },
+    {
+      "id": "what-should-happen-when-the-host-cannot-answer-a-question",
+      "h2": "What should happen when the host cannot answer a question?",
+      "body": "A restaurant phone host should know its limits. When it cannot answer something, the call should land with staff in a clear inbox, not turn into a dead end. That matters for catering, unusual allergies, manager requests, and complaints.\n\nA good handoff should include the important facts:\n- Caller name and phone number\n- What they wanted\n- Which location it was for\n- Any urgency or special note\n- A short transcript or summary\n\nExample script the host might use: “Let me get that to the restaurant team. Can I take your name and phone number?” That is better than making the caller repeat everything later.\n\nROAL does this handoff for tricky calls and stores call history with transcripts and recordings in the dashboard. Owners can answer a question once in the inbox, and the host learns it from then on. That is useful for menu items, policies, and location-specific details that change over time.\n\nThis is also where you should check the menu editor and FAQ tools. If you regularly get asked about parking, delivery zones, or which items are gluten-sensitive, those answers should be easy to update. For restaurants with many questions, [menu, hours and allergen questions](/use-cases/menu-questions) is a good comparison point."
+    },
+    {
+      "id": "what-kitchen-and-staff-workflow-should-i-expect-after-each-c",
+      "h2": "What kitchen and staff workflow should I expect after each call?",
+      "body": "The phone host is only useful if the back of house can use the order without extra cleanup. Look for a clean ticket that reaches the kitchen screen with the right items, modifiers, and notes. That should be easy for the cook or expo to read during a rush.\n\nA practical kitchen checklist:\n1. Order appears as new, preparing, or ready.\n2. Notes are readable.\n3. Modifiers stay attached to the right item.\n4. Sold-out items are not included.\n5. Staff can see call history if they need to check a detail.\n\nExample: a caller orders two chicken sandwiches, one without mayo, one extra spicy, and asks for pickup in 25 minutes. The ticket should show both sandwiches clearly, with each modifier tied to the right sandwich, not lumped together in a messy note.\n\nROAL includes a kitchen screen with live tickets, plus call history, menu editing, hours, FAQs, upsell suggestions, and multi-location menus in the dashboard. If you run more than one spot, that last part matters because each location needs its own menu, hours, and phone flow. Owners comparing tools for a second store should also look at [multiple locations](/use-cases/multi-location) before they commit."
+    },
+    {
+      "id": "what-is-the-final-owner-checklist-before-i-turn-it-on",
+      "h2": "What is the final owner checklist before I turn it on?",
+      "body": "Before you go live, do one final pass like an owner, not a salesperson. Keep it short and practical.\n\nFinal checklist:\n- Test order a common pickup item.\n- Test one delivery order.\n- Ask for hours, address, and parking.\n- Ask a menu question.\n- Ask a reservation request.\n- Ask an allergy-sensitive question.\n- Confirm the host does not take card numbers.\n- Confirm sold-out items are blocked.\n- Confirm the kitchen ticket is readable.\n- Confirm forwarding can be turned off anytime.\n\nOne last example: if a caller says, “I’ll pay with my card over the phone,” the host should not take card numbers. Payment should happen at pickup or however your restaurant already takes it. That keeps the call simple and matches how many restaurants already work.\n\nIf the checklist looks good, you can [build a free test host from your website](/try). ROAL is a fit for owners who want a fast setup, a clear kitchen ticket, and a phone host that handles the routine calls while staff handle the exceptions."
+    }
+  ],
+  "takeaways": [
+    "Check order taking, menu questions, and kitchen tickets first.",
+    "Test with your real menu before you forward your number.",
+    "Compare total cost against monthly fees, call-center pricing, and delivery-app commissions.",
+    "Make sure tricky calls go to staff with a clear summary."
+  ],
+  "faq": [
+    {
+      "q": "What should I look for in an AI phone answering service for a restaurant?",
+      "a": "Look for order taking from your live menu, clear answers to hours and address questions, and a clean ticket to the kitchen. Also check whether it can collect the caller’s name and phone, quote a ready time, and hand off allergy or complaint calls to staff. If it cannot handle those basics, it will create more work than it saves."
+    },
+    {
+      "q": "How do I test an AI phone host before going live?",
+      "a": "Use your real menu and make a live test call. Try a standard order, a modifier, a sold-out item, a menu question, and a handoff request for staff. Pay attention to whether the order is correct, whether the host sounds natural, and whether the kitchen ticket is easy to read."
+    },
+    {
+      "q": "How much does an AI phone answering tool cost for a restaurant?",
+      "a": "Many tools charge a monthly fee per location, often roughly $79 to $599, whether or not orders come in. ROAL charges $0.90 per completed phone order with no monthly fee, setup fee, per-minute fee, or contract. To compare fairly, multiply your expected completed orders by the per-order price and compare that total to your other options."
+    },
+    {
+      "q": "Can an AI phone host replace my staff for all phone calls?",
+      "a": "No. It should handle routine orders and common questions, but tricky calls still need a person. Good examples are catering, complaint calls, manager requests, and allergy-sensitive questions. The best setup is one where the host handles the simple calls and passes the rest to staff with context."
+    }
+  ],
+  "words": 1410,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

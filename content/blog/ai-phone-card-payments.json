@@ -1,0 +1,72 @@
+{
+  "slug": "ai-phone-card-payments",
+  "keyword": "ai phone take credit card restaurant",
+  "category": "ai-basics",
+  "title": "Why your AI phone host should not take card numbers",
+  "seoTitle": "AI phone take credit card numbers on restaurant calls | ROAL",
+  "description": "If your AI phone host takes restaurant card numbers, payment should still stay secure. Here is why the host should skip that step.",
+  "question": "Should my AI phone host take card numbers for restaurant orders?",
+  "answer": "No. Your AI phone host should take the order details, name, phone number, and ready time, then send the ticket to the kitchen. Payment should happen at pickup or through the restaurant’s normal payment process, so card numbers are handled the same way they already are in your shop.",
+  "summary": "See why card numbers should stay out of phone orders and how to set up a safer, smoother payment flow.",
+  "intro": "An AI phone host should not take card numbers for restaurant orders. It should collect the food, the name, the phone number, and the pickup or delivery details, then pass the order to your kitchen.\n\nThat keeps payment inside the way your restaurant already works. It also keeps phone orders simpler for staff and less stressful for callers, which is especially useful in busy pizza shops, takeout spots, delis, and family restaurants.",
+  "sections": [
+    {
+      "id": "why-shouldn-t-an-ai-phone-host-take-card-numbers",
+      "h2": "Why shouldn’t an AI phone host take card numbers?",
+      "body": "The short answer is: because it adds risk, friction, and extra work without helping the order get out the door faster. A restaurant phone host is best at taking the order, confirming it, and getting it to the kitchen quickly.\n\nCard numbers create a different kind of job. You now have to think about who hears the number, how it is written down, where it is stored, and what happens if the caller changes their mind halfway through. That is more than most restaurants want tied to a phone order.\n\nA better flow looks like this:\n1. The caller places the order.\n2. The host reads it back.\n3. The host gives a ready time.\n4. Payment happens at pickup or the restaurant’s normal payment step.\n\nExample phone line: “I’ve got your order. You can pay when you pick it up.”\n\nThat simple script keeps the call moving. It also keeps your team focused on food, not payment handling over the phone."
+    },
+    {
+      "id": "what-should-the-host-collect-instead-of-payment",
+      "h2": "What should the host collect instead of payment?",
+      "body": "A good AI phone host should collect the details your kitchen actually needs. ROAL does this by taking items, sizes, modifiers, and notes from the live menu, then sending a clean ticket to the kitchen screen.\n\nFor a pickup order, the core checklist is simple:\n- Items and sizes\n- Modifiers, extras, and notes\n- Caller’s name\n- Caller’s phone number\n- Ready time\n- Any allergy-sensitive or manager requests that need staff attention\n\nExample script: “I have a large pepperoni, one medium cheese with extra sauce, and a side salad. The name is Maria, and the number is 201-555-0123. Your order will be ready in 20 minutes.”\n\nThat is enough for most shops. If the caller asks about a sold-out item, the host should not offer it. If the question gets tricky, it should hand it to staff with a short summary. That is much cleaner than trying to turn the phone host into a cashier."
+    },
+    {
+      "id": "how-does-this-fit-your-current-payment-setup",
+      "h2": "How does this fit your current payment setup?",
+      "body": "Most restaurants already have a payment flow that works. The phone host should fit into that flow, not replace it.\n\nHere are common setups:\n\n| Restaurant setup | What the host should do |\n|---|---|\n| Pay at pickup | Take the order, then tell the caller to pay when they arrive |\n| Cash-only spot | Take the order, then note that payment is due at pickup |\n| Existing card process | Take the order, then let staff handle payment the way they already do |\n| Delivery through staff or in-house drivers | Take the order and pass it along; payment follows your current routine |\n\nWorked example: say your average order is $28. If 10 phone orders come in, that is $280 in food sales. Plug in your own average ticket and order count. The point is not to change how you collect money. The point is to keep the phone order clean and move it to the next step fast.\n\nROAL follows this approach. It takes the order, confirms it, and sends the ticket. It does not take card numbers over the phone, so payment stays with the restaurant’s normal process."
+    },
+    {
+      "id": "what-do-you-tell-callers-when-they-ask-to-pay-by-phone",
+      "h2": "What do you tell callers when they ask to pay by phone?",
+      "body": "Some callers will ask to pay right away. That does happen, especially with pickup orders and regulars. Your team needs a simple answer that sounds calm and consistent.\n\nA good phone script is:\n- “We’ll take the order now, and you can pay when you pick it up.”\n- “We handle payment at the restaurant.”\n- “Your order is set. We’ll take care of payment when you arrive.”\n\nIf your restaurant already takes payment another way, keep the script close to that process. Do not make the caller guess.\n\nHere is a short staff checklist:\n1. Use the same payment wording every time.\n2. Do not ask the caller for card details unless your restaurant already uses a separate payment step.\n3. Confirm the total only if your normal process requires it.\n4. Keep the order moving back to food, not payment.\n\nThis matters because the phone call is often happening during a rush. A short, repeatable payment line saves time. It also keeps the host from making promises your staff cannot keep."
+    },
+    {
+      "id": "how-do-forwarding-and-setup-work-with-roal",
+      "h2": "How do forwarding and setup work with ROAL?",
+      "body": "Getting started should be simple. With ROAL, the owner pastes the restaurant website, Google Maps link, or “Name, City” at /try. ROAL reads the menu, prices, hours, and address from public pages or uploaded menu files, builds a phone host in about a minute, and the owner can test-call it right in the browser.\n\nWhen it is time to go live, the owner claims the host and forwards the restaurant’s existing number to it. That can be all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nFor call forwarding, the exact codes depend on the carrier and plan. On some landlines and carriers, *72 starts forwarding and *73 turns it off. On some mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Business VoIP systems usually use the web portal. Always confirm with your carrier and test with a call.\n\nIf you want a starting point, check [how it works](/how-it-works) and [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-are-the-cost-and-security-tradeoffs-for-owners",
+      "h2": "What are the cost and security tradeoffs for owners?",
+      "body": "There is a reason many owners prefer not to put card handling into a phone system. It is one more part of the operation that can go wrong.\n\nA phone host that does not take card numbers is simpler to manage. You avoid turning the phone call into a payment process. You also keep staff in charge of any money handoff, which is usually where restaurants already have their best routine.\n\nThe pricing side matters too. Some AI phone tools charge a fixed monthly fee per location, often around $79 to $599 whether or not orders come in. Human answering services usually bill per minute or per call. ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free, billed monthly.\n\nThat means the phone host is meant to earn its place by handling orders and sending tickets, not by becoming a payment center. If you want to compare options, [pricing](/pricing) and [AI phone host vs answering service](/compare/answering-service) are good places to start."
+    }
+  ],
+  "takeaways": [
+    "Keep card numbers out of the phone call; let the host focus on the order and the kitchen ticket.",
+    "Use a simple payment script tied to how your restaurant already collects money.",
+    "Collect the name, phone number, items, modifiers, and ready time instead of payment details.",
+    "ROAL takes orders from the live menu and sends them to the kitchen screen, but it does not take card numbers.",
+    "If you change your call flow, test the forwarding and confirm your staff’s payment process first."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take credit card numbers for restaurant orders?",
+      "a": "It should not. A restaurant AI phone host is best used to take the order details, confirm the order, and send it to the kitchen. Payment should stay with the restaurant’s normal process, such as payment at pickup or the way staff already handle it."
+    },
+    {
+      "q": "What should my phone host ask for instead of a card number?",
+      "a": "It should ask for the items, sizes, modifiers, caller name, phone number, and ready time. If needed, it can also collect notes and hand allergy-sensitive or manager requests to staff. That gives the kitchen what it needs without turning the call into a payment session."
+    },
+    {
+      "q": "What should I say when a caller wants to pay by phone?",
+      "a": "Use a short, consistent line like: “We’ll take the order now, and you can pay when you pick it up.” If your shop uses a different normal payment process, match that wording. The key is to keep the answer simple and the order moving."
+    },
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. ROAL takes pickup and delivery orders from the restaurant’s live menu, answers common questions, and sends a clean ticket to the kitchen screen. Payment happens at pickup or however the restaurant already takes it."
+    }
+  ],
+  "words": 1118,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

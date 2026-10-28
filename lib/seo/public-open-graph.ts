@@ -21,7 +21,11 @@ export type PublicPageMetadataInput = {
   openGraphType?: "website" | "article";
   keywords?: Metadata["keywords"];
   article?: OpenGraphArticleExtras;
+  /** Share image path; defaults to the site card at /opengraph-image. */
+  ogImage?: string;
 };
+
+export const DEFAULT_OG_IMAGE = "/opengraph-image";
 
 /** Text-first Open Graph — title + description only (no OG image). */
 export function buildTextFirstOpenGraph(
@@ -29,7 +33,8 @@ export function buildTextFirstOpenGraph(
   description: string,
   canonicalPath: string,
   type: "website" | "article" = "website",
-  article?: OpenGraphArticleExtras
+  article?: OpenGraphArticleExtras,
+  ogImage: string = DEFAULT_OG_IMAGE
 ): NonNullable<Metadata["openGraph"]> {
   const url = absoluteUrl(canonicalPath) ?? canonicalPath;
 
@@ -40,6 +45,7 @@ export function buildTextFirstOpenGraph(
     url,
     locale: OG_LOCALE,
     siteName: SITE_NAME,
+    images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     ...(type === "article" && article ? article : {}),
   };
 }
@@ -47,12 +53,14 @@ export function buildTextFirstOpenGraph(
 /** Twitter card; the image comes from app/twitter-image.tsx. */
 export function buildTextFirstTwitter(
   title: string,
-  description: string
+  description: string,
+  ogImage: string = DEFAULT_OG_IMAGE
 ): NonNullable<Metadata["twitter"]> {
   return {
     card: "summary_large_image",
     title,
     description,
+    images: [ogImage],
   };
 }
 
@@ -65,6 +73,7 @@ export function buildPublicPageMetadata(input: PublicPageMetadataInput): Metadat
     openGraphType = "website",
     keywords,
     article,
+    ogImage = DEFAULT_OG_IMAGE,
   } = input;
 
   return {
@@ -80,9 +89,10 @@ export function buildPublicPageMetadata(input: PublicPageMetadataInput): Metadat
       description,
       canonicalPath,
       openGraphType,
-      article
+      article,
+      ogImage
     ),
-    twitter: buildTextFirstTwitter(title, description),
+    twitter: buildTextFirstTwitter(title, description, ogImage),
   };
 }
 

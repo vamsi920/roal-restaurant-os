@@ -1,0 +1,76 @@
+{
+  "slug": "restaurant-call-center-centralized",
+  "keyword": "restaurant call center",
+  "category": "operations",
+  "title": "Centralized call lines for restaurant groups",
+  "seoTitle": "Centralized call lines for restaurant groups | ROAL",
+  "description": "See how a restaurant call center can centralize ordering lines, route calls, and cut missed pickup orders across multiple locations.",
+  "question": "How do I set up centralized ordering lines for my restaurant group with a restaurant call center?",
+  "answer": "A centralized restaurant call center lets a group send phone orders, questions, and handoffs through one managed system instead of making each store handle everything alone. With ROAL, each location gets its own phone line automatically, and you can forward your existing number to it for all calls or only when busy or unanswered.",
+  "summary": "You’ll learn how to centralize phone orders across locations without losing each store’s own number.",
+  "intro": "A restaurant call center for a group does one simple job well: it puts ordering, questions, and handoffs into a clean system instead of leaving each location to juggle calls on its own. For a multi-location operator, that usually means one AI phone host setup with separate lines for each store.\n\nThat matters because a busy lunch rush, a short-staffed shift, or a holiday weekend can break the phone at one location fast. ROAL gives each location its own phone line automatically, while your restaurant keeps its existing number and can forward calls only when needed.",
+  "sections": [
+    {
+      "id": "what-does-a-centralized-restaurant-call-center-actually-do",
+      "h2": "What does a centralized restaurant call center actually do?",
+      "body": "A centralized restaurant call center is not just one person answering phones for every store. For restaurant groups, it is a shared way to handle pickup and delivery orders, menu questions, and call transfers from all locations without making each store build its own phone process from scratch.\n\nWith ROAL, each location gets its own host and its own line. The host can take items, sizes, modifiers, notes, caller name, phone number, and a ready time. It can also answer hours, address, parking, and menu questions from the live menu, then send a clean ticket to the kitchen screen.\n\nA simple owner-friendly setup looks like this:\n- Location A gets its own line.\n- Location B gets its own line.\n- Calls can forward from each store’s existing number to its host.\n- Tricky calls, allergy questions, complaints, catering, and manager requests go to staff with a summary.\n\nExample script line for your team: \"If the host needs help, it will send the caller and a summary to us right away.\""
+    },
+    {
+      "id": "when-should-a-group-centralize-ordering-lines-instead-of-usi",
+      "h2": "When should a group centralize ordering lines instead of using each store separately?",
+      "body": "Centralizing works best when the same phone problems keep repeating across locations. That usually means one store is slammed while another is quiet, managers are spending too much time on the phone, or guests are calling for the same questions over and over.\n\nA good fit is a group with shared menu items but different local phone traffic. A pizza group, deli group, or family restaurant group often has one central playbook for order taking, but each location still needs its own address, hours, and kitchen tickets.\n\nUse this quick check:\n1. Are missed calls or busy signals a problem at more than one store?\n2. Do callers ask the same menu and hours questions at every location?\n3. Do you want one consistent phone experience across the group?\n4. Do you still need each store to keep its own number?\n\nIf you answered yes to most of those, a centralized setup is worth looking at. You can compare common phone setups on the [restaurant phone glossary](/glossary) page and use [rush-hour phone orders](/use-cases/rush-hour) as a starting point for planning."
+    },
+    {
+      "id": "how-do-i-route-each-location-s-number-without-changing-the-r",
+      "h2": "How do I route each location’s number without changing the restaurant phone number?",
+      "body": "You do not need to give up the number your guests already know. ROAL lets the owner claim the host, then forward the restaurant’s existing number to it. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nFor many landlines and some carriers, dialing *72 then the forwarding number often forwards all calls, and *73 turns it off. On some mobile carriers, codes can differ: AT&T and T-Mobile commonly use **21*number# for all calls and ##21# to turn it off, **61*number# for unanswered calls, and **67*number# for busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually set this in the web portal.\n\nUse this setup checklist:\n- Confirm the code with your carrier or phone system.\n- Test with one real call.\n- Decide whether you want all calls forwarded or only busy/unanswered calls.\n- Check that the caller reaches the correct location line.\n\nIf you want a simple reference, ROAL also keeps [call forwarding codes by carrier](/tools/call-forwarding-codes) in one place. Always confirm with your carrier and test before relying on it."
+    },
+    {
+      "id": "what-should-the-call-flow-look-like-for-pickup-and-delivery-",
+      "h2": "What should the call flow look like for pickup and delivery orders?",
+      "body": "The best restaurant call center flow is short and predictable. The caller should hear the host, hear the location name if needed, and get to order fast.\n\nHere is a practical call flow for a group:\n1. Greeting: \"Thanks for calling Main Street Pizza. How can I help?\"\n2. Order capture: items, sizes, modifiers, and notes.\n3. Contact check: caller name and phone number.\n4. Quote ready time: a clear pickup or delivery estimate.\n5. Confirm back: repeat the order before sending it.\n6. Kitchen ticket: send the clean order to the screen.\n\nROAL also speaks the caller’s language, takes reservation requests, and does not offer items marked sold out. It does not take card numbers over the phone, so payment stays at pickup or however the restaurant already takes it.\n\nFor a manager, that means fewer interruptions at the counter. For the kitchen, it means cleaner tickets and fewer unclear handwritten orders. If you are working on your pickup flow too, the [pickup order taking](/use-cases/pickup-orders) page is a useful companion."
+    },
+    {
+      "id": "how-do-multi-location-menus-and-hours-stay-accurate",
+      "h2": "How do multi-location menus and hours stay accurate?",
+      "body": "A centralized restaurant call center only helps if the menu and hours stay current. That is why ROAL builds from public pages like your website, Google Maps link, menu PDFs, or menu photos, and owners can also upload a menu in any format.\n\nOnce live, the dashboard gives you tools for menu editing, hours, FAQs, upsell suggestions, call history, and multi-location menus. That matters for groups because one location may have different lunch hours, different parking, or a different set of sold-out items.\n\nHere is a simple owner checklist for each location:\n- Confirm hours.\n- Confirm address and parking notes.\n- Check the sold-out items list.\n- Review common menu questions.\n- Make sure the kitchen screen is receiving live tickets.\n\nROAL also saves questions it could not answer in an inbox. You answer once, and the host knows it from then on. That is handy when one store has a special local rule or a seasonal menu item that the other locations do not carry."
+    },
+    {
+      "id": "what-does-the-cost-look-like-for-a-restaurant-group",
+      "h2": "What does the cost look like for a restaurant group?",
+      "body": "For many groups, the cost question is the first one that matters. Delivery apps commonly charge roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools for restaurants charge a fixed monthly fee per location, often around $79 to $599, even in slow weeks.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nWorked example you can swap for your own numbers:\n- Say one location gets 300 completed phone orders in a month.\n- 300 x $0.90 = $270 for that location.\n- If your group has 4 locations, plug in each location’s own order count.\n\nThat does not mean it will be cheaper in every case. But it gives you a clean way to compare a pay-per-order model with [monthly AI phone plans](/compare/monthly-ai-phone-plans) and with [delivery app commission](/compare/delivery-apps)."
+    },
+    {
+      "id": "how-do-i-roll-this-out-across-my-group-without-creating-chao",
+      "h2": "How do I roll this out across my group without creating chaos?",
+      "body": "Start with one location, then copy the setup to the others. A careful rollout is better than changing every store on the same day.\n\nA simple rollout plan:\n1. Pick one location with enough call volume to test the workflow.\n2. Paste the restaurant website, Google Maps link, or \"Name, City\" at /try.\n3. Let ROAL read the menu, prices, hours, and address.\n4. Test-call the host in the browser with your real menu questions.\n5. Claim the host and forward that store’s number.\n6. Review transcripts, tickets, and unanswered questions in the dashboard.\n7. Repeat for the next location.\n\nA good launch script for staff is: \"If the phone host cannot answer something, it will hand it to us with the details already written down.\" That helps managers trust the system and keeps front-of-house staff from feeling blindsided.\n\nIf you want a deeper setup reference, [how it works](/how-it-works) and [restaurant tech for owners who hate tech](/blog/restaurant-tech-for-non-tech-owners) both help keep the rollout simple."
+    }
+  ],
+  "takeaways": [
+    "A centralized restaurant call center can give each location its own phone line without changing the restaurant’s existing number.",
+    "Forwarding can be set for all calls, busy calls, or unanswered calls, but codes vary by carrier and should be tested.",
+    "ROAL handles pickup and delivery orders, menu questions, reservations, and staff handoffs, while keeping payment at pickup.",
+    "A pay-per-completed-order model can be easier to compare than fixed monthly plans when you run multiple locations."
+  ],
+  "faq": [
+    {
+      "q": "What is a restaurant call center for a multi-location group?",
+      "a": "It is a shared way to handle phone orders and questions across several restaurant locations without making each store manage everything alone. In practice, that means each location can still have its own line and its own tickets, while the group keeps one consistent phone process."
+    },
+    {
+      "q": "Can I keep my restaurant’s existing phone number?",
+      "a": "Yes. With ROAL, the restaurant keeps its own number and forwards calls to the AI phone host. You can forward all calls or only when the line is busy or unanswered, and forwarding can be turned off any time."
+    },
+    {
+      "q": "Will the phone host take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes the order, confirms it, and sends the ticket to the kitchen screen; payment happens at pickup or however the restaurant already takes it."
+    },
+    {
+      "q": "How does ROAL price compare with monthly phone answering plans?",
+      "a": "ROAL charges $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. That is different from many AI phone tools that charge a fixed monthly fee per location, even when order volume is light."
+    }
+  ],
+  "words": 1312,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

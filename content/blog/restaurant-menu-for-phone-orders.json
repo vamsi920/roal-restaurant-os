@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-menu-for-phone-orders",
+  "keyword": "phone friendly restaurant menu",
+  "category": "menu",
+  "title": "How to make a phone-friendly restaurant menu",
+  "seoTitle": "Phone-friendly restaurant menu | ROAL",
+  "description": "Build a phone-friendly restaurant menu with clear names, sizes, modifiers, and order-ready wording so callers can place orders faster.",
+  "question": "How do I make my restaurant menu easy to order by phone?",
+  "answer": "Make your menu phone friendly by using simple item names, clear sizes, common modifiers, and fewer hard-to-explain choices. Put prices, sold-out items, and special notes in a format an AI phone host like ROAL can read from the live menu so callers can order quickly and staff get a clean ticket.",
+  "summary": "You’ll be able to rewrite your menu so callers can order faster and your kitchen gets cleaner tickets.",
+  "intro": "A phone friendly restaurant menu uses plain item names, clear sizes, and simple choices so callers can order without guessing. It also helps an AI phone host read the menu correctly and send a cleaner ticket to the kitchen.\n\nFor a busy pizza shop, deli, takeout spot, or family restaurant, this means fewer repeats on the phone and fewer order mistakes. ROAL can read your live menu, answer menu questions, and take pickup or delivery orders from it, but the menu itself still has to be easy to speak out loud.",
+  "sections": [
+    {
+      "id": "what-makes-a-phone-friendly-restaurant-menu",
+      "h2": "What makes a phone friendly restaurant menu?",
+      "body": "A phone friendly restaurant menu is one a caller can understand in one listen. That means the names are short, the sizes are obvious, and the add-ons are grouped in a way that sounds natural on the phone.\n\nUse this simple test: can a person order your top 10 items without asking, “What comes on that?” or “How big is that?” If not, the menu needs cleanup.\n\nChecklist:\n- Use common words first: “chicken parm sandwich” instead of a clever house name only staff know.\n- Put size before extra details: “12-inch cheese pizza” is easier than a long description.\n- Group modifiers: crust, cheese, protein, spice level, and toppings.\n- Mark sold-out items clearly in the live menu so they are not offered.\n\nExample phone line:\n“Would you like the 12-inch cheese pizza, the 16-inch cheese pizza, or the large special?”"
+    },
+    {
+      "id": "how-should-i-rewrite-item-names-so-callers-order-faster",
+      "h2": "How should I rewrite item names so callers order faster?",
+      "body": "Start with the words people already use on the phone. If your menu names are cute or creative, keep the idea, but add the plain version right away.\n\nA good rule is: item type first, special name second. That way the caller hears the food before the branding.\n\n| Hard to say | Easier to order by phone |\n|---|---|\n| The Works Supreme | Large Supreme Pizza |\n| Nonna’s Favorite | Spaghetti with meatballs |\n| House Stack | Roast beef sandwich |\n| Firecracker Bowl | Spicy chicken rice bowl |\n\nIf you have family meals or combo deals, make the call script match the menu. For example: “family dinner for four” should clearly say what is included and what choices are allowed. That helps on [family meal deals](/blog/family-meal-deals) and similar orders.\n\nShort script you can use:\n“Just to confirm, that’s one large Supreme Pizza and one chicken parm sandwich, both for pickup.”"
+    },
+    {
+      "id": "what-menu-details-should-always-be-easy-to-hear",
+      "h2": "What menu details should always be easy to hear?",
+      "body": "Phone orders break down when the important parts are buried. The caller should hear the size, the main protein, the price, and the choices available before they decide.\n\nPut these details in the same order every time:\n1. Item name\n2. Size or portion\n3. Price\n4. Common modifiers\n5. Notes or limits\n\nFor example, say you sell a $28 average order. Plug in your own number. If a caller adds a $4 side and a $3 drink, the total moves from $28 to $35 before tax or fees. That is simple enough to repeat back.\n\nUse a checklist like this for each menu item:\n- Is the size spoken in normal language?\n- Are toppings and modifiers easy to choose from?\n- Is there one clear default version?\n- Are allergies or spice notes obvious?\n- Is the item still orderable if one version is sold out?\n\nROAL reads the live menu, so clean structure matters. It can take items, sizes, modifiers, and notes, but it works best when the menu is written for the ear, not just the eye."
+    },
+    {
+      "id": "how-do-i-handle-modifiers-allergies-and-special-requests-wit",
+      "h2": "How do I handle modifiers, allergies, and special requests without confusion?",
+      "body": "Phone callers often know what they want, but they do not always know your menu language. Keep modifiers short and standard. Too many custom options slow the call and make tickets messy.\n\nA practical setup is to separate what a caller can choose from what staff must handle. Use common choices like extra cheese, no onions, light sauce, or spicy. Keep rarer requests in a note field for staff review.\n\nStep list:\n1. List the top 5 to 8 modifiers for each popular item.\n2. Put allergy-sensitive questions in a clear route to staff.\n3. Decide which requests are okay and which need manager approval.\n4. Add a simple policy line for card payments if needed: ROAL does not take card numbers over the phone.\n\nExample script lines:\n- “Would you like that with regular sauce or light sauce?”\n- “Any allergies we should tell the kitchen about?”\n- “I’ll have a staff member follow up on that special request.”\n\nIf your menu has a lot of spice or dietary questions, this is worth cleaning up before launch. Related reading on [halal and kosher questions from callers](/blog/halal-kosher-menu-questions) and [spice levels on phone orders](/blog/spice-level-phone-orders) can help you tighten the wording."
+    },
+    {
+      "id": "how-should-i-format-the-menu-so-an-ai-phone-host-can-read-it",
+      "h2": "How should I format the menu so an AI phone host can read it well?",
+      "body": "A clear phone menu is easier for people and easier for an AI phone host to read. ROAL can read menus from your website, menu PDFs, menu photos, or an upload in any format, but the cleaner the source, the better the call flow.\n\nGood formatting is simple:\n- One item per line.\n- One price per item.\n- Clear size names.\n- Short modifier lists.\n- Sold-out items removed or marked.\n\nIf your website has a messy PDF, consider a cleaner version for phone use. Keep the public menu and the spoken menu close to each other, so callers do not hear one thing and see another.\n\nWorked example:\n- Bad: “Specials section” with 14 items and tiny print.\n- Better: “Sandwiches,” “Pizzas,” “Sides,” and “Drinks” with the most ordered items first.\n\nThat structure helps with [menu engineering for small restaurants](/blog/menu-engineering-small-restaurant) and also makes it easier to update seasonal items later. A simple menu is faster for staff, clearer for callers, and easier to keep accurate in the ROAL dashboard."
+    },
+    {
+      "id": "how-do-i-test-my-phone-menu-before-going-live",
+      "h2": "How do I test my phone menu before going live?",
+      "body": "Test the menu the same way a real customer would call it. Listen for places where the host sounds unsure, repeats too much, or reads a special in the wrong order.\n\nTry these five test calls:\n1. A simple pickup order with two items.\n2. A size question on your best-selling item.\n3. A modifier-heavy order, like extra cheese and no onions.\n4. A sold-out item.\n5. A caller with a question about hours, parking, or address.\n\nUse this quick scorecard:\n| Test | Pass means |\n|---|---|\n| Item names | Caller hears the right food on the first try |\n| Sizes | No guessing between small, medium, large, or slices |\n| Modifiers | Staff can read the ticket without extra decoding |\n| Questions | Common menu and store questions are answered clearly |\n| Handoff | Special requests go to staff with a summary |\n\nROAL lets owners test-call the host right in the browser with no sign-up needed, then claim it and go live when ready. You can also keep your existing number by forwarding calls, all calls or only when busy or unanswered. If you want a starting point, [build a free test host](/try) from your website and then listen like a customer would."
+    },
+    {
+      "id": "how-do-i-keep-the-menu-easy-to-order-after-launch",
+      "h2": "How do I keep the menu easy to order after launch?",
+      "body": "Menus change. Prices change. Specials come and go. The best phone friendly restaurant menu is one you can update without breaking the call flow.\n\nKeep a weekly habit:\n- Remove sold-out items from the live menu.\n- Check prices on top sellers.\n- Update seasonal items and specials.\n- Listen to common call questions in the dashboard.\n- Tighten wording where callers keep getting confused.\n\nROAL includes a menu editor, call history with transcripts and recordings, FAQs, upsell suggestions, and multi-location menus in the dashboard. That makes it easier to keep one clean menu across every location instead of relying on memory.\n\nPricing matters too. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. For owners comparing options, that is different from many AI phone tools that charge a monthly fee per location, even when orders are slow, or answering services that bill by the minute or by the call.\n\nIf you want to map phone forwarding, use your carrier’s instructions and test the line after setup. Codes vary by carrier and plan, so confirm before you switch. For reference, you can also check [call forwarding codes by carrier](/tools/call-forwarding-codes) and [pricing](/pricing)."
+    }
+  ],
+  "takeaways": [
+    "Use plain item names, not clever ones, so callers can order faster.",
+    "Keep sizes, modifiers, and sold-out items clear in the live menu.",
+    "Format the menu for the ear, not just the screen.",
+    "Test your menu with real phone-style orders before going live.",
+    "Update the menu often so the phone host and your kitchen stay in sync."
+  ],
+  "faq": [
+    {
+      "q": "What is a phone friendly restaurant menu?",
+      "a": "It is a menu written so someone can order by phone without guessing. The names are clear, the sizes are obvious, and the choices are grouped in a simple order. That makes it easier for callers and for an AI phone host to read the menu correctly."
+    },
+    {
+      "q": "How many menu options should I give on the phone?",
+      "a": "Give only the choices a caller really needs to place the order. Too many options slow the call and lead to mistakes. For popular items, keep the main size, a few common modifiers, and one clear default version."
+    },
+    {
+      "q": "Should I change my website menu for phone orders?",
+      "a": "Often, yes. A website menu can be visual and detailed, but a phone menu needs shorter names and cleaner wording. Keep the public menu accurate, then make sure the spoken version is easy to repeat back and easy for the kitchen to read."
+    },
+    {
+      "q": "Can ROAL take every kind of order from my menu?",
+      "a": "ROAL can take pickup and delivery orders from the restaurant’s live menu, including items, sizes, modifiers, and notes. It also answers common questions and can hand allergy-sensitive questions, catering, complaints, and manager requests to staff with a summary. It does not take card numbers over the phone."
+    }
+  ],
+  "words": 1362,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

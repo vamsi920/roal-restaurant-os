@@ -1,0 +1,123 @@
+{
+  "slug": "indian",
+  "label": "Indian restaurants",
+  "h1": "An AI phone host for Indian restaurants",
+  "seoTitle": "AI phone answering for Indian restaurants | ROAL",
+  "description": "ROAL answers calls for Indian restaurants, takes pickup orders from your live menu, handles hours and menu questions, and sends clean tickets to the kitchen.",
+  "lead": "Busy Friday night? ROAL answers your restaurant phone, takes pickup orders, and helps with common questions while your team focuses on the line and the dining room. It is built for Indian restaurants with real menus, real rushes, and real callers.",
+  "question": "How can an Indian restaurant use an AI phone host to answer calls and take pickup orders?",
+  "answer": "ROAL is an AI phone host for Indian restaurants. It answers calls, takes pickup and delivery orders from your live menu, answers questions about hours, address, parking, and menu items, and sends a clean ticket to the kitchen screen. You can forward all calls, or only busy and unanswered calls, and turn forwarding off any time.",
+  "pains": [
+    {
+      "title": "The phone rings during the dinner rush",
+      "body": "A line forms, naan is coming out, and the same person is answering calls about butter chicken, samosas, and pickup times. Calls pile up when the kitchen is busiest."
+    },
+    {
+      "title": "Simple order calls still take time",
+      "body": "Many callers just want chicken tikka masala, garlic naan, and a 6:30 pickup. But staff still have to stop, listen, repeat the order, and write it down."
+    },
+    {
+      "title": "Questions keep interrupting the flow",
+      "body": "People call to ask if the lamb biryani is available, where to park, or whether the restaurant can handle a mild spice request. Those calls matter, but they slow the team down."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers the phone in your restaurant's style",
+      "body": "ROAL can greet callers by name and voice choice, then take the order in a calm, brief way. It can also speak the caller's language when needed."
+    },
+    {
+      "title": "Takes the details your kitchen needs",
+      "body": "It collects items, sizes, modifiers, notes, the caller's name, and phone number. Then it confirms the order back before sending it to the kitchen screen."
+    },
+    {
+      "title": "Handles common Indian restaurant calls",
+      "body": "ROAL can answer hours, address, parking, and menu questions from the live menu. If someone asks about a manager, catering, or allergy-sensitive issue, it passes that along with a summary."
+    },
+    {
+      "title": "Fits busy shifts and missed calls",
+      "body": "Forward your number when the phones get busy, or when the front counter is short-staffed. You keep your own number, and the forwarding can be turned off any time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. I can help with that."
+    },
+    {
+      "who": "caller",
+      "line": "Great. One chicken tikka masala, mild, and two garlic naan."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One chicken tikka masala, mild, and two garlic naan."
+    },
+    {
+      "who": "caller",
+      "line": "Also one veg samosa and one mango lassi."
+    },
+    {
+      "who": "host",
+      "line": "Thank you. What name should I put on the order, and what phone number can we reach you at?"
+    },
+    {
+      "who": "caller",
+      "line": "This is Raj. 201-555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Raj. Your pickup order will be ready around 6:40 pm. I have one chicken tikka masala mild, two garlic naan, one veg samosa, and one mango lassi. Is that correct?"
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "Raj · 201-555-0148",
+      "1 chicken tikka masala, mild",
+      "2 garlic naan",
+      "1 veg samosa",
+      "1 mango lassi"
+    ],
+    "note": ""
+  },
+  "sections": [
+    {
+      "h2": "Built for the calls Indian restaurants get all day",
+      "body": "Indian restaurants get a very specific mix of calls. A caller may ask for chicken tikka masala, paneer makhani, lamb biryani, a lunch special, or an extra side of mint chutney. Another caller may ask if the food is mild, if onions can be left out, or if the order can be ready by a certain time.\n\nROAL is designed for those exact moments. It answers the phone, takes the pickup order, and keeps moving. If someone asks a question it cannot answer, it sends that question to the owner or staff inbox so the team can reply once and move on. Start with [How it works](/how-it-works) if you want the short version."
+    },
+    {
+      "h2": "A simple setup for owners who do not want more tech work",
+      "body": "You do not need to rebuild your menu from scratch. At [Build a free test host](/try), paste your website, Google Maps link, or just your restaurant name and city. ROAL reads public menu pages, PDFs, and menu photos, then builds a phone host in about a minute.\n\nBefore you go live, you can test-call it in the browser with no sign-up needed. If you want to change a name, a voice, a menu item, or a ready-time rule, you can do that from the dashboard. If a dish sells out, the host does not offer it on the call."
+    },
+    {
+      "h2": "Why pickup calls matter more during rush hours",
+      "body": "A Friday night line does not care that the phone is ringing. Someone still has to answer questions about naan, curry spice level, parking, and when the food will be ready. Even a few missed calls can mean a lost pickup order, especially when the front is short-staffed.\n\nROAL is useful when the dining room is busy, the kitchen is behind, or the host stand is tied up. It can take the order, confirm it back, and send a clean ticket to the kitchen screen. For a closer look at this use case, see [Pickup orders](/use-cases/pickup-orders)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take orders for items from my live menu?",
+      "a": "Yes. It reads your live menu and takes pickup and delivery orders from it. It can handle items, sizes, modifiers, and notes, then send a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "Does it work for common Indian restaurant questions?",
+      "a": "Yes. It can answer hours, address, parking, and menu questions. If the caller asks something it cannot answer, that question goes to your inbox so you can answer it once and the host can learn it from there."
+    },
+    {
+      "q": "Can I forward only busy or unanswered calls?",
+      "a": "Yes. You can forward all calls, or only when the line is busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time."
+    },
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. It does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How much does it cost for Indian restaurants?",
+      "a": "ROAL charges $0.90 per completed phone order, which means a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract, and calls and test calls are free."
+    }
+  ]
+}

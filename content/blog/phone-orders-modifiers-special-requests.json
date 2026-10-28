@@ -1,0 +1,77 @@
+{
+  "slug": "phone-orders-modifiers-special-requests",
+  "keyword": "phone order special requests restaurant",
+  "category": "phone-orders",
+  "title": "Modifiers and special requests on phone orders",
+  "seoTitle": "Phone order special requests for restaurants",
+  "description": "Handle phone order special requests with clear modifier rules, allergy notes, read-back scripts, and cleaner ticketing.",
+  "question": "How should I handle modifiers and special requests on phone orders without slowing down the line?",
+  "answer": "Treat special requests like part of the order, not an afterthought. Ask for modifiers in a fixed order, read the full order back, and send a clean ticket to the kitchen so the line can see changes clearly. For allergy-sensitive, complaint, catering, or manager requests, hand the call to staff with a short summary.",
+  "summary": "You’ll learn a simple way to capture modifiers, special requests, and allergy notes without confusing the kitchen.",
+  "intro": "Phone orders get messy when the caller adds changes at the end. The fix is simple: ask for modifiers early, repeat them back clearly, and send the kitchen a clean ticket.\n\nFor a phone order special requests restaurant teams can actually use, the goal is not to sound fancy. The goal is to protect the kitchen, keep the pickup time realistic, and make sure the caller hears exactly what was written down.",
+  "sections": [
+    {
+      "id": "what-counts-as-a-modifier-vs-a-special-request",
+      "h2": "What counts as a modifier vs a special request?",
+      "body": "A modifier changes the item itself. A special request changes how the restaurant should handle it, but it may not change the recipe. That distinction matters on the phone because the kitchen needs to know what affects prep.\n\nA simple way to think about it:\n\n| Type | Example | What you should do |\n|---|---|---|\n| Modifier | \"No onions on the burger\" | Add it to the item line |\n| Size change | \"Large fries\" | Confirm the size before moving on |\n| Special request | \"Extra napkins\" | Put it in the notes |\n| Allergy-sensitive note | \"Please no peanuts\" | Hand it to staff with a summary |\n| Order concern | \"My last order was wrong\" | Transfer to staff and summarize |\n\nIf you want a simple phone script, use this line: \"I’ll take the item first, then any changes after each item.\" That keeps the call organized. It also helps if you use ROAL, because it takes items, sizes, modifiers, and notes from the live menu and sends a clean ticket to the kitchen screen."
+    },
+    {
+      "id": "how-do-i-ask-for-changes-without-slowing-the-call-down",
+      "h2": "How do I ask for changes without slowing the call down?",
+      "body": "The best phone orders feel short and steady. Ask for the main item first, then ask one clear follow-up question. Don’t wait until the end to uncover every change.\n\nA practical call flow:\n\n1. Take the item.\n2. Ask for size or style.\n3. Ask for modifiers.\n4. Ask for notes only after the item is complete.\n5. Move to the next item.\n\nExample script: \"What kind of pizza would you like?\" Then: \"Any toppings or changes on that pie?\" Then: \"Anything else on that order?\" This is easier on busy shifts than asking a long list of questions all at once.\n\nIf the caller is making many changes, slow down and group them. Say: \"Let me read that back item by item.\" That line saves mistakes. It also helps the person on the line feel heard, which matters when they are ordering for a group, a family meal, or a picky kid. For more on that read-back step, see [why you should read back every phone order](/blog/read-back-phone-orders)."
+    },
+    {
+      "id": "how-should-i-handle-allergies-and-safety-sensitive-requests",
+      "h2": "How should I handle allergies and safety-sensitive requests?",
+      "body": "Allergy-sensitive calls need a different path. Do not guess, and do not brush them off. If the caller mentions an allergy or asks about ingredients you cannot confirm, hand the call to staff and include a short summary.\n\nUse a script like this: \"Thanks for telling me. I’m going to connect you with the restaurant team so they can help with that safely.\" That sentence is calm and clear.\n\nA short checklist for allergy calls:\n\n- Ask what ingredient they need to avoid.\n- Confirm whether the concern is an allergy or a preference.\n- Do not promise that a dish is safe unless the restaurant can confirm it.\n- Move the call to staff if the caller asks detailed ingredient questions.\n- Put the allergy note in the order summary if the kitchen should see it.\n\nROAL is set up to hand allergy-sensitive questions, complaints, catering calls, and manager requests to staff with a summary. That keeps the phone moving without forcing the host to answer something it should not guess at. If you want a broader view of this kind of call, see [menu, hours and allergen questions](/use-cases/menu-questions)."
+    },
+    {
+      "id": "what-does-a-clean-ticket-need-to-show-the-kitchen",
+      "h2": "What does a clean ticket need to show the kitchen?",
+      "body": "A good ticket should be easy to read in one glance. The kitchen does not need the whole conversation. It needs the order, the changes, the caller’s name, a phone number, and the ready time.\n\nA clean phone order ticket usually includes:\n\n- Customer name\n- Phone number\n- Item names and sizes\n- Modifiers and notes\n- Pickup or delivery timing\n- Any special handling note\n\nWorked example: say a customer orders 2 plain slices, 1 large pepperoni pizza with no onions, and 1 side salad with dressing on the side. The ticket should not say \"customer requested a few changes.\" It should spell out each item and each change.\n\nROAL sends a clean ticket to the kitchen screen, which helps when the line is busy and nobody wants to decode a rushed voicemail-style message. If you already use a kitchen screen, that kind of formatting matters even more during a rush. For pickup orders specifically, see [pickup order taking](/use-cases/pickup-orders)."
+    },
+    {
+      "id": "how-do-i-quote-time-when-the-caller-adds-extras",
+      "h2": "How do I quote time when the caller adds extras?",
+      "body": "Modifiers affect time. So do special requests that make the order slower to prep. If someone adds a lot of changes, give a realistic ready time instead of the fastest possible one.\n\nA simple way to quote time:\n\n1. Estimate the base ticket.\n2. Add time for extra prep if the order is customized.\n3. Tell the caller the time in plain language.\n\nExample you can swap for your own shop: say your base pickup time for a $28 average order is 15 minutes. If the caller adds two custom pies, extra sauce on the side, and a well-done request, you may need more time. You might say, \"That’ll be ready in about 25 minutes.\" Use your own kitchen speed, not someone else’s.\n\nA useful script line is: \"Because of the changes, I’m giving you a little extra time so the kitchen can make it right.\" That sounds better than sounding uncertain. It also reduces callbacks asking whether the order is ready yet. For more on timing language, see [quoting pickup times on the phone](/blog/pickup-time-quotes-phone-orders)."
+    },
+    {
+      "id": "what-should-i-do-when-the-request-is-really-a-complaint-cate",
+      "h2": "What should I do when the request is really a complaint, catering ask, or manager call?",
+      "body": "Not every special request belongs in the order. Some calls need a person. If the caller is upset, asks for catering, or wants to speak to a manager, route the call to staff and keep the summary short.\n\nUse this handoff structure:\n\n- Who is calling\n- Why they called\n- What they want\n- Any order number or item name\n\nExample: \"Customer named Maria called about a missing side from the last order and wants a manager.\" That is enough for staff to respond quickly.\n\nThe same applies to catering requests. A regular pickup order can be taken on the spot, but a large event order may need a person to confirm details. For those calls, the goal is not to avoid the caller. The goal is to pass along the right context so the team can answer it well.\n\nROAL can take the normal order pieces and send the harder calls to staff with a summary, which is useful when the phone rings during a lunch rush or a short-staffed shift. If you deal with many of these calls, [catering inquiries](/use-cases/catering) is worth a look."
+    },
+    {
+      "id": "how-can-i-keep-special-requests-from-turning-into-expensive-",
+      "h2": "How can I keep special requests from turning into expensive mistakes?",
+      "body": "Most mistakes happen when the order is not read back, the note is vague, or the kitchen cannot tell which change matters. You can reduce that with a repeatable routine.\n\nUse this quick checklist on every order:\n\n- Confirm each item before moving on.\n- Read back all modifiers.\n- Repeat any special request in plain words.\n- Call out allergy notes clearly.\n- Confirm the ready time.\n- Make sure the caller’s name and phone number are correct.\n\nA practical script: \"Just to confirm: one large pepperoni with no onions, one side salad with dressing on the side, ready in about 25 minutes.\" That sentence is short, specific, and easy for the caller to correct.\n\nIf you are trying to decide whether phone orders are worth the effort compared with delivery apps or monthly phone plans, the cost structure matters too. Delivery apps commonly take roughly 15-30% commission per order, and many AI phone tools charge a fixed monthly fee whether or not orders come in. ROAL uses a per-completed-order model at $0.90 per confirmed order whose ticket reaches the kitchen screen. You can compare that with your own volume on [pricing](/pricing) or [phone orders vs monthly AI phone plans](/compare/monthly-ai-phone-plans). To get started, [build a free test host from your website](/try)."
+    }
+  ],
+  "takeaways": [
+    "Ask for modifiers right after each item, not all at the end.",
+    "Read back every changed item so the caller can catch mistakes.",
+    "Send allergy-sensitive, complaint, catering, and manager calls to staff with a summary.",
+    "Keep kitchen tickets clean: item, size, note, name, phone, and ready time.",
+    "Use your own prep times when quoting pickup times for customized orders."
+  ],
+  "faq": [
+    {
+      "q": "How do I ask about special requests on a restaurant phone order?",
+      "a": "Ask after each item, not after the whole order. A simple line like \"Any toppings or changes on that item?\" keeps the call organized and easier to read back. If the caller adds several changes, repeat the item before moving on."
+    },
+    {
+      "q": "Should I treat a modifier and a special request the same way?",
+      "a": "No. A modifier changes the item itself, while a special request is usually a note or handling preference. Put modifiers directly on the item line and place special requests in the notes so the kitchen can see what changed."
+    },
+    {
+      "q": "What should I do with allergy questions on the phone?",
+      "a": "Do not guess. Ask what ingredient the caller needs to avoid, then hand the call to staff if the question is detailed or safety-sensitive. Keep a short summary so the team knows exactly what the caller asked."
+    },
+    {
+      "q": "How does ROAL handle modifiers and special requests?",
+      "a": "ROAL takes items, sizes, modifiers, and notes from the restaurant’s live menu, then sends a clean ticket to the kitchen screen. It also hands allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary, and it does not take card numbers over the phone."
+    }
+  ],
+  "words": 1350,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

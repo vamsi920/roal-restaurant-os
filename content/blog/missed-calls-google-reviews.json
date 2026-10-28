@@ -1,0 +1,76 @@
+{
+  "slug": "missed-calls-google-reviews",
+  "keyword": "restaurant doesn't answer phone review",
+  "category": "missed-calls",
+  "title": "How unanswered calls turn into bad restaurant reviews",
+  "seoTitle": "Unanswered calls and bad restaurant reviews | ROAL",
+  "description": "See how unanswered calls can turn into bad restaurant reviews, and what to fix at the phone before more guests get frustrated.",
+  "question": "Why do unanswered restaurant calls turn into bad reviews, and what should I do about it?",
+  "answer": "When a restaurant does not answer the phone, callers often assume the place is too busy, disorganized, or does not care. That can push them to leave a bad review, call a competitor, or place the order somewhere else. The fix is simple: answer faster, forward missed calls, use a clear script, and make sure someone or something can take pickup and delivery orders when the line is busy.",
+  "summary": "You’ll learn why missed calls hurt reviews and what to change at the phone so callers get help instead of frustration.",
+  "intro": "A restaurant doesn't answer phone review usually starts with one simple moment: the caller wanted to order, ask a question, or check hours, and nobody picked up. That caller may leave upset, and the review often reflects the silence more than the food.\n\nFor a busy pizza shop, deli, takeout spot, or family restaurant, the fix is mostly about phone flow. You need a plan for busy hours, unanswered calls, and after-hours calls, plus a clear way to capture orders and questions before they turn into complaints.",
+  "sections": [
+    {
+      "id": "why-does-one-missed-call-turn-into-a-bad-review",
+      "h2": "Why does one missed call turn into a bad review?",
+      "body": "People call a restaurant because they want a quick answer. If the phone rings and rings, the caller feels ignored, even if your kitchen is packed and your team is working hard.\n\nHere is the usual path:\n- The caller tries once.\n- No one answers.\n- They call again, or they hang up.\n- They place the order somewhere else, or they leave a review.\n\nA common review complaint sounds like this: \"I called twice and nobody picked up.\" That is short, but it says a lot. It tells future diners the restaurant was hard to reach. It can also make a small issue feel bigger than it was.\n\nA practical response is to treat every unanswered call like a lost chance to serve someone. ROAL is built for that exact moment: it answers the restaurant's phone, takes pickup and delivery orders from the live menu, and handles common questions about hours, address, parking, and the menu. If the question is too complex, it sends it to staff with a summary."
+    },
+    {
+      "id": "what-do-callers-actually-do-when-nobody-picks-up",
+      "h2": "What do callers actually do when nobody picks up?",
+      "body": "Most callers do not wait around. They move on fast. That matters because a missed call is not only a missed order; it can also become a lost regular.\n\nUse this simple example and plug in your own numbers:\n\n| Example item | Number |\n|---|---:|\n| Average order | $28 |\n| Missed calls on a busy night | 8 |\n| Orders that would have been placed | 5 |\n| Lost sales | $140 |\n\nThat is only a rough example. Your numbers may be higher or lower. The point is to look at the calls, not just the ticket line.\n\nA caller who cannot get through may do one of three things:\n1. Place the order with a competitor.\n2. Leave a frustrated review about bad service.\n3. Give up and not come back.\n\nIf you want a deeper way to estimate the damage, use the [missed call cost calculator](/tools/missed-call-calculator) and swap in your own average check and call volume."
+    },
+    {
+      "id": "what-should-the-phone-sound-like-when-you-are-busy",
+      "h2": "What should the phone sound like when you are busy?",
+      "body": "A phone that rings forever feels like no one is in charge. A short, calm greeting tells the caller the restaurant is open and ready.\n\nUse a script like this:\n\"Thanks for calling Bella Pizza. I can help with pickup, delivery, hours, or menu questions. What can I get started for you?\"\n\nIf your team is short-staffed, the goal is not a fancy script. The goal is consistency. Everyone should know what to say, and there should be a backup when the line is busy.\n\nQuick checklist:\n- Answer within a few rings when possible.\n- Keep one clear greeting for all staff.\n- Ask for the caller's name and phone number early.\n- Repeat the order back before hanging up.\n- Send complex issues to a manager with a short summary.\n\nROAL follows that kind of flow. It can take items, sizes, modifiers, and notes, then quote a ready time and confirm the order back. It also speaks the caller's language and routes allergy-sensitive questions, complaints, catering, and manager requests to staff."
+    },
+    {
+      "id": "how-do-i-forward-calls-without-confusing-customers",
+      "h2": "How do I forward calls without confusing customers?",
+      "body": "Forwarding is one of the fastest ways to reduce unanswered calls. You can forward all calls, or only when your line is busy or not answered.\n\nThe exact code depends on your carrier or phone system, so confirm with your provider and test it with a real call. On many landlines and some carriers, dial *72 then the forwarding number to forward all calls, and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle forwarding in the web portal.\n\nUse this simple setup plan:\n1. Decide whether you want all calls forwarded or only busy/unanswered calls.\n2. Enter the forwarding number.\n3. Call your restaurant's main number from a mobile phone.\n4. Confirm the forwarded call is answered the way you want.\n5. Test again during a real rush.\n\nFor a full list by carrier, use the [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-can-an-ai-phone-host-help-before-a-bad-review-starts",
+      "h2": "How can an AI phone host help before a bad review starts?",
+      "body": "A phone host helps most when the front counter is slammed and nobody can leave the make line. It can answer the phone, take orders from the live menu, and handle basic questions without making the caller wait.\n\nROAL gives each location its own phone line automatically when the owner claims the host, and the restaurant forwards its existing number to it. Forwarding can be turned off any time. The owner can paste a website, Google Maps link, or \"Name, City\" at /try, then test-call the host in the browser with no sign-up needed.\n\nThat matters because the caller gets help instead of a voicemail box. And your staff gets fewer interruptions while still receiving a clean ticket on the kitchen screen. The owner can also upload a menu in any format, which helps if the menu is not easy to read on the website.\n\nIf you want to compare phone help options, see [AI phone host vs voicemail](/compare/voicemail) or [AI phone host vs hiring phone staff](/compare/hiring-phone-staff)."
+    },
+    {
+      "id": "what-should-i-fix-first-if-reviews-already-mention-the-phone",
+      "h2": "What should I fix first if reviews already mention the phone?",
+      "body": "Start with the easiest fixes first. You do not need a big tech project to improve the caller experience.\n\nTry this order:\n- Check whether calls are going to voicemail during lunch and dinner.\n- Set up forwarding for busy or unanswered calls.\n- Put one person in charge of callbacks and messages.\n- Write a short script for order calls and common questions.\n- Make sure hours, address, parking, and menu answers are current.\n\nIf you see repeated complaints like \"nobody answered\" or \"I called three times,\" treat that as a phone problem, not just a review problem. A clean phone flow can stop the complaint before it reaches the review page.\n\nROAL also includes a dashboard with call history, transcripts, recordings, a menu editor, hours, FAQs, upsell suggestions, and live kitchen tickets. Questions the host cannot answer go to an inbox, and the owner answers once so the host knows it from then on."
+    },
+    {
+      "id": "how-much-can-missed-calls-cost-compared-with-other-options",
+      "h2": "How much can missed calls cost compared with other options?",
+      "body": "Here is a simple way to compare the phone to other order channels.\n\n| Option | Common cost pattern |\n|---|---|\n| Delivery apps | Often 15-30% commission per order |\n| Human answering service | Usually billed per minute or per call |\n| Monthly AI phone tools | Often a fixed monthly fee per location, whether or not orders come in |\n| ROAL | $0.90 per completed phone order, no monthly fee, no setup fee, no per-minute fee, no contract |\n\nPlug in your own numbers. For example, say you get 40 phone orders a month and 30 of them are completed through the phone host. At $0.90 each, that would be $27 for completed orders. That is just an example; your total depends on how many orders are confirmed and sent to the kitchen screen.\n\nIf you want to compare a phone setup against your current order mix, use the [AI phone host cost calculator](/tools/phone-host-cost-calculator) and your own order count. ROAL is billed monthly, and calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "takeaways": [
+    "Unanswered calls can lead to frustration, lost orders, and bad reviews.",
+    "A clear greeting, fast callbacks, and call forwarding reduce phone complaints.",
+    "A phone host can take orders, answer common questions, and route complex calls to staff.",
+    "Compare missed-call cost against your current phone setup before the next rush."
+  ],
+  "faq": [
+    {
+      "q": "Why would a customer leave a review just because nobody answered the phone?",
+      "a": "Because the phone is often the first service moment they experience. If they cannot reach the restaurant, they may feel ignored and leave a review about service, not food. That review can affect how future customers see the place."
+    },
+    {
+      "q": "Should I forward my restaurant phone when I am busy?",
+      "a": "Yes, forwarding busy or unanswered calls is often better than letting the phone ring out. Confirm the right code with your carrier or phone system, and test it with a real call. Keep your existing number so regulars do not have to learn a new one."
+    },
+    {
+      "q": "Can an AI phone host take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. It takes the order, confirms it, and sends a clean ticket to the kitchen screen. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "q": "What kinds of calls should be sent to staff instead of handled on the phone?",
+      "a": "Catering, complaints, allergy-sensitive questions, and manager requests should go to staff with a summary. ROAL does that when it cannot safely answer the call itself. That keeps the caller moving without guessing on important issues."
+    }
+  ],
+  "words": 1275,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

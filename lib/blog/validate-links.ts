@@ -1,3 +1,4 @@
+import { SEO_LINKS } from "@/lib/seo/site-pages";
 import { BLOG_POSTS } from "./posts";
 import type { BlogArticleContent, BlogPost } from "./types";
 
@@ -13,10 +14,13 @@ const ALLOWED_INLINE_PATHS = new Set<string>([
   "/signup",
   "/blog",
   ...BLOG_ALLOWED_CTA_HREFS,
+  ...SEO_LINKS.map((l) => l.path),
 ]);
 
 function collectInlinePaths(content: BlogArticleContent): string[] {
   const paths: string[] = [];
+  const texts = [content.intro ?? "", ...content.faq.map((f) => f.answer), ...content.sections.map((s) => s.body ?? "")];
+  for (const text of texts) for (const match of text.matchAll(INLINE_LINK_RE)) paths.push(match[2]);
   for (const section of content.sections) {
     for (const paragraph of section.paragraphs) {
       for (const match of paragraph.matchAll(INLINE_LINK_RE)) {
@@ -28,6 +32,7 @@ function collectInlinePaths(content: BlogArticleContent): string[] {
 }
 
 function assertInlinePath(slug: string, path: string, blogSlugs: Set<string>): void {
+  path = path.split("#")[0];
   if (path.startsWith("/blog/")) {
     const postSlug = path.slice("/blog/".length).replace(/\/$/, "");
     if (!blogSlugs.has(postSlug)) {

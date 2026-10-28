@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-weekly-review-routine",
+  "keyword": "restaurant weekly review",
+  "category": "operations",
+  "title": "A simple restaurant weekly review for owners",
+  "seoTitle": "Restaurant weekly review routine for owners | ROAL",
+  "description": "Use a simple restaurant weekly review to check calls, orders, menu gaps, hours, staffing, and forwarding before the next week starts.",
+  "question": "How should I do a restaurant weekly review without wasting time?",
+  "answer": "Use a short weekly review to check call volume, missed or busy calls, order issues, menu updates, hours, and forwarding before the next rush. For a small restaurant, 20 to 30 focused minutes is enough if you review the same items every week and fix the few problems that are costing orders or staff time.",
+  "summary": "A simple weekly routine to review calls, orders, menu issues, and phone setup before the next busy week.",
+  "intro": "A restaurant weekly review should take 20 to 30 minutes and focus on the few things that affect orders, staff time, and customer experience. The best routine is the one you can repeat every week without opening ten different tabs.\n\nFor many owners, that means checking calls, kitchen tickets, hours, menu changes, and anything the phone host could not answer. If you use ROAL, you can review those items in one place and spot problems early, before they turn into lost pickup orders or confused callers.",
+  "sections": [
+    {
+      "id": "what-should-i-review-every-week",
+      "h2": "What should I review every week?",
+      "body": "Start with the same five items every week: calls, orders, menu questions, hours, and forwarding. That keeps the review simple and makes it easier to notice changes from one week to the next.\n\nA useful owner check looks like this:\n\n1. Count the calls that came in.\n2. Review completed pickup or delivery orders.\n3. Look at the questions the host could not answer.\n4. Confirm your hours and holiday hours are still right.\n5. Test the phone forwarding path you are using.\n\nIf ROAL is your [phone host](/how-it-works), the dashboard gives you call history, transcripts, recordings, live kitchen tickets, and unanswered questions in one place. That means you can scan the week fast instead of asking staff to remember every awkward call.\n\nA good rule is to ask, \"What made us slower or made callers repeat themselves?\" Then write down one fix for the next week. Keep it practical. If the issue was a missing menu item, update the menu. If the issue was a confusing parking answer, add a short FAQ. If the issue was forwarding, test it before the lunch rush."
+    },
+    {
+      "id": "how-do-i-read-the-call-log-without-getting-lost",
+      "h2": "How do I read the call log without getting lost?",
+      "body": "You do not need to read every transcript in full. Pick the calls that tell you something useful: new orders, wrong-address calls, allergy questions, reservation requests, and calls that needed staff help.\n\nA simple review table can look like this:\n\n| Call type | What to check | What to fix |\n|---|---|---|\n| Pickup order | Item names, sizes, modifiers, ready time | Update menu wording or prep timing |\n| Menu question | Hours, specials, sold-out items | Edit the FAQ or menu |\n| Staff handoff | Allergy, catering, manager request | Make sure the summary is clear |\n| Missed answer | Why the host could not answer | Add the answer to the menu or FAQ |\n\nIf you use ROAL, the call history shows you the transcript and recording, so you can spot patterns. For example, if three callers ask, \"Do you have gluten-free crust?\" you can decide whether to add a clearer menu note. If callers keep asking about parking, that is a sign the address page needs a better line.\n\nTry a line like this when you want the host to answer the same way every time: \"We are at 24 Main Street, next to the pharmacy, and parking is on the side lot.\" Keep it short enough for a tired caller to catch on the first try."
+    },
+    {
+      "id": "which-order-problems-should-i-catch-before-the-next-rush",
+      "h2": "Which order problems should I catch before the next rush?",
+      "body": "The weekly review is the time to catch small ordering problems before Friday night or lunch. Look for items that are getting repeated corrections, slow prep times, or special notes that the kitchen keeps asking about.\n\nCheck these items:\n\n- Misspelled or unclear item names.\n- Sizes that are hard to tell apart.\n- Modifiers that matter to the kitchen, like no onions or extra sauce.\n- Sold-out items that still sound available.\n- Ready times that are too optimistic.\n\nA worked example helps. Say your average pickup order is $28, and one in ten calls leads to a correction because the caller and kitchen heard the item differently. If you fix the menu wording and cut that confusion in half, you are protecting time on both sides of the counter. Plug in your own average ticket and your own weekly order count.\n\nROAL sends a clean ticket to the kitchen screen, which helps the kitchen see the order in one place. Still, the weekly review matters because the best ticket is the one that starts with a clear menu. If a caller keeps asking for a sauce that is not listed, add it to the menu or mark it as a note the host should collect."
+    },
+    {
+      "id": "how-do-i-use-hours-holidays-and-forwarding-in-the-review",
+      "h2": "How do I use hours, holidays, and forwarding in the review?",
+      "body": "Hours problems usually show up when the phone rings at the worst time. That is why your weekly review should always include your hours, holiday hours, and any forwarding setup.\n\nUse this quick checklist:\n\n- Confirm open and close times for each day.\n- Check whether holiday hours are coming up.\n- Test whether the phone forwards when busy or unanswered.\n- Make sure the existing number still points where you expect.\n- Call your own restaurant once and listen to what callers hear.\n\nFor many landlines and some carriers, *72 followed by the forwarding number forwards all calls, and *73 turns it off. On some mobile carriers, codes can differ, and business phone systems often use a web portal. Codes vary by carrier and plan, so always confirm with your carrier and test with a call. If you need a carrier-by-carrier refresher, keep [call forwarding codes by carrier](/tools/call-forwarding-codes) handy.\n\nA good script for staff is: \"If the phones get busy, let the host take the first pass and we will catch the special requests.\" That keeps the team calm and makes forwarding part of the routine, not an emergency fix."
+    },
+    {
+      "id": "what-should-i-review-for-menu-changes-and-sold-out-items",
+      "h2": "What should I review for menu changes and sold-out items?",
+      "body": "Your weekly review should end with the menu, because menu mistakes create the most avoidable phone problems. Check new items, price updates, sold-out items, and anything that needs a clearer description for callers.\n\nA practical menu pass looks like this:\n\n1. Confirm the top sellers are listed clearly.\n2. Check prices against your current menu.\n3. Remove or mark sold-out items.\n4. Add notes for sizes, sides, and extras.\n5. Review common questions from last week and add answers.\n\nIf ROAL is reading your public menu pages or an uploaded menu, the clearer your menu is, the better the phone host can answer. If a side is extra, write it that way. If an item is seasonal, say that. If you want fewer back-and-forth calls, clear language matters more than fancy wording.\n\nExample: instead of \"Chef special sub,\" write \"Chef special sub, available until 4 pm, choose white or wheat, add chips or fries for extra cost.\" That gives the caller enough to decide without needing a second call. It also reduces the chance that a tired staff member has to explain the same thing ten times in one shift."
+    },
+    {
+      "id": "how-do-i-turn-the-review-into-actions-for-staff",
+      "h2": "How do I turn the review into actions for staff?",
+      "body": "A weekly review is only useful if it ends with assignments. Write down who fixes what before the week starts, even if the person is you.\n\nA simple owner action list can be:\n\n- Update one menu item description.\n- Fix one hours note.\n- Add one FAQ answer.\n- Test forwarding from one number.\n- Review one tricky call with the kitchen or counter team.\n\nIf a caller asked for a manager, a catering quote, or an allergy-sensitive question, that should be in your review notes too. ROAL passes those calls to staff with a summary, which gives you a clean handoff to review later. You can ask, \"Did we respond fast enough?\" and \"Did the summary give enough context?\" without digging through scattered notes.\n\nA short owner script helps when you talk to staff: \"This week, I want the phone to sound the same every day, and I want the kitchen to see clear tickets.\" That is easy to understand and easy to measure.\n\nYou can also use the review to spot training needs. If one cashier keeps giving a different answer about parking, give them one approved line to use. If your counter team keeps hearing the same menu question, add that answer to the host and the FAQ."
+    },
+    {
+      "id": "what-does-a-30-minute-weekly-review-look-like-in-practice",
+      "h2": "What does a 30-minute weekly review look like in practice?",
+      "body": "Here is a realistic 30-minute routine for a busy shop. You can repeat it every Monday morning or Sunday night, whichever is quieter for you.\n\n| Time | Task | Owner action |\n|---|---|---|\n| 0-5 min | Check call volume and completed orders | Look for spikes or dips |\n| 5-12 min | Scan call history for issues | Flag wrong answers, allergy calls, reservations |\n| 12-18 min | Review kitchen tickets | Check clarity, timing, and special notes |\n| 18-24 min | Confirm hours and forwarding | Test one live call to your number |\n| 24-30 min | Update menu and FAQ | Fix one or two items, then stop |\n\nIf you need a quick way to think about value, use simple math. Say you take 40 phone orders in a week and your average order is $28. That is $1,120 in weekly phone revenue before tip and other charges. If your review finds one menu issue that was causing repeated confusion, you are protecting time and making the next week smoother.\n\nThis is also where ROAL can help keep the routine tidy. The dashboard combines live tickets, call history, menu edits, hours, FAQs, and multi-location menus, so you are not jumping between tools. The goal is not to overanalyze. The goal is to spot the few fixes that make the phone easier next week."
+    }
+  ],
+  "takeaways": [
+    "Review the same five things every week: calls, orders, menu questions, hours, and forwarding.",
+    "Use call transcripts and kitchen tickets to find repeat problems, not just one-off mistakes.",
+    "Keep menu language short and clear so callers hear sizes, modifiers, and sold-out items correctly.",
+    "End every weekly review with one or two concrete fixes for the next shift.",
+    "Test your forwarding setup regularly and confirm it with an actual call."
+  ],
+  "faq": [
+    {
+      "q": "How long should a restaurant weekly review take?",
+      "a": "For most independent restaurants, 20 to 30 minutes is enough if you follow the same checklist each week. The point is to review the calls and menu issues that affect service, not to rebuild your whole operation. If you are spending much longer, narrow the review to the highest-impact items."
+    },
+    {
+      "q": "What should I look for in the call log?",
+      "a": "Focus on calls that caused a handoff, confusion, or repeat question. That includes pickup orders, hours questions, allergy calls, reservation requests, and anything the phone host could not answer. Those calls show you where the menu or FAQ needs a fix."
+    },
+    {
+      "q": "How do I know if my phone forwarding is working?",
+      "a": "Test it with an actual call after you change the setting. On many carriers and phone systems, forwarding codes differ, so confirm the correct setup with your carrier or phone provider first. Do not rely on the setting alone; always place a test call and listen to what happens."
+    },
+    {
+      "q": "What should I update first if I only have a few minutes?",
+      "a": "Start with the problem that affected callers most often: a wrong hour, a sold-out item still listed, or a repeated menu question. If the same issue came up more than once, fix that before touching less common items. Small edits can save a lot of back-and-forth on the next shift."
+    }
+  ],
+  "words": 1528,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

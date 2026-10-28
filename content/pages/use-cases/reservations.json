@@ -1,0 +1,114 @@
+{
+  "slug": "reservations",
+  "label": "Reservation requests",
+  "h1": "Reservation requests, handled by phone",
+  "seoTitle": "Restaurant reservation calls, handled by AI | ROAL",
+  "description": "Let a phone host answer reservation requests, collect names and party sizes, and pass special notes to your team when the restaurant is busy.",
+  "lead": "A phone that rings during dinner should not pull you out of the line or the dining room. ROAL can answer reservation requests, take the details, and send the note to your team.",
+  "question": "How can an AI phone host handle reservation requests for my restaurant?",
+  "answer": "ROAL answers reservation calls, asks for the date, time, party size, name, and phone number, and captures special notes like a high chair, birthday dessert, or patio seating. It can also pass unclear requests or manager questions to staff with a short summary. That helps when the host stand is busy, the bar is slammed, or the phone rings while you are in service.",
+  "pains": [
+    {
+      "title": "The phone rings when the host stand is full",
+      "body": "At 6:30 on a Friday, one person may be checking coats, seating a walk-in, and answering a call at the same time. Reservation calls turn into long hold times or voicemail."
+    },
+    {
+      "title": "Details get lost in a rush",
+      "body": "Names get spelled wrong, party sizes get mixed up, and notes like \"outside table if possible\" can disappear on a busy night. That causes confusion when the guest arrives."
+    },
+    {
+      "title": "Guests call when your team is already helping tables",
+      "body": "A caller who just wants to book two for 7:00 pm can end up waiting while your staff is clearing plates or fixing a check. That hurts the dining room flow and the guest experience."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes the reservation basics",
+      "body": "ROAL collects the date, time, party size, name, and callback number. It can also ask for simple notes like indoor, outdoor, booth, wheelchair access, or a birthday."
+    },
+    {
+      "title": "Fits busy service times",
+      "body": "You can forward all calls, or only busy and unanswered calls, so reservation requests still get answered during the dinner rush. Your team keeps the same restaurant number."
+    },
+    {
+      "title": "Sends clear notes to your team",
+      "body": "When a request needs a person, ROAL passes along a short summary instead of making the guest repeat everything. That is useful for large parties, special seating, or questions about policies."
+    },
+    {
+      "title": "Keeps the call simple for guests",
+      "body": "The phone host speaks plainly and keeps the exchange short. Guests get a quick answer instead of a long menu or a voicemail box."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I make a reservation for tonight?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What time would you like?"
+    },
+    {
+      "who": "caller",
+      "line": "7:30 for four, if possible."
+    },
+    {
+      "who": "host",
+      "line": "I can help with that. May I have the name and a phone number?"
+    },
+    {
+      "who": "caller",
+      "line": "It’s Maria Lopez, 201-555-0148. And can we get a booth?"
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. I have four people at 7:30 pm under Maria Lopez, with a booth request noted. I’ll send that to the restaurant now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Reservation request · 7:30 pm",
+    "lines": [
+      "Name: Maria Lopez",
+      "Party: 4",
+      "Phone: 201-555-0148",
+      "Request: booth if available"
+    ],
+    "note": "Reservation request only; please confirm in-house if needed."
+  },
+  "sections": [
+    {
+      "h2": "What a reservation phone host should ask",
+      "body": "For reservation requests, keep the questions short and consistent. Ask for the date, time, party size, name, and callback number first. Then ask one simple follow-up if needed, such as indoor or outdoor seating, high chair, stroller space, or a birthday note.\n\nDo not make guests sit through a long script. People calling to book dinner want a quick answer. If your restaurant only takes certain party sizes, certain seating areas, or same-day reservations after a cutoff time, put that in the phone host so it can explain it clearly."
+    },
+    {
+      "h2": "Good examples of reservation calls",
+      "body": "A common call is simple: \"Table for two at 6:45 tonight.\" Another is more specific: \"Six people on Saturday, and my mom needs a booth.\" During busy weekends, guests may also ask if they can add a stroller, bring a cake, or sit outside if weather allows.\n\nThose details matter because they help your team set the table right the first time. A phone host is useful here because it can capture the note without rushing, repeating, or forgetting the phone number. If a request is unusual, it can send it to staff with a short summary."
+    },
+    {
+      "h2": "A practical setup for a busy restaurant",
+      "body": "Start by deciding what should be taken on the phone and what should be passed to staff. For example, let the phone host handle standard reservation requests, but send large parties, private dining questions, and manager requests to your team.\n\nThen check your forwarding before service. You can forward all calls, or only when busy or unanswered, so the front of house is not stuck choosing between the dining room and the phone. If you want to test the flow first, try it on [How it works](/how-it-works) or build a free test host at [Try ROAL](/try)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take a reservation request, not just answer hours?",
+      "a": "Yes. It can take reservation requests and collect the main details a restaurant needs. If the request is unusual or needs staff review, ROAL can pass it along with a summary."
+    },
+    {
+      "q": "What details does the phone host collect for a reservation?",
+      "a": "Usually date, time, party size, name, and phone number. You can also have it ask for simple notes like booth, patio, high chair, or celebration details."
+    },
+    {
+      "q": "What happens if the guest asks for something the host cannot answer?",
+      "a": "ROAL sends the question to your team in an inbox with the call details. Once you answer it, the host can use that answer next time."
+    },
+    {
+      "q": "Can I still keep my own restaurant number?",
+      "a": "Yes. You keep your existing number and forward calls to the phone host. You can forward all calls, or only when you are busy or miss the call."
+    },
+    {
+      "q": "Does ROAL take card numbers for reservations?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment stays with the restaurant's normal process."
+    }
+  ]
+}

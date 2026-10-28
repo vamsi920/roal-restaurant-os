@@ -1,0 +1,82 @@
+{
+  "slug": "office-lunch-phone-orders",
+  "keyword": "office lunch catering phone order",
+  "category": "phone-orders",
+  "title": "Office lunch catering orders by phone",
+  "seoTitle": "Office lunch catering phone orders | ROAL",
+  "description": "Handle office lunch catering phone orders with a clear script, fast ticketing, and simple handoff steps for busy restaurant teams.",
+  "question": "How should my restaurant handle office lunch orders by phone?",
+  "answer": "Use a short phone script, confirm the office name, headcount, timing, items, and delivery or pickup details, then repeat the order back before it goes to the kitchen. For bigger catering or allergy-sensitive requests, have the phone host collect the basics and hand the call to staff with a summary. ROAL can answer these calls from your live menu and send a clean ticket to the kitchen screen.",
+  "summary": "You’ll learn how to take office lunch orders by phone with less back-and-forth and cleaner kitchen tickets.",
+  "intro": "Office lunch orders by phone should be handled like a small system, not a scramble. The key is to collect the same details every time, keep the menu clear, and send a clean ticket to the kitchen fast.\n\nFor a busy pizza shop, deli, or family restaurant, that means one simple phone script, one clear pickup or delivery process, and one way to hand off catering questions. ROAL can help by answering the phone, quoting from your live menu, and sending the order to the kitchen screen while your team stays focused on food and service.",
+  "sections": [
+    {
+      "id": "what-should-you-ask-on-an-office-lunch-order-call",
+      "h2": "What should you ask on an office lunch order call?",
+      "body": "Start with the details that save you time later. The goal is to find out who the order is for, when it is needed, and how it is getting to the office.\n\nA simple script line works well:\n\n\"Thanks for calling. Is this for pickup or delivery, and what time do you need it ready?\"\n\nThen collect the basics in the same order every time:\n\n1. Office name and contact name\n2. Call-back phone number\n3. Pickup or delivery\n4. Ready time or delivery time\n5. Headcount or number of trays\n6. Menu items, sizes, modifiers, and notes\n7. Floor, suite, gate code, or parking instructions if needed\n\nFor office lunch, the details matter. A deli platter for 12, a pizza mix for 18, or boxed lunches for 25 all need different kitchen timing. If you use ROAL, it can collect items, sizes, modifiers, and notes from your live menu, then confirm the order back before it sends the ticket. That gives staff less guessing and fewer callbacks."
+    },
+    {
+      "id": "how-do-you-keep-the-call-short-without-sounding-rushed",
+      "h2": "How do you keep the call short without sounding rushed?",
+      "body": "Office callers often want speed. They may be ordering for a team meeting, a sales lunch, or a last-minute office celebration. A short, calm flow helps.\n\nUse a three-step pattern:\n\n- Ask what they need\n- Confirm timing and contact info\n- Repeat the order back\n\nExample phone line:\n\n\"I can take that now. What time do you need it ready, and how many people are we feeding?\"\n\nIf the caller starts listing items fast, do not try to memorize everything. Break it into chunks:\n\n- First course or mains\n- Sides and drinks\n- Special instructions\n- Payment timing, if your shop already handles it at pickup or on delivery\n\nHere is a worked example you can copy and swap for your own numbers. Say the office needs 8 sandwiches, 2 salads, and 4 drinks. If your average lunch order is $28, a 4-person office order might be small, while a 12-person office order can add up quickly. The exact total depends on your menu, so plug in your own prices and portions. The point is to confirm the count early so the kitchen can plan the pack-out."
+    },
+    {
+      "id": "what-does-a-good-office-lunch-order-ticket-include",
+      "h2": "What does a good office lunch order ticket include?",
+      "body": "A clean ticket is what keeps the kitchen moving. The person on the phone may be busy, distracted, or calling from a noisy office, so the ticket should carry the key details in plain language.\n\nA useful ticket format includes:\n\n| Field | Example |\n|---|---|\n| Office name | Acme Marketing |\n| Contact name | Jordan Lee |\n| Phone number | 555-123-4567 |\n| Order type | Delivery |\n| Ready time | 12:15 PM |\n| Items | 4 turkey sandwiches, 3 chicken wraps, 2 salads |\n| Notes | No onions on one wrap, dressing on side |\n| Handoff | Leave with front desk |\n\nThat is the kind of structure staff can read fast during lunch rush. ROAL sends a clean ticket to the kitchen screen, and the dashboard also keeps call history with transcripts and recordings. If you need to review an office order later, you can check exactly what was said.\n\nFor more on ticket clarity, see [what a clean phone order ticket looks like](/blog/phone-orders-ticket-format)."
+    },
+    {
+      "id": "how-should-you-handle-catering-questions-allergies-and-manag",
+      "h2": "How should you handle catering questions, allergies, and manager requests?",
+      "body": "Not every office lunch order should stay on the phone host alone. Some calls need a person to step in.\n\nROAL is designed to hand catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. That matters for office lunch because callers may ask things like:\n\n- Can you make 20 boxed lunches for Thursday?\n- Which items are safe for someone with a food allergy?\n- Can you do a custom platter for our office meeting?\n\nA safe handoff line sounds like this:\n\n\"I can get a team member for that request and pass along the details.\"\n\nFor allergy-sensitive calls, keep the wording careful and direct. Do not guess. Do not promise what you have not checked. The phone host should gather the request and send it to staff, not try to improvise.\n\nIf the caller asks for a manager, treat it the same way. Collect the office name, callback number, and the issue in one pass, then hand it off with a short summary so your team is not starting from scratch. That is better than losing the thread during lunch service."
+    },
+    {
+      "id": "how-do-you-set-up-your-phone-so-office-orders-reach-you",
+      "h2": "How do you set up your phone so office orders reach you?",
+      "body": "Before lunch rush, make sure your call flow is simple. Many restaurants forward their existing number to a phone line so the restaurant keeps its own number while calls are routed where they should go.\n\nBasic steps:\n\n1. Confirm how your carrier or phone system handles forwarding.\n2. Choose whether to forward all calls or only busy and unanswered calls.\n3. Test the setup with a real call.\n4. Make sure your staff knows where office orders are landing.\n\nCodes vary by carrier and plan, but many landlines and some carriers use *72 to forward all calls and *73 to turn it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually let you set forwarding in the web portal. Always confirm with your carrier and test with a call.\n\nIf you want a handy reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-does-roal-help-with-office-lunch-orders-by-phone",
+      "h2": "How does ROAL help with office lunch orders by phone?",
+      "body": "ROAL is built for restaurants that need the phone to work during lunch, not just ring. It answers the restaurant's phone, takes pickup and delivery orders from the live menu, answers questions about hours, address, parking, and the menu, and sends a clean ticket to the kitchen screen.\n\nFor office lunch orders, that means the phone host can:\n\n- Speak the caller’s language\n- Take items, sizes, modifiers, and notes\n- Collect the caller’s name and phone\n- Quote a ready time\n- Confirm the order back before sending it through\n\nIt also skips sold-out items, which helps avoid awkward calls back to the office. And it never takes card numbers over the phone. Payment happens at pickup or however your restaurant already handles it.\n\nSetup is simple. The owner pastes the restaurant website, Google Maps link, or \"Name, City\" at /try. ROAL reads public menu, price, hours, and address pages and builds a phone host in about a minute. Owners can test-call it right in the browser with no sign-up needed. Once it is live, each location gets its own phone line automatically, and the restaurant can forward its existing number to it.\n\nIf you want the pricing details, see [Pricing](/pricing)."
+    },
+    {
+      "id": "what-should-you-do-after-the-call-so-lunch-runs-smoothly",
+      "h2": "What should you do after the call so lunch runs smoothly?",
+      "body": "The call is only half the job. The other half is what happens before the food leaves the kitchen.\n\nUse a short checklist for office lunch orders:\n\n- Check the kitchen screen for the order status\n- Confirm the ready time against your prep pace\n- Pack utensils, napkins, sauces, and drinks if your order includes them\n- Label platters or bags clearly\n- Add delivery instructions or pickup notes for the driver or front counter\n\nIf you are short-staffed, a phone host can help your team stay on task during the lunch rush. The dashboard also gives you live tickets with statuses like new, preparing, and ready, plus call history, transcripts, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus.\n\nA practical example: say an office places a $96 lunch order for 6 people at 11:20 AM and wants it at 12:15 PM. Your kitchen can see the ticket early, set the order in motion, and check the timing against the rest of the rush. That is easier than re-listening to a voicemail or trying to decode handwritten notes. If you want a broader view of phone handling for busy shifts, see [short-staffed shifts](/use-cases/short-staffed)."
+    },
+    {
+      "id": "what-is-a-simple-office-lunch-phone-process-you-can-train-in",
+      "h2": "What is a simple office lunch phone process you can train in one shift?",
+      "body": "Keep the process short enough that a new staff member can follow it on a busy day. Here is a practical version you can post by the phone.\n\n1. Answer with your normal greeting.\n2. Ask whether the caller wants pickup, delivery, or catering.\n3. Get the office name, callback number, and ready time.\n4. Take the order in menu order, item by item.\n5. Repeat the full order back.\n6. Send it to the kitchen or hand it to staff if it needs review.\n\nA good opener is:\n\n\"Thanks for calling. I can help with a lunch order. What time do you need it ready?\"\n\nThat simple line keeps the call moving and gives the caller confidence that someone is paying attention. If your team wants a test run, you can [build a free test host](/try) from your website, menu, or Google Maps link and see how it sounds before you forward calls.\n\nROAL was built by Venkata Vamsi in Jersey City, NJ, and it works for any US restaurant, not just the first locations in Jersey City and Hoboken. It is a practical fit for restaurants that want phone orders to feel organized during the lunch rush."
+    }
+  ],
+  "takeaways": [
+    "Ask for office name, headcount, timing, and callback number on every lunch call.",
+    "Use a repeat-back script so the order is confirmed before it hits the kitchen.",
+    "Send catering, allergy, and manager requests to staff with a short summary.",
+    "Use clean tickets with clear notes, ready time, and delivery instructions.",
+    "Forward your existing number carefully and test it with a real call."
+  ],
+  "faq": [
+    {
+      "q": "How do I take office lunch orders by phone without slowing down service?",
+      "a": "Use the same order flow every time: office name, contact number, pickup or delivery, ready time, items, and special notes. Then repeat the order back once before sending it to the kitchen. That keeps the call short and cuts down on missed details."
+    },
+    {
+      "q": "What details should I collect for an office lunch catering call?",
+      "a": "At minimum, get the office name, contact name, phone number, headcount, timing, items, and delivery or pickup instructions. If the order is large, ask about suite number, front desk drop-off, or parking instructions too. If there are allergy-sensitive questions, hand those to staff instead of guessing."
+    },
+    {
+      "q": "Can an AI phone host take office lunch orders for my restaurant?",
+      "a": "Yes. ROAL answers the restaurant's phone, takes pickup and delivery orders from the live menu, collects caller details, quotes a ready time, and sends a clean ticket to the kitchen screen. It also hands catering and allergy-sensitive questions to staff with a summary."
+    },
+    {
+      "q": "Do I need to take credit card numbers on office lunch calls?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles it. That keeps the call simpler and lets staff follow the same payment process they already use."
+    }
+  ],
+  "words": 1582,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

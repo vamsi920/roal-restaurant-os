@@ -1,0 +1,77 @@
+{
+  "slug": "large-phone-orders-restaurant",
+  "keyword": "large phone order restaurant",
+  "category": "phone-orders",
+  "title": "Taking large phone orders without mistakes",
+  "seoTitle": "Large phone orders without mistakes | ROAL",
+  "description": "Handle large phone orders with a read-back script, clear pickup times, modifier checks, and cleaner tickets for the kitchen.",
+  "question": "How do I take a large phone order restaurant call without making mistakes?",
+  "answer": "Use a fixed order-taking script, read back every item, size, modifier, and note, and quote one clear ready time before ending the call. For busy restaurants, an AI phone host like ROAL can take pickup and delivery orders from your live menu, confirm the order back, and send a clean ticket to the kitchen screen.",
+  "summary": "You’ll learn a simple system for taking big phone orders cleanly and getting them to the kitchen without confusion.",
+  "intro": "Large phone orders go wrong when the call is handled in pieces. The fix is a simple script, a clear read-back, and one place for the ticket to land.\n\nFor a busy pizza shop, deli, or family restaurant, that means taking the order the same way every time, then confirming it before the caller hangs up. ROAL is built for that workflow: it answers the phone, takes the order from your live menu, and sends a clean ticket to the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-should-you-say-first-on-a-large-phone-order-call",
+      "h2": "What should you say first on a large phone order call?",
+      "body": "Start with one calm line that sets the pace. You want the caller to know you are ready, and you want the order to come in the same way every time.\n\nUse a script like this:\n\n\"Thanks for calling. I’ll take your order now, and I’ll read it back before we finish.\"\n\nThen follow the same order every call:\n\n1. Ask for pickup or delivery.\n2. Get the caller’s name and phone number.\n3. Take the first item completely before moving to the next.\n4. Ask for sizes, modifiers, and notes right away.\n5. Quote the ready time near the end.\n\nThat structure matters on a large phone order restaurant call because people often add extra pizzas, sides, sauces, and special instructions at the end. If you leave details floating, mistakes happen. If you keep one steady order, the call stays clean. ROAL does this same flow automatically and confirms the order back before it sends the ticket to the kitchen screen."
+    },
+    {
+      "id": "how-do-i-keep-toppings-modifiers-and-notes-straight",
+      "h2": "How do I keep toppings, modifiers, and notes straight?",
+      "body": "The safest way is to treat every item like a mini checklist. Do not rely on memory. Do not jump ahead.\n\nFor each item, confirm:\n\n- Size\n- Quantity\n- Base item\n- Modifiers\n- Special notes\n\nExample script:\n\n\"Got it: one large pepperoni pizza, extra cheese, light sauce, cut into squares. Anything else on that pizza?\"\n\nIf the caller orders three entrees, read each one back before moving on. That keeps the ticket easier for the kitchen and easier for you to catch errors. It also helps with messy calls like \"make it like last time\" or \"add the usual.\" If the guest wants something custom, write it down exactly as spoken.\n\nROAL can take items, sizes, modifiers, and notes from the restaurant’s live menu, and it will not offer items marked sold out. That keeps the call closer to what the kitchen can actually make."
+    },
+    {
+      "id": "how-do-i-quote-a-pickup-time-without-overpromising",
+      "h2": "How do I quote a pickup time without overpromising?",
+      "body": "Give one clear ready time, not a vague answer. The caller wants to know when to leave, and the kitchen needs a promise it can actually keep.\n\nA good line is:\n\n\"That will be ready at 6:25.\"\n\nIf your kitchen is slammed, use a longer buffer. If the order is simple, keep it tighter. The point is consistency. Do not say \"probably\" or \"around maybe\" unless you truly need a range. A large phone order restaurant call should end with one exact time, plus any important notes like \"please bring the card at pickup\" or \"we’ll have it at the front counter.\"\n\nHere is a simple worked example you can swap for your own numbers:\n\n| Example order | What you say |\n|---|---|\n| 4 pizzas, 2 pastas, 3 salads | \"That will be ready in 35 minutes.\" |\n| 8 entrees for pickup | \"That will be ready at 7:10.\" |\n| A last-minute family order | \"I can take that now, and I’ll give you the exact ready time after I read it back.\" |\n\nROAL quotes a ready time during the call and confirms the order back before the ticket reaches the kitchen screen."
+    },
+    {
+      "id": "what-is-the-best-way-to-read-back-a-big-order",
+      "h2": "What is the best way to read back a big order?",
+      "body": "Read-back is the safety step that catches most mistakes before they hit the kitchen. It should sound slow, complete, and boring.\n\nUse this pattern:\n\n\"Let me read that back: two large cheese pizzas, one with mushrooms, one with pepperoni and onions; one chicken parm hero; one Caesar salad no croutons; and two orders of fries. Pickup under Maria, phone number ending in 4421. Ready at 6:25. Is that all correct?\"\n\nThat one sentence does a lot of work. It confirms item count, toppings, notes, name, number, and time. If the caller changes anything, repeat the full order again before hanging up.\n\nA quick checklist for the read-back:\n\n- Did I say every item?\n- Did I include sizes and quantities?\n- Did I repeat every special request?\n- Did I confirm the name and phone?\n- Did I give the ready time?\n\nIf you use ROAL, the order is confirmed back on the call and then sent as a clean ticket to the kitchen screen, so staff sees the same details the caller approved."
+    },
+    {
+      "id": "what-should-i-do-when-the-order-gets-too-complicated-for-the",
+      "h2": "What should I do when the order gets too complicated for the phone?",
+      "body": "Some calls belong with staff, not with the person answering the phone. That includes catering, complaints, allergy-sensitive questions, and manager requests.\n\nA simple handoff line is:\n\n\"I’m going to pass this to the team with your details so someone can help you directly.\"\n\nThen give the staff a short summary:\n\n- Caller name and phone\n- What they want\n- Why it needs attention\n- Any time pressure\n\nExample: \"Caller wants a 30-person tray order for Friday, asked about gluten-free options, and wants a manager to call back.\"\n\nThat is the right move because the kitchen and front counter need the full context. ROAL handles this same kind of handoff by sending tricky calls to staff with a summary. It also takes reservation requests, but it does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "id": "how-do-i-set-up-phone-order-taking-without-adding-more-work",
+      "h2": "How do I set up phone order taking without adding more work?",
+      "body": "If you are already busy, the setup has to be simple. ROAL was built for that kind of owner workflow.\n\nTo get started, the owner pastes the restaurant website, Google Maps link, or \"Name, City\" at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute. You can also upload a menu in any format. Then you test-call it right in the browser, with no sign-up needed.\n\nWhen you are ready to go live, you claim the host, ROAL gives each location its own phone line automatically, and you forward your existing number to it. You can forward all calls, or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nPhone forwarding codes vary by carrier and plan, so always confirm with your phone company and test with a call. On many landlines and some carriers, *72 turns forwarding on and *73 turns it off. Some mobile carriers use different codes, and business VoIP systems usually set forwarding in the web portal."
+    },
+    {
+      "id": "what-does-a-large-phone-order-actually-cost-compared-with-ot",
+      "h2": "What does a large phone order actually cost compared with other options?",
+      "body": "This is where the math helps. Use your own average check, but here is a simple example you can swap for yours.\n\nSay your average phone order is $28.\n\n- If a delivery app takes roughly 15-30% commission, that can mean about $4.20 to $8.40 per order in commission on a $28 check.\n- Many AI phone tools charge a fixed monthly fee whether or not orders come in.\n- Human answering services usually bill per minute or per call.\n- ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract.\n\nThat makes it easier to line up cost with actual orders. If you only get a few phone orders in a slow week, you are not paying a fixed monthly bill just to keep the line open. To estimate your own numbers, plug in your average ticket size and your usual phone order count, then compare that with [the pay-per-order cost page](/pricing) or the [AI phone host cost calculator](/tools/phone-host-cost-calculator).\n\nYou can also compare phone orders with [delivery app commissions](/compare/delivery-apps) if that is where many of your phone customers currently go."
+    }
+  ],
+  "takeaways": [
+    "Use one script every time so big orders do not drift.",
+    "Read back the full order before hanging up.",
+    "Quote one clear ready time and confirm the caller’s name and number.",
+    "Send complicated requests to staff with a short summary.",
+    "ROAL can take live-menu orders, confirm them, and send clean kitchen tickets."
+  ],
+  "faq": [
+    {
+      "q": "How do you take a large phone order without mistakes?",
+      "a": "Take the order in the same order every time: name, phone, pickup or delivery, then each item with size, quantity, modifiers, and notes. Read the full order back before ending the call. That final read-back catches most mistakes before the ticket hits the kitchen."
+    },
+    {
+      "q": "What should I say when a customer has a big custom order?",
+      "a": "Keep it simple and slow. Say, \"I’ll take that item by item and read it back before we finish.\" Then confirm each pizza, entrée, side, or special request as you go. For a large phone order restaurant call, that script keeps the conversation organized."
+    },
+    {
+      "q": "Can an AI phone host take complex phone orders?",
+      "a": "Yes, for normal restaurant orders from the live menu. ROAL takes items, sizes, modifiers, notes, caller name and phone, and a ready time, then confirms the order back and sends a clean ticket to the kitchen screen. It hands allergy-sensitive questions, catering, complaints, and manager requests to staff."
+    },
+    {
+      "q": "How do I set up call forwarding for restaurant orders?",
+      "a": "That depends on your carrier or phone system. On many landlines and some carriers, *72 forwards all calls and *73 turns it off; some mobile carriers use different codes, and VoIP systems often use a web portal. Confirm the exact code with your carrier and test with a call before going live."
+    }
+  ],
+  "words": 1293,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

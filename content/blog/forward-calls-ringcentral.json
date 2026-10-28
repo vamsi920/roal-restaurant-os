@@ -1,0 +1,77 @@
+{
+  "slug": "forward-calls-ringcentral",
+  "keyword": "ringcentral call forwarding",
+  "category": "phone-setup",
+  "title": "RingCentral call forwarding for restaurants",
+  "seoTitle": "RingCentral call forwarding for restaurants | ROAL",
+  "description": "Set up RingCentral call forwarding for restaurant lines, choose busy or unanswered forwarding, and see how ROAL fits with your number.",
+  "question": "How do I set up ringcentral call forwarding for my restaurant so calls go to the right place?",
+  "answer": "RingCentral call forwarding is usually set in the web portal, where you choose where calls go and whether they forward all calls, busy calls, or unanswered calls. Always confirm the exact steps with your carrier or phone admin and test with a real call. For restaurants, ROAL can take forwarded calls, answer menu and hours questions, and send clean tickets to the kitchen screen.",
+  "summary": "You’ll know how to forward your RingCentral calls, when to use each forwarding option, and how to connect that setup to ROAL.",
+  "intro": "RingCentral call forwarding is usually done in the RingCentral web portal, where you choose whether calls forward all the time, only when the line is busy, or only when nobody answers. After that, test the call yourself from a cell phone so you know it rings where you want it to ring.\n\nFor a restaurant, that matters because the phone is tied to orders, hours questions, and reservation requests. If you use ROAL, your existing number can forward to your restaurant’s own AI phone host, while you keep the number customers already know.",
+  "sections": [
+    {
+      "id": "how-do-i-set-up-ringcentral-call-forwarding-for-a-restaurant",
+      "h2": "How do I set up ringcentral call forwarding for a restaurant line?",
+      "body": "For most restaurant owners, the cleanest way is to use RingCentral’s web portal and set forwarding rules there. The exact screens can vary by account setup, but the idea is simple: you tell the system what number should ring next, and when it should do that.\n\nA practical setup for a restaurant often looks like this:\n\n1. Log in to your RingCentral account.\n2. Find the phone number or extension you want to forward.\n3. Choose the forwarding behavior: all calls, unanswered calls, or busy calls.\n4. Enter the destination number.\n5. Save the change.\n6. Test it from a second phone.\n\nIf you are forwarding to a restaurant phone host, make sure the destination number is the one ROAL gives your location after you claim the host. ROAL keeps your existing number in place, so you do not have to print a new number on menus, signs, or receipts. That is useful if your restaurant already has regulars calling the same line for pickup, delivery, or questions about hours.\n\nA simple phone script you can use when training staff is: \"If the line is busy or we’re off the floor, the main number forwards to our host, and we check the inbox for anything unusual.\""
+    },
+    {
+      "id": "which-forwarding-option-should-i-use-all-calls-unanswered-or",
+      "h2": "Which forwarding option should I use: all calls, unanswered, or busy?",
+      "body": "The right choice depends on how you run the restaurant. Each option solves a different problem, and you can change it later if the setup does not fit your rushes.\n\n| Forwarding choice | Best when | Restaurant example |\n|---|---|---|\n| All calls | You want every call to land in one place | A small takeout shop using ROAL for all ordering questions |\n| Unanswered calls | You want the front counter to try first | A family restaurant that answers live when possible |\n| Busy calls | You want backup during rush periods | A pizza shop with one phone line and dinner rush spikes |\n\nHere is a worked example. Say you have one busy Friday night line and you want to keep answering at the counter. You might forward unanswered calls to ROAL, so if your staff is taking an in-person order, the caller still gets help instead of hearing a long ring. If you are short-staffed, you could forward busy calls too.\n\nUse a quick checklist:\n- Does the phone ring long enough before forwarding?\n- Do callers hear a clear greeting?\n- Does the forwarded number go where you expect?\n- Do you want staff to keep taking first priority during lunch, but not dinner?\n\nFor a restaurant, the best setting is the one that protects orders during your rush, not the one that looks neat on paper. If you want a deeper phone setup overview, the [call forwarding codes by carrier](/tools/call-forwarding-codes) page can help you compare common options, but always confirm inside your own RingCentral account first."
+    },
+    {
+      "id": "what-happens-after-ringcentral-forwards-a-call-to-roal",
+      "h2": "What happens after RingCentral forwards a call to ROAL?",
+      "body": "Once the call reaches ROAL, the host answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and answers common questions about hours, address, parking, and menu items. It can also take reservation requests and hand off catering, allergy-sensitive questions, complaints, and manager requests to staff with a summary.\n\nThat matters because a lot of restaurant calls are repetitive. A caller might ask, \"Are you open until 10?\" or \"Do you have mozzarella sticks?\" or \"Can I place a pickup order for 2 large pies and a salad?\" Those are the kinds of calls a phone host can handle while your team focuses on service.\n\nA useful restaurant-side script for staff is: \"If the host cannot answer something specific, it leaves us a note in the inbox and we answer it once.\" That inbox becomes your memory for tricky items, holiday hours, or a special request you want the host to remember later.\n\nROAL also speaks the caller’s language, uses the voice and name you pick, and does not offer items marked sold out. It never takes card numbers over the phone, so payment still happens at pickup or however your restaurant already takes it. For many owners, that makes forwarding feel less risky than sending every call to a generic voicemail box."
+    },
+    {
+      "id": "how-do-i-keep-my-restaurant-number-and-still-forward-calls",
+      "h2": "How do I keep my restaurant number and still forward calls?",
+      "body": "You keep your existing restaurant number and forward it to the destination RingCentral points to. That way, customers still call the number they already know, while the calls route to your restaurant phone host behind the scenes.\n\nA simple way to think about it is this: your public number stays the same, but the answer point changes.\n\n| You keep | You change |\n|---|---|\n| Your printed restaurant number | Where the call rings next |\n| Your current signage | Forwarding rules in RingCentral |\n| Your caller history | The fallback when staff is busy |\n\nThis is especially helpful if you already have flyers, menus, delivery bags, or window signs with your number on them. You do not need to ask customers to learn a new line.\n\nIf your restaurant uses ROAL, each location gets its own phone line automatically after you claim the host. That makes it easier for a single store, and it matters even more if you run more than one location. ROAL can also keep a record of call history, transcripts, and recordings in the dashboard, so you can review what happened on an order or question later.\n\nA good practical test: call your restaurant number from your cell, then call again while the first call is still active. You want to see whether the forwarding rule behaves the way you expected during a real busy moment."
+    },
+    {
+      "id": "what-should-i-test-before-i-tell-staff-the-number-is-live",
+      "h2": "What should I test before I tell staff the number is live?",
+      "body": "Do not assume a forwarding rule works just because it saved. Make a few test calls from a cell phone and try the situations your restaurant actually sees.\n\nTest this short list:\n- One normal call when the line is free.\n- One call while someone is already on the line.\n- One call when nobody answers.\n- One call in the language your guests use most often.\n- One call asking about a sold-out item or a special request.\n\nYou should also listen for the greeting and make sure the caller hears the right restaurant name. If the host is going to handle pickup orders, ask for a small real-world test like: \"Can I get two chicken sandwiches, one with no pickles, for pickup at 6:30?\" That checks items, modifiers, name, phone number, and ready time in one call.\n\nFor a busy shop, the test list can be kept at the front counter:\n1. Dial the main number from a cell phone.\n2. Confirm it rings where you want.\n3. Place a short order.\n4. Confirm the kitchen screen receives the ticket.\n5. Check the inbox for anything the host could not answer.\n\nIf you are looking at costs, it helps to compare the phone side against other options. Many monthly AI phone tools charge a fixed fee whether or not orders come in, while human answering services often bill per minute or per call. ROAL is different: it charges $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    },
+    {
+      "id": "what-should-i-tell-staff-about-forwarded-calls-during-a-rush",
+      "h2": "What should I tell staff about forwarded calls during a rush?",
+      "body": "Staff should know what a forwarded call means before the dinner rush starts. If they understand the flow, they are less likely to grab the phone in the middle of a ticket or miss a call that should be handed off.\n\nUse this short floor plan:\n\n- Front counter answers first when possible.\n- If the line is busy, RingCentral forwards to the host.\n- If the call is about catering, a complaint, allergies, or a manager issue, the host sends it to staff with a summary.\n- If the host cannot answer a question, staff handles it from the inbox once and the host learns it for next time.\n\nA useful spoken line for managers is: \"We answer live when we can, but the forwarded line is our backup when the floor gets slammed.\" That keeps the team aligned without turning every shift into a phone juggling act.\n\nIf you want a quick cost check, use your own numbers. Say your average order is $28. Then compare that to the value of a completed order versus the cost of other phone options or delivery app commission. Plug in your own average ticket and order volume; the point is to see whether the phone is paying its way during peak hours.\n\nROAL was built by Venkata Vamsi in Jersey City, NJ, and it started with restaurants in Jersey City and Hoboken. It works for any US restaurant, but the setup idea stays the same: keep your number, forward calls where they should go, and make the phone easier to manage when the dining room gets loud."
+    },
+    {
+      "id": "when-is-ringcentral-forwarding-enough-and-when-do-i-need-a-p",
+      "h2": "When is RingCentral forwarding enough, and when do I need a phone host?",
+      "body": "RingCentral forwarding by itself is useful when you just need calls sent somewhere else. But forwarding alone does not answer menu questions, take orders from your live menu, or build a clean ticket for the kitchen.\n\nHere is a simple comparison for an owner:\n\n| Need | Forwarding alone | ROAL |\n|---|---|---|\n| Send calls to another number | Yes | Yes |\n| Answer hours and address questions | No | Yes |\n| Take pickup and delivery orders | No | Yes |\n| Send a kitchen ticket | No | Yes |\n| Keep a record of call history | Limited | Yes |\n\nThat is why many restaurant owners use forwarding as the bridge, not the whole plan. The forwarding rule gets the call to the right place. The phone host does the restaurant work.\n\nIf you want to try it without a long setup, you can [build a free test host from your website](/try). You paste your restaurant website, Google Maps link, or just the name and city, and ROAL reads the public menu, hours, and address to build a host in about a minute. You can test-call it in the browser before you claim it.\n\nIf your goal is simply to stop calls from going dead when you are busy, RingCentral forwarding may be enough for now. If your goal is to turn those forwarded calls into orders and useful information, a phone host is the next step."
+    }
+  ],
+  "takeaways": [
+    "RingCentral call forwarding is usually set in the web portal, then tested with a real call.",
+    "For restaurants, unanswered or busy forwarding often makes more sense than forwarding every call.",
+    "ROAL can receive forwarded calls, take orders, answer common questions, and send kitchen tickets.",
+    "Keep your existing restaurant number; forwarding changes where calls ring, not the number customers already know.",
+    "Always confirm the exact forwarding codes or settings with your carrier and test before going live."
+  ],
+  "faq": [
+    {
+      "q": "How do I forward my RingCentral restaurant line to another number?",
+      "a": "Log in to RingCentral, find the number or extension, and set the forwarding rule for all calls, unanswered calls, or busy calls. Then enter the destination number and test it from a second phone. Because account layouts can vary, confirm the exact steps in your own portal before you rely on it for service."
+    },
+    {
+      "q": "Should a restaurant forward all calls or only unanswered calls?",
+      "a": "That depends on how your floor works. If the line is often tied up during rushes, busy forwarding can protect pickup orders and questions. If staff can answer most calls live, unanswered forwarding lets the front counter stay in control first."
+    },
+    {
+      "q": "Will forwarding let me keep my restaurant number?",
+      "a": "Yes. Forwarding changes where the call rings, not the public number customers dial. That means you can keep the number on your menus, signs, and receipts while routing calls to your chosen destination."
+    },
+    {
+      "q": "What happens when a call is forwarded to ROAL?",
+      "a": "ROAL answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and handles common questions about hours, address, parking, and the menu. It sends a clean ticket to the kitchen screen and passes tricky calls to staff with a summary. It does not take card numbers over the phone."
+    }
+  ],
+  "words": 1796,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

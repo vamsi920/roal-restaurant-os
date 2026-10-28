@@ -1,0 +1,72 @@
+{
+  "slug": "phone-orders-during-renovation",
+  "keyword": "restaurant renovation stay open",
+  "category": "operations",
+  "title": "Keeping phone orders going during a restaurant renovation",
+  "seoTitle": "Restaurant renovation: keep phone orders going",
+  "description": "Keep phone orders moving during a restaurant renovation with call forwarding, clear scripts, and a setup that helps tickets stay on track.",
+  "question": "How can I keep phone orders going during a restaurant renovation and stay open?",
+  "answer": "Keep your existing number active, forward calls when needed, and give callers one clear path for pickup and delivery orders while your team is busy with the work. A phone host like ROAL can answer the phone, take orders from your live menu, handle questions about hours and address, and send clean tickets to the kitchen screen while you renovate.",
+  "summary": "A practical plan to keep phone orders coming in while your restaurant is under renovation.",
+  "intro": "A restaurant renovation does not have to stop your phone orders. Keep your existing number, forward calls when needed, and give callers a clear way to place pickup and delivery orders while the work is going on.\n\nThe goal is simple: protect sales, protect the kitchen, and protect your staff’s time. Whether you are repainting the dining room, changing floors, or closing part of the building, a [phone host](/use-cases/pickup-orders) can help keep the phones moving without asking your team to juggle every ring.",
+  "sections": [
+    {
+      "id": "what-should-i-do-with-the-phone-number-during-a-renovation",
+      "h2": "What should I do with the phone number during a renovation?",
+      "body": "Start with the number customers already know. Do not hide it or make people guess which line to call. If your team cannot answer live all day, forward the restaurant’s existing number to a system that can take the call, then turn forwarding off any time you are back to normal.\n\nA simple setup plan looks like this:\n1. Keep your main restaurant number active.\n2. Forward calls all the time, or only when busy or unanswered.\n3. Test one real call from a cell phone before service starts.\n4. Make sure the caller hears the right hours, address, and pickup instructions.\n\nIf you use a mobile carrier or landline, forwarding codes vary by carrier and plan. On many landlines, *72 forwards all calls and *73 turns it off. On some mobile carriers, **21*number# forwards all calls and ##21# turns it off. For unanswered or busy forwarding, codes also vary. Always confirm with your carrier and test the result with a call. If your system is business VoIP, the forwarding settings are often in the web portal. For a quick reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-do-i-keep-pickup-and-delivery-orders-coming-in-while-wor",
+      "h2": "How do I keep pickup and delivery orders coming in while work is loud?",
+      "body": "Renovation noise makes it harder for staff to hear the phone, repeat the order, and catch modifiers correctly. That is where a phone host helps. ROAL answers the restaurant’s phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen so the order does not live on a notepad.\n\nHere is a practical renovation flow:\n- The caller rings your normal number.\n- The phone host answers with your restaurant name.\n- It takes the order, name, phone number, sizes, modifiers, and notes.\n- It gives a ready time.\n- It confirms the order back before ending the call.\n\nExample script line for your staff if a caller asks about the work: “We’re open for pickup and delivery, and I can take your order now.” If the caller wants a tricky exception, a catering request, or a manager, the phone host can hand it to staff with a summary.\n\nIf your team wants to compare options, see [AI phone host vs voicemail](/compare/voicemail) and [AI phone host vs answering service](/compare/answering-service)."
+    },
+    {
+      "id": "what-should-callers-hear-while-the-dining-room-is-under-cons",
+      "h2": "What should callers hear while the dining room is under construction?",
+      "body": "Give callers a short, calm message. People call during a renovation because they want food, not a long explanation. Keep the message focused on what is still available and how to order.\n\nUse a plain script like this: “Thanks for calling [restaurant name]. We’re open for pickup and delivery while we renovate. Please stay on the line and we’ll take your order.” If you are using a phone host, you can still keep that tone. The caller hears a simple greeting and then gets help right away.\n\nA useful renovation checklist for callers:\n- Are hours still correct?\n- Is the address easy to find?\n- Is parking still the same?\n- Are sold-out items blocked from ordering?\n- Do staff know which door customers should use for pickup?\n\nROAL reads your menu, prices, hours, and address from your public pages, and you can also upload a menu in any format. That matters during a renovation because things change fast. If a lunch special disappears or a door closes for construction, update it once in the dashboard so the phone host gives the new answer. Questions it cannot answer go to an inbox, and you answer once so it knows for next time."
+    },
+    {
+      "id": "how-do-i-handle-the-kitchen-when-the-building-is-half-open",
+      "h2": "How do I handle the kitchen when the building is half-open?",
+      "body": "Renovations make the kitchen busier in a different way. Orders still come in, but the room may be louder, the staff may be smaller, and the flow may change by the hour. You need a clean handoff from phone to kitchen.\n\nThat is why the ticket matters. ROAL sends a clean ticket to the kitchen screen with the order details, so your cooks are not decoding a rushed phone note. On the dashboard, you can watch live tickets move from new to preparing to ready. That gives you one place to see what is going on when the dining room is torn up.\n\nA simple kitchen checklist:\n1. Confirm the kitchen screen is visible from the expo or prep area.\n2. Decide who watches new tickets during rushes.\n3. Make one person the contact for allergy-sensitive questions and manager requests.\n4. Keep sold-out items updated so callers do not order them.\n5. Review ready times during the renovation week and adjust if the kitchen needs more buffer.\n\nIf a caller asks about allergies or a custom catering order, the phone host should hand that off to staff with a summary. That is better than guessing in a noisy room."
+    },
+    {
+      "id": "what-does-a-renovation-cost-plan-look-like-for-phone-orders",
+      "h2": "What does a renovation cost plan look like for phone orders?",
+      "body": "A renovation can make margins feel tight, so it helps to compare phone-order handling by the numbers. Use your own average order size and volume, but here is a simple example you can swap out.\n\nSay your average phone order is $28. If you get 40 completed phone orders in a month, that is $1,120 in phone-order sales. If a third-party delivery app takes roughly 15-30% commission, that can mean about $168 to $336 in fees on those orders. If you are using a human answering service, the bill is often per minute or per call. Many AI phone tools also charge a monthly fee per location whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing happens monthly.\n\nUse this quick worksheet:\n- Average phone order: $___\n- Completed phone orders this month: ___\n- Delivery app commission estimate: ___\n- Phone answer cost estimate: ___\n- Cleaner option for the renovation period: ___\n\nIf you want a number for your own shop, compare your phone costs with [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) and [AI phone host cost calculator](/tools/phone-host-cost-calculator)."
+    },
+    {
+      "id": "how-do-i-set-this-up-fast-before-the-contractors-arrive",
+      "h2": "How do I set this up fast before the contractors arrive?",
+      "body": "The fastest path is to use the pages you already have. With ROAL, the owner pastes the restaurant website, Google Maps link, or “Name, City” at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute. The owner can test-call it right in the browser, no sign-up needed.\n\nA quick pre-renovation setup list:\n- Check that hours and address are current.\n- Upload a menu if you have one in another format.\n- Pick the host’s voice and name.\n- Test pickup and delivery questions from a real phone.\n- Decide when calls should forward: all calls, busy, or unanswered.\n- Tell staff what to do with manager calls and allergy questions.\n\nIf you want a visual check on call handling, look at [how it works](/how-it-works) and [set up an AI phone host from your website](/blog/set-up-ai-phone-host-one-minute). The owner can claim the host when ready, and ROAL gives each location its own phone line automatically. The restaurant keeps its own number, and forwarding can be turned off any time.\n\nOne useful phone line to tell staff: “If the phone rings while the crew is busy, let the host take the order and keep the line open for in-store guests.”"
+    }
+  ],
+  "takeaways": [
+    "Keep your existing phone number active and forward calls only as needed.",
+    "Use a phone host to take orders, answer common questions, and send clean kitchen tickets.",
+    "Update hours, address, parking, and sold-out items before the renovation starts.",
+    "Compare phone-order costs with your own numbers, not with guesswork.",
+    "Use a short caller script so customers know you are still open for orders."
+  ],
+  "faq": [
+    {
+      "q": "How do I keep restaurant phone orders going during a renovation?",
+      "a": "Keep your current number, forward calls to a live answer path, and give callers a short message that you are open for pickup and delivery. A phone host can take the order, quote a ready time, and send the ticket to the kitchen screen while your staff focuses on the renovation work."
+    },
+    {
+      "q": "Should I forward all calls or only unanswered calls during a remodel?",
+      "a": "That depends on how busy your team is. Many restaurants forward all calls during the loudest or most disrupted days, then switch to busy or unanswered forwarding when staff can still pick up some calls. Always confirm the code or setting with your carrier or phone system and test it with a real call."
+    },
+    {
+      "q": "Can a phone host handle special requests during construction days?",
+      "a": "Yes, for the kinds of calls restaurants get most often. It can take pickup and delivery orders, answer hours, address, parking, and menu questions, speak the caller’s language, and pass catering, allergy-sensitive questions, complaints, or manager requests to staff with a summary."
+    },
+    {
+      "q": "How much does ROAL cost while I stay open during a renovation?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing happens monthly."
+    }
+  ],
+  "words": 1282,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

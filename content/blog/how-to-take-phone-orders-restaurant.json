@@ -1,0 +1,77 @@
+{
+  "slug": "how-to-take-phone-orders-restaurant",
+  "keyword": "how to take phone orders restaurant",
+  "category": "phone-orders",
+  "title": "How to take phone orders in a restaurant",
+  "seoTitle": "How to take phone orders in a restaurant",
+  "description": "Use a clear script, checklist, pricing tips, and setup steps to handle restaurant phone orders smoothly during busy shifts.",
+  "question": "How do I take phone orders at a restaurant without making mistakes?",
+  "answer": "Take the order in the same order every time: greet the caller, confirm pickup or delivery, get the items with sizes and modifiers, collect the name and phone number, quote the ready time, and read the full order back before ending the call. Keep a written or screen-based ticket for the kitchen, and send anything unusual or out-of-policy to staff.",
+  "summary": "A simple phone order process your team can follow on busy shifts.",
+  "intro": "Taking phone orders at a restaurant works best when you use the same steps every time. Greet the caller, get the items and details, repeat the order back, and send a clear ticket to the kitchen.\n\nThat sounds basic, but speed matters. A clean phone process cuts mistakes, keeps the line moving, and helps a small team handle pickup and delivery orders without guessing.",
+  "sections": [
+    {
+      "id": "what-should-you-ask-first-on-a-phone-order",
+      "h2": "What should you ask first on a phone order?",
+      "body": "Start with the basics so you do not waste time writing down the wrong thing. The first questions should tell you whether this is a pickup or delivery order, what the customer wants, and how to reach them if something changes.\n\nA simple opening works well:\n\n\"Thanks for calling, this is [restaurant name]. Is this for pickup or delivery?\"\n\nAfter that, keep the order moving in the same order every time:\n\n1. Ask for the main items.\n2. Get size, crust, protein, spice level, or other modifiers.\n3. Ask for special notes only after the main items are set.\n4. Get the caller’s name and phone number.\n5. Quote the ready time before ending the call.\n\nFor a pizza shop, that might sound like: \"One large cheese pizza, thin crust, add mushrooms, and one order of wings, mild sauce. What name should I put this under?\" That structure helps your staff avoid missed details and messy tickets."
+    },
+    {
+      "id": "how-do-you-write-the-order-so-the-kitchen-can-read-it-fast",
+      "h2": "How do you write the order so the kitchen can read it fast?",
+      "body": "The kitchen should be able to glance at the ticket and start cooking right away. Use short lines, clear item names, and the exact modifier language your team already uses.\n\nA good ticket usually includes:\n\n- Customer name and phone number\n- Pickup or delivery\n- Items and sizes\n- Modifiers and notes\n- Ready time\n- Any allergy-sensitive note or special handling\n\nHere is a simple example you can copy:\n\n| Field | Example |\n|---|---|\n| Name | Maria |\n| Phone | 555-010-2044 |\n| Order type | Pickup |\n| Item 1 | Large pepperoni pizza, extra cheese, well done |\n| Item 2 | Chicken parm hero, no onions |\n| Ready time | 20 minutes |\n\nIf you use ROAL, it sends a clean ticket to the kitchen screen with the order details, and the owner can review call history, transcripts, and recordings later. That matters when the order is busy or a caller asks for something unusual."
+    },
+    {
+      "id": "what-do-you-say-when-the-caller-wants-delivery-pickup-or-spe",
+      "h2": "What do you say when the caller wants delivery, pickup, or special requests?",
+      "body": "Different requests need different handling, but the tone should stay calm and direct. Tell the caller what you can do now, what needs staff review, and what will be sent to the kitchen.\n\nUse short script lines like these:\n\n- \"Pickup is ready in about 20 minutes.\"\n- \"Delivery time depends on the address and kitchen volume.\"\n- \"I can send that note to the kitchen.\"\n- \"Let me get a staff member for that question.\"\n\nSome calls should move to staff right away. Allergy-sensitive questions, complaints, catering requests, and manager requests are examples. ROAL can hand those calls to staff with a summary, which saves your team from re-asking the same details.\n\nIf the caller asks for an item that is sold out, do not take it. Say: \"That item is not available right now. I can help you choose another option.\" That keeps the conversation clear and avoids problems at pickup."
+    },
+    {
+      "id": "how-do-you-confirm-the-order-before-hanging-up",
+      "h2": "How do you confirm the order before hanging up?",
+      "body": "Never end the call without reading the order back. This is where many mistakes get caught, especially with sizes, toppings, sauces, and names that sound similar.\n\nUse a final check like this:\n\n\"Just to confirm: one large cheese pizza with mushrooms, one order of mild wings, pickup for Maria, phone number 555-010-2044, ready in about 20 minutes. Is that correct?\"\n\nIf the caller changes something, repeat the updated order once more. Then give them the next step:\n\n- Pickup: \"We’ll have it ready at the quoted time.\"\n- Delivery: \"We’ll send the order to the kitchen and follow the delivery process you already use.\"\n- Reservation request: \"I’m sending that to the team.\"\n\nThis is also where language matters. ROAL can speak the caller’s language, which helps when your neighborhood gets busy and your staff is juggling dine-in guests, pickup, and the phone at the same time."
+    },
+    {
+      "id": "how-much-does-a-phone-order-really-cost-you",
+      "h2": "How much does a phone order really cost you?",
+      "body": "Phone orders can be cheap to take, but the true cost depends on how you handle them. A missed call may become a lost order, a human answering service may bill by the minute or per call, and many AI phone tools charge a monthly fee whether orders come in or not.\n\nHere is a simple way to think about it with example numbers you can swap for your own:\n\n- Say your average phone order is $28.\n- Say a delivery app takes 20% commission.\n- That order would cost $5.60 in commission.\n\nNow compare that with a phone host that charges per completed order. ROAL charges $0.90 per completed phone order, with no monthly fee, no setup fee, and no per-minute fee. If you take 100 completed phone orders in a month, the example cost would be $90, and you can compare that against your own order volume and average ticket size using the numbers in your shop.\n\nIf you want to compare options more directly, see [phone orders vs delivery apps](/compare/delivery-apps) and [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans)."
+    },
+    {
+      "id": "how-do-you-set-up-call-forwarding-without-confusing-the-staf",
+      "h2": "How do you set up call forwarding without confusing the staff?",
+      "body": "You do not need to replace your restaurant number. Most owners forward calls from the existing number to a phone host when they are busy, after hours, or whenever the line is not being answered.\n\nA practical setup checklist:\n\n1. Confirm your carrier or phone system supports the forwarding code you want.\n2. Test the code on one line before changing the main number.\n3. Forward all calls, or only unanswered/busy calls if that fits your operation.\n4. Make a test call from a cell phone.\n5. Turn forwarding off and on again so your team knows the process.\n\nCommon codes can vary by carrier and plan. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On some GSM mobile carriers, **21*number# forwards all calls and ##21# turns it off, while **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually set this in the web portal. Always confirm with your carrier and test it with a real call.\n\nROAL gives each location its own phone line automatically after the owner claims the host, and the restaurant keeps its own number. If you want to try it before going live, you can [build a free test host](/try)."
+    },
+    {
+      "id": "what-should-a-busy-restaurant-standardize-before-taking-more",
+      "h2": "What should a busy restaurant standardize before taking more calls?",
+      "body": "The best phone order process is the one your team can repeat on a slammed Friday night. Standardizing a few details keeps the line moving and makes the kitchen screen easier to trust.\n\nMake a one-page checklist for staff with these items:\n\n- Greeting script\n- Pickup and delivery time ranges\n- Common modifiers\n- Sold-out items and replacements\n- Allergy and complaint handoff rules\n- Where to send reservation requests and manager calls\n\nIt also helps to keep your menu, hours, address, and FAQs current. ROAL reads that public information from your website, Google Maps link, menu PDFs, menu photos, or an uploaded menu, then builds the phone host in about a minute. The owner can test-call it in the browser, pick the voice and name, and answer any questions that land in the inbox once so the host learns them from then on.\n\nFor owners who want more background, [how it works](/how-it-works) and [phone greeting templates](/tools/phone-greeting-templates) are useful next steps. The goal is simple: fewer surprises on the phone, clearer tickets in the kitchen, and a smoother handoff for your staff."
+    }
+  ],
+  "takeaways": [
+    "Take the order in the same sequence every time: item, modifier, name, phone, ready time.",
+    "Read the full order back before ending the call.",
+    "Send clean, readable tickets to the kitchen screen.",
+    "Hand off allergy, complaint, catering, and manager calls to staff.",
+    "Use call forwarding that fits your carrier and test it before relying on it."
+  ],
+  "faq": [
+    {
+      "q": "What is the best way to take a restaurant phone order?",
+      "a": "Use a fixed script: greet the caller, ask pickup or delivery, capture the items and modifiers, get the name and phone number, quote the ready time, and read the order back. That keeps the call short and helps prevent kitchen mistakes. The same process works whether a staff member answers or an AI phone host handles the call."
+    },
+    {
+      "q": "What details should I collect on every phone order?",
+      "a": "At minimum, collect the customer name, phone number, order type, items, sizes, modifiers, notes, and the quoted ready time. If the caller asks for anything unusual, make sure it is clear enough for the kitchen to read quickly. For delivery, use the address process your restaurant already follows."
+    },
+    {
+      "q": "Should I take payment card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone, and payment happens at pickup or however the restaurant already takes it. That keeps the call simpler and avoids adding extra steps to the order flow. If your restaurant already has a different payment process, keep using that process."
+    },
+    {
+      "q": "How do I keep phone orders from slowing down the restaurant?",
+      "a": "Use one short script, one ticket format, and one rule for special calls. If the caller has an allergy question, complaint, catering request, or manager request, send it to staff with a summary instead of trying to solve everything on the spot. That helps the phone stay useful without pulling too much attention from the kitchen."
+    }
+  ],
+  "words": 1271,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-answering-delis",
+  "keyword": "deli phone orders",
+  "category": "restaurant-types",
+  "title": "AI phone answering for deli phone orders",
+  "seoTitle": "Deli phone orders with AI answering | ROAL",
+  "description": "AI phone answering for deli phone orders can take pickups, answer menu questions, and keep the counter moving during the lunch rush.",
+  "question": "How can AI phone answering help with deli phone orders without adding more staff?",
+  "answer": "An AI phone host can answer your deli phone orders, take pickup and delivery details from your live menu, and send a clean ticket to the kitchen screen. It can also answer common questions about hours, address, parking, and menu items, while handing allergy-sensitive or manager requests to staff. With ROAL, you pay per completed phone order, not a monthly fee.",
+  "summary": "See how a deli phone host can take orders, answer questions, and keep the line moving.",
+  "intro": "Deli phone orders can pile up fast, especially during lunch. An AI phone host can answer the phone, take the order, and send it straight to the kitchen screen while your counter team keeps serving in person.\n\nFor delis and sandwich shops, that means fewer missed pickup calls, fewer repeat questions, and less time spent shouting over the slicer. ROAL is built for that kind of rush, and it works from your live menu, hours, and store info.",
+  "sections": [
+    {
+      "id": "what-kinds-of-deli-phone-orders-can-an-ai-host-take",
+      "h2": "What kinds of deli phone orders can an AI host take?",
+      "body": "A deli phone host works best when the order is simple but still has plenty of detail: bread choice, size, cheese, toppings, dressing, hot or cold, and special notes. It can take pickup and delivery orders from the restaurant’s live menu, then confirm the full order back before sending it to the kitchen screen.\n\nFor a sandwich shop, that matters because most calls are not complicated, but they still take time. A caller might say: \"Turkey on rye, toasted, no tomato, add pickles, and make it a combo.\" The host can capture that, ask for the name and phone number, and quote a ready time.\n\nA practical deli checklist for the phone:\n- Sandwich size or roll choice\n- Protein, cheese, and toppings\n- Toasted or not toasted\n- Hot or cold\n- Pickup or delivery\n- Caller name and phone number\n- Any special notes\n\nROAL also avoids offering items marked sold out, so the phone host is working from what you can actually make. That helps keep the call accurate when the lunch rush is moving and the line is already long."
+    },
+    {
+      "id": "how-do-i-set-up-roal-from-my-deli-menu-and-hours",
+      "h2": "How do I set up ROAL from my deli menu and hours?",
+      "body": "Setup is meant to be simple for busy owners. Go to /try, paste your restaurant website, Google Maps link, or just your restaurant name and city. ROAL reads the menu, prices, hours, and address from public pages like your website, menu PDFs, or menu photos, and builds a phone host in about a minute.\n\nYou can also upload a menu in any format. Before going live, you can test-call the host right in the browser with no sign-up needed. That helps you check how it handles deli-specific items like half sandwiches, add-ons, and house specials.\n\nUse this quick setup order:\n1. Paste your website, Maps link, or name and city.\n2. Review the menu, hours, and address ROAL pulled in.\n3. Upload your menu if anything needs correction.\n4. Pick the host’s voice and name.\n5. Test-call it and listen for any fixes.\n\nIf you want a second opinion on the setup flow, [How it works](/how-it-works) lays out the steps in plain English. The useful part for delis is that the system learns from your public info first, then the owner can correct anything it could not answer and it remembers it from then on."
+    },
+    {
+      "id": "what-should-the-phone-say-when-a-deli-customer-calls",
+      "h2": "What should the phone say when a deli customer calls?",
+      "body": "The best phone script is short and clear. Deli callers usually want speed, not a long greeting. The host should answer, take the order, and move on without making the caller repeat basic details.\n\nA good opening line sounds like this: \"Thanks for calling Main Street Deli. Would you like pickup or delivery?\" From there, the host can ask for the sandwich, size, bread, toppings, and name.\n\nHere is a simple flow you can use:\n- Greet the caller and identify the shop.\n- Ask pickup or delivery.\n- Take the item, size, modifiers, and notes.\n- Collect name and phone number.\n- Quote a ready time.\n- Confirm the full order back.\n\nROAL can also speak the caller’s language, which helps when your neighborhood has regulars who prefer something other than English. And if the caller asks for catering, has an allergy-sensitive question, wants a manager, or complains about an order, the host hands it to staff with a summary. That keeps the staff in control when the call gets complicated."
+    },
+    {
+      "id": "how-much-does-phone-answering-cost-compared-with-other-optio",
+      "h2": "How much does phone answering cost compared with other options?",
+      "body": "For deli owners, the cost question is often the biggest one. Third-party delivery apps commonly charge restaurants roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone answering products charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nHere’s a simple example you can swap for your own numbers:\n| Example | Amount |\n| --- | ---: |\n| Completed phone orders in a month | 200 |\n| ROAL cost at $0.90 each | $180 |\n| If your average order is $28 | $5,600 in order value |\n\nThat does not tell every store what to spend, but it gives you a clean way to compare models. If you want a tool for your own numbers, [Pricing](/pricing) explains the plan, and [Pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) helps owners compare the math."
+    },
+    {
+      "id": "how-do-i-forward-my-deli-s-existing-phone-number",
+      "h2": "How do I forward my deli’s existing phone number?",
+      "body": "You do not have to give up your current number. Once you claim the host, ROAL gives each location its own phone line automatically, and you forward your restaurant’s existing number to it. You can forward all calls, or only when busy or unanswered, and you can turn forwarding off any time.\n\nThe exact steps depend on your carrier or phone system. On many landlines and some carriers, dialing *72 then the forwarding number forwards all calls, and *73 turns it off. On GSM mobile carriers like AT&T and T-Mobile, **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls. Verizon Wireless uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually set forwarding in the web portal.\n\nAlways confirm the code with your carrier and test it with a call. A quick shop checklist:\n- Call your own number from a cell phone.\n- Confirm the host answers.\n- Place a test order.\n- Check that the ticket appears on the kitchen screen.\n- Turn forwarding off and back on once so staff knows how it works.\n\nIf you want carrier-specific reminders, [Call forwarding codes by carrier](/tools/call-forwarding-codes) is a useful reference."
+    },
+    {
+      "id": "what-does-the-kitchen-and-owner-dashboard-look-like-after-ca",
+      "h2": "What does the kitchen and owner dashboard look like after calls come in?",
+      "body": "The point of the dashboard is to keep the phone work organized, not buried. ROAL gives you live kitchen tickets with statuses like new, preparing, and ready. It also keeps call history with transcripts and recordings, plus a menu editor, hours, FAQs, upsell suggestions, and multi-location menus.\n\nThat matters for delis because lunch orders often need quick review. Maybe a caller asked for extra meat, a different bread, or a side that was easy to miss while the counter was busy. The transcript lets you check what was said, and the kitchen ticket keeps the order readable.\n\nUse this simple end-of-shift review:\n- Check new tickets and move them as you prep.\n- Listen to any confusing calls.\n- Fix menu wording if people keep asking the same thing.\n- Add an FAQ for common questions like parking or hours.\n- Mark sold-out items so the host stops offering them.\n\nThe owner can also answer questions the host could not answer once, and the host knows it from then on. That saves time on repeat calls. For owners comparing options, [AI phone host vs hiring phone staff](/compare/hiring-phone-staff) and [AI phone host vs answering service](/compare/answering-service) are good next reads."
+    },
+    {
+      "id": "what-should-a-deli-owner-watch-out-for-before-going-live",
+      "h2": "What should a deli owner watch out for before going live?",
+      "body": "A phone host can help a lot, but it is still important to set clear rules. ROAL does not take card numbers over the phone, so payment happens at pickup or however your restaurant already takes it. It also routes allergy-sensitive questions, complaints, catering requests, and manager requests to staff with a summary.\n\nBefore you go live, make sure these items are ready:\n- Your menu is current.\n- Sold-out items are marked sold out.\n- Hours and address are correct.\n- The phone host name and voice fit your shop.\n- Staff know where the tickets show up.\n- Someone on the team knows how to answer forwarded calls if needed.\n\nFor a deli, the small details matter. If you sell breakfast sandwiches until 11, make sure that is in the menu or hours. If you close early on Sunday, say so clearly. If parking is behind the building, add it. The better your public info is, the better the phone host will sound.\n\nIf you want to try it with your own menu, [build a free test host from your website](/try). ROAL is pre-launch, so the honest way to judge it is by testing it with your own calls, your own menu, and your own team."
+    }
+  ],
+  "takeaways": [
+    "Deli phone orders work well with an AI phone host because most calls follow a repeatable pattern.",
+    "ROAL can read your menu, hours, and address from public pages and build a test host in about a minute.",
+    "You keep your existing number and forward calls to ROAL only when you want to.",
+    "ROAL charges $0.90 per completed phone order, with no monthly fee or contract.",
+    "Hard calls like allergy questions, complaints, and manager requests go to staff with a summary."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take deli sandwich orders with modifiers?",
+      "a": "Yes. ROAL can take items, sizes, modifiers, and notes from your live menu, then confirm the order back before sending it to the kitchen screen. That makes it useful for common deli orders like bread choice, toasted or not, extra toppings, and special instructions."
+    },
+    {
+      "q": "Will my deli have to change its existing phone number?",
+      "a": "No. Your restaurant keeps its own number. After you claim the host, ROAL gives each location its own phone line automatically, and you forward your existing number to it. You can forward all calls or only unanswered and busy calls, then turn forwarding off any time."
+    },
+    {
+      "q": "Does ROAL take payment over the phone for sandwich orders?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment, which keeps the phone order simple and avoids card handling on the call."
+    },
+    {
+      "q": "How much does it cost to use ROAL for deli phone orders?",
+      "a": "ROAL costs $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract, and calls, questions, and test calls are unlimited and free."
+    }
+  ],
+  "words": 1436,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

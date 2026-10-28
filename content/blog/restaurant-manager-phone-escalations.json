@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-manager-phone-escalations",
+  "keyword": "restaurant manager escalation",
+  "category": "staffing",
+  "title": "Which calls should reach the restaurant manager",
+  "seoTitle": "Restaurant manager escalation rules for calls",
+  "description": "Set clear escalation rules for restaurant calls. See which issues staff should handle, which ones should reach the manager, and how to script the handoff.",
+  "question": "What calls should reach the manager in a restaurant?",
+  "answer": "The manager should take calls about complaints, allergy-sensitive questions, catering, reservation problems, and anything staff cannot answer safely. Routine pickup orders, hours, address, parking, and menu questions should stay with the phone host or front staff unless the caller asks for the manager or the issue is urgent.",
+  "summary": "Set clear escalation rules so staff know which calls to handle and which to pass up.",
+  "intro": "The manager should take calls that involve safety, money disputes, guest recovery, or anything staff cannot answer confidently. Routine menu questions, hours, address, parking, and pickup orders should stay with the phone host or front counter.\n\nThat split keeps the phone moving and gives the manager time for the calls that actually need a decision. It also makes restaurant manager escalation easier to train, whether you use staff, voicemail, or an AI phone host like ROAL.",
+  "sections": [
+    {
+      "id": "which-calls-should-reach-the-manager-right-away",
+      "h2": "Which calls should reach the manager right away?",
+      "body": "Use one simple rule: if the call could change the order, affect safety, or require a policy decision, escalate it. If it is a normal order question, answer it on the spot.\n\nA practical manager-escalation list for restaurants looks like this:\n- Allergy-sensitive questions: “Can you make this without peanuts?”\n- Complaints: wrong order, missing item, rude service, cold food\n- Catering or large-party requests\n- Reservation problems or special seating needs\n- Payment disputes or refund requests\n- Calls asking for a manager by name\n- Menu questions the phone host cannot answer\n\nExample script line: “I can help with the basics, but I want to get the manager on this because it involves your allergy note.”\n\nIf you use ROAL, it already hands these calls to staff with a summary, so the manager gets context instead of starting from zero. That summary matters. It should include the caller’s name, phone number, what they wanted, and any promised follow-up.\n\nKeep the list short enough that employees can remember it on a busy Friday night. Too many rules slow everyone down. Three buckets usually work best: answer it, escalate it, or take a message."
+    },
+    {
+      "id": "how-do-you-decide-what-staff-can-answer-without-asking",
+      "h2": "How do you decide what staff can answer without asking?",
+      "body": "The easiest way to train staff is to give them clear yes/no boundaries. If the caller wants hours, address, parking, menu items, or a pickup order, staff can answer. If the caller wants a judgment call, a refund, a special accommodation, or a manager callback, escalate.\n\nUse a quick checklist at the counter or host stand:\n1. Is this a standard question from the menu or website?\n2. Is the caller asking for a change to a policy or order?\n3. Is there any allergy, complaint, or safety issue?\n4. Does the caller want the manager by name?\n5. Can I solve this without interrupting the kitchen?\n\nA short script helps staff stay calm: “I can answer the regular menu questions. For that request, I’m going to get the manager.”\n\nHere is a simple example. Say your staff can answer a standard $28 pickup order, but the caller asks to swap ingredients because of a seafood allergy. That is no longer a routine order. Pass it up.\n\nROAL follows the same pattern. It handles routine questions and takes orders from the live menu, but allergy-sensitive questions and manager requests go to staff. That keeps the line clear without forcing your team to improvise."
+    },
+    {
+      "id": "what-should-the-manager-hear-in-the-handoff",
+      "h2": "What should the manager hear in the handoff?",
+      "body": "A good handoff saves time. The manager should hear the issue, the caller’s name, the callback number, and what the staff already said. Do not just transfer a frustrated caller with no context.\n\nUse this handoff format:\n- Caller name\n- Phone number\n- Order number or item details, if any\n- Problem in one sentence\n- What the caller wants next\n- Any deadline, like “before 6 p.m.”\n\nExample: “Maria called from 201-555-0188. She says her chicken parm order was missing garlic bread and wants a callback today.”\n\nIf you need a phone script, keep it plain: “I’m writing this down for the manager now. She’ll have your name, your number, and what happened.”\n\nThat same structure works for paper notes, a call log, or an AI phone host inbox. ROAL stores call history with transcripts and recordings, so the manager can review the conversation instead of guessing what happened.\n\nThis matters most during a rush. A manager who gets a clean summary can decide fast whether to remake an item, offer a store credit under house policy, or call the guest back later. The fewer back-and-forth questions, the better for the caller and the kitchen."
+    },
+    {
+      "id": "how-do-you-keep-the-phone-from-interrupting-the-kitchen",
+      "h2": "How do you keep the phone from interrupting the kitchen?",
+      "body": "Not every urgent-sounding call needs the manager in the moment. Some calls can wait ten minutes without hurting service. The trick is to sort calls by urgency, not emotion.\n\nUse this simple tier system:\n| Call type | Who handles it | Example |\n| --- | --- | --- |\n| Routine | Staff or phone host | Hours, parking, menu, pickup order |\n| Needs review | Manager later | “Can you add a note for the driver?” |\n| Urgent | Manager now | Allergy issue, refund, wrong order complaint |\n\nExample with numbers you can swap: say your average phone order is $30. If two employees stop working for five minutes each to answer a non-urgent call, that can cost you more than the time it takes to handle the issue later. Plug in your own average order value and your own labor cost to see what interruption really costs.\n\nA useful script is: “The manager is on the floor right now. I have your name and number, and we’ll call you back as soon as we can.”\n\nROAL can help here because it answers the phone, takes the order, and only hands off the calls that truly need staff. That means fewer interruptions for the line cook, cashier, or whoever is already covering the front."
+    },
+    {
+      "id": "what-should-change-in-your-manager-phone-policy-during-rush-",
+      "h2": "What should change in your manager phone policy during rush hours?",
+      "body": "Your escalation rules should get stricter when the restaurant is busy. During lunch rush, Friday dinner, or a holiday rush, the manager should only be pulled for the highest-value calls.\n\nA practical rush-hour policy might be:\n1. Staff answer hours, address, parking, and menu questions.\n2. Staff take pickup orders if they are simple.\n3. Staff escalate allergy questions, complaints, catering, and reservation problems.\n4. The manager gets only urgent issues until the rush eases.\n\nExample script: “We’re in the middle of a rush, so I’m going to take your number and have the manager call you back.”\n\nIf you use call forwarding, you can also route the restaurant number so the phone host answers when the team is slammed. ROAL lets owners forward all calls, or only when busy or unanswered, and turn forwarding off any time. That keeps the restaurant number the same while reducing pressure on the floor.\n\nFor owners who want to compare options, it helps to see the labor side too. [Phone staff cost calculator](/tools/phone-staff-cost-calculator) and [AI phone host cost calculator](/tools/phone-host-cost-calculator) can help you plug in your own numbers. Use your own wages, your own call volume, and your own average ticket. Do not guess."
+    },
+    {
+      "id": "how-should-a-manager-callback-system-work",
+      "h2": "How should a manager callback system work?",
+      "body": "If a call needs a manager later, do not leave it vague. Set a clear callback promise and a clear owner for the follow-up. One person should own the message from start to finish.\n\nA simple workflow:\n- Take the caller’s name and phone number\n- Write the reason for the call in one sentence\n- Mark the level: complaint, allergy, catering, reservation, or refund question\n- Say when the manager will respond\n- Log the outcome after the callback\n\nExample: “The manager will call you after the dinner rush, before 8 p.m.”\n\nYou can also use a short script for the manager’s return call: “Hi, this is the manager from the restaurant. I’m calling about your order from earlier today.”\n\nThis is where a clean call log helps. ROAL keeps call history with transcripts and recordings, plus an inbox for questions it could not answer. That gives the manager a record of what happened and what still needs a reply.\n\nIf you are building the policy from scratch, start small. Write down the five call types that should always reach management. Train the team on those first. Then review one busy week and adjust the list based on what actually slowed service down."
+    },
+    {
+      "id": "how-do-you-train-staff-so-escalation-feels-normal",
+      "h2": "How do you train staff so escalation feels normal?",
+      "body": "Staff usually do better when the rule is simple and repeated the same way every time. Do not teach a long speech. Teach a short decision tree.\n\nUse this training script:\n- “Answer normal questions.”\n- “Take the order if it is simple.”\n- “Escalate safety, complaints, catering, and refund issues.”\n- “Get the caller’s name and number before you transfer or hand off.”\n\nPractice with real examples from your restaurant:\n- “Is the marinara sauce vegetarian?” Ask the manager if you are not sure.\n- “Can I add a birthday note?” Staff can handle it.\n- “My order was missing two slices.” Escalate.\n- “Can I book 18 people for Saturday?” Escalate.\n\nYou can also post a tiny cheat sheet near the phone with the phrase: “When in doubt, get the manager.” That is enough for a busy deli, pizza shop, or family restaurant.\n\nROAL fits into that same habit because it answers routine calls and sends tricky ones to staff with a summary. For owners who want the bigger picture, the [How it works](/how-it-works) page explains setup, and [Questions owners ask](/faq) covers common concerns. The point is simple: make escalation boring, fast, and consistent."
+    }
+  ],
+  "takeaways": [
+    "Escalate calls about complaints, allergy issues, catering, refunds, and reservation problems.",
+    "Keep routine menu, hours, address, parking, and pickup questions with staff or the phone host.",
+    "Give managers a clean handoff: name, number, issue, and what the caller wants next.",
+    "During rush hours, tighten the rules so only high-priority calls reach management.",
+    "ROAL can route tricky calls to staff and keep routine calls moving without changing your restaurant number."
+  ],
+  "faq": [
+    {
+      "q": "What calls should always go to the manager in a restaurant?",
+      "a": "Complaints, allergy-sensitive questions, catering requests, refund issues, and reservation problems should usually go to the manager. Calls where staff need a policy decision or the caller asks for the manager by name should also be escalated. Routine menu and hours questions do not need manager time."
+    },
+    {
+      "q": "How do I tell staff when to transfer a caller to the manager?",
+      "a": "Give them a short rule: answer routine questions, take simple orders, and escalate anything about safety, money, or policy. A simple phrase works well: “I can help with the basics, but I’m bringing the manager in for that.” Train the same line every time so the team does not hesitate."
+    },
+    {
+      "q": "Should the manager take all complaint calls live?",
+      "a": "Not always. If the complaint is urgent, safety-related, or the guest is very upset, live transfer it or hand it off right away. If the issue can wait, collect the caller’s name, number, and problem, then promise a callback after the rush."
+    },
+    {
+      "q": "Can an AI phone host handle restaurant manager escalation?",
+      "a": "Yes, for the types of calls it is designed to route. ROAL answers routine questions, takes pickup and delivery orders, and hands complaints, allergy-sensitive questions, catering, and manager requests to staff with a summary. It does not replace the manager for difficult calls, and it does not take card numbers over the phone."
+    }
+  ],
+  "words": 1490,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-ai-search-visibility",
+  "keyword": "restaurant ai search",
+  "category": "marketing",
+  "title": "Showing up in restaurant AI search",
+  "seoTitle": "Showing up in restaurant AI search | ROAL",
+  "description": "See how restaurant AI search works, what information matters most, and how to make your restaurant easier to recommend and call.",
+  "question": "How do I show up when people ask AI where to eat near me?",
+  "answer": "To show up in restaurant AI search, keep your restaurant name, address, hours, menu, and phone details clear and consistent on your website, Google Maps page, and menu pages. Make it easy for an AI phone host to read your live menu, answer common questions, and send orders to the kitchen without confusion.",
+  "summary": "You’ll learn how to make your restaurant easier for AI search tools to find, understand, and recommend.",
+  "intro": "People now ask AI where to eat the same way they ask a friend. If your restaurant details are clear online, you have a better shot at being picked up by restaurant AI search and sent to the phone host that answers the call.\n\nThe practical work is simple: keep your hours, address, menu, and pickup details easy to read, then make sure the phone side is ready too. ROAL can read public menu and location pages, answer questions, and take pickup or delivery orders from the live menu, so the phone experience matches what people find online.",
+  "sections": [
+    {
+      "id": "what-does-restaurant-ai-search-look-for-first",
+      "h2": "What does restaurant AI search look for first?",
+      "body": "When someone asks AI where to eat, the tool is usually trying to answer a simple local question: where are you, what do you serve, when are you open, and can you answer the phone. That means your restaurant data has to be easy to find and easy to trust.\n\nStart with the basics on your website and map listing. Use the same restaurant name everywhere. Make the address match exactly. Keep hours current. Put your menu online in a format that can be read without guessing. If you have a pickup number, list it clearly. If your menu changes often, update it the same day.\n\nA practical checklist:\n- Name, address, and phone match across your main pages.\n- Hours are visible without clicking around.\n- Menu items are written clearly, not only in images.\n- Parking, pickup, and delivery notes are easy to see.\n- Holiday hours are updated before the rush.\n\nA short line you can use on your site: “Call us for pickup, delivery, hours, parking, and menu questions.” That helps both customers and AI phone tools understand what your line is for."
+    },
+    {
+      "id": "how-do-i-make-my-menu-easy-for-ai-to-read",
+      "h2": "How do I make my menu easy for AI to read?",
+      "body": "A lot of restaurant AI search comes down to the menu. If the menu is buried in photos with tiny text, the system has to work harder. If it’s clean and current, it can understand items, sizes, modifiers, and sold-out items much faster.\n\nKeep your menu written in plain text somewhere public. If you only have menu photos, make sure the photos are readable. If you have PDFs, make them current. If you use specials, separate them from the core menu so the main items do not get mixed up. For takeout spots, add the common modifiers people actually ask for, like “extra cheese,” “no onions,” or size options.\n\nHere’s a simple example you can copy and adapt:\n| Item | Size | Price |\n| --- | --- | --- |\n| Cheese pizza | Small / Large | $X / $Y |\n| Chicken parm hero | One size | $Z |\n| Fries | Regular / Large | $A / $B |\n\nThat kind of structure helps the phone host understand the order and quote it back cleanly. ROAL reads public pages and menu uploads, then builds a phone host around what your restaurant already sells. If an item is marked sold out, it should not be offered.\n\nKeep one person responsible for menu changes. Even a five-minute update can prevent a bad order later."
+    },
+    {
+      "id": "what-should-my-phone-setup-say-when-ai-or-customers-call",
+      "h2": "What should my phone setup say when AI or customers call?",
+      "body": "Your phone setup should be simple. The goal is to get the call to someone who can help, even during a rush. With ROAL, the restaurant keeps its own number and forwards calls to the location’s phone line when needed. You can forward all calls, or only when busy or unanswered, and turn forwarding off any time.\n\nA useful phone script is short and direct: “Thanks for calling Joe’s Grill. I can help with pickup, delivery, hours, and menu questions.” That tells people what the line can do right away. It also helps the phone host sound consistent.\n\nIf you are setting up forwarding yourself, confirm the exact code with your carrier or phone system and test it with a real call. Codes vary by carrier and plan. Common examples include *72 for some landlines and Verizon Wireless, and carrier-specific codes on some mobile networks for unanswered or busy calls. Business VoIP systems usually handle forwarding in the web portal.\n\nQuick phone setup checklist:\n- Decide whether to forward all calls or only missed/busy ones.\n- Test the forwarding from a mobile phone.\n- Check that callers hear the right greeting.\n- Make sure staff know where overflow calls go.\n- Keep a backup plan for holidays and rushes."
+    },
+    {
+      "id": "what-can-an-ai-phone-host-handle-before-staff-step-in",
+      "h2": "What can an AI phone host handle before staff step in?",
+      "body": "A good phone host should handle the calls that slow your team down the most. That includes pickup orders, delivery orders from the live menu, hours, address, parking, and common menu questions. It can also take reservation requests, collect the caller’s name and phone, and quote a ready time.\n\nThe best part is the handoff. When a caller asks for catering, has a complaint, needs allergy-sensitive help, or asks for a manager, the call should go to staff with a clear summary. That keeps the phone moving without trapping the caller in a loop.\n\nUse this mental split:\n- Phone host handles: menu, hours, address, parking, pickup, delivery, reservations, and routine order-taking.\n- Staff handles: allergies, complaints, catering, manager requests, and anything unusual.\n\nExample order flow you can picture: “One large cheese pizza, well done, extra basil, name Mike, callback number 555-0123, ready in 20 minutes.” The phone host repeats the order back before sending the ticket to the kitchen screen.\n\nROAL also speaks the caller’s language, which matters in real neighborhoods. It does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it."
+    },
+    {
+      "id": "how-do-i-compare-the-cost-of-ai-phone-tools-with-other-optio",
+      "h2": "How do I compare the cost of AI phone tools with other options?",
+      "body": "A lot of owners look at phone help only by monthly price. That can be misleading. Many AI phone tools charge a fixed monthly fee per location, often roughly $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call. Delivery apps commonly take roughly 15-30% commission per order.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nHere’s a simple example you can swap for your own numbers:\n- Say you get 200 completed phone orders in a month.\n- At $0.90 each, that is $180.\n- If your average order is $28, that is $5,600 in phone-order sales.\n- Plug in your own order count and average ticket to compare.\n\nYou can also compare against delivery-app commission using our [delivery commission calculator](/tools/delivery-commission-calculator) or compare phone labor with the [phone staff cost calculator](/tools/phone-staff-cost-calculator). For owners who want the math in one place, the [AI phone host cost calculator](/tools/phone-host-cost-calculator) helps make the choice easier."
+    },
+    {
+      "id": "how-fast-can-i-get-it-live-without-making-a-mess",
+      "h2": "How fast can I get it live without making a mess?",
+      "body": "The setup can be quick if your public info is already in decent shape. With ROAL, the owner pastes the restaurant website, Google Maps link, or just the name and city at /try. ROAL reads the menu, prices, hours, and address from public pages or an uploaded menu, then builds a phone host in about a minute. You can test-call it in the browser right away, with no sign-up needed.\n\nA practical launch plan:\n1. Fix the website hours and menu first.\n2. Check the Google Maps link for the right address and phone.\n3. Test the menu for missing items or old prices.\n4. Set the voice and name you want.\n5. Forward calls and place a few test calls from your own phone.\n\nOnce you claim the host, each location gets its own phone line automatically. The dashboard gives you live kitchen tickets, call history with transcripts and recordings, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. If a question comes in that the host cannot answer, it lands in an inbox and the owner answers once so the host knows it from then on.\n\nIf you want to see how this feels for your own restaurant, [build a free test host](/try)."
+    },
+    {
+      "id": "what-should-i-watch-after-launch-so-search-and-calls-stay-cl",
+      "h2": "What should I watch after launch so search and calls stay clean?",
+      "body": "After launch, the main job is maintenance. Restaurant AI search works better when the facts stay current, and phone callers notice fast when something is off. Hours, holiday changes, sold-out items, and parking notes should be updated as soon as they change.\n\nA simple weekly routine works well:\n- Check hours for the next seven days.\n- Review any unanswered questions in the inbox.\n- Update the menu if prices or items changed.\n- Listen to a few call recordings for confusing spots.\n- Scan the kitchen screen for order issues.\n\nYou should also watch for repeat questions. If people keep asking where to park or whether a side can be swapped, put that answer on your site and in the FAQ area. That helps both customers and the phone host.\n\nA small example: if ten callers in a week ask about delivery radius or a late pickup cutoff, that is a sign the answer should be easier to find online. Fixing that once is better than repeating it ten times.\n\nROAL’s dashboard is built for that kind of cleanup. You can adjust hours, FAQs, and menu details without starting over, which matters when your restaurant is busy and the phone never really stops."
+    }
+  ],
+  "takeaways": [
+    "Keep your restaurant name, address, hours, and menu consistent everywhere online.",
+    "Use clean menu text and current prices so AI phone tools can understand orders.",
+    "Set up phone forwarding carefully and test it with a real call.",
+    "Use a phone host for routine calls and send tricky issues to staff with a summary.",
+    "Review call history and update FAQs so your search and phone info stay current."
+  ],
+  "faq": [
+    {
+      "q": "How do I get my restaurant to show up in AI search results?",
+      "a": "Make your name, address, phone number, hours, and menu easy to read on your website and map listing. Use the same details everywhere and keep them current, especially on busy nights and holidays. AI tools look for clear local information they can trust."
+    },
+    {
+      "q": "Do I need a special website for restaurant AI search?",
+      "a": "Not usually. A current website with readable hours, address, menu, and pickup details can be enough to start. If your menu is only in photos or old PDFs, clean that up so the information is easier to understand."
+    },
+    {
+      "q": "Can an AI phone host take payment over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already handles payment, which keeps the phone side simple and safer."
+    },
+    {
+      "q": "How does call forwarding work for a restaurant phone line?",
+      "a": "You keep your existing number and forward calls to the phone line assigned to your location. Many carriers and phone systems have different codes or portal settings, so confirm the exact method with your provider and test it with a real call before you rely on it."
+    }
+  ],
+  "words": 1521,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

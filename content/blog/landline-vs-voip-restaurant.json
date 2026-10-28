@@ -1,0 +1,77 @@
+{
+  "slug": "landline-vs-voip-restaurant",
+  "keyword": "landline vs voip restaurant",
+  "category": "phone-setup",
+  "title": "Landline vs VoIP for restaurants",
+  "seoTitle": "Landline vs VoIP for restaurants",
+  "description": "Compare call forwarding, cost, reliability, and setup so you can choose the right phone system for your restaurant.",
+  "question": "Should my restaurant keep a landline or switch to VoIP for the phone line?",
+  "answer": "For many restaurants, the right choice depends on how you handle calls. A landline is simple and familiar, while VoIP is often easier to forward, manage, and move between locations. If your goal is to route calls to an AI phone host like ROAL, either can work as long as you can forward calls reliably and test it with a real call.",
+  "summary": "Compare landline and VoIP phone setups so you can choose the simplest, cheapest, and most reliable option for your restaurant.",
+  "intro": "A landline is usually the simpler old-school choice. VoIP is usually easier to manage if you want call forwarding, multiple locations, or a web portal for phone settings.\n\nFor a restaurant, the better option is the one that keeps orders moving and makes forwarding easy. If you are setting up [call forwarding](/tools/call-forwarding-codes) for a phone host like ROAL, the key question is not just price. It is how often the phone rings, how easy it is to change settings, and whether the system works when the kitchen is busy.",
+  "sections": [
+    {
+      "id": "what-is-the-real-difference-between-a-landline-and-voip-for-",
+      "h2": "What is the real difference between a landline and VoIP for a restaurant?",
+      "body": "A landline is the traditional phone line from a phone company. VoIP sends calls over the internet and usually gives you more settings in a web portal.\n\nFor restaurant owners, the practical difference is simple:\n- **Landline:** usually easy to understand, but forwarding and changes may require carrier codes.\n- **VoIP:** usually easier to adjust from a browser, especially if you have more than one location.\n\nExample: if your host stand keeps missing pickup calls during the dinner rush, you may want calls forwarded to ROAL. With a landline, you might use a carrier code like *72 or a similar code your carrier supports. With VoIP, you may turn forwarding on in the phone portal. Either way, the setup should end with a test call from your cell phone so you can hear what a customer hears.\n\nA simple owner checklist:\n1. Confirm whether you have a landline or VoIP.\n2. Write down who controls forwarding settings.\n3. Test one busy-time call and one unanswered-call scenario.\n4. Keep your current number if possible and forward it only when needed."
+    },
+    {
+      "id": "which-one-is-easier-to-forward-to-an-ai-phone-host",
+      "h2": "Which one is easier to forward to an AI phone host?",
+      "body": "VoIP is often easier for forwarding because many systems let you change settings in a browser. Landlines can still work well, but you may need carrier codes or support help to make changes.\n\nThat matters if you want an AI phone host like [ROAL](/how-it-works) to answer pickup and delivery orders, menu questions, and reservation requests. ROAL gives each location its own phone line automatically, and you forward your existing number to it. You can forward all calls, or only unanswered and busy calls.\n\nHere is a quick example you can copy:\n- Main number rings as usual.\n- If the line is busy, forward to the host.\n- If nobody picks up in a few rings, forward to the host.\n- If you need to stop forwarding, turn it off and test again.\n\nUseful script line for staff: \"If the line is tied up, let the backup line take the order and I will check the ticket on the kitchen screen.\"\n\nIf you are comparing forwarding options, read [how to forward calls on a VoIP phone system](/blog/forward-calls-voip-restaurant) and [how to turn call forwarding back off](/blog/turn-off-call-forwarding)."
+    },
+    {
+      "id": "how-much-does-each-option-usually-cost-a-restaurant",
+      "h2": "How much does each option usually cost a restaurant?",
+      "body": "The monthly bill is one of the biggest differences. A landline may feel straightforward, but the real cost is not just the base phone line. VoIP can be cheaper for some shops and easier to scale, but the price depends on the carrier and setup.\n\nFor the phone itself, restaurant owners usually run into these patterns:\n- **Landline or carrier line:** monthly line charges vary by provider.\n- **VoIP:** often a monthly service fee per line or per location.\n- **Human answering services:** usually bill per minute or per call.\n- **Delivery apps:** commonly take roughly 15-30% commission per order.\n\nIf you are comparing phone options only, use this simple example and swap in your own numbers:\n- Say you get 20 phone orders a day.\n- Say your average order is $28.\n- If a delivery app takes a commission on those orders, the cost can add up fast.\n- If a phone setup helps you keep more direct orders, the math may look very different.\n\nROAL uses pay-per-completed-order pricing: $0.90 for each confirmed phone order that reaches the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    },
+    {
+      "id": "which-setup-is-more-reliable-during-a-rush",
+      "h2": "Which setup is more reliable during a rush?",
+      "body": "Reliability is not just about the phone company. It is about how many calls your staff can actually handle when the kitchen is moving.\n\nA landline can be dependable, but if one person must answer every call, you still have the same problem when the line is busy. VoIP can be just as reliable for routing calls, but only if the internet and phone settings are stable.\n\nA simple rush-hour plan:\n1. Decide whether busy calls should ring to staff or to the phone host.\n2. Make sure unanswered calls have a backup route.\n3. Test the setup during a real busy window, not at 10 a.m.\n4. Check that the kitchen sees the ticket cleanly.\n\nExample script for a cashier: \"I am ringing in orders now. If the line holds, the backup host will take the next pickup call and send the ticket straight to the kitchen screen.\"\n\nROAL is built for this kind of backup flow. It takes items, sizes, modifiers, and notes from the restaurant's live menu, quotes a ready time, and hands tricky calls to staff with a summary. It does not take card numbers over the phone, so payment stays in your normal process."
+    },
+    {
+      "id": "how-do-you-test-your-phone-setup-before-lunch-rush",
+      "h2": "How do you test your phone setup before lunch rush?",
+      "body": "Do not assume the forwarding works just because you turned it on. Test it the same way a customer would call.\n\nUse this quick test plan for either landline or VoIP:\n- Call the restaurant from a cell phone.\n- Let it ring long enough to trigger forwarding.\n- Check whether the backup line answers.\n- Listen for the greeting and menu details.\n- Place a fake pickup order and make sure the ticket shows up where it should.\n\nIf you are using ROAL, you can test call it right in the browser before going live, with no sign-up needed. The owner pastes the restaurant website, Google Maps link, or \"Name, City\" at /try, and ROAL reads the menu, prices, hours, and address from public pages. You can also upload a menu in any format.\n\nA practical test prompt for your staff: \"Call the main number now and ask for a chicken parm pickup for 6:15. If the call forwards, check whether the name, phone, and ready time are captured correctly.\"\n\nFor a step-by-step setup check, see [how to test that call forwarding works](/blog/test-call-forwarding)."
+    },
+    {
+      "id": "when-should-a-restaurant-keep-landline-switch-to-voip-or-add",
+      "h2": "When should a restaurant keep landline, switch to VoIP, or add ROAL?",
+      "body": "There is no one answer for every shop. The right choice depends on how you operate.\n\nKeep the landline if:\n- You already have a simple setup that works.\n- Your staff is comfortable with it.\n- You do not need many phone settings.\n\nConsider VoIP if:\n- You want easier forwarding changes.\n- You have multiple locations.\n- You like managing settings in a web portal.\n\nAdd a phone host like ROAL if:\n- Your team misses calls during rushes.\n- You want pickup and delivery orders taken from the live menu.\n- You want questions about hours, address, parking, and menu handled automatically.\n\nWorked example: say you get 12 pickup calls during the dinner rush and your staff misses 3 when the line is busy. If each order averages $24, plug in your own numbers and think about what those missed calls can mean over a week. The point is not to guess a perfect number. The point is to see whether the phone setup is helping or hurting service.\n\nIf you run more than one store, a setup built for multiple locations can also help keep each location organized. ROAL supports location-specific lines and a dashboard with call history, live tickets, and menu tools."
+    },
+    {
+      "id": "what-should-you-ask-your-carrier-or-phone-provider-before-ch",
+      "h2": "What should you ask your carrier or phone provider before changing anything?",
+      "body": "Before you switch, ask the provider the questions that matter to a restaurant owner. Keep it short and practical.\n\nUse this checklist:\n1. Is my line landline or VoIP?\n2. Can I forward all calls, busy calls, or unanswered calls?\n3. What code or portal setting do I use?\n4. How do I turn forwarding off fast?\n5. Can I keep my current number?\n6. What happens if the internet goes down?\n\nFor reference, many carriers use codes such as *72 and *73 for forwarding on and off on some landlines. Some mobile carriers use different codes, and business VoIP systems often use a portal. Codes vary by carrier and plan, so always confirm with your provider and test with a real call.\n\nIf you want to keep your number while adding a phone host, that is a normal setup. ROAL lets the restaurant keep its own number and forward calls to the host line. When the owner claims the host, ROAL gives each location its own phone line automatically, then forwarding can be turned off any time.\n\nIf you want to compare options side by side, [ROAL pricing](/pricing) explains the pay-per-order model in plain English, and [compare AI phone host vs answering service](/compare/answering-service) shows the difference in how calls are handled."
+    }
+  ],
+  "takeaways": [
+    "Landline is simpler; VoIP is usually easier to manage and forward.",
+    "For restaurants, the best setup is the one that routes calls reliably during a rush.",
+    "Always confirm forwarding codes or portal steps with your carrier and test with a real call.",
+    "ROAL can sit behind your current number and take orders, menu questions, and reservations.",
+    "Use your own order volume and average check to compare the cost of missed calls versus phone setup costs."
+  ],
+  "faq": [
+    {
+      "q": "Is VoIP better than a landline for a restaurant?",
+      "a": "VoIP is often better if you want easier call forwarding, browser-based settings, or multiple locations. A landline can still be fine if you want the simplest setup and your current number works well. The right choice depends on how your staff handles calls during the busiest parts of the day."
+    },
+    {
+      "q": "Can I keep my restaurant number if I switch to VoIP or add a phone host?",
+      "a": "Usually yes, but confirm with your provider before making changes. Many restaurants keep their main number and forward it to another line when needed. ROAL also lets you keep your existing number and forward calls to the host line."
+    },
+    {
+      "q": "How do I forward restaurant calls on a landline?",
+      "a": "Many landlines use carrier codes such as *72 to forward calls and *73 to turn forwarding off, but codes vary by provider and plan. Always confirm the exact steps with your carrier and test with a real call. If you only want calls forwarded when the line is busy or unanswered, ask the carrier which code or setting handles that."
+    },
+    {
+      "q": "Will a phone host take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment. It can still take the order, collect the caller's name and phone, quote a ready time, and send the ticket to the kitchen screen."
+    }
+  ],
+  "words": 1460,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,119 @@
+{
+  "slug": "bakeries",
+  "label": "Bakeries and cake shops",
+  "h1": "An AI phone host for bakeries and cake shops",
+  "seoTitle": "AI phone answering for bakeries and cake shops | ROAL",
+  "description": "ROAL answers bakery calls, takes pickup orders, and handles cake questions from your live menu. Built for busy cake shops and bakeries.",
+  "lead": "Your counter is busy. The phone rings while you are boxing cupcakes or writing a cake message. ROAL answers in a warm voice and takes the order or question for you.",
+  "question": "How can an AI phone host help my bakery take phone orders without slowing down the counter?",
+  "answer": "ROAL answers your bakery phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle cake orders, cupcake boxes, pastry trays, custom sizes, notes, and ready times. It also answers common questions about hours, address, parking, and the menu, so your team can keep serving the line.",
+  "pains": [
+    {
+      "title": "The phone rings during your busiest baking hours",
+      "body": "Morning rush, lunch pickup, and weekend cake pickups can pile up at once. A missed call can be a lost dozen muffins, a birthday cake order, or a catering tray."
+    },
+    {
+      "title": "Custom cake orders take time",
+      "body": "People call to ask about sheet cake sizes, fillings, frosting colors, writing on the cake, and how much notice you need. Those calls are helpful, but they can stop the front counter."
+    },
+    {
+      "title": "Staff have to repeat the same details",
+      "body": "Your team keeps answering the same questions about today’s pastries, the flavor list, pickup times, and whether a cake is ready. That slows service when the case is full and the door keeps opening."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Takes bakery orders by phone",
+      "body": "ROAL can take items, sizes, modifiers, and notes from your menu. That includes cupcakes, cookies, croissants, pies, cannoli, custom cakes, and pastry boxes."
+    },
+    {
+      "title": "Handles cake details clearly",
+      "body": "It collects the name on the order, phone number, ready time, and simple notes like message text, frosting choice, or “no nuts.” Then it confirms the order back before sending it to the kitchen screen."
+    },
+    {
+      "title": "Answers common questions fast",
+      "body": "ROAL can answer hours, address, parking, and menu questions from the information you share. If something is unclear, it sends the question to your inbox and learns the answer for next time."
+    },
+    {
+      "title": "Helps when the counter is slammed",
+      "body": "You can forward calls when busy or unanswered, or forward all calls. Your bakery keeps its own number, and you can turn forwarding off any time."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I order a birthday cake and a box of cupcakes for pickup today?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. I can help with that."
+    },
+    {
+      "who": "caller",
+      "line": "I need a half sheet vanilla cake with strawberry filling, and a dozen cupcakes. Half chocolate, half vanilla."
+    },
+    {
+      "who": "host",
+      "line": "Got it. For the cake, vanilla with strawberry filling. For the cupcakes, six chocolate and six vanilla. Any writing on the cake?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes, please write “Happy 8th Birthday, Mia.” My name is Laura and my number is 212-555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thank you, Laura. I have a half sheet vanilla cake with strawberry filling and “Happy 8th Birthday, Mia,” plus one dozen cupcakes, six chocolate and six vanilla. I have pickup for 4:30 pm today. Is that correct?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes, that’s perfect."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 4:30 pm",
+    "lines": [
+      "Half sheet vanilla cake",
+      "Strawberry filling",
+      "Message: Happy 8th Birthday, Mia",
+      "1 dozen cupcakes · 6 chocolate, 6 vanilla",
+      "Name: Laura · Phone: 212-555-0148"
+    ],
+    "note": "Confirm at pickup counter"
+  },
+  "sections": [
+    {
+      "h2": "Built for real bakery calls",
+      "body": "Bakery phones are not all the same. A customer may want two cherry turnovers, a lemon loaf, and six scones for 8:15 am. Another caller may ask if the red velvet cake can be made with cream cheese frosting, or whether you can write a short message on top. ROAL is built for those exact calls.\n\nIt can take pickup orders from your live menu, answer common questions, and keep the order clear for the kitchen. If someone asks about something sensitive, like a nut allergy or a custom cake request you need to review, ROAL can hand it to staff with a summary.\n\nIf you want to see the basics first, start with [How it works](/how-it-works) or the [Questions owners ask](/faq)."
+    },
+    {
+      "h2": "A simple setup for owners who are not tech people",
+      "body": "You do not need a long setup. At [Build a free test host](/try), paste your bakery website, Google Maps link, or just your name and city. ROAL reads your menu, prices, hours, and address from public pages and builds a phone host in about a minute.\n\nYou can test-call it in the browser before you go live. You can also upload a menu photo, PDF, or file if that is easier. Then claim the host, forward your existing number when you want, and keep your same business number.\n\nThat is useful on days like Saturday morning, prom season, or the week of a wedding order when the phone keeps ringing while the case is full."
+    },
+    {
+      "h2": "Keep phone orders clean and kitchen-ready",
+      "body": "For bakeries, the smallest detail matters. One caller says “one dozen cupcakes,” but means six chocolate, four vanilla, and two red velvet. Another says “medium cake” and needs help choosing the size. ROAL helps by asking for the details in a steady order: item, size, flavor, notes, name, phone, and ready time.\n\nThe kitchen gets a clean ticket with the order details instead of a rushed scribble on a pad. You can also review call history, transcripts, and recordings in the dashboard.\n\nIf you want to compare call handling options, see [AI phone host vs voicemail](/compare/voicemail) or [Pickup order taking](/use-cases/pickup-orders)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take custom cake orders by phone?",
+      "a": "Yes. It can take the cake size, flavor, filling, frosting, message, and pickup time from your menu and notes. If a request needs staff review, it can send a summary to your team instead of guessing."
+    },
+    {
+      "q": "What kinds of bakery items can it take?",
+      "a": "It can take pickup orders for items on your live menu, like cakes, cupcakes, cookies, croissants, muffins, pies, danishes, and pastry boxes. It only offers what is on your menu and does not offer items marked sold out."
+    },
+    {
+      "q": "Will it answer common bakery questions too?",
+      "a": "Yes. It can answer questions about hours, address, parking, and menu items from the information you provide. If it cannot answer a question, it sends it to your inbox so you can respond once and teach it for next time."
+    },
+    {
+      "q": "How does forwarding work if we are busy?",
+      "a": "You can forward all calls or only forward when busy or unanswered. On many landlines and some carriers, *72 starts forwarding and *73 turns it off, but codes vary, so confirm with your carrier and test with a call."
+    },
+    {
+      "q": "How is ROAL priced for a bakery or cake shop?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ]
+}

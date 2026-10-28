@@ -1,0 +1,77 @@
+{
+  "slug": "spanish-speaking-callers-restaurant",
+  "keyword": "spanish phone orders restaurant",
+  "category": "ai-basics",
+  "title": "Taking orders from Spanish-speaking callers",
+  "seoTitle": "Spanish phone orders for restaurants: a plain guide | ROAL",
+  "description": "Handle Spanish phone orders with a simple script, menu prep, forwarding tips, and clear handoff rules for staff.",
+  "question": "How can my restaurant take Spanish phone orders without losing accuracy on the phone?",
+  "answer": "Use a Spanish-speaking phone script, keep your menu names and modifiers written clearly, and make sure the caller’s name, phone number, and ready time are confirmed before ending the call. An AI phone host like ROAL can speak the caller’s language, take pickup and delivery orders from your live menu, and pass allergy-sensitive or complicated requests to staff with a summary.",
+  "summary": "You’ll learn how to handle Spanish-speaking order calls with a simple script, setup steps, and a clear handoff process.",
+  "intro": "Spanish phone orders restaurant calls are easier when you keep the call simple, confirm each item back, and make the menu easy to read. The goal is not perfect language skills. It is getting the right order, the right phone number, and the right ready time.\n\nIf you use ROAL, it can speak the caller’s language, take the order from your live menu, and send a clean ticket to the kitchen screen. For calls that need a person, it passes them to staff with a short summary. That keeps the phone moving without making you guess what the caller meant.",
+  "sections": [
+    {
+      "id": "what-should-i-say-first-when-a-spanish-speaking-caller-order",
+      "h2": "What should I say first when a Spanish-speaking caller orders?",
+      "body": "Start with a short greeting and one clear question. Keep it slow and simple. You do not need long explanations or a lot of back-and-forth.\n\nUse a line like: **\"Hola, gracias por llamar. ¿Quiere pickup o delivery?\"** If you are not fluent, that one line helps you get the call moving. Then ask for the name and phone number early, before the order gets long.\n\nA practical call flow looks like this:\n1. Greet the caller.\n2. Ask pickup or delivery.\n3. Take the name and phone number.\n4. Read the order item by item.\n5. Confirm the ready time.\n\nIf you want a fuller script for busy shifts, save a few lines in your notes app or print them near the phone. You can also use [phone greeting templates](/tools/phone-greeting-templates) as a starting point and translate the lines your staff uses most.\n\nA simple script keeps mistakes down. It also helps when different team members answer the phone. Even a small shop can do this well if the same steps happen every time."
+    },
+    {
+      "id": "how-do-i-make-sure-the-order-is-understood-correctly",
+      "h2": "How do I make sure the order is understood correctly?",
+      "body": "The safest way is to confirm each item back in plain language. Do not wait until the end to repeat the whole order. Confirm as you go.\n\nA useful pattern is:\n- Item name\n- Size or quantity\n- Modifier\n- Special note\n\nExample: **\"One chicken burrito, no onions, extra salsa. Is that correct?\"** Then move to the next item. If the caller changes something, repeat the updated version right away.\n\nHere is a worked example you can swap for your own menu:\n| Part of the order | What you repeat back |\n| --- | --- |\n| Main item | \"Two plain slices\" |\n| Size | \"Large\" |\n| Modifier | \"Extra cheese\" |\n| Note | \"No garlic\" |\n\nIf you use ROAL, it can take items, sizes, modifiers, notes, and the caller’s name and phone. It also does not offer items marked sold out, which helps cut down on a common source of confusion. For tricky requests, it hands the call to staff with a summary instead of guessing.\n\nA good rule for your team: if the caller sounds unsure, ask one more question before ending the call. For example: **\"¿Quiere arroz y frijoles con eso?\"** A single clarification can save a remake."
+    },
+    {
+      "id": "what-menu-details-should-i-prepare-before-i-start-taking-spa",
+      "h2": "What menu details should I prepare before I start taking Spanish orders?",
+      "body": "Before you rely on the phone, clean up the menu details that matter most. Spanish-speaking callers need the same clear facts as anyone else: item names, prices, sizes, sides, add-ons, and any sold-out items.\n\nMake a short checklist:\n- Menu names written the same way every time\n- Prices easy to read\n- Common modifiers listed clearly\n- Special instructions for allergy-sensitive items\n- Ready times or average prep times for top sellers\n- Hours, address, parking, and pickup notes\n\nIf you have menu PDFs, menu photos, or a website, keep them current. ROAL reads menu, prices, hours, and address from public pages and can also use an uploaded menu in any format. That means your phone host can answer common menu questions without making the caller wait while staff searches for a paper menu.\n\nA useful example is a pizza shop. If a caller asks for a pie with half mushrooms and half pepperoni, the menu should already reflect how you want that written on the ticket. The clearer your menu is, the fewer times staff need to call back and ask, \"What did they mean?\"\n\nFor owners who want to compare phone options, [how it works](/how-it-works) explains the setup steps in plain language, and [ROAL facts](/facts) covers what the host can and cannot do."
+    },
+    {
+      "id": "how-do-i-handle-spanish-callers-who-ask-about-allergies-rese",
+      "h2": "How do I handle Spanish callers who ask about allergies, reservations, or catering?",
+      "body": "These calls need special care. Do not try to force everything into the order form. If the caller asks about a serious allergy, catering, or a reservation request, send it to staff with a summary.\n\nA good transfer line is: **\"Un momento, por favor. Voy a pasarle con el equipo.\"** If you are using ROAL, that kind of call is handed to staff with the important details already summarized. That is safer than trying to improvise on a complicated request.\n\nHere is a simple handoff checklist for staff:\n1. What the caller wants.\n2. Any allergy note.\n3. The best phone number.\n4. The pickup or delivery time requested.\n5. Any special instructions.\n\nKeep a short internal note for your team: allergy questions are not a guess, and reservation rules should match how your restaurant already works. If a caller asks something the phone host cannot answer, the owner can answer once in the inbox and the host learns from it from then on.\n\nThis is especially useful when your dining room is busy. You do not want one hard call blocking the whole line. A clear handoff keeps the call moving and still protects accuracy."
+    },
+    {
+      "id": "how-much-can-phone-orders-cost-me-compared-with-other-option",
+      "h2": "How much can phone orders cost me compared with other options?",
+      "body": "It helps to compare the real cost of taking orders by phone with other ways restaurants sell food. Delivery apps commonly charge roughly 15-30% commission per order. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nHere is a simple example you can swap for your own numbers:\n- Say your average phone order is $28.\n- Say you get 100 completed phone orders in a month.\n- A delivery app commission at 20% would be about $5.60 per order, or $560 total on those 100 orders.\n- ROAL would be $90 for those 100 completed orders.\n\nThat is just a sample math exercise. Use your own average ticket and order count. The point is to compare the payment method you already use against the cost of missed or mishandled calls. A [phone host cost calculator](/tools/phone-host-cost-calculator) can help you plug in your own numbers without guessing."
+    },
+    {
+      "id": "how-do-i-forward-my-restaurant-number-without-losing-control",
+      "h2": "How do I forward my restaurant number without losing control?",
+      "body": "You can keep your restaurant’s existing number and forward calls to the host line. That matters because customers already know your number, and you do not need to print a new one everywhere.\n\nThe owner claims the host, ROAL gives each location its own phone line automatically, and then the restaurant forwards the existing number to it. Forward all calls, or only when busy or unanswered. Forwarding can be turned off any time.\n\nPhone setup codes vary by carrier and plan, so always confirm with your carrier and test with a call. Common patterns include:\n- Many landlines and some carriers: *72 to forward all calls, *73 to turn it off\n- AT&T and T-Mobile GSM: **21*number# to forward all calls, ##21# to turn it off\n- **61*number# to forward unanswered calls\n- **67*number# to forward busy calls\n- Verizon Wireless: *72 / *73, and *71 for busy/no-answer forwarding\n- Business VoIP systems: often set forwarding in the web portal\n\nA practical setup for a small shop is:\n1. Keep your main number.\n2. Forward only when busy at first.\n3. Test one real call from a cell phone.\n4. Check that the kitchen gets the ticket.\n5. Switch to all calls only if that fits your workflow.\n\nIf you want a code reference, use [call forwarding codes by carrier](/tools/call-forwarding-codes). And if you want to test the host first, you can [build a free test host](/try) from your website or menu page."
+    },
+    {
+      "id": "what-should-i-check-on-the-first-week-of-spanish-orders",
+      "h2": "What should I check on the first week of Spanish orders?",
+      "body": "The first week is about spotting patterns, not chasing perfection. Listen for the calls that slow things down and fix those first.\n\nReview these items each day:\n- Did the caller’s name and phone get captured?\n- Were modifiers written the way the kitchen wants them?\n- Did the ready time sound realistic?\n- Were sold-out items blocked?\n- Did any allergy or manager request get passed to staff?\n\nA helpful test is to compare the phone transcript to the kitchen ticket. If the caller said one thing and the ticket shows another, update the menu wording or the script. For example, if callers keep asking for \"rice on the side,\" make sure your menu or order notes use the same words every time.\n\nROAL’s dashboard keeps call history with transcripts and recordings, plus live kitchen tickets, a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. That gives you one place to spot what Spanish-speaking callers are asking for most often.\n\nA final owner habit helps a lot: ask one staff member to listen to a few calls each week and write down the top confusion points. Then fix the wording once, instead of re-explaining it forever. If a question comes up that the host could not answer, answer it once in the inbox and it becomes part of the host’s knowledge."
+    }
+  ],
+  "takeaways": [
+    "Use short Spanish-friendly script lines and confirm each item as you go.",
+    "Keep your menu, hours, address, and sold-out items clean before you take orders.",
+    "Send allergy, catering, reservation, and manager calls to staff with a summary.",
+    "Compare phone order costs against delivery apps and monthly phone tools using your own numbers.",
+    "You can keep your existing number and forward calls to a host line when busy or unanswered."
+  ],
+  "faq": [
+    {
+      "q": "How do I take Spanish phone orders at a restaurant?",
+      "a": "Use a short greeting, ask pickup or delivery, and confirm the caller’s name, phone number, and each item one by one. Keep the menu wording simple and repeat back modifiers like size, toppings, and special notes. If the call gets complicated, hand it to staff with a summary."
+    },
+    {
+      "q": "Can an AI phone host speak Spanish for restaurant orders?",
+      "a": "Yes. ROAL speaks the caller’s language, takes pickup and delivery orders from the restaurant’s live menu, and confirms the order before sending a clean ticket to the kitchen screen. It also hands allergy-sensitive, catering, complaint, and manager calls to staff."
+    },
+    {
+      "q": "Does ROAL take card payments over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however the restaurant already takes it. That keeps payment handling the way your restaurant already works."
+    },
+    {
+      "q": "How do I forward my restaurant phone number to take Spanish calls?",
+      "a": "You keep your existing number and forward calls to the host line. Common carrier codes include *72 and *73 on many landlines, **21*number# and ##21# on some GSM mobile carriers, and carrier-specific options on Verizon and VoIP systems. Always confirm with your carrier and test the call."
+    }
+  ],
+  "words": 1571,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

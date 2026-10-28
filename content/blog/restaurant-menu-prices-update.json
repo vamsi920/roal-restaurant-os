@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-menu-prices-update",
+  "keyword": "how to update menu prices",
+  "category": "menu",
+  "title": "How to update menu prices without confusion",
+  "seoTitle": "How to update menu prices without confusion | ROAL",
+  "description": "Update menu prices without confusing customers or staff. Keep phone orders accurate and reduce mistakes when menu items or costs change.",
+  "question": "How do I update menu prices without confusing customers or staff?",
+  "answer": "Update menu prices by changing the source your phone orders use first, then telling staff which items changed and when the new prices start. Keep one clean menu source, add a short note for specials or temporary increases, and make sure your phone host, website, printed menus, and kitchen all match before the next order comes in.",
+  "summary": "You’ll be able to change menu prices cleanly and keep phone orders, staff, and customers on the same page.",
+  "intro": "Updating menu prices without confusing customers starts with one rule: change the source menu first, then tell your staff and phone line what changed. That keeps phone orders, pickup tickets, and menu questions consistent.\n\nIf your prices change often, the safest setup is one menu file or menu page that everything points to. ROAL reads the restaurant’s live menu and prices from public pages or an uploaded menu, so when you update the source, the phone host can quote the current price instead of an old one.",
+  "sections": [
+    {
+      "id": "what-should-you-change-first-when-prices-move",
+      "h2": "What should you change first when prices move?",
+      "body": "Start with the menu your customers actually see and your staff actually use. That could be your website menu page, a PDF menu, or the menu file you upload to your phone host.\n\nA simple order of operations works well:\n1. Update the menu source.\n2. Check the kitchen copy or printed copy.\n3. Update hours or item notes if they changed too.\n4. Test a phone call before opening.\n\nExample: if your chicken parm goes from **$16.95 to $18.95**, change that item in one place first. Then confirm that the phone script, printed specials sheet, and kitchen screen all show the same price. If you use ROAL, you can also edit the menu in the dashboard so the phone host quotes the right amount on the next call."
+    },
+    {
+      "id": "how-do-you-announce-a-price-change-without-upsetting-regular",
+      "h2": "How do you announce a price change without upsetting regulars?",
+      "body": "People are usually fine with a price change when it is clear and short. The problem is confusion, not the price itself. A quick, plain explanation helps a lot.\n\nUse a line like this at the counter or on the phone: \"Just a heads-up, the price on the menu for the cheesesteak is now $12.95.\" That is better than a long explanation. If the item is a special, say so: \"That price is for today’s lunch special only.\"\n\nA useful checklist:\n- Say the new price once, clearly.\n- Use the same price on the menu and the phone.\n- Train the person answering calls to repeat the updated number.\n- Put temporary changes in a note for staff.\n\nIf you have regulars who order the same thing every week, this keeps the conversation calm and quick. No guessing, no back-and-forth."
+    },
+    {
+      "id": "what-is-the-cleanest-way-to-handle-temporary-or-seasonal-pri",
+      "h2": "What is the cleanest way to handle temporary or seasonal pricing?",
+      "body": "Temporary pricing needs a clear label. Otherwise customers may think an item is always that price, or staff may forget when the old price returns.\n\nHere is a simple format you can use for specials:\n\n| Item | Price | Note |\n|---|---:|---|\n| Eggplant parm hero | $11.95 | Friday special only |\n| Large Greek salad | $14.50 | Summer price |\n| Family tray pasta | $39.99 | Catering only |\n\nWorked example: say your regular pizza slice is $3.50, but lunch slices are $2.99 until 2 p.m. Put the time window in the note. That way the phone host, cashier, and kitchen know which price applies. If a caller asks, \"How much is the slice?\" the answer can be, \"Slices are $2.99 at lunch and $3.50 after 2 p.m.\""
+    },
+    {
+      "id": "how-should-your-phone-line-match-the-new-menu-price",
+      "h2": "How should your phone line match the new menu price?",
+      "body": "Phone orders break when the caller hears one price and the kitchen expects another. So after a price update, test the phone flow before the rush.\n\nA practical phone check:\n1. Call your restaurant like a customer.\n2. Ask for the changed item.\n3. Listen for the price.\n4. Confirm the ticket shows the same number.\n5. Fix any mismatch right away.\n\nROAL is built for this kind of check because it answers the restaurant’s phone, reads from the live menu, and sends a clean ticket to the kitchen screen. Owners can test-call it in the browser before going live, which is useful when you just changed a few prices and want to make sure the caller hears the right amount.\n\nIf a caller asks about an item the host can’t answer, that question lands in the inbox for staff. That is better than guessing on a price or making up a number."
+    },
+    {
+      "id": "how-do-you-update-prices-across-delivery-phone-and-in-house-",
+      "h2": "How do you update prices across delivery, phone, and in-house menus?",
+      "body": "Try not to update one channel and forget the others. Confusion usually happens when the website says one thing, the phone says another, and the paper menu says something else.\n\nUse this simple table to stay organized:\n\n| Place | What to check |\n|---|---|\n| Website menu | Updated prices and item names |\n| Phone host | Current price for each item |\n| Printed menu | Old prices removed or marked out |\n| Kitchen screen | Correct item and modifier list |\n| Staff notes | Temporary specials or exceptions |\n\nExample: if a large pie goes from **$18 to $20**, make that same change everywhere on the same day. If you cannot update everything at once, tell staff which version is active: \"Use the new menu prices starting at 3 p.m.\" That keeps the front counter from quoting the old number while the phone line quotes the new one."
+    },
+    {
+      "id": "how-can-you-avoid-mistakes-when-callers-ask-about-old-prices",
+      "h2": "How can you avoid mistakes when callers ask about old prices?",
+      "body": "Some customers will remember the old price. That is normal. The answer should be short and polite, with no debate.\n\nA good script is: \"Yes, that item was updated. The new price is $14.95.\" If they ask why, keep it simple: \"We recently updated the menu.\" If they push back, repeat the price once and move on.\n\nUse this quick staff checklist:\n- Keep one approved price for each item.\n- Do not quote from memory.\n- Check sold-out items and special prices before taking the order.\n- Send unusual questions to a manager.\n\nIf you use an AI phone host like ROAL, the host can quote from the live menu and hand tougher questions to staff with a summary. That helps when price changes happen during a busy lunch or dinner rush.\n\nOne more tip: when you raise prices, watch the items that get ordered most often. Those are the ones where a small mismatch creates the most confusion."
+    },
+    {
+      "id": "what-should-you-do-before-the-next-busy-shift",
+      "h2": "What should you do before the next busy shift?",
+      "body": "Before the next rush, do a fast price audit. It only takes a few minutes, and it can save a lot of phone confusion.\n\nUse this pre-shift checklist:\n1. Review the top 10 ordered items.\n2. Confirm every new price.\n3. Check modifiers like extra cheese, toppings, or size upgrades.\n4. Update the phone greeting if needed.\n5. Place one printed note at the register for the staff.\n\nIf you want a place to start, you can [build a free test host from your website](/try) and see how a phone host reads your current menu. ROAL builds the host from public menu pages or an uploaded menu, and you can test it before you claim the line.\n\nFor owners who change prices often, the goal is simple: one menu, one truth, one price. That is the easiest way to keep orders accurate without turning every call into a correction."
+    }
+  ],
+  "takeaways": [
+    "Update the source menu first, then match the phone line, kitchen, and printed copies.",
+    "Use short scripts so staff can quote price changes without confusion.",
+    "Label temporary or seasonal prices clearly with dates or time windows.",
+    "Test one changed item by phone before the next rush.",
+    "Keep one approved price for each item across every ordering channel."
+  ],
+  "faq": [
+    {
+      "q": "What is the best way to update menu prices without confusing customers?",
+      "a": "Change the main menu source first, then update every place customers or staff see that item. That includes your website menu, phone host, printed menus, and kitchen notes. Use a short script for staff so they can repeat the new price clearly."
+    },
+    {
+      "q": "Should I change prices on my website before my printed menus?",
+      "a": "Yes, if your website is the main source for phone orders and public menu questions. Then update printed menus and staff sheets as soon as you can. The key is to avoid having two active prices at the same time."
+    },
+    {
+      "q": "How do I handle temporary price increases?",
+      "a": "Mark them clearly with a note such as \"today only,\" \"lunch special,\" or \"catering only.\" That tells staff and customers exactly when the price applies. A dated note helps prevent the old price from staying in use by mistake."
+    },
+    {
+      "q": "Can ROAL read updated menu prices automatically?",
+      "a": "ROAL reads the restaurant’s menu and prices from public pages or an uploaded menu when the host is set up. If you change the menu source or edit the menu in the dashboard, the phone host can use the updated information. Questions it cannot answer go to the inbox for staff."
+    }
+  ],
+  "words": 1106,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

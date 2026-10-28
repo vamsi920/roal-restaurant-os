@@ -1,0 +1,77 @@
+{
+  "slug": "pay-per-order-vs-monthly-fee",
+  "keyword": "pay per order vs monthly subscription",
+  "category": "pricing",
+  "title": "Pay per order vs monthly fee for phone AI",
+  "seoTitle": "Pay per order vs monthly subscription for phone AI | ROAL",
+  "description": "Compare pay per order and monthly fee pricing for phone AI in restaurants. See which model is easier to predict and budget for.",
+  "question": "Is pay per order or a monthly subscription better for my restaurant's phone AI?",
+  "answer": "Pay per order can fit restaurants that want costs tied to completed orders, while a monthly subscription can make sense if you expect steady call volume and want a fixed bill. For many independent restaurants, the main question is not just price, but whether the plan matches busy nights, slow days, and the way your phone really gets used.",
+  "summary": "See which phone AI pricing model fits your call volume, order mix, and restaurant budget.",
+  "intro": "Pay per order vs monthly subscription comes down to risk. Pay per order keeps you from paying a fixed bill when the phone is slow. A monthly fee can be easier to predict, but you pay it whether orders come in or not.\n\nFor a restaurant, the right choice depends on how many calls turn into real orders, how often you miss the phone, and whether you want the cost to follow results. ROAL uses a pay-per-completed-order model, and it bills only when a confirmed order reaches the kitchen screen.",
+  "sections": [
+    {
+      "id": "what-is-the-real-difference-between-pay-per-order-and-monthl",
+      "h2": "What is the real difference between pay per order and monthly subscription?",
+      "body": "The difference is simple: one model charges when the phone host completes an order, and the other charges a fixed amount every month. That sounds small, but it changes how you feel the cost on a slow Tuesday versus a packed Friday.\n\nHere is the restaurant version:\n- **Pay per order**: you pay when the phone host takes a real pickup or delivery order and sends the ticket to the kitchen screen.\n- **Monthly subscription**: you pay the same fee each month, whether the phone rings a lot or a little.\n\nA good way to think about it is like this. If your store gets 20 completed phone orders in a month, a per-order plan grows with that activity. If your store gets 200 completed phone orders, the fixed plan may look more attractive, depending on the monthly price.\n\nUse this phone script line as a benchmark for any setup: \"Thanks for calling. I can take your pickup order now, or I can help with hours, address, and menu questions.\" That is the kind of call work you are paying for, so count the orders that truly make it to the kitchen, not just the calls that ring in."
+    },
+    {
+      "id": "how-do-i-compare-the-math-for-my-shop",
+      "h2": "How do I compare the math for my shop?",
+      "body": "Use your own numbers. Do not guess. Start with your average order size and the number of phone orders you usually get in a week.\n\nHere is a simple worked example with made-up numbers you can swap out:\n\n| Item | Example |\n|---|---:|\n| Average phone order | $28 |\n| Completed phone orders per month | 120 |\n| Monthly revenue from phone orders | $3,360 |\n| ROAL price | $0.90 per completed order |\n| ROAL monthly cost | $108 |\n\nIf your phone volume is 120 completed orders, the math is easy: 120 x $0.90 = $108. If your order count is lower, your cost is lower. If your order count is higher, your cost goes up, but only because the phone host is completing more orders for you.\n\nNow compare that with a monthly plan. Many AI phone tools for restaurants charge a fixed monthly fee per location, often roughly $79 to $599, whether or not orders come in. That means your bill can stay the same during a slow month. For a small pizza shop or deli, that can feel heavy if call volume is uneven.\n\nIf you want to work through your own numbers, use [the phone host cost calculator](/tools/phone-host-cost-calculator) or read [what counts as a completed order on your bill](/blog/what-counts-as-completed-order)."
+    },
+    {
+      "id": "when-does-monthly-pricing-make-sense-for-a-restaurant",
+      "h2": "When does monthly pricing make sense for a restaurant?",
+      "body": "A monthly fee can make sense when your order flow is steady and predictable. If you already know the phone is busy every day, a fixed bill may be easier to plan for in your monthly budget.\n\nMonthly pricing can also be easier for owners who want one flat line item. Some managers like knowing the bill will not move much from month to month. That can help when you are lining up labor, food cost, and rent.\n\nStill, a fixed fee has to earn its keep. Ask yourself:\n- Do I have enough completed phone orders to justify the flat bill?\n- Will I still feel okay paying the same amount during slower weeks?\n- Am I paying for extra features I will not use?\n\nA practical test is to write down your last 30 days of phone orders and ask: \"What would I have wanted my bill to be if I paid per order instead?\" If the answer is less than the flat monthly fee, per order may fit better. If the answer is much more, monthly may feel simpler.\n\nFor owners comparing fixed plans, [this pricing comparison](/compare/monthly-ai-phone-plans) and [our no-contract software post](/blog/no-contract-restaurant-software) can help frame the decision."
+    },
+    {
+      "id": "when-does-pay-per-order-fit-better",
+      "h2": "When does pay per order fit better?",
+      "body": "Pay per order fits restaurants that want the bill tied to actual work done. That is especially helpful if your phone volume changes with weather, holidays, sports nights, or staffing.\n\nIt also helps when you do not want to pay for a tool that sits idle. If the host only costs money when it completes a ticket, then quiet periods stay quiet on the bill too. That is useful for smaller shops, family restaurants, and takeout counters where phone orders come in waves.\n\nA few examples where pay per order often feels natural:\n- A pizza shop that gets slammed on Friday but is slower Monday through Wednesday.\n- A deli that wants to cover lunch rush calls without adding more staff.\n- A family restaurant that wants to handle pickup orders and basic menu questions without a fixed monthly commitment.\n\nROAL follows this model at $0.90 per completed phone order, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. That means you can use the phone host for menu questions, hours, address, parking, and order taking without worrying about per-minute meter pressure.\n\nA useful line to hear on the phone is: \"I can help with your order, and I can also answer menu or hours questions.\" If that is the kind of work you need, pay per order is often easier to justify than a fixed subscription."
+    },
+    {
+      "id": "what-hidden-costs-should-i-watch-for-before-i-choose",
+      "h2": "What hidden costs should I watch for before I choose?",
+      "body": "The sticker price is not the whole story. A plan can look cheap at first and still cost more once you add fees, usage charges, or setup work.\n\nWatch for these items:\n- **Setup fees** that raise the first bill.\n- **Per-minute charges** that make long calls expensive.\n- **Contract terms** that lock you in longer than you want.\n- **Extra location fees** if you have more than one store.\n- **Charges for calls that do not become orders**.\n\nFor many restaurants, the biggest hidden cost is paying for silence. If the phone is slow, a monthly bill still arrives. If staff are busy, a fixed fee may feel like paying twice: once for the software and once for the extra labor you still need when calls pile up.\n\nThat is why it helps to compare against the cost of real alternatives. Human answering services usually bill per minute or per call. Delivery apps commonly charge restaurants roughly 15-30% commission per order. Those are very different cost shapes from a pay-per-order phone host.\n\nIf you want a quick side-by-side, [compare phone orders with delivery apps](/compare/delivery-apps) and use [the delivery commission calculator](/tools/delivery-commission-calculator) to see how fast those fees can add up."
+    },
+    {
+      "id": "how-do-i-set-up-phone-forwarding-without-making-a-mess",
+      "h2": "How do I set up phone forwarding without making a mess?",
+      "body": "Pricing only matters if the phone actually reaches the host. That means forwarding has to be set up correctly, and you should always test it.\n\nThe basic steps are:\n1. Claim the host and get your restaurant's dedicated phone line.\n2. Forward your existing number to that line, either for all calls or only when busy or unanswered.\n3. Test a live call from your cell phone.\n4. Make sure the host can answer, quote hours and address, and take a sample order.\n5. Confirm the kitchen gets the ticket.\n\nCommon carrier codes vary, so confirm with your provider and test with a real call. On many landlines and some carriers, *72 forwards all calls and *73 turns it off. On GSM mobile carriers like AT&T and T-Mobile, **21*number# often forwards all calls and ##21# turns it off. **61*number# often forwards unanswered calls and **67*number# often forwards busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy or no-answer forwarding. Business VoIP systems usually set this in the web portal.\n\nROAL keeps the restaurant's own number in place. You can forward all calls, or only when busy or unanswered, and turn forwarding off any time. If you want a checklist for setup, see [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "how-should-i-decide-in-one-afternoon",
+      "h2": "How should I decide in one afternoon?",
+      "body": "You do not need a long planning process. You need a clear check.\n\nUse this quick owner checklist:\n- Count your completed phone orders from the last 2 to 4 weeks.\n- Estimate your average order value.\n- Decide whether you want a fixed monthly bill or a variable bill.\n- Ask whether slow weeks matter more to you than predictable billing.\n- Compare the monthly fee you are seeing with a per-order cost.\n\nIf your call volume changes a lot, pay per order often feels safer. If your volume is very steady and high, a monthly plan may feel simpler. The key is to match the pricing model to your rhythm, not to the sales pitch.\n\nROAL is built by Venkata Vamsi in Jersey City, NJ, and it is already set up for independent restaurants that need phone coverage without extra hassle. It can answer questions about your menu, hours, address, and parking, take pickup and delivery orders from the live menu, and send a clean ticket to the kitchen screen. It also hands tricky calls like complaints, allergy-sensitive questions, catering, and manager requests to staff with a summary.\n\nIf you want to see the setup flow, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Pay per order ties cost to completed tickets; monthly pricing stays fixed whether orders come in or not.",
+    "For restaurants with uneven phone volume, pay per order often feels easier to budget for.",
+    "Check for setup fees, per-minute charges, and contract terms before comparing plans.",
+    "Use your own order count and average ticket size to compare real monthly cost.",
+    "ROAL charges $0.90 per completed order and does not charge monthly, setup, or per-minute fees."
+  ],
+  "faq": [
+    {
+      "q": "Is pay per order cheaper than a monthly subscription for a restaurant phone AI?",
+      "a": "It depends on your order volume. Pay per order is often cheaper when your phone traffic is uneven or lower, because you only pay when a completed order reaches the kitchen screen. A monthly subscription can cost less if you have a high, steady stream of completed phone orders and the flat fee is lower than your per-order total."
+    },
+    {
+      "q": "What counts as a completed order on a pay per order plan?",
+      "a": "A completed order is a confirmed order whose ticket reaches the kitchen screen. In other words, the caller gives the items, sizes, modifiers, and notes, the order is confirmed back, and the kitchen gets the ticket. Calls that are only questions, test calls, or unfinished calls do not count as completed orders."
+    },
+    {
+      "q": "Do monthly AI phone plans usually charge even when no orders come in?",
+      "a": "Yes, many monthly AI phone tools for restaurants charge a fixed fee each month whether or not orders come in. That is why some owners prefer a per-order model when business is unpredictable. A fixed fee can be fine, but it should fit your real call pattern."
+    },
+    {
+      "q": "Can I forward only busy or unanswered calls to an AI phone host?",
+      "a": "Yes, many phone systems and carriers support busy or unanswered forwarding, but the exact method depends on your carrier or phone system. On many systems, you can forward all calls or only when busy or unanswered, then turn forwarding off later. Always confirm the code with your carrier and test with a real call."
+    }
+  ],
+  "words": 1563,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -4,6 +4,8 @@ export type BlogArticleSection = {
   id: string;
   title: string;
   paragraphs: string[];
+  /** Markdown body (generated posts); rendered instead of paragraphs when present. */
+  body?: string;
 };
 
 export type BlogFaqItem = {
@@ -27,6 +29,13 @@ export type BlogArticleContent = {
   /** Primary question this article answers (defaults to first FAQ question). */
   aeoQuestion?: string;
   answerShort: string;
+  /** Markdown intro shown above the sections. */
+  intro?: string;
+  /** One-line key takeaways. */
+  takeaways?: string[];
+  /** Target search query. */
+  keyword?: string;
+  wordCount?: number;
   author: string;
   seo: BlogArticleSeo;
   sections: BlogArticleSection[];

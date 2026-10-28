@@ -1,0 +1,171 @@
+{
+  "slug": "delivery-apps",
+  "label": "Phone orders vs delivery apps",
+  "h1": "Phone orders vs delivery apps",
+  "seoTitle": "Delivery apps vs phone orders: the real cost | ROAL",
+  "description": "Compare phone orders and delivery apps for restaurants. See cost, control, rush-hour flow, and when ROAL’s pay-per-order phone host fits better.",
+  "lead": "Delivery apps can bring new demand. But they can also take a big cut and keep the customer on the app. ROAL is built for restaurants that want phone orders with less missed ringing and a lower per-order cost.",
+  "question": "Should my restaurant take phone orders with ROAL or rely on delivery apps?",
+  "answer": "If you want to keep more control over your own orders, phone orders can be a strong fit. ROAL answers the phone, takes pickup or delivery orders from your live menu, and charges $0.90 per completed order. Delivery apps can be better if you want extra marketplace exposure and do not mind paying a much higher commission on each order.",
+  "pains": [
+    {
+      "title": "Delivery commissions can be steep",
+      "body": "Third-party apps commonly take roughly 15-30% per order. On a $40 order, that can be a painful cut before food and labor."
+    },
+    {
+      "title": "Phone calls get missed during rushes",
+      "body": "When the line rings during a Friday dinner rush, staff may be dropping fries, boxing meals, or helping walk-ins. That is when pickup orders often slip away."
+    },
+    {
+      "title": "Apps can change the customer relationship",
+      "body": "On an app, the customer often stays inside the app’s flow. With phone orders, you keep the conversation on your number and can handle notes, questions, and repeat callers directly."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Lower cost when orders come in by phone",
+      "body": "ROAL charges $0.90 per completed phone order. That can be easier to live with than a percentage cut on every ticket, especially for steady pickup business."
+    },
+    {
+      "title": "Handles real menu calls",
+      "body": "It can take a cheesesteak with no onions, a large pepperoni pizza with extra sauce, or a biryani with mild spice and a side of raita, then send a clean ticket to the kitchen screen."
+    },
+    {
+      "title": "Helps during busy stretches",
+      "body": "When three calls come in at once and the counter is packed, ROAL can keep answering while your team finishes service. You can also forward only unanswered or busy calls."
+    },
+    {
+      "title": "Still works when apps make less sense",
+      "body": "For regulars, local pickup, last-minute dinner orders, and after-hours questions, a phone host can be a better fit than sending every customer to a marketplace app."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What would you like today?"
+    },
+    {
+      "who": "caller",
+      "line": "One large pepperoni pizza, extra cheese, and a Caesar salad. No croutons."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One large pepperoni pizza with extra cheese, and one Caesar salad, no croutons. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. My name is Maria, and my number is 201-555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your order will be ready at 6:40 pm. I have one large pepperoni pizza with extra cheese and one Caesar salad, no croutons. Is that correct?"
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "1 large pepperoni pizza",
+      "Extra cheese",
+      "1 Caesar salad",
+      "No croutons",
+      "Caller: Maria · 201-555-0148"
+    ],
+    "note": ""
+  },
+  "sections": [
+    {
+      "h2": "When phone orders beat delivery apps",
+      "body": "Phone orders usually work best when your restaurant gets a lot of repeat customers, local pickup, and simple delivery orders. Think of a neighborhood pizzeria taking a large plain pie, wings, and a garlic knot order on a Friday night. Or a Chinese takeout spot handling fried rice, lo mein, and a lunch combo before the dinner rush.\n\nA phone order lets you hear the details right away. You can confirm no onions, mild spice, extra sauce, or a substitute side before the ticket goes to the kitchen. That can help reduce back-and-forth later. It also helps when customers have questions the app does not answer well, like parking, ready times, or whether a menu item is sold out.\n\nROAL is meant to sit in that middle ground. It is not trying to replace every sales channel. It is for the calls your team would like to answer, but often cannot during peak hours."
+    },
+    {
+      "h2": "When delivery apps are the better choice",
+      "body": "Delivery apps can make sense when your main goal is new customer discovery. If someone nearby is browsing for dinner and has never heard of your restaurant, the app can put you in front of them without you having to answer the phone.\n\nThey can also be the simpler choice if your team does not want to manage call forwarding or phone workflows at all. Some owners prefer the app because the order intake, payment flow, and customer browsing all live in one place.\n\nThe tradeoff is cost and control. App commissions are often much higher than a phone-order fee, and the customer relationship stays inside the app. For some restaurants, that is still worth it. For others, especially busy independents with lots of repeat callers, it is not."
+    },
+    {
+      "h2": "A practical way to choose",
+      "body": "A simple way to decide is to ask where your orders really come from. If you get lots of calls for pickup, special instructions, lunch specials, catering, or after-hours questions, ROAL can help you capture more of that phone demand.\n\nIf you depend on marketplace discovery and are comfortable paying commission for that traffic, delivery apps may still be part of the mix. Many restaurants use both: apps for discovery, and a phone host for the calls that come straight to the store.\n\nExample: say your shop gets 12 missed calls on a Friday. If even a few of those are real orders for a burger combo, a large pizza, or a family meal, answering them can matter more than any one tool alone. The right choice is the one that fits your margin, your staff, and your volume."
+    }
+  ],
+  "table": {
+    "otherName": "Delivery apps",
+    "rows": [
+      {
+        "label": "Cost model",
+        "roal": "$0.90 per completed phone order",
+        "other": "Commonly 15-30% commission per order"
+      },
+      {
+        "label": "Setup",
+        "roal": "Paste your website, Maps link, or name and city to build a phone host quickly",
+        "other": "Usually just create a store listing and set menu details in the app"
+      },
+      {
+        "label": "Rush-hour capacity",
+        "roal": "Can keep answering while staff are cooking, packing, or helping in person",
+        "other": "Orders arrive through the app, but it does not answer your phone"
+      },
+      {
+        "label": "Menu knowledge",
+        "roal": "Reads your live menu, prices, hours, and address from public pages or uploads",
+        "other": "Menu must be maintained inside the app listing"
+      },
+      {
+        "label": "Kitchen tickets",
+        "roal": "Sends a clean ticket to the kitchen screen",
+        "other": "Orders usually flow through the app’s order system"
+      },
+      {
+        "label": "Languages",
+        "roal": "Speaks the caller’s language",
+        "other": "Depends on the app experience and customer settings"
+      },
+      {
+        "label": "After hours",
+        "roal": "Can still answer calls and take requests after close if you forward those calls",
+        "other": "Orders may still come in through the marketplace even when the store is closed, depending on settings"
+      },
+      {
+        "label": "Handoff to staff",
+        "roal": "Can pass allergy-sensitive questions, complaints, and manager requests to staff with a summary",
+        "other": "Customers usually contact support through the app flow"
+      },
+      {
+        "label": "Best for",
+        "roal": "Restaurants that want to capture phone orders and keep more control of the order flow",
+        "other": "Restaurants that want marketplace discovery and are willing to pay commission"
+      },
+      {
+        "label": "Customer relationship",
+        "roal": "The call comes to your restaurant number and voice flow",
+        "other": "The app often sits between you and the customer"
+      }
+    ]
+  },
+  "verdict": "Pick ROAL if your restaurant gets real phone traffic and you want a lower-cost way to answer it. Pick delivery apps if you want marketplace discovery and are comfortable paying commission for that visibility. Many owners use both, but for direct phone orders, ROAL is usually the better fit.",
+  "faq": [
+    {
+      "q": "Is ROAL cheaper than delivery apps?",
+      "a": "Usually, yes, if you are comparing per order. ROAL charges $0.90 per completed phone order, while delivery apps commonly take roughly 15-30% commission. The better choice depends on your average ticket size and how many orders you expect to come through the phone."
+    },
+    {
+      "q": "Can I still use delivery apps if I use ROAL?",
+      "a": "Yes. ROAL is for the calls that come to your restaurant number. It does not replace marketplace apps, and many owners use both channels at the same time."
+    },
+    {
+      "q": "What kinds of orders does ROAL handle best?",
+      "a": "ROAL is a good fit for pickup orders, simple delivery orders, repeat callers, and busy dinner rushes. It can take items, sizes, modifiers, and notes from your live menu, then send a ticket to the kitchen screen."
+    },
+    {
+      "q": "When is a delivery app the better option?",
+      "a": "If you want more exposure to people browsing for food and you are fine paying commission for that reach, a delivery app can be the better choice. It may also be easier if you do not want to manage phone forwarding or call flow at all."
+    },
+    {
+      "q": "Do I need to change my restaurant number?",
+      "a": "No. ROAL gives each location its own phone line and you forward your existing number to it. You can forward all calls, or only unanswered and busy calls, and turn forwarding off any time."
+    }
+  ]
+}

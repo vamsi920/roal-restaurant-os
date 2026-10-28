@@ -1,0 +1,71 @@
+{
+  "slug": "tell-callers-they-are-talking-to-ai",
+  "keyword": "disclose ai phone calls customers",
+  "category": "ai-basics",
+  "title": "Should you tell callers they are talking to AI?",
+  "seoTitle": "Disclose AI phone calls to customers | ROAL",
+  "description": "Know when to disclose AI phone calls customers hear, what to say, and how to set expectations without losing trust.",
+  "question": "Should I tell callers they're talking to AI on my restaurant phone line?",
+  "answer": "Yes, in many cases it is smart to disclose that callers are speaking to an AI phone host, especially if the caller asks, the call involves reservations or special requests, or your local rules require disclosure. Keep the wording simple and honest: say it is an AI phone host for the restaurant, and make it easy to reach staff for anything the host cannot handle.",
+  "summary": "You’ll know when to disclose AI on calls and how to say it in a simple, honest way.",
+  "intro": "Yes — you should be ready to tell callers they are speaking with an AI phone host, and in many cases it is the better move for trust. A short, honest line works well: \"I’m the restaurant’s AI phone host, and I can help with orders, hours, and pickup questions.\" \n\nFor a busy restaurant, disclosure does not need to be a big speech. It should be a clean part of the greeting, or a short answer when someone asks. ROAL is built for that kind of call flow: it answers the phone, takes pickup and delivery orders from your live menu, and passes tricky calls to staff with a summary.",
+  "sections": [
+    {
+      "id": "should-you-disclose-it-at-the-start-of-the-call",
+      "h2": "Should you disclose it at the start of the call?",
+      "body": "For most independent restaurants, the safest approach is simple disclosure early in the call. That does not mean making the caller sit through a long explanation. It means being direct so the caller knows who is helping them and what the host can do.\n\nA practical greeting sounds like this: \"Thanks for calling Tony’s Pizza. I’m the restaurant’s AI phone host. I can take your order, give you hours, and help with menu questions.\" That gives the caller context right away. It also sets expectations if they need special help.\n\nUse this quick check before deciding how prominent disclosure should be:\n- If the call is for a normal pickup order, a short disclosure is usually enough.\n- If the caller asks about allergies, a complaint, or a manager, route it to staff.\n- If you take reservations, keep the wording clear so the caller knows a person may still confirm later.\n- If your staff wants a different tone, pick a voice and name that sound natural for your place.\n\nROAL lets the owner choose the host’s voice and name, so the opening line can fit a family spot, a deli, or a late-night takeout counter."
+    },
+    {
+      "id": "what-should-you-say-so-it-feels-honest-not-awkward",
+      "h2": "What should you say so it feels honest, not awkward?",
+      "body": "The best disclosure sounds like a restaurant, not a tech demo. Keep it short. Say what the host is, what it can do, and what happens next if the caller needs staff.\n\nHere are three script options you can use or adjust:\n1. \"I’m the restaurant’s AI phone host. I can help with your order or questions about hours and menu items.\"\n2. \"You’re speaking with our AI phone host. I can take pickup orders and pass anything special to the team.\"\n3. \"I’m the restaurant’s phone host. If you need a manager, I’ll send that over with a summary.\"\n\nA good script does three jobs:\n- It tells the truth.\n- It lowers confusion.\n- It tells the caller what to do next.\n\nIf you want a more human sound, keep the greeting warm and restaurant-specific: \"Thanks for calling Maria’s Grill. I can help you with pickup, delivery, and hours.\" That still works because ROAL can answer questions about hours, address, parking, and the menu from your public pages.\n\nOne thing to avoid is sounding apologetic. You do not need to say sorry for using an AI phone host. You do need to be clear that a real person can step in when needed."
+    },
+    {
+      "id": "when-can-a-disclosure-be-enough-and-when-should-staff-take-o",
+      "h2": "When can a disclosure be enough, and when should staff take over?",
+      "body": "Disclosure is only part of the job. The other part is knowing which calls should move to staff.\n\nROAL handles the everyday stuff well: items, sizes, modifiers, notes, caller name, caller phone, ready time, menu questions, and reservation requests. It also speaks the caller’s language and will not offer items marked sold out. But it should hand off the harder calls.\n\nUse this handoff checklist:\n- Allergies or ingredient safety questions\n- Complaints or service recovery\n- Catering requests\n- Manager requests\n- Any question the host cannot answer from the menu or FAQs\n\nA useful handoff line is: \"I’m sending this to the team with a summary so they can help you.\" That keeps the caller informed and avoids a dead end.\n\nIf you run a pizza shop, for example, the host can take a plain order like: \"Two large pepperoni, one with extra cheese, one with mushrooms, name is Sam, phone ends in 4821.\" But if Sam asks whether a sauce contains an allergen, staff should answer that directly.\n\nThis is where the inbox matters. Questions the host cannot answer land there, the owner answers once, and the host knows it from then on. That helps reduce repeat confusion without pretending the host knows everything."
+    },
+    {
+      "id": "how-do-you-explain-ai-to-callers-without-losing-trust",
+      "h2": "How do you explain AI to callers without losing trust?",
+      "body": "Most callers do not want a lecture. They want their food, their ready time, and a clear answer. So explain the AI part only as much as the moment needs.\n\nA simple way to frame it is: \"I’m the restaurant’s AI phone host, here to help with orders and common questions.\" That sounds plain and calm. It also avoids making the call feel like a barrier between the guest and the kitchen.\n\nHere is a small trust table you can use when training staff or writing your greeting:\n\n| Situation | Good wording | Why it works |\n|---|---|---|\n| Normal order | \"I can take that for you now.\" | Keeps the call moving |\n| Caller asks who you are | \"I’m the restaurant’s AI phone host.\" | Honest and direct |\n| Special request | \"Let me send that to the team.\" | Shows there is a path to staff |\n| Hours or address | \"I can help with that right now.\" | Makes the host useful |\n\nIf you use ROAL, the caller still gets a normal restaurant experience: the host reads from your live menu, confirms the order back, and sends a clean ticket to the kitchen screen. That means the caller hears a helpful voice, not a dead end.\n\nFor owners, the practical goal is not to hide the tool. It is to make the call easy, accurate, and short."
+    },
+    {
+      "id": "what-about-laws-carrier-rules-and-phone-setup",
+      "h2": "What about laws, carrier rules, and phone setup?",
+      "body": "Disclosure rules can vary by place, so do not guess. If you are unsure whether you need to say more than a simple greeting, check local rules before you go live.\n\nFor phone setup, many restaurants forward their existing number to the AI phone host. On many landlines and some carriers, *72 then the forwarding number can forward all calls, and *73 can turn it off. On GSM mobile carriers, **21*number# may forward all calls and ##21# may turn it off; **61*number# may forward unanswered calls and **67*number# may forward busy calls. Verizon Wireless often uses *72 / *73, and *71 for busy/no-answer forwarding. Business VoIP systems usually handle forwarding in the web portal.\n\nImportant: codes vary by carrier and plan, so always confirm with your carrier and test with a call.\n\nA safe setup checklist:\n- Confirm your forwarding method with your carrier or phone system.\n- Test an answered call and an unanswered call.\n- Make sure the greeting includes your chosen disclosure line.\n- Check that the host can quote hours, address, and menu items correctly.\n- Confirm that tricky calls still reach staff.\n\nROAL gives each location its own phone line automatically, and the restaurant keeps its own number. Forwarding can be turned off any time. That makes it easier to try the setup without changing the business phone you already use."
+    },
+    {
+      "id": "what-is-the-best-policy-for-a-small-restaurant",
+      "h2": "What is the best policy for a small restaurant?",
+      "body": "A good policy is simple enough for anyone on the team to follow. For a family restaurant, deli, or takeout shop, write one short rule and stick to it.\n\nHere is a practical policy you can copy and adjust:\n1. Disclose the AI phone host in the greeting or when asked.\n2. Keep the wording short and clear.\n3. Let the host take normal orders, hours questions, and basic menu questions.\n4. Send allergies, complaints, catering, and manager requests to staff.\n5. Review questions that the host could not answer and add the answer to the FAQ.\n\nYou can also tie the policy to money. Say a $28 average order and 10 completed phone orders in a month. That would be $280 in phone-order sales. Plug in your own average ticket and call volume to see what missed calls may be worth to your place. ROAL charges $0.90 per completed phone order, billed monthly, with no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nIf you want to try the idea without a big commitment, [build a free test host](/try) from your website or menu. You can test-call it in the browser, then decide how you want the greeting to sound before forwarding any live calls."
+    }
+  ],
+  "takeaways": [
+    "Tell callers early if they are speaking with an AI phone host; keep it short and honest.",
+    "Use one clear greeting line, then route allergies, complaints, and manager requests to staff.",
+    "Test your call forwarding with your carrier before turning anything live.",
+    "ROAL can take normal orders, answer common questions, and hand off tricky calls with a summary."
+  ],
+  "faq": [
+    {
+      "q": "Do I have to tell callers they are speaking with AI?",
+      "a": "In many situations, yes, it is wise to disclose it clearly and early. A short line in the greeting usually works best. If you are unsure about local rules, check them before you go live."
+    },
+    {
+      "q": "What should I say when a caller asks if this is a person?",
+      "a": "Be direct. Say, \"I’m the restaurant’s AI phone host.\" Then add what it can help with, like orders, hours, or menu questions. That keeps the call honest and useful."
+    },
+    {
+      "q": "Can an AI phone host take allergy questions?",
+      "a": "It can pass them to staff with a summary, but allergy-sensitive questions should be handled by a person. That is safer for the guest and better for the restaurant. Make that handoff part of your policy."
+    },
+    {
+      "q": "Does ROAL take card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment, and the host sends a clean ticket to the kitchen screen."
+    }
+  ],
+  "words": 1400,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,76 @@
+{
+  "slug": "who-should-answer-restaurant-phone",
+  "keyword": "who answers phone at restaurant",
+  "category": "operations",
+  "title": "Who should answer the restaurant phone?",
+  "seoTitle": "Who answers the restaurant phone? Owner guide",
+  "description": "Who answers the restaurant phone? Get the best setup for busy shifts, call routing, scripts, and when an AI phone host helps.",
+  "question": "Who should answer the phone at a restaurant during busy service?",
+  "answer": "The phone should be answered by whoever can take the call without hurting service on the floor or in the kitchen. In many restaurants, that means a dedicated host, a manager, or an AI phone host that takes orders, answers basic questions, and sends clean tickets while staff focus on guests.",
+  "summary": "You’ll be able to choose a phone setup that fits your staff, hours, and order flow.",
+  "intro": "The best person to answer the restaurant phone is the one who can do it without slowing service. For many busy takeout spots, that is not the cashier, the server, or the cook on the line.\n\nIt is usually a dedicated front-of-house person, a manager, or an AI phone host that handles routine calls and passes the tricky ones to staff. If your phone rings while the line is out, the right answer is the one that protects the guest in the dining room and the order in the kitchen.",
+  "sections": [
+    {
+      "id": "who-should-answer-the-restaurant-phone-on-a-busy-shift",
+      "h2": "Who should answer the restaurant phone on a busy shift?",
+      "body": "For a small restaurant, the phone often lands on whoever is closest. That works for a little while, but it breaks down fast when dine-in guests, online orders, and pickup calls all hit at once.\n\nA practical rule is simple:\n- **If you have a host or cashier with light traffic:** let them answer basic calls.\n- **If your counter is slammed:** route calls to a manager or a phone host.\n- **If the kitchen is exposed to interruptions:** do not make cooks answer the phone.\n- **If your team is short-staffed:** send routine calls somewhere that can keep taking them.\n\nHere is a clean script a staff member can use: \"Thanks for calling Joe’s Pizza. How can I help?\" Then they should decide quickly: take the order, answer a question, or transfer the call to a manager. The goal is not a long conversation. The goal is to get the caller what they need without tying up the line or the counter.\n\nIf you want a deeper breakdown of staffing choices, see [AI phone host vs hiring phone staff](/compare/hiring-phone-staff)."
+    },
+    {
+      "id": "what-happens-when-the-same-person-answers-dine-in-guests-and",
+      "h2": "What happens when the same person answers dine-in guests and pickup calls?",
+      "body": "When one person handles both walk-ins and phone orders, something gives. Usually it is either the in-store guest experience or the accuracy of the phone order.\n\nA simple example: say your average phone order is $28. If that person misses one order because they were helping a table, that lost call matters more than it looks. Plug in your own average ticket and your own busy-hour call volume. The math is personal to your shop.\n\nA useful workflow is:\n1. Answer the phone within a few rings.\n2. Figure out whether it is an order, a question, a reservation, or a problem.\n3. Take the easy stuff first.\n4. Send anything unusual to a manager.\n5. Put the order into the kitchen clearly.\n\nHere is the issue most owners know too well: the counter person hears half the order, the caller changes something, and the kitchen gets a messy ticket or a verbal note that no one can read later. ROAL is built to reduce that kind of friction by taking pickup and delivery orders from the live menu and sending a clean ticket to the kitchen screen. That helps the person on the floor stay with the people in front of them.\n\nIf your restaurant runs pickup-heavy service, [pickup order taking](/use-cases/pickup-orders) is worth a look."
+    },
+    {
+      "id": "what-should-the-phone-script-say",
+      "h2": "What should the phone script say?",
+      "body": "The best phone script is short, polite, and specific to the restaurant. It should help the caller quickly, not sound like a call center.\n\nUse a simple structure:\n- Greeting\n- What can I help you with?\n- Order, question, or special request\n- Name and phone number\n- Ready time or next step\n\nExample script for staff or a phone host:\n\"Thanks for calling Maria’s Deli. How can I help you today?\"\n\nIf the caller wants to place an order, the next lines should be practical:\n\"What can I get started for you?\"\n\"Can I get your name and best phone number?\"\n\"Your order will be ready around 20 minutes.\"\n\nIf the caller asks about hours, parking, or the menu, the answer should be direct:\n\"We’re open until 9 tonight. Parking is behind the building.\"\n\nA short checklist helps keep calls tight:\n- Say the restaurant name clearly.\n- Ask for the order or question right away.\n- Repeat the order back.\n- Give a ready time.\n- End with a thank-you.\n\nROAL follows a similar flow, but it also speaks the caller’s language, confirms the order back, and can hand allergy-sensitive questions, complaints, catering, and manager requests to staff with a summary. For ready-to-use wording, see [phone greeting templates](/tools/phone-greeting-templates)."
+    },
+    {
+      "id": "how-do-you-route-calls-when-nobody-can-pick-up",
+      "h2": "How do you route calls when nobody can pick up?",
+      "body": "Most restaurants need a backup plan for lunch rush, dinner rush, and after-hours calls. The exact forwarding steps depend on the carrier or phone system, so always confirm with your provider and test with a real call.\n\nCommon examples look like this:\n- On many landlines and some carriers, dial **\\*72** then the forwarding number to forward all calls, and **\\*73** to turn it off.\n- On some GSM mobile carriers, **\\*\\*21\\*number#** forwards all calls and **##21#** turns it off.\n- For unanswered calls, some carriers use **\\*\\*61\\*number#**.\n- For busy calls, some carriers use **\\*\\*67\\*number#**.\n- Verizon Wireless commonly uses **\\*72** / **\\*73**, and **\\*71** for busy/no-answer forwarding.\n- Many business VoIP systems let you set forwarding in the web portal.\n\nA practical restaurant setup is:\n1. Forward all calls during off hours, if you want.\n2. Forward only unanswered or busy calls during service, if that fits your operation.\n3. Test the forwarding with one real call from another phone.\n4. Make sure the caller hears the right greeting.\n5. Turn it off when the dining room is quiet again.\n\nROAL gives each location its own phone line automatically after the owner claims the host, and the restaurant can forward its existing number to it. That means the restaurant keeps its own number, and forwarding can be turned off any time."
+    },
+    {
+      "id": "how-do-you-keep-the-kitchen-from-getting-dragged-into-phone-",
+      "h2": "How do you keep the kitchen from getting dragged into phone work?",
+      "body": "The kitchen should not be the default phone desk. Every time a cook stops to answer a question, that pause can slow tickets and create more pressure on the line.\n\nA good boundary is to send only the calls the staff truly needs to handle:\n- Allergy-sensitive questions\n- Complaints and refunds\n- Catering requests\n- Manager requests\n- Anything the phone host cannot answer from the menu or hours\n\nEverything else should stay out of the kitchen. That includes menu questions, hours, address, parking, and routine pickup orders.\n\nHere is a simple handoff line:\n\"I’m going to get a manager for that and make sure they have your order details.\"\n\nIf you use ROAL, that handoff can include a short summary so staff do not start from zero. The owner can also answer unknown questions once in the inbox, and then the host knows it from then on. That helps over time, especially for local specials or store-specific policies.\n\nA kitchen-safe checklist:\n- The phone does not ring in the kitchen unless it needs to.\n- Order notes are written clearly.\n- Sold-out items are not offered.\n- Card numbers are not taken over the phone.\n- Staff get only the calls they need to handle.\n\nIf your team is stretched thin, [short-staffed shifts](/use-cases/short-staffed) is a useful related read."
+    },
+    {
+      "id": "when-does-an-ai-phone-host-make-more-sense-than-a-person",
+      "h2": "When does an AI phone host make more sense than a person?",
+      "body": "An AI phone host makes more sense when the phone is important, but you do not want it stealing time from service. That is common in pizza shops, delis, takeout spots, family restaurants, and places with steady pickup traffic.\n\nIt can make sense when:\n- Calls come in during the same window as your busiest counter rush.\n- The same questions repeat all day: hours, menu, parking, address.\n- Staff are already busy taking in-person orders.\n- You want a cleaner kitchen ticket than handwritten notes or verbal relays.\n- You want the phone handled after hours without leaving people guessing.\n\nHere is a worked example you can swap for your own numbers:\n- Say you get 40 completed phone orders in a month.\n- ROAL charges $0.90 per completed phone order.\n- 40 x $0.90 = $36 for those completed orders.\n\nThat is not a promise of your own volume. It is just the math. Plug in your own order count and compare it with what you spend on staff time, missed calls, or other phone handling costs.\n\nROAL has no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. That makes it easier to compare against fixed monthly phone tools or per-minute answering services. If you want to compare payment models, see [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans)."
+    },
+    {
+      "id": "what-is-the-best-setup-for-a-small-restaurant-right-now",
+      "h2": "What is the best setup for a small restaurant right now?",
+      "body": "The best setup is the one your team will actually use on a busy Friday night. For many owners, that means a simple path: answer basic calls with staff when possible, forward overflow when needed, and let a phone host handle routine questions and orders.\n\nA workable setup looks like this:\n1. Decide who answers first: host, manager, or phone host.\n2. Decide what should be escalated: allergies, complaints, catering, and manager requests.\n3. Set forwarding rules for busy or unanswered calls.\n4. Keep your menu, hours, and address current.\n5. Review call history and fix gaps.\n\nIf you want to try something built for restaurants, you can [build a free test host](/try) from your website, Google Maps link, or restaurant name and city. ROAL reads the public menu, prices, hours, and address, and you can test-call it right in the browser without signing up first.\n\nFor owners who want to compare options by task, [How it works](/how-it-works) and [Pricing](/pricing) are good next stops. The main thing is to choose a setup that protects your staff, keeps the kitchen clear, and gives callers a direct answer instead of a long hold."
+    }
+  ],
+  "takeaways": [
+    "The right person to answer the phone is the one who can do it without hurting service on the floor or in the kitchen.",
+    "Basic calls should be fast: greeting, request, name, phone number, ready time, repeat-back.",
+    "Forward overflow calls when the team is busy, and always test the setup with a real call.",
+    "ROAL can answer routine menu and order calls, then send unusual issues to staff with a summary."
+  ],
+  "faq": [
+    {
+      "q": "Who should answer the phone at a restaurant during dinner rush?",
+      "a": "During dinner rush, the phone should be answered by the person least likely to slow down service. That may be a host, manager, or a phone host that handles routine calls while staff keep serving guests. The key is to keep the floor moving and send only special issues to staff."
+    },
+    {
+      "q": "Should a cook answer the restaurant phone?",
+      "a": "Usually no. A cook is tied to the line, and interruptions can slow tickets and hurt order quality. It is better to have the phone go to a host, manager, or a phone system that can take routine calls and leave the kitchen focused on food."
+    },
+    {
+      "q": "How do I forward my restaurant phone when I’m busy?",
+      "a": "Forwarding depends on your carrier or phone system, so confirm the exact code with them and test it. Common examples include \\*72 on many landlines, **21*number# on some GSM carriers, and forwarding options inside business VoIP portals. Always place a test call after setting it up."
+    },
+    {
+      "q": "Can an AI phone host take restaurant orders?",
+      "a": "Yes, ROAL can take pickup and delivery orders from the restaurant’s live menu, collect the caller’s name and phone, quote a ready time, and send a clean ticket to the kitchen screen. It does not take card numbers over the phone, and tricky calls like complaints or allergy-sensitive questions go to staff with a summary."
+    }
+  ],
+  "words": 1564,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

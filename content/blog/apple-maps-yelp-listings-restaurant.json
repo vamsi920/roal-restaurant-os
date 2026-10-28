@@ -1,0 +1,71 @@
+{
+  "slug": "apple-maps-yelp-listings-restaurant",
+  "keyword": "restaurant yelp apple maps listing",
+  "category": "marketing",
+  "title": "Apple Maps and Yelp listings for restaurants",
+  "seoTitle": "Restaurant Apple Maps and Yelp listings | ROAL",
+  "description": "See how Apple Maps and Yelp listings affect calls, pickup orders, and menu accuracy, plus simple steps to keep your details current.",
+  "question": "How should I set up my restaurant Yelp and Apple Maps listing so people can call, find hours, and place orders easily?",
+  "answer": "Your Yelp and Apple Maps listings should match your current hours, address, phone number, menu, and parking details exactly. If those listings are wrong or outdated, people may call the wrong number, show up at the wrong time, or skip your restaurant for a competitor with clearer info.",
+  "summary": "You’ll know how to clean up your listings so callers can find you, trust you, and place orders faster.",
+  "intro": "A restaurant Yelp and Apple Maps listing should point people to the right phone number, hours, and menu every time. If those details are off, you lose calls, pickup orders, and trust.\n\nFor an independent shop, the goal is simple: make it easy for someone to find you, call you, and order without guessing. That means checking your public listings, your website, and your phone setup together, not one at a time.",
+  "sections": [
+    {
+      "id": "what-should-a-restaurant-yelp-and-apple-maps-listing-actuall",
+      "h2": "What should a restaurant Yelp and Apple Maps listing actually say?",
+      "body": "Start with the basics that matter at the counter and on the phone. Your listing should show the same name, address, phone number, hours, and category everywhere. If you take pickup orders, add a clear note that people can call for takeout. If parking is tight, say that plainly.\n\nUse this quick checklist:\n- Restaurant name matches your storefront and website\n- Same street address and suite number on both listings\n- Current phone number that rings to the right place\n- Open hours, holiday hours, and late-night changes\n- Menu link or menu photos that match what you actually sell\n- Parking, pickup, and delivery notes written in plain English\n\nExample phone line for your listing or voicemail greeting: \"Thanks for calling Maria’s Pizza. We’re open till 10, and you can place pickup orders here by phone.\" That line is better than a vague greeting because it tells the caller what to do next.\n\nIf your restaurant has more than one location, keep each listing separate. A caller should not have to guess which store they reached. ROAL can help by giving each location its own phone line and menu details so the listing and the live phone flow stay aligned."
+    },
+    {
+      "id": "why-do-mismatched-hours-menus-and-phone-numbers-hurt-orders",
+      "h2": "Why do mismatched hours, menus, and phone numbers hurt orders?",
+      "body": "When a listing is wrong, the caller does not think about your back office. They think, \"This place is closed,\" or \"Nobody answered,\" and they move on. Even small mistakes can turn into lost pickup orders or complaints when the caller arrives expecting a different menu or a different price.\n\nA common problem is the old phone number still showing on one directory and the new number on another. Another one is Sunday hours on Apple Maps that do not match your website. The caller does not care where the error came from. They just want a simple answer.\n\nA practical fix is to review your restaurant Yelp and Apple Maps listing together once a week. Check these items:\n1. Hours for today and this week\n2. Holiday closures and early closings\n3. Menu links and top sellers\n4. Phone number and call forwarding status\n5. Address, parking notes, and delivery area notes\n\nWorked example: say your average pickup order is $28. If a wrong hour on a listing causes just 3 missed calls in a week, that is about $84 in weekly sales you may lose. Plug in your own average order and your own call volume to see the real number for your shop."
+    },
+    {
+      "id": "how-do-i-turn-listing-traffic-into-pickup-calls-instead-of-w",
+      "h2": "How do I turn listing traffic into pickup calls instead of wasted clicks?",
+      "body": "A listing should do more than describe your restaurant. It should push the caller toward a clear next step. That means your phone number must be easy to spot, your hours must be right, and your menu should be simple enough that people can decide quickly.\n\nIf your staff is busy, missed calls are a real problem. That is where a phone host can help. ROAL answers the phone, takes pickup and delivery orders from your live menu, gives hours and address details, and sends a clean ticket to the kitchen screen. It can also hand off allergy questions, complaints, and manager requests to staff with a summary.\n\nUse a simple call script on your listing or in your greeting:\n- \"We can take your order by phone now.\"\n- \"Pick up is ready in about 20 minutes.\"\n- \"If you need a reservation or have an allergy question, we’ll connect you with staff.\"\n\nIf you use call forwarding, keep it straightforward. Many landlines and some carriers use *72 to forward all calls and *73 to turn it off. Some mobile carriers use different codes, and business VoIP systems usually let you set it in the web portal. Codes vary, so confirm with your carrier and test it with a real call. For a quick reference, see [call forwarding codes by carrier](/tools/call-forwarding-codes)."
+    },
+    {
+      "id": "what-should-i-do-before-i-claim-or-update-my-listings",
+      "h2": "What should I do before I claim or update my listings?",
+      "body": "Before you edit anything, gather the exact details you want the public to see. That keeps you from changing one listing and forgetting the other. It also helps if your phone host, website, and maps all need the same information.\n\nHere is a simple prep list:\n- Legal or storefront restaurant name\n- Main phone number and backup number\n- Street address, unit number, and cross street\n- Regular hours and holiday hours\n- Menu PDF, menu photos, or website menu page\n- Parking notes, delivery notes, and pickup instructions\n- Best contact for questions about hours or menu changes\n\nIf you already have a clean website, use that as the source of truth. If not, use your menu PDF or menu photos and make sure prices are readable. ROAL can read public pages, menu PDFs, and menu photos, then build a phone host in about a minute from your website, Google Maps link, or just your name and city at /try.\n\nThat matters because listing details and phone details should agree. If your menu says one thing and your listing says another, you create extra work for staff. Clean data saves time at the host stand and on the phone."
+    },
+    {
+      "id": "how-should-i-handle-call-forwarding-from-my-restaurant-numbe",
+      "h2": "How should I handle call forwarding from my restaurant number?",
+      "body": "Call forwarding is useful when you want all calls, or only busy and unanswered calls, to reach your phone host. The restaurant keeps its own number, which is important for signs, menus, and regular customers. Forwarding can be turned off any time.\n\nA simple setup path looks like this:\n1. Decide whether you want all calls forwarded or only unanswered/busy calls\n2. Confirm the right code with your carrier or phone system\n3. Forward calls to the number ROAL gives that location\n4. Test with one real call from a mobile phone\n5. Check that the caller hears the greeting you expect and that the ticket reaches the kitchen screen\n\nExample from a busy Friday: if the dining room is slammed, you may only want unanswered calls forwarded so the front desk stays in control. On a slower night, you might forward all calls while staff is short-handed. The right choice depends on your floor, not a generic rule.\n\nKeep notes for your team so everyone knows when forwarding is on. That way a missed pickup call does not turn into a mystery. And remember: codes vary by carrier and plan, so always confirm and test before you rely on it."
+    },
+    {
+      "id": "how-can-roal-help-keep-listing-info-and-phone-orders-aligned",
+      "h2": "How can ROAL help keep listing info and phone orders aligned?",
+      "body": "One common problem is that the listing is right, but the phone experience is not. Or the phone works, but the menu on the listing is outdated. ROAL helps tie the public info to the live call flow so callers hear the same hours, address, and menu details they saw online.\n\nROAL is an AI phone host for restaurants. It answers the phone, takes pickup and delivery orders from the live menu, answers questions about hours, address, parking, and menu items, and sends a clean ticket to the kitchen screen. The owner can paste a website, Google Maps link, or name and city at /try, test-call the host in the browser with no sign-up needed, and then claim it if they want to go live.\n\nWhat the owner can control:\n- Host name and voice\n- Hours and FAQs\n- Menu items, sizes, modifiers, and sold-out items\n- Call forwarding behavior\n- Multi-location menus if needed\n\nROAL does not take card numbers over the phone. Payment stays at pickup or however your restaurant already takes it. Tricky calls like catering, complaints, allergy-sensitive questions, and manager requests go to staff with a summary. If you want to try a free test host, [build a free test host](/try)."
+    }
+  ],
+  "takeaways": [
+    "Keep your Yelp and Apple Maps details identical to your website and phone setup.",
+    "Treat hours, phone number, menu, and parking notes as sales tools, not just directory fields.",
+    "Test call forwarding before busy shifts so pickup calls reach the right place.",
+    "Use a phone host like ROAL to answer routine questions and send clean order tickets to the kitchen."
+  ],
+  "faq": [
+    {
+      "q": "What should a restaurant Yelp listing include?",
+      "a": "At minimum, it should show your exact name, address, phone number, current hours, and a menu link or menu photos. Add parking notes, pickup instructions, and delivery notes if they help callers decide faster. The goal is to remove guesswork before they call or visit."
+    },
+    {
+      "q": "Should my Apple Maps hours match my website?",
+      "a": "Yes. Your Apple Maps hours should match your website and your phone greeting as closely as possible. If one source says you are open and another says closed, callers lose confidence and may move on. Update all three together whenever your schedule changes."
+    },
+    {
+      "q": "How do I forward my restaurant phone to another number?",
+      "a": "Many landlines and some carriers use *72 to forward all calls and *73 to turn it off. Some mobile carriers and business phone systems use different codes or a web portal, so confirm with your carrier and test with a real call. If you only want unanswered or busy calls forwarded, ask your carrier for the right option."
+    },
+    {
+      "q": "Can ROAL replace a restaurant receptionist?",
+      "a": "ROAL can handle routine calls, answer hours and menu questions, and take pickup and delivery orders from the live menu. It also hands off allergy questions, complaints, and manager requests to staff. It does not take card numbers over the phone, so staff still handles payment at pickup or through your normal process."
+    }
+  ],
+  "words": 1310,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

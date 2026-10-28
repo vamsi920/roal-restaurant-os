@@ -1,0 +1,72 @@
+{
+  "slug": "ai-host-catering-handoff",
+  "keyword": "catering inquiry handoff",
+  "category": "operations",
+  "title": "Catering inquiry handoff from your phone host",
+  "seoTitle": "Catering inquiry handoff from your phone host | ROAL",
+  "description": "Use a clear catering inquiry handoff flow with scripts, staff steps, forwarding tips, and a simple way to route larger orders.",
+  "question": "How should my phone host handle a catering inquiry handoff without losing the lead?",
+  "answer": "Your phone host should collect the basics, label the call as catering, and hand it to staff with a short summary. That summary should include the caller’s name, phone number, event date, guest count, order type, and any deadline so your team can follow up quickly and keep the lead moving.",
+  "summary": "Set up a clean handoff so catering calls reach staff with the right details and no confusion.",
+  "intro": "A good catering inquiry handoff is simple: the phone host gathers the details, then passes the call to your staff with a short summary. That way the caller does not have to repeat everything, and your team knows what kind of event they are handling.\n\nROAL can do this on the phone by taking the basic order or inquiry details and sending staff the summary when the call needs a person. For restaurants that also get pickup orders and menu questions, this keeps catering leads from getting stuck while the phone is ringing. See [Catering inquiries](/use-cases/catering) and [How it works](/how-it-works) for the setup flow.",
+  "sections": [
+    {
+      "id": "what-details-should-the-phone-host-collect-on-a-catering-cal",
+      "h2": "What details should the phone host collect on a catering call?",
+      "body": "For catering, the goal is not to close every deal on the spot. The goal is to get enough information so staff can respond fast and correctly. A phone host should ask for the event basics first, then move to food details.\n\nUse a simple script like: \"Thanks for calling. Is this for a catering order, pickup order, or delivery order?\" If it is catering, the host should collect:\n\n- Caller name\n- Callback phone number\n- Event date and time\n- Guest count\n- Pickup or delivery\n- Food type or menu items requested\n- Any special notes, like trays, utensils, or setup timing\n\nIf the caller is unsure, the host can still get a useful lead. Example: \"We have a lunch for about 30 people next Friday, and I need pricing.\" That is enough to pass to staff with the event date, size, and intent. ROAL can take the call, gather the basics, and send a summary to staff when the inquiry needs human follow-up."
+    },
+    {
+      "id": "when-should-the-host-hand-off-to-staff-right-away",
+      "h2": "When should the host hand off to staff right away?",
+      "body": "Some catering calls are too important or too specific to keep on the phone host. The handoff should happen when the caller wants custom pricing, a special menu, a manager, or help that your host cannot answer from the menu and FAQ.\n\nA good rule is to hand off when the call needs judgment, not just information. That includes:\n\n1. Large orders with many trays or dishes\n2. Last-minute events\n3. Requests for custom food combinations\n4. Questions about setup, delivery timing, or service style\n5. Allergy-sensitive requests\n6. Manager requests or complaints\n\nExample phone line: \"I can take your details and have our team follow up with you about the catering order.\" That sounds calm and clear. It also avoids making promises the kitchen cannot keep.\n\nIf your restaurant uses [Order throttling: slowing intake when the kitchen is slammed](/blog/restaurant-order-throttling), use the same thinking here. A catering lead is valuable, but it should not overwhelm the line cook or cashier. The handoff protects the sale and protects the kitchen."
+    },
+    {
+      "id": "what-should-staff-see-in-the-handoff-summary",
+      "h2": "What should staff see in the handoff summary?",
+      "body": "The best handoff is short enough to read in seconds, but complete enough to act on. Staff should not have to listen to a long call recording just to know whether the lead is real.\n\nA useful summary format looks like this:\n\n| Field | Example |\n|---|---|\n| Caller name | Maria Lopez |\n| Phone number | (555) 123-4567 |\n| Event date | Friday afternoon |\n| Guest count | About 25 |\n| Order type | Catering inquiry |\n| Food request | Sandwich trays and salad |\n| Notes | Wants pricing and delivery window |\n\nYou can swap in your own format, but keep it consistent. That way whoever answers the inbox can spot the important parts fast.\n\nA staff member can then reply with a simple script: \"Hi Maria, thanks for calling about your catering order. I saw the details from your call and will follow up with pricing and timing.\" ROAL sends the summary so the caller is not left repeating the same information twice, and the team starts from a clean note instead of a blank page."
+    },
+    {
+      "id": "how-do-you-set-up-the-forwarding-flow-for-busy-hours",
+      "h2": "How do you set up the forwarding flow for busy hours?",
+      "body": "You do not need to change your main number to use a phone host. The usual setup is to forward your restaurant number to the host when you want coverage, then turn it off when you do not.\n\nA practical flow is:\n\n1. Keep your existing restaurant number.\n2. Forward all calls, or only unanswered and busy calls, to the phone host.\n3. Let the host handle general calls and send catering questions to staff.\n4. Test the path with one real call before lunch rush.\n\nForwarding codes vary by carrier and phone system, so confirm with your provider and test with a call. For some carriers, call forwarding codes are available through the phone itself or the web portal. If you need a quick reference, use [Call forwarding codes by carrier](/tools/call-forwarding-codes).\n\nThis matters for catering because many inquiries come in during busy meal periods. If the line is tied up, the host can still capture the lead instead of sending the caller away. ROAL gives each location its own phone line automatically once you claim the host, and forwarding can be turned off any time."
+    },
+    {
+      "id": "how-should-you-route-catering-calls-alongside-normal-orders",
+      "h2": "How should you route catering calls alongside normal orders?",
+      "body": "Catering calls should not compete with pickup orders in the same messy pile. They need their own label and their own follow-up path. That makes it easier for a manager, cashier, or shift lead to see what matters first.\n\nA clean workflow is:\n\n- Pickup and delivery orders go straight to the kitchen screen\n- Catering inquiries go to staff with a summary\n- Allergy-sensitive questions go to staff right away\n- Complaints and manager requests go to staff right away\n\nIf your restaurant already uses a [Kitchen screen vs printed tickets](/blog/kds-vs-printed-tickets) setup, this is even easier to manage. The kitchen handles food tickets, while the office side handles the bigger conversation.\n\nExample: a caller wants three sandwich trays for 18 people, plus an update on whether you can include napkins. The phone host can gather the basics, then route the call to staff with the note \"catering inquiry, needs pricing and service details.\" That keeps the line moving while still preserving the sale."
+    },
+    {
+      "id": "what-should-you-charge-promise-or-avoid-promising-on-the-fir",
+      "h2": "What should you charge, promise, or avoid promising on the first call?",
+      "body": "For a catering inquiry handoff, the phone host should stay careful. It should not quote custom pricing unless your menu and rules make that easy. It should not promise delivery timing that staff has not confirmed. And it should never take card numbers over the phone.\n\nUse plain language on the call:\n\n- \"I can take your details and have our team follow up.\"\n- \"We’ll confirm pricing once staff reviews the order.\"\n- \"We can collect your name and number now.\"\n\nIf you want a rough way to think about value, plug in your own numbers. Say a catering job might be worth a $120 order instead of a $28 average order. Even one saved lead can matter more than a small pickup ticket, but do not assume every inquiry becomes a sale.\n\nThis is where ROAL fits well for independent restaurants: it answers the phone, captures the inquiry, and hands the tricky part to people. It also keeps the caller in their language and sends questions the host could not answer into an inbox for later follow-up. If you want to try it, [Build a free test host](/try) from your website."
+    }
+  ],
+  "takeaways": [
+    "A catering inquiry handoff should capture the basics and move the lead to staff fast.",
+    "Use a short summary with name, phone, date, guest count, and notes.",
+    "Hand off custom pricing, allergy questions, complaints, and manager requests.",
+    "Keep your main number and forward calls only when you need coverage.",
+    "Do not let the phone host take card numbers or promise details staff has not confirmed."
+  ],
+  "faq": [
+    {
+      "q": "What information should a restaurant get from a catering caller?",
+      "a": "At minimum, get the caller’s name, callback number, event date, guest count, food request, and any special notes. If they want delivery or pickup, that should be noted too. Those details are enough for staff to follow up without making the caller repeat everything."
+    },
+    {
+      "q": "Should a phone host answer catering pricing questions?",
+      "a": "It can answer simple menu and hours questions, but custom catering pricing is usually better left to staff unless your restaurant has very clear catering packages. A safe handoff is to collect the event details and have a person confirm pricing. That prevents wrong quotes and confusion later."
+    },
+    {
+      "q": "How do I route catering calls during a rush?",
+      "a": "Forward unanswered or busy calls to your phone host so the caller still gets picked up. The host can take the inquiry and send staff a summary while the line stays open for dine-in or pickup traffic. Confirm forwarding codes with your carrier and test the setup before a rush."
+    },
+    {
+      "q": "Can ROAL handle catering inquiries and regular phone orders?",
+      "a": "Yes. ROAL answers the phone, takes pickup and delivery orders from the live menu, and hands catering inquiries to staff with a summary. It also sends a clean ticket to the kitchen screen for completed orders, while tricky calls land in an inbox for follow-up."
+    }
+  ],
+  "words": 1169,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

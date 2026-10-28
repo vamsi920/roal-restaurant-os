@@ -1,0 +1,123 @@
+{
+  "slug": "pickup-orders",
+  "label": "Pickup order taking",
+  "h1": "Pickup orders taken by phone, ticketed to the kitchen",
+  "seoTitle": "AI pickup order taking for restaurants | ROAL",
+  "description": "Let an AI phone host answer pickup calls, take menu items and notes, confirm ready times, and send clean tickets to the kitchen screen.",
+  "lead": "Pickup calls come in during the lunch rush, the dinner rush, and right when your counter is packed. ROAL answers those calls, takes the order, and keeps your staff focused on the line.",
+  "question": "How can an AI phone answering pickup order taking restaurant setup help me during busy call times?",
+  "answer": "ROAL acts like a phone host for pickup orders. It answers calls, takes items, sizes, modifiers, and notes from your live menu, confirms the order back, and sends a clean ticket to the kitchen screen. If a caller asks something the host should not handle, it can route it to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings while the line is out the door",
+      "body": "A caller wants two chicken parm heroes, a side of fries, and “extra sauce,” but your cashier is bagging orders and cannot stop to answer. The call either waits, rolls to voicemail, or gets missed."
+    },
+    {
+      "title": "Pickup orders need exact details",
+      "body": "People call with small changes: no onions, sauce on the side, one combo with white rice, or a gluten note. If those notes are rushed or written down wrong, the pickup order can come back wrong."
+    },
+    {
+      "title": "You still need a ready time",
+      "body": "When someone asks, “Can I pick this up in 20 minutes?” you need a realistic answer. During a Friday rush, that time changes fast and the front counter may not have a spare person to explain it clearly."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers pickup calls with a calm voice",
+      "body": "ROAL picks up the phone and handles the first conversation for you. That helps when the same few minutes bring three calls, two walk-ins, and a stack of tickets."
+    },
+    {
+      "title": "Takes the full order, not just a name",
+      "body": "It can collect the items, sizes, modifiers, and special notes for pickup orders. It also gathers the caller’s name and phone number so the ticket is easier to match at pickup."
+    },
+    {
+      "title": "Confirms the order before sending it",
+      "body": "The host reads the order back and gives a ready time. That reduces the back-and-forth that slows down a busy front counter."
+    },
+    {
+      "title": "Sends a clean ticket to the kitchen screen",
+      "body": "ROAL turns the call into a clear ticket with new, preparing, and ready status in the dashboard. Your team can see the order without trying to decode a shaky handwritten note."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What would you like today?"
+    },
+    {
+      "who": "caller",
+      "line": "Two plain cheeseburgers, one order of fries, and one turkey club with no tomato."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes on the burgers or fries?"
+    },
+    {
+      "who": "caller",
+      "line": "One burger with no onions, and extra ketchup on the side."
+    },
+    {
+      "who": "host",
+      "line": "Thanks. I have two plain cheeseburgers, one with no onions, one order of fries, and one turkey club with no tomato, plus extra ketchup on the side. What name should I put on the order, and when would you like to pick it up?"
+    },
+    {
+      "who": "caller",
+      "line": "Maria. I’ll be there in about 25 minutes."
+    },
+    {
+      "who": "host",
+      "line": "Perfect, Maria. I’ll send it in for pickup in about 25 minutes."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "2 plain cheeseburgers",
+      "- 1 no onions",
+      "1 fries",
+      "1 turkey club",
+      "- no tomato | extra ketchup on side"
+    ],
+    "note": "Pickup name: Maria | Ready in about 25 minutes"
+  },
+  "sections": [
+    {
+      "h2": "What pickup calls usually look like",
+      "body": "Pickup calls are often short, but they are not simple. A caller may rattle off three items, then add changes at the end: no mayo, add pickles, sauce on the side, or one item without cheese. During lunch or dinner, your counter staff may be bagging orders, taking cash, and answering walk-ins at the same time. That is when pickup calls get missed or rushed.\n\nROAL is built for that exact moment. It answers the call, takes the order from your live menu, and sends a clean ticket to the kitchen screen. It can also answer common questions like hours, address, and parking, so your team is not repeating the same details over and over."
+    },
+    {
+      "h2": "A simple pickup call flow that works",
+      "body": "A good pickup phone flow should be short and clear. First, answer the call and ask what they want to order. Then collect each item, size, modifier, and note. Ask for the name and a phone number, give a realistic ready time, and read the order back once before sending it to the kitchen.\n\nThat is what ROAL is designed to do. If you sell a chicken sandwich, fries, a side salad, and a soda, the host can take that order and keep it organized. If something is not on the live menu, sold out, or too unclear to confirm, it should be handled carefully instead of guessed."
+    },
+    {
+      "h2": "How to set it up for your restaurant",
+      "body": "To get started, you paste your restaurant website, Google Maps link, or just your name and city at /try. ROAL reads your public menu, hours, and address, and you can also upload a menu file or photos. Then you test-call the host in the browser before going live.\n\nWhen you are ready, you claim the host and forward your restaurant number to it. You can forward all calls, or only when the line is busy or unanswered. Your original number stays yours, and forwarding can be turned off any time. If you want to check the basics first, see the [How it works](/how-it-works) page or the [Questions owners ask](/faq) page."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pickup orders from my live menu?",
+      "a": "Yes. ROAL is set up to take pickup and delivery orders from your live menu. It can collect items, sizes, modifiers, and notes, then send a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "What if the caller asks for a sold-out item?",
+      "a": "ROAL does not offer items marked sold out. That helps prevent a pickup order from being promised when the item is not available."
+    },
+    {
+      "q": "Can it give a ready time for pickup?",
+      "a": "Yes. The host can quote a ready time during the call. You can use that to keep pickup orders moving without tying up the front counter."
+    },
+    {
+      "q": "Does it take credit card numbers over the phone?",
+      "a": "No. ROAL does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes payment."
+    },
+    {
+      "q": "How do I start?",
+      "a": "Go to [Build a free test host](/try) and paste your restaurant website, Google Maps link, or name and city. You can test-call it right in the browser before you decide to go live."
+    }
+  ]
+}

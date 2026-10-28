@@ -1,0 +1,171 @@
+{
+  "slug": "answering-service",
+  "label": "AI phone host vs answering service",
+  "h1": "AI phone host vs answering service",
+  "seoTitle": "AI phone host vs answering service | ROAL",
+  "description": "Compare an AI phone host and a human answering service for restaurant calls, orders, and rushes. See costs, handoff, and where each fits best.",
+  "lead": "If your phone rings all day, both options can help. The right choice depends on whether you want a live person on the line or a phone host built for restaurant orders.",
+  "question": "Is an AI phone host or an answering service better for my restaurant?",
+  "answer": "For busy restaurants, an AI phone host like ROAL can take pickup and delivery orders, answer common menu and hours questions, and send a ticket to the kitchen for $0.90 per completed order. A human answering service is often better if you want a real person for every call, especially for delicate guest issues or unusual requests. The best choice depends on your call mix, your menu, and how often calls turn into orders.",
+  "pains": [
+    {
+      "title": "You pay even when the phone is quiet",
+      "body": "Many answering services bill by the minute or by the call. If a slow Tuesday brings only a few calls, you can still see a steady bill."
+    },
+    {
+      "title": "Rush calls get messy fast",
+      "body": "Friday dinner is where missed calls stack up. A live service can answer, but it may not know your menu well enough to take a full order for chicken biryani, extra naan, or no onions."
+    },
+    {
+      "title": "The wrong tool can slow the kitchen",
+      "body": "If the caller gets basic questions but no clean order ticket, staff still has to rewrite the order. That can lead to mistakes when the line is moving and the phone keeps ringing."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Charges only when an order is completed",
+      "body": "ROAL bills $0.90 for each completed phone order that reaches the kitchen screen. Calls, questions, and test calls are free, so you are not paying a monthly fee just to keep it on."
+    },
+    {
+      "title": "Handles real restaurant orders",
+      "body": "It can take items, sizes, modifiers, and notes from your live menu. That helps on calls like “large pepperoni, half mushrooms, extra well done, for pickup in 25 minutes.”"
+    },
+    {
+      "title": "Sends staff the right handoff",
+      "body": "If someone asks about a sold-out item, a catering order, an allergy concern, or a manager issue, the call can go to staff with a summary. That is useful when a human needs to step in."
+    },
+    {
+      "title": "Still leaves room for human backup",
+      "body": "If your team wants a live person to answer every complaint or handle a very high-touch guest, an answering service can be the better fit. Some restaurants also use both, with ROAL covering orders and staff covering edge cases."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One large pepperoni pizza, extra crispy, and one Caesar salad, no croutons."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One large pepperoni pizza, extra crispy, and one Caesar salad, no croutons. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. My name is Daniel, 555-0148."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Daniel. Your pickup order is confirmed for 7:20 pm. I have one large pepperoni pizza, extra crispy, and one Caesar salad, no croutons."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "Daniel · 555-0148",
+      "1x Large Pepperoni Pizza",
+      "  - extra crispy",
+      "1x Caesar Salad",
+      "  - no croutons"
+    ],
+    "note": ""
+  },
+  "sections": [
+    {
+      "h2": "When an answering service is the better choice",
+      "body": "A human answering service can be the better fit if your calls are more about guest care than order taking. For example, a caller may be upset about a late delivery, confused about a catering quote, or asking for a manager after a bad experience. A live person can listen, slow down, and choose a softer tone in the moment.\n\nIt can also make sense if your restaurant gets lots of unusual calls that do not follow a set pattern. Think private party planning, last-minute banquet changes, or a guest who wants to explain several allergies in one call. In those cases, a human can gather details and pass them along.\n\nThe tradeoff is cost and fit. Human services commonly bill by the minute or by the call, so the bill can keep growing even on calls that never turn into sales. And if the person answering does not know your menu well, staff may still need to clean up the order later."
+    },
+    {
+      "h2": "When an AI phone host is the better choice",
+      "body": "An AI phone host is usually the stronger choice when the main goal is to capture more orders without adding front-desk labor. That matters at lunch rush, Friday night, or during a holiday rush when the phone keeps ringing while the team is plating, bagging, and taking walk-ins.\n\nROAL is built for restaurant calls. It can answer questions about hours, address, parking, and menu items, then take pickup or delivery orders from your live menu and send a clean ticket to the kitchen screen. That works well for repeat calls like “two chicken parm heroes, no onions” or “one family tray for 6:30.”\n\nThis can also be a good fit if you want a simple cost tied to completed orders. With ROAL, you are not paying a monthly fee just to keep the line open. If a call is only a question, a test call, or a quick check on hours, that does not add cost."
+    },
+    {
+      "h2": "A simple way to compare the two",
+      "body": "Start with your last busy week and sort calls into three buckets: orders, questions, and problem calls. If most calls are orders or basic menu questions, an AI phone host may fit well. If many calls are complaints, special events, or complicated guest situations, a human answering service may still earn its keep.\n\nExample: say you missed 12 calls on a Friday. If 8 were pickup orders, 3 were “what time do you close?”, and 1 was a complaint about a missing item, a phone host can cover most of the volume and hand off the one hard call. If those 12 calls were mostly upset guests and catering changes, a live service may be the safer first step.\n\nA lot of owners also choose a split setup. The phone host can cover all calls or only the busy and unanswered ones, and staff can still handle the calls that need a human voice right away."
+    }
+  ],
+  "table": {
+    "otherName": "Answering service",
+    "rows": [
+      {
+        "label": "Cost model",
+        "roal": "$0.90 per completed order",
+        "other": "Often per minute or per call"
+      },
+      {
+        "label": "Quiet day cost",
+        "roal": "No monthly fee, so quiet days stay quiet",
+        "other": "You may still pay a steady monthly or usage bill"
+      },
+      {
+        "label": "Setup",
+        "roal": "Paste your website, Google Maps link, or restaurant name and city",
+        "other": "Usually you brief a service team on hours, menu, and scripts"
+      },
+      {
+        "label": "Rush-hour capacity",
+        "roal": "Built to cover order spikes and basic questions",
+        "other": "Can help, but call volume still depends on staffing"
+      },
+      {
+        "label": "Menu knowledge",
+        "roal": "Reads your live menu and can use sold-out items properly",
+        "other": "Depends on how well the person was trained"
+      },
+      {
+        "label": "Kitchen tickets",
+        "roal": "Sends a clean ticket to the kitchen screen",
+        "other": "May relay notes, but the restaurant often still rewrites details"
+      },
+      {
+        "label": "Languages",
+        "roal": "Can speak the caller’s language",
+        "other": "Depends on the person on duty"
+      },
+      {
+        "label": "After-hours calls",
+        "roal": "Can answer hours, orders, and common questions after close",
+        "other": "Can also answer after hours if staffed"
+      },
+      {
+        "label": "Handoff to staff",
+        "roal": "Passes allergy-sensitive questions, complaints, and manager requests with a summary",
+        "other": "Can transfer or take a message, depending on the service"
+      },
+      {
+        "label": "Best for",
+        "roal": "Restaurants that want order-taking tied to completed sales",
+        "other": "Restaurants that want a live person for every call"
+      }
+    ]
+  },
+  "verdict": "Pick ROAL if you want a phone host built for restaurant orders, with pricing tied to completed tickets. Pick a human answering service if you want a live person for every call, especially for complaints, special events, or delicate conversations. Some restaurants use both, and that can be the most practical setup.",
+  "faq": [
+    {
+      "q": "Can ROAL take my full phone order?",
+      "a": "Yes. It can take pickup and delivery orders from your live menu, including items, sizes, modifiers, and notes. It also confirms the order back and sends a clean ticket to the kitchen screen."
+    },
+    {
+      "q": "What if a caller needs a real person?",
+      "a": "ROAL can hand off catering, complaints, allergy-sensitive questions, and manager requests with a summary. If you want a live person for every complex call, a human answering service may still be the better fit."
+    },
+    {
+      "q": "How does ROAL compare on price?",
+      "a": "ROAL is $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. Human answering services usually bill by the minute or by the call, so the cost can rise even when calls do not become orders."
+    },
+    {
+      "q": "Do I have to change my restaurant phone number?",
+      "a": "No. You keep your own number. You forward calls to ROAL, either all calls or only when busy or unanswered, and you can turn forwarding off any time."
+    },
+    {
+      "q": "Is an answering service ever the better choice?",
+      "a": "Yes. A human service can be better if your restaurant gets a lot of complaints, custom catering changes, or calls that need a warm live voice. It can also be a good choice if you want a person handling every call from start to finish."
+    }
+  ]
+}

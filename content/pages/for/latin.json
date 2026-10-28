@@ -1,0 +1,123 @@
+{
+  "slug": "latin",
+  "label": "Latin American restaurants",
+  "h1": "An AI phone host for Latin American restaurants",
+  "seoTitle": "AI phone answering for Latin American restaurants | ROAL",
+  "description": "ROAL answers calls for Latin American restaurants, takes pickup orders from the live menu, handles rush-hour questions, and sends clean kitchen tickets.",
+  "lead": "Busy lunch rush. Busy dinner rush. Lots of calls for pickup, hours, and menu questions. ROAL is a phone host for Latin American restaurants that can help answer those calls and take orders from your live menu.",
+  "question": "How can an AI phone host help my Latin American restaurant take pickup orders without making the front counter busier?",
+  "answer": "ROAL answers the restaurant phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can handle common Latin American restaurant calls like arroz con pollo for pickup, pupusas with extra curtido, mofongo questions, tamales, empanadas, arroz chaufa, and hours or parking questions. If a caller asks about a sold-out item, allergy-sensitive question, catering, or a manager request, ROAL passes it to staff with a summary.",
+  "pains": [
+    {
+      "title": "The phone rings hardest when the line is already full",
+      "body": "Friday dinner, lunch combos, and weekend takeout can stack up fast. If your cashier is packing orders or your cook is behind the grill, calls for arroz con pollo, tacos, arepas, or pupusas can keep coming in."
+    },
+    {
+      "title": "Callers ask for details that slow everyone down",
+      "body": "People often want prices, sides, spice level, ready time, parking, or whether the kitchen still has plantains or yucca. Those small questions take time when the team is already juggling tickets."
+    },
+    {
+      "title": "Pickup orders get missed when staff are short",
+      "body": "A missed call can become a lost pickup order, especially during a rush or after hours. Many owners want a simple way to keep the phone covered without adding another full-time phone person."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers calls in your restaurant's style",
+      "body": "ROAL can greet callers, answer hours and address questions, and take orders for popular Latin American dishes from the menu you already have. You choose the voice and name so it sounds like your shop, not a generic menu line."
+    },
+    {
+      "title": "Takes real pickup orders and sends a kitchen ticket",
+      "body": "It can collect items, sizes, modifiers, and notes, then confirm the order back before sending a clean ticket to the kitchen screen. That helps when callers want extra salsa verde, no onions, more yuca, or a specific pickup time."
+    },
+    {
+      "title": "Handles busy moments and odd questions politely",
+      "body": "If the caller asks about a sold-out item, a reservation request, a complaint, or an allergy-sensitive question, ROAL can hand it to staff with a short summary. That keeps the call moving without forcing the caller to repeat everything."
+    },
+    {
+      "title": "Gives you control over setup and forwarding",
+      "body": "You can start by pasting your website, Google Maps link, or name and city. Then forward calls only when busy or unanswered, or all the time if that fits your shop better."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What would you like?"
+    },
+    {
+      "who": "caller",
+      "line": "Two pupusas revueltas, one chicken empanada, and a side of curtido."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Any changes on the pupusas or empanada?"
+    },
+    {
+      "who": "caller",
+      "line": "Extra sauce on the side. Name is Carlos."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Carlos. I have two pupusas revueltas, one chicken empanada, and curtido on the side. Pickup in about 20 minutes. Is that right?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes, perfect."
+    },
+    {
+      "who": "host",
+      "line": "Thank you. Your order is confirmed and going to the kitchen now."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "2x Pupusas revueltas",
+      "1x Chicken empanada",
+      "1x Curtido on the side",
+      "Name: Carlos",
+      "Ready time: 7:20 pm"
+    ],
+    "note": "Extra sauce on the side"
+  },
+  "sections": [
+    {
+      "h2": "Built for the calls Latin American restaurants get all day",
+      "body": "Latin American restaurants get a lot of the same phone calls. People ask for pickup on busy dinner nights, check if you still have certain items, or want to know if the kitchen can make a plate without onions, spicy sauce, or dairy. A caller may ask for arroz con pollo, pernil, mofongo, pupusas, empanadas, tamales, bandeja-style plates, or a family-size order for later. ROAL is built to handle those calls in plain language.\n\nIt can answer hours, address, and parking questions. It can also take the order itself, then read it back before sending a kitchen ticket. If an item is sold out, ROAL does not offer it. If the question needs a person, like a complaint or an allergy concern, it can pass that along with the important details."
+    },
+    {
+      "h2": "A simple setup for owners who do not want a tech project",
+      "body": "You do not need to rebuild your whole phone system to try it. Start at [Build a free test host](/try) by pasting your website, Google Maps link, or even just your restaurant name and city. ROAL reads public menu pages, menu PDFs, and menu photos, then builds a test phone host in about a minute.\n\nYou can call the test host in your browser before you go live. That makes it easy to hear how it answers common questions like “Do you have tres leches?” or “What time is pickup for two orders of pastelitos?” When you are ready, claim the host and forward your existing number to it when busy or unanswered."
+    },
+    {
+      "h2": "A worked example for a Friday rush",
+      "body": "Say your shop gets 12 missed calls on a Friday dinner rush. Some callers want pickup for carne asada bowls, others want to know if you still have plantains, and one person needs a large order for a family gathering. That is a lot for a cashier or cook to juggle while the line is moving.\n\nROAL can answer the repetitive calls, quote a ready time, and send the pickup tickets to the kitchen screen. You still stay in control. You can review call history, check the transcript, and update hours, FAQs, or menu items from the dashboard when your menu changes. If you want to compare options, see [AI phone host vs voicemail](/compare/voicemail) and [Pickup order taking](/use-cases/pickup-orders)."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL take pickup orders for Latin American dishes with modifiers?",
+      "a": "Yes. It can take items, sizes, modifiers, and notes from the live menu. That can include things like extra curtido, no onions, mild salsa, extra rice, or a specific pickup time."
+    },
+    {
+      "q": "Does it work for Spanish-speaking callers?",
+      "a": "ROAL can speak the caller's language during the call. That can help when a caller starts in Spanish and wants to place a simple order without slowing down the front counter."
+    },
+    {
+      "q": "What happens if someone asks about a sold-out item or a complaint?",
+      "a": "ROAL does not offer items marked sold out. Questions it cannot answer, including complaints, allergy-sensitive questions, and manager requests, go to staff with a summary so you can handle them yourself."
+    },
+    {
+      "q": "How do I turn it on for my restaurant phone?",
+      "a": "You can forward your existing number to ROAL, either for all calls or only when busy or unanswered. The restaurant keeps its own number, and forwarding can be turned off any time."
+    },
+    {
+      "q": "How is ROAL priced for a small Latin American restaurant?",
+      "a": "ROAL charges $0.90 per completed phone order, meaning a confirmed order that reaches the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free."
+    }
+  ]
+}

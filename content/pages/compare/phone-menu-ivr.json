@@ -1,0 +1,166 @@
+{
+  "slug": "phone-menu-ivr",
+  "label": "AI phone host vs a press-1 phone menu",
+  "h1": "AI phone host vs a press-1 phone menu",
+  "seoTitle": "AI phone host vs a press-1 phone menu | ROAL",
+  "description": "Compare ROAL with a press-1 phone menu for restaurant calls, orders, and rush-hour bottlenecks. See costs, setup, and where each fits best.",
+  "lead": "A press-1 menu can route calls. A phone host can answer them, take orders, and talk to guests like a front desk helper. For a busy restaurant, the right choice depends on how often callers need a real answer versus a simple branch.",
+  "question": "Is an AI phone host better than a press-1 phone menu for my restaurant?",
+  "answer": "A press-1 phone menu is better when you only need callers to choose a department, hear hours, or leave a message. ROAL is better when you want the phone to actually take pickup and delivery orders, answer menu questions, and send a clean ticket to the kitchen. ROAL costs $0.90 per completed order, while a phone menu is usually a setup-and-routing tool, not an order taker.",
+  "pains": [
+    {
+      "title": "Guests get stuck at the menu",
+      "body": "During a Friday rush, callers may press the wrong number, hang up, or keep listening while your line rings busy. That can mean a lost pickup order for something simple like two cheeseburgers, fries, and a soda."
+    },
+    {
+      "title": "A menu does not take the order",
+      "body": "If someone asks for a large plain pie, extra mozzarella sticks, or a sauce on the side, a press-1 system usually just routes the call or sends them to voicemail. The guest still has to wait for a person to call back."
+    },
+    {
+      "title": "It helps routing, not restaurant work",
+      "body": "A phone menu can be useful for basic branches like hours, catering, or a manager line. But it does not read the live menu, confirm modifiers, or create a kitchen ticket on its own."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers like a front counter helper",
+      "body": "ROAL can greet the caller, check what they want, and take a full pickup or delivery order from the live menu. It handles items, sizes, modifiers, and notes without making the guest start over."
+    },
+    {
+      "title": "Sends work to the kitchen",
+      "body": "When the order is done, ROAL sends a clean ticket to the kitchen screen. That helps the team see new, preparing, and ready orders in one place instead of chasing sticky notes or callback lists."
+    },
+    {
+      "title": "Still lets staff step in",
+      "body": "If the caller needs a manager, has an allergy-sensitive question, or has a complaint, ROAL hands it to staff with a summary. That is better than making the caller press 1, then press 2, then wait again."
+    },
+    {
+      "title": "Fits busy and off-hour calls",
+      "body": "You can forward all calls, or only when you are busy or do not answer. That makes it useful for lunch rushes, dinner peaks, and after-hours calls without forcing you to replace your current number."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "Two plain slices, one order of garlic knots, and a large Coke."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Two plain slices, one garlic knots, and one large Coke. Any changes?"
+    },
+    {
+      "who": "caller",
+      "line": "Add extra sauce cups, please. The name is Maria."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your pickup order will be ready in about 20 minutes. I have two plain slices, garlic knots, and a large Coke, with extra sauce cups. Is that correct?"
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "2 plain slices",
+      "1 garlic knots",
+      "1 large Coke",
+      "Extra sauce cups",
+      "Name: Maria"
+    ],
+    "note": "Check slices are cut and boxed together."
+  },
+  "sections": [
+    {
+      "h2": "Where a press-1 menu is the better choice",
+      "body": "A press-1 menu still makes sense for simple routing. If you mainly want callers to hear hours, press 1 for catering, press 2 for a manager, or press 3 for directions, that can be enough. It is also a reasonable choice if you already have staff answering orders and you only need better call organization.\n\nFor a tiny shop with very few calls, a menu can be the lightest option. It can reduce random interruptions and help some callers find the right branch faster. If your menu is short, your order flow is simple, and you do not want the phone to take orders yet, a press-1 system may be the safer first step.\n\nThe limit is clear: it does not solve missed orders. If a caller wants a half tray of wings, two chicken sandwiches, or a gluten-free note, the menu only points them somewhere else. That is fine if humans are always available. It is not fine if lunch rush keeps sending people to voicemail."
+    },
+    {
+      "h2": "Where a phone host is the better choice",
+      "body": "ROAL is a better fit when the phone itself should do restaurant work. It can answer in your restaurant's voice, take real orders from your live menu, handle modifiers, and send a ticket to the kitchen. That matters most when the line rings during lunch, dinner, holidays, or short-staffed shifts.\n\nThink about a real rush. Someone calls for a large pepperoni pie, a Caesar salad, and a side of ranch. Another caller wants chicken tikka with no onions, mild spice, and a 6:30 pickup. A press-1 menu can route those calls, but it cannot complete them. ROAL can.\n\nThe pricing also fits order-taking better. ROAL bills $0.90 per completed order, so you pay when a confirmed order reaches the kitchen screen. That is different from a monthly fee for a tool that may or may not save you any orders that day."
+    },
+    {
+      "h2": "How to choose without overthinking it",
+      "body": "Start with your real call pattern. If most callers just need hours, directions, or a department, a press-1 menu may be enough. If you regularly miss pickup orders, get repeat menu questions, or have staff too busy to answer the phone, a phone host is usually the stronger choice.\n\nA simple way to decide is to list the last 10 calls you missed. If most of them were people asking, 'Can I get two beef empanadas and a plantain order for pickup?' or 'Are you open, and do you have parking?' then a phone host can do more useful work. If most were only looking for a manager or catering line, a menu may cover the basics.\n\nYou do not need to replace your current number to test it. ROAL can be set to catch all calls, or only busy and unanswered calls, so you can see how it fits your day before you change more than necessary."
+    }
+  ],
+  "table": {
+    "otherName": "Press-1 menu",
+    "rows": [
+      {
+        "label": "Cost model",
+        "roal": "$0.90 per completed order",
+        "other": "Usually a setup or monthly routing fee"
+      },
+      {
+        "label": "Setup",
+        "roal": "Paste your website, Maps link, or name and city; test it in the browser",
+        "other": "Record menu options and route calls by keypress"
+      },
+      {
+        "label": "Rush-hour capacity",
+        "roal": "Can keep taking calls while the team works",
+        "other": "Helps callers choose, but still needs people for orders"
+      },
+      {
+        "label": "Menu knowledge",
+        "roal": "Reads the live menu, prices, hours, and address",
+        "other": "Only knows the prompts you record"
+      },
+      {
+        "label": "Kitchen tickets",
+        "roal": "Sends a clean ticket to the kitchen screen",
+        "other": "Does not create an order ticket by itself"
+      },
+      {
+        "label": "Modifiers and notes",
+        "roal": "Can handle sizes, add-ons, and special notes",
+        "other": "Usually sends callers onward or to voicemail"
+      },
+      {
+        "label": "Languages",
+        "roal": "Can speak the caller's language",
+        "other": "Usually uses one recorded language per menu"
+      },
+      {
+        "label": "After hours",
+        "roal": "Can answer, take orders, and capture questions",
+        "other": "Can route to voicemail or a recorded message"
+      },
+      {
+        "label": "Best for",
+        "roal": "Restaurants that want the phone to take real orders",
+        "other": "Restaurants that mainly need call routing and basic instructions"
+      }
+    ]
+  },
+  "verdict": "Pick a press-1 phone menu if you only need simple routing and basic call directions. Pick ROAL if you want the phone to take orders, answer menu questions, and reduce missed calls during busy shifts. If you are not sure, start with your busiest line and compare what callers actually ask for.",
+  "faq": [
+    {
+      "q": "Can a press-1 menu take a pickup order?",
+      "a": "Not by itself. A press-1 menu can guide callers to a person or a voicemail box, but it does not read the menu, collect modifiers, or send a kitchen ticket. ROAL is built to do those order steps for you."
+    },
+    {
+      "q": "Is ROAL more expensive than a phone menu?",
+      "a": "It depends on how many completed orders you get. ROAL is $0.90 per completed order, with no monthly fee or setup fee. A phone menu may cost less to run, but it usually does less for the restaurant."
+    },
+    {
+      "q": "When is a press-1 menu the smarter choice?",
+      "a": "It can be the better choice if your calls are mostly simple routing calls. For example, if guests mainly need hours, directions, or a manager line, a press-1 menu may be enough without adding order-taking."
+    },
+    {
+      "q": "Can I still keep my restaurant number with ROAL?",
+      "a": "Yes. You keep your own number and forward calls to the host when you want. You can forward all calls or only when busy or unanswered, and turn forwarding off any time."
+    },
+    {
+      "q": "What if the caller asks a question the host cannot answer?",
+      "a": "That question lands in your inbox, and you answer it once. The host can learn it from then on, so the next caller gets a faster answer."
+    }
+  ]
+}

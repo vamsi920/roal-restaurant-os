@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-vs-online-ordering-page",
+  "keyword": "phone ordering vs online ordering page",
+  "category": "comparisons",
+  "title": "AI phone ordering vs online ordering pages",
+  "seoTitle": "AI phone ordering vs online ordering page | ROAL",
+  "description": "Compare AI phone ordering vs online ordering pages for restaurants, including cost, order size, call handling, and when each works best.",
+  "question": "Should I use AI phone ordering or an online ordering page for my restaurant?",
+  "answer": "For many restaurants, an online ordering page is best for customers who want to place an order on their own, while AI phone ordering works best for callers who still prefer the phone. The right choice depends on where your orders come from, how busy your phone gets, and whether you want someone to answer menu questions and take orders during live calls.",
+  "summary": "You will know when to use phone ordering, when to use an online ordering page, and how to compare the costs.",
+  "intro": "AI phone ordering and an online ordering page solve different problems. A phone host helps when customers call, while an ordering page helps when they want to tap and submit on their own.\n\nFor a lot of independent restaurants, the best setup is not either-or. It is knowing which orders belong on the phone, which belong online, and what each one costs your shop to run. ROAL is one way to handle the phone side without adding more desk work.",
+  "sections": [
+    {
+      "id": "what-problem-does-each-one-solve-for-a-restaurant",
+      "h2": "What problem does each one solve for a restaurant?",
+      "body": "An online ordering page is for self-serve orders. The customer picks items, adds notes, and submits the order without calling. AI phone ordering is for the customers who still dial your number and expect a person-like experience.\n\nHere is the simple split:\n\n- **Online ordering page:** good for repeat customers, late-night ordering, and people who do not want to wait on hold.\n- **AI phone ordering:** good for callers who want to ask, “What size is the pie?” or “Do you have parking?” and then place the order right there.\n\nA useful test is to ask, “How does my customer usually reach me?” If your regulars often call from the car or while juggling family dinner, phone ordering still matters. If many already go to your site first, a page can handle a big share of orders. ROAL answers the phone, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen when the order is confirmed."
+    },
+    {
+      "id": "how-do-the-costs-compare-in-plain-numbers",
+      "h2": "How do the costs compare in plain numbers?",
+      "body": "The cost difference is usually the part owners feel first. Delivery apps commonly take roughly 15-30% commission per order. Many AI phone tools charge a fixed monthly fee whether or not the phone rings much. Human answering services usually bill by the minute or by the call.\n\nROAL uses a different model: **$0.90 per completed phone order**. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nUse this simple example and plug in your own numbers:\n\n| Item | Example numbers | Your number |\n|---|---:|---:|\n| Average phone order | $28 |  |\n| Completed phone orders per month | 200 |  |\n| ROAL cost | 200 × $0.90 = $180 |  |\n| Delivery app commission at 20% | 200 × $28 × 20% = $1,120 |  |\n\nThat table is not a promise of savings. It is just a way to compare apples to apples. If your site already gets steady self-serve orders, an online ordering page can be cheap to run. If your phone is busy, a pay-per-completed-order model may fit better than a monthly fee."
+    },
+    {
+      "id": "which-one-is-better-for-pickup-orders-and-questions",
+      "h2": "Which one is better for pickup orders and questions?",
+      "body": "For pickup orders, phone ordering can be faster when the caller already knows what they want and wants help with modifiers, sides, or timing. An online ordering page is better when the customer wants to browse at their own pace and submit without talking.\n\nFor questions, the phone has an edge. Callers often ask about hours, address, parking, sold-out items, allergens, or which menu item is best for a certain diet. A page can show some of that, but it cannot talk someone through a question in the moment.\n\nA practical call script for your staff or host sounds like this:\n\n> “Thanks for calling. What can I start for you today?”\n\nThen the flow can be:\n\n1. Take the items.\n2. Add sizes, modifiers, and notes.\n3. Confirm the caller’s name and phone.\n4. Quote the ready time.\n5. Read the order back.\n\nROAL does that on the phone and also hands tricky calls to staff with a summary when the question is about catering, complaints, allergy-sensitive requests, or a manager request."
+    },
+    {
+      "id": "when-should-you-keep-both-instead-of-choosing-one",
+      "h2": "When should you keep both instead of choosing one?",
+      "body": "Most restaurants do best with both, because not every customer behaves the same way. A website ordering page catches the people who want speed and self-service. Phone ordering catches the people who still prefer to talk, especially during rushes or when the menu is complicated.\n\nKeep both if any of these are true:\n\n- You get a mix of regulars and first-time callers.\n- Your menu has lots of modifiers or add-ons.\n- You take pickup and delivery orders by phone now.\n- Your staff spends time answering the same menu questions again and again.\n\nA good split can be simple. Let the page handle the easy, typed-in orders. Let the phone host handle the calls, questions, and order confirmations. ROAL also speaks the caller’s language, which helps when your neighborhood hears more than one language over the phone. That is useful in places like Jersey City and Hoboken, where many shops serve a wide mix of customers."
+    },
+    {
+      "id": "how-do-you-decide-based-on-your-phone-habits",
+      "h2": "How do you decide based on your phone habits?",
+      "body": "Start with a one-week look at how your phone behaves. You do not need fancy software. Just track the basics on paper or in your notes.\n\n| Question | What to write down |\n|---|---|\n| How many calls are order calls? |  |\n| How many are menu questions? |  |\n| How many are reservation requests? |  |\n| How many are complaints or manager requests? |  |\n| How often does staff miss calls during rush? |  |\n\nThen match the tool to the problem:\n\n- If the main issue is people not wanting to type, phone ordering matters more.\n- If the main issue is slow staff response to calls, a phone host matters more.\n- If the main issue is traffic from social media or search, the page matters more.\n\nIf you use ROAL, setup is simple: paste your restaurant website, Google Maps link, or “Name, City” at /try, or upload a menu. It reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute. You can test-call it in the browser before going live."
+    },
+    {
+      "id": "what-does-setup-look-like-if-you-want-phone-forwarding",
+      "h2": "What does setup look like if you want phone forwarding?",
+      "body": "Phone forwarding is often the bridge between your current number and a phone host. The restaurant keeps its own number, and calls can be forwarded to the host when busy, unanswered, or all the time.\n\nThe exact codes depend on your carrier or phone system, so always confirm with them and test with a call. Common examples are:\n\n- On many landlines and some carriers: dial *72 plus the forwarding number to forward all calls, and *73 to turn it off.\n- On GSM mobile carriers such as AT&T or T-Mobile: **21*number# forwards all calls and ##21# turns it off; **61*number# forwards unanswered calls and **67*number# forwards busy calls.\n- Verizon Wireless often uses *72 / *73, and *71 for busy/no-answer forwarding.\n- Business VoIP systems usually set forwarding in the web portal.\n\nA simple owner checklist:\n\n1. Confirm your carrier’s forwarding code.\n2. Test with one real call.\n3. Decide if forwarding should be all calls or only busy/no-answer.\n4. Check that your kitchen sees the ticket clearly.\n5. Turn forwarding off any time you want.\n\nThat setup can work well with ROAL because each location gets its own phone line automatically after the owner claims the host."
+    },
+    {
+      "id": "which-option-is-easier-for-the-kitchen-and-front-counter",
+      "h2": "Which option is easier for the kitchen and front counter?",
+      "body": "A restaurant tool is only useful if the kitchen can read it fast. An online ordering page may send orders into a system your staff has to monitor, while a phone host can send a clean ticket to the kitchen screen after the caller confirms the order.\n\nFor a busy counter, that matters. Less back-and-forth at the register means fewer missed notes and fewer rushed corrections. ROAL’s dashboard also keeps call history, transcripts, recordings, live kitchen tickets, menu editing, hours, FAQs, upsell suggestions, and multi-location menus in one place.\n\nA quick back-of-house checklist:\n\n- Can staff see new, preparing, and ready tickets?\n- Can they find the caller transcript if a question comes up?\n- Can they update hours and FAQs without waiting on a vendor?\n- Can they mark sold-out items so the host does not offer them?\n\nThat last point is important. The host does not offer items marked sold out, and it does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it."
+    }
+  ],
+  "takeaways": [
+    "Phone ordering is best for callers who want to talk, while an online ordering page is best for self-serve customers.",
+    "Compare costs by looking at completed orders, not just monthly fees.",
+    "Use both channels if your restaurant gets a mix of callers and online shoppers.",
+    "A phone host can handle menu questions, ready times, and tricky calls that should go to staff.",
+    "ROAL uses pay-per-completed-order pricing and fits restaurants that still rely on the phone."
+  ],
+  "faq": [
+    {
+      "q": "Is AI phone ordering better than an online ordering page?",
+      "a": "Neither is always better. An online ordering page is better for self-serve customers, while AI phone ordering is better for callers who want help, questions, and a spoken checkout. Many restaurants use both because they solve different parts of the order flow."
+    },
+    {
+      "q": "What is cheaper: phone ordering or an online ordering page?",
+      "a": "It depends on how your restaurant is built. A page can be low cost if customers already use it, but many AI phone tools charge a monthly fee whether or not calls come in. ROAL charges $0.90 per completed phone order, so you can compare it against your call volume and average order size."
+    },
+    {
+      "q": "Can an AI phone host take pickup and delivery orders from my menu?",
+      "a": "Yes. ROAL takes pickup and delivery orders from the restaurant’s live menu, collects items, sizes, modifiers, notes, name, and phone number, then sends a clean ticket to the kitchen screen. It also skips items marked sold out."
+    },
+    {
+      "q": "How do I forward my restaurant number to a phone host?",
+      "a": "You can usually forward calls through your carrier or phone system, but the exact code depends on the plan. Common examples include *72 on many landlines, and carrier-specific codes on mobile lines such as **21*number# for some GSM carriers. Always confirm with your carrier and test the forwarding with a real call."
+    }
+  ],
+  "words": 1331,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "restaurant-phone-bot",
+  "keyword": "restaurant phone bot",
+  "category": "ai-basics",
+  "title": "What a restaurant phone bot can and can't do",
+  "seoTitle": "Restaurant phone bot: what it can and can't do",
+  "description": "A restaurant phone bot can answer calls, take orders, and share key details. See where it helps and where a person still does the job better.",
+  "question": "What can a restaurant phone bot do, and what can't it do for my restaurant?",
+  "answer": "A restaurant phone bot can answer your restaurant’s phone, take pickup and delivery orders from your live menu, answer common questions, and send the order ticket to the kitchen. It can also quote a ready time, collect the caller’s name and number, and hand tricky calls to staff. It cannot take card numbers over the phone, make judgment calls on hard situations, or replace your team for every special request.",
+  "summary": "You’ll know what a restaurant phone bot can handle, where it stops, and how to set one up without giving up control.",
+  "intro": "A restaurant phone bot can answer common calls, take orders, and pass the rest to your team. It cannot handle every situation, and that is a good thing for busy restaurants.\n\nFor an independent shop, the real question is not “Can it do everything?” It is “Can it handle the repeat stuff fast, accurately, and in your restaurant’s voice?”",
+  "sections": [
+    {
+      "id": "what-can-a-restaurant-phone-bot-handle-on-a-normal-day",
+      "h2": "What can a restaurant phone bot handle on a normal day?",
+      "body": "A good restaurant phone bot is strongest on repeat tasks. That means pickup orders, delivery orders, hours, address, parking, menu questions, and basic reservation requests. It should also collect the caller’s name, phone number, items, sizes, modifiers, and notes, then repeat the order back before sending it to the kitchen.\n\nHere is a simple example. A caller says, “Can I get two plain slices, one pepperoni pie, and a Coke?” The phone host can respond: “Sure. Two plain slices, one pepperoni pie, and one Coke. What name should I put on the order?” Then it can quote the ready time and send a clean ticket to the kitchen screen.\n\nFor many shops, that covers the most common interruptions. ROAL is built around those tasks: it answers the phone, reads from your live menu, and sends the order to the kitchen screen. It also speaks the caller’s language and does not offer items marked sold out.\n\nQuick checklist for what it should do:\n- Take items, sizes, modifiers, and notes\n- Ask for name and phone number\n- Quote a ready time\n- Confirm the full order back\n- Answer hours, address, parking, and menu questions\n- Pass special calls to staff with a summary"
+    },
+    {
+      "id": "what-should-it-pass-to-a-person-right-away",
+      "h2": "What should it pass to a person right away?",
+      "body": "A restaurant phone bot should know when to stop and hand the call to staff. That is not a weakness. It protects the guest and keeps the order from going sideways.\n\nFor example, allergy-sensitive questions, complaint calls, catering requests, and manager requests should go to a person. If someone says, “I have a severe nut allergy, can you tell me exactly what is safe?” the right move is to transfer it or send it to staff with a summary. If a caller wants to argue about a missing item, a human should handle that too.\n\nA practical rule is simple: if the call needs judgment, empathy, or a policy exception, send it to staff. If it is repeatable and based on the menu, the phone host can usually handle it.\n\nUse this handoff script in your head:\n- “Let me have the restaurant team take this one.”\n- “I’m sending a note to the staff now.”\n- “For that question, the team will help you directly.”\n\nROAL does this handoff with a summary, so staff can see what the caller already said. That saves time on the callback and keeps the conversation moving. It is also why owners should not expect a phone host to replace a manager on tough calls."
+    },
+    {
+      "id": "what-can-t-it-do-and-why-does-that-matter",
+      "h2": "What can’t it do, and why does that matter?",
+      "body": "A restaurant phone bot cannot do everything a person can do. The biggest limits are payment, judgment, and edge cases.\n\nFirst, it does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it. That matters because you should never force the phone host to handle something you do not want handled by voice.\n\nSecond, it cannot fix every unusual order. If someone wants a half-and-half special with a long list of substitutions, or asks for a menu item the restaurant does not carry, a person may still need to step in.\n\nThird, it should not guess. If the caller asks something the phone host cannot answer, the question should land in an inbox. Then the owner answers once and the host learns it from then on. That is the right way to handle the unknown.\n\nA simple owner test:\n| Call type | Can the phone host handle it? | Best next step |\n|---|---:|---|\n| Hours, address, parking | Yes | Let it answer |\n| Pickup order from menu | Yes | Send ticket to kitchen |\n| Card payment over phone | No | Collect at pickup or your usual method |\n| Severe allergy question | No | Hand to staff |\n| Complaint or manager request | No | Hand to staff |\n\nThat balance is the point. A restaurant phone bot should take the predictable work off your line without pretending it can manage every hard conversation."
+    },
+    {
+      "id": "how-do-you-know-it-will-fit-your-restaurant-menu-and-phone-s",
+      "h2": "How do you know it will fit your restaurant menu and phone setup?",
+      "body": "The easiest test is whether the system can read your real menu and work with your current phone number. With ROAL, an owner pastes the restaurant website, Google Maps link, or “Name, City” at /try. ROAL reads public pages, menu PDFs, and menu photos, then builds a phone host in about a minute. The owner can test-call it right in the browser, with no sign-up needed.\n\nThat is helpful for small restaurants because menus change. You want a phone host that can use your live menu, not one that keeps asking about items you no longer sell. You also want something that can be adjusted without a long setup process.\n\nOn the phone side, the restaurant keeps its own number. ROAL gives each location its own phone line automatically, and the owner forwards the restaurant’s existing number to it. That can be all calls, or only when busy or unanswered. Forwarding can be turned off any time.\n\nBefore you go live, check this list:\n1. Your menu is current\n2. Hours and address are correct\n3. Parking notes are clear\n4. Sold-out items are marked properly\n5. The team knows where tickets will appear\n6. Someone on staff knows how to turn forwarding on or off\n\nIf you use a carrier code, confirm it with your carrier and test with a real call. Codes vary by carrier and plan, so do not assume one setup works everywhere."
+    },
+    {
+      "id": "what-does-the-money-side-look-like-for-a-small-shop",
+      "h2": "What does the money side look like for a small shop?",
+      "body": "For a restaurant owner, the money question is simple: what does it cost when calls turn into orders? ROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free.\n\nThat pricing model is different from common monthly plans that charge whether or not orders come in. It is also different from human answering services that usually bill per minute or per call. Delivery apps often take roughly 15-30% commission per order, which can add up fast on a $20 or $30 ticket.\n\nHere is a worked example you can swap for your own numbers:\n- Say your average phone order is $28\n- Say you receive 100 completed phone orders in a month\n- ROAL would cost $90 for those orders\n\nNow plug in your own average ticket and volume. If your average order is higher, the math changes. If you get fewer completed orders, the cost drops.\n\nThat is why the right comparison is not just “price per month.” It is “what do I pay when a real order is completed?” For many independent restaurants, that is the number that matters most."
+    },
+    {
+      "id": "how-do-you-set-expectations-with-your-staff-and-customers",
+      "h2": "How do you set expectations with your staff and customers?",
+      "body": "The best phone host works when your team knows what it does and what it does not do. That keeps the front counter, kitchen, and caller on the same page.\n\nStart with a short staff script:\n- “The phone host handles normal orders and menu questions.”\n- “If it hears an allergy issue, complaint, or manager request, it sends it to us.”\n- “It does not take card numbers over the phone.”\n\nFor customers, keep the wording plain. A caller might hear: “I can help with your order, hours, address, and menu questions.” That sets the right expectation without sounding robotic.\n\nOwners should also decide what to do when the phone host does not know an answer. With ROAL, those questions land in an inbox, and once the owner answers, the host learns it from then on. That is useful for local details like parking, catering minimums, or a store-specific policy.\n\nA quick rollout checklist:\n- Pick the voice and name\n- Confirm the hours and address\n- Review sold-out items\n- Tell staff where tickets and transcripts live\n- Decide which calls should go to a person first\n- Test a few real scenarios before forwarding the main line\n\nIf you want to try it with your own menu, [build a free test host](/try)."
+    },
+    {
+      "id": "what-should-you-look-for-before-you-buy-one",
+      "h2": "What should you look for before you buy one?",
+      "body": "Before you choose a restaurant phone bot, ask a few practical questions. Can it take orders from your live menu? Can it hand off tough calls? Can it work with your current number? Can you test it before you commit?\n\nUse this owner checklist:\n- Reads your menu, hours, and address from public pages or uploads\n- Takes pickup and delivery orders from the live menu\n- Collects name, phone, modifiers, and notes\n- Sends a clean ticket to the kitchen screen\n- Hands allergy, complaint, catering, and manager calls to staff\n- Lets you turn forwarding off any time\n- Has pricing you understand without a long contract\n\nIt also helps if the dashboard shows call history, transcripts, recordings, live tickets, menu editing, hours, FAQs, upsell suggestions, and multi-location menus. Those are the everyday tools that make a phone host useful after the first week.\n\nROAL was built by Venkata Vamsi in Jersey City, NJ, and it is already being used first in Jersey City and Hoboken, while working for any US restaurant. If you want a plain comparison point, the [AI phone host vs answering service](/compare/answering-service) page is a helpful next step."
+    }
+  ],
+  "takeaways": [
+    "A restaurant phone bot is best at repeat calls, simple questions, and order taking from a live menu.",
+    "It should hand allergy issues, complaints, and manager requests to staff with a summary.",
+    "It cannot take card numbers over the phone, so payment must stay in your normal process.",
+    "The right setup keeps your existing number and lets you control forwarding.",
+    "ROAL charges per completed order, not per month, per minute, or per call."
+  ],
+  "faq": [
+    {
+      "q": "Can a restaurant phone bot take phone orders from my menu?",
+      "a": "Yes. A restaurant phone bot can take pickup and delivery orders from the restaurant’s live menu, including items, sizes, modifiers, and notes. It should also collect the caller’s name and phone number, quote a ready time, and confirm the order back before sending a ticket to the kitchen."
+    },
+    {
+      "q": "Can it answer questions about hours, address, and parking?",
+      "a": "Yes. Those are exactly the kinds of questions a restaurant phone bot should handle well. It should be able to share your hours, address, parking notes, and menu details without needing staff every time."
+    },
+    {
+      "q": "What kinds of calls should a phone bot hand to staff?",
+      "a": "Allergy-sensitive questions, complaints, catering requests, and manager requests should go to staff. Those calls need judgment or personal attention, so the phone host should pass them along with a short summary."
+    },
+    {
+      "q": "Does a restaurant phone bot take card payments over the phone?",
+      "a": "No, ROAL does not take card numbers over the phone. Payment happens at pickup or through whatever payment process the restaurant already uses. That keeps the phone host focused on ordering and information, not card handling."
+    }
+  ],
+  "words": 1583,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

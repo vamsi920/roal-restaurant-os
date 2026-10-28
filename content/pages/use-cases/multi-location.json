@@ -1,0 +1,115 @@
+{
+  "slug": "multi-location",
+  "label": "Multiple locations",
+  "h1": "One phone host setup for every location",
+  "seoTitle": "Phone answering for multi-location restaurants",
+  "description": "Handle calls across every restaurant location with one phone host. Take orders, answer hours and menu questions, and route each ticket to the right kitchen.",
+  "lead": "When you run more than one restaurant, calls get messy fast. One store is on lunch rush, another is calm, and the phone rings anyway.",
+  "question": "How does an AI phone host help a restaurant with multiple locations handle calls without confusing one store for another?",
+  "answer": "ROAL gives each location its own phone line and can forward calls from each restaurant’s existing number. It answers with the right menu, hours, and address for that location, takes orders, and sends the ticket to the right kitchen screen. That helps keep a Hoboken call from landing in Jersey City, or a pickup order from going to the wrong store.",
+  "pains": [
+    {
+      "title": "Calls land at the wrong location",
+      "body": "A caller may want the nearest store, but the phone keeps ringing at the busiest one. Staff then spend time transferring the call or explaining which location has the item."
+    },
+    {
+      "title": "Hours and menus are not the same",
+      "body": "One location may close earlier, run different specials, or have different pickup windows. If the caller hears the wrong info, the team has to fix it after the fact."
+    },
+    {
+      "title": "Rush hour gets doubled",
+      "body": "At lunch or dinner, every location can get its own pile of calls. If one site is short-staffed, the phone still keeps pulling people away from the line, expo, or counter."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Each store gets its own phone host",
+      "body": "ROAL can set up a separate host for each location, so the caller hears the right address, hours, and menu for that store. That is useful when your downtown shop sells lunch platters and your second spot focuses on dinner pickup."
+    },
+    {
+      "title": "Calls can be forwarded only when needed",
+      "body": "You can send all calls, or just forward when busy or unanswered. That lets one location keep ringing normally while another one gets help during a Friday rush."
+    },
+    {
+      "title": "Tickets go to the right kitchen",
+      "body": "The host sends a clean ticket with items, modifiers, and notes to the right kitchen screen. If a caller orders a large chicken parm hero at one store, it lands where that food is actually made."
+    },
+    {
+      "title": "Questions you have not set up yet go to inbox",
+      "body": "If a caller asks something new, like parking behind the second location or whether the lunch combo is available there, the question lands in the inbox. You answer once, and the host can use that answer going forward."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, is this the Jersey City location? I want to place a pickup order."
+    },
+    {
+      "who": "host",
+      "line": "Yes, this is ROAL for the Jersey City store. What can I get started for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One large plain pie, extra cheese, and a chicken cutlet hero with lettuce and mayo."
+    },
+    {
+      "who": "host",
+      "line": "Got it. One large plain pie with extra cheese, and one chicken cutlet hero with lettuce and mayo. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. Name is Marco."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Marco. Your pickup order will be ready around 6:40 pm. I’ll read it back: one large plain pie, extra cheese, and one chicken cutlet hero with lettuce and mayo."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:40 pm",
+    "lines": [
+      "Large plain pie",
+      "Extra cheese",
+      "Chicken cutlet hero",
+      "Lettuce, mayo",
+      "Name: Marco"
+    ],
+    "note": ""
+  },
+  "sections": [
+    {
+      "h2": "How multi-location phone coverage works",
+      "body": "If you run two or three restaurants, the first goal is simple: make sure each call reaches the right store. ROAL gives each location its own phone line, then you forward the store number to it when you want help. That means the caller can reach the Jersey City location, the Hoboken location, or another site without your staff guessing where the call belongs.\n\nA practical setup is to give each location its own menu, hours, address, and common questions. For example, one store may close at 9 pm, while another stays open until 10 pm for pickup. If a caller asks for the second store’s parking or wants to know whether that location has broccoli rabe on the menu, the host answers using that location’s info.\n\nThis also helps during rush moments. If one shop is slammed with lunch orders and the other is slower, you can forward unanswered calls from the busy store only. The kitchen still gets a clean ticket with the right store details."
+    },
+    {
+      "h2": "What to set before you go live",
+      "body": "Before you turn it on, make a short list for each location. Include the exact store name, address, hours, pickup rules, parking notes, and any items that are different from the other stores. If one location sells square slices and another does not, that should be clear on day one.\n\nIt also helps to check your menu wording. Use the same names your staff already says on the phone. If your caller asks for “the lunch special” or “the family tray,” ROAL should see those items the same way the kitchen does.\n\nThen test each store from your browser. Call it like a real customer would. Ask for pickup, ask about a topping, and ask for the address. If something sounds off, change it before you forward live calls."
+    },
+    {
+      "h2": "Example of a busy night across two stores",
+      "body": "Picture a Friday at 6:15 pm. The first location is taking walk-ins, online pickups, and a steady stream of phone orders. The second location is quieter, but the phone still rings for questions about hours, wait time, and whether the soup of the day is still available.\n\nWithout a phone host, one cashier may keep stepping away from the register to answer the same questions again and again. With ROAL, the caller hears the right store, places the order, and gets a ready time without tying up the counter.\n\nFor owners, the big win is control. You can keep your existing number, choose when calls forward, and see call history by location. If a caller asks for a manager or a complaint needs attention, that note can be handled by staff instead of slowing the line."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can each restaurant location have its own phone host?",
+      "a": "Yes. ROAL can give each location its own phone line, so calls can be handled with the right menu, hours, and address for that store. That is the cleanest setup for restaurants with separate kitchens or different hours."
+    },
+    {
+      "q": "What if a caller reaches the wrong location?",
+      "a": "You can forward calls from the number you want, and the host can answer using the right store details. If a caller asks for a different location, staff can still handle it from the call history and transcript."
+    },
+    {
+      "q": "Can it take pickup orders for one location and questions for another?",
+      "a": "Yes. Each location can answer its own menu and hours, while the host also handles common questions like address, parking, and ready time. The ticket goes to the kitchen screen for that location."
+    },
+    {
+      "q": "Do I need to give up my restaurant’s current number?",
+      "a": "No. The restaurant keeps its own number. You forward calls to ROAL when you want, and you can turn forwarding off any time."
+    },
+    {
+      "q": "What if my two locations have different menus?",
+      "a": "That is fine. ROAL reads the menu and hours for each location, so one store can offer items the other does not. It will not offer items marked sold out."
+    }
+  ]
+}

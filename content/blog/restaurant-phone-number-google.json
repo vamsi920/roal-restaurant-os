@@ -1,0 +1,76 @@
+{
+  "slug": "restaurant-phone-number-google",
+  "keyword": "restaurant phone number google maps",
+  "category": "marketing",
+  "title": "How to fix your restaurant phone number on Google Maps",
+  "seoTitle": "Restaurant phone number on Google Maps | ROAL",
+  "description": "Wrong phone numbers on Google Maps can send calls to the wrong place. Check, fix, and forward your listing so customers reach the right line.",
+  "question": "How do I get my restaurant phone number right on Google Maps?",
+  "answer": "Make sure the number on your Google Business Profile matches the number customers should call, and make sure that same number is visible on your website and other major listings. Then test it from a phone, confirm the call routes to the right place, and set forwarding if you want calls to ring somewhere else while keeping your existing number.",
+  "summary": "You’ll know how to check, fix, and test your restaurant’s Google Maps phone number.",
+  "intro": "If your restaurant phone number on Google Maps is wrong, fix it in your Google Business Profile first, then test the call from a real phone. Make sure the number matches the line you want customers to use, and confirm it still reaches you after any forwarding changes.\n\nFor many restaurants, the goal is simple: keep the number customers already know, but make sure it actually rings somewhere useful. That matters for takeout, pickup, reservations, and quick questions about hours, parking, and the menu.",
+  "sections": [
+    {
+      "id": "what-number-should-show-on-google-maps",
+      "h2": "What number should show on Google Maps?",
+      "body": "Use the number that you want customers to call first. For many independent restaurants, that is the main store line, not a manager’s cell.\n\nA good setup is usually:\n- One main public number for pickup, questions, and directions\n- The same number on your website and Google Business Profile\n- A backup route for calls if the line is busy or unanswered\n\nExample: if your main line is (201) 555-0148, that should usually be the number on Google Maps. If you also use a second line for staff, keep that private unless you truly want guests calling it. The key is consistency. When customers see one number online and hear a different number on the phone, they lose confidence fast.\n\nROAL works well in this setup because the restaurant keeps its own number. ROAL gives each location its own phone line automatically, and you can forward your existing number to it all calls, or only when busy or unanswered."
+    },
+    {
+      "id": "how-do-i-check-whether-google-maps-has-the-wrong-number",
+      "h2": "How do I check whether Google Maps has the wrong number?",
+      "body": "Open your restaurant listing on Google Maps and compare the phone number to what is on your website, receipts, menus, and voicemail greeting. If the number does not match, that is a fix you should handle right away.\n\nUse this quick checklist:\n1. Search your restaurant name in Google Maps.\n2. Tap the call button and confirm the displayed number.\n3. Compare it with your website contact page.\n4. Check your Google Business Profile phone field.\n5. Call the number yourself from another phone.\n\nIf you have more than one location, check each one separately. A common mistake is one location showing the main office line, or two locations sharing the same public number by accident. That causes missed pickup calls and confusion for customers trying to reach the right store.\n\nIf you want a broader cleanup, also review [where your phone number should appear](/blog/restaurant-phone-number-everywhere) so the same number shows up in the places customers actually use."
+    },
+    {
+      "id": "how-do-i-fix-the-number-without-breaking-calls",
+      "h2": "How do I fix the number without breaking calls?",
+      "body": "Before you edit anything, decide whether you are changing the public number or just where calls ring. Those are not the same thing.\n\nUse this practical order:\n- Keep your public number stable if customers already know it\n- Change Google Maps only if the public listing is wrong\n- Set call forwarding only if you need calls to route somewhere else\n- Test after every change\n\nExample: say you want to keep (201) 555-0148 as the public number, but you want calls answered by ROAL first. You can forward that line to the ROAL location line and keep your public listing the same. The restaurant still owns its number, and forwarding can be turned off any time.\n\nFor Google Business Profile edits, keep the number format clean and simple. Use one number per location. Do not pile on old numbers, seasonal numbers, or a manager’s personal line unless you are ready to manage the calls that come with them."
+    },
+    {
+      "id": "what-is-the-safest-way-to-forward-the-line",
+      "h2": "What is the safest way to forward the line?",
+      "body": "Forwarding is useful, but it should be tested like any other part of your phone setup. Codes vary by carrier and plan, so confirm with your carrier and place a test call.\n\nCommon examples:\n| Situation | Common setup example |\n|---|---|\n| Forward all calls on some landlines and carriers | *72 + forwarding number, *73 to turn off |\n| AT&T or T-Mobile GSM mobile | **21*number# to forward all, ##21# to turn off |\n| Unanswered calls | **61*number# |\n| Busy calls | **67*number# |\n| Verizon Wireless | *72 / *73, and *71 for busy/no-answer forwarding |\n| Business VoIP systems | Set it in the web portal |\n\nA simple test script helps: “Hi, this is the restaurant. I’m testing our call forwarding. Please answer as if you were a customer ordering pickup.” Then call from a second phone and listen for the full route. If you use [call forwarding codes by carrier](/tools/call-forwarding-codes), still confirm with your carrier because codes can vary.\n\nIf your restaurant is short-staffed, forwarding only unanswered calls can be a good middle ground. That lets staff answer when possible and still catches the calls that would otherwise go to voicemail."
+    },
+    {
+      "id": "how-can-google-maps-calls-turn-into-actual-orders",
+      "h2": "How can Google Maps calls turn into actual orders?",
+      "body": "A correct phone number is only the first step. The next step is making sure the call leads to a useful conversation.\n\nA good pickup call usually needs the same details every time:\n- Item name\n- Size or quantity\n- Modifiers and notes\n- Caller name and phone number\n- Ready time\n\nExample phone line: “Thanks for calling. What can I get started for pickup today?” Then: “Got it. Two large pepperoni pizzas, one no onions, name and phone number please.”\n\nThat matters because many callers are not ready to order online. They want a fast answer about hours, parking, sold-out items, or whether the kitchen can handle a simple change. ROAL is built for that kind of call. It answers the restaurant’s phone, takes pickup and delivery orders from the live menu, and sends a clean ticket to the kitchen screen.\n\nIt also does not take card numbers over the phone. Payment happens at pickup or however your restaurant already takes it. For tricky calls like catering, allergy-sensitive questions, complaints, or manager requests, it passes the call to staff with a summary."
+    },
+    {
+      "id": "what-should-i-tell-staff-before-i-change-the-listing",
+      "h2": "What should I tell staff before I change the listing?",
+      "body": "Even a small phone change can create confusion if the team is not ready. Tell staff what number is public, where calls are supposed to land, and what to do if a customer mentions the old number.\n\nUse this short team checklist:\n- Confirm the public Google Maps number\n- Post the current number near the register and prep area\n- Update voicemail greeting if needed\n- Teach staff the backup number or forwarding rule\n- Test one inbound call after the change\n\nIf you have multiple employees answering the phone, give them one script for the most common questions. For example: “Our pickup line is the same number listed on Google Maps. If you get voicemail, call back in a few minutes or place the order directly.”\n\nThis is also the right time to review your hours, address, parking notes, and menu details. ROAL reads those public details from your website, Google Maps link, or menu files when you set it up, and you can answer unanswered questions once so the host knows it from then on."
+    },
+    {
+      "id": "when-does-it-make-sense-to-use-roal-for-the-phone-line",
+      "h2": "When does it make sense to use ROAL for the phone line?",
+      "body": "If your restaurant gets a lot of calls for pickup, hours, menu questions, and reservations, an AI phone host can help keep those calls organized without adding a monthly flat fee.\n\nROAL charges $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nUse this simple comparison for your own math:\n- Say you have 300 completed phone orders in a month\n- Multiply 300 × $0.90\n- Your example cost would be $270 for that month\n\nPlug in your own order count. If you have fewer phone orders, your cost is lower. If you have more, your cost scales with completed orders, not idle time. You can [build a free test host](/try) from your website, Google Maps link, or restaurant name and city, then test-call it in the browser with no sign-up needed. If you want to compare options first, see [Pricing](/pricing) and [How it works](/how-it-works)."
+    }
+  ],
+  "takeaways": [
+    "Your Google Maps phone number should match the number customers are meant to call.",
+    "Do not change the public number and forwarding setup at the same time without testing both.",
+    "Forwarding should be confirmed with your carrier or phone system and then tested from a real phone.",
+    "A good phone setup should help customers place pickup orders, ask questions, and reach staff when needed."
+  ],
+  "faq": [
+    {
+      "q": "How do I change my restaurant phone number on Google Maps?",
+      "a": "Update the phone number in your Google Business Profile, then check the live Google Maps listing to make sure it reflects the change. After that, call the number from another phone and confirm it reaches the right line. If you keep your old number but want calls to go somewhere else, use forwarding instead of changing the public listing."
+    },
+    {
+      "q": "Should my restaurant use the same number everywhere online?",
+      "a": "Yes, the same public number should usually appear on Google Maps, your website, and other major listings. That makes it easier for customers to trust they are calling the right place. If you have multiple locations, each location should have its own public number."
+    },
+    {
+      "q": "What if my Google Maps number is right but calls still go to voicemail?",
+      "a": "That usually means the call route, forwarding, or phone system needs attention. Check whether forwarding is on, whether the line is busy, and whether your carrier or VoIP system has the correct settings. Then place a test call from an outside phone and listen to the full path."
+    },
+    {
+      "q": "Can ROAL keep my restaurant’s existing phone number?",
+      "a": "Yes. The restaurant keeps its own number, and ROAL gives each location its own phone line automatically. You forward your existing number to it if you want calls answered there, and you can turn forwarding off any time."
+    }
+  ],
+  "words": 1302,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

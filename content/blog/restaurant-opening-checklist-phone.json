@@ -1,0 +1,71 @@
+{
+  "slug": "restaurant-opening-checklist-phone",
+  "keyword": "restaurant opening checklist",
+  "category": "operations",
+  "title": "Restaurant opening checklist for phones and orders",
+  "seoTitle": "Restaurant opening checklist for phones and orders | ROAL",
+  "description": "Use this restaurant opening checklist to set up phone orders, hours, forwarding, and kitchen tickets before you open the doors.",
+  "question": "What should I check before opening the restaurant so phone orders and calls are handled right?",
+  "answer": "Start with your phone forwarding, hours, menu, and order flow before the first call comes in. Make sure callers can reach you, the menu is current, tickets reach the kitchen, and staff know who handles exceptions like allergies, complaints, and catering.",
+  "summary": "A practical opening checklist for phone, ordering, hours, and kitchen tickets.",
+  "intro": "A restaurant opening checklist for phone and ordering should cover the basics first: can customers reach you, can they order from the right menu, and do those orders land in the kitchen cleanly. It should also cover who answers tough calls, what happens when you are busy, and how you confirm hours, address, and pickup details.\n\nFor independent restaurants, the phone still matters. A missed pickup order is real money. A wrong hours setting creates frustration. A messy ticket slows the kitchen down. Here is a simple opening checklist you can use every morning, or anytime you reopen after a day off, a menu change, or a staffing crunch.",
+  "sections": [
+    {
+      "id": "1-is-your-phone-line-ready-before-the-first-call",
+      "h2": "1. Is your phone line ready before the first call?",
+      "body": "Start with the phone itself. Before opening, make sure your restaurant’s main number reaches the right place during service, and that you know what happens when you are closed, busy, or short-staffed. If you use call forwarding, confirm it with your carrier or phone system and test it with a real call.\n\nA simple morning check:\n- Call the restaurant from a mobile phone.\n- Hear the greeting you expect.\n- Make sure the call goes to the right phone host or staff member.\n- Test a busy-forwarding path if you use one.\n- Confirm voicemail is not catching live orders by mistake.\n\nIf you use ROAL, the restaurant keeps its own number and can forward calls to the host when needed. That means you can route all calls, or only unanswered or busy calls, depending on how you run the floor. For setup codes, carrier rules vary, so use [call forwarding codes by carrier](/tools/call-forwarding-codes) as a reference and still test with a live call.\n\nExample script for staff: “If the line rings twice, let it roll to the phone host and keep an eye on the kitchen screen.”"
+    },
+    {
+      "id": "2-is-today-s-menu-current-and-complete",
+      "h2": "2. Is today’s menu current and complete?",
+      "body": "Your opening checklist should include a menu check every day, especially if you have sold-out items, seasonal specials, or price changes. The person opening should verify that the menu a caller hears is the menu the kitchen can actually make.\n\nUse this quick menu check:\n1. Review top sellers first: pizzas, sandwiches, platters, drinks, sides.\n2. Remove anything sold out before service starts.\n3. Check prices on public pages and your menu PDF or photos.\n4. Confirm sizes, modifiers, and common add-ons.\n5. Make sure allergy-sensitive items are clearly handled by staff, not guessed at.\n\nROAL reads your live menu from public pages or an uploaded menu and uses that to take pickup and delivery orders. If you change prices or run out of an item, update the menu before the rush. That keeps the call smoother and avoids kitchen confusion.\n\nWorked example: say your lunch menu has 24 items and 3 are sold out. Update those 3 before opening. If a caller asks for a sold-out special, the phone host should not offer it. A good staff line is: “We’re out of that today, but I can help with the next best option.”"
+    },
+    {
+      "id": "3-do-your-hours-address-and-parking-answers-match-reality",
+      "h2": "3. Do your hours, address, and parking answers match reality?",
+      "body": "A lot of opening problems come from simple details. Customers ask the same things over and over: hours, address, parking, pickup entrance, and whether you are open for a holiday or early close. If those answers are wrong, the order may never happen.\n\nCheck these items before the first ring:\n- Today’s hours, including lunch and dinner breaks.\n- Holiday closures or shortened service.\n- The exact street address and suite number.\n- Parking notes, especially if there is a rear lot or street parking only.\n- Pickup directions, such as “use the side door.”\n\nIf you use an AI phone host, make sure it can answer these basics from your public information. ROAL reads hours and address from your website, Google Maps link, or uploaded materials, then answers common questions from that information. If it cannot answer something, the question lands in your inbox so you can teach it once and keep moving.\n\nExample phone line: “We’re open until 9 tonight, and pickup is at the front counter on Main Street.”\n\nThis is one of the easiest checks to do, but one of the most important. A correct address and clear pickup note saves staff time and keeps customers from calling back confused."
+    },
+    {
+      "id": "4-is-the-order-flow-clean-from-caller-to-kitchen",
+      "h2": "4. Is the order flow clean from caller to kitchen?",
+      "body": "The real test of a restaurant opening checklist is whether the order makes it to the kitchen cleanly. Your phone process should collect the items, sizes, modifiers, notes, caller name, phone number, and ready time in one clear flow.\n\nUse this opening checklist for order flow:\n- Can the caller place pickup and delivery orders from the live menu?\n- Does the order get confirmed back in plain language?\n- Does the kitchen receive a clean ticket?\n- Are new, preparing, and ready tickets easy to read on the screen?\n- Does the phone host skip card numbers and leave payment for pickup or your normal process?\n\nROAL is built for that flow. It takes items, sizes, modifiers, and notes, quotes a ready time, confirms the order, and sends a clean ticket to the kitchen screen. It does not take card numbers over the phone.\n\nWorked example: say a caller orders 2 large plain pies, 1 chicken parm hero, and 1 side salad. The phone host should gather the name and phone number, repeat the order back, and give a ready time the kitchen can meet. If your kitchen is backed up, the ready time should reflect that reality.\n\nStaff script: “I have two large plain pies, one chicken parm hero, and one side salad for Maria. That will be ready in about 25 minutes.”"
+    },
+    {
+      "id": "5-who-handles-reservations-catering-complaints-and-allergy-q",
+      "h2": "5. Who handles reservations, catering, complaints, and allergy questions?",
+      "body": "Not every call should become a kitchen ticket. Your opening checklist should separate normal order calls from calls that need a person. That saves time and keeps tricky situations from getting lost.\n\nDecide in advance who handles these call types:\n- Reservation requests\n- Catering inquiries\n- Complaints\n- Allergy-sensitive questions\n- Manager requests\n\nROAL can take reservation requests and hand the more sensitive calls to staff with a summary. That summary matters because it saves the manager from asking the same questions twice. For example, if a caller is upset about a missing item, the host can pass along the issue instead of trying to solve it badly over the phone.\n\nUse a simple handoff note format:\n| Call type | Who handles it | What staff needs |\n|---|---|---|\n| Catering | Manager | Date, headcount, menu interest |\n| Complaint | Shift lead | Order details, issue, callback number |\n| Allergy question | Kitchen lead | Ingredient question, risk level |\n| Reservation | Host or manager | Time, party size, name |\n\nA good opening line for staff is: “If it sounds unusual, don’t rush it. Let the phone host gather the basics and send it over with notes.”"
+    },
+    {
+      "id": "6-can-you-review-calls-improve-the-menu-and-reopen-fast-tomo",
+      "h2": "6. Can you review calls, improve the menu, and reopen fast tomorrow?",
+      "body": "The last part of a restaurant opening checklist is the part that helps tomorrow. After the shift starts, check what came in, what was missed, and what questions kept repeating. That is how your phone setup gets better without adding more work.\n\nAt the end of service, review:\n- Live tickets in the kitchen screen.\n- Call history and transcripts.\n- Questions that landed in the inbox.\n- Menu items that caused confusion.\n- Hours or FAQs that need a small edit.\n\nROAL includes a dashboard with live tickets, call history, transcripts, recordings, menu editing, hours, FAQs, and upsell suggestions. That means you can see what callers asked, what staff handled, and where the menu or hours need cleanup.\n\nIf you want a simple number to think about, use your own average order value. Say your average pickup order is $28. Then each completed phone order is worth that amount to your operation before food cost and labor. Plug in your own average to see why order handling matters.\n\nIf you want to try this setup without a big project, you can [build a free test host from your website](/try). Test calls are free, and you can hear how it handles your menu before you claim the line."
+    }
+  ],
+  "takeaways": [
+    "Check phone forwarding, hours, and menu before the first call.",
+    "Make sure every order ends in a clean kitchen ticket.",
+    "Route complaints, catering, and allergy calls to staff with context.",
+    "Review call history daily so tomorrow’s setup is better than today’s."
+  ],
+  "faq": [
+    {
+      "q": "What should be on a restaurant opening checklist for phone orders?",
+      "a": "At minimum, check forwarding, hours, address, parking notes, menu accuracy, and the order path from caller to kitchen. Also decide who handles reservations, complaints, catering, and allergy questions. If those basics are set, the first rush is much easier to manage."
+    },
+    {
+      "q": "How do I know if my restaurant phone forwarding is set correctly?",
+      "a": "Call the restaurant from a separate phone and listen for the right greeting or ring path. Then test the busy or unanswered path if you use one. Carrier codes vary, so confirm with your provider and make sure the call reaches the right place before opening."
+    },
+    {
+      "q": "Should I let a phone host take card numbers over the phone?",
+      "a": "No. In the setup described here, the phone host should not take card numbers over the phone. Payment should happen at pickup or through whatever process your restaurant already uses."
+    },
+    {
+      "q": "Can an AI phone host answer hours, address, and menu questions?",
+      "a": "Yes, if those details are on your public pages or uploaded menu. ROAL reads public menu, hours, and address information, then answers those common questions and hands off anything it cannot answer. That keeps simple calls moving and gets unusual issues to staff."
+    }
+  ],
+  "words": 1333,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

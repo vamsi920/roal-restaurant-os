@@ -1,0 +1,72 @@
+{
+  "slug": "restaurant-tech-for-non-tech-owners",
+  "keyword": "simple restaurant technology",
+  "category": "operations",
+  "title": "Simple restaurant technology for owners who hate tech",
+  "seoTitle": "Simple restaurant technology for owners who hate tech",
+  "description": "Start with simple restaurant technology: phone setup, call forwarding, order handling, and costs that make sense for your shop.",
+  "question": "What is the simplest restaurant technology for an owner who hates tech?",
+  "answer": "The simplest restaurant technology is the kind that solves one painful job without making you learn a new system. For many restaurants, that means a phone host that answers calls, takes pickup orders from your live menu, and sends a clean ticket to the kitchen screen. Keep setup simple: use your website or Google Maps link, forward calls when you want, and test it before going live.",
+  "summary": "Set up simple restaurant technology that handles calls, orders, and questions without adding work.",
+  "intro": "Simple restaurant technology is the kind you can set up fast, explain to staff in one minute, and use every day without thinking about it. For many restaurants, that starts with the phone.\n\nIf your phone rings during a rush, the best tech is not the fanciest tech. It is the tool that answers, takes the order cleanly, and hands the kitchen what it needs. ROAL is built for that kind of job.",
+  "sections": [
+    {
+      "id": "what-should-simple-restaurant-technology-actually-do",
+      "h2": "What should simple restaurant technology actually do?",
+      "body": "For a busy restaurant, simple technology should do one thing well: reduce phone chaos. It should answer common questions, take pickup or delivery orders from your menu, and send the order to the kitchen in a format your staff can use.\n\nA good test is this: can your team explain it in one minute? If the answer is no, it may be too much. Simple restaurant technology should also fit the way you already work. It should not force you to rewrite your menu, replace your number, or train a manager for hours.\n\nHere is the practical checklist I would use:\n- Answers the phone when you are busy\n- Reads your hours, address, parking, and menu\n- Takes items, sizes, modifiers, and notes\n- Collects name and phone number\n- Gives a ready time\n- Sends a clean ticket to the kitchen screen\n\nIf a tool cannot do those basics, it is not simple. It is extra work dressed up as convenience. For owners who hate tech, the right move is to pick the smallest system that removes the biggest headache first."
+    },
+    {
+      "id": "how-do-you-set-it-up-without-a-big-project",
+      "h2": "How do you set it up without a big project?",
+      "body": "The easiest setup is the one that starts with what you already have. With ROAL, an owner can paste a restaurant website, Google Maps link, or just “Name, City” at /try. ROAL reads public menu pages, menu PDFs, menu photos, hours, and address, then builds a phone host in about a minute. You can also upload a menu in any format.\n\nA simple setup path looks like this:\n1. Gather your website or Google Maps link.\n2. Check that your menu, hours, and address are current.\n3. Build a test host.\n4. Call it in the browser and listen to the script.\n5. Fix any menu wording or hours that need cleanup.\n6. Claim the host and forward your restaurant number.\n\nYou do not need to replace your existing phone number. ROAL gives each location its own phone line automatically, and you forward calls to it. You can forward all calls, or only when you are busy or do not answer. If you want a quick reference for forwarding, use [call forwarding codes by carrier](/tools/call-forwarding-codes), then confirm with your carrier and test with a real call."
+    },
+    {
+      "id": "how-do-you-keep-the-phone-from-becoming-a-mess-during-servic",
+      "h2": "How do you keep the phone from becoming a mess during service?",
+      "body": "The phone gets messy when staff are busy, callers are rushed, and the order has too many chances to go wrong. A simple system should make the call feel like a normal order, not a long interview.\n\nHere is the phone flow that works best for most takeout spots:\n- Greet the caller clearly.\n- Take the order item by item.\n- Confirm sizes, modifiers, and notes.\n- Ask for the caller’s name and phone.\n- Give the ready time.\n- Repeat the order back.\n\nA useful script line is: “What size would you like, and do you want any changes on that?” That one line keeps the order moving and cuts down on back-and-forth.\n\nROAL can speak the caller’s language, take reservation requests, and hand catering, complaints, allergy-sensitive questions, and manager requests to staff with a summary. It does not offer items marked sold out, and it does not take card numbers over the phone. Payment happens at pickup or however you already take it.\n\nIf you want to compare this with older phone setups, [how it works](/how-it-works) is the place to see the full flow without a lot of jargon."
+    },
+    {
+      "id": "what-does-simple-restaurant-technology-cost-really",
+      "h2": "What does simple restaurant technology cost, really?",
+      "body": "Owners hate surprise fees almost as much as they hate a ringing phone during dinner rush. So compare the real monthly shape of the cost, not just the headline price.\n\nMany AI phone tools for restaurants charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in. Human answering services usually bill per minute or per call. Delivery apps commonly take roughly 15-30% commission per order, which can get expensive fast when the ticket size is decent.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free. Billed monthly.\n\nHere is a simple way to think about it with your own numbers:\n- Say your average phone order is $28.\n- Say you get 100 completed phone orders in a month.\n- Multiply 100 x $0.90 to estimate ROAL order fees.\n- Then compare that with a monthly flat fee or delivery app commission.\n\nIf you want a quick worksheet, the [AI phone host cost calculator](/tools/phone-host-cost-calculator) can help you plug in your own numbers."
+    },
+    {
+      "id": "how-do-you-avoid-mistakes-with-menu-changes-sold-out-items-a",
+      "h2": "How do you avoid mistakes with menu changes, sold-out items, and hours?",
+      "body": "The easiest way to keep tech simple is to keep the source of truth in one place. If your hours change, your menu changes, or an item runs out, update that information before it causes calls and complaints.\n\nFor a restaurant owner, the practical workflow is:\n1. Update the menu editor when prices or items change.\n2. Check hours before a holiday or weather event.\n3. Review FAQs for parking, delivery area, or pickup rules.\n4. Mark anything sold out so it is not offered.\n5. Look at the inbox for questions the host could not answer.\n\nThat inbox matters. When ROAL gets a question it cannot answer, the owner answers it once, and the host learns from then on. That saves repeated explanations for things like a special lunch combo, parking behind the building, or whether the dining room is open.\n\nA simple owner habit is to review the dashboard once a day, even for two minutes. Check live tickets, call history, and any unanswered questions. If your team already uses a kitchen screen, live tickets are easy to spot because they show new, preparing, and ready status. That is the kind of tech that feels manageable, not heavy."
+    },
+    {
+      "id": "how-do-you-roll-it-out-to-staff-without-drama",
+      "h2": "How do you roll it out to staff without drama?",
+      "body": "The rollout should be short and calm. Tell staff what the phone host does, what it does not do, and who handles the edge cases. That avoids confusion on a busy shift.\n\nA quick staff script works well:\n- “It answers the phone when we are busy.”\n- “It takes pickup and delivery orders from the menu.”\n- “It sends the kitchen a clean ticket.”\n- “If there is a complaint, allergy issue, or manager request, it sends it to us.”\n\nThat is enough for most teams. You do not need a long training session. Give one person the job of checking the inbox and updating hours or menu items when needed.\n\nIf you run more than one location, keep each location’s phone setup separate so the staff knows which menu, hours, and line belong where. That is especially useful for groups and multi-store owners. You can read more about the phone side in [setting up a restaurant phone system](/blog/restaurant-phone-system-setup) and [asking about multiple locations](/use-cases/multi-location).\n\nIf you want a simple starting point, [build a free test host](/try) from your website and call it before you turn on forwarding. That keeps the learning curve low and lets you hear exactly what customers will hear."
+    }
+  ],
+  "takeaways": [
+    "Simple restaurant technology should solve one real problem: phones, orders, and kitchen handoff.",
+    "You can set up ROAL from a website, Google Maps link, or menu upload in about a minute.",
+    "Keep your existing number and forward calls only when you want to.",
+    "Compare flat monthly fees, per-minute billing, delivery commissions, and pay-per-order costs before you choose.",
+    "The best tech for a busy restaurant is the one staff can understand fast."
+  ],
+  "faq": [
+    {
+      "q": "What is the easiest restaurant technology to set up?",
+      "a": "The easiest restaurant technology is usually the one that starts with your existing website, menu, and phone number. For restaurants, that often means an AI phone host that can answer calls, take orders, and send kitchen tickets without a long setup project. The best tools let you test them first, then go live when you are ready."
+    },
+    {
+      "q": "How do I forward my restaurant phone without breaking anything?",
+      "a": "Use your carrier or phone system’s forwarding code or web portal, then test with a real call. On many landlines and some carriers, *72 turns forwarding on and *73 turns it off. On some mobile carriers, codes vary for all calls, busy calls, and unanswered calls, so confirm with your carrier before relying on it."
+    },
+    {
+      "q": "Is simple restaurant technology worth it for a small takeout shop?",
+      "a": "Yes, if the tool removes a daily headache without creating a new one. A small takeout shop often benefits most from phone help because missed calls, rushed orders, and busy-hour mistakes can pile up fast. The right setup should fit your current workflow, not replace it."
+    },
+    {
+      "q": "Can an AI phone host take payment over the phone?",
+      "a": "No, ROAL does not take card numbers over the phone. It takes the order, confirms it, and sends the ticket to the kitchen screen. Payment happens at pickup or however your restaurant already handles it."
+    }
+  ],
+  "words": 1241,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

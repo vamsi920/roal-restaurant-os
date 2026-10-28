@@ -1,0 +1,122 @@
+{
+  "slug": "rush-hour",
+  "label": "Rush-hour phone orders",
+  "h1": "Rush-hour phone orders, picked up",
+  "seoTitle": "Rush-hour phone orders for restaurants | ROAL",
+  "description": "Take more phone orders when the line gets jammed. ROAL answers, takes pickup and delivery orders, and sends clean tickets to the kitchen.",
+  "lead": "Friday dinner rush. The phone keeps ringing while the expo is shouting and the fry station is backed up. ROAL answers in the background so your staff can keep cooking.",
+  "question": "How can an AI phone host help with rush-hour phone orders at my restaurant?",
+  "answer": "ROAL answers your restaurant phone during the busiest stretches, takes pickup and delivery orders from your live menu, and sends a clean ticket to the kitchen screen. It can also quote a ready time, answer common menu and hours questions, and hand off allergy-sensitive or manager calls when needed. You can forward all calls, or only when the line is busy or unanswered.",
+  "pains": [
+    {
+      "title": "The phone rings when the line is already buried",
+      "body": "At 6:30 pm, one person may be boxing takeout, one is plating dine-in tickets, and the phone keeps ringing. Every missed call can mean a lost pickup order."
+    },
+    {
+      "title": "Staff have to choose between the phone and the food",
+      "body": "When someone stops to answer, the kitchen slows down. When nobody answers, callers hang up or go somewhere else."
+    },
+    {
+      "title": "Rush calls are simple, but they still take time",
+      "body": "A caller wants a large pepperoni, a chicken parm hero, or two pad thais with no peanuts. They still need sizes, modifiers, a name, a phone number, and a ready time."
+    }
+  ],
+  "howItHelps": [
+    {
+      "title": "Answers while your team stays on the make line",
+      "body": "ROAL picks up the phone and handles common rush-time orders without pulling staff away from the window, grill, or expo."
+    },
+    {
+      "title": "Takes the order the way your kitchen needs it",
+      "body": "It collects items, sizes, modifiers, and notes, then confirms the order back before sending it to the kitchen screen."
+    },
+    {
+      "title": "Keeps the rush moving with clear ready times",
+      "body": "The host gives a pickup time or delivery prep time based on the order, so callers know what to expect and staff get fewer repeat calls."
+    },
+    {
+      "title": "Only sends what your kitchen can actually make",
+      "body": "If you mark an item sold out, the host will not offer it. You can also add answers for hours, parking, and menu questions from the same place."
+    }
+  ],
+  "sampleCall": [
+    {
+      "who": "caller",
+      "line": "Hi, can I place a pickup order?"
+    },
+    {
+      "who": "host",
+      "line": "Of course. What can I get for you?"
+    },
+    {
+      "who": "caller",
+      "line": "One large pepperoni pizza, extra cheese, and an order of garlic knots."
+    },
+    {
+      "who": "host",
+      "line": "Got it. Anything else?"
+    },
+    {
+      "who": "caller",
+      "line": "That’s it. Under Maria, please."
+    },
+    {
+      "who": "host",
+      "line": "Thanks, Maria. Your pickup will be ready around 7:20 pm. I have one large pepperoni pizza with extra cheese and one garlic knots. Is that correct?"
+    },
+    {
+      "who": "caller",
+      "line": "Yes, that’s right."
+    },
+    {
+      "who": "host",
+      "line": "Perfect. We’ll see you at 7:20 pm."
+    }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 pm",
+    "lines": [
+      "Maria · phone captured",
+      "1x Large Pepperoni Pizza",
+      "Extra cheese",
+      "1x Garlic Knots"
+    ],
+    "note": ""
+  },
+  "sections": [
+    {
+      "h2": "What a rush-hour phone host should handle",
+      "body": "During rush hour, the best help is simple and fast. The host should answer, take the order, confirm the details, and send a clear ticket to the kitchen. For a pizza shop, that might be a large pepperoni with mushrooms and a side of wings. For a Chinese takeout spot, it might be sesame chicken, fried rice, and no onions. The point is not fancy talk. It is fewer missed calls and fewer mistakes when the line is busy.\n\nYou can also use the host for the questions that slow everyone down: \"How late are you open?\" \"Do you have parking?\" \"Is the shrimp fried rice made with eggs?\" If the question needs a person, the host can pass it along with a summary. That keeps your team focused on the rush without making callers wait on hold."
+    },
+    {
+      "h2": "A simple setup for a busy night",
+      "body": "You do not need a big project to start. Paste your restaurant website, Google Maps link, or just your name and city at [Build a free test host](/try). ROAL reads your public menu, hours, and address, then builds a phone host in about a minute. You can test-call it in the browser before you send real calls.\n\nWhen you are ready, claim the host and forward your existing number to it. Many owners start with all calls. Others forward only when the line is busy or unanswered. That way, your team can keep taking the easy calls while ROAL catches the rush overflow. You can turn forwarding off any time."
+    },
+    {
+      "h2": "A worked example from a Friday dinner rush",
+      "body": "Say your phone usually gets 12 missed calls on a Friday between 5:45 and 7:15. A lot of those callers are not asking complicated things. They want two burritos, a family pizza, or a pickup order for eight minutes from now. ROAL can answer those calls, collect the name and phone number, and send the ticket straight to the kitchen screen.\n\nThat helps in two ways. First, callers do not sit in voicemail. Second, your staff do not have to stop mid-rush to repeat the same order details. If someone asks for a manager, has an allergy question, or needs a catering quote, the host can hand it off with context instead of making your line start over."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can ROAL handle rush-hour pickup orders without me answering the phone?",
+      "a": "Yes. ROAL can answer the call, take the order, confirm it back, and send a ticket to the kitchen. You can forward all calls, or only the busy and unanswered ones."
+    },
+    {
+      "q": "Will it take the same orders my staff takes on a busy night?",
+      "a": "It can take items, sizes, modifiers, and notes from your live menu. If something is marked sold out, it will not offer it."
+    },
+    {
+      "q": "What happens if the caller asks something unusual?",
+      "a": "Questions the host cannot answer land in an inbox for you to reply once. It also hands allergy-sensitive questions, complaints, and manager requests to staff with a summary."
+    },
+    {
+      "q": "Can I use it only when the restaurant is slammed?",
+      "a": "Yes. You can forward all calls, or just when the line is busy or unanswered. Forwarding can be turned off any time."
+    },
+    {
+      "q": "How do I start if I am not tech-savvy?",
+      "a": "Go to [How it works](/how-it-works) or build a free test host with your website, Google Maps link, or restaurant name and city. You can test-call it before you go live, and there is no sign-up needed to try it."
+    }
+  ]
+}

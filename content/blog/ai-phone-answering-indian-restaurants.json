@@ -1,0 +1,77 @@
+{
+  "slug": "ai-phone-answering-indian-restaurants",
+  "keyword": "indian restaurant phone orders",
+  "category": "restaurant-types",
+  "title": "AI phone answering for Indian restaurant orders",
+  "seoTitle": "AI phone answering for Indian restaurant orders",
+  "description": "AI phone answering for Indian restaurant phone orders can take pickup calls, answer menu questions, and route tricky calls to staff.",
+  "question": "How can I use AI phone answering for Indian restaurant phone orders without losing control of the call?",
+  "answer": "An AI phone host can answer your restaurant’s calls, take pickup and delivery orders from your live menu, answer common questions, and send a clean ticket to the kitchen. For an Indian restaurant, that means fewer missed calls during rushes, less time repeating hours and dish details, and a smoother handoff for allergy-sensitive or complex requests.",
+  "summary": "You’ll learn how to handle Indian restaurant phone orders with an AI phone host, from setup to forwarding to kitchen tickets.",
+  "intro": "Indian restaurant phone orders can be handled by an AI phone host that answers the call, takes the order, and sends the ticket to the kitchen. It can also answer hours, address, parking, and menu questions, so your team is not stuck repeating the same details on every call.\n\nROAL does this for restaurants by reading your live menu and public info, then turning your restaurant into a phone host in about a minute. It is built for pickup and delivery orders, and it hands harder calls to staff with a summary when the caller needs special help.",
+  "sections": [
+    {
+      "id": "what-does-an-ai-phone-host-do-for-indian-restaurant-phone-or",
+      "h2": "What does an AI phone host do for Indian restaurant phone orders?",
+      "body": "For Indian restaurant phone orders, the main job is simple: answer fast, take the order cleanly, and keep the line moving. A good phone host should be able to hear items, sizes, modifiers, and notes, then confirm the order back before it sends anything to the kitchen.\n\nThat matters for Indian menus because calls often include side rice, spice requests, substitutions, combo meals, and extra notes like “no onions” or “sauce on the side.” ROAL can take pickup and delivery orders from the live menu, answer basic menu questions, and speak the caller’s language.\n\nA useful restaurant workflow looks like this:\n1. Caller says what they want.\n2. The phone host repeats each item.\n3. It checks modifiers and special notes.\n4. It collects the caller’s name and phone.\n5. It gives a ready time and confirms the order.\n6. It sends a clean ticket to the kitchen screen.\n\nExample script line: “Sure, I can take that order now. I’ll repeat it back before I send it to the kitchen.”"
+    },
+    {
+      "id": "which-menu-details-should-you-clean-up-before-you-go-live",
+      "h2": "Which menu details should you clean up before you go live?",
+      "body": "Indian menus often need a little extra care before phone orders are automated. The clearer your menu is, the better the order will sound on the phone and the fewer clarifying calls your staff will need to make.\n\nStart with the items people ask for most often. Then make sure the public menu shows names, prices, sizes, and the common modifiers that change the order. ROAL reads menu pages, PDFs, and menu photos from public pages, and owners can also upload a menu in any format.\n\nUse this checklist before going live:\n- Main dishes and combos are listed with prices.\n- Sizes are clear, if you offer small, medium, large, or family trays.\n- Common notes are easy to understand, like mild, medium, spicy, or no cilantro.\n- Sold-out items are marked so the host does not offer them.\n- Hours, address, and parking details are correct.\n\nWorked example: say your butter chicken is $18, garlic naan is $4, and a rice upgrade is $3. A caller wants one butter chicken, two naan, and a rice upgrade. The total before tax is $29. Plug in your own prices and the same logic works for your menu."
+    },
+    {
+      "id": "how-do-you-set-it-up-without-slowing-down-your-team",
+      "h2": "How do you set it up without slowing down your team?",
+      "body": "Owners usually want a quick setup because the lunch rush does not wait. With ROAL, the owner pastes a restaurant website, Google Maps link, or “Name, City” at /try, and ROAL builds the phone host in about a minute from public menu and location details.\n\nThen you test-call it right in the browser. No sign-up is needed for that first test. After that, the owner claims the host, chooses the voice and name, and goes live with a dedicated phone line for each location.\n\nHere is the practical rollout:\n1. Paste your website, Maps link, or name and city.\n2. Check the menu, hours, and address.\n3. Test-call it and listen to the order flow.\n4. Fix any missing dishes or wrong hours.\n5. Forward your restaurant’s existing number to the ROAL line.\n6. Turn forwarding on for all calls, or only when busy or unanswered.\n\nIf you want the forwarding part to match your phone setup, use the carrier or system settings you already have. For help with codes and options, see [call forwarding codes by carrier](/tools/call-forwarding-codes). Codes vary, so always confirm with your carrier and test with a call."
+    },
+    {
+      "id": "how-much-does-phone-ordering-cost-compared-with-other-option",
+      "h2": "How much does phone ordering cost compared with other options?",
+      "body": "The money question matters, especially for independent restaurants. Third-party delivery apps commonly take roughly 15-30% commission per order, which can add up fast on a busy night. Human answering services usually bill per minute or per call. Many AI phone tools charge a fixed monthly fee per location, often around $79 to $599, whether or not orders come in.\n\nROAL uses a different model: $0.90 per completed phone order, meaning a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, no setup fee, no per-minute fee, and no contract. Calls, questions, and test calls are unlimited and free, and billing is monthly.\n\nA simple example:\n- Say your average phone order is $28.\n- Say you get 100 completed phone orders in a month.\n- ROAL cost would be 100 × $0.90 = $90.\n- Plug in your own order count and average ticket to compare it with your current phone cost.\n\nFor a broader comparison, you can also look at [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) and [phone orders vs delivery apps](/compare/delivery-apps)."
+    },
+    {
+      "id": "what-should-the-host-do-when-a-caller-asks-something-tricky",
+      "h2": "What should the host do when a caller asks something tricky?",
+      "body": "Some calls should not be pushed through as if they were simple pickup orders. Indian restaurants often get allergy questions, catering requests, complaints, manager requests, and reservation requests. Those are exactly the moments where a clean handoff matters.\n\nROAL can take reservations, but it also knows when to pass the call to staff with a summary. It hands catering, complaints, allergy-sensitive questions, and manager requests to your team instead of guessing. It also does not offer items marked sold out, and it never takes card numbers over the phone; payment happens at pickup or however your restaurant already takes it.\n\nUse this handoff checklist for staff:\n- Did the caller mention an allergy or dietary restriction?\n- Is this a large order or catering request?\n- Is the caller upset about a previous order?\n- Do they want a manager or owner?\n- Did they ask about something not on the menu?\n\nExample transfer line: “I’m sending this to the restaurant team now with your note about the sauce and the allergy question.” That keeps the call moving without forcing the host to guess."
+    },
+    {
+      "id": "how-do-you-keep-the-kitchen-staff-and-phone-line-in-sync",
+      "h2": "How do you keep the kitchen, staff, and phone line in sync?",
+      "body": "Once the phone host is live, the real win is keeping everyone on the same page. The kitchen should see clean tickets. The front of house should see call history. And the owner should be able to fix menu or hours details without starting over.\n\nROAL includes a dashboard with live kitchen tickets marked new, preparing, and ready. It also keeps call history with transcripts and recordings, plus a menu editor, hours, FAQs, upsell suggestions, and multi-location menus. If a caller asks something the host could not answer, it lands in an inbox. The owner answers once, and the host knows it from then on.\n\nA simple weekly routine:\n1. Check call history for repeated questions.\n2. Update any menu item names or prices that changed.\n3. Confirm hours, holiday timing, and address details.\n4. Review missed questions in the inbox.\n5. Make sure sold-out items are marked correctly.\n\nIf you run more than one location, keep each location’s menu and hours separate. For owners with multiple stores, [ROAL for indian restaurants](/for/indian) can help keep the phone side organized by location."
+    },
+    {
+      "id": "what-should-an-owner-do-this-week-to-try-it-safely",
+      "h2": "What should an owner do this week to try it safely?",
+      "body": "The safest way to start is with one location, one phone number flow, and a small set of common orders. Pick the menu items people order most by phone, then test the call flow during a quiet moment so staff can hear how it sounds.\n\nUse this starter plan:\n- Pick your top 10 to 20 phone items.\n- Confirm hours, address, parking, and delivery area details.\n- Mark sold-out items.\n- Decide when calls should forward: all calls, busy calls, or unanswered calls.\n- Tell staff which calls should be handled by the phone host and which should still go to a person.\n\nIf you want to compare setup, pricing, or security details before moving forward, [About ROAL](/about), [Pricing](/pricing), and [Security](/security) are the best pages to check.\n\nIf your goal is to reduce the time spent on routine Indian restaurant phone orders without giving up control, [build a free test host](/try) and listen to it on your own menu before you decide what to do next."
+    }
+  ],
+  "takeaways": [
+    "Use an AI phone host to take pickup and delivery orders from your live menu.",
+    "Clean menu data matters most: names, prices, modifiers, sold-out items, and hours.",
+    "Tricky calls should go to staff with a summary, not be forced through automation.",
+    "ROAL bills per completed order, not per minute or per month.",
+    "Forwarding can be turned on for all calls, busy calls, or unanswered calls."
+  ],
+  "faq": [
+    {
+      "q": "Can an AI phone host take Indian restaurant pickup orders correctly?",
+      "a": "Yes, if the menu is clear and the host is set up with the right items, sizes, and modifiers. ROAL can take items, notes, caller name and phone, then confirm the order back before sending a clean ticket to the kitchen screen. It is designed for pickup and delivery orders from the live menu."
+    },
+    {
+      "q": "Will the phone host handle spice levels and special requests?",
+      "a": "Yes, it can capture modifiers and notes, like mild, medium, spicy, or no onions. The key is to list those options clearly in the menu so the phone host can repeat them back. If a request is too unusual or allergy-sensitive, it can hand the call to staff with a summary."
+    },
+    {
+      "q": "How does ROAL pricing work for an Indian restaurant?",
+      "a": "ROAL charges $0.90 per completed phone order, which means a confirmed order whose ticket reached the kitchen screen. There is no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free, and billing is monthly."
+    },
+    {
+      "q": "How do I forward my restaurant phone to ROAL?",
+      "a": "You forward your existing restaurant number to the ROAL line, and your restaurant keeps its own number. On many landlines and some carriers, *72 forwards all calls and *73 turns it off; GSM mobile carriers often use **21*number# and ##21# for all calls, **61*number# for unanswered calls, and **67*number# for busy calls. Codes vary by carrier and plan, so confirm with your provider and test with a call."
+    }
+  ],
+  "words": 1367,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}

@@ -1,0 +1,76 @@
+{
+  "slug": "multiple-menus-one-restaurant",
+  "keyword": "multiple menus restaurant",
+  "category": "menu",
+  "title": "Managing lunch, dinner, and catering menus",
+  "seoTitle": "Multiple restaurant menus for lunch and catering | ROAL",
+  "description": "Set up lunch, dinner, and catering menus without confusion. Keep pricing, phone scripts, and menu changes clear for staff and customers.",
+  "question": "How do I run lunch, dinner, and catering menus without confusing phone orders?",
+  "answer": "Keep each menu clearly separated by time of day and order type, with one live source for prices, hours, and sold-out items. For phone orders, a restaurant AI phone host like ROAL can read the live menu, answer menu questions, and send the right ticket to the kitchen screen while handing catering or tricky calls to staff.",
+  "summary": "You will learn how to separate lunch, dinner, and catering menus so phone orders stay clear and accurate.",
+  "intro": "Running lunch, dinner, and catering menus works best when each menu has a clear purpose and clear rules. Keep the phone order path simple: one live menu, one set of prices, and one fast way to route the right call.\n\nFor a multiple menus restaurant, the goal is not to make the menu fancy. It is to make it easy for the person answering the phone, easy for the kitchen, and easy for the caller to order the right thing at the right time.",
+  "sections": [
+    {
+      "id": "what-should-be-on-lunch-dinner-and-catering-menus",
+      "h2": "What should be on lunch, dinner, and catering menus?",
+      "body": "Start by separating the job of each menu.\n\n- **Lunch menu:** fast items, combos, smaller portions, and anything you can turn quickly.\n- **Dinner menu:** fuller plates, family meals, appetizers, and items that take longer.\n- **Catering menu:** trays, pans, party bundles, lead times, drop-off notes, and minimums if you use them.\n\nA simple rule helps: if an item is only meant for a group order, it belongs on the catering menu, not the lunch menu. If a caller wants one sandwich and a drink at 12:15 p.m., they should hear the lunch options first. If they want food for 20 people on Friday, they should hear the catering path.\n\nTry this phone line: \"Are you ordering lunch for now, dinner for later, or catering for a group?\"\n\nThat one question saves back-and-forth. It also helps your staff hear the intent quickly when the order lands in the kitchen.\n\nA useful checklist:\n- Keep each menu name short.\n- Put the most ordered items near the top.\n- Mark items that are only for groups or advance notice.\n- Make sure the same item name is not different across menus unless it truly is a different portion or price."
+    },
+    {
+      "id": "how-do-i-keep-prices-and-portions-from-getting-mixed-up",
+      "h2": "How do I keep prices and portions from getting mixed up?",
+      "body": "The biggest problem in a multiple menus restaurant is not too many items. It is too many versions of the same item with no clear difference.\n\nUse a simple format for each version. For example: one lunch pasta at one price, one dinner pasta at a larger portion and a different price, and one catering tray priced for a group. Put the portion right in the name so the phone host and the kitchen do not have to guess.\n\nWorked example:\n- Lunch chicken wrap: $11.50\n- Dinner chicken wrap plate: $16.95\n- Catering chicken wrap tray: $48.00\n\nThose numbers are only examples. Plug in your own prices.\n\nA good rule is to write the menu the way you would say it on the phone. Instead of \"wrap,\" say \"lunch chicken wrap\" or \"catering chicken wrap tray.\" That extra detail prevents confusion when someone orders three versions of the same dish.\n\nIf you use ROAL, it reads the live menu, prices, and hours from your public pages or uploaded menu. That means the phone host can keep lunch, dinner, and catering answers aligned with what you actually sell. It also helps if you change prices or remove an item for one menu only.\n\nShort pricing check:\n- Is the portion different?\n- Is the price different?\n- Is the prep time different?\n- Would the caller understand the difference without asking twice?"
+    },
+    {
+      "id": "how-should-the-phone-answer-when-a-caller-asks-for-the-wrong",
+      "h2": "How should the phone answer when a caller asks for the wrong menu?",
+      "body": "Calls get messy when lunch callers ask about dinner items, or a catering caller wants a pickup order for two people. The best answer is calm and direct.\n\nUse a script like this: \"I can help with that. Are you looking for our lunch menu, dinner menu, or catering menu?\"\n\nThen follow with the smallest useful choice. Do not read the whole restaurant history. Just narrow the order.\n\nExample phone flow:\n1. Ask which menu they want.\n2. Ask when they need the food.\n3. Confirm the item, size, and any modifiers.\n4. Confirm name, phone, and ready time.\n5. Repeat the order back.\n\nA caller asking about a party tray should hear a different path from someone ordering a single entree. That is where a phone host helps. ROAL can answer menu, hours, address, parking, and order questions, then send a clean ticket to the kitchen screen. It can also hand catering requests or allergy-sensitive questions to staff with a summary.\n\nUse this fallback line for staff:\n\"This sounds like a catering order, so I’m sending it to the team with your details.\"\n\nThat keeps the call moving without making the caller repeat everything."
+    },
+    {
+      "id": "how-do-i-handle-lunch-dinner-and-catering-hours-without-conf",
+      "h2": "How do I handle lunch, dinner, and catering hours without confusion?",
+      "body": "Hours matter as much as the menu. A lunch menu that starts too early or a catering menu that sounds available for instant pickup can create trouble.\n\nMake the rules visible in plain language. For example:\n- Lunch menu: served until 3 p.m.\n- Dinner menu: starts at 3 p.m.\n- Catering menu: requires advance notice\n\nIf your actual hours are different, use those. The point is to make the handoff clear.\n\nA useful phone script is: \"Lunch is available until 3, dinner starts after 3, and catering needs advance notice. What can I help with today?\"\n\nHere is a simple table you can copy into your own planning:\n\n| Menu | Best for | Example timing | Caller should hear |\n|---|---|---:|---|\n| Lunch | quick pickup | 11 a.m. to 3 p.m. | fast items, combos |\n| Dinner | larger meals | after 3 p.m. | full plates, family meals |\n| Catering | groups | planned ahead | trays, bundles, delivery details |\n\nIf you run more than one location, keep the rules tied to the right store. ROAL has multi-location menus in the dashboard, which helps when one location has a different lunch cutoff or catering list from another.\n\nThe simple test: can your staff explain the menu split in one sentence? If not, the caller will feel that confusion too."
+    },
+    {
+      "id": "what-should-a-catering-menu-include-so-callers-understand-it",
+      "h2": "What should a catering menu include so callers understand it fast?",
+      "body": "A catering menu should answer the questions people ask before they place the order. Think less like a restaurant menu and more like a planning sheet.\n\nInclude these basics:\n- Tray or pan name\n- How many people it feeds, if you already state that internally\n- Pickup or delivery note\n- How much notice you need\n- Any sides, utensils, or serving notes\n- Contact phone number for questions\n\nIf you want callers to act quickly, write the catering menu in plain language. For example: \"Chicken parm tray, garlic bread, salad, and serving utensils included on request.\" That is easier to order from than a long block of text.\n\nA helpful phone prompt is: \"Is this for pickup, delivery, or a catering order with a planned time?\"\n\nKeep in mind that delivery apps commonly take roughly 15-30% commission per order, while catering orders often come in by phone or direct inquiry. That makes a clear catering menu worth the effort. It gives the caller confidence and reduces mistakes before the kitchen starts cooking.\n\nIf a caller asks an allergy-sensitive question or a manager-level question, the best move is to send it to staff with a summary. ROAL does that. It also does not take card numbers over the phone, so payment stays in your normal process at pickup or however you already handle it."
+    },
+    {
+      "id": "how-can-i-price-a-multiple-menus-restaurant-without-hurting-",
+      "h2": "How can I price a multiple menus restaurant without hurting margins?",
+      "body": "Start with your real food cost, labor, and speed. Then build each menu around the job it serves.\n\nA lunch menu usually needs quick-turn items. A dinner menu can support bigger plates. A catering menu should price for prep time, packaging, and the fact that one order may replace many small orders.\n\nWorked example:\n- Say your lunch combo is $12.95.\n- Say the dinner version is $17.95 because it includes a larger portion and extra side.\n- Say the catering tray is $59.00 because it serves a group and takes longer to prep.\n\nThose numbers are examples only. Plug in your own.\n\nA simple way to check pricing is to ask:\n1. Does this menu need a lower price for speed and volume?\n2. Does this menu need a higher price because it takes longer?\n3. Does the packaging cost more?\n4. Does the caller expect a group deal or a single-plate deal?\n\nIf you use a phone tool, compare the cost model before you choose one. Some AI phone tools charge a monthly fee whether calls come in or not. ROAL uses pay-per-completed-order pricing at $0.90 per completed phone order, with no monthly fee, setup fee, per-minute fee, or contract. Calls, questions, and test calls are unlimited and free.\n\nThat matters most when lunch is busy and dinner is slower. Your phone cost should match your order flow, not punish you for having a quiet hour."
+    },
+    {
+      "id": "what-is-the-easiest-way-to-keep-the-menus-updated-every-day",
+      "h2": "What is the easiest way to keep the menus updated every day?",
+      "body": "Use one source of truth. Do not let the website, printed menu, and phone script drift apart.\n\nA practical update routine:\n1. Change the menu in one place first.\n2. Check lunch, dinner, and catering sections separately.\n3. Remove sold-out items from the live menu.\n4. Test one phone order for each menu type.\n5. Tell staff what changed before the next rush.\n\nIf you are using [How it works](/how-it-works) style setup with ROAL, you can paste your restaurant website, Google Maps link, or \"Name, City\" at /try. ROAL reads the menu, prices, hours, and address from public pages and can also use an uploaded menu in any format. You can test-call it in the browser before going live.\n\nA final owner checklist for a multiple menus restaurant:\n- Lunch menu is fast and simple.\n- Dinner menu matches evening service.\n- Catering menu explains timing and group orders.\n- The phone script points people to the right menu.\n- The kitchen screen shows the order clearly.\n\nIf you want a clean place to start, [build a free test host](/try) from your website and see how your lunch, dinner, and catering menus sound on the phone."
+    }
+  ],
+  "takeaways": [
+    "Separate lunch, dinner, and catering by purpose, not just by name.",
+    "Use one clear phone question to route callers to the right menu.",
+    "Keep prices, portions, and ready times written in plain language.",
+    "Make one source of truth for menu updates so staff and callers hear the same thing."
+  ],
+  "faq": [
+    {
+      "q": "How do I organize multiple menus in a restaurant phone system?",
+      "a": "Group the menus by caller intent: lunch for quick meals, dinner for fuller plates, and catering for larger group orders. Then use one simple question on the phone to route the caller to the right path. Keep the live menu, hours, and prices aligned so staff and callers hear the same information."
+    },
+    {
+      "q": "Should lunch and dinner items have different prices?",
+      "a": "They can, if the portion, sides, or prep time are different. The important part is to label the difference clearly, such as \"lunch chicken wrap\" and \"dinner chicken wrap plate.\" If the item is the same in every way, keep one price and one name to avoid confusion."
+    },
+    {
+      "q": "What should be on a catering menu for phone orders?",
+      "a": "A catering menu should include tray or pan names, timing, pickup or delivery notes, and any serving details callers need. It should also make it obvious that catering is for planned orders, not instant pickup. Clear wording helps the caller know what to ask and what to expect."
+    },
+    {
+      "q": "Can ROAL handle lunch, dinner, and catering questions?",
+      "a": "Yes. ROAL answers menu, hours, address, parking, and order questions, and it can take pickup and delivery orders from the live menu. It also handles reservation requests and sends catering, allergy-sensitive, complaint, or manager requests to staff with a summary."
+    }
+  ],
+  "words": 1595,
+  "generatedAt": "2026-10-28",
+  "metaPolished": true
+}
