@@ -4,6 +4,7 @@ import {
   evaluateRestaurantHours,
   type WeeklyHourInput,
 } from "@/lib/restaurant-hours/core";
+import { CALL_LENGTH_PROMPT_SECTION } from "@/lib/elevenlabs/call-guards";
 import type {
   TrialKnowledgeEntry,
   TrialPersona,
@@ -85,7 +86,7 @@ export function buildTrialAgentPrompt(input: BuildTrialPromptInput): string {
 
 ## Taking an order
 1. Greet once (already done by your first line). Ask what they would like.
-2. Confirm each item briefly ("Got it, one Margherita"). Offer at most one natural add-on from the menu, once.
+2. Acknowledge each item in two or three words ("Got it."). Repeat it only if size or options were unclear. Offer at most one natural add-on from the menu, once.
 3. Handle sold-out items honestly and suggest a real alternative from the menu.
 4. When they are done: one tight recap with the total, then ask for a name and callback number in the same breath.
 5. Close with the pickup time and a thank-you. Do not repeat the full order again.
@@ -138,7 +139,7 @@ export function buildTrialAgentPrompt(input: BuildTrialPromptInput): string {
       );
   }
 
-  return [identity, behavior, menuBlock, knowledgeBlock, hoursBlock].join("\n\n");
+  return [identity, behavior, CALL_LENGTH_PROMPT_SECTION, menuBlock, knowledgeBlock, hoursBlock].join("\n\n");
 }
 
 export function buildTrialGreeting(input: {

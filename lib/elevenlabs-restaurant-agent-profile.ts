@@ -1,3 +1,4 @@
+import { CALL_GUARD_CONVERSATION, CALL_GUARD_TURN } from "@/lib/elevenlabs/call-guards";
 import {
   getElevenLabsAgentId,
   getRestaurantAgentTimezone,
@@ -125,6 +126,8 @@ function mergeVoicemailBuiltIns(
 ): Record<string, unknown> {
   const base = asRecord(builtIn) ?? {};
   const out = { ...base };
+  // Hosts must be able to hang up on silence, spam and finished calls (see call-guards).
+  if (!out.end_call) out.end_call = systemToolLikeEndCall("end_call");
   if (!out.voicemail_detection) {
     out.voicemail_detection = systemToolLikeEndCall("voicemail_detection", {
       voicemail_message: voicemailMessage,
@@ -287,6 +290,8 @@ export async function applyRestaurantOrderAgentProfile(options?: {
       ...(profile?.agent_voice_id?.trim()
         ? { tts: { voice_id: profile.agent_voice_id.trim() } }
         : {}),
+      turn: { ...CALL_GUARD_TURN },
+      conversation: { ...CALL_GUARD_CONVERSATION },
     },
   };
 
@@ -320,6 +325,8 @@ export async function applyRestaurantOrderAgentProfile(options?: {
       "conversation_config.agent.prompt.timezone?",
       "conversation_config.agent.prompt.knowledge_base?",
       "conversation_config.agent.dynamic_variables?",
+      "conversation_config.turn (silence check-in + hang-up)",
+      "conversation_config.conversation.max_duration_seconds",
     ],
   };
 }

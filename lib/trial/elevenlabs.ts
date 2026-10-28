@@ -6,6 +6,7 @@ import {
   getConvaiSignedUrl,
   patchConvaiAgent,
 } from "@/lib/elevenlabs";
+import { CALL_GUARD_TURN } from "@/lib/elevenlabs/call-guards";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import { requireTrialDb } from "@/lib/trial/store";
 import { DEFAULT_TRIAL_VOICE, findTrialVoice } from "@/lib/trial/voices";
@@ -36,7 +37,7 @@ const VOICE_STACK_CONFIG = {
     optimize_streaming_latency: 3,
   },
   agent: { prompt: { llm: TRIAL_LLM, temperature: 0.5 } },
-  turn: { turn_eagerness: "normal", turn_timeout: 8 },
+  turn: { turn_eagerness: "normal", ...CALL_GUARD_TURN },
 };
 
 const OVERRIDES_PLATFORM_SETTINGS = {

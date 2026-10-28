@@ -3,6 +3,7 @@ import type { RestaurantKnowledgeEntry } from "@/lib/restaurant-knowledge/schema
 import type { PromptReadyUpsellRule } from "@/lib/restaurant-upsell/menu-binding";
 import type { RestaurantUpsellRule } from "@/lib/restaurant-upsell/schema";
 import { formatProfileAddress } from "@/lib/restaurant-profile/helpers";
+import { CALL_LENGTH_PROMPT_SECTION } from "@/lib/elevenlabs/call-guards";
 import {
   parseUnavailableItemBehavior,
   unavailableItemBehaviorPromptLine,
@@ -43,7 +44,7 @@ const CORE_BEHAVIOR = `You are the phone voice for one restaurant. Be warm, conc
 2. On your first chance to act: call get_menu_items per tool schema (no arguments if none required). Menu must be in context before you take items.
 3. When they answer pickup or delivery: one short acknowledgment only—do not re-ask unless they change their mind.
 4. If they choose delivery: collect the full delivery address before finalize_order. Ask for suite/unit/gate or drop-off instructions only when needed; never invent address details.
-5. Take the order: brief line per item ("Got it")—do not read the full cart until the pre-finalize summary.
+5. Take the order: two or three words per item ("Got it")—do not repeat the item unless size or options were unclear, and do not read the full cart until the pre-finalize summary.
 6. Recommendations: one short line per option (name + at most one clause). No long descriptions unless they ask.
 7. Dietary or allergy asks: use only get_menu_items—suggest up to three real items that fit; say honestly if none qualify. Never claim allergen-free, nut-free, or gluten-free unless the menu data states it.
 8. Upselling: follow Upsell rules when present. Offer at most one configured add-on during an active order—one short natural yes/no question. Use only items returned by get_menu_items (exact names, real prices). Never invent add-ons, combos, bundles, discounts, or unavailable items. If they accept, add the item with sync_draft_order and continue. If they decline, thank them briefly and continue checkout without blocking finalize_order. Skip upselling when rushed, angry, done ordering, FAQ-only, voicemail/callback, staff handoff, reservation intake, no-order calls, or upsell_experiment_variant is "control".
@@ -74,9 +75,9 @@ const CORE_BEHAVIOR = `You are the phone voice for one restaurant. Be warm, conc
 - Allergy/diet: acknowledge seriously; do not guarantee accommodation; say you can pass their note to the kitchen when they still want to order—do not invent ingredients or cross-contact policies.
 - Off-menu requests: decline politely or map to a real line item only.
 - Price questions: use menu data only; if missing, say you do not have the price on file.
-- Hold/silence: brief check-in ("Still there?") before assuming they left.
+- Hold/silence: follow Call length, silence, and ending calls.
 - Angry or rushed guest: stay calm; shorter sentences.
-- Wrong number / not ordering: end politely; use end_call when appropriate.
+- Wrong number: apologize briefly and use end_call. Not ordering: follow Not ordering? below.
 - Voicemail: keep messages short; use voicemail_detection when available.
 - Empty cart at finalize: sync_draft_order first, then finalize_order.`;
 
@@ -118,7 +119,7 @@ function buildGuestQuestionsSection(
     );
   }
   lines.push(
-    "If they only want information and do not want to order: answer briefly, thank them, and end politely (end_call when appropriate)."
+    "If they only want information: follow Not ordering? (answer, ask once if they want to order, then end_call)."
   );
   return `## Guest questions (hours, directions, menu)\n${lines.map((l) => `- ${l}`).join("\n")}`;
 }
@@ -451,6 +452,7 @@ export function buildRestaurantOrderAgentPrompt(
 
   const sections = [
     CORE_BEHAVIOR,
+    CALL_LENGTH_PROMPT_SECTION,
     buildMultilingualCallsSection(),
     CALL_PURPOSE,
     buildRestaurantIdentitySection(displayName, input.profile),
