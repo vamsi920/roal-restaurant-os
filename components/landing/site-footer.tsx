@@ -33,7 +33,7 @@ export function SiteFooter() {
           ))}
         </div>
         <p className="site-footer__featured">
-          Featured on{" "}
+          Find ROAL on{" "}
           {SITE_FEATURED_ON.map((f, i) => (
             <span key={f.href}>
               {i > 0 ? " · " : null}
