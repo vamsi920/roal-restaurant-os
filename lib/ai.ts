@@ -218,6 +218,7 @@ Return {"c":[{"n":"Category","i":[{"n":"Item","p":4.99,"d":"Short description","
 - m: optional add-ons or choices listed for that item, as [name, extra price or 0].
 - Keep the menu's own category names and order. Do not invent items or prices.
 - Ignore navigation, delivery-app ads, catering packages, and footer copy.
+- Skip "Popular", "Most popular", "Featured" or "Recommended" sections that only repeat items listed in other categories.
 - If the text has no menu, return {"c":[]}.`;
 
 const COMPACT_MENU_SCHEMA = {
@@ -349,17 +350,20 @@ export async function extractMenuFromWebsiteText(
  */
 export async function extractMenuFromDocument(
   base64: string,
-  mimeType: string
+  mimeType: string,
+  { careful = false }: { careful?: boolean } = {}
 ): Promise<ScanMenuImageResult> {
   const isPdf = mimeType === "application/pdf";
   const part = isPdf
     ? ({ type: "file", file: { filename: "menu.pdf", file_data: `data:application/pdf;base64,${base64}` } } as const)
     : ({ type: "image_url", image_url: { url: `data:${mimeType};base64,${base64}` } } as const);
   const result = await generateJson<CompactMenu>(
-    WEBSITE_MENU_PROMPT.replace("from this website text", isPdf ? "from this PDF" : "from this menu photo"),
+    `${WEBSITE_MENU_PROMPT.replace("from this website text", isPdf ? "from this PDF" : "from this menu photo")}
+- Read multi-column layouts column by column. Skip text that isn't something to order (ingredient lists, slogans).`,
     [part, { type: "text", text: "Extract the menu." }],
     COMPACT_MENU_SCHEMA,
-    { maxTokens: 12000, fast: true }
+    // Owner uploads are the source of truth: a little reasoning untangles columns and stray text.
+    { maxTokens: 12000, fast: !careful }
   );
   return { data: expandCompactMenu([result.data]), modelUsed: result.modelUsed };
 }

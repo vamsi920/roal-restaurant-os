@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RoalWordmark } from "@/components/landing/roal-wordmark";
+import { MenuUpload } from "@/components/start/menu-upload";
 import { TrialCall } from "@/components/try/trial-call";
 import { trialApi, type TrialApiResult } from "@/components/try/trial-api";
 import { cn } from "@/lib/cn";
@@ -190,7 +191,7 @@ export function StartFunnel({
   }, [go]);
 
   const fixMenu = useCallback(
-    async (payload: { menu_url?: string } | FormData) => {
+    async (payload: { menu_url?: string }) => {
       if (!trial) return;
       setBusy(true);
       setError(null);
@@ -353,11 +354,13 @@ export function StartFunnel({
             {step === "menu" && trial ? (
               <MenuScreen
                 trial={trial}
+                mode={mode}
                 ready={menuReady}
                 phase={menuPhase}
                 busy={busy}
                 error={error}
                 onFix={fixMenu}
+                onUpdated={setTrial}
                 onNext={() => go("pricing")}
               />
             ) : null}
@@ -624,25 +627,31 @@ function InsightScreen({
 
 function MenuScreen({
   trial,
+  mode,
   ready,
   phase,
   busy,
   error,
   onFix,
+  onUpdated,
   onNext,
 }: {
   trial: TrialPublicView;
+  mode: "public" | "dashboard";
   ready: boolean;
   phase: "site" | "web";
   busy: boolean;
   error: string | null;
-  onFix: (p: { menu_url?: string } | FormData) => void;
+  onFix: (p: { menu_url?: string }) => void;
+  onUpdated: (trial: TrialPublicView) => void;
   onNext: () => void;
 }) {
   const [menuUrl, setMenuUrl] = useState("");
-  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [showUpload, setShowUpload] = useState(false);
   const summary = trial.menuSummary;
   const isSample = !summary || summary.source === "sample";
+  const uploaded = summary?.source === "upload";
+  const foundOnline = Boolean(summary && !isSample && !uploaded);
 
   if (!ready || busy) {
     return (
@@ -664,6 +673,50 @@ function MenuScreen({
     );
   }
 
+  const preview = summary && !isSample ? (
+    <>
+      <ul className="sf__menu">
+        {summary.sampleItems.slice(0, 6).map((item, n) => (
+          <motion.li key={`${item.name}-${n}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + n * 0.08 }}>
+            <span className="min-w-0">
+              <span className="sf__menu-name">{item.name}</span>
+              <span className="sf__menu-cat">{item.category}</span>
+            </span>
+            <span className="sf__menu-price">{item.price != null ? `$${item.price.toFixed(2)}` : "—"}</span>
+          </motion.li>
+        ))}
+      </ul>
+      {summary.itemCount > 6 ? <p className="sf__fine">+ {summary.itemCount - 6} more items</p> : null}
+    </>
+  ) : null;
+
+  // Real sign-up: the owner's own menu file is the source of truth, so uploading is the main action.
+  if (mode === "dashboard" && !uploaded) {
+    return (
+      <div className="sf__center">
+        <p className={cn("sf__eyebrow", foundOnline && "sf__eyebrow--ok")}>
+          {foundOnline && summary ? (
+            <>
+              <Check /> We found {summary.itemCount} items online
+            </>
+          ) : (
+            "Your menu"
+          )}
+        </p>
+        <h1 className="sf__title">Upload your menu.</h1>
+        <p className="sf__sub">
+          Any format works: photos of each page, a PDF, Word, Excel or CSV. We&apos;ll read every item, price and add-on so
+          your host quotes them exactly.
+        </p>
+        <MenuUpload trialId={trial.id} onUpdated={onUpdated} />
+        {error ? <p className="sf__error" role="alert">{error}</p> : null}
+        <button type="button" className="sf__text-btn" onClick={onNext}>
+          {foundOnline && summary ? `Use the ${summary.itemCount} items we found for now` : "Skip for now and add it from the Menu page later"}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="sf__center">
       {isSample ? (
@@ -671,38 +724,20 @@ function MenuScreen({
           <p className="sf__eyebrow sf__eyebrow--warn">No prices online</p>
           <h1 className="sf__title">We couldn&apos;t find a priced menu online.</h1>
           <p className="sf__sub">
-            We checked your website, ordering pages and menu sites. Snap a photo of your menu or paste a menu link, and
-            we&apos;ll read every item and price. Or keep going with a sample menu and add yours later.
+            We checked your website, ordering pages and menu sites. Upload your menu in any format and we&apos;ll read every
+            item and price. Or keep going with a sample menu and add yours later.
           </p>
-          <div className="sf__menu-fix">
-            <button type="button" className="btn-accent btn-lg sf__cta" onClick={() => fileRef.current?.click()}>
-              Upload a menu photo
-            </button>
-            <input
-              ref={fileRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (!file) return;
-                const fd = new FormData();
-                fd.append("image", file);
-                onFix(fd);
-                e.target.value = "";
-              }}
-            />
-            <form
-              className="sf__menu-url"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (menuUrl.trim()) onFix({ menu_url: menuUrl.trim() });
-              }}
-            >
-              <input className="sf__input sf__input--sm" placeholder="or paste your menu page link" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} />
-              <button type="submit" className="btn-ghost" disabled={!menuUrl.trim()}>Read</button>
-            </form>
-          </div>
+          <MenuUpload trialId={trial.id} onUpdated={onUpdated} />
+          <form
+            className="sf__menu-url"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (menuUrl.trim()) onFix({ menu_url: menuUrl.trim() });
+            }}
+          >
+            <input className="sf__input sf__input--sm" placeholder="or paste your menu page link" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} />
+            <button type="submit" className="btn-ghost" disabled={!menuUrl.trim()}>Read</button>
+          </form>
           {error ? <p className="sf__error" role="alert">{error}</p> : null}
           <button type="button" className="sf__text-btn" onClick={onNext}>
             Continue with a sample menu
@@ -719,24 +754,22 @@ function MenuScreen({
           <p className="sf__sub">
             {summary.source === "web_search" && summary.sourceUrl
               ? `Found on ${hostOf(summary.sourceUrl)}, so double-check prices before you go live. `
-              : ""}
+              : uploaded
+                ? "Read from your upload. "
+                : ""}
             Your host will know every one of these, with prices, the moment a caller asks.
           </p>
-          <ul className="sf__menu">
-            {summary.sampleItems.slice(0, 6).map((item, n) => (
-              <motion.li key={`${item.name}-${n}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + n * 0.08 }}>
-                <span className="min-w-0">
-                  <span className="sf__menu-name">{item.name}</span>
-                  <span className="sf__menu-cat">{item.category}</span>
-                </span>
-                <span className="sf__menu-price">{item.price != null ? `$${item.price.toFixed(2)}` : "—"}</span>
-              </motion.li>
-            ))}
-          </ul>
-          {summary.itemCount > 6 ? <p className="sf__fine">+ {summary.itemCount - 6} more items</p> : null}
+          {preview}
           <button type="button" className="btn-primary btn-lg sf__cta" onClick={onNext}>
             Looks right <Arrow />
           </button>
+          {uploaded || showUpload ? (
+            <MenuUpload trialId={trial.id} onUpdated={onUpdated} primaryLabel={uploaded ? "Add more pages or files" : "Upload your menu"} />
+          ) : (
+            <button type="button" className="sf__text-btn" onClick={() => setShowUpload(true)}>
+              Have your exact menu? Upload it in any format
+            </button>
+          )}
         </>
       )}
     </div>

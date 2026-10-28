@@ -833,6 +833,128 @@
   color: rgb(var(--text-primary));
 }
 
+
+/* ------------------------------- menu upload ------------------------------- */
+
+.sf__upload {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.sf__drop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 26px 18px;
+  border-radius: 20px;
+  border: 1.5px dashed rgb(var(--border-strong));
+  background: rgb(var(--bg-card));
+  transition: border-color var(--dur), background var(--dur), transform var(--dur-fast);
+}
+.sf__drop:hover:not(:disabled),
+.sf__drop.is-dragging {
+  border-color: rgb(var(--accent));
+  background: rgb(var(--accent-soft) / 0.5);
+}
+.sf__drop.is-dragging {
+  transform: scale(1.01);
+}
+.sf__drop:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+.sf__drop-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgb(var(--bg-ink));
+  color: #fff;
+}
+.sf__drop-title {
+  font-family: var(--font-display), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.sf__drop-sub {
+  font-size: 13.5px;
+  color: rgb(var(--text-muted));
+}
+.sf__files {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+.sf__file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgb(var(--bg-card));
+  border: 1px solid rgb(var(--border));
+  font-size: 13.5px;
+}
+.sf__file-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.sf__file-state {
+  flex: none;
+  max-width: 60%;
+  text-align: right;
+  color: rgb(var(--text-muted));
+}
+.sf__file.is-reading .sf__file-state {
+  color: rgb(var(--accent));
+}
+.sf__file.is-done .sf__file-state {
+  color: rgb(var(--success));
+  font-weight: 600;
+}
+.sf__file.is-error {
+  border-color: rgb(var(--danger) / 0.4);
+}
+.sf__file.is-error .sf__file-state {
+  color: rgb(var(--danger));
+  white-space: normal;
+}
+.sf__paste {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.sf__textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid rgb(var(--border-strong));
+  background: rgb(var(--bg-card));
+  font-family: var(--font-mono), monospace;
+  font-size: 13.5px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.sf__textarea:focus {
+  outline: none;
+  border-color: rgb(var(--text-primary));
+}
+
 @media (max-width: 480px) {
   .sf__place-facts {
     grid-template-columns: 1fr;

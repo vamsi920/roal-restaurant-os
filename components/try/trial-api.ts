@@ -36,6 +36,17 @@ export const trialApi = {
       method: "POST",
       body: body instanceof FormData ? body : JSON.stringify(body ?? {}),
     }),
+  /** One menu file or pasted text; `append` adds to the menu being built from earlier uploads. */
+  uploadMenu: (id: string, input: { file?: Blob; fileName?: string; text?: string; append: boolean }) => {
+    const fd = new FormData();
+    if (input.file) fd.append("file", input.file, input.fileName ?? "menu");
+    if (input.text) fd.append("text", input.text);
+    fd.append("mode", input.append ? "append" : "replace");
+    return request<TrialEnvelope & { added: number; file: string }>(`/api/try/${id}/menu/upload`, {
+      method: "POST",
+      body: fd,
+    });
+  },
   agent: (id: string) => request<TrialEnvelope>(`/api/try/${id}/agent`, { method: "POST" }),
   persona: (
     id: string,
