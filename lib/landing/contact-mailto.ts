@@ -1,6 +1,6 @@
 /** Pilot inbox + mailto builders (single source for `/contact` CTAs). */
 
-export const CONTACT_PILOT_EMAIL = "hello@getroal.com" as const;
+export const CONTACT_PILOT_EMAIL = "venva920@gmail.com" as const;
 
 const MAILTO_PREFIX = `mailto:${CONTACT_PILOT_EMAIL}`;
 
