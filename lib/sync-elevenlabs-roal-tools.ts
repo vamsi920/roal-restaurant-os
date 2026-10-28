@@ -62,6 +62,11 @@ const LINE_ITEM_BODY = {
         "Exact modifier strings from get_menu_items, not translated.",
       items: { type: "string", description: "One customization" },
     },
+    notes: {
+      type: "string",
+      description:
+        "Kitchen note for a simple request on this item, in the caller's words: extra spicy, mild, no onions, sauce on the side, well done.",
+    },
   },
 } as const;
 
