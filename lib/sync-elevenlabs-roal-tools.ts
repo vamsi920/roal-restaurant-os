@@ -65,9 +65,10 @@ const LINE_ITEM_BODY = {
   },
 } as const;
 
+/** Filled in by ElevenLabs with the call's id, so orders, calls and tickets all share one key. */
 const SESSION_ID_PROP = {
   type: "string",
-  description: "Stable session id (e.g. ElevenLabs conversation id)",
+  dynamic_variable: "system__conversation_id",
 } as const;
 
 const STATUS_PROP = {

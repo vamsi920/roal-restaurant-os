@@ -129,6 +129,11 @@ function mergeVoicemailBuiltIns(
   const out = { ...base };
   // Hosts must be able to hang up on silence, spam and finished calls (see call-guards).
   if (!out.end_call) out.end_call = systemToolLikeEndCall("end_call");
+  // Hang up right after the goodbye instead of waiting on the caller.
+  if (out.end_call && typeof out.end_call === "object") {
+    (out.end_call as Record<string, unknown>).description =
+      "Hang up the call. Use it right after your goodbye: once the order is placed and you said the ready time, or when the caller says bye, thanks, or that's all.";
+  }
   if (!out.voicemail_detection) {
     out.voicemail_detection = systemToolLikeEndCall("voicemail_detection", {
       voicemail_message: voicemailMessage,

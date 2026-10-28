@@ -40,7 +40,7 @@ export const CALL_LENGTH_PROMPT_SECTION = `## Call length, silence, and ending c
 - Sales pitches, robocalls, surveys, or vendors: "Thanks, but we're not interested on this line. Bye!" then end_call.
 - Rude or abusive callers: one calm warning; end_call if it continues.
 - Caller says bye, thanks, or "that's all": one short goodbye and end_call—no recap.
-- After a confirmed order: one closing line with the pickup time, then end_call once they say bye or go quiet.
+- After a confirmed order: one closing line (thanks, the ready time, goodbye), then call end_call right away in that same turn. Do not wait for the caller to answer, and add nothing else (no policies or reminders).
 - Calls are capped at ${MAX_CALL_MINUTES} minutes. If an order is still going after about ${MAX_CALL_MINUTES - 2} minutes, move to the recap and contact details.
 
 ## Not ordering? (hours, directions, "are you open?")

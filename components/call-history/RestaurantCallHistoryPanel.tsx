@@ -31,13 +31,15 @@ import {
 import { Notice, RefreshButton } from "@/components/live-orders/workspace-ui";
 import { DrawerSection, SideDrawer } from "@/components/live-orders/SideDrawer";
 import { TranscriptBubbles } from "@/components/call-history/TranscriptBubbles";
+import { LiveBill, type LiveBillState } from "@/components/start/live-bill";
+import { linesFromDraft } from "@/components/voice-agent/LiveOrderTicket";
+import type { DraftOrderRow } from "@/lib/types";
 import { CALL_HISTORY_DEFAULT_RANGE_DAYS } from "@/lib/call-history/load-call-history";
 import type {
   CallHistoryRow,
   CallHistorySnapshot,
   ReservationRequestRow,
 } from "@/lib/call-history/types";
-import { parseOrderLineItems } from "@/lib/orders/line-items";
 import {
   isOpenReservationStatus,
   normalizeReservationStatus,
@@ -445,8 +447,37 @@ function CallRow({
   );
 }
 
+/** While a call is live, the draft order for that call, refreshed every second. */
+function useLiveDraft(restaurantId: string, sessionId: string | null, live: boolean): DraftOrderRow | null {
+  const [draft, setDraft] = useState<DraftOrderRow | null>(null);
+  useEffect(() => {
+    setDraft(null);
+    if (!sessionId || !live) return;
+    let alive = true;
+    async function poll() {
+      try {
+        const res = await fetch(`/api/restaurants/${restaurantId}/live/orders`, { cache: "no-store" });
+        if (!res.ok) return;
+        const body = (await res.json()) as { draftOrders?: DraftOrderRow[] };
+        if (alive) setDraft((body.draftOrders ?? []).find((d) => d.session_id === sessionId) ?? null);
+      } catch {
+        // Next poll retries.
+      }
+    }
+    void poll();
+    const t = setInterval(poll, 1000);
+    return () => {
+      alive = false;
+      clearInterval(t);
+    };
+  }, [restaurantId, sessionId, live]);
+  return draft;
+}
+
 function CallDrawer({
   row,
+  restaurantId,
+  restaurantName,
   hostName,
   items,
   handled,
@@ -454,6 +485,8 @@ function CallDrawer({
   onClose,
 }: {
   row: CallHistoryRow | null;
+  restaurantId: string;
+  restaurantName: string;
   hostName: string;
   items: unknown;
   handled: boolean;
@@ -462,7 +495,26 @@ function CallDrawer({
 }) {
   const caller = row ? callerLabel(row) : null;
   const tel = row ? dialHref(row.callerPhone) : null;
-  const lines = useMemo(() => (items == null ? [] : parseOrderLineItems(items)), [items]);
+  const live = row ? isLive(row) : false;
+  const draft = useLiveDraft(restaurantId, row?.sessionId ?? null, live);
+  const orderItems = draft?.items ?? items;
+  const lines = useMemo(() => (orderItems == null ? [] : linesFromDraft({ items: orderItems })), [orderItems]);
+  const subtotal = lines.reduce((sum, l) => sum + (l.unitPrice ?? 0) * l.qty, 0);
+  const placed = row?.outcome === "order_completed" || Boolean(draft && draft.status !== "draft");
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!live) return;
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [live]);
+  const billState: LiveBillState = placed
+    ? "placed"
+    : draft && now - new Date(draft.updated_at).getTime() < 5000
+      ? "writing"
+      : live
+        ? "live"
+        : "idle";
+  const showBill = live || lines.length > 0 || row?.lineCount;
   const badge = row ? outcomeBadge(row, handled) : null;
   const followUp = row ? needsFollowUp(row) : false;
 
@@ -509,82 +561,74 @@ function CallDrawer({
             </Notice>
           ) : null}
 
-          <DrawerSection title="Summary">
+          {showBill ? (
+            <div className="mb-6">
+              <LiveBill
+                restaurantName={restaurantName}
+                hostName={hostName}
+                ticketNo={row.sessionId.replace(/[^0-9]/g, "").slice(-4).padStart(4, "0")}
+                lines={lines.map((l, i) => ({
+                  key: `${l.name}-${l.mods.join(",")}-${i}`,
+                  name: l.name,
+                  qty: l.qty,
+                  lineTotal: l.unitPrice != null ? l.unitPrice * l.qty : null,
+                  mods: l.mods,
+                }))}
+                subtotal={subtotal}
+                customerName={draft?.customer_name ?? row.callerName}
+                fulfillment={draft?.fulfillment_type ?? (row.fulfillmentLabel?.toLowerCase().includes("deliver") ? "delivery" : "pickup")}
+                state={billState}
+                startedAt={live ? new Date(row.occurredAt).getTime() : null}
+                emptyText={`${hostName} is on the call. Items appear here the moment the caller orders them.`}
+              />
+            </div>
+          ) : null}
+
+          <DrawerSection title={live ? "What's happening" : "Summary"}>
             {row.transcriptSummary ? (
               <p className="text-[14px] leading-relaxed text-ink [overflow-wrap:anywhere]">{row.transcriptSummary}</p>
             ) : (
-              <p className="text-[13px] text-subtle">No summary for this call.</p>
+              <p className="text-[13px] text-subtle">
+                {live ? `${hostName} is talking with the caller right now.` : "No summary for this call."}
+              </p>
             )}
-            <dl className="mt-3 grid grid-cols-2 gap-2 text-[12.5px]">
-              <div className="rounded-[10px] bg-elev px-3 py-2">
-                <dt className="text-subtle">Intent</dt>
-                <dd className="font-semibold text-ink">{row.intentLabel}</dd>
-              </div>
-              <div className="rounded-[10px] bg-elev px-3 py-2">
-                <dt className="text-subtle">Outcome</dt>
-                <dd className="font-semibold text-ink">{row.outcomeLabel}</dd>
-              </div>
-              {!followUp ? (
-                <div className="col-span-2 rounded-[10px] bg-elev px-3 py-2">
+            {!live ? (
+              <dl className="mt-3 grid grid-cols-2 gap-2 text-[12.5px]">
+                <div className="rounded-[10px] bg-elev px-3 py-2">
+                  <dt className="text-subtle">Outcome</dt>
+                  <dd className="font-semibold text-ink">{row.outcomeLabel}</dd>
+                </div>
+                <div className="rounded-[10px] bg-elev px-3 py-2">
                   <dt className="text-subtle">Next step</dt>
                   <dd className="font-semibold text-ink">{row.ownerActionLabel}</dd>
                 </div>
-              ) : null}
-            </dl>
+              </dl>
+            ) : null}
           </DrawerSection>
 
-          {row.lineCount > 0 || lines.length > 0 ? (
-            <DrawerSection
-              title={`Order${row.fulfillmentLabel ? ` · ${row.fulfillmentLabel}` : ""}`}
-              action={
-                row.totalLabel ? (
-                  <span className="font-mono text-[14px] font-bold tabular-nums text-ink">{row.totalLabel}</span>
-                ) : null
-              }
-            >
-              {lines.length > 0 ? (
-                <ul className="divide-y divide-line rounded-[12px] border border-line">
-                  {lines.map((line, i) => (
-                    <li key={i} className="flex gap-2.5 px-3 py-2">
-                      <span className="w-6 shrink-0 font-mono text-[13.5px] font-bold tabular-nums">{line.quantity}×</span>
-                      <span className="min-w-0">
-                        <span className="block text-[13.5px] font-semibold text-ink [overflow-wrap:anywhere]">{line.name}</span>
-                        {line.customizations.length > 0 ? (
-                          <span className="block text-[12.5px] text-muted">{line.customizations.join(" · ")}</span>
-                        ) : null}
-                        {line.notes ? <span className="kds-ticket__note mt-1 block">{line.notes}</span> : null}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-[13px] text-subtle">
-                  {row.lineCount} item{row.lineCount === 1 ? "" : "s"} on this order. Open the Kitchen board for the ticket.
-                </p>
-              )}
-            </DrawerSection>
+          {row.transcriptLines.length > 0 || row.recordingUrl ? (
+            <details className="mt-6 rounded-[12px] border border-line px-3 py-2.5">
+              <summary className="cursor-pointer text-[13px] font-semibold text-ink">
+                Show conversation
+                {formatDuration(row.durationSeconds) ? (
+                  <span className="font-normal text-subtle"> · {formatDuration(row.durationSeconds)}</span>
+                ) : null}
+              </summary>
+              <div className="mt-3 space-y-3">
+                {row.recordingUrl ? (
+                  <a href={row.recordingUrl} target="_blank" rel="noreferrer" className="btn-ghost btn-sm">
+                    <Play size={13} aria-hidden />
+                    Play recording
+                  </a>
+                ) : null}
+                {row.transcriptLines.length > 0 ? (
+                  <TranscriptBubbles lines={row.transcriptLines} hostName={hostName} />
+                ) : null}
+              </div>
+            </details>
+          ) : live ? (
+            <p className="mt-4 text-[12.5px] text-subtle">The full conversation shows up here when the call ends.</p>
           ) : null}
-
-          <DrawerSection
-            title="Transcript"
-            action={
-              row.recordingUrl ? (
-                <a href={row.recordingUrl} target="_blank" rel="noreferrer" className="btn-ghost btn-sm">
-                  <Play size={13} aria-hidden />
-                  Recording
-                  {formatDuration(row.durationSeconds) ? ` · ${formatDuration(row.durationSeconds)}` : ""}
-                </a>
-              ) : null
-            }
-          >
-            {row.transcriptLines.length > 0 ? (
-              <TranscriptBubbles lines={row.transcriptLines} hostName={hostName} />
-            ) : (
-              <p className="text-[13px] text-subtle">
-                {isLive(row) ? "The call is still going — the transcript arrives when it ends." : "No transcript was saved for this call."}
-              </p>
-            )}
-          </DrawerSection>
 
           <details className="mt-6 rounded-[10px] border border-line px-3 py-2">
             <summary className="cursor-pointer text-[12.5px] font-medium text-subtle">Call reference</summary>
@@ -637,6 +681,14 @@ export function RestaurantCallHistoryPanel({
     () => sorted.filter((row) => matchesFilter(row, filter, handled)),
     [sorted, filter, handled]
   );
+
+  const anyLive = snapshot.rows.some(isLive);
+  useEffect(() => {
+    const t = setInterval(() => {
+      if (document.visibilityState === "visible") router.refresh();
+    }, anyLive ? 3000 : 15000);
+    return () => clearInterval(t);
+  }, [anyLive, router]);
 
   const openRow = openId ? snapshot.rows.find((row) => row.sessionId === openId) ?? null : null;
   const openReservations = snapshot.reservationRequests.filter((r) => isOpenReservationStatus(r.status)).length;
@@ -734,6 +786,8 @@ export function RestaurantCallHistoryPanel({
 
       <CallDrawer
         row={openRow}
+        restaurantId={snapshot.restaurantId}
+        restaurantName={snapshot.restaurantName}
         hostName={hostName}
         items={openRow ? orderItemsBySession[openRow.sessionId] ?? null : null}
         handled={openRow ? handled.has(openRow.sessionId) : false}
