@@ -7,7 +7,7 @@ Copy: docs/launch/LAUNCH_KIT.md. Images: docs/launch/images/. Footer "Featured o
 |---|---|
 | Product Hunt | Scheduled Thu Oct 29, 12:01 AM PT. producthunt.com/products/roal. Gallery, first comment, tags (AI, Food & Drink, Customer Communication), pricing set |
 | Google Search Console | Verified, sitemap submitted, 6 URLs requested |
-| Bing Webmaster | Site added; meta tag verification waiting on deploy |
+| Bing Webmaster | Verified (meta tag), sitemap submitted, 80 key URLs submitted (100/day cap) |
 | IndexNow | 257 URLs accepted; daily function pings new posts |
 | Brave | 14 key URLs submitted |
 | Launching Next | Submitted, free queue (id 170072, ~4 months; $99 fast-track not bought) |
@@ -15,6 +15,8 @@ Copy: docs/launch/LAUNCH_KIT.md. Images: docs/launch/images/. Footer "Featured o
 | Indie Hackers | Live: indiehackers.com/product/roal |
 | Future Tools | Submitted, manual review |
 | Tiny Startups | Saved in free queue (£69 instant listing not bought) |
+| twelve.tools | Live: twelve.tools (slug tryroal). Keep the footer link or it drops off. Edit link: twelve.tools/edit?hash=p1cii9mzxspxqe8noxc4 |
+| Fazier | Skipped: free tier needs 3 public comments on other products in your name plus their badge ($29 skips it) |
 
 ## Launch day (Oct 29) — needs you
 - **Show HN** (signed in on your Chrome): post 8–10 AM ET. Title: "Show HN: ROAL – AI phone host for restaurants that builds itself from your website". URL https://tryroal.com. Text: the PH first comment.
