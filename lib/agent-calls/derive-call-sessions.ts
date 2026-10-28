@@ -14,7 +14,8 @@ import {
 } from "@/lib/agent-calls/types";
 
 const DEFAULT_ABANDONED_MS = 30 * 60 * 1000;
-const DEFAULT_ACTIVE_MS = 15 * 60 * 1000;
+/** Calls are capped at 8 minutes (MAX_CALL_SECONDS), so nothing quiet for 9 is still on the line. */
+const DEFAULT_ACTIVE_MS = 9 * 60 * 1000;
 
 function sessionKey(restaurantId: string, sessionId: string): string {
   return `${restaurantId}:${sessionId}`;

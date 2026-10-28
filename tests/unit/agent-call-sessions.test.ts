@@ -192,8 +192,8 @@ describe("deriveAgentCallSessions", () => {
         draft({
           session_id: "live_1",
           items: [{ name: "Salad", quantity: 1, customizations: [] }],
-          created_at: "2026-05-30T17:50:00.000Z",
-          updated_at: "2026-05-30T17:50:00.000Z",
+          created_at: "2026-05-30T17:55:00.000Z",
+          updated_at: "2026-05-30T17:55:00.000Z",
         }),
       ],
       receipts: [],

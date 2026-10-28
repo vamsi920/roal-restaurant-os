@@ -201,3 +201,15 @@ describe("caller question topics: owner-facing fixes", () => {
     );
   });
 });
+
+describe("halal as a dish name", () => {
+  it("does not treat a dish called Chicken Tikka Halal as a dietary question", async () => {
+    const { classifyCallerQuestionTopic } = await import("@/lib/analytics/caller-question-topics");
+    expect(classifyCallerQuestionTopic({ transcript_summary: "The caller selected Chicken Tikka Halal." })).not.toBe(
+      "allergens_dietary"
+    );
+    expect(classifyCallerQuestionTopic({ transcript: [{ role: "user", message: "Is the chicken halal?" }] })).toBe(
+      "allergens_dietary"
+    );
+  });
+});

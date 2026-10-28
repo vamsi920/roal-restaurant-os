@@ -94,8 +94,11 @@ const TOPIC_MATCHERS: Array<{ id: CallerQuestionTopicId; patterns: RegExp[] }> =
       /\bshellfish\b/,
       /\bvegan\b/,
       /\bvegetarian\b/,
-      /\bhalal\b/,
-      /\bkosher\b/,
+      // Only when asked about: "Chicken Tikka Halal" is a dish name, not a dietary question.
+      /\b(?:is|are) (?:it|this|that|they|the \w+|your \w+|everything|the meat) (?:halal|kosher)\b/,
+      /\b(?:halal|kosher)\s*\?/,
+      /\bany(?:thing)? (?:halal|kosher)\b/,
+      /\b(?:halal|kosher) (?:meat|options?|food|menu|certified)\b/,
       /\bdietary\b/,
     ],
   },
