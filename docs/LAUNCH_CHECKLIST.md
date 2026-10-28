@@ -58,7 +58,8 @@ Stripe and Twilio API calls.
    `NEXT_PUBLIC_APP_URL=https://tryroal.com` on Netlify and in `.env.local`, Let's Encrypt cert live, Firebase
    authorized domains include tryroal.com + www, live Stripe webhook `we_1UVYRKG9grk49qlEeF3UHT0C` now posts to
    `https://tryroal.com/api/billing/webhook` (same secret), and both phone hosts re-synced and verified on the new
-   domain. The ElevenLabs post-call webhook still uses roal-os.netlify.app, which keeps working as an alias. Original steps: add it in Netlify. Set `NEXT_PUBLIC_APP_URL=https://<domain>`, add the domain to Firebase
+   domain. The ElevenLabs post-call webhook is the new workspace endpoint "ROAL post-call (tryroal.com)"
+   (`55a96fec9c5e4d5f8cf1a01033d0208b`) with its secret in `ELEVENLABS_WEBHOOK_SECRET`; the old netlify.app one is disabled. Original steps: add it in Netlify. Set `NEXT_PUBLIC_APP_URL=https://<domain>`, add the domain to Firebase
    Auth > Authorized domains, point the live Stripe webhook at it, then re-sync phone hosts
    (`npm run resync:elevenlabs-all` with `.env.local` pointing at the new domain), because the hosts'
    tool links use the app URL. Keep `roal-os.netlify.app` working as an alias.
