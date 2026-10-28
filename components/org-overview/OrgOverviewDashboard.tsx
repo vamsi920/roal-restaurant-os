@@ -183,7 +183,7 @@ function OrganizationOverviewSection({
                   <tr>
                     <th>Location</th>
                     <th>Phone host</th>
-                    <th>Menu sync</th>
+                    <th>Host menu</th>
                     <th className="is-num">Orders</th>
                     <th>Status</th>
                   </tr>
@@ -259,11 +259,11 @@ function RestaurantOverviewRow({ row }: { row: OrgRestaurantOverviewRow }) {
           ) : null}
         </div>
       </td>
-      <td data-label="Menu sync">
+      <td data-label="Host menu">
         <div className="min-w-0">
           <StatusChip tone={menuSyncTone(row.menuSyncPhase)}>{row.menuSyncLabel}</StatusChip>
           <p className="mt-1 text-[12px] text-subtle">
-            {row.lastMenuSyncAt ? formatWhen(row.lastMenuSyncAt) : "Never synced"}
+            {row.lastMenuSyncAt ? formatWhen(row.lastMenuSyncAt) : "Not sent yet"}
           </p>
         </div>
       </td>

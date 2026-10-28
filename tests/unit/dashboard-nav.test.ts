@@ -60,7 +60,7 @@ describe("location-scoped sidebar nav (v3)", () => {
     expect(active(`${BASE}/overview`)).toEqual(["overview"]);
     expect(active(`${BASE}/calls`)).toEqual(["calls"]);
     expect(active(`${BASE}/menu`)).toEqual(["menu"]);
-    expect(active(`${BASE}/menu`, "#restaurant-settings")).toEqual(["settings"]);
+    expect(active(`${BASE}/settings`)).toEqual(["settings"]);
     expect(active(`${BASE}/agent`)).toEqual(["host"]);
     expect(active(`${BASE}/analytics`)).toEqual(["reports"]);
     expect(active(`${BASE}/billing`)).toEqual(["billing"]);

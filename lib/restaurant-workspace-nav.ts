@@ -36,16 +36,13 @@ export function buildRestaurantWorkspaceNav(
 ): RestaurantWorkspaceDestination[] {
   const {
     restaurantId,
-    hasLiveAgentRoute = false,
     hasRestaurantAnalytics = false,
     hasRestaurantBilling = false,
   } = options;
 
   const base = `/dashboard/restaurants/${restaurantId}`;
 
-  const liveAgentHref = hasLiveAgentRoute
-    ? `${base}/agent`
-    : `${base}/menu`;
+  const liveAgentHref = `${base}/agent`;
 
   const analyticsHref = hasRestaurantAnalytics
     ? `${base}/analytics`
@@ -131,7 +128,7 @@ export function isRestaurantWorkspaceNavActive(
   const callsPath = `${base}/calls`;
   const analyticsPath = `${base}/analytics`;
   const billingPath = `${base}/billing`;
-  const settingsPath = `${base}/menu`;
+  const settingsPath = `${base}/settings`;
 
   switch (itemId) {
     case "orders":

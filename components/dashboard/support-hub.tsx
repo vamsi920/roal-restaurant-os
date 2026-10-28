@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  Activity,
   Bell,
   ChefHat,
   ChevronRight,
@@ -114,16 +113,9 @@ export function SupportHub() {
           <ResourceLink
             href="/dashboard/settings/notifications"
             label="Notifications"
-            detail="Order complete, sync fail, stuck orders"
+            detail="Completed orders, setup problems, stuck orders"
             icon={Bell}
             color="amber"
-          />
-          <ResourceLink
-            href="/api/health"
-            label="Platform health"
-            detail="JSON status for deploy checks"
-            icon={Activity}
-            color="blue"
           />
           <ResourceLink
             href="/contact"

@@ -7,6 +7,7 @@ import {
 import {
   restaurantLiveOrdersHref,
   restaurantMenuSetupHref,
+  restaurantSettingsHref,
   restaurantVoiceAgentHref,
 } from "@/lib/voice-agent/provision-display";
 import type {
@@ -181,18 +182,18 @@ export function evaluateConversationInitWebhook(input: {
 function itemHref(restaurantId: string, id: LaunchChecklistItemId): string {
   switch (id) {
     case "profile_complete":
-      return restaurantMenuSetupHref(restaurantId);
+      return restaurantSettingsHref(restaurantId);
     case "menu_has_items":
       return restaurantMenuSetupHref(restaurantId);
     case "hours_set":
-      return restaurantMenuSetupHref(restaurantId);
+      return restaurantSettingsHref(restaurantId, "hours");
     case "server_env_ready":
     case "agent_provisioned":
     case "tools_synced":
     case "conversation_init_webhook":
       return restaurantVoiceAgentHref(restaurantId);
     case "test_call_passed":
-      return restaurantVoiceAgentHref(restaurantId);
+      return `${restaurantVoiceAgentHref(restaurantId)}#test-call`;
     default:
       return restaurantLiveOrdersHref(restaurantId);
   }

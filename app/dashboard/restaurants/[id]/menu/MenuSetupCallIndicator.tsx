@@ -37,7 +37,7 @@ export function MenuSetupCallIndicator({ restaurantId }: { restaurantId: string 
     activeCallCount > 0
       ? "Call in progress"
       : syncingUpdateCount > 0
-        ? "Syncing menu updates"
+        ? "Updating your host"
         : "No active call";
   const liveCount = activeCallCount > 0 ? activeCallCount : syncingUpdateCount;
 
@@ -57,7 +57,7 @@ export function MenuSetupCallIndicator({ restaurantId }: { restaurantId: string 
       title={
         activeCallCount > 0
           ? "A guest is on the phone with your host right now"
-          : "Order updates are syncing from a recent call"
+          : "Updating orders from a recent call"
       }
     >
       <span

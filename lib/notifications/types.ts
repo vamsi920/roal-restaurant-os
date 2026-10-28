@@ -71,11 +71,11 @@ export type DispatchNotificationInput = {
 
 export const NOTIFICATION_EVENT_LABELS: Record<NotificationEventType, string> = {
   order_completed: "Order completed",
-  sync_failure: "Voice agent sync failure",
+  sync_failure: "Phone host problem",
   scan_failure: "Menu scan failure",
   order_stuck: "Order stuck in kitchen",
-  provision_failure: "Voice agent provisioning failure",
-  menu_auto_sync_failure: "Menu auto-sync failure",
+  provision_failure: "Phone host setup problem",
+  menu_auto_sync_failure: "Menu update problem",
   go_live: "Location went live",
   realtime_degraded: "Realtime connection degraded",
   staff_handoff_requested: "Staff handoff requested",
@@ -92,16 +92,16 @@ export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
   string
 > = {
   order_completed: "When a phone order is marked complete on the KDS.",
-  sync_failure: "When ElevenLabs tool or profile sync fails for a location.",
+  sync_failure: "When your phone host can't get your latest details.",
   scan_failure: "When menu photo extraction fails.",
   order_stuck: "When an order stays in the kitchen queue past your threshold.",
   provision_failure:
-    "When dedicated voice agent auto-setup fails for a location (once per failure).",
+    "When setting up a location's phone host fails (once per problem).",
   menu_auto_sync_failure:
-    "When menu or profile changes fail to sync to the voice agent (once per failure).",
+    "When menu or detail changes don't reach your phone host (once per problem).",
   go_live: "When a location completes onboarding and goes live.",
   realtime_degraded:
-    "When the live orders panel falls back to polling (Realtime offline).",
+    "When the kitchen board can't get instant updates and refreshes more slowly.",
   staff_handoff_requested:
     "When a phone call asks for manager/staff follow-up or escalation.",
   voicemail_callback:

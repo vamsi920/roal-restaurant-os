@@ -400,7 +400,7 @@ export async function createVoiceAgentBrowserCallAction(input: {
   const profile = await getRestaurantProfile(supabase, input.restaurantId);
   const agentId = profile?.elevenlabs_agent_id?.trim();
   if (!profile || !agentId) {
-    throw new Error("Provision the voice agent before starting a call.");
+    throw new Error("Your phone host is still getting ready. Try again in a minute.");
   }
   const signedUrl = await getConvaiSignedUrl(agentId);
   return {
@@ -435,7 +435,7 @@ export async function startVoiceAgentOutboundCallAction(input: {
   const profile = await getRestaurantProfile(supabase, input.restaurantId);
   const agentId = profile?.elevenlabs_agent_id?.trim();
   if (!profile || !agentId) {
-    throw new Error("Provision the voice agent before starting a call.");
+    throw new Error("Your phone host is still getting ready. Try again in a minute.");
   }
   const toNumber = toE164Phone(profile.phone);
   if (!toNumber) {
@@ -684,7 +684,7 @@ export async function syncRestaurantVoiceAgentOnboardingAction(input: {
   const profile = await getRestaurantProfile(supabase, input.restaurantId);
   const agentId = profile?.elevenlabs_agent_id?.trim();
   if (!agentId) {
-    throw new Error("Provision the voice agent before syncing tools.");
+    throw new Error("Your phone host is still getting ready. Try again in a minute.");
   }
 
   try {

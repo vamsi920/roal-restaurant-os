@@ -24,7 +24,7 @@ export function PhoneNumberCard({
   restaurantPhone: string | null;
 }) {
   return (
-    <section className="panel p-4 sm:p-5" aria-labelledby="phone-number-title">
+    <section id="phone-number" className="panel scroll-mt-24 p-4 sm:p-5" aria-labelledby="phone-number-title">
       <div className="flex flex-wrap items-start gap-3">
         <IconTile icon={Phone} color="green" size="lg" />
         <div className="min-w-0 flex-1">

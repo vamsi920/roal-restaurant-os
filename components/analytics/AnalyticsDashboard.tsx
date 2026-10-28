@@ -55,7 +55,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
     (snapshot.restaurantId
       ? `/dashboard/restaurants/${snapshot.restaurantId}`
       : "/dashboard/restaurants");
-  const emptyCta = isRestaurantScope ? "Open live orders" : "Open restaurants";
+  const emptyCta = isRestaurantScope ? "Open kitchen" : "Open restaurants";
 
   const peakLabel =
     peakHours.length > 0
@@ -188,9 +188,9 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
               value={peakCallHours[0] ? peakCallHours[0].label : "—"}
               hint={
                 peakCallHours.length > 0
-                  ? `UTC from post-call webhooks · ${peakCallLabel}`
+                  ? `Times in UTC · ${peakCallLabel}`
                   : peakHours.length > 0
-                    ? `No call webhooks yet. Receipt peak: ${peakLabel}`
+                    ? `No calls yet. Busiest order time: ${peakLabel}`
                     : "No call events in range"
               }
               icon={Clock}
@@ -337,7 +337,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
                 <StatTile
                   label="Active calls"
                   value={callOutcomes.active.toLocaleString()}
-                  hint="Calls still in progress when last synced"
+                  hint="Calls still in progress when last updated"
                 />
                 <StatTile
                   label="Abandoned calls"

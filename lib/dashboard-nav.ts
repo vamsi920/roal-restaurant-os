@@ -94,7 +94,7 @@ export function isLocationNavActive(
 ): boolean {
   if (restaurantIdFromPath(pathname) !== restaurantId) return false;
   const sub = restaurantSubpath(pathname, restaurantId);
-  const onSettings = sub.startsWith("/settings") || (sub.startsWith("/menu") && hash === "#restaurant-settings");
+  const onSettings = sub.startsWith("/settings");
   switch (key) {
     case "overview":
       return sub.startsWith("/overview");

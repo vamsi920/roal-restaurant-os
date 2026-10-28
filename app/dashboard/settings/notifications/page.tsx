@@ -63,7 +63,7 @@ export default async function NotificationSettingsPage() {
         backHref="/dashboard/settings"
         backLabel="Settings"
         title="Notifications"
-        lead={`Alerts for completed orders, sync and scan failures, stuck tickets, and realtime outages. ${NOTIFICATION_PROVIDER_POSTURE.devDefault}`}
+        lead="Get alerts for completed orders, phone host problems, menu upload problems and stuck tickets."
       />
 
       <NotificationSettingsForm settings={settings} canEdit={canEdit} />

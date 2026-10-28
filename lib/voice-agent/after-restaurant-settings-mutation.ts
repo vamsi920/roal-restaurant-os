@@ -11,7 +11,9 @@ export function restaurantSettingsRevalidatePaths(
   return [
     `/dashboard/restaurants/${restaurantId}`,
     `/dashboard/restaurants/${restaurantId}/menu`,
+    `/dashboard/restaurants/${restaurantId}/settings`,
     `/dashboard/restaurants/${restaurantId}/agent`,
+    `/dashboard/restaurants/${restaurantId}/overview`,
   ] as const;
 }
 

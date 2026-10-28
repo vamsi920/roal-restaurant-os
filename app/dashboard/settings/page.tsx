@@ -78,7 +78,7 @@ export default async function SettingsPage() {
         <SettingsLink
           href="/dashboard/settings/notifications"
           title="Notifications"
-          detail="Completed orders, sync failures, stuck tickets."
+          detail="Completed orders, setup problems, stuck tickets."
           icon={Bell}
           color="amber"
         />

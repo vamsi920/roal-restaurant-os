@@ -4,6 +4,7 @@ import type { MenuAutoSyncUiPhase } from "@/lib/voice-agent/menu-auto-sync-displ
 import {
   restaurantLiveOrdersHref,
   restaurantMenuSetupHref,
+  restaurantSettingsHref,
   restaurantVoiceAgentHref,
   type VoiceProvisionUiState,
 } from "@/lib/voice-agent/provision-display";
@@ -40,25 +41,25 @@ export function resolveLocationNextBestAction(input: {
       setupBlocker.code === "voice_provision_failed" ||
       setupBlocker.code === "voice_agent_missing"
     ) {
-      return { label: "Finish voice agent setup", href: agentHref };
+      return { label: "See phone host", href: agentHref };
     }
-    if (
-      setupBlocker.code === "menu_sync_failed" ||
-      setupBlocker.code === "voice_sync_error"
-    ) {
-      return { label: "Fix menu sync", href: menuHref };
+    if (setupBlocker.code === "menu_sync_failed") {
+      return { label: "Check menu", href: menuHref };
+    }
+    if (setupBlocker.code === "voice_sync_error") {
+      return { label: "See phone host", href: agentHref };
     }
     if (setupBlocker.code === "menu_empty") {
       return { label: "Add menu items", href: menuHref };
     }
     if (setupBlocker.code === "hours_not_set") {
-      return { label: "Set weekly hours", href: menuHref };
+      return { label: "Set weekly hours", href: restaurantSettingsHref(input.restaurantId, "hours") };
     }
     return { label: setupBlocker.message, href: setupBlocker.href ?? agentHref };
   }
 
   if (input.menuSyncPhase === "syncing") {
-    return { label: "Menu sync in progress", href: menuHref };
+    return { label: "Updating your host", href: menuHref };
   }
 
   if (input.activeCallCount > 0) {

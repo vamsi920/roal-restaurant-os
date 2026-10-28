@@ -7,5 +7,5 @@ export const NOTIFICATION_PROVIDER_POSTURE = {
   webhookLive:
     "Webhooks POST JSON in production mode when a URL is saved and the channel is enabled.",
   memberReadOnly:
-    "Organization members can view delivery history. Only admins can change settings or channel secrets.",
+    "Organization members can view delivery history. Only admins can change these settings.",
 } as const;

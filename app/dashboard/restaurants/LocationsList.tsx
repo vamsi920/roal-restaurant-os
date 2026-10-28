@@ -376,13 +376,13 @@ function RestaurantCard({
 function menuSyncLabel(phase: MenuAutoSyncUiPhase): string {
   switch (phase) {
     case "syncing":
-      return "syncing";
+      return "updating";
     case "failed":
-      return "sync error";
+      return "needs attention";
     case "succeeded":
-      return "synced";
+      return "up to date";
     case "idle":
-      return "not synced";
+      return "not sent yet";
     default:
       return "no host";
   }

@@ -35,7 +35,7 @@ export function buildRestaurantLaunchBlockers(
   if (input.voiceProvisionState === "needs_attention") {
     blockers.push({
       code: "voice_provision_failed",
-      message: "Voice agent setup failed — open Live Agent to retry",
+      message: "Phone host setup hit a snag. Open Phone host to try again.",
       href: agentHref,
     });
   } else if (
@@ -46,7 +46,7 @@ export function buildRestaurantLaunchBlockers(
       code: "voice_agent_missing",
       message:
         input.voiceProvisionState === "in_progress"
-          ? "Voice agent is still provisioning"
+          ? "Phone host is getting ready"
           : "Dedicated phone agent not connected",
       href: agentHref,
     });
@@ -55,7 +55,7 @@ export function buildRestaurantLaunchBlockers(
   if (input.menuSyncPhase === "failed") {
     blockers.push({
       code: "menu_sync_failed",
-      message: "Menu sync to voice agent failed",
+      message: "Couldn't update your host's menu",
       href: menuHref,
     });
   }
@@ -66,7 +66,7 @@ export function buildRestaurantLaunchBlockers(
   ) {
     blockers.push({
       code: "voice_sync_error",
-      message: "Last voice agent sync reported an error",
+      message: "Your phone host hit a snag",
       href: agentHref,
     });
   }
@@ -83,7 +83,7 @@ export function buildRestaurantLaunchBlockers(
     blockers.push({
       code: "hours_not_set",
       message: "Weekly hours not configured",
-      href: menuHref,
+      href: `/dashboard/restaurants/${input.restaurantId}/settings#restaurant-hours`,
     });
   }
 

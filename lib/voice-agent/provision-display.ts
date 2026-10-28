@@ -25,6 +25,11 @@ export function restaurantMenuSetupHref(restaurantId: string): string {
   return `/dashboard/restaurants/${restaurantId}/menu`;
 }
 
+/** Restaurant details, hours, FAQs and handoff (the Settings page). */
+export function restaurantSettingsHref(restaurantId: string, section?: "hours"): string {
+  return `/dashboard/restaurants/${restaurantId}/settings${section === "hours" ? "#restaurant-hours" : ""}`;
+}
+
 export function parseVoiceAgentProvisionApiResult(
   raw: unknown
 ): VoiceAgentProvisionApiResult | null {

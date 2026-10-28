@@ -117,8 +117,8 @@ export function MenuAutoSyncStatusPanel({
           <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
           <span suppressHydrationWarning>
             {display.lastSyncedAt
-              ? `Synced ${formatRelative(display.lastSyncedAt)}`
-              : "Synced"}
+              ? `Up to date · ${formatRelative(display.lastSyncedAt)}`
+              : "Up to date"}
           </span>
         </Badge>
       );
@@ -220,7 +220,7 @@ export function MenuAutoSyncStatusPanel({
           aria-busy={pending}
           onClick={onResync}
         >
-          {pending ? "Publishing…" : "Publish to voice"}
+          {pending ? "Updating…" : "Update host"}
         </button>
         {actionError ? (
           <span className="basis-full text-[12px] text-danger" role="alert">
@@ -258,7 +258,7 @@ export function MenuAutoSyncStatusPanel({
           items={[
             { label: "Status", value: display.badgeLabel },
             {
-              label: "Last synced",
+              label: "Last updated",
               value:
                 display.lastSyncedAt && display.phase === "succeeded"
                   ? formatMenuAutoSyncWhen(display.lastSyncedAt)
@@ -271,10 +271,11 @@ export function MenuAutoSyncStatusPanel({
 
         {display.phase === "no_agent" ? (
           <p className="text-[13px] text-muted">
+            Your{" "}
             <Link href={agentHref} className="font-medium text-ink underline underline-offset-2">
-              Open Live Agent
+              phone host
             </Link>{" "}
-            to connect ElevenLabs first.
+            is still getting ready.
           </p>
         ) : null}
 
@@ -288,10 +289,10 @@ export function MenuAutoSyncStatusPanel({
             aria-busy={pending}
             onClick={onResync}
           >
-            {pending ? "Publishing…" : "Publish to voice"}
+            {pending ? "Updating…" : "Update host"}
           </button>
           <Link href={agentHref} className="btn-ghost w-full sm:w-auto">
-            Live Agent settings
+            Phone host
           </Link>
         </div>
       </div>

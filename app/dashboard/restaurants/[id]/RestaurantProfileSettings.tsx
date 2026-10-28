@@ -192,7 +192,7 @@ export function RestaurantProfileSettings({
       message = error;
       tone = "bad";
     } else if (isActive && saved && !pending) {
-      message = "Saved. The phone host picks this up on its next sync.";
+      message = "Saved. Your phone host picks this up in about a minute.";
       tone = "ok";
     } else if (dirty.has(section)) {
       message = otherDirty

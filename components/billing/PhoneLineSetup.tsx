@@ -45,7 +45,7 @@ export function PhoneLineSetup() {
             {ready.map((l) => (
               <li key={l.restaurantId}>
                 Your phone line: <span className="font-semibold tabular-nums text-ink">{l.phoneNumber}</span>{" "}
-                <Link className="underline" href={`/dashboard/restaurants/${l.restaurantId}/agent`}>
+                <Link className="underline" href={`/dashboard/restaurants/${l.restaurantId}/agent#phone-number`}>
                   How to forward your calls
                 </Link>
               </li>

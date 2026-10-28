@@ -351,7 +351,7 @@ describe("next best action priority", () => {
       openReservationCount: 0,
       hoursConfigured: true,
     });
-    expect(action.label).toBe("Finish voice agent setup");
+    expect(action.label).toBe("See phone host");
     expect(action.href).toContain("/agent");
   });
 

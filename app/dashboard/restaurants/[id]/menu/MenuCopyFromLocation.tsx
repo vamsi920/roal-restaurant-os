@@ -127,7 +127,7 @@ export function MenuCopyFromLocation({
       try {
         const result = await setDefaultMenuTemplateAction(restaurantId, templateId);
         setNotice(
-          `"${result.template.name}" will be applied to new locations before their voice agent is synced.`
+          `"${result.template.name}" will be used for new locations.`
         );
         router.refresh();
       } catch (e) {
@@ -204,7 +204,7 @@ export function MenuCopyFromLocation({
           );
         } else {
           setNotice(
-            `Updated ${updated} inherited location${updated === 1 ? "" : "s"} and queued voice-agent menu sync${additive > 0 ? `; added missing brand items to ${additive} customized location${additive === 1 ? "" : "s"}` : ""}${preservedFieldOverrides > 0 ? `; preserved ${preservedFieldOverrides} local item override${preservedFieldOverrides === 1 ? "" : "s"}` : ""}${localOnlyItems > 0 ? ` and ${localOnlyItems} local-only item${localOnlyItems === 1 ? "" : "s"}` : ""}${locallyCustomized > 0 ? `; skipped ${locallyCustomized} customized location${locallyCustomized === 1 ? "" : "s"}` : ""}.`
+            `Updated ${updated} inherited location${updated === 1 ? "" : "s"} (their phone hosts get the update automatically)${additive > 0 ? `; added missing brand items to ${additive} customized location${additive === 1 ? "" : "s"}` : ""}${preservedFieldOverrides > 0 ? `; preserved ${preservedFieldOverrides} local item override${preservedFieldOverrides === 1 ? "" : "s"}` : ""}${localOnlyItems > 0 ? ` and ${localOnlyItems} local-only item${localOnlyItems === 1 ? "" : "s"}` : ""}${locallyCustomized > 0 ? `; skipped ${locallyCustomized} customized location${locallyCustomized === 1 ? "" : "s"}` : ""}.`
           );
         }
         router.refresh();
@@ -343,8 +343,8 @@ export function MenuCopyFromLocation({
             className="mt-0.5 h-4 w-4 shrink-0 accent-ink"
           />
           <span>
-            Use this as the default menu for new locations. New restaurants will
-            inherit it before their ElevenLabs agent is provisioned.
+            Use this as the default menu for new locations. New restaurants start
+            with it before their phone host is set up.
           </span>
         </label>
         <p className="mt-1 text-[12.5px] text-subtle">
