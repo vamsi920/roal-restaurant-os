@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     types: { "application/rss+xml": [{ url: "/blog/feed.xml", title: "The ROAL Journal" }] },
   },
   verification: {
-    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : {}),
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "tVDUSDR0_2XYoRtuwZLCQmECTJVYyOTl4680Z_TjGK8",
     ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } } : {}),
   },
   icons: {
