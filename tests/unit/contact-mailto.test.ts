@@ -9,9 +9,9 @@ import {
 } from "@/lib/landing/contact-mailto";
 
 describe("contact-mailto", () => {
-  it("uses venva920@gmail.com", () => {
-    expect(CONTACT_PILOT_EMAIL).toBe("venva920@gmail.com");
-    expect(buildPilotMailto()).toBe("mailto:venva920@gmail.com");
+  it("uses vamsi@tryroal.com", () => {
+    expect(CONTACT_PILOT_EMAIL).toBe("vamsi@tryroal.com");
+    expect(buildPilotMailto()).toBe("mailto:vamsi@tryroal.com");
   });
 
   it("encodes pilot mailto subject and body", () => {

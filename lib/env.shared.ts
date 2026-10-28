@@ -109,7 +109,7 @@ export const ENV_HINTS: Record<string, string> = {
   ELEVENLABS_AGENT_PHONE_NUMBER_ID:
     "Optional ElevenLabs phone number id for outbound owner test calls",
   NEXT_PUBLIC_APP_URL:
-    "Public site origin without trailing slash, e.g. https://getroal.com (local: http://localhost:3000)",
+    "Public site origin without trailing slash, e.g. https://tryroal.com (local: http://localhost:3000)",
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
     "Stripe Dashboard → Developers → API keys (planned billing)",
   STRIPE_SECRET_KEY:

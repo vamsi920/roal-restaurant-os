@@ -24,7 +24,7 @@ async function fetchHtml(
       method: "GET",
       redirect: "follow",
       headers: {
-        "User-Agent": "ROAL-menu-import/1.0 (+https://getroal.com)",
+        "User-Agent": "ROAL-menu-import/1.0 (+https://tryroal.com)",
         Accept: "text/html,application/xhtml+xml",
       },
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),

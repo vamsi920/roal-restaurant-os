@@ -12,7 +12,7 @@ export function SiteJsonLd() {
       name: "ROAL",
       url: origin,
       logo: `${origin}/icons/roal-apple-touch-icon.png`,
-      email: "venva920@gmail.com",
+      email: "vamsi@tryroal.com",
     },
     {
       "@context": "https://schema.org",

@@ -19,7 +19,7 @@ export async function fetchPageText(url: string, fetchImpl: FetchFn = fetch): Pr
       method: "GET",
       redirect: "follow",
       headers: {
-        "User-Agent": "ROAL-agent-builder/1.0 (+https://getroal.com)",
+        "User-Agent": "ROAL-agent-builder/1.0 (+https://tryroal.com)",
         Accept: "text/html,application/xhtml+xml",
       },
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),

@@ -54,7 +54,8 @@ Stripe and Twilio API calls.
 
 ## Owner must do: before announcing
 
-6. **Domain.** Add it in Netlify. Set `NEXT_PUBLIC_APP_URL=https://<domain>`, add the domain to Firebase
+6. **Domain: tryroal.com** (2026-10-28): added in Netlify as primary (www redirects), IONOS A records → 75.2.60.5,
+   `NEXT_PUBLIC_APP_URL=https://tryroal.com` on Netlify and in `.env.local`. Original steps: add it in Netlify. Set `NEXT_PUBLIC_APP_URL=https://<domain>`, add the domain to Firebase
    Auth > Authorized domains, point the live Stripe webhook at it, then re-sync phone hosts
    (`npm run resync:elevenlabs-all` with `.env.local` pointing at the new domain), because the hosts'
    tool links use the app URL. Keep `roal-os.netlify.app` working as an alias.

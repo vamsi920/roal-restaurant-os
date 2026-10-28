@@ -40,7 +40,7 @@ export function GET() {
 - Pricing: ${origin}/pricing
 - Security: ${origin}/security
 - Blog: ${origin}/blog
-- Contact: venva920@gmail.com
+- Contact: vamsi@tryroal.com
 `;
   return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
 }

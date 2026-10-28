@@ -94,7 +94,7 @@ export function CommandCenterMock() {
           <i />
           <i />
         </span>
-        <span className="cc__url">getroal.com/dashboard</span>
+        <span className="cc__url">tryroal.com/dashboard</span>
       </div>
       <div className="cc__app">
         <aside className="cc__side">
