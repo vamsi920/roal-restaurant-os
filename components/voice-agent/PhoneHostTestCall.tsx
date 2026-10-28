@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Headset, PhoneOutgoing, PlugZap } from "lucide-react";
+import { Headset, Loader2, PhoneOutgoing } from "lucide-react";
 import { TrialCall } from "@/components/try/trial-call";
 import { TrialScorecardPanel } from "@/components/try/trial-scorecard";
 import { Badge, EmptyState, IconTile, type Tone } from "@/components/ui";
@@ -12,7 +12,6 @@ import {
   createVoiceAgentBrowserCallAction,
   startVoiceAgentOutboundCallAction,
 } from "@/app/dashboard/onboarding/actions";
-import { AdvancedLink } from "./phone-host-ui";
 import "@/components/try/trial.css";
 
 type Props = {
@@ -141,14 +140,9 @@ export function PhoneHostTestCall({
         </div>
       ) : (
         <EmptyState
-          icon={PlugZap}
-          title={`${hostName} isn't connected yet`}
-          body={`Link the voice agent for ${restaurantName}, then come back here to call ${hostName} from your browser.`}
-          action={
-            <AdvancedLink section="connection" className="btn-primary">
-              Open connection settings
-            </AdvancedLink>
-          }
+          icon={Loader2}
+          title={`We're getting ${hostName} ready`}
+          body={`${hostName} is learning ${restaurantName}'s menu and hours. This takes about a minute and happens automatically. Refresh to call from your browser.`}
         />
       )}
     </section>

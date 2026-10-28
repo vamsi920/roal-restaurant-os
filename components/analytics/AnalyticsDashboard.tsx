@@ -161,7 +161,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
             <StatCard
               label="Calls recorded"
               value={callOutcomes.total.toLocaleString()}
-              hint="ElevenLabs post-call webhook sessions"
+              hint="Calls your phone host answered"
               icon={PhoneCall}
               color="blue"
             />
@@ -413,7 +413,7 @@ export function AnalyticsDashboard({ snapshot, ordersHref }: Props) {
             <Panel
               className="analytics-dashboard__rush-windows"
               title="Busiest call windows"
-              hint="Day and hour buckets from ElevenLabs post-call webhooks, shown in UTC."
+              hint="When your calls come in, by day and hour (UTC)."
             >
               <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 {peakCallWindows.map((row) => (

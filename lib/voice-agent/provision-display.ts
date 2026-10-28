@@ -105,28 +105,23 @@ export function voiceProvisionUiStateFromProfile(
 export function voiceProvisionBadgeLabel(state: VoiceProvisionUiState): string | null {
   switch (state) {
     case "ready":
-      return "Voice ready";
+      return "Host ready";
     case "in_progress":
-      return "Voice setup…";
+      return "Setting up host…";
     case "needs_attention":
-      return "Voice setup needed";
+      return "Host retrying";
     default:
       return null;
   }
 }
 
-export function voiceProvisionBadgeTitle(
-  state: VoiceProvisionUiState,
-  profile: RestaurantProfileProvisionFields | null | undefined
-): string | undefined {
-  if (state === "needs_attention" && profile?.elevenlabs_provision_error?.trim()) {
-    return profile.elevenlabs_provision_error.trim();
-  }
+/** Plain-language hover text; raw provider errors are never shown to owners. */
+export function voiceProvisionBadgeTitle(state: VoiceProvisionUiState): string | undefined {
   if (state === "needs_attention") {
-    return "Open Live Agent to finish voice setup";
+    return "We hit a snag setting up the phone host and are retrying automatically.";
   }
   if (state === "in_progress") {
-    return "Voice agent is being configured";
+    return "Your phone host is being set up. It takes about a minute.";
   }
   return undefined;
 }

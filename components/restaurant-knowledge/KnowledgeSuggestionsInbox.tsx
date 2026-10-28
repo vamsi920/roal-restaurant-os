@@ -118,7 +118,7 @@ export function KnowledgeSuggestionsInbox({ restaurantId, hostName, suggestions 
               Questions {hostName} couldn&apos;t answer
             </h2>
             <p className="text-[12.5px] text-subtle">
-              From real calls. Add an answer and it goes live on the next sync.
+              From real calls. Add an answer and your host will use it from the next call.
             </p>
           </div>
         </div>

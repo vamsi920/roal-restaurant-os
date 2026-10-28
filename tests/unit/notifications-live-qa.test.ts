@@ -13,12 +13,13 @@ describe("notifications live posture (launch 22)", () => {
     expect(NOTIFICATION_PROVIDER_POSTURE.memberReadOnly).toMatch(/admin/i);
   });
 
-  it("settings form surfaces provider posture copy", () => {
+  it("settings form tells owners plainly that email and text delivery is coming", () => {
     const form = readFileSync(
       join(REPO, "components/notifications/NotificationSettingsForm.tsx"),
       "utf8"
     );
-    expect(form).toContain("NOTIFICATION_PROVIDER_POSTURE");
+    expect(form).toMatch(/Email and text delivery is switching on soon/);
+    expect(form).not.toMatch(/Webhook|Development console|Dev console/);
     expect(form).toContain("canEdit");
     expect(form).toMatch(/Ask an organization admin/i);
   });

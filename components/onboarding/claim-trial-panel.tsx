@@ -15,7 +15,7 @@ type ClaimStep = { label: string; status: "pending" | "running" | "done" | "fail
 const STEPS: Array<ClaimStep["label"]> = [
   "Creating your workspace",
   "Saving menu, hours, and FAQs",
-  "Provisioning your dedicated phone host",
+  "Setting up your phone host",
   "Opening your dashboard",
 ];
 

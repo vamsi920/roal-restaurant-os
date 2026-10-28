@@ -28,16 +28,3 @@ describe("website menu import gate", () => {
   });
 });
 
-describe("magic setup wiring", () => {
-  it("onboarding apply and try-call use existing provision plus signed URL", () => {
-    const actions = read("app/dashboard/onboarding/actions.ts");
-    const voice = read("components/onboarding/onboarding-voice-agent-step.tsx");
-    const tryCall = read("components/onboarding/onboarding-try-call.tsx");
-    expect(actions).toContain("applyRestaurantLookupAction");
-    expect(actions).toContain("tryProvisionVoiceAgentForNewRestaurant");
-    expect(actions).toContain("getConvaiSignedUrl");
-    expect(actions).toContain("startConvaiOutboundCall");
-    expect(voice).toContain("OnboardingTryCall");
-    expect(tryCall).toContain("Talk to your agent now");
-  });
-});

@@ -103,12 +103,8 @@ describe("dashboard restaurant workspace (pass 65)", () => {
   it("live agent page uses compact real-data sections", () => {
     const page = read("app/dashboard/restaurants/[id]/agent/page.tsx");
 
-    expect(page).toContain("RestaurantLaunchGateCard");
-    expect(page).toContain("loadRestaurantLaunchGate");
-    expect(page).toContain("compact");
-    expect(page).toContain("voiceAgentCenter");
-    expect(page).toContain('variant="inline"');
-    expect(page).toContain("<MetaList");
+    expect(page).toContain("voiceHostStateFromProfile");
+    expect(page).toContain("<PhoneHostTestCall");
     expect(page).not.toContain("RestaurantLaunchChecklist");
     expect(page).not.toContain("RestaurantCommandCenterPanel");
     expect(page).not.toMatch(/demo|fake data|MOCK_/i);

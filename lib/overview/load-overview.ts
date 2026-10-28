@@ -147,6 +147,7 @@ async function loadLaunch(
       status: item.status,
       detail: item.detail ?? null,
       href: item.href,
+      automatic: item.automatic ?? false,
     })),
     primaryAction: gate.isLiveReady ? null : gate.primaryAction,
   };

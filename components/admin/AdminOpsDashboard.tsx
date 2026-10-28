@@ -16,6 +16,7 @@ import {
   type Tone,
 } from "@/components/dashboard/page-primitives";
 import { EmptyState, IconTile, StatCard } from "@/components/ui";
+import { ActivatePlanButton } from "@/components/admin/ActivatePlanButton";
 import type { AdminOpsSnapshot, AdminTrialLead, OpsErrorRow } from "@/lib/admin/types";
 import { formatMembershipRole } from "@/lib/auth/roles";
 import type { MembershipRole } from "@/lib/types";
@@ -125,9 +126,12 @@ function OrganizationSection({ org }: { org: AdminOpsSnapshot["organizations"][n
           </p>
         </div>
         </div>
-        <Link href="/dashboard/billing" className="btn-ghost btn-sm">
-          Billing
-        </Link>
+        <span className="flex items-start gap-2">
+          <Link href="/dashboard/billing" className="btn-ghost btn-sm">
+            Billing
+          </Link>
+          <ActivatePlanButton organizationId={org.id} active={org.subscriptionStatus === "active"} />
+        </span>
       </div>
 
       <div className="admin-ops-dashboard__stats grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-5">

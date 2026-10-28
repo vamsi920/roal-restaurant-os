@@ -18,6 +18,8 @@ export type LaunchChecklistItem = {
   status: LaunchChecklistStatus;
   detail?: string;
   href: string;
+  /** ROAL does this step itself (the phone host); the owner just waits. */
+  automatic?: boolean;
 };
 
 export type RestaurantLaunchChecklistSnapshot = {

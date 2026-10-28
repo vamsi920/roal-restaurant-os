@@ -53,7 +53,7 @@ export function HostPersonaCard({
           agentVoiceId: voiceId,
           agentGreeting: greeting,
         });
-        setMessage({ tone: "ok", text: "Saved. Your host is re-syncing with the new persona." });
+        setMessage({ tone: "ok", text: "Saved. Your host will use this on the next call." });
         onSaved?.({ name: res.agentDisplayName, voiceLabel: res.agentVoiceLabel });
       } catch (e) {
         setMessage({
@@ -131,7 +131,7 @@ export function HostPersonaCard({
         </div>
 
         <SaveRow
-          message={message?.text ?? (dirty ? "Unsaved changes" : "Saving re-syncs your host.")}
+          message={message?.text ?? (dirty ? "Unsaved changes" : "Changes apply to your next call.")}
           tone={message ? (message.tone === "error" ? "bad" : "ok") : "muted"}
         >
           <button

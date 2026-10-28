@@ -304,7 +304,7 @@ function RestaurantCard({
       </div>
 
       <div className="locations-card__meta mt-3 flex min-w-0 flex-wrap gap-1.5 px-4">
-        <Badge tone={HOST_TONE[provisionState]} title={voiceProvisionBadgeTitle(provisionState, profile)}>
+        <Badge tone={HOST_TONE[provisionState]} title={voiceProvisionBadgeTitle(provisionState)}>
           {HOST_LABEL[provisionState]}
         </Badge>
         {stats ? (

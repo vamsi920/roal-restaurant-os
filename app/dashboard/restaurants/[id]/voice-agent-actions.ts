@@ -239,7 +239,7 @@ export async function publishRestaurantVoiceContentAction(
       ok: false,
       skipped: true,
       skipReason: result.skipReason,
-      error: "Connect an agent on Live Agent before publishing to voice.",
+      error: "Your phone host is still being set up. Your menu is added automatically when it's ready.",
       menuAutoSync,
     };
   }

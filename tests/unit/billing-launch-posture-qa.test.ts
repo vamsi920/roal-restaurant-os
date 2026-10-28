@@ -30,15 +30,8 @@ describe("billing launch posture (launch 21)", () => {
     expect(dash).toContain("BILLING_LAUNCH_POSTURE");
     expect(dash).toContain("snapshot.checkoutEnabled");
     expect(dash).toContain("BillingCheckoutButtons");
-    expect(dash).toContain("Pilot billing mode");
+    expect(dash).toContain("You only pay $0.90 when a call becomes an order");
     expect(dash).not.toMatch(/btn-primary.*Upgrade to/);
   });
 
-  it("onboarding has no Stripe gate", () => {
-    const wizard = readFileSync(
-      join(REPO, "components/onboarding/onboarding-wizard.tsx"),
-      "utf8"
-    );
-    expect(wizard).not.toMatch(/stripe|STRIPE|checkout/i);
-  });
 });

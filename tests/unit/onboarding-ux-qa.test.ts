@@ -30,28 +30,6 @@ describe("onboarding UX (launch 11)", () => {
     expect(copy).toMatch(/Menu setup/i);
   });
 
-  it("go-live checklist supports test-call skip and host retry/sync", () => {
-    const wizard = readFileSync(
-      join(REPO, "components/onboarding/onboarding-wizard.tsx"),
-      "utf8"
-    );
-    expect(wizard).toContain('setStep("test_call", "skipped")');
-    expect(wizard).toContain('setStep("voice_agent", "skipped")');
-    expect(wizard).toContain("OnboardingVoiceAgentStep");
-    expect(wizard).toContain("OnboardingTryCall");
-    const voiceStep = readFileSync(
-      join(REPO, "components/onboarding/onboarding-voice-agent-step.tsx"),
-      "utf8"
-    );
-    expect(voiceStep).toContain("retryRestaurantVoiceAgentProvisionAction");
-    expect(voiceStep).toContain("syncRestaurantVoiceAgentOnboardingAction");
-    expect(wizard).toContain("OnboardingReadinessPanel");
-    expect(wizard).toContain("Skip for now");
-    expect(wizard).toContain('role="alert"');
-    expect(wizard).toContain("RESTAURANT_LIVE_ORDERS_LABEL");
-    expect(wizard).not.toMatch(/\bKDS\b/);
-  });
-
   it("onboarding page redirects guests to login with next", () => {
     const page = readFileSync(
       join(REPO, "app/dashboard/onboarding/page.tsx"),

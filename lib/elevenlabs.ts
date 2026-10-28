@@ -100,6 +100,37 @@ export async function startConvaiOutboundCall(input: {
   return parseJsonOrThrow(res, "outbound call");
 }
 
+/** Bring a Twilio number we bought into the voice platform so it can be assigned to a host. */
+export async function importTwilioPhoneNumber(input: {
+  phoneNumber: string;
+  label: string;
+  twilioAccountSid: string;
+  twilioAuthToken: string;
+}): Promise<{ phone_number_id: string }> {
+  const res = await elevenlabsFetch("/v1/convai/phone-numbers", {
+    method: "POST",
+    body: JSON.stringify({
+      provider: "twilio",
+      phone_number: input.phoneNumber,
+      label: input.label,
+      sid: input.twilioAccountSid,
+      token: input.twilioAuthToken,
+    }),
+  });
+  const data = (await parseJsonOrThrow(res, "import phone number")) as { phone_number_id?: string };
+  if (!data.phone_number_id) throw new Error("Phone number import returned no id");
+  return { phone_number_id: data.phone_number_id };
+}
+
+/** Point an imported number at a restaurant's host: every call to it is answered by that host. */
+export async function assignPhoneNumberToAgent(phoneNumberId: string, agentId: string): Promise<unknown> {
+  const res = await elevenlabsFetch(`/v1/convai/phone-numbers/${encodeURIComponent(phoneNumberId)}`, {
+    method: "PATCH",
+    body: JSON.stringify({ agent_id: agentId }),
+  });
+  return parseJsonOrThrow(res, "assign phone number");
+}
+
 export type ConvaiToolListItem = {
   id: string;
   tool_config?: { type?: string; name?: string };

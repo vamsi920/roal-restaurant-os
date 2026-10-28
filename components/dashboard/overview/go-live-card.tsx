@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check, CircleAlert, Rocket } from "lucide-react";
+import { ArrowRight, Check, CircleAlert, Loader2, Rocket } from "lucide-react";
 import { IconTile } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import type { OverviewLaunch } from "@/lib/overview/types";
@@ -7,10 +7,11 @@ import type { OverviewLaunch } from "@/lib/overview/types";
 /** Compact "Go live" checklist shown on the Overview until the location is live. */
 export function GoLiveCard({ launch }: { launch: OverviewLaunch }) {
   const percent = launch.totalCount > 0 ? Math.round((launch.completedCount / launch.totalCount) * 100) : 0;
-  const nextIndex = launch.items.findIndex((item) => item.status !== "ok");
+  // Highlight the next step the owner can do; automatic steps fill themselves in.
+  const nextIndex = launch.items.findIndex((item) => item.status !== "ok" && !item.automatic);
 
   return (
-    <section className="panel overflow-hidden" aria-labelledby="go-live-title">
+    <section id="go-live" className="panel scroll-mt-20 overflow-hidden" aria-labelledby="go-live-title">
       <div className="flex flex-wrap items-start gap-3 p-4 sm:p-5">
         <IconTile icon={Rocket} color="orange" size="lg" />
         <div className="min-w-0 flex-1">
@@ -18,7 +19,7 @@ export function GoLiveCard({ launch }: { launch: OverviewLaunch }) {
             Go live
           </h2>
           <p className="mt-0.5 text-[13px] text-subtle">
-            {launch.completedCount} of {launch.totalCount} done. Finish these and your host starts answering real calls.
+            {launch.completedCount} of {launch.totalCount} done. Finish these and your host starts answering your calls.
           </p>
           <div
             className="mt-3 h-1.5 w-full max-w-sm overflow-hidden rounded-full bg-elev"
@@ -41,6 +42,7 @@ export function GoLiveCard({ launch }: { launch: OverviewLaunch }) {
         {launch.items.map((item, index) => {
           const done = item.status === "ok";
           const error = item.status === "error";
+          const working = !done && Boolean(item.automatic);
           return (
             <li key={item.id} className="min-w-0 bg-card">
               <Link
@@ -55,11 +57,18 @@ export function GoLiveCard({ launch }: { launch: OverviewLaunch }) {
                     "grid h-5 w-5 shrink-0 place-items-center rounded-full border",
                     done && "border-success bg-success text-white",
                     error && "border-danger/40 bg-danger/10 text-danger",
-                    !done && !error && "border-line-strong bg-card text-transparent"
+                    working && "border-transparent text-accent",
+                    !done && !error && !working && "border-line-strong bg-card text-transparent"
                   )}
                   aria-hidden
                 >
-                  {done ? <Check size={12} strokeWidth={3} /> : error ? <CircleAlert size={12} /> : null}
+                  {done ? (
+                    <Check size={12} strokeWidth={3} />
+                  ) : working ? (
+                    <Loader2 size={14} className="animate-spin motion-reduce:animate-none" />
+                  ) : error ? (
+                    <CircleAlert size={12} />
+                  ) : null}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className={cn("block truncate font-medium", done ? "text-subtle line-through decoration-line-strong" : "text-ink")}>
@@ -69,7 +78,7 @@ export function GoLiveCard({ launch }: { launch: OverviewLaunch }) {
                     <span className="block truncate text-[12px] text-subtle">{item.detail}</span>
                   ) : null}
                 </span>
-                <span className="sr-only">{done ? "Done" : error ? "Needs attention" : "To do"}</span>
+                <span className="sr-only">{done ? "Done" : working ? "Setting up for you" : error ? "Needs attention" : "To do"}</span>
                 {!done ? (
                   <ArrowRight size={14} className="shrink-0 text-subtle transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
                 ) : null}

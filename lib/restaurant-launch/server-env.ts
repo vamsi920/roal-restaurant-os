@@ -25,7 +25,7 @@ export function evaluateServerLaunchEnvReady(): {
     ready,
     detail: ready
       ? null
-      : "Server config incomplete — add ElevenLabs API key and agent tool signing secret.",
+      : "Server keys for the phone host are missing.",
   };
 }
 
@@ -48,19 +48,20 @@ export function evaluateTestCallProof(input: {
   return {
     passed: false,
     detail:
-      "Run a test call on Live Agent and complete a sample order, or mark the test-call step complete.",
+      "Call your host from your browser and place a pretend order.",
   };
 }
 
+/** Owner-actionable steps first; the automatic host step, then the test call that needs it. */
 const BLOCKER_PRIORITY: LaunchChecklistItemId[] = [
-  "server_env_ready",
+  "profile_complete",
+  "menu_has_items",
+  "hours_set",
   "agent_provisioned",
+  "test_call_passed",
+  "server_env_ready",
   "tools_synced",
   "conversation_init_webhook",
-  "profile_complete",
-  "hours_set",
-  "menu_has_items",
-  "test_call_passed",
 ];
 
 export function topLaunchBlocker<

@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { ClaimTrialPanel } from "@/components/onboarding/claim-trial-panel";
 import { MagicOnboarding } from "@/components/onboarding/magic-onboarding";
-import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { loadOnboardingWizardState } from "@/lib/onboarding/wizard-state.server";
 import { readPendingTrialFromCookie } from "@/lib/trial/auth";
 import { getDb } from "@/lib/db";
@@ -53,11 +52,7 @@ export default async function OnboardingPage({
     );
   }
 
-  // 3. Existing location: launch checklist (go live).
-  return (
-    <OnboardingWizard
-      key={`${state.activeRestaurant?.id ?? "none"}-${state.activeStep}`}
-      initialState={state}
-    />
-  );
+  // 3. Existing location: the simple go-live checklist lives on its Overview.
+  const target = state.activeRestaurant?.id ?? state.restaurants[0]?.id;
+  redirect(target ? `/dashboard/restaurants/${target}/overview#go-live` : "/dashboard");
 }

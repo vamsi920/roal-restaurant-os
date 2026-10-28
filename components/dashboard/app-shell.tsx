@@ -36,6 +36,7 @@ import { usePopover } from "@/lib/dashboard/use-popover";
 import { LocationSwitcher } from "./location-switcher";
 import { NavIcon, navIconKeyForHref } from "./nav-icon";
 import { TakingOrdersCard } from "./taking-orders-card";
+import { VoiceHostKeeper } from "./voice-host-keeper";
 
 function readStorage(key: string): string | null {
   try {
@@ -144,7 +145,11 @@ export function AppShell({
   const locationNav = current
     ? buildLocationNav(current.id, { pendingQuestions: current.pendingQuestions })
     : [];
-  const orgNav = visibleOrgNav({ showAdminNav, showOrgAdminNav });
+  // Owners see only what runs their restaurant: staff tools live in the account menu, and the
+  // organization section appears once there is more than one location to organize.
+  const orgNav = visibleOrgNav({ showAdminNav, showOrgAdminNav })
+    .map((group) => ({ ...group, items: group.items.filter((item) => !item.platformOnly) }))
+    .filter((group) => group.items.length > 0 && locations.length > 1);
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed((prev) => {
@@ -273,7 +278,7 @@ export function AppShell({
           <div className={cn(compact && "lg:hidden")}>
             <PromoCard current={current} onNavigate={closeMenu} />
           </div>
-          {current && current.organizationId ? (
+          {current && current.organizationId && current.isLive ? (
             <TakingOrdersCard location={current} collapsed={compact} />
           ) : null}
           <AccountCard
@@ -283,6 +288,7 @@ export function AppShell({
             roleLabel={roleLabel}
             compact={compact}
             onNavigate={closeMenu}
+            showStaffLink={showAdminNav}
           />
         </div>
       </aside>
@@ -336,6 +342,7 @@ export function AppShell({
         >
           {children}
         </main>
+        <VoiceHostKeeper restaurantId={current?.organizationId ? current.id : null} />
       </div>
     </div>
   );
@@ -413,16 +420,16 @@ function PromoCard({
   if (!current.isLive) {
     return (
       <div className="app-promo rounded-xl p-3">
-        <p className="text-[13px] font-semibold text-ink">Finish going live</p>
+        <p className="text-[13px] font-semibold text-ink">Almost ready</p>
         <p className="mt-0.5 text-[12px] leading-snug text-muted">
-          A few steps left before your host starts answering calls.
+          A few quick steps before {current.agentDisplayName ?? "your host"} starts answering your calls.
         </p>
         <Link
-          href={`/dashboard/onboarding?restaurant=${encodeURIComponent(current.id)}`}
+          href={`/dashboard/restaurants/${current.id}/overview#go-live`}
           onClick={onNavigate}
           className="btn-accent btn-sm mt-2.5 w-full"
         >
-          Continue setup
+          See what&apos;s left
         </Link>
       </div>
     );
@@ -452,6 +459,7 @@ function AccountCard({
   roleLabel,
   compact,
   onNavigate,
+  showStaffLink = false,
 }: {
   userEmail: string;
   userName: string | null;
@@ -459,6 +467,7 @@ function AccountCard({
   roleLabel: string | null;
   compact: boolean;
   onNavigate: () => void;
+  showStaffLink?: boolean;
 }) {
   const { open, toggle, close, rootRef, triggerRef } = usePopover<HTMLDivElement>();
   const go = () => {
@@ -516,6 +525,11 @@ function AccountCard({
             <Link href="/dashboard/support" onClick={go} className={itemCls}>
               <LifeBuoy size={15} className="text-subtle" aria-hidden /> Support
             </Link>
+            {showStaffLink ? (
+              <Link href="/dashboard/admin" onClick={go} className={itemCls}>
+                <Settings size={15} className="text-subtle" aria-hidden /> ROAL staff tools
+              </Link>
+            ) : null}
             <Link href="/" onClick={go} className={cn("app-shell-marketing-link", itemCls)}>
               <ExternalLink size={15} className="text-subtle" aria-hidden /> Marketing site
             </Link>

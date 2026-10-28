@@ -93,9 +93,8 @@ describe("menu setup route split", () => {
 
   it("hosts voice agent on dedicated agent route", () => {
     const agent = readFileSync(AGENT_PAGE, "utf8");
-    expect(agent).toContain("<VoiceAgentPanel");
-    expect(agent).toContain("loadRestaurantMenuSetupPageData");
-    expect(agent).toContain("voiceAgentCenter");
+    expect(agent).toContain("<PhoneHostTestCall");
+    expect(agent).toContain("<HostPersonaCard");
     expect(agent).not.toContain("menu-setup-flow");
   });
 

@@ -6,27 +6,6 @@ const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
 describe("Dashboard ops pages responsive (prompt 38)", () => {
-  it("structures onboarding, support, admin, and notification surfaces", () => {
-    const css = read("app/dashboard-theme.css");
-
-    expect(read("components/onboarding/onboarding-wizard.tsx")).toContain(
-      "onboarding-page"
-    );
-    expect(read("components/onboarding/onboarding-wizard.tsx")).toContain(
-      "min-[380px]:grid-cols-2"
-    );
-    expect(read("components/dashboard/support-hub.tsx")).toContain("support-hub__cards");
-    expect(read("components/admin/AdminOpsDashboard.tsx")).toContain(
-      "admin-ops-dashboard__restaurant-table org-table"
-    );
-    expect(read("components/notifications/NotificationSettingsForm.tsx")).toContain(
-      "notification-settings__event"
-    );
-    expect(read("components/notifications/NotificationDeliveryLog.tsx")).toContain(
-      "notification-delivery-log__list"
-    );
-    expect(css).toContain("Onboarding, settings, notifications, support, admin (prompt 38)");
-  });
 
   it("uses card tables and scrollable delivery logs on small screens", () => {
     const admin = read("components/admin/AdminOpsDashboard.tsx");

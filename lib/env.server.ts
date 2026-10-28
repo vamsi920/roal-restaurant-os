@@ -29,6 +29,9 @@ const serverEnvSchema = z.object({
   RESTAURANT_AGENT_TIMEZONE: optionalString,
   GOOGLE_PLACES_API_KEY: optionalString,
   ELEVENLABS_AGENT_PHONE_NUMBER_ID: optionalString,
+  /** Buys each restaurant its own local phone line when its plan starts. */
+  TWILIO_ACCOUNT_SID: optionalString,
+  TWILIO_AUTH_TOKEN: optionalString,
   ROAL_ORDER_KB: z.preprocess((v) => {
     const x = emptyToUndefined(v);
     if (x === undefined) return undefined;

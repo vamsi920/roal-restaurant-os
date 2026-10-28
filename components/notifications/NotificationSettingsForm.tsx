@@ -8,8 +8,6 @@ import {
   NOTIFICATION_EVENT_TYPES,
 } from "@/lib/notifications/types";
 import type { NotificationSettings } from "@/lib/notifications/types";
-import { cn } from "@/lib/cn";
-import { NOTIFICATION_PROVIDER_POSTURE } from "@/lib/notifications/provider-posture";
 import {
   saveNotificationSettingsAction,
   type SaveNotificationsState,
@@ -24,34 +22,17 @@ const initial: SaveNotificationsState = {};
 
 export function NotificationSettingsForm({ settings, canEdit }: Props) {
   const [state, action] = useFormState(saveNotificationSettingsAction, initial);
-  const production = settings.providerMode === "production";
 
   return (
     <form action={action} className="notification-settings min-w-0 space-y-4">
-      <Panel
-        className="notification-settings__mode"
-        title="Delivery mode"
-        hint="Dev console logs to the server and the history below. Production enables webhooks; email and SMS stay human-setup until providers are wired."
-      >
-        <div className="notification-settings__mode-options grid gap-2 sm:grid-cols-2">
-          <ModeOption
-            value="dev_console"
-            label="Development console"
-            detail="Log every event, send nothing."
-            checked={settings.providerMode === "dev_console"}
-            disabled={!canEdit}
-          />
-          <ModeOption
-            value="production"
-            label="Production channels"
-            detail="Deliver to the channels below."
-            checked={settings.providerMode === "production"}
-            disabled={!canEdit}
-          />
-        </div>
-      </Panel>
+      {/* Owners choose what and who; delivery plumbing (console/webhooks) is ROAL's concern. */}
+      <input type="hidden" name="provider_mode" value="production" />
+      <p className="rounded-[10px] border border-line bg-elev px-3 py-2.5 text-[13px] text-muted">
+        Pick the alerts you care about and who should get them. Email and text delivery is switching on soon; until
+        then every alert shows up in the history below.
+      </p>
 
-      <Panel className="notification-settings__events" title="Events">
+      <Panel className="notification-settings__events" title="What to alert you about">
         <ul className="-my-1 divide-y divide-line/70">
           {NOTIFICATION_EVENT_TYPES.map((event) => (
             <li key={event}>
@@ -77,7 +58,7 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
         </ul>
         <div className="mt-4 border-t border-line pt-4">
           <label className="field-label" htmlFor="order_stuck_minutes">
-            Stuck order threshold (minutes)
+            Alert me when an order waits longer than (minutes)
           </label>
           <input
             id="order_stuck_minutes"
@@ -95,40 +76,19 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
         </div>
       </Panel>
 
-      <Panel
-        className={cn("notification-settings__channels", !production && "opacity-70")}
-        title="Channels"
-        hint={NOTIFICATION_PROVIDER_POSTURE.emailSmsHumanOnly}
-      >
-        {production ? (
-          <p className="rounded-[10px] border border-line bg-elev px-3 py-2 text-[12.5px] text-muted">
-            {NOTIFICATION_PROVIDER_POSTURE.webhookLive}
-          </p>
-        ) : null}
+      <Panel className="notification-settings__channels" title="Who gets alerts">
         <ul className="mt-3 grid gap-1 first:mt-0 sm:grid-cols-2">
-          <ChannelToggle
-            name="channel_dev_console"
-            label="Dev console"
-            checked={settings.channels.dev_console}
-            disabled={!canEdit || production}
-          />
           <ChannelToggle
             name="channel_email"
             label="Email"
             checked={settings.channels.email}
-            disabled={!canEdit || !production}
+            disabled={!canEdit}
           />
           <ChannelToggle
             name="channel_sms"
             label="SMS"
             checked={settings.channels.sms}
-            disabled={!canEdit || !production}
-          />
-          <ChannelToggle
-            name="channel_webhook"
-            label="Webhook"
-            checked={settings.channels.webhook}
-            disabled={!canEdit || !production}
+            disabled={!canEdit}
           />
         </ul>
 
@@ -142,37 +102,23 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
               name="email_recipients"
               rows={2}
               defaultValue={settings.emailRecipients.join(", ")}
-              disabled={!canEdit || !production}
-              placeholder="ops@example.com, owner@example.com"
+              disabled={!canEdit}
+              placeholder="you@restaurant.com, manager@restaurant.com"
               className="input-base min-h-[4rem] resize-y"
             />
           </div>
           <div>
             <label className="field-label" htmlFor="sms_recipients">
-              SMS numbers
+              Mobile numbers for texts
             </label>
             <textarea
               id="sms_recipients"
               name="sms_recipients"
               rows={2}
               defaultValue={settings.smsRecipients.join(", ")}
-              disabled={!canEdit || !production}
+              disabled={!canEdit}
               placeholder="+15551234567"
               className="input-base min-h-[4rem] resize-y"
-            />
-          </div>
-          <div>
-            <label className="field-label" htmlFor="webhook_url">
-              Webhook URL
-            </label>
-            <input
-              id="webhook_url"
-              type="url"
-              name="webhook_url"
-              defaultValue={settings.webhookUrl ?? ""}
-              disabled={!canEdit || !production}
-              placeholder="https://hooks.example.com/roal"
-              className="input-base"
             />
           </div>
         </div>
@@ -204,37 +150,6 @@ export function NotificationSettingsForm({ settings, canEdit }: Props) {
         </p>
       )}
     </form>
-  );
-}
-
-function ModeOption({
-  value,
-  label,
-  detail,
-  checked,
-  disabled,
-}: {
-  value: string;
-  label: string;
-  detail: string;
-  checked: boolean;
-  disabled: boolean;
-}) {
-  return (
-    <label className="notification-settings__radio flex min-h-11 cursor-pointer items-start gap-3 rounded-[10px] border border-line bg-card px-3 py-2.5 transition-colors hover:border-line-strong has-[:checked]:border-ink has-[:checked]:shadow-[0_0_0_3px_rgb(17_17_17/0.06)] has-[:disabled]:cursor-not-allowed">
-      <input
-        type="radio"
-        name="provider_mode"
-        value={value}
-        defaultChecked={checked}
-        disabled={disabled}
-        className="mt-0.5 h-4 w-4 shrink-0 accent-ink"
-      />
-      <span className="min-w-0">
-        <span className="block text-[13px] font-medium text-ink">{label}</span>
-        <span className="block text-[12px] text-muted">{detail}</span>
-      </span>
-    </label>
   );
 }
 

@@ -141,7 +141,8 @@ describe("restaurant launch checklist", () => {
 
     const gate = buildRestaurantLaunchGate(readyInput());
     expect(gate.isLiveReady).toBe(false);
-    expect(gate.topBlockerLabel).toMatch(/Conversation-init webhook/i);
+    // Call-in setup is ours to fix; owners see it as the automatic phone host step.
+    expect(gate.topBlockerLabel).toMatch(/Phone host ready/i);
 
     vi.unstubAllEnvs();
   });
@@ -154,7 +155,7 @@ describe("restaurant launch checklist", () => {
     });
     expect(gate.phase).toBe("blocked");
     expect(gate.isLiveReady).toBe(false);
-    expect(gate.topBlockerLabel).toMatch(/Server environment/i);
+    expect(gate.topBlockerLabel).toMatch(/Phone host ready/i);
   });
 
   it("does not count harness-only receipts as test call proof", () => {
@@ -178,7 +179,7 @@ describe("restaurant launch checklist", () => {
     expect(gate.isLiveReady).toBe(true);
     expect(gate.phase).toBe("ready");
     expect(gate.phaseLabel).toBe("Ready for live calls");
-    expect(gate.checklist.completedCount).toBe(8);
+    expect(gate.checklist.completedCount).toBe(5);
     expect(gate.checklist.items.every((i) => i.status === "ok")).toBe(true);
   });
 

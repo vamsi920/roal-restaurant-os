@@ -52,8 +52,8 @@ export function resolveMenuAutoSyncDisplay(
   if (options?.pendingResync || snapshot.status === "syncing") {
     return {
       phase: "syncing",
-      badgeLabel: "Syncing",
-      summary: "Pushing menu and agent settings to ElevenLabs…",
+      badgeLabel: "Updating",
+      summary: "Sending your latest menu to your phone host…",
       badgeClassName: "bg-accent/15 text-accent",
       errorMessage: null,
       lastSyncedAt: snapshot.lastSyncedAt,
@@ -64,8 +64,8 @@ export function resolveMenuAutoSyncDisplay(
   if (!snapshot.agentLinked) {
     return {
       phase: "no_agent",
-      badgeLabel: "No agent",
-      summary: "Connect an agent on Live Agent before menu can sync.",
+      badgeLabel: "Getting ready",
+      summary: "Your phone host is being set up. Your menu is added automatically.",
       badgeClassName: "bg-elev text-muted",
       errorMessage: null,
       lastSyncedAt: null,
@@ -74,10 +74,11 @@ export function resolveMenuAutoSyncDisplay(
   }
 
   if (snapshot.status === "failed") {
-    const errorMessage = snapshot.error?.trim() || "Menu sync failed.";
+    // Raw provider errors mean nothing to owners; updates retry on the next save or visit.
+    const errorMessage = "Couldn't update your phone host just now. We'll try again automatically.";
     return {
       phase: "failed",
-      badgeLabel: "Sync error",
+      badgeLabel: "Retrying",
       summary: errorMessage,
       badgeClassName: "bg-danger/10 text-danger",
       errorMessage,
@@ -89,10 +90,10 @@ export function resolveMenuAutoSyncDisplay(
   if (snapshot.status === "succeeded") {
     return {
       phase: "succeeded",
-      badgeLabel: "Synced",
+      badgeLabel: "Up to date",
       summary: snapshot.lastSyncedAt
-        ? `Last synced ${formatMenuAutoSyncWhen(snapshot.lastSyncedAt)}`
-        : "Menu and agent settings are synced.",
+        ? `Your host has your latest menu (updated ${formatMenuAutoSyncWhen(snapshot.lastSyncedAt)})`
+        : "Your host has your latest menu.",
       badgeClassName: "bg-success/15 text-success",
       errorMessage: null,
       lastSyncedAt: snapshot.lastSyncedAt,
@@ -102,10 +103,10 @@ export function resolveMenuAutoSyncDisplay(
 
   return {
     phase: "idle",
-    badgeLabel: "Not synced",
+    badgeLabel: "Up to date",
     summary: snapshot.lastSyncedAt
-      ? `No recent auto-sync. Last agent update ${formatMenuAutoSyncWhen(snapshot.lastSyncedAt)}.`
-      : "Save menu or settings to sync, or use Re-sync now.",
+      ? `Changes you save go to your host automatically (last update ${formatMenuAutoSyncWhen(snapshot.lastSyncedAt)}).`
+      : "Changes you save go to your host automatically.",
     badgeClassName: "bg-elev text-muted",
     errorMessage: null,
     lastSyncedAt: snapshot.lastSyncedAt,

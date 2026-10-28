@@ -468,7 +468,7 @@ export async function retryRestaurantVoiceAgentProvisionAction(input: {
 
   if (!getElevenLabsAgentId()) {
     throw new Error(
-      "Voice agent auto-setup is not configured. Connect manually from Live Agent."
+      "Phone host setup is temporarily unavailable. We'll finish it automatically."
     );
   }
 

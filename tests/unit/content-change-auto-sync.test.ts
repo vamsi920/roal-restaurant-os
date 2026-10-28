@@ -231,8 +231,10 @@ describe("content-change auto-sync (pass 13)", () => {
 
       const display = resolveMenuAutoSyncDisplay(snapshot);
       expect(display.phase).toBe("failed");
-      expect(display.errorMessage).toBe("ElevenLabs rate limited");
-      expect(display.badgeLabel).toBe("Sync error");
+      // Owners see a plain retry message, never the provider's raw error.
+      expect(display.errorMessage).toMatch(/Couldn't update your phone host/);
+      expect(display.errorMessage).not.toMatch(/ElevenLabs/);
+      expect(display.badgeLabel).toBe("Retrying");
     });
   });
 });

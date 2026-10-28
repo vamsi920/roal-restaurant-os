@@ -3,58 +3,29 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const REPO = join(import.meta.dirname, "../..");
+const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
-describe("ElevenLabs dashboard UI audit", () => {
-  it("KDS and menu pages are orders/menu-only; voice UI on agent route", () => {
-    const page = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/page.tsx"),
-      "utf8"
-    );
-    const workspace = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/menu/MenuSetupWorkspace.tsx"),
-      "utf8"
-    );
-    const agent = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/agent/page.tsx"),
-      "utf8"
-    );
+describe("Phone host is owner-simple (no setup plumbing on screen)", () => {
+  it("KDS and menu pages are orders/menu-only; the phone host page has no developer panels", () => {
+    const page = read("app/dashboard/restaurants/[id]/page.tsx");
+    const agent = read("app/dashboard/restaurants/[id]/agent/page.tsx");
     expect(page).toContain("<LiveOrdersPanel");
-    expect(page).not.toContain("VoiceAgentPanel");
-    expect(workspace).not.toContain("VoiceAgentPanel");
-    expect(agent).toContain("<VoiceAgentPanel");
-    expect(agent).toContain("embedded");
     expect(agent).toContain("<PageHeader");
-    expect(agent).toContain("loadRestaurantMenuSetupPageData");
-    expect(
-      readFileSync(
-        join(REPO, "app/dashboard/restaurants/[id]/VoiceAgentPanel.tsx"),
-        "utf8"
-      )
-    ).toContain("connectVoiceAgentAction");
+    expect(agent).toContain("<PhoneHostTestCall");
+    expect(agent).toContain("<HostPersonaCard");
+    expect(agent).toContain("<PhoneNumberCard");
+    expect(agent).toContain("voiceHostStateFromProfile");
+    // Code identifiers like getElevenLabsAgentId are fine; words owners would read are not.
+    const visible = agent.replace(/\b\w*ElevenLabs\w*\b/g, "");
+    for (const plumbing of ["VoiceAgentPanel", "VoiceAgentTestHarness", "Advanced", "webhook", "ElevenLabs", "agent ID"]) {
+      expect(visible).not.toContain(plumbing);
+    }
   });
 
-  it("control panel uses voice-agent-actions and input-base", () => {
-    const panel = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/VoiceAgentPanel.tsx"),
-      "utf8"
-    );
-    expect(panel).toContain("connectVoiceAgentAction");
-    expect(panel).toContain("resyncVoiceAgentAction");
-    expect(panel).toContain("input-base");
-    expect(panel).toContain("voiceBlocked");
-    expect(panel).toContain('setSuccess("Agent re-synced.")');
-    expect(panel).toContain('role="alert"');
-    expect(panel).toContain("Advanced diagnostics");
-    expect(panel).not.toContain("elevenlabs-actions");
-  });
-
-  it("test harness uses styled input-base not missing input-field", () => {
-    const harness = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/VoiceAgentTestHarness.tsx"),
-      "utf8"
-    );
-    expect(harness).toContain("input-base");
-    expect(harness).not.toMatch(/\binput-field\b/);
-    expect(harness).toContain("runVoiceAgentHarnessScenarioAction");
+  it("the dashboard sets up and syncs every location's host in the background", () => {
+    const shell = read("components/dashboard/app-shell.tsx");
+    const keeper = read("components/dashboard/voice-host-keeper.tsx");
+    expect(shell).toContain("<VoiceHostKeeper");
+    expect(keeper).toContain("/voice-host");
   });
 });

@@ -43,6 +43,8 @@ export type OverviewChecklistItem = {
   status: "ok" | "pending" | "error";
   detail: string | null;
   href: string;
+  /** ROAL handles this step; show "setting up" instead of a to-do. */
+  automatic?: boolean;
 };
 
 export type OverviewLaunch = {

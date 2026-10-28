@@ -127,19 +127,23 @@ export function MenuAutoSyncStatusPanel({
       return (
         <Badge tone="info" className={cn("h-7 px-2.5 text-[12px]", className)}>
           <span className="h-1.5 w-1.5 rounded-full bg-current motion-safe:animate-pulse" aria-hidden />
-          Publishing…
+          Updating your host…
         </Badge>
       );
     }
     if (display.phase === "no_agent") {
       return (
-        <Link
-          href={agentHref}
-          className={cn("btn-ghost", className)}
-          title="Connect a phone host before your menu can be published"
-        >
-          Connect phone host
-        </Link>
+        <Badge tone="neutral" className={cn("h-7 px-2.5 text-[12px]", className)} title={display.summary}>
+          Host getting ready
+        </Badge>
+      );
+    }
+    // Saving the menu updates the host automatically; only a failed update needs a button.
+    if (display.phase !== "failed" && !voiceBlocked) {
+      return (
+        <Badge tone="ok" className={cn("h-7 px-2.5 text-[12px]", className)} title={display.summary}>
+          Host has your latest menu
+        </Badge>
       );
     }
     return (
@@ -153,7 +157,7 @@ export function MenuAutoSyncStatusPanel({
           title={display.summary}
         >
           <Send size={15} aria-hidden />
-          {pending ? "Publishing…" : "Publish to phone host"}
+          {pending ? "Updating…" : "Try again"}
         </button>
         {errorText ? (
           <span
@@ -166,9 +170,7 @@ export function MenuAutoSyncStatusPanel({
           <span className="text-[12px] text-subtle sm:text-right">
             {voiceBlocked
               ? "Phone orders are paused on your plan."
-              : display.phase === "failed"
-                ? "Last publish failed"
-                : "Unpublished changes"}
+              : "Couldn't update your host"}
           </span>
         )}
       </span>
@@ -181,10 +183,7 @@ export function MenuAutoSyncStatusPanel({
         <Badge tone={tone}>{display.badgeLabel}</Badge>
         {display.phase === "no_agent" ? (
           <p className="mt-2 text-[13px] leading-snug text-muted">
-            <Link href={agentHref} className="font-medium text-ink underline underline-offset-2">
-              Connect an agent
-            </Link>{" "}
-            to sync menu and settings.
+            {display.summary}
           </p>
         ) : display.errorMessage ? (
           <p

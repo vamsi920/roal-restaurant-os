@@ -86,8 +86,8 @@ describe("real-data discipline (prompt 37)", () => {
       "utf8"
     );
 
-    expect(agent).toContain("loadRestaurantMenuSetupPageData");
-    expect(agent).toMatch(/center\.connectionStatus|voiceAgentCenter\.connectionStatus/);
+    // Status comes from the stored profile (voiceHostStateFromProfile), never a hard-coded value.
+    expect(agent).toContain("voiceHostStateFromProfile(profile");
     expect(center).toContain('connectionStatus = "disconnected"');
     expect(agent).not.toMatch(/MOCK_|demoAgent|fakeCenter|connectionStatus:\s*"connected"/);
   });

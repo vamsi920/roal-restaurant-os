@@ -224,82 +224,72 @@ export function buildRestaurantLaunchChecklist(
   const testOk = input.testCallPassed;
   const serverEnvOk = input.serverEnvReady;
 
+  const missingProfile = [
+    !input.profile?.phone?.trim() && "phone number",
+    !input.profile?.address_line1?.trim() && "address",
+    !input.profile?.timezone?.trim() && "time zone",
+    input.profile && !input.profile.allows_pickup && !input.profile.allows_delivery && "pickup or delivery",
+  ].filter(Boolean) as string[];
+
+  // The host's plumbing (dedicated host, ordering tools, call-in setup, server keys) is ours to
+  // handle automatically, so owners see it as one step that fills itself in.
+  const hostOk = serverEnvOk && agentOk && toolsOk && webhookOk;
+  const hostFailed =
+    !serverEnvOk ||
+    sharedTemplate ||
+    input.profile?.elevenlabs_provision_status === "failed" ||
+    Boolean(input.lastSyncError?.trim());
+  const hostName = input.profile?.agent_display_name?.trim() || "your host";
+
   const specs: Array<{
     id: LaunchChecklistItemId;
     label: string;
     status: LaunchChecklistStatus;
     detail?: string;
+    automatic?: boolean;
   }> = [
     {
-      id: "server_env_ready",
-      label: "Server environment ready",
-      status: serverEnvOk ? "ok" : "error",
-      detail: serverEnvOk
-        ? undefined
-        : input.serverEnvDetail?.trim() ||
-          "Server config incomplete — ElevenLabs and Supabase settings required.",
-    },
-    {
       id: "profile_complete",
-      label: "Restaurant profile complete",
+      label: "Restaurant details",
       status: profileOk ? "ok" : "pending",
       detail: profileOk
         ? undefined
-        : "Name, phone, address, timezone, and pickup or delivery.",
+        : missingProfile.length
+          ? `Add your ${missingProfile.join(", ")}.`
+          : "Check your restaurant's name and details.",
     },
     {
       id: "menu_has_items",
-      label: "Menu has items",
+      label: "Menu",
       status: menuOk ? "ok" : "pending",
       detail: menuOk
-        ? `${input.menuItemCount} item${input.menuItemCount === 1 ? "" : "s"} on menu`
-        : "Add at least one menu item in Menu & agent setup.",
+        ? `${input.menuItemCount} item${input.menuItemCount === 1 ? "" : "s"} on your menu`
+        : "Upload your menu: a photo, PDF or file works.",
     },
     {
       id: "hours_set",
-      label: "Hours configured",
+      label: "Opening hours",
       status: hoursOk ? "ok" : "pending",
-      detail: hoursOk ? undefined : "Set weekly hours on Menu & agent setup.",
+      detail: hoursOk ? undefined : "Tell callers when you're open.",
     },
     {
       id: "agent_provisioned",
-      label: "Dedicated agent provisioned",
-      status: agentOk
-        ? "ok"
-        : sharedTemplate
-          ? "error"
-          : input.profile?.elevenlabs_provision_status === "failed"
-            ? "error"
-            : "pending",
-      detail: agentOk
-        ? undefined
-        : sharedTemplate
-          ? "Shared template agent is linked — provision a dedicated agent for this location."
-          : input.profile?.elevenlabs_provision_error?.trim() ||
-            "Connect on Live Agent to create a dedicated ElevenLabs agent.",
-    },
-    {
-      id: "tools_synced",
-      label: "ROAL tools synced to agent",
-      status: toolsOk ? "ok" : input.lastSyncError ? "error" : "pending",
-      detail: toolsOk
-        ? undefined
-        : input.lastSyncError?.trim() ||
-          "Run Connect & sync on Live Agent.",
-    },
-    {
-      id: "conversation_init_webhook",
-      label: "Conversation-init webhook set",
-      status: webhookOk ? "ok" : webhookEval.detail ? "error" : "pending",
-      detail: webhookOk ? undefined : webhookEval.detail ?? undefined,
+      label: "Phone host ready",
+      automatic: true,
+      status: hostOk ? "ok" : hostFailed ? "error" : "pending",
+      detail: hostOk
+        ? `${hostName} knows your menu, hours and how to take orders.`
+        : hostFailed
+          ? "We hit a snag setting this up and are retrying automatically."
+          : "We're setting this up for you. It takes about a minute.",
     },
     {
       id: "test_call_passed",
-      label: "Test call passed",
+      label: "Test call",
       status: testOk ? "ok" : "pending",
       detail: testOk
-        ? input.testCallDetail || "Test order recorded or step marked complete."
-        : "Run a test call on Live Agent and complete a sample order.",
+        ? "You placed a test order."
+        : `Call ${hostName} from your browser and place a pretend order.`,
     },
   ];
 
@@ -332,18 +322,8 @@ function deriveLaunchGatePhase(
 ): LaunchGatePhase {
   if (checklist.isLaunchReady) return "ready";
 
-  const byId = new Map(checklist.items.map((item) => [item.id, item]));
-  const server = byId.get("server_env_ready");
-  const agent = byId.get("agent_provisioned");
-  const tools = byId.get("tools_synced");
-
-  if (
-    server?.status === "error" ||
-    agent?.status === "error" ||
-    tools?.status === "error"
-  ) {
-    return "blocked";
-  }
+  const agent = checklist.items.find((item) => item.id === "agent_provisioned");
+  if (agent?.status === "error") return "blocked";
 
   return "almost_ready";
 }
@@ -359,20 +339,16 @@ export function evaluateLaunchGate(
     ? {
         label:
           blocker.id === "test_call_passed"
-            ? "Run test call"
-            : blocker.id === "server_env_ready"
-              ? "Review server config"
-              : blocker.id === "menu_has_items"
-                ? "Add menu items"
-                : blocker.id === "hours_set"
-                  ? "Set weekly hours"
-                  : blocker.id === "conversation_init_webhook"
-                    ? "Configure webhook"
-                    : blocker.id === "agent_provisioned"
-                      ? "Finish voice agent setup"
-                      : blocker.id === "tools_synced"
-                        ? "Fix agent sync"
-                        : "Finish setup",
+            ? "Make a test call"
+            : blocker.id === "menu_has_items"
+              ? "Add your menu"
+              : blocker.id === "hours_set"
+                ? "Set your hours"
+                : blocker.id === "profile_complete"
+                  ? "Add your details"
+                  : blocker.id === "agent_provisioned"
+                    ? "See phone host"
+                    : "Finish setup",
         href: blocker.href,
       }
     : {

@@ -24,12 +24,11 @@ const STATE_CLASS: Record<Exclude<VoiceProvisionUiState, "not_started">, string>
 const STATE_LABEL: Record<Exclude<VoiceProvisionUiState, "not_started">, string> = {
   ready: "Host ready",
   in_progress: "Setting up host",
-  needs_attention: "Host needs attention",
+  needs_attention: "Host retrying",
 };
 
 export function VoiceProvisionStatusBadge({
   state,
-  profile = null,
   className,
   compact = false,
 }: Props) {
@@ -38,7 +37,7 @@ export function VoiceProvisionStatusBadge({
   const label = voiceProvisionBadgeLabel(state);
   if (!label) return null;
 
-  const title = voiceProvisionBadgeTitle(state, profile);
+  const title = voiceProvisionBadgeTitle(state);
 
   return (
     <span

@@ -104,6 +104,8 @@ export const ENV_HINTS: Record<string, string> = {
     "IANA timezone for the voice agent, e.g. America/Chicago",
   GOOGLE_PLACES_API_KEY:
     "Google Cloud → Places API (New) key for restaurant lookup (server only)",
+  TWILIO_ACCOUNT_SID: "Twilio console → Account Info → Account SID (buys a phone line per restaurant)",
+  TWILIO_AUTH_TOKEN: "Twilio console → Account Info → Auth Token (server only)",
   ELEVENLABS_AGENT_PHONE_NUMBER_ID:
     "Optional ElevenLabs phone number id for outbound owner test calls",
   NEXT_PUBLIC_APP_URL:

@@ -1,5 +1,7 @@
 import {
   buildRestaurantLaunchGate,
+  areToolsSynced,
+  isDedicatedAgentProvisioned,
   parseVoiceAgentSyncSummary,
 } from "@/lib/restaurant-launch/evaluate-checklist";
 import {
@@ -114,10 +116,19 @@ export function evaluateOnboardingReadiness(input: {
 
   const agentHref = restaurantVoiceAgentHref(input.restaurantId);
 
+  // "Phone host ready" folds the host and its phone call-in setup into one owner step; readiness
+  // still tells them apart so a built host waiting on phone setup isn't reported as unsynced.
+  const hostBuilt =
+    isDedicatedAgentProvisioned(input.profile, input.templateAgentId ?? null) &&
+    areToolsSynced(syncSummary, input.profile?.elevenlabs_last_sync_error ?? null);
+
   const items: OnboardingReadinessItem[] = gate.checklist.items
     .filter((item) => item.id !== "server_env_ready")
     .map((item) => {
-      const state = onboardingStateFromChecklistItem(item.id);
+      const state =
+        item.id === "agent_provisioned" && hostBuilt
+          ? "phone_not_connected"
+          : onboardingStateFromChecklistItem(item.id);
       return {
         state,
         ok: item.status === "ok",
@@ -131,10 +142,8 @@ export function evaluateOnboardingReadiness(input: {
     items.unshift({
       state: "server_config_incomplete",
       ok: false,
-      label: "Server environment ready",
-      detail:
-        serverEnv.detail ??
-        "Server config incomplete — ElevenLabs and Supabase settings required.",
+      label: "Phone host ready",
+      detail: "We're finishing setup on our side. Nothing for you to do.",
       href: agentHref,
     });
   }

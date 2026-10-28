@@ -36,7 +36,7 @@ describe("resolveMenuAutoSyncDisplay", () => {
       lastSyncedAt: null,
     });
     expect(d.phase).toBe("syncing");
-    expect(d.badgeLabel).toBe("Syncing");
+    expect(d.badgeLabel).toBe("Updating");
     expect(d.resyncDisabled).toBe(true);
   });
 
@@ -48,6 +48,6 @@ describe("resolveMenuAutoSyncDisplay", () => {
       lastSyncedAt: "2026-05-30T10:00:00.000Z",
     });
     expect(d.phase).toBe("failed");
-    expect(d.errorMessage).toBe("ElevenLabs timeout");
+    expect(d.errorMessage).toMatch(/Couldn't update your phone host/);
   });
 });

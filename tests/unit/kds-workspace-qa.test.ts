@@ -198,13 +198,4 @@ describe("KDS workspace UX", () => {
     expect(modal).not.toContain('>Session<');
   });
 
-  it("collapses voice test harness by default", () => {
-    const harness = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/VoiceAgentTestHarness.tsx"),
-      "utf8"
-    );
-    expect(harness).toContain('variant?: "panel" | "test-call"');
-    expect(harness).toContain("menu-setup-test-call");
-    expect(harness).toContain("const [open, setOpen] = useState(false)");
-  });
 });

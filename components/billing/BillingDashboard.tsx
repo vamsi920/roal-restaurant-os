@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  AlertTriangle,
   Check,
   DollarSign,
   FileText,
@@ -97,36 +96,20 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         }
       />
 
-      {pilot ? (
+      {snapshot.subscriptionStatus !== "active" ? (
         <div
           className="billing-dashboard__notice billing-dashboard__notice--pilot panel flex min-w-0 items-start gap-3 border-accent/25 bg-accent-soft/50 p-4 text-[13px] text-muted"
           role="status"
         >
           <IconTile icon={Sparkles} color="orange" />
           <div className="min-w-0 flex-1">
-          <p className="font-semibold text-ink">Pilot billing mode</p>
-          <p className="mt-1 text-pretty">
-            {BILLING_LAUNCH_POSTURE.devMode} Public pricing is {BILLING_LAUNCH_POSTURE.pilotRate}{" "}
-            ({BILLING_LAUNCH_POSTURE.model}). {BILLING_LAUNCH_POSTURE.selfServeCheckout}{" "}
-            {BILLING_LAUNCH_POSTURE.pilotBilling}
-          </p>
-          <p className="billing-dashboard__notice-links mt-2 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-4">
-            <InlineLink href={BILLING_LAUNCH_POSTURE.publicPricingPath}>Public pricing</InlineLink>
-            <InlineLink href={BILLING_LAUNCH_POSTURE.contactPath}>Contact for pilot terms</InlineLink>
-          </p>
-          </div>
-        </div>
-      ) : !snapshot.checkoutEnabled ? (
-        <div
-          className="billing-dashboard__notice billing-dashboard__notice--stripe panel flex min-w-0 items-start gap-3 border-warning/30 bg-warning/5 p-4 text-[13px] text-muted"
-          role="status"
-        >
-          <IconTile icon={AlertTriangle} color="amber" />
-          <div className="min-w-0 flex-1">
-            <p className="font-semibold text-ink">Stripe keys detected — checkout not live</p>
+            <p className="font-semibold text-ink">You only pay $0.90 when a call becomes an order.</p>
             <p className="mt-1 text-pretty">
-              API keys are configured, but {BILLING_LAUNCH_POSTURE.selfServeCheckout.toLowerCase()}{" "}
-              {BILLING_LAUNCH_POSTURE.pilotBilling}
+              No monthly fee and no setup fee. Calls about your hours, wrong numbers and hang-ups are free. Start your plan
+              when you&apos;re ready for real calls, and we&apos;ll set up your own phone line.
+            </p>
+            <p className="mt-2">
+              <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>Start my plan</InlineLink>
             </p>
           </div>
         </div>
@@ -201,9 +184,9 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             </p>
           ) : snapshot.subscriptionStatus === "trialing" ? (
             <p className="mt-3 text-[13px] text-warning">
-              Trial ended.{" "}
-              <InlineLink href={BILLING_LAUNCH_POSTURE.contactPath}>Contact sales</InlineLink> for
-              pilot terms — self-serve checkout is not live yet.
+              Your free trial ended.{" "}
+              <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>Start your plan</InlineLink> to keep
+              taking calls.
             </p>
           ) : null}
 
@@ -212,13 +195,13 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
               <BillingCheckoutButtons snapshot={snapshot} />
             ) : pilot ? (
               <p className="mt-3 text-[13px] text-muted">
-                No self-serve checkout in pilot mode. Usage is tracked here; billing is agreed via{" "}
-                <InlineLink href={BILLING_LAUNCH_POSTURE.contactPath}>contact sales</InlineLink>.
+                Every completed order is counted here.{" "}
+                <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>Questions about your plan?</InlineLink>
               </p>
             ) : (
               <p className="mt-3 text-[13px] text-muted">
-                Upgrade and payment buttons appear when Stripe Checkout is enabled. Until then,
-                contact sales for plan changes.
+                To change your plan,{" "}
+                <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>get in touch</InlineLink>.
               </p>
             )
           ) : (
@@ -233,22 +216,6 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
               <dt>Status</dt>
               <dd>{statusLabel(snapshot.effectiveStatus)}</dd>
-            </div>
-            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
-              <dt>Provider</dt>
-              <dd>
-                {snapshot.providerMode === "stripe"
-                  ? snapshot.checkoutEnabled
-                    ? "Stripe"
-                    : "Stripe (keys only)"
-                  : "Development"}
-              </dd>
-            </div>
-            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
-              <dt>Stripe customer</dt>
-              <dd className="font-mono text-[12px] font-normal text-muted">
-                {snapshot.stripeCustomerLinked ? "Linked" : "—"}
-              </dd>
             </div>
             <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
               <dt>Period</dt>

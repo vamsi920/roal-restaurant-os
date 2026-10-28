@@ -13,7 +13,6 @@ import { ensureVoiceReady } from "@/lib/trial/elevenlabs";
 import { getTrial, updateTrial } from "@/lib/trial/store";
 import type { TrialRecord } from "@/lib/trial/types";
 import { resolveTrialPersona } from "@/lib/trial/voices";
-import { tryProvisionVoiceAgentForNewRestaurant } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 import type { VoiceAgentProvisionApiResult } from "@/lib/voice-agent/provision-restaurant-voice-agent";
 
 export type ClaimTrialInput = {
@@ -202,22 +201,18 @@ export async function claimTrial(
     );
   }
 
-  const voiceProvision = await tryProvisionVoiceAgentForNewRestaurant({
-    restaurantId,
-    restaurantName,
-    organizationId,
-    userId: input.userId,
+  // Creating the dedicated host takes ~12s on top of everything above, which pushed this
+  // request past the serverless time limit. The dashboard's VoiceHostKeeper creates and syncs
+  // it in its own request right after the owner lands (lib/voice-agent/ensure-voice-host).
+  const voiceProvision: VoiceAgentProvisionApiResult = {
+    ok: false,
+    skipped: true,
+    warning: "Setting up the phone host in the background.",
+  };
+  await updateRestaurantOnboardingStep(supabase, restaurantId, organizationId, "voice_agent", "in_progress", {
+    source: "trial_claim",
+    queued: true,
   });
-  await updateRestaurantOnboardingStep(
-    supabase,
-    restaurantId,
-    organizationId,
-    "voice_agent",
-    voiceProvision.ok ? "completed" : "in_progress",
-    voiceProvision.ok
-      ? { agent_id: voiceProvision.agent_id, source: "trial_claim" }
-      : { provision_error: voiceProvision.warning, source: "trial_claim" }
-  );
 
   if (trial.call_count > 0) {
     await updateRestaurantOnboardingStep(

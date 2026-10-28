@@ -91,6 +91,6 @@ describe("error-state wiring (launch 30)", () => {
       join(REPO, "components/billing/BillingDashboard.tsx"),
       "utf8"
     );
-    expect(billing).toContain("Pilot billing mode");
+    expect(billing).toContain("You only pay $0.90 when a call becomes an order");
   });
 });

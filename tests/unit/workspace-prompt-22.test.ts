@@ -47,8 +47,7 @@ describe("workspace prompt 22 targeted checks", () => {
     );
     expect(indicator).toContain("drafts");
     expect(indicator).toContain("liveEndpoints.callStatus");
-    expect(agent).toContain("voiceAgentCenter");
-    expect(agent).toContain("loadRestaurantMenuSetupPageData");
+    expect(agent).toContain('.from("restaurant_profiles")');
     expect(agent).not.toMatch(/MOCK_|demoAgent|fakeCenter/i);
   });
 
