@@ -22,6 +22,7 @@ import { BILLING_LAUNCH_POSTURE } from "@/lib/billing/launch-posture";
 import type { BillingSnapshot } from "@/lib/billing/types";
 import { BillingCheckoutButtons } from "@/components/billing/BillingCheckoutButtons";
 import { PhoneLineSetup } from "@/components/billing/PhoneLineSetup";
+import type { InvoiceSummary, OrganizationInvoices } from "@/lib/billing/invoices";
 
 type Props = {
   snapshot: BillingSnapshot;
@@ -30,7 +31,24 @@ type Props = {
   justStarted?: boolean;
   /** Owner backed out of the payment page. */
   checkoutCanceled?: boolean;
+  /** Past invoices and the running bill for this month. */
+  billingHistory?: OrganizationInvoices;
 };
+
+const INVOICE_STATUS: Record<InvoiceSummary["status"], { label: string; tone: Tone }> = {
+  paid: { label: "Paid", tone: "ok" },
+  open: { label: "Due", tone: "warn" },
+  draft: { label: "Draft", tone: "neutral" },
+  void: { label: "Voided", tone: "neutral" },
+  uncollectible: { label: "Unpaid", tone: "warn" },
+};
+
+function ordersReportHref(from: string | null, to: string | null): string {
+  const q = new URLSearchParams();
+  if (from) q.set("from", from);
+  if (to) q.set("to", to);
+  return `/api/billing/orders-report?${q.toString()}`;
+}
 
 function formatDate(iso: string | null): string {
   if (!iso) return "—";
@@ -66,7 +84,9 @@ function meterTone(level: "ok" | "warning" | "exceeded"): string {
   return "bg-ink";
 }
 
-export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checkoutCanceled }: Props) {
+export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checkoutCanceled, billingHistory }: Props) {
+  const invoices = billingHistory?.invoices ?? [];
+  const upcoming = billingHistory?.upcoming ?? null;
   const isRestaurantScope = snapshot.scope === "restaurant";
   const pilot = snapshot.providerMode === "dev";
   const usageTotal =
@@ -269,6 +289,14 @@ export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checko
             No billable phone orders yet this period. Missed and no-order calls are not charged.
           </p>
         ) : null}
+        {!isRestaurantScope ? (
+          <p className="mb-3 text-[13px] text-muted">
+            <a className="font-medium text-ink underline underline-offset-2" href={ordersReportHref(snapshot.periodStart, snapshot.periodEnd)}>
+              Download this month&apos;s orders (CSV)
+            </a>{" "}
+            · every completed order with its $0.90 fee, to check against your bill.
+          </p>
+        ) : null}
         <ul className="billing-dashboard__meters grid gap-3 sm:grid-cols-2">
           {snapshot.limitChecks.map((check) => (
             <li
@@ -336,36 +364,119 @@ export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checko
         </ul>
       </Panel>
 
+      {!isRestaurantScope && planActive && upcoming ? (
+        <Panel
+          className="billing-dashboard__upcoming"
+          title="Next bill so far"
+          hint={upcoming.billsOn ? `Charged to your card on ${formatDate(upcoming.billsOn)}.` : "Charged to your card at the end of this period."}
+        >
+          <dl className="org-kv billing-dashboard__meta">
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Completed orders</dt>
+              <dd className="tabular-nums">{upcoming.orders.toLocaleString()} × $0.90</dd>
+            </div>
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Subtotal</dt>
+              <dd className="tabular-nums">{formatMoney(upcoming.subtotalUsd)}</dd>
+            </div>
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Sales tax</dt>
+              <dd className="tabular-nums">
+                {upcoming.taxCalculated || upcoming.taxUsd > 0 ? formatMoney(upcoming.taxUsd) : "None"}
+              </dd>
+            </div>
+            <div className="billing-dashboard__meta-row flex flex-col sm:flex-row">
+              <dt>Total so far</dt>
+              <dd className="tabular-nums font-semibold text-ink">{formatMoney(upcoming.totalUsd)}</dd>
+            </div>
+          </dl>
+        </Panel>
+      ) : null}
+
       <Panel
         className="billing-dashboard__invoices"
         flush
         title={isRestaurantScope ? "Organization invoices" : "Invoices"}
         hint={
-          snapshot.stripeCustomerLinked
-            ? "Open Payment & invoices to see and download past invoices."
-            : "Your monthly invoice lists here once your plan starts."
+          billingHistory?.failed
+            ? "We couldn't load your invoices just now. Refresh in a minute."
+            : invoices.length
+              ? "Each invoice is also emailed to you. Open one to see the details or download a PDF."
+              : "Your monthly invoice lists here once your plan starts."
         }
       >
-        <div className="billing-dashboard__invoice-table org-table min-w-0">
+        <div className="billing-dashboard__invoice-table org-table min-w-0 overflow-x-auto">
           <table>
             <thead>
               <tr>
-                <th>Date</th>
-                <th className="is-num">Amount</th>
+                <th>Period</th>
+                <th className="is-num">Orders</th>
+                <th className="is-num">Tax</th>
+                <th className="is-num">Total</th>
                 <th>Status</th>
+                <th>
+                  <span className="sr-only">Documents</span>
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td colSpan={3} className="!p-0">
-                  <EmptyState
-                    icon={FileText}
-                    className="w-full py-8"
-                    title="No invoices yet"
-                    body="Completed orders are billed at $0.90 each. Invoices list here once one is issued."
-                  />
-                </td>
-              </tr>
+              {invoices.length ? (
+                invoices.map((inv) => {
+                  const status = INVOICE_STATUS[inv.status] ?? INVOICE_STATUS.open;
+                  return (
+                    <tr key={inv.id}>
+                      <td>
+                        <span className="text-ink">
+                          {inv.periodStart && inv.periodEnd
+                            ? `${formatDate(inv.periodStart)} – ${formatDate(inv.periodEnd)}`
+                            : formatDate(inv.issuedAt)}
+                        </span>
+                        {inv.number ? <span className="block text-[12px] text-subtle">{inv.number}</span> : null}
+                      </td>
+                      <td className="is-num tabular-nums">{inv.orders.toLocaleString()}</td>
+                      <td className="is-num tabular-nums">{formatMoney(inv.taxUsd)}</td>
+                      <td className="is-num tabular-nums">{formatMoney(inv.totalUsd)}</td>
+                      <td>
+                        <StatusChip tone={status.tone}>{status.label}</StatusChip>
+                      </td>
+                      <td className="whitespace-nowrap text-[13px]">
+                        {inv.viewUrl ? (
+                          <a className="underline underline-offset-2" href={inv.viewUrl} target="_blank" rel="noreferrer">
+                            {inv.status === "open" ? "Pay" : "View"}
+                          </a>
+                        ) : null}
+                        {inv.pdfUrl ? (
+                          <>
+                            {" · "}
+                            <a className="underline underline-offset-2" href={inv.pdfUrl} target="_blank" rel="noreferrer">
+                              PDF
+                            </a>
+                          </>
+                        ) : null}
+                        {!isRestaurantScope ? (
+                          <>
+                            {" · "}
+                            <a className="underline underline-offset-2" href={ordersReportHref(inv.periodStart, inv.periodEnd)}>
+                              Orders
+                            </a>
+                          </>
+                        ) : null}
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={6} className="!p-0">
+                    <EmptyState
+                      icon={FileText}
+                      className="w-full py-8"
+                      title="No invoices yet"
+                      body="Completed orders are billed at $0.90 each, plus sales tax where it applies. Invoices list here once one is issued."
+                    />
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

@@ -5,6 +5,7 @@ import { loadOrganizationBilling } from "@/lib/billing/load-billing";
 import { getDb } from "@/lib/db";
 import { confirmCheckoutSession } from "@/lib/billing/confirm-checkout";
 import { getStripeClient } from "@/lib/billing/provider";
+import { loadOrganizationInvoices } from "@/lib/billing/invoices";
 
 export const dynamic = "force-dynamic";
 
@@ -46,9 +47,20 @@ export default async function BillingPage({
     redirect("/dashboard/onboarding");
   }
 
+  const { data: billingIds } = await supabase
+    .from("organizations")
+    .select("stripe_customer_id, stripe_subscription_id")
+    .eq("id", membership.organization_id)
+    .maybeSingle<{ stripe_customer_id: string | null; stripe_subscription_id: string | null }>();
+  const billingHistory = await loadOrganizationInvoices(
+    billingIds?.stripe_customer_id ? getStripeClient() : null,
+    billingIds ?? { stripe_customer_id: null, stripe_subscription_id: null }
+  );
+
   return (
     <BillingDashboard
       snapshot={snapshot}
+      billingHistory={billingHistory}
       justStarted={justStarted}
       checkoutCanceled={searchParams?.checkout === "canceled"}
     />
