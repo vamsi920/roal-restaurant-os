@@ -14,6 +14,7 @@ export const NOTIFICATION_EVENT_TYPES = [
   "complaint_caller",
   "call_review_needed",
   "stuck_active_call",
+  "forwarding_quiet",
 ] as const;
 
 export type NotificationEventType = (typeof NOTIFICATION_EVENT_TYPES)[number];
@@ -85,6 +86,7 @@ export const NOTIFICATION_EVENT_LABELS: Record<NotificationEventType, string> = 
   complaint_caller: "Complaint / unhappy caller",
   call_review_needed: "Call needs review",
   stuck_active_call: "Stuck live call",
+  forwarding_quiet: "Call forwarding looks off",
 };
 
 export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
@@ -116,4 +118,6 @@ export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
     "When a call fails or ends without an order and needs owner review.",
   stuck_active_call:
     "When a live inbound call stays active past your threshold.",
+  forwarding_quiet:
+    "When no calls reach your host on a day you were open, so forwarding may be off.",
 };

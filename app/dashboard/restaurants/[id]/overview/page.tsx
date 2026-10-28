@@ -5,6 +5,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import { ArrowUpRight, Clock, Info, PhoneCall, ShoppingBag, Timer, TrendingUp } from "lucide-react";
 import { Panel, StatCard, formatMoney, greetingFor } from "@/components/ui";
 import { CallsChart } from "@/components/dashboard/overview/calls-chart";
+import { ForwardingTodoCard } from "@/components/dashboard/overview/forwarding-todo-card";
 import { GoLiveCard } from "@/components/dashboard/overview/go-live-card";
 import { RecentActivity } from "@/components/dashboard/overview/recent-activity";
 import { WelcomeGoLiveCard } from "@/components/live-orders/WelcomeGoLiveCard";
@@ -15,6 +16,7 @@ import {
   formatHandledDuration,
   formatLocalDayTime,
 } from "@/lib/overview/aggregate";
+import { loadForwardingSummary } from "@/lib/forwarding/state";
 import { loadForwardingNumber } from "@/lib/overview/forwarding-number";
 import { loadRestaurantOverview } from "@/lib/overview/load-overview";
 import { ensureRestaurantProfile } from "@/lib/restaurant-profile/helpers";
@@ -48,7 +50,7 @@ export default async function RestaurantOverviewPage({
   const showWelcome = searchParams?.welcome === "1";
   const now = new Date();
 
-  const [overview, forwardingNumber] = await Promise.all([
+  const [overview, forwardingNumber, forwarding] = await Promise.all([
     loadRestaurantOverview(supabase, {
       restaurantId: restaurant.id,
       restaurantName: restaurant.name,
@@ -58,6 +60,7 @@ export default async function RestaurantOverviewPage({
     showWelcome
       ? loadForwardingNumber(restaurant.id, restaurant.name, profile)
       : Promise.resolve<string | null>(null),
+    loadForwardingSummary(supabase, restaurant.id).catch(() => null),
   ]);
 
   if (overview.warnings.length > 0) {
@@ -132,6 +135,10 @@ export default async function RestaurantOverviewPage({
           </p>
         )}
       </section>
+
+      {forwarding ? (
+        <ForwardingTodoCard forwarding={forwarding} hostName={overview.hostName} href={`${base}/forwarding`} />
+      ) : null}
 
       {showChecklist && overview.launch ? <GoLiveCard launch={overview.launch} /> : null}
 

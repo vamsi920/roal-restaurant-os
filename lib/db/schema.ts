@@ -84,6 +84,7 @@ export const TABLES: Record<string, TableSpec> = {
         "complaint_caller",
         "call_review_needed",
         "stuck_active_call",
+        "forwarding_quiet",
       ],
       channels: { dev_console: true, email: false, sms: false, webhook: false },
       email_recipients: [],
@@ -130,6 +131,8 @@ export const TABLES: Record<string, TableSpec> = {
   restaurant_reservation_requests: { defaults: { status: "requested", created_at: now, updated_at: now } },
   /** Connected register (Clover) per restaurant; tokens are sealed (lib/pos/seal.ts). */
   pos_connections: { pk: ["restaurant_id"], autoId: false, defaults: { created_at: now, updated_at: now } },
+  /** Call-forwarding setup and checks per restaurant (lib/forwarding/state.ts). */
+  restaurant_call_forwarding: { pk: ["restaurant_id"], autoId: false, defaults: { created_at: now, updated_at: now } },
 };
 
 export function tableSpec(table: string): Required<Pick<TableSpec, "pk">> & TableSpec {
@@ -164,6 +167,7 @@ export const CASCADES: Record<string, Array<{ table: string; column: string }>> 
     { table: "restaurant_knowledge_suggestions", column: "restaurant_id" },
     { table: "restaurant_reservation_requests", column: "restaurant_id" },
     { table: "pos_connections", column: "restaurant_id" },
+    { table: "restaurant_call_forwarding", column: "restaurant_id" },
   ],
   categories: [{ table: "items", column: "category_id" }],
   items: [{ table: "modifiers", column: "item_id" }],

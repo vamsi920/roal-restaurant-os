@@ -1046,3 +1046,19 @@ html.app-shell-nav-open body {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Call-forwarding "keep by the phone" card: print only the card. */
+@media print {
+  body:has(.forwarding-sticker) * {
+    visibility: hidden;
+  }
+  .forwarding-sticker,
+  .forwarding-sticker * {
+    visibility: visible;
+  }
+  .forwarding-sticker {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+  }
+}
