@@ -17,14 +17,19 @@ import {
 } from "@/components/dashboard/page-primitives";
 import { EmptyState, IconTile, StatCard, formatMoney } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { BILLING_PLANS, statusLabel } from "@/lib/billing";
+import { statusLabel } from "@/lib/billing";
 import { BILLING_LAUNCH_POSTURE } from "@/lib/billing/launch-posture";
 import type { BillingSnapshot } from "@/lib/billing/types";
 import { BillingCheckoutButtons } from "@/components/billing/BillingCheckoutButtons";
+import { PhoneLineSetup } from "@/components/billing/PhoneLineSetup";
 
 type Props = {
   snapshot: BillingSnapshot;
   orgBillingHref?: string;
+  /** Owner just came back from paying: show the phone line being set up. */
+  justStarted?: boolean;
+  /** Owner backed out of the payment page. */
+  checkoutCanceled?: boolean;
 };
 
 function formatDate(iso: string | null): string {
@@ -61,13 +66,14 @@ function meterTone(level: "ok" | "warning" | "exceeded"): string {
   return "bg-ink";
 }
 
-export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
-  const { plan, effectiveLimits } = snapshot;
+export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checkoutCanceled }: Props) {
   const isRestaurantScope = snapshot.scope === "restaurant";
   const pilot = snapshot.providerMode === "dev";
   const usageTotal =
     snapshot.usage.menuScans + snapshot.usage.billablePhoneOrders + snapshot.usage.toolCalls;
   const organizationBillingHref = orgBillingHref ?? "/dashboard/billing";
+  const canStartOnline = snapshot.canManageBilling && snapshot.checkoutEnabled;
+  const planActive = snapshot.subscriptionStatus === "active";
   const noOrders = isRestaurantScope
     ? usageTotal === 0
     : snapshot.usage.billablePhoneOrders === 0;
@@ -96,7 +102,15 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         }
       />
 
-      {snapshot.subscriptionStatus !== "active" ? (
+      {justStarted && planActive ? <PhoneLineSetup /> : null}
+
+      {checkoutCanceled && !planActive ? (
+        <p className="billing-dashboard__notice panel p-3 text-[13px] text-muted" role="status">
+          No problem, nothing was charged. Start your plan whenever you&apos;re ready.
+        </p>
+      ) : null}
+
+      {!planActive ? (
         <div
           className="billing-dashboard__notice billing-dashboard__notice--pilot panel flex min-w-0 items-start gap-3 border-accent/25 bg-accent-soft/50 p-4 text-[13px] text-muted"
           role="status"
@@ -108,9 +122,13 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
               No monthly fee and no setup fee. Calls about your hours, wrong numbers and hang-ups are free. Start your plan
               when you&apos;re ready for real calls, and we&apos;ll set up your own phone line.
             </p>
-            <p className="mt-2">
-              <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>Start my plan</InlineLink>
-            </p>
+            {canStartOnline ? (
+              <BillingCheckoutButtons snapshot={snapshot} />
+            ) : (
+              <p className="mt-2">
+                <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>Start my plan</InlineLink>
+              </p>
+            )}
           </div>
         </div>
       ) : null}
@@ -156,16 +174,12 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         >
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <p className="font-display text-[24px] font-bold tracking-[-0.02em] text-ink">
-              {pilot
-                ? BILLING_LAUNCH_POSTURE.pilotRate
-                : plan.monthlyPriceUsd != null
-                  ? `$${plan.monthlyPriceUsd} / month`
-                  : "Custom pricing"}
+              {BILLING_LAUNCH_POSTURE.pilotRate}
             </p>
-            <p className="text-[13px] text-muted">{plan.name}</p>
+            <p className="text-[13px] text-muted">No monthly fee</p>
           </div>
           <p className="mt-1.5 max-w-md text-[13px] text-muted">
-            {pilot ? BILLING_LAUNCH_POSTURE.pilotRateDetail : plan.description}
+            {BILLING_LAUNCH_POSTURE.pilotRateDetail}
           </p>
 
           {snapshot.isTrialActive ? (
@@ -185,14 +199,20 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
           ) : snapshot.subscriptionStatus === "trialing" ? (
             <p className="mt-3 text-[13px] text-warning">
               Your free trial ended.{" "}
-              <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>Start your plan</InlineLink> to keep
-              taking calls.
+              {canStartOnline ? (
+                "Start your plan to keep taking calls."
+              ) : (
+                <>
+                  <InlineLink href={`${BILLING_LAUNCH_POSTURE.contactPath}?topic=start-plan`}>Start your plan</InlineLink> to
+                  keep taking calls.
+                </>
+              )}
             </p>
           ) : null}
 
           {snapshot.canManageBilling ? (
             snapshot.checkoutEnabled ? (
-              <BillingCheckoutButtons snapshot={snapshot} />
+              planActive ? <BillingCheckoutButtons snapshot={snapshot} /> : null
             ) : pilot ? (
               <p className="mt-3 text-[13px] text-muted">
                 Every completed order is counted here.{" "}
@@ -206,7 +226,7 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             )
           ) : (
             <p className="mt-3 text-[13px] text-muted">
-              Ask an organization admin to change plans or payment methods.
+              Ask the account owner to start the plan or update payment.
             </p>
           )}
         </Panel>
@@ -225,9 +245,9 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             </div>
           </dl>
           <p className="mt-3 text-[12px] text-subtle [overflow-wrap:anywhere]">
-            {snapshot.checkoutEnabled
-              ? "Invoices and payment methods appear here once billing is active."
-              : "Invoices and payment methods appear here after Stripe Checkout and Customer Portal are enabled."}
+            {snapshot.stripeCustomerLinked
+              ? "Your card and past invoices are under Payment & invoices."
+              : "Your card and invoices will show here once your plan starts."}
           </p>
         </Panel>
       </div>
@@ -237,8 +257,8 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         title={isRestaurantScope ? "This location — usage this period" : "Usage this period"}
         hint={
           isRestaurantScope
-            ? "Only receipt-backed phone orders for this location count toward pilot charges."
-            : "Only receipt-backed phone orders across accessible locations count toward pilot charges."
+            ? "Only completed phone orders at this location are charged."
+            : "Only completed phone orders are charged."
         }
       >
         {noOrders ? (
@@ -289,13 +309,6 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
             </li>
           ))}
         </ul>
-        {pilot ? (
-          <p className="mt-3 text-[12px] text-subtle">
-            Dev mode caps: {formatLimit(effectiveLimits.max_active_locations)} locations; other
-            meters are effectively unlimited. Tier limits are for future self-serve plans, not pilot
-            invoicing.
-          </p>
-        ) : null}
       </Panel>
 
       <Panel className="billing-dashboard__features" title="Plan features">
@@ -323,60 +336,14 @@ export function BillingDashboard({ snapshot, orgBillingHref }: Props) {
         </ul>
       </Panel>
 
-      {snapshot.upgradePlanIds.length > 0 ? (
-        <Panel
-          className="billing-dashboard__compare"
-          title={
-            pilot || !snapshot.checkoutEnabled
-              ? "Future self-serve tiers (not active)"
-              : "Compare plans"
-          }
-          hint={
-            pilot || !snapshot.checkoutEnabled
-              ? `Monthly SaaS tiers are placeholders for a future Stripe checkout release. Pilots use ${BILLING_LAUNCH_POSTURE.pilotRate}.`
-              : undefined
-          }
-        >
-          <ul className="billing-dashboard__tier-grid grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {(["starter", "growth", "enterprise"] as const).map((id) => {
-              const p = BILLING_PLANS[id];
-              const current = id === plan.id;
-              return (
-                <li
-                  key={id}
-                  className={cn(
-                    "billing-dashboard__tier flex min-w-0 flex-col rounded-[12px] border p-4",
-                    current ? "border-ink bg-card shadow-[0_0_0_3px_rgb(17_17_17/0.05)]" : "border-line bg-elev"
-                  )}
-                >
-                  <p className="org-kicker">
-                    {p.name}
-                    {current ? " · Current" : null}
-                  </p>
-                  <p className="mt-1.5 text-[17px] font-semibold tracking-tight text-ink">
-                    {p.monthlyPriceUsd != null ? `$${p.monthlyPriceUsd}/mo` : "Contact us"}
-                  </p>
-                  <p className="mt-1.5 flex-1 text-[13px] text-muted">{p.description}</p>
-                  <p className="mt-2 text-[12px] text-subtle">
-                    Up to {formatLimit(p.limits.max_active_locations)} locations
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
-        </Panel>
-      ) : null}
-
       <Panel
         className="billing-dashboard__invoices"
         flush
         title={isRestaurantScope ? "Organization invoices" : "Invoices"}
         hint={
-          snapshot.checkoutEnabled
-            ? "Invoice history and PDF downloads list here once billing is active."
-            : pilot
-              ? "Pilot invoices are handled manually — no Stripe invoices in this mode."
-              : "Invoice history appears here after Stripe Checkout ships."
+          snapshot.stripeCustomerLinked
+            ? "Open Payment & invoices to see and download past invoices."
+            : "Your monthly invoice lists here once your plan starts."
         }
       >
         <div className="billing-dashboard__invoice-table org-table min-w-0">

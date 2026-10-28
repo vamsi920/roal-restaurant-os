@@ -59,7 +59,7 @@ describe("getBillingProviderConfig", () => {
     expect(config.checkoutEnabled).toBe(false);
   });
 
-  it("returns stripe mode with checkout disabled when keys are set", () => {
+  it("returns stripe mode with checkout enabled when keys are set", () => {
     stripeState.secret = "sk_test_x";
     stripeState.publishable = "pk_test_x";
 
@@ -67,7 +67,7 @@ describe("getBillingProviderConfig", () => {
     expect(config.mode).toBe("stripe");
     expect(config.isConfigured).toBe(true);
     expect(config.checkoutEnabled).toBe(STRIPE_CHECKOUT_ENABLED);
-    expect(config.checkoutEnabled).toBe(false);
+    expect(config.checkoutEnabled).toBe(true);
   });
 });
 
@@ -83,32 +83,7 @@ describe("billingProvider actions", () => {
     expect(result.ok).toBe(false);
     if (result.ok) return;
     expect(result.code).toBe("not_configured");
-    expect(result.message).toMatch(/development mode|pilot billing/i);
-  });
-
-  it("returns not_implemented when keys exist but checkout is disabled", async () => {
-    stripeState.secret = "sk_test_x";
-    stripeState.publishable = "pk_test_x";
-
-    const checkout = await billingProvider.createCheckoutSession({
-      organizationId: "org",
-      planId: "growth",
-      successUrl: "http://localhost/success",
-      cancelUrl: "http://localhost/cancel",
-    });
-    expect(checkout.ok).toBe(false);
-    if (checkout.ok) return;
-    expect(checkout.code).toBe("not_implemented");
-    expect(checkout.message).toMatch(/not enabled|contact sales/i);
-
-    const portal = await billingProvider.createPortalSession({
-      organizationId: "org",
-      returnUrl: "http://localhost/billing",
-    });
-    expect(portal.ok).toBe(false);
-    if (portal.ok) return;
-    expect(portal.code).toBe("not_implemented");
-    expect(portal.message).toMatch(/Customer Portal is not enabled/i);
+    expect(result.message).not.toMatch(/stripe/i);
   });
 });
 

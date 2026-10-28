@@ -1,11 +1,19 @@
 import { getEnvStatus, getServerEnv } from "@/lib/env.server";
+import { getDb, type Db } from "@/lib/db";
+import {
+  createStripeClient,
+  ensureOrderPrice,
+  ensurePortalConfiguration,
+  type FetchFn,
+  type StripeClient,
+} from "@/lib/billing/stripe";
 import type {
   BillingPlanId,
   BillingProviderMode,
 } from "@/lib/billing/types";
 
-/** Flip when Stripe Checkout + Customer Portal ship. */
-export const STRIPE_CHECKOUT_ENABLED = false;
+/** Self-serve checkout is live whenever Stripe keys are configured. */
+export const STRIPE_CHECKOUT_ENABLED = true;
 
 export type BillingProviderConfig = {
   mode: BillingProviderMode;
@@ -33,6 +41,13 @@ export function getBillingProviderConfig(): BillingProviderConfig {
   };
 }
 
+/** Server-side Stripe client, or null when keys are missing. */
+export function getStripeClient(fetchImpl?: FetchFn): StripeClient | null {
+  const secret = getServerEnv().STRIPE_SECRET_KEY?.trim();
+  if (!secret || getBillingProviderConfig().mode !== "stripe") return null;
+  return createStripeClient(secret, fetchImpl);
+}
+
 export type CheckoutSessionRequest = {
   organizationId: string;
   planId: BillingPlanId;
@@ -47,60 +62,106 @@ export type BillingPortalRequest = {
 
 export type BillingProviderActionResult =
   | { ok: true; url: string }
-  | { ok: false; code: "not_configured" | "not_implemented"; message: string };
+  | { ok: false; code: "not_configured" | "not_implemented" | "failed"; message: string };
 
-/** Stripe-ready hooks; dev mode returns structured not_configured. */
+type ProviderDeps = { db?: Db; fetchImpl?: FetchFn };
+
+const NOT_CONFIGURED: BillingProviderActionResult = {
+  ok: false,
+  code: "not_configured",
+  message: "Online payment isn't switched on yet. Get in touch and we'll start your plan for you.",
+};
+
+const FAILED: BillingProviderActionResult = {
+  ok: false,
+  code: "failed",
+  message: "We couldn't open the payment page just now. Please try again in a minute.",
+};
+
+/** Reuse the organization's billing customer, creating and saving one on first checkout. */
+async function ensureCustomer(db: Db, stripe: StripeClient, organizationId: string): Promise<string> {
+  const { data: org, error } = await db
+    .from("organizations")
+    .select("id, name, stripe_customer_id")
+    .eq("id", organizationId)
+    .maybeSingle<{ id: string; name: string | null; stripe_customer_id: string | null }>();
+  if (error) throw new Error(error.message);
+  if (!org) throw new Error("Organization not found.");
+  if (org.stripe_customer_id?.trim()) return org.stripe_customer_id.trim();
+
+  const customer = await stripe.post<{ id: string }>(
+    "/customers",
+    { name: org.name ?? undefined, metadata: { organization_id: organizationId } },
+    { idempotencyKey: `customer-${organizationId}` }
+  );
+  await db
+    .from("organizations")
+    .update({ stripe_customer_id: customer.id, updated_at: new Date().toISOString() })
+    .eq("id", organizationId);
+  return customer.id;
+}
+
 export const billingProvider = {
   async createCheckoutSession(
-    _req: CheckoutSessionRequest // eslint-disable-line @typescript-eslint/no-unused-vars -- Stripe stub
+    req: CheckoutSessionRequest,
+    deps: ProviderDeps = {}
   ): Promise<BillingProviderActionResult> {
-    const config = getBillingProviderConfig();
-    if (config.mode !== "stripe") {
-      return {
-        ok: false,
-        code: "not_configured",
-        message:
-          "Stripe is not connected. Pilot billing runs in development mode with relaxed limits—no checkout required to onboard.",
-      };
+    const stripe = getStripeClient(deps.fetchImpl);
+    if (!stripe) return NOT_CONFIGURED;
+    const db = deps.db ?? getDb();
+    try {
+      const [customer, price] = await Promise.all([
+        ensureCustomer(db, stripe, req.organizationId),
+        ensureOrderPrice(stripe),
+      ]);
+      const metadata = { organization_id: req.organizationId, plan_id: req.planId };
+      const session = await stripe.post<{ url?: string }>("/checkout/sessions", {
+        mode: "subscription",
+        customer,
+        client_reference_id: req.organizationId,
+        line_items: [{ price }],
+        payment_method_collection: "always",
+        metadata,
+        subscription_data: { metadata },
+        success_url: req.successUrl,
+        cancel_url: req.cancelUrl,
+      });
+      if (!session.url) return FAILED;
+      return { ok: true, url: session.url };
+    } catch (e) {
+      console.error("[billing] checkout", e instanceof Error ? e.message : e);
+      return FAILED;
     }
-    if (!config.checkoutEnabled) {
-      return {
-        ok: false,
-        code: "not_implemented",
-        message:
-          "Self-serve Stripe Checkout is not enabled. Pilots use success-based terms via contact sales—no payment is processed here.",
-      };
-    }
-    return {
-      ok: false,
-      code: "not_implemented",
-      message: "Stripe Checkout will be enabled in a follow-up release.",
-    };
   },
 
   async createPortalSession(
-    _req: BillingPortalRequest // eslint-disable-line @typescript-eslint/no-unused-vars -- Stripe stub
+    req: BillingPortalRequest,
+    deps: ProviderDeps = {}
   ): Promise<BillingProviderActionResult> {
-    const config = getBillingProviderConfig();
-    if (config.mode !== "stripe") {
-      return {
-        ok: false,
-        code: "not_configured",
-        message: "Connect Stripe to manage payment methods and invoices.",
-      };
+    const stripe = getStripeClient(deps.fetchImpl);
+    if (!stripe) return NOT_CONFIGURED;
+    const db = deps.db ?? getDb();
+    try {
+      const { data: org } = await db
+        .from("organizations")
+        .select("stripe_customer_id")
+        .eq("id", req.organizationId)
+        .maybeSingle<{ stripe_customer_id: string | null }>();
+      const customer = org?.stripe_customer_id?.trim();
+      if (!customer) {
+        return { ok: false, code: "not_implemented", message: "Start your plan first, then you can manage payment here." };
+      }
+      const configuration = await ensurePortalConfiguration(stripe);
+      const session = await stripe.post<{ url?: string }>("/billing_portal/sessions", {
+        customer,
+        configuration,
+        return_url: req.returnUrl,
+      });
+      if (!session.url) return FAILED;
+      return { ok: true, url: session.url };
+    } catch (e) {
+      console.error("[billing] portal", e instanceof Error ? e.message : e);
+      return FAILED;
     }
-    if (!config.checkoutEnabled) {
-      return {
-        ok: false,
-        code: "not_implemented",
-        message:
-          "Stripe Customer Portal is not enabled yet. Keys are configured for a future release.",
-      };
-    }
-    return {
-      ok: false,
-      code: "not_implemented",
-      message: "Stripe Customer Portal will be enabled in a follow-up release.",
-    };
   },
 };

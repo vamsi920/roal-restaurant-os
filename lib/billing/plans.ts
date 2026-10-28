@@ -100,17 +100,22 @@ export function getPlan(planId: BillingPlanId): PlanDefinition {
   return BILLING_PLANS[planId] ?? BILLING_PLANS.starter;
 }
 
+/**
+ * Pricing is $0.90 per completed order with no tiers, so no plan caps usage. The tier limits
+ * above stay for reference only. Inactive plans are still gated by subscription status.
+ */
 export function effectivePlanLimits(
-  plan: PlanDefinition,
-  providerMode: "dev" | "stripe"
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- kept for callers; tiers no longer cap usage
+  _plan: PlanDefinition,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _providerMode: "dev" | "stripe"
 ): PlanLimits {
-  if (providerMode === "dev") return DEV_MODE_LIMITS;
-  return plan.limits;
+  return DEV_MODE_LIMITS;
 }
 
 export const PLAN_FEATURE_LABELS: Record<PlanFeatureKey, string> = {
   menu_scan: "Menu scan & import",
-  voice_agent: "ElevenLabs voice agent",
+  voice_agent: "Phone host that takes orders",
   kds_orders: "Kitchen display & orders",
   multi_location: "Multiple locations",
   priority_support: "Priority support",

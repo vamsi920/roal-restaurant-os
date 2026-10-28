@@ -13,6 +13,7 @@ import {
   readIdempotencyKey,
 } from "@/lib/agent-tools/server/auth";
 import { assertVoiceOrderBillingGate } from "@/lib/agent-tools/server/billing-gate";
+import { reportCompletedOrderUsage } from "@/lib/billing/report-usage";
 import { loadIdempotentResponse, storeIdempotentResponse } from "@/lib/agent-tools/server/idempotency";
 import {
   agentToolErrorResponse,
@@ -235,6 +236,12 @@ export async function handleFinalizeOrder(req: Request, db: Db = getDb()): Promi
     await markAgentCallOrderCompleted(db, { restaurantId, sessionId });
   } catch (markErr) {
     console.error("[finalize_order] markAgentCallOrderCompleted failed", markErr);
+  }
+
+  try {
+    await reportCompletedOrderUsage(db, { restaurantId, sessionId });
+  } catch (usageErr) {
+    console.error("[finalize_order] reportCompletedOrderUsage failed", usageErr);
   }
 
   if (idempotencyKey) {

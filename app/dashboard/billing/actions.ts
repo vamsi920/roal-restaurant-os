@@ -18,14 +18,13 @@ export async function startCheckoutAction(
 ): Promise<BillingActionState> {
   const context = await getAuthContext();
   if (!context?.primaryMembership) {
-    return { error: "Sign in to manage billing." };
+    return { error: "Please sign in again." };
   }
   if (!isOrgAdmin(context.primaryMembership.role)) {
-    return { error: "Only organization admins can change plans." };
+    return { error: "Only an account owner or admin can start the plan." };
   }
 
-  const planId = formData.get("planId") as BillingPlanId;
-  if (!planId) return { error: "Missing plan." };
+  const planId = (formData.get("planId") as BillingPlanId | null) ?? "starter";
 
   const base =
     process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ??
@@ -35,7 +34,7 @@ export async function startCheckoutAction(
   const result = await billingProvider.createCheckoutSession({
     organizationId: orgId,
     planId,
-    successUrl: `${base}/dashboard/billing?checkout=success`,
+    successUrl: `${base}/dashboard/billing?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
     cancelUrl: `${base}/dashboard/billing?checkout=canceled`,
   });
 
@@ -54,10 +53,10 @@ export async function openBillingPortalAction(
 ): Promise<BillingActionState> {
   const context = await getAuthContext();
   if (!context?.primaryMembership) {
-    return { error: "Sign in to manage billing." };
+    return { error: "Please sign in again." };
   }
   if (!isOrgAdmin(context.primaryMembership.role)) {
-    return { error: "Only organization admins can open the billing portal." };
+    return { error: "Only an account owner or admin can manage payment." };
   }
 
   const base =

@@ -10,15 +10,16 @@ import { STRIPE_CHECKOUT_ENABLED } from "@/lib/billing/provider";
 const REPO = join(import.meta.dirname, "../..");
 
 describe("billing launch posture (launch 21)", () => {
-  it("disables self-serve checkout flag", () => {
-    expect(STRIPE_CHECKOUT_ENABLED).toBe(false);
+  it("enables self-serve checkout once payment keys are set", () => {
+    expect(STRIPE_CHECKOUT_ENABLED).toBe(true);
     expect(isSelfServeCheckoutAvailable(false)).toBe(false);
+    expect(isSelfServeCheckoutAvailable(true)).toBe(true);
   });
 
   it("documents success-based pilot model", () => {
     expect(BILLING_LAUNCH_POSTURE.pilotRate).toContain("$0.90");
     expect(BILLING_LAUNCH_POSTURE.pilotRate).toMatch(/successful phone order/i);
-    expect(BILLING_LAUNCH_POSTURE.selfServeCheckout).toMatch(/not enabled/i);
+    expect(BILLING_LAUNCH_POSTURE.selfServeCheckout).toMatch(/start the plan online/i);
     expect(BILLING_LAUNCH_POSTURE.pilotBilling).toMatch(/contact sales|manual/i);
   });
 
@@ -32,6 +33,7 @@ describe("billing launch posture (launch 21)", () => {
     expect(dash).toContain("BillingCheckoutButtons");
     expect(dash).toContain("You only pay $0.90 when a call becomes an order");
     expect(dash).not.toMatch(/btn-primary.*Upgrade to/);
+    expect(dash).not.toMatch(/Stripe|webhook/);
   });
 
 });
