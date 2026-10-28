@@ -181,6 +181,20 @@ function fitScore(l: Lead) {
   return (takeout ? 10_000 : 0) + (Number(l.reviews) || 0);
 }
 
+const FREE_MAIL = /@(gmail|googlemail|yahoo|ymail|outlook|hotmail|live|msn|aol|icloud|me|comcast|verizon|optonline)\./i;
+
+/** The address belongs to the restaurant: on its own website's domain, or a free inbox it lists. */
+function ownAddress(l: Lead) {
+  if (FREE_MAIL.test(l.email)) return true;
+  const domain = l.email.split("@")[1]?.toLowerCase() ?? "";
+  const root = (h: string) => h.replace(/^www\./, "").split(".").slice(-2).join(".");
+  try {
+    return root(new URL(String(l.website)).hostname) === root(domain);
+  } catch {
+    return false;
+  }
+}
+
 function buildQueue(leads: Lead[], s: State, stop: Set<string>) {
   const now = Date.now();
   const due: { lead: Lead; step: 1 | 2 | 3 }[] = [];
@@ -194,7 +208,8 @@ function buildQueue(leads: Lead[], s: State, stop: Set<string>) {
     const c = s.contacts[email];
     if (c?.stopped) continue;
     if (!c || !c.sent.length) {
-      fresh.push({ lead: l, step: 1 });
+      // Agencies and web designers often leave their own address on a client's site.
+      if (ownAddress(l)) fresh.push({ lead: l, step: 1 });
       continue;
     }
     const last = c.sent[c.sent.length - 1];
