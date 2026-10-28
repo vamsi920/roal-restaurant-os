@@ -23,6 +23,7 @@ import {
   buildRoalKbPlaybook,
 } from "@/lib/elevenlabs/agent-prompt";
 import { loadRestaurantMenu } from "@/lib/menu-editor/load-menu";
+import { menuPromptLines } from "@/lib/elevenlabs/load-menu-prompt-snapshot";
 import {
   buildMenuUpsellCatalog,
   filterUpsellRulesForPrompt,
@@ -210,6 +211,7 @@ export async function applyRestaurantOrderAgentProfile(options?: {
           categoryCount: menuSnapshot.categories.length,
           itemCount: menuSnapshot.items.length,
           modifierCount: menuSnapshot.modifiers.length,
+          lines: menuPromptLines(menuSnapshot),
         };
         try {
           upsellRules = await loadRestaurantUpsellRules(supabase, rid);

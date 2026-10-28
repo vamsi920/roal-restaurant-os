@@ -155,7 +155,8 @@ vi.mock("@/lib/restaurant-hours/helpers", () => ({
   buildAgentHoursPromptFromBundle: vi.fn(() => "## Hours and ordering availability\n- Open now."),
 }));
 
-vi.mock("@/lib/elevenlabs/load-menu-prompt-snapshot", () => ({
+vi.mock("@/lib/elevenlabs/load-menu-prompt-snapshot", async (importOriginal) => ({
+  menuPromptLines: (await importOriginal<typeof import("@/lib/elevenlabs/load-menu-prompt-snapshot")>()).menuPromptLines,
   loadMenuPromptSnapshot: vi.fn(() =>
     Promise.resolve({ categoryCount: 2, itemCount: 8, modifierCount: 1 })
   ),

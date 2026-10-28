@@ -173,7 +173,8 @@ async function verifyRestaurantTools(row: RestaurantRow) {
 
   const listed = await listAllConvaiTools();
   const byName = new Map<string, string>();
-  for (const t of listed) {
+  // Only this agent's own tools: several restaurants have tools with the same names.
+  for (const t of listed.filter((tool) => toolIds.includes(tool.id))) {
     const n = t.tool_config?.name;
     if (n && (TOOL_NAMES as readonly string[]).includes(n)) byName.set(n, t.id);
   }

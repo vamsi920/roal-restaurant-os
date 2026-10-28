@@ -1,4 +1,4 @@
-import { elevenlabsFetch, listAllConvaiTools } from "@/lib/elevenlabs";
+import { elevenlabsFetch, getConvaiAgent, listAllConvaiTools } from "@/lib/elevenlabs";
 import { getElevenLabsAgentId } from "@/lib/env.server";
 import {
   ROAL_BAKED_TOOL_NAMES,
@@ -26,8 +26,13 @@ export async function fetchSyncedRoalTool(
   const aid = agentId?.trim() || getElevenLabsAgentId();
   if (!aid) throw new Error("ELEVENLABS_AGENT_ID required");
 
+  // Tool names repeat across restaurants; only look at the tools this agent actually uses.
+  const agent = (await getConvaiAgent(aid)) as {
+    conversation_config?: { agent?: { prompt?: { tool_ids?: string[] } } };
+  };
+  const agentToolIds = new Set(agent.conversation_config?.agent?.prompt?.tool_ids ?? []);
   const listed = await listAllConvaiTools();
-  const row = listed.find((t) => t.tool_config?.name === toolName);
+  const row = listed.find((t) => agentToolIds.has(t.id) && t.tool_config?.name === toolName);
   if (!row?.id) throw new Error(`Tool ${toolName} not found on ElevenLabs account`);
 
   const res = await elevenlabsFetch(
