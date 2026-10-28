@@ -4,9 +4,7 @@ import {
   DollarSign,
   FileText,
   ReceiptText,
-  ScanLine,
   Sparkles,
-  Wrench,
 } from "lucide-react";
 import {
   InlineLink,
@@ -153,11 +151,11 @@ export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checko
         </div>
       ) : null}
 
-      <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-3">
         <StatCard
           label="Completed orders"
           value={snapshot.usage.billablePhoneOrders.toLocaleString()}
-          hint="Receipt-backed phone orders this period"
+          hint="Orders your host took this period"
           icon={ReceiptText}
           color="green"
         />
@@ -171,18 +169,6 @@ export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checko
           hint={BILLING_LAUNCH_POSTURE.pilotRate}
           icon={DollarSign}
           color="orange"
-        />
-        <StatCard
-          label="Menu scans"
-          value={snapshot.usage.menuScans.toLocaleString()}
-          icon={ScanLine}
-          color="blue"
-        />
-        <StatCard
-          label="Tool calls"
-          value={snapshot.usage.toolCalls.toLocaleString()}
-          icon={Wrench}
-          color="amber"
         />
       </div>
 
@@ -202,7 +188,7 @@ export function BillingDashboard({ snapshot, orgBillingHref, justStarted, checko
             {BILLING_LAUNCH_POSTURE.pilotRateDetail}
           </p>
 
-          {snapshot.isTrialActive ? (
+          {snapshot.isTrialActive && snapshot.trialEndsAt ? (
             <p className="mt-3 rounded-[10px] border border-line bg-elev px-3 py-2 text-[13px] text-muted">
               Trial ends {formatDate(snapshot.trialEndsAt)}
               {snapshot.trialDaysRemaining != null ? (

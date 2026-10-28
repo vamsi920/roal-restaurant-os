@@ -99,7 +99,7 @@ describe("empty usage meters", () => {
       restaurantCount: 0,
     };
     const checks = buildLimitChecks(usage, DEV_MODE_LIMITS);
-    expect(checks).toHaveLength(4);
+    expect(checks).toHaveLength(3);
     expect(checks.every((c) => c.level === "ok")).toBe(true);
     expect(checks.every((c) => c.used === 0)).toBe(true);
   });

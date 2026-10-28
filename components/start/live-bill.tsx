@@ -97,12 +97,13 @@ export function LiveBill({
   useEffect(() => {
     const diff = subtotal - lastTotal.current;
     lastTotal.current = subtotal;
-    if (diff > 0.004) {
+    // Only celebrate additions during a call, not when an old ticket loads.
+    if (diff > 0.004 && (state === "live" || state === "writing")) {
       const id = Date.now() + Math.random();
       setBumps((b) => [...b, { id, amount: diff }]);
       setTimeout(() => setBumps((b) => b.filter((x) => x.id !== id)), 1400);
     }
-  }, [subtotal]);
+  }, [subtotal, state]);
 
   const itemCount = lines.reduce((n, l) => n + l.qty, 0);
   const live = state === "live" || state === "writing";

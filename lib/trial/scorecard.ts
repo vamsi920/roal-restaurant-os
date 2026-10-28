@@ -12,7 +12,7 @@ export type TrialScorecardItem = {
 
 /** Guided test-call checklist (auto-ticks from the transcript). */
 export const TRIAL_SCORECARD_ITEMS: readonly TrialScorecardItem[] = [
-  { id: "greeted", label: "Agent greeted you", hint: "Happens as soon as the call connects." },
+  { id: "greeted", label: "Host greeted you", hint: "Happens as soon as the call connects." },
   { id: "menu_question", label: "Asked about the menu", hint: "Try: “What do you have that’s vegetarian?”" },
   { id: "placed_order", label: "Placed a pickup order", hint: "Order two things and give a name." },
   { id: "modifier", label: "Changed an item", hint: "Try: “Make that extra spicy” or “no onions”." },

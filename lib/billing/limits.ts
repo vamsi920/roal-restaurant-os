@@ -70,13 +70,6 @@ export function buildLimitChecks(
       used: usage.billablePhoneOrders,
       limit: limits.max_voice_orders_per_period,
       unitLabel: "orders",
-    },
-    {
-      key: "tool_calls",
-      label: "Agent tool calls",
-      used: usage.toolCalls,
-      limit: limits.max_tool_calls_per_period,
-      unitLabel: "calls",
     }
   );
 
@@ -91,7 +84,8 @@ export function buildFeatureEntitlements(
   planId: BillingPlanId
 ): FeatureEntitlement[] {
   const plan = getPlan(planId);
-  return (Object.keys(PLAN_FEATURE_LABELS) as PlanFeatureKey[]).map((key) => ({
+  // API access is an internal capability, not something owners shop for.
+  return (Object.keys(PLAN_FEATURE_LABELS) as PlanFeatureKey[]).filter((key) => key !== "api_access").map((key) => ({
     key,
     label: PLAN_FEATURE_LABELS[key],
     enabled: plan.features[key],
