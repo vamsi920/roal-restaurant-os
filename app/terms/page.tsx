@@ -34,9 +34,11 @@ export default function TermsPage() {
                 completed when the caller confirms their name, phone number, and
                 items and the ticket is delivered to your account. There is no
                 monthly fee, no setup fee, and no per-minute fee. Calls that do
-                not produce a ticket are free. If you void a ticket in good
-                faith, tell us and we will credit it. If we change the price, we
-                will tell you in advance by email.
+                not produce a ticket are free. Orders are billed monthly to the
+                card you add, plus sales tax where it applies, and each invoice
+                is emailed to you. If you void a ticket in good faith, tell us
+                and we will credit it. If we change the price, we will tell you
+                in advance by email.
               </p>
 
               <h2>No contract</h2>
@@ -53,8 +55,9 @@ export default function TermsPage() {
                   what you configure.
                 </li>
                 <li>
-                  Tell callers that calls may be recorded where your local law
-                  requires it. Recording can be turned off.
+                  The host tells every caller that the call may be recorded. If
+                  you write your own greeting, keep that notice in it where your
+                  local law requires it.
                 </li>
                 <li>
                   Review tickets as they arrive. ROAL takes the order; your
