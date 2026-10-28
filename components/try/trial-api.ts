@@ -1,5 +1,6 @@
 "use client";
 
+import type { LiveTicket } from "@/lib/trial/live-ticket";
 import type { TrialPublicView } from "@/lib/trial/types";
 
 export type TrialApiResult<T> = { ok: true; data: T } | { ok: false; error: string; status: number; data?: T };
@@ -47,6 +48,11 @@ export const trialApi = {
       body: fd,
     });
   },
+  ticket: (id: string, turns: Array<{ role: "agent" | "user"; text: string }>) =>
+    request<{ ticket: LiveTicket | null }>(`/api/try/${id}/ticket`, {
+      method: "POST",
+      body: JSON.stringify({ turns }),
+    }),
   agent: (id: string) => request<TrialEnvelope>(`/api/try/${id}/agent`, { method: "POST" }),
   persona: (
     id: string,

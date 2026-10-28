@@ -4,8 +4,8 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RoalWordmark } from "@/components/landing/roal-wordmark";
+import { CallWithTicket } from "@/components/start/call-with-ticket";
 import { MenuUpload } from "@/components/start/menu-upload";
-import { TrialCall } from "@/components/try/trial-call";
 import { trialApi, type TrialApiResult } from "@/components/try/trial-api";
 import { cn } from "@/lib/cn";
 import { PRICING_RATE_AMOUNT } from "@/lib/landing/pricing-core";
@@ -68,6 +68,8 @@ export type StartFunnelProps = {
   onClaim?: (trialId: string) => Promise<void>;
   /** Where "Exit" goes; null hides it (first-run signup has nowhere else to go). */
   exitHref?: string | null;
+  /** Dashboard "Add location": a new branch or another restaurant, never the one already set up. */
+  addingLocation?: boolean;
 };
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -80,6 +82,7 @@ export function StartFunnel({
   startTrial,
   onClaim,
   exitHref = "/",
+  addingLocation = false,
 }: StartFunnelProps) {
   const flow = mode === "public" ? PUBLIC_FLOW : DASHBOARD_FLOW;
   const [step, setStep] = useState<Step>(initialTrial?.status === "ready" ? "meet" : initialQuery ? "search" : "link");
@@ -309,7 +312,7 @@ export function StartFunnel({
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
             {step === "link" ? (
-              <LinkScreen input={input} setInput={setInput} error={error} onSubmit={search} mode={mode} />
+              <LinkScreen input={input} setInput={setInput} error={error} onSubmit={search} mode={mode} addingLocation={addingLocation} />
             ) : null}
 
             {step === "search" ? <SearchScreen input={input} /> : null}
@@ -366,7 +369,7 @@ export function StartFunnel({
             ) : null}
 
             {step === "pricing" ? (
-              <PricingScreen estimate={estimate} error={error} onNext={build} />
+              <PricingScreen orderValue={TICKET_OPTIONS.find((o) => o.id === ticket)?.mid ?? 30} error={error} onNext={build} />
             ) : null}
 
             {step === "build" && trial ? <BuildScreen trial={trial} agentName={agentName} /> : null}
@@ -410,20 +413,28 @@ function LinkScreen({
   error,
   onSubmit,
   mode,
+  addingLocation = false,
 }: {
   input: string;
   setInput: (v: string) => void;
   error: string | null;
   onSubmit: (v: string) => void;
   mode: "public" | "dashboard";
+  addingLocation?: boolean;
 }) {
   const ref = useRef<HTMLInputElement | null>(null);
   useEffect(() => ref.current?.focus(), []);
   return (
     <div className="sf__center">
-      <p className="sf__eyebrow">{mode === "public" ? "Free · about 2 minutes · no sign-up" : "Let's set up your restaurant"}</p>
-      <h1 className="sf__title">Where can we find your restaurant?</h1>
-      <p className="sf__sub">Paste your website or Google Maps link. We&apos;ll read your menu, hours and details for you.</p>
+      <p className="sf__eyebrow">
+        {addingLocation ? "Add a location" : mode === "public" ? "Free · about 2 minutes · no sign-up" : "Let's set up your restaurant"}
+      </p>
+      <h1 className="sf__title">{addingLocation ? "Which location are you adding?" : "Where can we find your restaurant?"}</h1>
+      <p className="sf__sub">
+        {addingLocation
+          ? "Another branch of the same brand or a different restaurant both work. For a branch, paste that location's Google Maps link so we get the right address, phone and hours."
+          : "Paste your website or Google Maps link. We'll read your menu, hours and details for you."}
+      </p>
       <form
         className="sf__link-form"
         onSubmit={(e) => {
@@ -673,22 +684,7 @@ function MenuScreen({
     );
   }
 
-  const preview = summary && !isSample ? (
-    <>
-      <ul className="sf__menu">
-        {summary.sampleItems.slice(0, 6).map((item, n) => (
-          <motion.li key={`${item.name}-${n}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + n * 0.08 }}>
-            <span className="min-w-0">
-              <span className="sf__menu-name">{item.name}</span>
-              <span className="sf__menu-cat">{item.category}</span>
-            </span>
-            <span className="sf__menu-price">{item.price != null ? `$${item.price.toFixed(2)}` : "—"}</span>
-          </motion.li>
-        ))}
-      </ul>
-      {summary.itemCount > 6 ? <p className="sf__fine">+ {summary.itemCount - 6} more items</p> : null}
-    </>
-  ) : null;
+  const preview = summary && !isSample ? <MenuPreview summary={summary} /> : null;
 
   // Real sign-up: the owner's own menu file is the source of truth, so uploading is the main action.
   if (mode === "dashboard" && !uploaded) {
@@ -776,37 +772,113 @@ function MenuScreen({
   );
 }
 
+const money2 = (price: number | null) => (price != null ? `$${price.toFixed(2)}` : "—");
+
+/** First six items, then the whole menu grouped by category on demand. */
+function MenuPreview({ summary }: { summary: NonNullable<TrialPublicView["menuSummary"]> }) {
+  const [open, setOpen] = useState(false);
+  const all = summary.allItems?.length ? summary.allItems : summary.sampleItems;
+  const groups = useMemo(() => {
+    const map = new Map<string, typeof all>();
+    for (const item of all) {
+      const list = map.get(item.category) ?? [];
+      list.push(item);
+      map.set(item.category, list);
+    }
+    return [...map.entries()];
+  }, [all]);
+
+  if (open) {
+    return (
+      <>
+        <div className="sf__menu sf__menu--full">
+          {groups.map(([category, items]) => (
+            <section key={category} className="sf__menu-group">
+              <h3 className="sf__menu-group-title">
+                {category} <span>{items.length}</span>
+              </h3>
+              <ul>
+                {items.map((item, n) => (
+                  <li key={`${item.name}-${n}`}>
+                    <span className="sf__menu-name">{item.name}</span>
+                    <span className="sf__menu-price">{money2(item.price)}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+        <button type="button" className="sf__text-btn" onClick={() => setOpen(false)}>
+          Show less
+        </button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <ul className="sf__menu">
+        {summary.sampleItems.slice(0, 6).map((item, n) => (
+          <motion.li key={`${item.name}-${n}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + n * 0.08 }}>
+            <span className="min-w-0">
+              <span className="sf__menu-name">{item.name}</span>
+              <span className="sf__menu-cat">{item.category}</span>
+            </span>
+            <span className="sf__menu-price">{money2(item.price)}</span>
+          </motion.li>
+        ))}
+      </ul>
+      {summary.itemCount > 6 ? (
+        <button type="button" className="sf__more" onClick={() => setOpen(true)}>
+          See all {summary.itemCount} items in {summary.categoryCount} categories
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+      ) : null}
+    </>
+  );
+}
+
 function PricingScreen({
-  estimate,
+  orderValue,
   error,
   onNext,
 }: {
-  estimate: ReturnType<typeof estimateMissedRevenue>;
+  orderValue: number;
   error: string | null;
   onNext: () => void;
 }) {
+  const examples: Array<{ what: string; pay: string; paid: boolean }> = [
+    { what: `A customer orders a $${orderValue} meal`, pay: PRICING_RATE_AMOUNT, paid: true },
+    { what: "Someone calls to ask your hours", pay: "Free", paid: false },
+    { what: "Wrong number or hang-up", pay: "Free", paid: false },
+  ];
   return (
     <div className="sf__center">
       <p className="sf__eyebrow">Simple pricing</p>
-      <h1 className="sf__title">
-        You only pay when it brings you an order.
-      </h1>
-      <div className="sf__price">
-        <p className="sf__price-amount">
-          {PRICING_RATE_AMOUNT}
-          <span>per completed order</span>
-        </p>
-        <ul className="sf__price-rows">
-          <li><span>Monthly fee</span><strong>$0</strong></li>
-          <li><span>Setup</span><strong>$0</strong></li>
-          <li><span>Calls that don&apos;t become orders</span><strong>$0</strong></li>
-          <li><span>Contract</span><strong>None</strong></li>
-        </ul>
-        <p className="sf__price-math">
-          At your numbers: about <strong>${estimate.monthly.toLocaleString()}</strong> in recovered orders for about{" "}
-          <strong>${estimate.roalMonthlyCost.toLocaleString()}</strong> a month.
-        </p>
-      </div>
+      <h1 className="sf__title">No order, no charge.</h1>
+      <p className="sf__sub">
+        You pay {PRICING_RATE_AMOUNT} only when a customer actually places an order. Nothing else, ever.
+      </p>
+      <ul className="sf__receipt">
+        {examples.map((ex, n) => (
+          <motion.li
+            key={ex.what}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + n * 0.15 }}
+          >
+            <span>{ex.what}</span>
+            <strong className={ex.paid ? "is-paid" : "is-free"}>{ex.pay}</strong>
+          </motion.li>
+        ))}
+      </ul>
+      <ul className="sf__chips">
+        {["No monthly fee", "No setup fee", "Cancel anytime"].map((c) => (
+          <li key={c}>
+            <Check /> {c}
+          </li>
+        ))}
+      </ul>
       {error ? <p className="sf__error" role="alert">{error}</p> : null}
       <button type="button" className="btn-primary btn-lg sf__cta" onClick={onNext}>
         Build my phone host <Arrow />
@@ -903,9 +975,7 @@ function MeetScreen({
         </div>
       )}
       {testing ? (
-        <div className="sf__call">
-          <TrialCall trialId={trial.id} agentName={persona.agentName} restaurantName={trial.restaurantName ?? "your restaurant"} compact />
-        </div>
+        <CallWithTicket trialId={trial.id} agentName={persona.agentName} restaurantName={trial.restaurantName ?? "your restaurant"} />
       ) : null}
     </div>
   );
@@ -974,9 +1044,7 @@ function DoneScreen({ trial, callStatus, phone }: { trial: TrialPublicView; call
           <p className="sf__sub">
             We saved your details{phone ? <> and will be in touch at <strong>{formatPhone(phone)}</strong></> : null}. No need to wait: call {agentName} from your browser below.
           </p>
-          <div className="sf__call">
-            <TrialCall trialId={trial.id} agentName={agentName} restaurantName={trial.restaurantName ?? "your restaurant"} compact />
-          </div>
+          <CallWithTicket trialId={trial.id} agentName={agentName} restaurantName={trial.restaurantName ?? "your restaurant"} />
         </>
       )}
       <div className="sf__keep">

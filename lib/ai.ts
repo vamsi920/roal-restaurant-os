@@ -447,6 +447,53 @@ export async function readMenuViaWebSearch(
   return { data: expandCompactMenu([parsed]), sourceUrl: source };
 }
 
+/** What the caller has ordered so far, for the live ticket beside a demo call. */
+export type CallOrderDraft = {
+  i?: { n?: string; q?: number; m?: string[]; note?: string }[];
+  name?: string | null;
+  done?: boolean;
+};
+
+const CALL_ORDER_SCHEMA = {
+  type: "object",
+  properties: {
+    i: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          n: { type: "string" },
+          q: { type: "integer" },
+          m: { type: "array", items: { type: "string" } },
+          note: { type: "string" },
+        },
+        required: ["n", "q"],
+      },
+    },
+    name: { type: ["string", "null"] },
+    done: { type: "boolean" },
+  },
+  required: ["i"],
+};
+
+const CALL_ORDER_PROMPT = `You keep the order ticket for a restaurant phone call. From the transcript so far, list what the caller is ordering right now.
+- n: the item's name copied EXACTLY from the MENU list. Only items the caller asked for and has not removed.
+- q: quantity. m: chosen add-ons or options, using the menu's option names when listed. note: special requests ("no onions").
+- Apply changes: if the caller swaps or cancels an item, drop it.
+- name: the caller's name if they gave it, else null. done: true once the host has read back or confirmed the final order.
+- If nothing has been ordered yet, return {"i":[]}.`;
+
+export async function extractOrderFromCall(menuLines: string, transcript: string): Promise<CallOrderDraft> {
+  if (!transcript.trim()) return { i: [] };
+  const { data } = await generateJson<CallOrderDraft>(
+    CALL_ORDER_PROMPT,
+    `MENU:\n${menuLines.slice(0, 14_000)}\n\nTRANSCRIPT:\n${transcript.slice(-8_000)}`,
+    CALL_ORDER_SCHEMA,
+    { maxTokens: 1500, fast: true }
+  );
+  return data;
+}
+
 /* ------------------------------------------------------------------------- */
 /* Restaurant profile and call insights                                       */
 /* ------------------------------------------------------------------------- */

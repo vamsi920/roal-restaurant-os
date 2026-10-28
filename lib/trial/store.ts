@@ -165,6 +165,7 @@ export function toPublicView(trial: TrialRecord): TrialPublicView {
           categoryCount: menu.categories.length,
           itemCount: items.length,
           sampleItems: items.slice(0, 6),
+          allItems: items.slice(0, 400),
         }
       : null,
     knowledge: trial.knowledge,

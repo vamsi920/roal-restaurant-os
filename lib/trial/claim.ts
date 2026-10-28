@@ -97,6 +97,15 @@ export async function claimTrial(
   }
 
   const restaurantName = (trial.restaurant_name ?? trial.profile.name ?? "Restaurant").trim();
+  if (input.organizationId) {
+    const existing = await findExistingLocation(supabase, input.organizationId, trial);
+    if (existing) {
+      throw new Error(
+        `${existing.name}${existing.address ? ` at ${existing.address}` : ""} is already in your account. ` +
+          "To add another branch, paste that location's Google Maps link."
+      );
+    }
+  }
   const organizationId =
     input.organizationId ?? (await createOrganizationForTrial(supabase, input.userId, restaurantName));
 
@@ -238,6 +247,39 @@ export async function claimTrial(
     knowledgeSaved,
     voiceProvision,
   };
+}
+
+const normLoc = (s: string | null | undefined) =>
+  (s ?? "")
+    .toLowerCase()
+    .replace(/\b(street|st|avenue|ave|road|rd|boulevard|blvd|suite|ste|drive|dr)\b\.?/g, "")
+    .replace(/[^a-z0-9]/g, "");
+
+/**
+ * The same restaurant at the same address already in this organization. Another branch of the
+ * same brand (different address) is not a duplicate: franchises add one location per branch.
+ */
+export async function findExistingLocation(
+  supabase: Db,
+  organizationId: string,
+  trial: Pick<TrialRecord, "restaurant_name" | "profile">
+): Promise<{ id: string; name: string; address: string | null } | null> {
+  const name = normLoc(trial.restaurant_name ?? trial.profile?.name);
+  if (!name) return null;
+  const { data: restaurants } = await supabase.from("restaurants").select("id, name").eq("organization_id", organizationId);
+  const sameName = (restaurants ?? []).filter((r) => normLoc(r.name as string) === name);
+  if (!sameName.length) return null;
+  const { data: profiles } = await supabase
+    .from("restaurant_profiles")
+    .select("restaurant_id, address_line1")
+    .in("restaurant_id", sameName.map((r) => r.id as string));
+  const address = normLoc(trial.profile?.address_line1);
+  for (const r of sameName) {
+    const existing = (profiles ?? []).find((pr) => pr.restaurant_id === r.id)?.address_line1 as string | null | undefined;
+    // Same address, or neither side knows its address: treat as the same location.
+    if (normLoc(existing) === address) return { id: r.id as string, name: r.name as string, address: existing ?? null };
+  }
+  return null;
 }
 
 export function trialNeedsClaim(trial: TrialRecord | null): boolean {

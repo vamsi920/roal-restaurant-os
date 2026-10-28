@@ -133,7 +133,10 @@ export function TrialCall({
         },
         onModeChange: ({ mode: next }: { mode: "speaking" | "listening" }) => setMode(next),
         onMessage: ({ message, role }: { message: string; role: "user" | "agent" }) => {
-          const turn: TrialTranscriptTurn = { role, text: message, at: Date.now() };
+          // Eleven v4 delivery tags like "[warmly]" steer the voice; they aren't words to show.
+          const text = message.replace(/\[[a-z][a-z '-]{0,30}\]\s*/gi, "").trim();
+          if (!text) return;
+          const turn: TrialTranscriptTurn = { role, text, at: Date.now() };
           turnsRef.current = [...turnsRef.current, turn];
           setTurns(turnsRef.current);
           onTranscript?.(turnsRef.current);

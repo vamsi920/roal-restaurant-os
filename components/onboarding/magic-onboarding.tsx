@@ -14,10 +14,12 @@ type Props = {
   organizationName: string | null;
   /** Adding another location: allow leaving back to the dashboard. */
   canExit?: boolean;
+  /** "Add location": ask for the new branch's link instead of the first-run copy. */
+  addingLocation?: boolean;
 };
 
 /** Signed-in first run: the same step-by-step funnel as /try; the last step claims in place. */
-export function MagicOnboarding({ initialTrial, canExit = false }: Props) {
+export function MagicOnboarding({ initialTrial, canExit = false, addingLocation = false }: Props) {
   const router = useRouter();
 
   const startTrial = useCallback(async (input: string) => {
@@ -35,7 +37,9 @@ export function MagicOnboarding({ initialTrial, canExit = false }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <StartFunnel mode="dashboard" initialTrial={initialTrial} startTrial={startTrial} onClaim={onClaim} exitHref={canExit ? "/dashboard" : null} />
+      <StartFunnel mode="dashboard" initialTrial={initialTrial} startTrial={startTrial} onClaim={onClaim} exitHref={canExit ? "/dashboard" : null}
+        addingLocation={addingLocation}
+      />
     </div>
   );
 }

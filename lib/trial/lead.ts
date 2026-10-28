@@ -2,6 +2,7 @@ import { startConvaiOutboundCall } from "@/lib/elevenlabs";
 import { getElevenLabsAgentPhoneNumberId } from "@/lib/env.server";
 import { toE164Phone } from "@/lib/phone/e164";
 import { ensureTrialAgentId, ensureVoiceReady } from "@/lib/trial/elevenlabs";
+import { pickTrialGreeting } from "@/lib/trial/prompt";
 import { countTrialCallsLast24h, requireTrialDb, trialDailyCallCap, updateTrial } from "@/lib/trial/store";
 import type { TrialRecord } from "@/lib/trial/types";
 import { resolveTrialPersona } from "@/lib/trial/voices";
@@ -60,7 +61,15 @@ async function placeTrialCall(trial: TrialRecord, toNumber: string): Promise<Lea
       agentPhoneNumberId: phoneNumberId,
       toNumber,
       conversationConfigOverride: {
-        agent: { prompt: { prompt: trial.prompt }, first_message: trial.greeting, language: persona.language },
+        agent: {
+          prompt: { prompt: trial.prompt },
+          first_message: pickTrialGreeting({
+            restaurantName: trial.restaurant_name ?? trial.profile?.name ?? "",
+            agentName: persona.agentName,
+            timezone: trial.profile?.timezone,
+          }),
+          language: persona.language,
+        },
         tts: { voice_id: await ensureVoiceReady(persona.voiceId) },
       },
     });

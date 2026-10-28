@@ -100,6 +100,8 @@ export type TrialPublicView = {
     categoryCount: number;
     itemCount: number;
     sampleItems: Array<{ name: string; price: number | null; category: string }>;
+    /** Every item (capped) for the expandable menu view. */
+    allItems: Array<{ name: string; price: number | null; category: string }>;
   } | null;
   knowledge: TrialKnowledgeEntry[];
   persona: TrialPersona;

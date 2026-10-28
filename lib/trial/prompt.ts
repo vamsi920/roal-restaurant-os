@@ -153,3 +153,42 @@ export function buildTrialGreeting(input: {
   }
   return `Hi, thanks for calling ${name}, this is ${who}. What can I get started for you?`;
 }
+
+function partOfDay(timezone?: string | null, now = new Date()): "morning" | "afternoon" | "evening" {
+  let hour = now.getHours();
+  try {
+    hour = Number(new Intl.DateTimeFormat("en-US", { hour: "numeric", hourCycle: "h23", timeZone: timezone || undefined }).format(now));
+  } catch {
+    /* unknown zone: server time */
+  }
+  return hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
+}
+
+/** The ways a real host answers the phone; one is picked per call so repeat calls don't sound canned. */
+export function trialGreetingVariants(input: {
+  restaurantName: string;
+  agentName: string;
+  offersDelivery?: boolean;
+  timezone?: string | null;
+  now?: Date;
+}): string[] {
+  const name = input.restaurantName.trim() || "the restaurant";
+  const who = input.agentName;
+  const tod = partOfDay(input.timezone, input.now);
+  const variants = [
+    `Thank you for calling ${name}, this is ${who}. How can I help you today?`,
+    `Good ${tod}, thanks for calling ${name}! This is ${who}. What can I get started for you?`,
+    `Hi, thanks for calling ${name}, ${who} speaking. Are you calling to place an order?`,
+    `${name}, this is ${who}. Thanks so much for calling. What can I do for you?`,
+    `Hello and thank you for calling ${name}! You're speaking with ${who}. How can I help?`,
+  ];
+  if (input.offersDelivery) {
+    variants.push(`Thanks for calling ${name}, this is ${who}. Is this for pickup or delivery today?`);
+  }
+  return variants;
+}
+
+export function pickTrialGreeting(input: Parameters<typeof trialGreetingVariants>[0], random = Math.random): string {
+  const variants = trialGreetingVariants(input);
+  return variants[Math.floor(random() * variants.length) % variants.length];
+}

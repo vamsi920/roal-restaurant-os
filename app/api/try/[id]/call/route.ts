@@ -4,6 +4,7 @@ import { requireTrialFromCookie } from "@/lib/trial/auth";
 import { createTrialSignedUrl, ensureVoiceReady } from "@/lib/trial/elevenlabs";
 import { composeTrialAgent } from "@/lib/trial/pipeline";
 import { countTrialCallsLast24h, trialDailyCallCap, updateTrial } from "@/lib/trial/store";
+import { pickTrialGreeting } from "@/lib/trial/prompt";
 import { resolveTrialPersona } from "@/lib/trial/voices";
 
 export const runtime = "nodejs";
@@ -47,7 +48,13 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
       overrides: {
         agent: {
           prompt: { prompt: trial.prompt },
-          firstMessage: trial.greeting,
+          // A different natural receptionist opener each call.
+          firstMessage: pickTrialGreeting({
+            restaurantName: trial.restaurant_name ?? trial.profile?.name ?? "",
+            agentName: persona.agentName,
+            offersDelivery: Boolean((trial.persona as { offersDelivery?: boolean }).offersDelivery),
+            timezone: trial.profile?.timezone,
+          }),
           language: persona.language,
         },
         tts: { voiceId },
