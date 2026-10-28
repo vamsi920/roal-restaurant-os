@@ -1,3 +1,4 @@
+import { resolveRestaurantTimezone } from "@/lib/restaurant-profile/timezone";
 import type { Db } from "@/lib/db";
 import { commitMenuToRestaurant } from "@/lib/scanner/commit-menu";
 import {
@@ -129,7 +130,7 @@ export async function claimTrial(
     region: p.region,
     postal_code: p.postal_code,
     country: p.country || "US",
-    timezone: p.timezone || "America/Chicago",
+    timezone: resolveRestaurantTimezone({ timezone: p.timezone, region: p.region }),
     cuisine: p.cuisine,
     website: p.website,
     allows_pickup: true,

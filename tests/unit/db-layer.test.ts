@@ -16,7 +16,7 @@ describe("document db layer (Postgres parity)", () => {
 
     const r = await db.from("restaurants").insert({ name: "Joe's", organization_id: org.data.id }).select("id").single();
     const profile = await db.from("restaurant_profiles").select("*").eq("restaurant_id", r.data.id).maybeSingle();
-    expect(profile.data?.timezone).toBe("America/Chicago");
+    expect(profile.data?.timezone).toBe("America/New_York");
     expect(profile.data?.allows_pickup).toBe(true);
     const hours = await db.from("restaurant_weekly_hours").select("*", { count: "exact" }).eq("restaurant_id", r.data.id);
     expect(hours.count).toBe(7);

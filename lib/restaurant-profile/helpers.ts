@@ -1,3 +1,4 @@
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
 import type { Db } from "@/lib/db";
 import type {
   ElevenLabsMenuAutoSyncStatus,
@@ -52,7 +53,7 @@ export function defaultRestaurantProfile(
     region: null,
     postal_code: null,
     country: "US",
-    timezone: "America/Chicago",
+    timezone: DEFAULT_RESTAURANT_TIMEZONE,
     cuisine: null,
     website: null,
     allows_pickup: true,
@@ -99,7 +100,7 @@ function mapRow(row: Record<string, unknown>): RestaurantProfile {
     region: row.region != null ? String(row.region) : null,
     postal_code: row.postal_code != null ? String(row.postal_code) : null,
     country: String(row.country ?? "US"),
-    timezone: String(row.timezone ?? "America/Chicago"),
+    timezone: String(row.timezone ?? DEFAULT_RESTAURANT_TIMEZONE),
     cuisine: row.cuisine != null ? String(row.cuisine) : null,
     website: row.website != null ? String(row.website) : null,
     allows_pickup: Boolean(row.allows_pickup),

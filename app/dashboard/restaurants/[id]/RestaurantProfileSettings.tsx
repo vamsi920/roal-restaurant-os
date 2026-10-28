@@ -1,5 +1,7 @@
 "use client";
 
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
+
 import { useState, useTransition, type ReactNode } from "react";
 import { MessageCircleQuestion, PhoneForwarded, Sparkles, Store } from "lucide-react";
 import { saveRestaurantProfileSettingsAction } from "./profile-actions";
@@ -20,6 +22,16 @@ import type { RestaurantUpsellFormEntry } from "@/lib/restaurant-upsell/schema";
 import type { RestaurantUpsellRule } from "@/lib/restaurant-upsell/schema";
 import type { RestaurantMenuSnapshot } from "@/lib/menu-editor/load-menu";
 import type { Restaurant, RestaurantProfile } from "@/lib/types";
+
+const TIME_ZONE_CHOICES = [
+  { value: "America/New_York", label: "Eastern (New York, New Jersey)" },
+  { value: "America/Chicago", label: "Central (Chicago, Texas)" },
+  { value: "America/Denver", label: "Mountain (Denver)" },
+  { value: "America/Phoenix", label: "Arizona" },
+  { value: "America/Los_Angeles", label: "Pacific (Los Angeles)" },
+  { value: "America/Anchorage", label: "Alaska" },
+  { value: "Pacific/Honolulu", label: "Hawaii" },
+];
 
 type Props = {
   restaurant: Restaurant;
@@ -69,7 +81,7 @@ function toFormState(
     region: profile.region ?? "",
     postal_code: profile.postal_code ?? "",
     country: profile.country ?? "US",
-    timezone: profile.timezone ?? "America/Chicago",
+    timezone: profile.timezone ?? DEFAULT_RESTAURANT_TIMEZONE,
     cuisine: profile.cuisine ?? "",
     website: profile.website ?? "",
     allows_pickup: profile.allows_pickup,
@@ -329,15 +341,25 @@ export function RestaurantProfileSettings({
                     disabled={pending}
                   />
                 </Field>
-                <Field label="Timezone (IANA)" required>
-                  <input
+                <Field label="Time zone" required>
+                  <select
                     className="input-base"
                     value={form.timezone}
                     onChange={(e) => setField("timezone", e.target.value)}
-                    placeholder="America/Chicago"
                     required
                     disabled={pending}
-                  />
+                  >
+                    {[
+                      ...TIME_ZONE_CHOICES,
+                      ...(TIME_ZONE_CHOICES.some((z) => z.value === form.timezone)
+                        ? []
+                        : [{ value: form.timezone, label: form.timezone }]),
+                    ].map((z) => (
+                      <option key={z.value} value={z.value}>
+                        {z.label}
+                      </option>
+                    ))}
+                  </select>
                 </Field>
               </div>
             </FieldGroup>

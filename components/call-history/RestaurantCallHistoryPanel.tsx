@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPhoneForDisplay } from "@/lib/phone/e164";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -111,10 +112,21 @@ function formatDuration(seconds: number | null): string | null {
 
 function callerLabel(row: { callerName: string | null; callerPhone: string | null }) {
   const name = row.callerName?.trim();
-  const phone = row.callerPhone?.trim() || null;
+  const phone = formatPhoneForDisplay(row.callerPhone);
   if (name) return { primary: name, secondary: phone };
   if (phone) return { primary: phone, secondary: null };
   return { primary: "Unknown caller", secondary: null };
+}
+
+/** Call summaries are written as "The user… the agent…"; say "the caller" and the host's name instead. */
+export function ownerSummary(text: string, hostName: string): string {
+  return text
+    .replace(/\bThe user\b/g, "The caller")
+    .replace(/\bthe user\b/g, "the caller")
+    .replace(/\bThe agent\b/g, hostName)
+    .replace(/\bthe agent\b/g, hostName)
+    .replace(/\buser's\b/g, "caller's")
+    .replace(/\bagent's\b/g, `${hostName}'s`);
 }
 
 function dialHref(phone: string | null | undefined): string | null {
@@ -334,7 +346,7 @@ function ReservationRequests({
                   </p>
                   <p className="truncate text-[12.5px] text-subtle">
                     {row.customerName || "Guest"}
-                    {row.customerPhone ? ` · ${row.customerPhone}` : ""} · {formatRelative(row.createdAt)}
+                    {row.customerPhone ? ` · ${formatPhoneForDisplay(row.customerPhone)}` : ""} · {formatRelative(row.createdAt)}
                   </p>
                   {row.notes ? (
                     <p className="mt-1 text-[13px] text-muted [overflow-wrap:anywhere]">{row.notes}</p>
@@ -405,10 +417,12 @@ function ReservationRequests({
 
 function CallRow({
   row,
+  hostName,
   handled,
   onOpen,
 }: {
   row: CallHistoryRow;
+  hostName: string;
   handled: boolean;
   onOpen: () => void;
 }) {
@@ -428,7 +442,7 @@ function CallRow({
           <span className="block truncate text-[14px] font-semibold text-ink">{caller.primary}</span>
           <span className="block truncate text-[12.5px] text-subtle">
             {rowSublabel(row)}
-            {row.transcriptSummary ? ` — ${row.transcriptSummary}` : ""}
+            {row.transcriptSummary ? ` — ${ownerSummary(row.transcriptSummary, hostName)}` : ""}
           </span>
         </span>
         <span className="flex shrink-0 flex-col items-end gap-1">
@@ -586,7 +600,7 @@ function CallDrawer({
 
           <DrawerSection title={live ? "What's happening" : "Summary"}>
             {row.transcriptSummary ? (
-              <p className="text-[14px] leading-relaxed text-ink [overflow-wrap:anywhere]">{row.transcriptSummary}</p>
+              <p className="text-[14px] leading-relaxed text-ink [overflow-wrap:anywhere]">{ownerSummary(row.transcriptSummary, hostName)}</p>
             ) : (
               <p className="text-[13px] text-subtle">
                 {live ? `${hostName} is talking with the caller right now.` : "No summary for this call."}
@@ -771,6 +785,7 @@ export function RestaurantCallHistoryPanel({
               <CallRow
                 key={row.sessionId}
                 row={row}
+                hostName={hostName}
                 handled={handled.has(row.sessionId)}
                 onOpen={() => setOpenId(row.sessionId)}
               />

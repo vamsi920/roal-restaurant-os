@@ -34,7 +34,7 @@ export const TABLES: Record<string, TableSpec> = {
     pk: ["restaurant_id"],
     defaults: {
       country: "US",
-      timezone: "America/Chicago",
+      timezone: "America/New_York",
       allows_pickup: true,
       allows_delivery: false,
       prep_time_minutes: 20,

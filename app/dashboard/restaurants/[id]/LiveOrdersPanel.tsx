@@ -486,7 +486,7 @@ export function LiveOrdersPanel({
     <>
       <PageHeader
         title={RESTAURANT_LIVE_ORDERS_LABEL}
-        subtitle={`Tickets from ${hostName} land here the moment a call ends.`}
+        subtitle={`Tickets from ${hostName} land here the moment an order is placed.`}
         actions={
           <>
             <RealtimeBadge state={realtimeUi} />

@@ -1,3 +1,4 @@
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
 import type { Db } from "@/lib/db";
 import {
   evaluateRestaurantHours,
@@ -51,7 +52,7 @@ export async function loadHoursForRestaurant(
   if (eErr) throw new Error(eErr.message);
 
   const profileInput: HoursProfileInput = {
-    timezone: String(profile?.timezone ?? "America/Chicago"),
+    timezone: String(profile?.timezone ?? DEFAULT_RESTAURANT_TIMEZONE),
     temporarily_closed: Boolean(profile?.temporarily_closed),
     temporarily_closed_reason:
       profile?.temporarily_closed_reason != null

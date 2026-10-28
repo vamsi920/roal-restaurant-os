@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPhoneForDisplay } from "@/lib/phone/e164";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Phone, Play, Printer, UserRound } from "lucide-react";
 import { Badge, IconTile } from "@/components/ui";
@@ -279,7 +280,7 @@ export function OrderDetailModal({
                   {detail.customerName?.trim() || "Guest"}
                 </p>
                 {detail.customerPhone ? (
-                  <p className="text-[13px] text-muted">{detail.customerPhone}</p>
+                  <p className="text-[13px] text-muted">{formatPhoneForDisplay(detail.customerPhone)}</p>
                 ) : (
                   <p className="text-[13px] text-subtle">No phone on file</p>
                 )}
@@ -457,7 +458,7 @@ function ReceiptPrintBody({
       </p>
       <p>
         <strong>{detail.customerName ?? "Guest"}</strong>
-        {detail.customerPhone ? ` · ${detail.customerPhone}` : ""}
+        {detail.customerPhone ? ` · ${formatPhoneForDisplay(detail.customerPhone)}` : ""}
       </p>
       <p className="muted">Status: {detail.statusLabel}</p>
       <table>

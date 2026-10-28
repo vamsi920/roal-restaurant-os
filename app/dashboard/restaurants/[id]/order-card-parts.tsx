@@ -1,3 +1,4 @@
+import { formatPhoneForDisplay } from "@/lib/phone/e164";
 import { Bike, Loader2, ShoppingBag } from "lucide-react";
 import { parseOrderLineItems } from "@/lib/orders/line-items";
 import { ORDER_ACTION_LABELS, type OrderAction } from "@/lib/order-status";
@@ -61,7 +62,7 @@ export function CustomerLine({
       >
         {displayName}
       </p>
-      {phone ? <p className="mt-0.5 truncate text-[13px] text-muted">{phone}</p> : null}
+      {phone ? <p className="mt-0.5 truncate text-[13px] text-muted">{formatPhoneForDisplay(phone)}</p> : null}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
 /** Pure hours logic (no framework imports) — safe for Edge copy. */
 
 export const DAY_LABELS = [
@@ -131,7 +132,7 @@ export function evaluateRestaurantHours(input: {
   at?: Date;
 }): RestaurantHoursEvaluation {
   const at = input.at ?? new Date();
-  const tz = input.profile.timezone?.trim() || "America/Chicago";
+  const tz = input.profile.timezone?.trim() || DEFAULT_RESTAURANT_TIMEZONE;
   const zoned = getZonedParts(at, tz);
 
   if (input.profile.temporarily_closed) {

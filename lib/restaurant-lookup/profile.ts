@@ -1,3 +1,4 @@
+import { resolveRestaurantTimezone } from "@/lib/restaurant-profile/timezone";
 import type { Db } from "@/lib/db";
 import type { RestaurantProfileInput } from "@/lib/restaurant-profile/schema";
 import type { PlaceSnapshot } from "@/lib/restaurant-lookup/types";
@@ -17,7 +18,7 @@ export function profileInputFromSnapshot(
     region: p.region,
     postal_code: p.postal_code,
     country: p.country || "US",
-    timezone: p.timezone || "America/Chicago",
+    timezone: resolveRestaurantTimezone({ timezone: p.timezone, region: p.region }),
     cuisine: null,
     website: p.website,
     allows_pickup: true,

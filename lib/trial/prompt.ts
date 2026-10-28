@@ -1,3 +1,4 @@
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
 import type { ScannedMenu } from "@/lib/menu-import/types";
 import {
   buildHoursPromptSection,
@@ -112,7 +113,7 @@ export function buildTrialAgentPrompt(input: BuildTrialPromptInput): string {
   if (input.weeklyHours && input.weeklyHours.length > 0) {
     const evaluation = evaluateRestaurantHours({
       profile: {
-        timezone: p?.timezone || "America/Chicago",
+        timezone: p?.timezone || DEFAULT_RESTAURANT_TIMEZONE,
         temporarily_closed: false,
         temporarily_closed_reason: null,
       },
@@ -122,7 +123,7 @@ export function buildTrialAgentPrompt(input: BuildTrialPromptInput): string {
     });
     hoursBlock = buildHoursPromptSection({
       profile: {
-        timezone: p?.timezone || "America/Chicago",
+        timezone: p?.timezone || DEFAULT_RESTAURANT_TIMEZONE,
         temporarily_closed: false,
         temporarily_closed_reason: null,
       },

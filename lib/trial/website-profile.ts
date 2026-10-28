@@ -1,3 +1,4 @@
+import { resolveRestaurantTimezone } from "@/lib/restaurant-profile/timezone";
 import {
   extractRestaurantProfileFromWebsiteText,
   type ExtractedRestaurantProfile,
@@ -146,7 +147,7 @@ export function profileFromExtracted(
     region: extracted.region?.trim() || null,
     postal_code: extracted.postal_code?.trim() || null,
     country: /^[A-Z]{2}$/.test(country) ? country : "US",
-    timezone: extracted.timezone?.trim() || "America/Chicago",
+    timezone: resolveRestaurantTimezone({ timezone: extracted.timezone, region: extracted.region }),
     website,
     cuisine: extracted.cuisine?.trim() || null,
     tagline: extracted.tagline?.trim() || null,

@@ -102,7 +102,7 @@ describe("profileFromExtracted", () => {
       name: "Joe's Pizza",
       phone: "+1 (512) 555-0100",
       country: "US",
-      timezone: "America/Chicago",
+      timezone: "America/New_York",
       website: WEBSITE,
       cuisine: "Pizza",
       tagline: null,

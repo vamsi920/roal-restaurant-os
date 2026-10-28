@@ -9,3 +9,12 @@ export function toE164Phone(value: string | null | undefined): string | null {
   }
   return null;
 }
+
+/** "(201) 744-4665" for US/CA numbers; anything else is returned as given. */
+export function formatPhoneForDisplay(value: string | null | undefined): string | null {
+  const raw = value?.trim();
+  if (!raw) return null;
+  const digits = raw.replace(/\D/g, "");
+  const ten = digits.length === 11 && digits.startsWith("1") ? digits.slice(1) : digits.length === 10 ? digits : null;
+  return ten ? `(${ten.slice(0, 3)}) ${ten.slice(3, 6)}-${ten.slice(6)}` : raw;
+}

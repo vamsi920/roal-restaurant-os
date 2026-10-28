@@ -1,3 +1,4 @@
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
 import { getGooglePlacesApiKey } from "@/lib/env.server";
 import { weeklyHoursFromPlacesPeriods } from "@/lib/restaurant-lookup/hours";
 import type {
@@ -97,7 +98,7 @@ export function profileFromPlace(place: PlacesPlace, fallbackName: string): Plac
       ? `${streetNumber} ${route}`
       : route || streetNumber || place.formattedAddress?.split(",")[0]?.trim() || null;
   const country = (component(parts, "country", true) || "US").slice(0, 2).toUpperCase();
-  const timezone = place.timeZone?.id?.trim() || "America/Chicago";
+  const timezone = place.timeZone?.id?.trim() || DEFAULT_RESTAURANT_TIMEZONE;
 
   return {
     name: place.displayName?.text?.trim() || fallbackName,
