@@ -92,6 +92,7 @@ export function isLocationNavActive(
   restaurantId: string,
   hash = ""
 ): boolean {
+  void hash; // kept for callers; tabs no longer depend on the hash
   if (restaurantIdFromPath(pathname) !== restaurantId) return false;
   const sub = restaurantSubpath(pathname, restaurantId);
   const onSettings = sub.startsWith("/settings");
