@@ -1,3 +1,4 @@
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
 import Link from "next/link";
 import type { HTMLAttributes, ReactNode } from "react";
 import { ChevronLeft } from "lucide-react";
@@ -203,7 +204,8 @@ export function InlineLink({
   );
 }
 
-export function formatWhen(iso: string | null | undefined): string {
+/** Restaurant-local date and time. Pinned to a zone so server-rendered pages don't show UTC. */
+export function formatWhen(iso: string | null | undefined, timeZone: string = DEFAULT_RESTAURANT_TIMEZONE): string {
   if (!iso) return "—";
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "—";
@@ -212,5 +214,6 @@ export function formatWhen(iso: string | null | undefined): string {
     day: "numeric",
     hour: "numeric",
     minute: "2-digit",
+    timeZone,
   }).format(date);
 }

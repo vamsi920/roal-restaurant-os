@@ -38,3 +38,17 @@ describe("lookupWithoutListing", () => {
     expect(typed.profile).toMatchObject({ name: "Tiny Cafe", city: "Hoboken" });
   });
 });
+
+describe("resolveMapsShareLink", () => {
+  it("follows redirects to the place name", async () => {
+    const { resolveMapsShareLink } = await import("@/lib/trial/pipeline");
+    const hops: Record<string, string> = {
+      "https://maps.app.goo.gl/abc": "https://goo.gl/maps/xyz",
+      "https://goo.gl/maps/xyz": "https://www.google.com/maps/place/Razza+Pizza+Artigianale/@40.7,-74.0",
+    };
+    const fetchImpl = (async (u: string) =>
+      new Response(null, { status: 302, headers: hops[u] ? { location: hops[u] } : {} })) as unknown as typeof fetch;
+    expect(await resolveMapsShareLink("https://maps.app.goo.gl/abc", fetchImpl)).toBe("Razza Pizza Artigianale");
+    expect(await resolveMapsShareLink("https://maps.app.goo.gl/none", fetchImpl)).toBeNull();
+  });
+});

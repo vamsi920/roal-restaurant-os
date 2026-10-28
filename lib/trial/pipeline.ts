@@ -9,7 +9,7 @@ import {
 } from "@/lib/restaurant-lookup/places";
 import { scannedMenuHasPricedItems } from "@/lib/restaurant-lookup/priced-menu";
 import type { PlaceSnapshot } from "@/lib/restaurant-lookup/types";
-import type { ParsedTrialInput } from "@/lib/trial/input";
+import { mapsQueryFromUrl, type ParsedTrialInput } from "@/lib/trial/input";
 import { buildTrialAgentPrompt, buildTrialGreeting } from "@/lib/trial/prompt";
 import { buildSampleMenu } from "@/lib/trial/sample-menu";
 import { getTrial, updateTrial, upsertStep } from "@/lib/trial/store";
@@ -93,6 +93,31 @@ async function placesLookupByDomain(url: string): Promise<PlaceSnapshot | null> 
     console.error("[trial places by domain]", e instanceof Error ? e.message : e);
     return null;
   }
+}
+
+/** Follow a Google Maps short link (a few redirects) and read the place name from where it lands. */
+export async function resolveMapsShareLink(url: string, fetchImpl: typeof fetch = fetch): Promise<string | null> {
+  let current = url;
+  for (let hop = 0; hop < 4; hop += 1) {
+    let res: Response;
+    try {
+      res = await fetchImpl(current, { redirect: "manual", signal: AbortSignal.timeout(4000) });
+    } catch {
+      return null;
+    }
+    const next = res.headers.get("location");
+    if (!next) return null;
+    let target: URL;
+    try {
+      target = new URL(next, current);
+    } catch {
+      return null;
+    }
+    const found = mapsQueryFromUrl(target);
+    if (found) return found;
+    current = target.toString();
+  }
+  return null;
 }
 
 const WEB_SEARCH_LOOKUP_BUDGET_MS = 14_000;
@@ -294,7 +319,8 @@ export async function resolveTrialListing(
       }
     }
   } else if (parsed.kind === "maps") {
-    const query = parsed.query;
+    // Share links from the Maps app (maps.app.goo.gl/…) hide the place name behind a redirect.
+    const query = parsed.query ?? (await resolveMapsShareLink(parsed.url));
     const snapshot = query ? await placesLookup(query, null) : null;
     if (snapshot) {
       placeId = snapshot.place_id;

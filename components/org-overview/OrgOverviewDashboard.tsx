@@ -244,9 +244,6 @@ function RestaurantOverviewRow({ row }: { row: OrgRestaurantOverviewRow }) {
           >
             {row.name}
           </Link>
-          {row.agentIdSuffix ? (
-            <p className="mt-0.5 font-mono text-[11px] text-subtle">agent …{row.agentIdSuffix}</p>
-          ) : null}
         </div>
       </td>
       <td data-label="Phone host">
