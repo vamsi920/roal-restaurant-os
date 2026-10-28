@@ -171,8 +171,8 @@ describe("buildRestaurantOrderAgentPrompt", () => {
       menu: { categoryCount: 3, itemCount: 12, modifierCount: 6 },
     });
 
-    expect(prompt).toMatch(/call get_menu_items/i);
-    expect(prompt).toMatch(/first chance to act/i);
+    expect(prompt).toMatch(/get_menu_items/i);
+    expect(prompt).toMatch(/Menu" section of this prompt/i);
     expect(prompt).toContain("sync_draft_order");
     expect(prompt).toMatch(/After every cart change/i);
     expect(prompt).toMatch(

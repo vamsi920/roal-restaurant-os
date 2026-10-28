@@ -13,6 +13,8 @@ export type MenuPromptSnapshot = {
   categoryCount: number;
   itemCount: number;
   modifierCount: number;
+  /** Compact menu text baked into the prompt so the host never pauses to look it up. */
+  lines?: string;
 };
 
 export type BuildRestaurantOrderAgentPromptInput = {
@@ -37,11 +39,11 @@ const CORE_BEHAVIOR = `You are the phone voice for one restaurant. Be warm, conc
 ## Speech output (strict)
 - Speak only words you would say to a guest. Never output stage directions, bracketed notes, emotion tags, or labels in square brackets.
 - Never pass fictional, placeholder, or assumed guest data to tools. customer_name and customer_phone in finalize_order must be exactly what the caller stated after you asked.
-- Do not narrate loading or database access. Call get_menu_items, get_restaurant_info, and get_caller_history silently; use natural hospitality only.
+- Never go silent. Before any lookup or placing the order, say a short natural filler first ("One sec, let me check." / "Let me get that in for you."). Never mention databases, tools, or systems.
 
 ## Conversation flow
 1. The first assistant line already greets and asks pickup vs delivery when both are offered—do not repeat unless they change their mind.
-2. On your first chance to act: call get_menu_items per tool schema (no arguments if none required). Menu must be in context before you take items.
+2. The current menu is in the "Menu" section of this prompt: answer menu questions and take items from it directly, without calling get_menu_items. Only call get_menu_items if the guest asks about something not listed there.
 3. When they answer pickup or delivery: one short acknowledgment only—do not re-ask unless they change their mind.
 4. If they choose delivery: collect the full delivery address before finalize_order. Ask for suite/unit/gate or drop-off instructions only when needed; never invent address details.
 5. Take the order: two or three words per item ("Got it")—do not repeat the item unless size or options were unclear, and do not read the full cart until the pre-finalize summary.
@@ -149,7 +151,7 @@ function buildKnowledgeBaseSection(
   if (active.length === 0) return null;
 
   const lines = [
-    "Use these operator-approved answers for guest questions. You may restate the answer in the guest's language, but do not add details beyond the answer unless menu data or hours data supports them.",
+    "Use these operator-approved answers only when the guest asks about that topic—never volunteer them (for example at the end of a call). You may restate the answer in the guest's language, but do not add details beyond the answer unless menu data or hours data supports them.",
     ...active.map(
       (entry, index) =>
         `${index + 1}. [${entry.category}] Q: ${entry.question} A: ${entry.answer}`
@@ -340,7 +342,7 @@ function buildMenuRulesSection(
   profile: RestaurantProfile | null
 ): string {
   const lines = [
-    "Menu truth comes only from get_menu_items at session start and after major changes—never from memory or guesses.",
+    "Menu truth comes only from the Menu section below (or get_menu_items for anything not listed)—never from memory or guesses.",
     "If an item is not in the latest menu response, say so and offer the closest on-menu alternative.",
     "Read back critical details for ambiguous items (size, spice, protein) before moving on—for that item only.",
     "Respect is_available / sold-out flags from menu data; do not add unavailable items.",
@@ -374,7 +376,8 @@ function buildMenuRulesSection(
     }
   }
 
-  return `## Menu rules\n${lines.map((l) => `- ${l}`).join("\n")}`;
+  const rules = `## Menu rules\n${lines.map((l) => `- ${l}`).join("\n")}`;
+  return menu?.lines?.trim() ? `${rules}\n\n## Menu (current, available items only)\n${menu.lines.trim()}` : rules;
 }
 
 function buildCustomerInfoSection(): string {

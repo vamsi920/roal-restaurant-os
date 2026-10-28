@@ -23,7 +23,7 @@ describe("menu setup rendering (workspace)", () => {
     const src = workspace();
     expect(src).toContain("<MenuScanner");
     expect(src).toContain('id="menu-scan"');
-    expect(src).toContain("Upload menu photo");
+    expect(src).toContain("Add or update your menu");
     expect(src).toContain("menuScanGate={billingGates?.menu_scan");
     expect(src).toContain("hidePanelHeader");
   });

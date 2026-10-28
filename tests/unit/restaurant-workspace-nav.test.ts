@@ -46,9 +46,7 @@ describe("restaurant workspace nav", () => {
       hasLiveAgentRoute: true,
     });
     const settings = nav.find((d) => d.id === "settings");
-    expect(settings?.href).toBe(
-      "/dashboard/restaurants/r1/menu#restaurant-settings"
-    );
+    expect(settings?.href).toBe("/dashboard/restaurants/r1/settings");
     expect(settings?.label).toBe("Settings");
   });
 

@@ -80,8 +80,8 @@ describe("dashboard restaurant workspace (pass 65)", () => {
     ]);
     expect(nav.every((item) => item.href.includes(RESTAURANT_ID))).toBe(true);
     expect(nav.some((item) => item.href.includes(FOREIGN_ID))).toBe(false);
-    expect(nav.find((item) => item.id === "settings")?.href).toContain(
-      "#restaurant-settings"
+    expect(nav.find((item) => item.id === "settings")?.href).toBe(
+      `/dashboard/restaurants/${RESTAURANT_ID}/settings`
     );
   });
 
@@ -123,7 +123,8 @@ describe("dashboard restaurant workspace (pass 65)", () => {
     expect(kds).toContain("launchGate={pageData.launchGate}");
     expect(menu).toContain("loadRestaurantMenuSetupPageData");
     expect(menuWorkspace).toContain("MenuScanner");
-    expect(menuWorkspace).toContain('id="restaurant-settings"');
+    expect(menuWorkspace).not.toContain("RestaurantProfileSettings");
+    expect(read("app/dashboard/restaurants/[id]/settings/page.tsx")).toContain('id="restaurant-settings"');
     expect(menuWorkspace).not.toMatch(/staff roster|shift schedule/i);
   });
 

@@ -55,7 +55,7 @@ export function buildLocationNav(
     { key: "billing", href: `${base}/billing`, label: "Billing", description: "Completed orders and invoices" },
     {
       key: "settings",
-      href: `${base}/menu#restaurant-settings`,
+      href: `${base}/settings`,
       label: "Settings",
       description: "Business info, hours, FAQs and handoff",
     },
@@ -94,7 +94,7 @@ export function isLocationNavActive(
 ): boolean {
   if (restaurantIdFromPath(pathname) !== restaurantId) return false;
   const sub = restaurantSubpath(pathname, restaurantId);
-  const onSettings = sub.startsWith("/menu") && hash === "#restaurant-settings";
+  const onSettings = sub.startsWith("/settings") || (sub.startsWith("/menu") && hash === "#restaurant-settings");
   switch (key) {
     case "overview":
       return sub.startsWith("/overview");

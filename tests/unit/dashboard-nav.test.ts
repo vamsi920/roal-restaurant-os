@@ -43,7 +43,7 @@ describe("location-scoped sidebar nav (v3)", () => {
     expect(nav.every((i) => i.href.startsWith(BASE))).toBe(true);
     expect(nav.find((i) => i.key === "overview")?.href).toBe(`${BASE}/overview`);
     expect(nav.find((i) => i.key === "kitchen")?.href).toBe(BASE);
-    expect(nav.find((i) => i.key === "settings")?.href).toBe(`${BASE}/menu#restaurant-settings`);
+    expect(nav.find((i) => i.key === "settings")?.href).toBe(`${BASE}/settings`);
   });
 
   it("shows a count on Phone host only when questions are pending", () => {

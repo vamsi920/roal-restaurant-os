@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Headset, Loader2, PhoneOutgoing } from "lucide-react";
 import { TrialCall } from "@/components/try/trial-call";
 import { TrialScorecardPanel } from "@/components/try/trial-scorecard";
+import { LiveOrderTicket } from "@/components/voice-agent/LiveOrderTicket";
 import { Badge, EmptyState, IconTile, type Tone } from "@/components/ui";
 import { Notice } from "@/components/live-orders/workspace-ui";
 import { scoreTranscript } from "@/lib/trial/scorecard";
@@ -111,7 +112,7 @@ export function PhoneHostTestCall({
       ) : null}
 
       {agentReady ? (
-        <div className="grid min-w-0 gap-5 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div className="grid min-w-0 gap-5 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div className="min-w-0">
             <TrialCall
               trialId={restaurantId}
@@ -128,15 +129,18 @@ export function PhoneHostTestCall({
               }}
             />
           </div>
-          <aside
-            className="min-w-0 rounded-[12px] border border-line bg-elev p-4"
-            aria-label="What you tested"
-          >
-            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.04em] text-subtle">
-              What you tested
-            </p>
-            <TrialScorecardPanel scorecard={scorecard} compact />
-          </aside>
+          <div className="flex min-w-0 flex-col gap-4">
+            <LiveOrderTicket restaurantId={restaurantId} restaurantName={restaurantName} />
+            <aside
+              className="min-w-0 rounded-[12px] border border-line bg-elev p-4"
+              aria-label="What you tested"
+            >
+              <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.04em] text-subtle">
+                What you tested
+              </p>
+              <TrialScorecardPanel scorecard={scorecard} compact />
+            </aside>
+          </div>
         </div>
       ) : (
         <EmptyState

@@ -88,7 +88,7 @@ export function buildRestaurantWorkspaceNav(
     },
     {
       id: "settings",
-      href: `${base}/menu#restaurant-settings`,
+      href: `${base}/settings`,
       label: "Settings",
     },
   ];

@@ -6,15 +6,15 @@ const REPO = join(import.meta.dirname, "../..");
 const read = (rel: string) => readFileSync(join(REPO, rel), "utf8");
 
 describe("menu setup responsive (prompt 27)", () => {
-  it("structures board, import tools and settings sections", () => {
+  it("keeps the menu page to the menu board and one upload", () => {
     const workspace = read("app/dashboard/restaurants/[id]/menu/MenuSetupWorkspace.tsx");
 
     expect(workspace).toContain('id="menu-scan"');
     expect(workspace).toContain('id="menu-live"');
-    expect(workspace).toContain('id="restaurant-settings"');
-    expect(workspace).toContain("Upload menu photo");
+    expect(workspace).not.toContain('id="restaurant-settings"');
+    expect(workspace).toContain("Add or update your menu");
     expect(workspace).toContain("<MenuSetupCallIndicator");
-    expect(workspace).toContain("<MenuImportHistory");
+    expect(workspace).not.toContain("<MenuImportHistory");
     expect(workspace).toContain("<MenuCopyFromLocation");
     // Collapsed import tools open from the header action / URL hash.
     expect(workspace).toContain("<MenuHashOpener");

@@ -31,15 +31,15 @@ describe("menu auto-sync UI (pass 12)", () => {
       "utf8"
     );
     const workspace = readFileSync(
-      join(REPO, "app/dashboard/restaurants/[id]/menu/MenuSetupWorkspace.tsx"),
+      join(REPO, "app/dashboard/restaurants/[id]/settings/page.tsx"),
       "utf8"
     );
     expect(settings).toContain("RestaurantUpsellEditor");
     expect(editor).toContain("No upsell rules yet");
     expect(editor).toContain("auditUpsellRuleAgainstMenu");
     expect(editor).not.toMatch(/demo rule|fake upsell|placeholder row/i);
-    expect(workspace).toContain("upsellRules={upsellRules}");
-    expect(workspace).toContain("menu={menu}");
+    expect(workspace).toContain("upsellRules={setup.upsellRules}");
+    expect(workspace).toContain("menu={setup.menu}");
   });
 
   it("menu workspace exposes owner-friendly guest knowledge editor", () => {

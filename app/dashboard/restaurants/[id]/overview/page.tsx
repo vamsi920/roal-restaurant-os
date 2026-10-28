@@ -173,7 +173,7 @@ export default async function RestaurantOverviewPage({
           }
           icon={TrendingUp}
           color="orange"
-          href={month.upsellRules === 0 ? `${base}/menu#restaurant-settings` : `${base}/analytics`}
+          href={month.upsellRules === 0 ? `${base}/settings` : `${base}/analytics`}
         />
       </div>
 

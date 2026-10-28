@@ -406,17 +406,42 @@ function readPromptToolIds(agent: unknown): string[] {
   return ids.filter((x): x is string => typeof x === "string");
 }
 
-function firstWebhookToolIdByName(
-  tools: { id: string; tool_config?: { type?: string; name?: string } }[],
-  name: string
-): string | undefined {
-  for (const t of tools) {
-    if (t.tool_config?.type === "webhook" && t.tool_config?.name === name) {
-      return t.id;
-    }
+type ListedTool = { id: string; tool_config?: { type?: string; name?: string; api_schema?: { url?: string } } };
+
+/** The restaurant a webhook tool is baked for (`?restaurant_id=` in its URL), or "" for a shared dynamic tool. */
+export function toolRestaurantId(tool: ListedTool): string {
+  const url = tool.tool_config?.api_schema?.url ?? "";
+  try {
+    return new URL(url).searchParams.get("restaurant_id")?.trim() ?? "";
+  } catch {
+    return "";
   }
-  return undefined;
 }
+
+/**
+ * Tools are workspace-wide objects that several agents can point at. Only reuse a tool that already
+ * belongs to this restaurant (or, for the shared template, one with no restaurant baked in). Matching by
+ * name alone let the last restaurant set up take over every other restaurant's orders.
+ */
+export function ownedWebhookToolId(tools: readonly ListedTool[], name: string, restaurantId: string): string | undefined {
+  return tools.find(
+    (t) => t.tool_config?.type === "webhook" && t.tool_config?.name === name && toolRestaurantId(t) === restaurantId
+  )?.id;
+}
+
+/**
+ * How each tool behaves mid-call. Lookups and placing the order say a short filler ("one sec, let me check")
+ * so the caller never sits in silence; the running cart syncs in the background without pausing speech.
+ */
+export const ROAL_TOOL_SPEECH: Record<string, Record<string, unknown>> = {
+  get_menu_items: { force_pre_tool_speech: true, response_timeout_secs: 20 },
+  get_restaurant_info: { force_pre_tool_speech: true, response_timeout_secs: 20 },
+  get_caller_history: { force_pre_tool_speech: false, execution_mode: "async" },
+  submit_reservation_request: { force_pre_tool_speech: true },
+  sync_draft_order: { force_pre_tool_speech: false, execution_mode: "async" },
+  finalize_order: { force_pre_tool_speech: true, response_timeout_secs: 20 },
+  get_order_status: { force_pre_tool_speech: true, response_timeout_secs: 20 },
+};
 
 export type SyncRoalElevenLabsToolsResult = {
   ok: true;
@@ -664,13 +689,13 @@ export async function syncRoalElevenLabsTools(options?: {
     },
   };
 
-  const existing = await listAllConvaiTools();
+  const existing = (await listAllConvaiTools()) as ListedTool[];
   const results: { name: string; id: string; op: "created" | "updated" }[] = [];
 
   for (const name of toolNames) {
-    const tool_config = toolConfigs[name];
+    const tool_config = { ...toolConfigs[name], ...(ROAL_TOOL_SPEECH[name] ?? {}) };
     const payload = { tool_config };
-    const existingId = firstWebhookToolIdByName(existing, name);
+    const existingId = ownedWebhookToolId(existing, name, rid);
     let raw: unknown;
     let op: "created" | "updated";
     if (existingId) {
@@ -685,8 +710,11 @@ export async function syncRoalElevenLabsTools(options?: {
 
   const agent = await getConvaiAgent(agentId);
   const cur = readPromptToolIds(agent);
-  const newIds = results.map((r) => r.id);
-  const merged = [...new Set([...cur, ...newIds])];
+  // Drop any same-named tool the agent pointed at before (e.g. another restaurant's), keep the rest.
+  const nameById = new Map(existing.map((t) => [t.id, t.tool_config?.name ?? ""]));
+  const replaced = new Set<string>(toolNames);
+  const kept = cur.filter((id) => !replaced.has(nameById.get(id) ?? ""));
+  const merged = [...new Set([...kept, ...results.map((r) => r.id)])];
 
   const updatePlaceholders = Boolean(rid);
 

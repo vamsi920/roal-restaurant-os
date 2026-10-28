@@ -2,11 +2,8 @@ import { ScanLine } from "lucide-react";
 import type { RestaurantMenuSetupPageData } from "@/lib/restaurant-menu-setup/load-page-data";
 import { PageHeader } from "@/components/ui";
 import { CollapsiblePanel } from "@/components/live-orders/workspace-ui";
-import { MenuImportHistory } from "@/components/menu-import/MenuImportHistory";
 import { MenuAutoSyncStatusPanel } from "@/components/voice-agent/MenuAutoSyncStatusPanel";
 import { MenuScanner } from "../MenuScanner";
-import { RestaurantHoursSettings } from "../RestaurantHoursSettings";
-import { RestaurantProfileSettings } from "../RestaurantProfileSettings";
 import { MenuEditor } from "./MenuEditor";
 import { MenuCopyFromLocation } from "./MenuCopyFromLocation";
 import { MenuSetupCallIndicator } from "./MenuSetupCallIndicator";
@@ -14,12 +11,11 @@ import { MenuHashOpener, MenuJumpLink } from "./MenuHashOpener";
 
 type Props = RestaurantMenuSetupPageData;
 
-const HASH_SECTIONS = ["menu-scan", "menu-copy", "menu-import-history", "restaurant-settings"] as const;
+const HASH_SECTIONS = ["menu-scan", "menu-copy"] as const;
 
 /**
- * Menu module: PageHeader → menu board (categories + items, inline editing) →
- * import tools (scan, copy, history) → restaurant settings (#restaurant-settings).
- * Navigation chrome lives in the global sidebar, not here.
+ * Menu only: the menu board (categories + items, inline editing), one place to upload a new menu,
+ * and copying from a sister location when there is one. Restaurant settings live on /settings.
  */
 export function MenuSetupWorkspace({
   restaurant,
@@ -28,9 +24,6 @@ export function MenuSetupWorkspace({
   menuTemplates,
   billingGates,
   profile,
-  knowledgeEntries,
-  upsellRules,
-  hoursBundle,
   voiceAgentCenter,
 }: Props) {
   const categoryCount = menu.categories.length;
@@ -81,33 +74,24 @@ export function MenuSetupWorkspace({
         </section>
       </div>
 
-      <section aria-labelledby="menu-tools-heading" className="space-y-3">
-        <div>
-          <h2 id="menu-tools-heading" className="font-display text-[18px] font-bold tracking-[-0.01em] text-ink">
-            Import &amp; copy
-          </h2>
-          <p className="mt-0.5 text-[13px] text-subtle">
-            Bring a menu in from a photo or another location. Everything lands in the board above.
-          </p>
-        </div>
+      <CollapsiblePanel
+        id="menu-scan"
+        title="Add or update your menu"
+        hint="Upload a photo, PDF or file of your menu. We read the items and prices; you check them before they go live."
+        defaultOpen={menuEmpty}
+      >
+        <MenuScanner
+          restaurantId={restaurant.id}
+          menuScanGate={billingGates?.menu_scan ?? null}
+          hidePanelHeader
+        />
+      </CollapsiblePanel>
 
-        <CollapsiblePanel
-          id="menu-scan"
-          title="Upload menu photo"
-          hint="We read items, prices and options — you review before anything goes live."
-          defaultOpen={menuEmpty}
-        >
-          <MenuScanner
-            restaurantId={restaurant.id}
-            menuScanGate={billingGates?.menu_scan ?? null}
-            hidePanelHeader
-          />
-        </CollapsiblePanel>
-
+      {menuCopySources.length > 0 ? (
         <CollapsiblePanel
           id="menu-copy"
           title="Copy from another location"
-          hint="Reuse a brand template or copy a sister location's menu."
+          hint="Use the menu from one of your other locations."
         >
           <MenuCopyFromLocation
             restaurantId={restaurant.id}
@@ -115,53 +99,11 @@ export function MenuSetupWorkspace({
             templates={menuTemplates}
             inheritedTemplateId={restaurant.inherited_menu_template_id ?? null}
             inheritedTemplateAppliedAt={restaurant.inherited_menu_template_applied_at ?? null}
-            inheritedTemplateOverrideCount={Number(
-              restaurant.inherited_menu_template_override_count ?? 0
-            )}
-            inheritedTemplateLastLocalEditAt={
-              restaurant.inherited_menu_template_last_local_edit_at ?? null
-            }
+            inheritedTemplateOverrideCount={Number(restaurant.inherited_menu_template_override_count ?? 0)}
+            inheritedTemplateLastLocalEditAt={restaurant.inherited_menu_template_last_local_edit_at ?? null}
           />
         </CollapsiblePanel>
-
-        <CollapsiblePanel
-          id="menu-import-history"
-          title="Import history"
-          hint="Every scan and save, for your team's records."
-        >
-          <MenuImportHistory restaurantId={restaurant.id} hidePanelHeader />
-        </CollapsiblePanel>
-      </section>
-
-      <section
-        id="restaurant-settings"
-        aria-labelledby="restaurant-settings-heading"
-        className="scroll-mt-24 space-y-4"
-      >
-        <div>
-          <h2
-            id="restaurant-settings-heading"
-            className="font-display text-[18px] font-bold tracking-[-0.01em] text-ink"
-          >
-            Restaurant settings
-          </h2>
-          <p className="mt-0.5 text-[13px] text-subtle">
-            What {hostName} tells guests about your location — details, hours, FAQs, upsells and handoff.
-          </p>
-        </div>
-        <RestaurantProfileSettings
-          restaurant={restaurant}
-          profile={profile}
-          knowledgeEntries={knowledgeEntries}
-          upsellRules={upsellRules}
-          menu={menu}
-          hoursSlot={
-            hoursBundle ? (
-              <RestaurantHoursSettings restaurantId={restaurant.id} bundle={hoursBundle} />
-            ) : null
-          }
-        />
-      </section>
+      ) : null}
     </div>
   );
 }
