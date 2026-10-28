@@ -31,11 +31,12 @@ type Lead = {
   status?: string;
   [k: string]: unknown;
 };
-type Sent = { step: 1 | 2 | 3; at: string; messageId: string; subject: string };
+type Sent = { step: 1 | 2 | 3; at: string; messageId: string; subject: string; variant?: Variant };
 type Contact = { sent: Sent[]; stopped?: "replied" | "bounced" | "suppressed" };
 type State = { contacts: Record<string, Contact> };
 
 const PREVIEW = process.argv.includes("--preview");
+const STATS = process.argv.includes("--stats");
 const USER = process.env.GMAIL_USER ?? "";
 const PASS = (process.env.GMAIL_APP_PASSWORD ?? "").replace(/\s+/g, "");
 const DAILY_LIMIT = Number(process.env.DAILY_LIMIT ?? 30);
@@ -47,9 +48,9 @@ const STATE_FILE = "leads/send-state.json";
 const DAY = 86_400_000;
 const FOLLOW_UP_DAYS = { 2: 3, 3: 5 } as const; // step 2 three days after step 1, step 3 five days after step 2
 
+// Required by CAN-SPAM: a real postal address and a working way to opt out.
 const FOOTER =
-  "Vamsi\nROAL · tryroal.com · 207 South St, Jersey City, NJ 07307\n" +
-  'If you\'d rather not hear from me, reply "no" and I won\'t email again.';
+  "Vamsi\nROAL · 207 South St, Jersey City, NJ 07307\n" + 'Not a fit? Reply "no" and I won\'t follow up.';
 
 // ---------- copy ----------
 
@@ -70,43 +71,70 @@ function cleanName(raw: string) {
 function opener(l: Lead, name: string) {
   const t = l.type.toLowerCase();
   const reviews = Number(l.reviews) || 0;
-  if (reviews >= 500) return `${reviews.toLocaleString("en-US")} Google reviews — the phone at ${name} must be ringing nonstop on Friday nights.`;
+  if (reviews >= 500) return `${reviews.toLocaleString("en-US")} Google reviews means the phone at ${name} must ring nonstop on Friday nights.`;
   if (/pizza|chinese|indian|takeout|delivery|fast food|chicken|halal|wings|sandwich|deli|burger/.test(t))
     return `Takeout spots like ${name} lose the most orders when the phone rings in the middle of the 7pm rush.`;
   if (/cafe|coffee|bakery|dessert|bagel|tea|juice|ice cream/.test(t))
-    return `Catering and big pickup orders usually come in by phone — right when the counter is busiest.`;
-  return `When the dining room is full, the phone usually goes to voicemail — and those are orders lost.`;
+    return `Catering and big pickup orders usually come in by phone, right when the counter is busiest.`;
+  return `When the dining room is full, the phone usually goes to voicemail, and those are orders lost.`;
 }
 
-function compose(l: Lead, step: 1 | 2 | 3) {
+export type Variant = "A" | "B";
+
+/** Splits leads evenly and stably between the two first-email versions, so reply rates can be compared. */
+export function variantFor(email: string): Variant {
+  let h = 0;
+  for (const ch of email.toLowerCase()) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return h % 2 ? "B" : "A";
+}
+
+function compose(l: Lead, step: 1 | 2 | 3, firstSubject?: string) {
   const name = cleanName(l.name);
-  const subject = `phone orders at ${name}`;
-  if (step === 1) {
+  const variant = variantFor(l.email);
+  if (step === 1 && variant === "A") {
+    // Short, no links, ends on a yes/no question: built to get a reply.
     return {
-      subject,
+      variant,
+      subject: `missed calls at ${name}`,
       text: [
         `Hi ${name} team,`,
         opener(l, name),
-        `I'm Vamsi, I live in Jersey City. I built ROAL, an AI host that answers your phone when the line is busy and sends the full order straight to your kitchen.`,
-        `No monthly fee — $0.90 only when an order actually comes through.`,
-        `Want to try it? tryroal.com/try builds a test line from your real menu in about 5 minutes, and you can call it yourself. Or just reply and I'll set it up for you.`,
+        `I built ROAL, an AI host that picks up when your line is busy and sends the full order straight to your kitchen. $0.90 per completed order, no monthly fee.`,
+        `Want me to set up a free test line with your menu so you can call it and hear it yourself?`,
         FOOTER,
       ].join("\n\n"),
     };
   }
+  if (step === 1) {
+    // Local intro plus a self-serve link for owners who'd rather try it than reply.
+    return {
+      variant,
+      subject: `quick idea for ${name}`,
+      text: [
+        `Hi ${name} team, I'm Vamsi, a local in Jersey City.`,
+        opener(l, name),
+        `I made ROAL, an AI that answers the phone when you're slammed, takes the whole order and sends it to your kitchen. $0.90 per order, nothing monthly.`,
+        `You can try it with your own menu in 5 minutes at tryroal.com/try, or reply "yes" and I'll set it up for you.`,
+        FOOTER,
+      ].join("\n\n"),
+    };
+  }
+  const subject = `Re: ${firstSubject ?? `missed calls at ${name}`}`;
   if (step === 2) {
     return {
-      subject: `Re: ${subject}`,
+      variant,
+      subject,
       text: [
-        `Hi again — quick bump on this. Happy to build the test line for ${name} myself and send you the number to call. Worth 5 minutes?`,
+        `Hi again. Should I build the test line for ${name}? It takes me 5 minutes and you just call the number. Or try it yourself at tryroal.com/try.`,
         FOOTER,
       ].join("\n\n"),
     };
   }
   return {
-    subject: `Re: ${subject}`,
+    variant,
+    subject,
     text: [
-      `Last note from me. Friday and Saturday nights are when most calls get missed — if that's ever a problem at ${name}, reply and I'll set it up for free. Either way, good luck this season.`,
+      `I'll stop here. If missed calls on busy nights ever cost ${name} orders, reply anytime and I'll set it up for free. Good luck this season!`,
       FOOTER,
     ].join("\n\n"),
   };
@@ -248,12 +276,37 @@ void (async () => {
   const s = loadState();
   const stop = suppressed();
 
+  if (STATS) {
+    // One JSON line for the daily runner: how much is left to send, and how each email version is doing.
+    const queue = buildQueue(leads, s, stop);
+    const contacts = Object.values(s.contacts).filter((c) => c.sent.length);
+    const byVariant: Record<string, { contacted: number; replied: number }> = {};
+    for (const c of contacts) {
+      const v = c.sent[0].variant ?? "original";
+      byVariant[v] ??= { contacted: 0, replied: 0 };
+      byVariant[v].contacted++;
+      if (c.stopped === "replied") byVariant[v].replied++;
+    }
+    console.log(
+      JSON.stringify({
+        fresh: queue.filter((q) => q.step === 1).length,
+        followUpsDue: queue.filter((q) => q.step > 1).length,
+        contacted: contacts.length,
+        replied: contacts.filter((c) => c.stopped === "replied").length,
+        bounced: contacts.filter((c) => c.stopped === "bounced").length,
+        sentToday: sentToday(s),
+        byVariant,
+      }),
+    );
+    return;
+  }
+
   if (PREVIEW) {
     const queue = buildQueue(leads, s, stop);
     const sample = queue.slice(0, DAILY_LIMIT);
     const out = sample
       .map(({ lead, step }) => {
-        const m = compose(lead, step);
+        const m = compose(lead, step, s.contacts[lead.email.toLowerCase()]?.sent[0]?.subject);
         return `To: ${lead.email}\nSubject: ${m.subject}\n\n${m.text}`;
       })
       .join("\n\n" + "=".repeat(70) + "\n\n");
@@ -282,7 +335,7 @@ void (async () => {
       const email = lead.email.toLowerCase();
       const contact = (s.contacts[email] ??= { sent: [] });
       const first = contact.sent[0];
-      const m = compose(lead, step);
+      const m = compose(lead, step, first?.subject);
       const info = await smtp.sendMail({
         from: `"${FROM_NAME}" <${USER}>`,
         to: lead.email,
@@ -290,7 +343,7 @@ void (async () => {
         text: m.text,
         ...(first ? { inReplyTo: first.messageId, references: [first.messageId] } : {}),
       });
-      contact.sent.push({ step, at: new Date().toISOString(), messageId: info.messageId, subject: m.subject });
+      contact.sent.push({ step, at: new Date().toISOString(), messageId: info.messageId, subject: m.subject, variant: m.variant });
       saveState(s);
       console.log(`${i + 1}/${queue.length} step ${step} → ${lead.email} (${cleanName(lead.name)})`);
       if (i < queue.length - 1) {

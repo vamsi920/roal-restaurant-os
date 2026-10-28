@@ -47,7 +47,9 @@
     "seo:pages": "npx tsx --env-file=.env.local scripts/seo/generate-pages.ts",
     "seo:index": "npx tsx scripts/seo/build-content-index.ts",
     "seo:audit": "npx tsx scripts/seo/audit.ts",
-    "seo:indexnow": "npx tsx scripts/seo/indexnow.ts"
+    "seo:indexnow": "npx tsx scripts/seo/indexnow.ts",
+    "outreach:stats": "npx tsx --env-file=.env.local scripts/outreach/send.ts --stats",
+    "outreach:daily": "npx tsx --env-file=.env.local scripts/outreach/daily.ts"
   },
   "dependencies": {
     "@elevenlabs/client": "^1.31.0",

@@ -5,7 +5,7 @@
  *
  *   npm run outreach:emails
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { toCsv } from "./csv";
 
 type Lead = Record<string, string | number> & { name: string; website: string };
@@ -71,6 +71,14 @@ async function emailsFor(website: string) {
 
 void (async () => {
   const leads: Lead[] = JSON.parse(readFileSync("leads/restaurants.json", "utf8"));
+  // Keep earlier results (and any status typed into the sheet): only places that are new, or whose
+  // website changed, get visited again.
+  const prior = new Map<string, Record<string, unknown>>();
+  if (existsSync("leads/leads.json")) {
+    for (const r of JSON.parse(readFileSync("leads/leads.json", "utf8")) as Record<string, unknown>[]) {
+      prior.set(String(r.place_id), r);
+    }
+  }
   const out: Record<string, unknown>[] = new Array(leads.length);
   let next = 0;
   let done = 0;
@@ -80,6 +88,12 @@ void (async () => {
       while (next < leads.length) {
         const i = next++;
         const l = leads[i];
+        const old = prior.get(String(l.place_id));
+        if (old && old.website === l.website) {
+          out[i] = { ...l, email: old.email ?? "", other_emails: old.other_emails ?? "", status: old.status ?? "" };
+          done++;
+          continue;
+        }
         const emails = l.website ? await emailsFor(l.website) : [];
         out[i] = { ...l, email: emails[0] ?? "", other_emails: emails.slice(1, 4).join(" "), status: "" };
         if (++done % 50 === 0) console.log(`${done}/${leads.length}`);

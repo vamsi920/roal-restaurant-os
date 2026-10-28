@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Runs the daily cold-outreach batch at 10:15am, Monday to Friday. If the Mac is asleep then,
+     it runs when it wakes (send.ts still only sends 9am–5pm on weekdays).
+     Install: cp to ~/Library/LaunchAgents and `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.roal.outreach.plist` -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.roal.outreach</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>cd /Users/vamsi/Desktop/restaurant-agent &amp;&amp; npm run -s outreach:daily</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>10</integer><key>Minute</key><integer>15</integer></dict>
+    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>10</integer><key>Minute</key><integer>15</integer></dict>
+    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>10</integer><key>Minute</key><integer>15</integer></dict>
+    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>10</integer><key>Minute</key><integer>15</integer></dict>
+    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>10</integer><key>Minute</key><integer>15</integer></dict>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/Users/vamsi/Desktop/restaurant-agent/leads/daily.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/vamsi/Desktop/restaurant-agent/leads/daily.log</string>
+</dict>
+</plist>

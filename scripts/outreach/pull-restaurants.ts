@@ -19,6 +19,8 @@
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { toCsv } from "./csv";
 
+type Box = { south: number; west: number; north: number; east: number };
+
 const KEY = process.env.GOOGLE_PLACES_API_KEY;
 if (!KEY) throw new Error("GOOGLE_PLACES_API_KEY missing");
 
@@ -27,10 +29,31 @@ const SEARCH_BUDGET = Number(process.env.SEARCH_BUDGET ?? 4500);
 const DETAILS_BUDGET = Number(process.env.DETAILS_BUDGET ?? 900);
 
 const STATE_FILE = "leads/pull-state.json";
-const CITIES = new Set(["Jersey City", "Hoboken"]);
-
-// Box that covers all of Jersey City + Hoboken (results are filtered by city afterwards).
-const AREA = { south: 40.66, west: -74.125, north: 40.772, east: -74.018 };
+// Searched in this order. The first area is always on; with EXPAND=1 the next one is switched on once
+// everything found so far has its details (the daily runner does this when it runs out of people to email).
+// Each box is searched as a grid, and results are kept only for that area's cities.
+const AREAS: { name: string; cities: string[]; box: Box }[] = [
+  { name: "Jersey City + Hoboken", cities: ["Jersey City", "Hoboken"], box: { south: 40.66, west: -74.125, north: 40.772, east: -74.018 } },
+  {
+    name: "North Hudson",
+    cities: ["Weehawken", "Union City", "West New York", "North Bergen", "Guttenberg", "Secaucus"],
+    box: { south: 40.75, west: -74.09, north: 40.83, east: -73.99 },
+  },
+  { name: "Bayonne", cities: ["Bayonne"], box: { south: 40.64, west: -74.16, north: 40.69, east: -74.06 } },
+  { name: "Newark, Harrison, Kearny", cities: ["Newark", "Harrison", "Kearny"], box: { south: 40.68, west: -74.25, north: 40.79, east: -74.1 } },
+  {
+    name: "Fort Lee, Edgewater, Cliffside Park",
+    cities: ["Fort Lee", "Edgewater", "Cliffside Park", "Fairview", "Ridgefield"],
+    box: { south: 40.8, west: -74.02, north: 40.87, east: -73.95 },
+  },
+  { name: "Elizabeth", cities: ["Elizabeth"], box: { south: 40.64, west: -74.24, north: 40.69, east: -74.15 } },
+  {
+    name: "Montclair, Bloomfield, Nutley",
+    cities: ["Montclair", "Bloomfield", "Nutley", "Belleville", "Glen Ridge"],
+    box: { south: 40.78, west: -74.24, north: 40.85, east: -74.13 },
+  },
+];
+const EXPAND = process.env.EXPAND === "1";
 const START_STEP = 0.014; // ~1.5 km cells
 const MIN_STEP = 0.0025;
 
@@ -63,11 +86,11 @@ type Place = {
   businessStatus?: string;
 };
 type Details = { nationalPhoneNumber?: string; websiteUri?: string; rating?: number; userRatingCount?: number };
-type Box = { south: number; west: number; north: number; east: number };
 type State = {
   month: string;
   used: { search: number; details: number };
   queue: { query: string; box: Box }[] | null; // null = search not started yet
+  areaCount: number; // how many of AREAS are switched on
   places: Record<string, Place>;
   details: Record<string, Details>;
 };
@@ -75,7 +98,7 @@ type State = {
 const month = new Date().toISOString().slice(0, 7);
 
 function loadState(): State {
-  const fresh: State = { month, used: { search: 0, details: 0 }, queue: null, places: {}, details: {} };
+  const fresh: State = { month, used: { search: 0, details: 0 }, queue: null, areaCount: 1, places: {}, details: {} };
   if (!existsSync(STATE_FILE)) return fresh;
   const s = JSON.parse(readFileSync(STATE_FILE, "utf8")) as State;
   if (s.month !== month) s.used = { search: 0, details: 0 }; // new month, new free allowance
@@ -109,18 +132,18 @@ async function call(url: string, init: RequestInit) {
   }
 }
 
-function initialQueue() {
+function areaQueue(area: Box) {
   const q: NonNullable<State["queue"]> = [];
   for (const query of QUERIES) {
-    for (let lat = AREA.south; lat < AREA.north; lat += START_STEP) {
-      for (let lng = AREA.west; lng < AREA.east; lng += START_STEP) {
+    for (let lat = area.south; lat < area.north; lat += START_STEP) {
+      for (let lng = area.west; lng < area.east; lng += START_STEP) {
         q.push({
           query,
           box: {
             south: lat,
             west: lng,
-            north: Math.min(lat + START_STEP, AREA.north),
-            east: Math.min(lng + START_STEP, AREA.east),
+            north: Math.min(lat + START_STEP, area.north),
+            east: Math.min(lng + START_STEP, area.east),
           },
         });
       }
@@ -131,7 +154,7 @@ function initialQueue() {
 
 /** Runs the search queue until it is empty or the next cell could break the budget. */
 async function searchPhase(s: State) {
-  const queue = (s.queue ??= initialQueue());
+  const queue = (s.queue ??= areaQueue(AREAS[0].box));
   while (queue.length) {
     // A full cell takes 3 pages; never start one that could go over budget.
     if (s.used.search + 3 > SEARCH_BUDGET) {
@@ -203,8 +226,10 @@ function city(p: Place) {
   return (p.addressComponents ?? []).find((c) => c?.types?.includes("locality"))?.longText ?? "";
 }
 
+let cities = new Set(AREAS[0].cities);
+
 function isLead(p: Place) {
-  if (!CITIES.has(city(p)) || p.businessStatus !== "OPERATIONAL") return false;
+  if (!cities.has(city(p)) || p.businessStatus !== "OPERATIONAL") return false;
   if (p.primaryType && NOT_FOOD.has(p.primaryType)) return false;
   return (p.types ?? []).some((t) => FOOD.test(t));
 }
@@ -264,6 +289,15 @@ function writeOutputs(s: State) {
 void (async () => {
   mkdirSync("leads", { recursive: true });
   const s = loadState();
+  cities = new Set(AREAS.slice(0, s.areaCount).flatMap((a) => a.cities));
+  const pendingDetails = Object.values(s.places).some((p) => isLead(p) && !s.details[p.id]);
+  if (EXPAND && !s.queue?.length && s.queue !== null && !pendingDetails && s.areaCount < AREAS.length) {
+    const next = AREAS[s.areaCount];
+    s.areaCount++;
+    s.queue = areaQueue(next.box);
+    next.cities.forEach((c) => cities.add(c));
+    console.log(`Everything so far is done. Adding the next area: ${next.name}.`);
+  }
   try {
     await searchPhase(s);
     await detailsPhase(s);

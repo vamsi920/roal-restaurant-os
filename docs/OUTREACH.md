@@ -34,6 +34,19 @@ Each run reads the inbox first (anyone who replied or bounced is never emailed a
 `DAILY_LIMIT` (default 30) with 90–240s random gaps. Weekdays 9am–5pm only. Progress is in
 `leads/send-state.json`; add addresses to `leads/suppress.txt` to stop them by hand.
 
+## Daily routine
+
+`scripts/outreach/com.roal.outreach.plist` (installed in `~/Library/LaunchAgents`) runs `npm run outreach:daily`
+at 10:15am Monday–Friday; if the Mac is asleep it runs on wake. Each run waits a random 0–30 min, refills leads
+when fewer than 40 un-emailed restaurants are left (free-tier pull, then the next area in `AREAS`: North Hudson,
+Bayonne, Newark/Harrison/Kearny, Fort Lee/Edgewater, Elizabeth, Montclair/Bloomfield), sends 15–20 emails and shows a
+Mac notification. Log: `leads/daily.log`. Stats any time: `npm run outreach:stats`.
+
+First emails come in two versions, split evenly by address (A: short, no link, ends on a yes/no question;
+B: local intro plus the tryroal.com/try link). `outreach:stats` shows replies per version.
+
+Stop it: `launchctl bootout gui/$(id -u)/com.roal.outreach`.
+
 ## Sending more without looking like spam
 
 Spam filters judge the **sender** (domain age, volume per inbox, bounce rate, replies) more than the words.
