@@ -2,7 +2,7 @@ import Link from "next/link";
 import { RoalWordmark } from "@/components/landing/roal-wordmark";
 import { CONTACT_PILOT_EMAIL } from "@/lib/landing/contact-mailto";
 import { PRICING_RATE_AMOUNT } from "@/lib/landing/pricing-core";
-import { SITE_FOOTER_COLUMNS, SITE_FOOTER_LINE, SITE_FOOTER_MADE_FOR } from "@/lib/landing/site-nav";
+import { SITE_FEATURED_ON, SITE_FOOTER_COLUMNS, SITE_FOOTER_LINE, SITE_FOOTER_MADE_FOR } from "@/lib/landing/site-nav";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -32,6 +32,17 @@ export function SiteFooter() {
             </div>
           ))}
         </div>
+        <p className="site-footer__featured">
+          Featured on{" "}
+          {SITE_FEATURED_ON.map((f, i) => (
+            <span key={f.href}>
+              {i > 0 ? " · " : null}
+              <a href={f.href} target="_blank" rel="noopener">
+                {f.label}
+              </a>
+            </span>
+          ))}
+        </p>
         <div className="site-footer__meta">
           <span>© {year} ROAL · {SITE_FOOTER_MADE_FOR}</span>
           <span>{PRICING_RATE_AMOUNT} per completed phone order. Nothing otherwise.</span>

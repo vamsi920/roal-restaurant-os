@@ -75,3 +75,13 @@ export const SITE_FOOTER_LINE =
   "The AI phone host for restaurants. It answers, takes orders from your live menu, and sends the ticket to your kitchen." as const;
 
 export const SITE_FOOTER_MADE_FOR = "Made for restaurants" as const;
+
+/** Launch directories that list ROAL; some require a link back from our footer to keep the listing. */
+export const SITE_FEATURED_ON = [
+  { label: "Product Hunt", href: "https://www.producthunt.com/products/roal" },
+  { label: "Indie Hackers", href: "https://www.indiehackers.com/product/roal" },
+  { label: "Fazier", href: "https://fazier.com" },
+  { label: "Twelve Tools", href: "https://twelve.tools" },
+  { label: "Tiny Startups", href: "https://www.tinystartups.com" },
+  { label: "Future Tools", href: "https://www.futuretools.io" },
+] as const;

@@ -2344,6 +2344,16 @@
     grid-column: auto;
   }
 }
+.site-footer__featured {
+  margin-top: 2rem;
+  font-size: 13px;
+  color: rgb(var(--public-ink, 17 17 17) / 0.55);
+}
+.site-footer__featured a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
 .site-footer__line {
   max-width: 22rem;
   margin-top: 1rem;
