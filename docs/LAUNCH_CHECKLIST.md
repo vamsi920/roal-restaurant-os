@@ -41,12 +41,12 @@ Stripe and Twilio API calls.
    with the same 5 events (`checkout.session.completed`, `checkout.session.async_payment_succeeded`,
    `customer.subscription.created`, `.updated`, `.deleted`) and put its `whsec_` in `STRIPE_WEBHOOK_SECRET`.
    Push a commit to rebuild. The meter, price and portal are created automatically in live mode.
-3. **Turn on Stripe Tax.** Waiting on the business head office address, which isn't in Stripe yet.
-   Once you send it, the head office and home-state registration can be set through the API in
-   both sandbox and live. Settings > Tax: add your head office address (currently missing). Then add
-   a registration for each state where you must collect (your home state first; others when you
-   pass their thresholds). Stripe Tax costs about 0.5% per transaction. Ask an accountant which
-   states tax SaaS.
+3. ~~Stripe Tax~~: done in the sandbox (2026-10-28). Head office is 207 South St, Jersey City, NJ
+   07307, with defaults tax-exclusive and code `txcd_10103001`, and a New Jersey sales-tax
+   registration is active. A test calculation shows NJ treats business-use SaaS as exempt
+   (`product_exempt`, 0%), so NJ restaurants pay no tax on ROAL. Checkout now opens with automatic
+   tax `complete`. **Repeat in the live account.** Add other states only when you pass their
+   thresholds or an accountant says so; until then Stripe charges no tax there.
 4. ~~Stripe customer emails~~: done in the sandbox. Repeat in the live account.
 5. **Upgrade Twilio from Trial.** The account is `type: Trial`, with $7.21 balance and one number. Trial
    numbers play a trial message and only accept calls from verified numbers. Upgrade, add funds, and
