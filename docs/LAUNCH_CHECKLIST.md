@@ -1,4 +1,4 @@
-# Launch checklist (2026-10-28)
+# Launch checklist (updated 2026-10-28, evening)
 
 The current, single list of what stands between ROAL and a real paid launch. It replaces the
 stale blocker list in `LAUNCH_BLOCKERS.md`, which still describes the old Supabase stack.
@@ -21,23 +21,33 @@ Stripe and Twilio API calls.
   (Restaurant settings, Sales tax %), tickets add it.
 - Terms say: per order, billed monthly, plus sales tax where it applies, and calls are announced
   as recorded.
+- Billing page shows real invoices (period, orders, tax, total, status, View/Pay, PDF), a "Next bill
+  so far" box (orders × $0.90, tax, total, charge date), and order lists as CSV for this month and
+  for each invoice, so owners can match every charge to an order.
+- Google Places key `ROAL Places (server)` is created on GCP project `roal-1ae96`, restricted to
+  Places API (New), and set as `GOOGLE_PLACES_API_KEY` on Netlify. A test search worked. Project
+  roal now bills to "Firebase Payment"; billing was turned off on "Prompt Fight Club" to free a slot.
+- Stripe (sandbox) emails: payment and refund receipts, finalized invoices, credit notes,
+  failed-payment and expiring-card emails, and the manage-subscription link are all on.
 
 ## Owner (you) must do: blocks taking real money
 
-1. **Activate Stripe for live payments.** The account currently has `charges_enabled: false` and
-   `details_submitted: false`, so it can't take real payments. Fill in business details and a bank
-   account in the Stripe dashboard.
+1. **Stripe keys are from a Sandbox** (`acct_1UVXwKGKZ05P2Y69`, dashboard shows "Sandbox"). A sandbox
+   can never take real money. Live payments need the real Stripe account: activate it (business
+   details, bank account), then repeat the email settings above there. Sandbox settings don't
+   carry over.
 2. **Switch Netlify to live keys.** `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` are
    `sk_test_` / `pk_test_` today. Create a **live** webhook endpoint to `https://<domain>/api/billing/webhook`
    with the same 5 events (`checkout.session.completed`, `checkout.session.async_payment_succeeded`,
    `customer.subscription.created`, `.updated`, `.deleted`) and put its `whsec_` in `STRIPE_WEBHOOK_SECRET`.
    Push a commit to rebuild. The meter, price and portal are created automatically in live mode.
-3. **Turn on Stripe Tax.** Settings > Tax: add your head office address (currently missing). Then add
+3. **Turn on Stripe Tax.** Waiting on the business head office address, which isn't in Stripe yet.
+   Once you send it, the head office and home-state registration can be set through the API in
+   both sandbox and live. Settings > Tax: add your head office address (currently missing). Then add
    a registration for each state where you must collect (your home state first; others when you
    pass their thresholds). Stripe Tax costs about 0.5% per transaction. Ask an accountant which
    states tax SaaS.
-4. **Turn on Stripe customer emails.** Settings > Customer emails: successful payments and finalized
-   invoices. The terms promise emailed invoices.
+4. ~~Stripe customer emails~~: done in the sandbox. Repeat in the live account.
 5. **Upgrade Twilio from Trial.** The account is `type: Trial`, with $7.21 balance and one number. Trial
    numbers play a trial message and only accept calls from verified numbers. Upgrade, add funds, and
    turn on auto-recharge. Each line is about $1.15/month plus per-minute inbound.
@@ -48,8 +58,8 @@ Stripe and Twilio API calls.
    Auth > Authorized domains, point the live Stripe webhook at it, then re-sync phone hosts
    (`npm run resync:elevenlabs-all` with `.env.local` pointing at the new domain), because the hosts'
    tool links use the app URL. Keep `roal-os.netlify.app` working as an alias.
-7. **`GOOGLE_PLACES_API_KEY`** (name + city restaurant search). In Google Cloud, enable Places API (New),
-   restrict the key to that API, and set a budget alert. Cost: see below.
+7. ~~`GOOGLE_PLACES_API_KEY`~~: done. Still worth doing: a budget alert on the "Firebase Payment"
+   billing account, and a daily quota cap on Places API (New), so a bot can't run up the bill.
 8. **`ELEVENLABS_WEBHOOK_SECRET`** (post-call webhook, which saves transcripts and outcomes). Not set
    on Netlify. Create the post-call webhook in the voice platform's workspace settings, pointing at
    `/api/integrations/elevenlabs/post-call-webhook`, and copy its secret here.
