@@ -1,20 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { cn } from "@/lib/cn";
 import type { DraftOrderRow } from "@/lib/types";
-import "@/components/start/start.css";
+import { LiveBill, type LiveBillState } from "@/components/start/live-bill";
 
 type Line = { name: string; qty: number; unitPrice: number | null; mods: string[] };
 
 /** How recent an order must be to show as "this call" (covers a test call plus a minute or two). */
 const RECENT_MS = 15 * 60 * 1000;
-const POLL_MS = 2500;
-
-function money(n: number): string {
-  return `$${n.toFixed(2)}`;
-}
+const POLL_MS = 1000;
 
 export function linesFromDraft(order: Pick<DraftOrderRow, "items">): Line[] {
   const raw = Array.isArray(order.items) ? order.items : [];
@@ -42,12 +36,25 @@ export function pickCurrentOrder(drafts: readonly DraftOrderRow[], now = Date.no
   return recent[0] ?? null;
 }
 
+/** Shown as "writing" for a few seconds after the host changes the order. */
+const WRITING_MS = 5000;
+
 /**
  * The bill building itself while a guest orders, from the same order the kitchen sees. Works for
  * browser test calls and real calls to the restaurant's line alike.
  */
-export function LiveOrderTicket({ restaurantId, restaurantName }: { restaurantId: string; restaurantName: string }) {
+export function LiveOrderTicket({
+  restaurantId,
+  restaurantName,
+  hostName,
+}: {
+  restaurantId: string;
+  restaurantName: string;
+  hostName?: string;
+}) {
   const [order, setOrder] = useState<DraftOrderRow | null>(null);
+  const [callLive, setCallLive] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     let alive = true;
@@ -55,8 +62,11 @@ export function LiveOrderTicket({ restaurantId, restaurantName }: { restaurantId
       try {
         const res = await fetch(`/api/restaurants/${restaurantId}/live/orders`, { cache: "no-store" });
         if (!res.ok) return;
-        const body = (await res.json()) as { draftOrders?: DraftOrderRow[] };
-        if (alive) setOrder(pickCurrentOrder(body.draftOrders ?? []));
+        const body = (await res.json()) as { draftOrders?: DraftOrderRow[]; activeCalls?: unknown[] };
+        if (!alive) return;
+        setOrder(pickCurrentOrder(body.draftOrders ?? []));
+        setCallLive((body.activeCalls ?? []).length > 0);
+        setNow(Date.now());
       } catch {
         // Next poll retries.
       }
@@ -74,64 +84,33 @@ export function LiveOrderTicket({ restaurantId, restaurantName }: { restaurantId
   const lines = order ? linesFromDraft(order) : [];
   const subtotal = lines.reduce((sum, l) => sum + (l.unitPrice ?? 0) * l.qty, 0);
   const placed = Boolean(order && order.status !== "draft");
+  const justChanged = order ? now - new Date(order.updated_at).getTime() < WRITING_MS : false;
+  const state: LiveBillState = placed
+    ? "placed"
+    : order && justChanged
+      ? "writing"
+      : order || callLive
+        ? "live"
+        : "idle";
 
   return (
-    <aside className="sf__ticket" aria-label="Live order ticket" aria-live="polite">
-      <header className="sf__ticket-head">
-        <div className="min-w-0">
-          <p className="sf__ticket-kicker">Kitchen ticket</p>
-          <p className="sf__ticket-title">{restaurantName}</p>
-        </div>
-        <span className={cn("sf__ticket-badge", placed ? "is-ok" : "is-live")}>
-          {placed ? "Sent to kitchen" : order ? "Taking order" : "Live"}
-        </span>
-      </header>
-      {order?.customer_name ? (
-        <p className="sf__ticket-for">
-          For {order.customer_name} · {order.fulfillment_type === "delivery" ? "Delivery" : "Pickup"}
-        </p>
-      ) : null}
-
-      {lines.length ? (
-        <ul className="sf__ticket-lines">
-          <AnimatePresence initial={false}>
-            {lines.map((line, i) => (
-              <motion.li
-                key={`${line.name}-${i}`}
-                layout
-                initial={{ opacity: 0, x: 16, backgroundColor: "rgba(234,88,12,0.12)" }}
-                animate={{ opacity: 1, x: 0, backgroundColor: "rgba(234,88,12,0)" }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.45 }}
-              >
-                <span className="sf__ticket-qty">{line.qty}×</span>
-                <span className="sf__ticket-item">
-                  {line.name}
-                  {line.mods.map((m) => (
-                    <span key={m} className="sf__ticket-mod">
-                      + {m}
-                    </span>
-                  ))}
-                </span>
-                <span className="sf__ticket-price">
-                  {line.unitPrice != null ? money(line.unitPrice * line.qty) : "—"}
-                </span>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-      ) : (
-        <p className="sf__ticket-empty">
-          Call your host and order something. The ticket fills in here as you talk, and the kitchen gets it the moment
-          you confirm.
-        </p>
-      )}
-
-      <footer className="sf__ticket-foot">
-        <span>Subtotal</span>
-        <strong>{money(subtotal)}</strong>
-      </footer>
-      <p className="sf__ticket-fine">Prices from your menu, before tax.</p>
-    </aside>
+    <LiveBill
+      restaurantName={restaurantName}
+      hostName={hostName}
+      ticketNo={order ? order.id.replace(/[^0-9]/g, "").slice(-4).padStart(4, "0") : undefined}
+      lines={lines.map((l, i) => ({
+        key: `${l.name}-${l.mods.join(",")}-${i}`,
+        name: l.name,
+        qty: l.qty,
+        lineTotal: l.unitPrice != null ? l.unitPrice * l.qty : null,
+        mods: l.mods,
+      }))}
+      subtotal={subtotal}
+      customerName={order?.customer_name}
+      fulfillment={order?.fulfillment_type}
+      state={state}
+      startedAt={order ? new Date(order.created_at).getTime() : null}
+      emptyText="Call your host and order something. The ticket fills in here as you talk, and the kitchen gets it the moment you confirm."
+    />
   );
 }

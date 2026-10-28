@@ -130,7 +130,7 @@ export function PhoneHostTestCall({
             />
           </div>
           <div className="flex min-w-0 flex-col gap-4">
-            <LiveOrderTicket restaurantId={restaurantId} restaurantName={restaurantName} />
+            <LiveOrderTicket restaurantId={restaurantId} restaurantName={restaurantName} hostName={hostName} />
             <aside
               className="min-w-0 rounded-[12px] border border-line bg-elev p-4"
               aria-label="What you tested"

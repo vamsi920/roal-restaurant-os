@@ -1318,3 +1318,192 @@
     animation: none;
   }
 }
+
+/* ---------- Live bill: the ticket printing itself during a call ---------- */
+.lb {
+  position: relative;
+  overflow: visible;
+  padding-bottom: 22px;
+  background-image: repeating-linear-gradient(0deg, rgb(0 0 0 / 0.012) 0 1px, transparent 1px 3px);
+  background-color: rgb(var(--ticket));
+}
+.lb__no {
+  letter-spacing: 0.04em;
+  color: rgb(var(--text-secondary));
+}
+.lb__status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex: none;
+}
+.lb__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: rgb(var(--bg-elev));
+  color: rgb(var(--text-muted));
+}
+.lb__live.is-on {
+  background: rgb(220 38 38 / 0.1);
+  color: rgb(220 38 38);
+}
+.lb__dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.lb__live.is-on .lb__dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  animation: lb-ping 1.3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.lb__clock {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: rgb(var(--text-muted));
+}
+.lb__writing {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  padding: 2px 0 10px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgb(var(--tile-orange-ink, 194 65 12));
+}
+.lb__pen {
+  animation: lb-scribble 0.6s ease-in-out infinite alternate;
+}
+.lb__dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.lb__dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: lb-bounce 1s infinite ease-in-out;
+}
+.lb__dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.lb__dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.lb__count {
+  font-weight: 500;
+  color: rgb(var(--text-muted));
+}
+.lb__total {
+  position: relative;
+  display: inline-flex;
+}
+.lb__total strong {
+  font-variant-numeric: tabular-nums;
+}
+.lb__bump {
+  position: absolute;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  background: rgb(22 163 74);
+  color: white;
+  pointer-events: none;
+}
+.lb__stamp {
+  position: relative;
+  align-self: center;
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 3px solid rgb(22 163 74);
+  border-radius: 8px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(22 163 74);
+  background: rgb(var(--ticket) / 0.85);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.lb--placed {
+  box-shadow: 0 0 0 2px rgb(22 163 74 / 0.35), 0 24px 50px -32px rgb(0 0 0 / 0.4);
+  transition: box-shadow 0.4s;
+}
+/* Torn receipt edge */
+.lb__tear {
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  bottom: -9px;
+  height: 10px;
+  background: rgb(var(--ticket));
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+}
+.lb.sf__ticket {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+@keyframes lb-ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+@keyframes lb-bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+@keyframes lb-scribble {
+  from {
+    transform: rotate(-12deg) translateX(-1px);
+  }
+  to {
+    transform: rotate(8deg) translateX(2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lb__live.is-on .lb__dot::after,
+  .lb__dots i,
+  .lb__pen {
+    animation: none;
+  }
+}
