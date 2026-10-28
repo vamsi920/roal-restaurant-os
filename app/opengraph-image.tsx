@@ -46,13 +46,12 @@ export default function OpenGraphImage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 76, fontWeight: 800, letterSpacing: -3, lineHeight: 1.02 }}>Never miss another order.</div>
-          <div style={{ display: "flex", fontSize: 76, fontWeight: 800, letterSpacing: -3, lineHeight: 1.02 }}>
-            <span>Your phone, answered</span>
-            <span style={{ color: "#EA580C", marginLeft: 22 }}>24/7.</span>
+          <div style={{ fontSize: 80, fontWeight: 800, letterSpacing: -3, lineHeight: 1.02 }}>Your phone rings.</div>
+          <div style={{ display: "flex", fontSize: 80, fontWeight: 800, letterSpacing: -3, lineHeight: 1.02, color: "#EA580C" }}>
+            ROAL picks up.
           </div>
           <div style={{ marginTop: 26, fontSize: 30, color: "#44423C", maxWidth: 960 }}>
-            The AI phone host for restaurants. Takes pickup orders from your live menu and sends the ticket to your kitchen.
+            An AI phone host that takes orders from your real menu and sends them to your kitchen.
           </div>
         </div>
 
