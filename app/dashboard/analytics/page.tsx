@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
 import { getAuthContext } from "@/lib/auth/context-server";
 import { loadOrganizationAnalytics } from "@/lib/analytics/load-analytics";
 import { getDb } from "@/lib/db";
+
+export const metadata: Metadata = { title: "Reports — ROAL" };
 
 export const dynamic = "force-dynamic";
 

@@ -77,7 +77,7 @@ export const NOTIFICATION_EVENT_LABELS: Record<NotificationEventType, string> = 
   provision_failure: "Phone host setup problem",
   menu_auto_sync_failure: "Menu update problem",
   go_live: "Location went live",
-  realtime_degraded: "Realtime connection degraded",
+  realtime_degraded: "Kitchen board slow to update",
   staff_handoff_requested: "Staff handoff requested",
   voicemail_callback: "Voicemail / callback",
   reservation_request: "Reservation request",
@@ -91,7 +91,7 @@ export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
   NotificationEventType,
   string
 > = {
-  order_completed: "When a phone order is marked complete on the KDS.",
+  order_completed: "When a phone order is marked complete on the kitchen screen.",
   sync_failure: "When your phone host can't get your latest details.",
   scan_failure: "When menu photo extraction fails.",
   order_stuck: "When an order stays in the kitchen queue past your threshold.",
@@ -107,7 +107,7 @@ export const NOTIFICATION_EVENT_DESCRIPTIONS: Record<
   voicemail_callback:
     "When a caller leaves voicemail or asks for a callback number follow-up.",
   reservation_request:
-    "When the agent saves a table reservation request that still needs staff confirmation.",
+    "When your host takes a table request that still needs your confirmation.",
   catering_inquiry:
     "When a caller asks about catering or large-party orders.",
   complaint_caller:

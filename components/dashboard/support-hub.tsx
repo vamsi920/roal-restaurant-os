@@ -55,8 +55,8 @@ const RUNBOOKS = [
     icon: ChefHat,
     color: "rose",
     steps: [
-      `Use Refresh on ${RESTAURANT_LIVE_ORDERS_LABEL}; check Incoming vs Kitchen vs Done tabs.`,
-      "Accept new orders from the queue before they time out.",
+      `Use Refresh on ${RESTAURANT_LIVE_ORDERS_LABEL} and check the New, Preparing, Ready and Done tabs.`,
+      "Accept new tickets so the kitchen knows they are being made.",
       "See notification settings for stuck-order alerts.",
     ],
   },

@@ -19,7 +19,7 @@ export function NotificationDeliveryLog({ deliveries }: Props) {
     <Panel
       className="notification-delivery-log"
       title="Recent deliveries"
-      hint="Dev console and production channel attempts, newest first."
+      hint="Alerts we sent, newest first."
       flush
     >
       {deliveries.length === 0 ? (
@@ -45,7 +45,7 @@ export function NotificationDeliveryLog({ deliveries }: Props) {
               </p>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 <StatusChip>{NOTIFICATION_EVENT_LABELS[row.event_type] ?? row.event_type}</StatusChip>
-                <StatusChip>{row.channel}</StatusChip>
+                <StatusChip>{row.channel === "dev_console" ? "In app" : row.channel === "sms" ? "Text" : row.channel === "email" ? "Email" : row.channel}</StatusChip>
                 <StatusChip tone={statusTone(row.status)}>{row.status}</StatusChip>
               </div>
               {row.error_message ? (

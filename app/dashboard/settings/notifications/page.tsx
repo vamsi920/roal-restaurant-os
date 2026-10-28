@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { PageHeader } from "@/components/dashboard/page-primitives";
 import { NotificationDeliveryLog } from "@/components/notifications/NotificationDeliveryLog";
@@ -12,6 +13,8 @@ import { ensureNotificationSettings } from "@/lib/notifications/settings";
 import type { NotificationDeliveryRow } from "@/lib/notifications/types";
 import { NOTIFICATION_PROVIDER_POSTURE } from "@/lib/notifications/provider-posture";
 import { getDb } from "@/lib/db";
+
+export const metadata: Metadata = { title: "Notifications — ROAL" };
 
 export const dynamic = "force-dynamic";
 

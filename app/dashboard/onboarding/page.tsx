@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { ClaimTrialPanel } from "@/components/onboarding/claim-trial-panel";
 import { MagicOnboarding } from "@/components/onboarding/magic-onboarding";
@@ -6,6 +7,8 @@ import { readPendingTrialFromCookie } from "@/lib/trial/auth";
 import { getDb } from "@/lib/db";
 import { findExistingLocation, trialNeedsClaim } from "@/lib/trial/claim";
 import { toPublicView } from "@/lib/trial/store";
+
+export const metadata: Metadata = { title: "Set up your restaurant — ROAL" };
 
 export const dynamic = "force-dynamic";
 

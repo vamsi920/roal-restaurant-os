@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { BillingDashboard } from "@/components/billing/BillingDashboard";
 import { getAuthContext } from "@/lib/auth/context-server";
@@ -6,6 +7,8 @@ import { getDb } from "@/lib/db";
 import { confirmCheckoutSession } from "@/lib/billing/confirm-checkout";
 import { getStripeClient } from "@/lib/billing/provider";
 import { loadOrganizationInvoices } from "@/lib/billing/invoices";
+
+export const metadata: Metadata = { title: "Billing — ROAL" };
 
 export const dynamic = "force-dynamic";
 

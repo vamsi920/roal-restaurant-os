@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   ChevronDown,
@@ -107,6 +107,11 @@ export function MenuEditor({ restaurantId, initial, scanHref = "#menu-scan" }: P
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [notice, setNotice] = useState<string | null>(null);
+  useEffect(() => {
+    if (!notice) return;
+    const t = setTimeout(() => setNotice(null), 3500);
+    return () => clearTimeout(t);
+  }, [notice]);
   const [togglingIds, setTogglingIds] = useState<Set<string>>(new Set());
   const [pending, startTransition] = useTransition();
 
@@ -578,9 +583,6 @@ export function MenuEditor({ restaurantId, initial, scanHref = "#menu-scan" }: P
   return (
     <div className="menu-editor min-w-0 max-w-full space-y-3">
       <Messages error={error} notice={notice} pending={pending} />
-      {live.menuUpdatedVisible ? (
-        <Notice tone="info">Menu updated — the phone host uses your latest items.</Notice>
-      ) : null}
 
       <div className="grid min-w-0 gap-4 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start">
         {/* Categories: chips on mobile, list on desktop */}
@@ -937,9 +939,15 @@ function Messages({
         </Notice>
       ) : null}
       {notice && !error ? (
-        <Notice tone="ok" role="status">
-          {notice}
-        </Notice>
+        // Floats over the page so saving never shifts the menu under the owner's finger.
+        <div
+          role="status"
+          className="pointer-events-none fixed inset-x-0 bottom-5 z-50 flex justify-center px-4"
+        >
+          <p className="pointer-events-auto max-w-md rounded-full bg-ink px-4 py-2.5 text-center text-[13.5px] font-medium text-white shadow-lg">
+            {notice}
+          </p>
+        </div>
       ) : null}
       <p className="sr-only" aria-live="polite">
         {pending ? "Saving…" : ""}

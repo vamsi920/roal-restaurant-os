@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
@@ -17,6 +18,8 @@ import { EmptyState, IconTile, PageHeader, type TileColor } from "@/components/u
 import { getAuthContext } from "@/lib/auth/context-server";
 import { formatMembershipRole, isOrgAdmin } from "@/lib/auth/roles";
 import { getDb } from "@/lib/db";
+
+export const metadata: Metadata = { title: "Settings — ROAL" };
 
 export const dynamic = "force-dynamic";
 
