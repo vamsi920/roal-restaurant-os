@@ -52,6 +52,45 @@ async function placesLookup(query: string, city: string | null): Promise<PlaceSn
   }
 }
 
+const compact = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/** "dosahutnewjersey" from https://www.dosahutnewjersey.com/ */
+export function domainLabel(url: string): string | null {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "");
+    const label = host.split(".")[0];
+    return label && label.length >= 3 ? label : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Only trust a Google match whose name is clearly the same business as the domain. */
+export function placeMatchesDomain(placeName: string, label: string): boolean {
+  const name = compact(placeName.replace(/^the\s+/i, ""));
+  const domain = compact(label);
+  if (name.length < 3) return false;
+  if (domain.includes(name) || name.includes(domain)) return true;
+  const lead = compact(placeName.replace(/^the\s+/i, "").split(/[-–|(,]/)[0] ?? "");
+  return lead.length >= 5 && domain.includes(lead);
+}
+
+async function placesLookupByDomain(url: string): Promise<PlaceSnapshot | null> {
+  if (!hasGooglePlacesApiKey()) return null;
+  const label = domainLabel(url);
+  if (!label) return null;
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "");
+    const candidates = await searchRestaurantPlaces(host, "");
+    const match = candidates.find((c) => placeMatchesDomain(c.name, label));
+    if (!match) return null;
+    return await getRestaurantPlaceSnapshot(match.place_id, match.name);
+  } catch (e) {
+    console.error("[trial places by domain]", e instanceof Error ? e.message : e);
+    return null;
+  }
+}
+
 /** Netlify cuts synchronous functions off at 30s; stop waiting on the importer well before that. */
 const MENU_IMPORT_BUDGET_MS = 22_000;
 
@@ -170,7 +209,16 @@ export async function resolveTrialListing(
       }
       detail = `Read ${site.fetchedUrls.length} page${site.fetchedUrls.length === 1 ? "" : "s"} from ${new URL(parsed.url).hostname}`;
     } else {
-      failure = site.message;
+      // Some sites block automated visitors (bot checkpoints). Find the same place on Google instead.
+      const snapshot = site.reason === "not_restaurant" ? null : await placesLookupByDomain(parsed.url);
+      if (snapshot) {
+        placeId = snapshot.place_id;
+        profile = { ...profileFromSnapshot(snapshot), website: snapshot.profile.website ?? parsed.url };
+        weeklyHours = snapshot.weekly_hours;
+        detail = `Matched the Google listing for ${profile.name}`;
+      } else {
+        failure = site.message;
+      }
     }
   } else if (parsed.kind === "maps") {
     const query = parsed.query;
