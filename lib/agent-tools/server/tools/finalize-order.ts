@@ -36,6 +36,7 @@ import {
 import { createAgentToolMeter, resolveRestaurantOrganizationId } from "@/lib/agent-tools/server/record-usage";
 import { loadHoursForRestaurant } from "@/lib/agent-tools/server/restaurant-hours";
 import { FINALIZE_ORDER_STATUS } from "@/lib/order-status";
+import { pushOrderToPos } from "@/lib/pos/push-order";
 
 const TOOL = "finalize_order" as const;
 
@@ -243,6 +244,20 @@ export async function handleFinalizeOrder(req: Request, db: Db = getDb()): Promi
   } catch (usageErr) {
     console.error("[finalize_order] reportCompletedOrderUsage failed", usageErr);
   }
+
+  // Restaurants with a connected register (Clover) also get the order there and printed.
+  const pos = await pushOrderToPos(db, {
+    restaurantId,
+    sessionId,
+    lines: cartValidation.normalizedItems,
+    modifiers: menu.modifiers,
+    customerName: customerCheck.customer_name,
+    customerPhone: customerCheck.customer_phone,
+    fulfillmentType: resolvedFulfillmentType,
+    deliveryAddress,
+    deliveryInstructions,
+  });
+  if (pos.status === "failed") console.error("[finalize_order] register push failed", pos.error);
 
   if (idempotencyKey) {
     await storeIdempotentResponse(db, {

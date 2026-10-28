@@ -128,6 +128,8 @@ export const TABLES: Record<string, TableSpec> = {
     defaults: { category: "general", status: "pending", times_asked: 1, created_at: now, updated_at: now },
   },
   restaurant_reservation_requests: { defaults: { status: "requested", created_at: now, updated_at: now } },
+  /** Connected register (Clover) per restaurant; tokens are sealed (lib/pos/seal.ts). */
+  pos_connections: { pk: ["restaurant_id"], autoId: false, defaults: { created_at: now, updated_at: now } },
 };
 
 export function tableSpec(table: string): Required<Pick<TableSpec, "pk">> & TableSpec {
@@ -161,6 +163,7 @@ export const CASCADES: Record<string, Array<{ table: string; column: string }>> 
     { table: "restaurant_upsell_rules", column: "restaurant_id" },
     { table: "restaurant_knowledge_suggestions", column: "restaurant_id" },
     { table: "restaurant_reservation_requests", column: "restaurant_id" },
+    { table: "pos_connections", column: "restaurant_id" },
   ],
   categories: [{ table: "items", column: "category_id" }],
   items: [{ table: "modifiers", column: "item_id" }],

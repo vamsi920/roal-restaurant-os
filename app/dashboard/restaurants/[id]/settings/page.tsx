@@ -9,6 +9,10 @@ import { countPendingKnowledgeSuggestions } from "@/lib/knowledge-suggestions/he
 import { RestaurantWorkspaceRail } from "../RestaurantWorkspaceRail";
 import { RestaurantHoursSettings } from "../RestaurantHoursSettings";
 import { RestaurantProfileSettings } from "../RestaurantProfileSettings";
+import { RegisterConnectionSettings } from "../RegisterConnectionSettings";
+import { isOrgAdmin } from "@/lib/auth/roles";
+import { getCloverConfig } from "@/lib/pos/clover";
+import { loadPosConnection, summarizePosConnection } from "@/lib/pos/connections";
 
 export const metadata: Metadata = { title: "Settings — ROAL" };
 export const dynamic = "force-dynamic";
@@ -25,14 +29,17 @@ export default async function RestaurantSettingsPage({ params }: { params: { id:
 
   const { restaurant, role } = access;
   const db = getDb();
-  const [setup, suggestionCount] = await Promise.all([
+  const [setup, suggestionCount, posConnection] = await Promise.all([
     loadRestaurantMenuSetupPageData(db, {
       restaurant,
       organizationId: restaurant.organization_id,
       membershipRole: role,
     }),
     countPendingKnowledgeSuggestions(db, restaurant.id),
+    loadPosConnection(db, restaurant.id).catch(() => null),
   ]);
+  // The register card appears once ROAL's Clover app keys are set (or a connection already exists).
+  const showRegister = Boolean(getCloverConfig()) || Boolean(posConnection);
   const hostName = setup.profile.agent_display_name?.trim() || "your phone host";
 
   return (
@@ -58,6 +65,13 @@ export default async function RestaurantSettingsPage({ params }: { params: { id:
             ) : null
           }
         />
+        {showRegister ? (
+          <RegisterConnectionSettings
+            restaurantId={restaurant.id}
+            connection={summarizePosConnection(posConnection)}
+            canManage={isOrgAdmin(role)}
+          />
+        ) : null}
       </div>
     </RestaurantWorkspaceRail>
   );
