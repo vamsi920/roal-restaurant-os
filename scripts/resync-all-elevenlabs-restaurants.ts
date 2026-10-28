@@ -209,7 +209,6 @@ async function verifyRestaurantTools(row: RestaurantRow) {
       baked &&
       refFromUrl(url) === expectedRef &&
       toolIds.includes(id) &&
-      Boolean(headers.apikey) &&
       Boolean(headers.Authorization);
 
     if (!ok) allToolsOk = false;
@@ -219,7 +218,6 @@ async function verifyRestaurantTools(row: RestaurantRow) {
       urlPath: url.replace(/https:\/\/[^/]+/, ""),
       refMatch: refFromUrl(url) === expectedRef,
       headers: {
-        apikey: redactHeaderValue(headers.apikey),
         Authorization: redactHeaderValue(headers.Authorization),
         [ROAL_RESTAURANT_ID_HEADER]: {
           baked: ridHeader === rid,
