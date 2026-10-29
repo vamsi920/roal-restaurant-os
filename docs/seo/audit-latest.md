@@ -1,6 +1,6 @@
 # SEO audit (2026-10-29)
 
-Base http://localhost:3030, 268 sitemap URLs, 414 internal link targets.
+Base https://tryroal.com, 269 sitemap URLs, 415 internal link targets.
 
 ## Page issues (0)
 

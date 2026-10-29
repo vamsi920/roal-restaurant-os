@@ -1,0 +1,5 @@
+# Bing Webmaster URL Submission log (manual, 100/day quota; IndexNow runs separately)
+# Before 2026-10-29 11:00: ~199 URLs submitted manually on 10-28 and 10-29 (core pages, hubs, /for, /use-cases,
+# /compare, /locations, /tools and the blog posts live through 2026-10-29). Full list: Bing Webmaster >
+# URL Submission > Download all. Append one URL per line from here on.
+2026-10-29 https://tryroal.com/compare/per-order-pricing
