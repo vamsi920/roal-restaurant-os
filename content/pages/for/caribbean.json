@@ -24,7 +24,7 @@
   "howItHelps": [
     {
       "title": "Answers with your menu and hours",
-      "body": "Paste your website, Google Maps link, or restaurant name and city. ROAL reads the public menu, prices, hours, and address, then builds a phone host in about a minute."
+      "body": "Paste your website, Google Maps link, or restaurant name and city. ROAL reads the public menu, prices, hours, and address, then builds a phone host in about two minutes."
     },
     {
       "title": "Takes clear pickup orders",
@@ -118,7 +118,7 @@
     },
     {
       "q": "How do I get started if I am not very technical?",
-      "a": "Go to /try and paste your restaurant website, Google Maps link, or restaurant name and city. ROAL builds a phone host in about a minute, and you can test-call it in the browser before you go live."
+      "a": "Go to /try and paste your restaurant website, Google Maps link, or restaurant name and city. ROAL builds a phone host in about two minutes, and you can test-call it in the browser before you go live."
     }
   ]
 }

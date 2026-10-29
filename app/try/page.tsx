@@ -9,7 +9,7 @@ import { toPublicView } from "@/lib/trial/store";
 export const metadata: Metadata = buildPublicPageMetadata({
   title: "Try ROAL free: build your restaurant's AI phone host",
   description:
-    "Paste your restaurant's website or Google Maps link. ROAL reads your menu and hours and builds an AI phone host you can call in about a minute. No sign-up.",
+    "Paste your restaurant's website or Google Maps link. ROAL reads your menu and hours and builds an AI phone host you can call in about two minutes. No sign-up.",
   canonicalPath: "/try",
 });
 

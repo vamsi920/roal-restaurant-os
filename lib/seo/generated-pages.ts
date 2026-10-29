@@ -39,18 +39,19 @@ import g35 from "@/content/pages/compare/delivery-apps.json";
 import g36 from "@/content/pages/compare/hiring-phone-staff.json";
 import g37 from "@/content/pages/compare/monthly-ai-phone-plans.json";
 import g38 from "@/content/pages/compare/online-ordering.json";
-import g39 from "@/content/pages/compare/phone-menu-ivr.json";
-import g40 from "@/content/pages/compare/voicemail.json";
-import g41 from "@/content/pages/locations/hoboken.json";
-import g42 from "@/content/pages/locations/jersey-city.json";
-import g43 from "@/content/pages/locations/new-jersey.json";
-import g44 from "@/content/pages/locations/new-york-city.json";
+import g39 from "@/content/pages/compare/per-order-pricing.json";
+import g40 from "@/content/pages/compare/phone-menu-ivr.json";
+import g41 from "@/content/pages/compare/voicemail.json";
+import g42 from "@/content/pages/locations/hoboken.json";
+import g43 from "@/content/pages/locations/jersey-city.json";
+import g44 from "@/content/pages/locations/new-jersey.json";
+import g45 from "@/content/pages/locations/new-york-city.json";
 import glossary from "@/content/glossary.json";
 
 export const LANDING_JSON: Record<string, LandingPageJson[]> = {
   "for": [g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23] as LandingPageJson[],
   "use-cases": [g24, g25, g26, g27, g28, g29, g30, g31, g32, g33] as LandingPageJson[],
-  "compare": [g34, g35, g36, g37, g38, g39, g40] as LandingPageJson[],
-  "locations": [g41, g42, g43, g44] as LandingPageJson[],
+  "compare": [g34, g35, g36, g37, g38, g39, g40, g41] as LandingPageJson[],
+  "locations": [g42, g43, g44, g45] as LandingPageJson[],
 };
 export const GLOSSARY_JSON = glossary as GlossaryEntryJson[];

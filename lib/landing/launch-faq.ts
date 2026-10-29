@@ -33,7 +33,7 @@ const LAUNCH_FAQ_ENTRIES = [
     pages: ["home"],
     question: "How long does setup take?",
     answer:
-      "Paste your website or Google Maps link and you can talk to your own host in about a minute. Going live means forwarding your number, which takes a few minutes with most phone carriers.",
+      "Paste your website or Google Maps link and you can talk to your own host in about two minutes. Going live means forwarding your number, which takes a few minutes with most phone carriers.",
     link: { href: "/try", label: "Try it free" },
   },
   {

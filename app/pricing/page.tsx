@@ -196,6 +196,11 @@ export default function PricingPage() {
                 <span className="tone-muted">Pricing</span> questions
               </h2>
               <p className="lead mt-4">Still unsure? Build your host first. Testing is free.</p>
+              <p className="mt-4 text-sm leading-relaxed">
+                Comparing per-order services? See{" "}
+                <Link href="/compare/per-order-pricing">flat $0.90 vs percentage-of-order pricing</Link> and{" "}
+                <Link href="/compare/monthly-ai-phone-plans">pay per order vs monthly plans</Link>.
+              </p>
             </div>
             <div className="reveal min-w-0">
               <FaqList items={PRICING_FAQ} />

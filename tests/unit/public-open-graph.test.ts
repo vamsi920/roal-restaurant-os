@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildPublicPageMetadata } from "@/lib/seo/public-open-graph";
 
 describe("buildPublicPageMetadata", () => {
-  it("uses text-first OG without images", () => {
+  it("adds the default share card image", () => {
     const meta = buildPublicPageMetadata({
       title: "Test — ROAL",
       description: "Test description for social previews.",
@@ -16,7 +16,7 @@ describe("buildPublicPageMetadata", () => {
       siteName: "ROAL",
       locale: "en_US",
     });
-    expect(meta.openGraph).not.toHaveProperty("images");
+    expect(meta.openGraph).toMatchObject({ images: [{ url: "/opengraph-image", width: 1200, height: 630 }] });
     expect(meta.twitter).toMatchObject({
       card: "summary_large_image",
       title: "Test — ROAL",
@@ -38,6 +38,17 @@ describe("buildPublicPageMetadata", () => {
       authors: ["ROAL Team"],
       tags: ["Ops"],
     });
-    expect(meta.openGraph).not.toHaveProperty("images");
+    expect(meta.openGraph).toHaveProperty("images");
+  });
+
+  it("uses a page-specific share image when given", () => {
+    const meta = buildPublicPageMetadata({
+      title: "Post",
+      description: "Excerpt",
+      canonicalPath: "/blog/x",
+      ogImage: "/blog/x/opengraph-image",
+    });
+    expect(meta.openGraph).toMatchObject({ images: [{ url: "/blog/x/opengraph-image" }] });
+    expect(meta.twitter).toMatchObject({ images: ["/blog/x/opengraph-image"] });
   });
 });

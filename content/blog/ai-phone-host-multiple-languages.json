@@ -18,7 +18,7 @@
     {
       "id": "how-do-i-set-one-up-without-a-tech-headache",
       "h2": "How do I set one up without a tech headache?",
-      "body": "The easiest setup is the one that starts with what you already have. With ROAL, the owner can paste a restaurant website, a Google Maps link, or just “Name, City” at /try. ROAL reads public pages like the menu, prices, hours, address, menu PDFs, and menu photos, then builds a phone host in about a minute.\n\nHere is a practical setup checklist:\n\n1. Gather your website or Google Maps link.\n2. Check that your menu, hours, and address are current.\n3. Test-call the host in the browser before you claim it.\n4. Pick the voice and name you want callers to hear.\n5. Add any common questions that matter to your store, like parking or spice levels.\n\nIf your menu lives in a messy PDF or a photo from the wall, that still works. You can also upload a menu in any format. The owner can test the host right in the browser, and no sign-up is needed for that first test. That matters when you are busy and do not want to spend an hour on setup just to see whether it fits your store."
+      "body": "The easiest setup is the one that starts with what you already have. With ROAL, the owner can paste a restaurant website, a Google Maps link, or just “Name, City” at /try. ROAL reads public pages like the menu, prices, hours, address, menu PDFs, and menu photos, then builds a phone host in about two minutes.\n\nHere is a practical setup checklist:\n\n1. Gather your website or Google Maps link.\n2. Check that your menu, hours, and address are current.\n3. Test-call the host in the browser before you claim it.\n4. Pick the voice and name you want callers to hear.\n5. Add any common questions that matter to your store, like parking or spice levels.\n\nIf your menu lives in a messy PDF or a photo from the wall, that still works. You can also upload a menu in any format. The owner can test the host right in the browser, and no sign-up is needed for that first test. That matters when you are busy and do not want to spend an hour on setup just to see whether it fits your store."
     },
     {
       "id": "how-does-it-handle-callers-who-speak-spanish-arabic-or-anoth",
@@ -48,7 +48,7 @@
   ],
   "takeaways": [
     "A multilingual AI phone host can answer orders, questions, and reservations in the caller’s language.",
-    "ROAL reads your public menu and hours, then builds a test host in about a minute.",
+    "ROAL reads your public menu and hours, then builds a test host in about two minutes.",
     "You keep your restaurant number and control call forwarding.",
     "The host should handle routine calls and send sensitive or complex ones to staff.",
     "Pricing is pay per completed phone order, with no monthly fee or per-minute fee."

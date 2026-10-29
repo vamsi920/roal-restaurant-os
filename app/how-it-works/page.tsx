@@ -12,7 +12,7 @@ import { buildPublicPageMetadata } from "@/lib/seo/public-open-graph";
 export const metadata = buildPublicPageMetadata({
   title: "How ROAL works: an AI phone host from your link",
   description:
-    "Paste your restaurant website or Google Maps link, test-call your AI phone host in about a minute, then forward your number. Orders land on your kitchen screen.",
+    "Paste your restaurant website or Google Maps link, test-call your AI phone host in about two minutes, then forward your number. Orders land on your kitchen screen.",
   canonicalPath: "/how-it-works",
 });
 
@@ -76,7 +76,7 @@ export default function HowItWorksPage() {
             <LaunchAeoAnswer
               titleId="how-answer"
               question="How does ROAL set up an AI phone host for a restaurant?"
-              answer="You paste your restaurant's website or Google Maps link. ROAL reads your menu, prices and hours, and builds a phone host you can call in your browser in about a minute. When you like it, you forward your restaurant number to the host's line and orders start landing on your kitchen screen."
+              answer="You paste your restaurant's website or Google Maps link. ROAL reads your menu, prices and hours, and builds a phone host you can call in your browser in about two minutes. When you like it, you forward your restaurant number to the host's line and orders start landing on your kitchen screen."
             />
           </div>
         </div>

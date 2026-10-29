@@ -8,7 +8,7 @@
   "question": "How can I handle Vietnamese restaurant phone orders better without hiring more phone staff?",
   "answer": "An AI phone host can answer your restaurant’s calls, take pickup and delivery orders from your live menu, answer common questions, and send a clean ticket to the kitchen. For a Vietnamese restaurant, that means fewer busy signals during lunch and dinner, less interruption for the team, and a simple way to keep phone orders moving when the front counter is packed.",
   "summary": "See how Vietnamese restaurants can use an AI phone host to take orders, answer questions, and route clean tickets to the kitchen.",
-  "intro": "Vietnamese restaurant phone orders can be handled by an AI phone host that answers the line, takes the order, and sends it to the kitchen. It can also answer hours, address, parking, and menu questions so your staff does not have to stop cooking or serving to pick up the phone.\n\nFor an independent pho shop, banh mi counter, or family restaurant, this can be a practical way to keep takeout moving during rushes. ROAL is built for that kind of phone work, and you can set it up from your website or menu in about a minute.",
+  "intro": "Vietnamese restaurant phone orders can be handled by an AI phone host that answers the line, takes the order, and sends it to the kitchen. It can also answer hours, address, parking, and menu questions so your staff does not have to stop cooking or serving to pick up the phone.\n\nFor an independent pho shop, banh mi counter, or family restaurant, this can be a practical way to keep takeout moving during rushes. ROAL is built for that kind of phone work, and you can set it up from your website or menu in about two minutes.",
   "sections": [
     {
       "id": "what-phone-orders-look-like-in-a-vietnamese-restaurant",
@@ -23,7 +23,7 @@
     {
       "id": "how-do-i-set-up-vietnamese-restaurant-phone-orders-fast",
       "h2": "How do I set up Vietnamese restaurant phone orders fast?",
-      "body": "ROAL is designed to be set up quickly. The owner pastes the restaurant website, Google Maps link, or even just \"Name, City\" at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about a minute.\n\nYou can also upload a menu in any format. Then you test-call it right in the browser before going live, with no sign-up needed.\n\nA practical setup checklist:\n1. Gather your menu, hours, address, and parking notes.\n2. Decide the host name and voice.\n3. Add common Vietnamese menu modifiers, like spice level or protein swaps.\n4. Mark sold-out items so the host will not offer them.\n5. Test a few real calls, such as pho, banh mi, and a question about parking.\n\nIf you want to see the setup flow, [How it works](/how-it-works) explains the owner side in plain language."
+      "body": "ROAL is designed to be set up quickly. The owner pastes the restaurant website, Google Maps link, or even just \"Name, City\" at /try. ROAL reads the menu, prices, hours, and address from public pages and builds a phone host in about two minutes.\n\nYou can also upload a menu in any format. Then you test-call it right in the browser before going live, with no sign-up needed.\n\nA practical setup checklist:\n1. Gather your menu, hours, address, and parking notes.\n2. Decide the host name and voice.\n3. Add common Vietnamese menu modifiers, like spice level or protein swaps.\n4. Mark sold-out items so the host will not offer them.\n5. Test a few real calls, such as pho, banh mi, and a question about parking.\n\nIf you want to see the setup flow, [How it works](/how-it-works) explains the owner side in plain language."
     },
     {
       "id": "what-should-the-phone-host-say-on-a-real-order-call",
@@ -49,7 +49,7 @@
   "takeaways": [
     "An AI phone host can take Vietnamese restaurant phone orders, answer common questions, and send clean kitchen tickets.",
     "Use it for routine calls, but send allergy questions, complaints, catering, and manager requests to staff.",
-    "ROAL can be set up from your website, Google Maps link, or menu in about a minute.",
+    "ROAL can be set up from your website, Google Maps link, or menu in about two minutes.",
     "You keep your existing number and forward calls to the host when busy or unanswered.",
     "ROAL charges $0.90 per completed phone order, with no monthly fee or per-minute fee."
   ],

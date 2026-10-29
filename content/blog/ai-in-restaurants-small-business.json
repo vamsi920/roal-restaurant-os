@@ -13,7 +13,7 @@
     {
       "id": "which-phone-jobs-are-worth-handing-to-ai-first",
       "h2": "Which phone jobs are worth handing to AI first?",
-      "body": "Start with the calls that follow a pattern. For most small restaurants, that means order taking, hours, address, parking, menu questions, and simple reservation requests. Those are the calls people make every day, and they do not need a manager to answer each one.\n\nA good first split looks like this:\n- **AI handles:** pickup orders, delivery orders, hours, address, parking, menu items, reservation requests\n- **Staff handles:** complaints, catering, allergy-sensitive questions, manager requests, and anything the host cannot answer\n\nExample script line: \"Thanks for calling. I can help with pickup or delivery, or answer hours and menu questions.\"\n\nIf you use ROAL, it can read your public menu, prices, hours, and address from your site, Google Maps link, or uploaded menu, then build a phone host in about a minute. That makes it practical for a small place that does not have time for a long setup.\n\nA simple owner test is this: listen to the five most common calls you get in a week. If the same details come up again and again, those are the right jobs for AI."
+      "body": "Start with the calls that follow a pattern. For most small restaurants, that means order taking, hours, address, parking, menu questions, and simple reservation requests. Those are the calls people make every day, and they do not need a manager to answer each one.\n\nA good first split looks like this:\n- **AI handles:** pickup orders, delivery orders, hours, address, parking, menu items, reservation requests\n- **Staff handles:** complaints, catering, allergy-sensitive questions, manager requests, and anything the host cannot answer\n\nExample script line: \"Thanks for calling. I can help with pickup or delivery, or answer hours and menu questions.\"\n\nIf you use ROAL, it can read your public menu, prices, hours, and address from your site, Google Maps link, or uploaded menu, then build a phone host in about two minutes. That makes it practical for a small place that does not have time for a long setup.\n\nA simple owner test is this: listen to the five most common calls you get in a week. If the same details come up again and again, those are the right jobs for AI."
     },
     {
       "id": "how-do-you-know-it-will-fit-your-menu-and-hours",
@@ -59,7 +59,7 @@
     },
     {
       "q": "How does ROAL get set up?",
-      "a": "The owner pastes a website, Google Maps link, or business name and city at /try, or uploads a menu. ROAL reads the public info, builds the phone host in about a minute, and lets the owner test-call it in the browser. No sign-up is needed for the test."
+      "a": "The owner pastes a website, Google Maps link, or business name and city at /try, or uploads a menu. ROAL reads the public info, builds the phone host in about two minutes, and lets the owner test-call it in the browser. No sign-up is needed for the test."
     },
     {
       "q": "Can AI handle sold-out items and special requests?",

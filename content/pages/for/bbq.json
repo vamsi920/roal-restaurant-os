@@ -88,7 +88,7 @@
     },
     {
       "h2": "Set it up from the menu you already have",
-      "body": "You do not need to rewrite your whole menu. Paste your restaurant website, Google Maps link, or just your name and city at /try. ROAL reads public menu pages, menu PDFs, and menu photos, then builds a phone host in about a minute. You can also upload a menu in any format.\n\nThat matters for BBQ places because menus change often. Maybe the brisket plate is sold out early, the rib plate comes with two sides, or a holiday tray needs special timing. ROAL will not offer items marked sold out, and it can answer basic questions about hours, address, and parking from the live menu data you provide."
+      "body": "You do not need to rewrite your whole menu. Paste your restaurant website, Google Maps link, or just your name and city at /try. ROAL reads public menu pages, menu PDFs, and menu photos, then builds a phone host in about two minutes. You can also upload a menu in any format.\n\nThat matters for BBQ places because menus change often. Maybe the brisket plate is sold out early, the rib plate comes with two sides, or a holiday tray needs special timing. ROAL will not offer items marked sold out, and it can answer basic questions about hours, address, and parking from the live menu data you provide."
     },
     {
       "h2": "A simple way to keep more phone orders on busy days",

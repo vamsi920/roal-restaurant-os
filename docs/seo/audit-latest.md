@@ -1,6 +1,6 @@
-# SEO audit (2026-10-28)
+# SEO audit (2026-10-29)
 
-Base http://localhost:3030, 257 sitemap URLs, 393 internal link targets.
+Base http://localhost:3030, 268 sitemap URLs, 414 internal link targets.
 
 ## Page issues (0)
 

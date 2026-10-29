@@ -18,7 +18,7 @@
     {
       "id": "how-do-i-set-up-roal-from-my-deli-menu-and-hours",
       "h2": "How do I set up ROAL from my deli menu and hours?",
-      "body": "Setup is meant to be simple for busy owners. Go to /try, paste your restaurant website, Google Maps link, or just your restaurant name and city. ROAL reads the menu, prices, hours, and address from public pages like your website, menu PDFs, or menu photos, and builds a phone host in about a minute.\n\nYou can also upload a menu in any format. Before going live, you can test-call the host right in the browser with no sign-up needed. That helps you check how it handles deli-specific items like half sandwiches, add-ons, and house specials.\n\nUse this quick setup order:\n1. Paste your website, Maps link, or name and city.\n2. Review the menu, hours, and address ROAL pulled in.\n3. Upload your menu if anything needs correction.\n4. Pick the host’s voice and name.\n5. Test-call it and listen for any fixes.\n\nIf you want a second opinion on the setup flow, [How it works](/how-it-works) lays out the steps in plain English. The useful part for delis is that the system learns from your public info first, then the owner can correct anything it could not answer and it remembers it from then on."
+      "body": "Setup is meant to be simple for busy owners. Go to /try, paste your restaurant website, Google Maps link, or just your restaurant name and city. ROAL reads the menu, prices, hours, and address from public pages like your website, menu PDFs, or menu photos, and builds a phone host in about two minutes.\n\nYou can also upload a menu in any format. Before going live, you can test-call the host right in the browser with no sign-up needed. That helps you check how it handles deli-specific items like half sandwiches, add-ons, and house specials.\n\nUse this quick setup order:\n1. Paste your website, Maps link, or name and city.\n2. Review the menu, hours, and address ROAL pulled in.\n3. Upload your menu if anything needs correction.\n4. Pick the host’s voice and name.\n5. Test-call it and listen for any fixes.\n\nIf you want a second opinion on the setup flow, [How it works](/how-it-works) lays out the steps in plain English. The useful part for delis is that the system learns from your public info first, then the owner can correct anything it could not answer and it remembers it from then on."
     },
     {
       "id": "what-should-the-phone-say-when-a-deli-customer-calls",
@@ -48,7 +48,7 @@
   ],
   "takeaways": [
     "Deli phone orders work well with an AI phone host because most calls follow a repeatable pattern.",
-    "ROAL can read your menu, hours, and address from public pages and build a test host in about a minute.",
+    "ROAL can read your menu, hours, and address from public pages and build a test host in about two minutes.",
     "You keep your existing number and forward calls to ROAL only when you want to.",
     "ROAL charges $0.90 per completed phone order, with no monthly fee or contract.",
     "Hard calls like allergy questions, complaints, and manager requests go to staff with a summary."

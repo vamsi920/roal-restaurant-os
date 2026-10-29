@@ -49,6 +49,7 @@ export const USE_CASES: SeoPageRef[] = [
 
 /** /compare/<slug> — ROAL vs a category (never a named competitor). */
 export const COMPARE_PAGES: SeoPageRef[] = [
+  { slug: "per-order-pricing", label: "Pay-per-order AI phone answering: flat fee vs percentage" },
   { slug: "answering-service", label: "AI phone host vs answering service" },
   { slug: "voicemail", label: "AI phone host vs voicemail" },
   { slug: "hiring-phone-staff", label: "AI phone host vs hiring phone staff" },

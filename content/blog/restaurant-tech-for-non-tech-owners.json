@@ -18,7 +18,7 @@
     {
       "id": "how-do-you-set-it-up-without-a-big-project",
       "h2": "How do you set it up without a big project?",
-      "body": "The easiest setup is the one that starts with what you already have. With ROAL, an owner can paste a restaurant website, Google Maps link, or just “Name, City” at /try. ROAL reads public menu pages, menu PDFs, menu photos, hours, and address, then builds a phone host in about a minute. You can also upload a menu in any format.\n\nA simple setup path looks like this:\n1. Gather your website or Google Maps link.\n2. Check that your menu, hours, and address are current.\n3. Build a test host.\n4. Call it in the browser and listen to the script.\n5. Fix any menu wording or hours that need cleanup.\n6. Claim the host and forward your restaurant number.\n\nYou do not need to replace your existing phone number. ROAL gives each location its own phone line automatically, and you forward calls to it. You can forward all calls, or only when you are busy or do not answer. If you want a quick reference for forwarding, use [call forwarding codes by carrier](/tools/call-forwarding-codes), then confirm with your carrier and test with a real call."
+      "body": "The easiest setup is the one that starts with what you already have. With ROAL, an owner can paste a restaurant website, Google Maps link, or just “Name, City” at /try. ROAL reads public menu pages, menu PDFs, menu photos, hours, and address, then builds a phone host in about two minutes. You can also upload a menu in any format.\n\nA simple setup path looks like this:\n1. Gather your website or Google Maps link.\n2. Check that your menu, hours, and address are current.\n3. Build a test host.\n4. Call it in the browser and listen to the script.\n5. Fix any menu wording or hours that need cleanup.\n6. Claim the host and forward your restaurant number.\n\nYou do not need to replace your existing phone number. ROAL gives each location its own phone line automatically, and you forward calls to it. You can forward all calls, or only when you are busy or do not answer. If you want a quick reference for forwarding, use [call forwarding codes by carrier](/tools/call-forwarding-codes), then confirm with your carrier and test with a real call."
     },
     {
       "id": "how-do-you-keep-the-phone-from-becoming-a-mess-during-servic",
@@ -43,7 +43,7 @@
   ],
   "takeaways": [
     "Simple restaurant technology should solve one real problem: phones, orders, and kitchen handoff.",
-    "You can set up ROAL from a website, Google Maps link, or menu upload in about a minute.",
+    "You can set up ROAL from a website, Google Maps link, or menu upload in about two minutes.",
     "Keep your existing number and forward calls only when you want to.",
     "Compare flat monthly fees, per-minute billing, delivery commissions, and pay-per-order costs before you choose.",
     "The best tech for a busy restaurant is the one staff can understand fast."

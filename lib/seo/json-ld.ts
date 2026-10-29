@@ -22,7 +22,15 @@ export function organizationJsonLd() {
     "@type": "Organization",
     "@id": ORG_ID(),
     name: "ROAL",
-    alternateName: "ROAL AI phone host",
+    alternateName: ["ROAL AI phone host", "ROAL AI", "tryroal", "tryroal.com"],
+    disambiguatingDescription:
+      "ROAL (tryroal.com) is restaurant software: an AI phone host built in Jersey City, NJ. It is not a restaurant or a food distributor.",
+    sameAs: [
+      "https://www.producthunt.com/products/roal",
+      "https://www.indiehackers.com/product/roal",
+      "https://news.ycombinator.com/item?id=50289318",
+      "https://twelve.tools/tryroal",
+    ],
     url: origin,
     logo: { "@type": "ImageObject", url: `${origin}/icons/roal-512.png`, width: 512, height: 512 },
     image: `${origin}/opengraph-image`,
@@ -90,7 +98,7 @@ export function softwareJsonLd() {
       "Answers hours, address, parking and menu questions",
       "Speaks the caller's language",
       "Hands catering, complaints and manager requests to staff",
-      "Builds itself from the restaurant's website or Google Maps link in about a minute",
+      "Builds itself from the restaurant's website or Google Maps link in about two minutes",
     ],
     offers: {
       "@type": "Offer",

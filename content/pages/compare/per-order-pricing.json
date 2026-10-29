@@ -1,0 +1,71 @@
+{
+  "slug": "per-order-pricing",
+  "label": "Pay-per-order AI phone answering: flat fee vs percentage",
+  "h1": "Pay-per-order AI phone answering: flat fee vs percentage of the order",
+  "seoTitle": "Pay-per-order AI phone answering for restaurants",
+  "description": "AI phone answering that charges per order: how a flat $0.90 fee compares with 2%, 6% and 10% of the order and $1.50 per order, at $15 to $80 tickets.",
+  "lead": "Several AI phone services for restaurants now charge only when an order comes in. They price it in different ways, and the difference grows with your ticket size.",
+  "question": "What is the cheapest AI phone answering for restaurants that charges per order instead of a monthly fee?",
+  "answer": "Per-order AI phone services usually charge either a flat fee per order (commonly about $0.90 to $3) or a percentage of the order (commonly about 2% to 10%). ROAL charges a flat $0.90 per completed order with no monthly fee. A 2% fee is cheaper on tickets under $45; on a $50 order a flat $0.90 beats 2% ($1.00), 6% ($3.00) and 10% ($5.00).",
+  "pains": [
+    { "title": "Percentages grow with your ticket", "body": "A percentage fee takes more from your biggest orders: the family dinner, the office lunch, the catering tray." },
+    { "title": "Extra fees hide in the fine print", "body": "Some per-order plans add card processing, setup, or a minimum. Compare the all-in cost per order, not just the headline rate." },
+    { "title": "Monthly plans charge on slow weeks", "body": "A fixed monthly fee is due whether your phone brought in 5 orders or 500." }
+  ],
+  "howItHelps": [
+    { "title": "One flat number", "body": "$0.90 per completed order, whatever the ticket size. A $15 lunch and an $80 family order cost the same to take." },
+    { "title": "Only completed orders count", "body": "A completed order is a confirmed order whose ticket reached your kitchen screen. Questions, hang-ups and test calls are free." },
+    { "title": "No monthly fee or contract", "body": "No setup fee, no per-minute charge, no minimum. Stop any time." },
+    { "title": "Test before you pay anything", "body": "Paste your website or Google Maps link and call your own phone host in the browser in about two minutes." }
+  ],
+  "sampleCall": [
+    { "who": "caller", "line": "Hi, can I get a large pie, two orders of wings and a Caesar for pickup?" },
+    { "who": "host", "line": "Sure. Large cheese pie, two orders of wings, one Caesar. Any toppings on the pie?" },
+    { "who": "caller", "line": "Half pepperoni. And the wings hot, please." },
+    { "who": "host", "line": "Half pepperoni, wings hot. Can I get a name and phone number?" },
+    { "who": "caller", "line": "Dana, 201-555-0117." },
+    { "who": "host", "line": "Thanks, Dana. That's ready in about 25 minutes. See you soon." }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 6:55 PM",
+    "lines": ["1× Large pie, half pepperoni", "2× Wings, hot", "1× Caesar salad", "Dana · (201) 555-0117"],
+    "note": "Order total about $52. ROAL fee: $0.90."
+  },
+  "table": {
+    "otherName": "Percentage or higher flat fee",
+    "rows": [
+      { "label": "How the fee is set", "roal": "Flat $0.90 per completed order", "other": "A percentage of the order (commonly about 2% to 10%) or a higher flat fee (commonly about $1.50 to $3)" },
+      { "label": "Fee on a $15 order", "roal": "$0.90", "other": "2%: $0.30 · 6%: $0.90 · 10%: $1.50 · $1.50 flat: $1.50" },
+      { "label": "Fee on a $25 order", "roal": "$0.90", "other": "2%: $0.50 · 6%: $1.50 · 10%: $2.50 · $1.50 flat: $1.50" },
+      { "label": "Fee on a $35 order", "roal": "$0.90", "other": "2%: $0.70 · 6%: $2.10 · 10%: $3.50 · $1.50 flat: $1.50" },
+      { "label": "Fee on a $50 order", "roal": "$0.90", "other": "2%: $1.00 · 6%: $3.00 · 10%: $5.00 · $1.50 flat: $1.50" },
+      { "label": "Fee on an $80 order", "roal": "$0.90", "other": "2%: $1.60 · 6%: $4.79 · 10%: $8.00 · $1.50 flat: $1.50" },
+      { "label": "Monthly fee", "roal": "None", "other": "Usually none on per-order plans; check for minimums" },
+      { "label": "Calls that don't become orders", "roal": "Free", "other": "Usually free; check how they count abandoned or voided orders" },
+      { "label": "Try it first", "roal": "Build and call your own host free in about two minutes, no sign-up", "other": "Varies: free trial, demo call or sales call" },
+      { "label": "Best for", "roal": "Restaurants with average phone orders above about $45, or anyone who wants one predictable number", "other": "A 2% fee can cost less if most of your phone orders are small (under about $45)" }
+    ]
+  },
+  "verdict": "If your average phone order is above about $45, a flat $0.90 is the lowest per-order price in this comparison, and the gap grows with bigger tickets. If most orders are small, a low percentage can cost a little less, so run your own numbers with your average ticket and monthly phone orders.",
+  "sections": [
+    {
+      "h2": "Work out your real cost per month",
+      "body": "Take two numbers from last month: how many orders came in by phone, and your average phone ticket. Then compare:\n\n1. **Flat fee:** orders × fee. 300 orders × $0.90 = **$270**.\n2. **Percentage:** orders × average ticket × rate. 300 × $35 × 2% = **$210**; at 6% = **$630**; at 10% = **$1,050**.\n3. **Higher flat fee:** 300 × $1.50 = **$450**.\n\nSwap in your own numbers. The [AI phone host cost calculator](/tools/phone-host-cost-calculator) does this for you, and the [missed call calculator](/tools/missed-call-calculator) shows what the unanswered calls are worth first."
+    },
+    {
+      "h2": "What to check besides the rate",
+      "body": "- **What counts as an order.** ROAL only bills a confirmed order whose ticket reached your kitchen screen. Ask others how they treat cancelled or voided orders.\n- **Card processing.** Some services take payment on the phone and add processing fees. ROAL doesn't take cards on the phone; guests pay at pickup the way they already do.\n- **Minimums and setup.** Look for monthly minimums, onboarding fees or contracts.\n- **Where the order goes.** A kitchen screen, your POS, a text or a fax. Make sure your kitchen will actually see it during the rush.\n- **Who handles the hard calls.** Allergies, complaints and catering should reach a person. See [when phone AI should hand off to staff](/blog/when-ai-should-hand-off-to-staff)."
+    },
+    {
+      "h2": "Pay-per-order vs a monthly plan",
+      "body": "Per-order pricing keeps quiet weeks cheap and only grows when the phone is making you money. A fixed monthly plan, often in the range of roughly $79 to $599 per location, can make sense only when your phone order volume is high and steady. For most independent restaurants, per-order is the lower-risk way to start. More on that in [pay per order vs monthly AI phone plans](/compare/monthly-ai-phone-plans) and on [ROAL pricing](/pricing)."
+    }
+  ],
+  "faq": [
+    { "q": "Is there an AI phone answering service for restaurants with no monthly fee?", "a": "Yes. Several now charge per order instead. ROAL charges a flat $0.90 per completed order with no monthly fee, setup fee or contract, and calls that don't become orders are free." },
+    { "q": "Is a percentage fee or a flat fee cheaper for phone orders?", "a": "It depends on your ticket size. A 2% fee costs less than $0.90 on orders under $45 and more above that. Higher percentages like 6% or 10% cost more than $0.90 on almost any order over $15." },
+    { "q": "What does ROAL count as a completed order?", "a": "A confirmed order (items, name and phone) whose ticket reached your kitchen screen. Hang-ups, wrong numbers, questions and test calls are not billed." },
+    { "q": "Does ROAL take card payments on the phone?", "a": "No. It never asks for card numbers, so there are no phone processing fees from ROAL. Guests pay at pickup or however you already take payment." },
+    { "q": "How do I try ROAL before paying?", "a": "Paste your restaurant's website or Google Maps link at tryroal.com/try. ROAL builds a phone host from your menu in about two minutes and you can call it from your browser with no sign-up." }
+  ]
+}

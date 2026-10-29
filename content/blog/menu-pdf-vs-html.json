@@ -8,7 +8,7 @@
   "question": "Should my restaurant menu be a PDF or a web page?",
   "answer": "For most restaurants, a web page is better than a PDF because it is easier to update, easier for phone tools to read, and easier for guests to use on a phone. A PDF can still work, especially if you already have one, but a clean web page usually wins for speed, search, and day-to-day edits.",
   "summary": "You will know when to use a PDF, when to use a web page, and how to make either one easier for phone orders.",
-  "intro": "A restaurant menu web page is usually better than a PDF for phone orders, updates, and search. A PDF is fine to keep on hand, but a web page is easier for guests and phone tools to read quickly.\n\nIf you want the simplest rule: use a web page for your main menu, and keep a PDF only if you need a printable version or an attachment for catering. ROAL can read menus from public web pages, menu PDFs, and menu photos, then build a phone host from them in about a minute.",
+  "intro": "A restaurant menu web page is usually better than a PDF for phone orders, updates, and search. A PDF is fine to keep on hand, but a web page is easier for guests and phone tools to read quickly.\n\nIf you want the simplest rule: use a web page for your main menu, and keep a PDF only if you need a printable version or an attachment for catering. ROAL can read menus from public web pages, menu PDFs, and menu photos, then build a phone host from them in about two minutes.",
   "sections": [
     {
       "id": "which-format-is-easier-for-guests-to-use-on-the-phone",
@@ -72,7 +72,7 @@
     },
     {
       "q": "Can ROAL read both PDF and web menus?",
-      "a": "Yes. ROAL reads menus from public web pages, menu PDFs, and menu photos, then builds a phone host from that information in about a minute. Owners can also upload a menu in any format."
+      "a": "Yes. ROAL reads menus from public web pages, menu PDFs, and menu photos, then builds a phone host from that information in about two minutes. Owners can also upload a menu in any format."
     }
   ],
   "words": 1664,

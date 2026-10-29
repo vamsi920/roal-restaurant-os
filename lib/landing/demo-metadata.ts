@@ -5,7 +5,7 @@ export function buildDemoPageMetadata(): Metadata {
   return buildPublicPageMetadata({
     title: "Demo — talk to your own AI phone host | ROAL",
     description:
-      "The best demo is your own menu. Paste your restaurant link and call your AI phone host from the browser in about a minute.",
+      "The best demo is your own menu. Paste your restaurant link and call your AI phone host from the browser in about two minutes.",
     canonicalPath: "/demo",
   });
 }

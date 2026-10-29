@@ -7,6 +7,7 @@ import { PRICING_RATE_AMOUNT } from "@/lib/landing/pricing-core";
 export const ROAL_FACTS = {
   name: "ROAL",
   url: "https://tryroal.com",
+  alsoKnownAs: "ROAL AI phone host, tryroal.com. Not the Roal restaurant in Rome or Roal Food.",
   oneLiner:
     "ROAL is an AI phone host for restaurants. It answers the restaurant's phone, takes pickup and delivery orders from the live menu, answers questions about hours and the menu, and sends a clean ticket to the kitchen screen.",
   category: "AI phone answering and phone ordering for restaurants (AI receptionist for restaurants)",
@@ -14,7 +15,7 @@ export const ROAL_FACTS = {
   priceDetail:
     "A completed order is a confirmed order whose ticket reached the kitchen screen. No monthly fee, no setup fee, no per-minute fee, no contract. Calls, questions and test calls are unlimited and free. Billed monthly.",
   setup:
-    "Paste the restaurant's website, Google Maps link, or name and city at tryroal.com/try. ROAL reads the menu, prices, hours and address and builds a phone host in about a minute. The owner test-calls it in the browser with no sign-up, then claims it and forwards the restaurant's existing number.",
+    "Paste the restaurant's website, Google Maps link, or name and city at tryroal.com/try. ROAL reads the menu, prices, hours and address and builds a phone host in about two minutes. The owner test-calls it in the browser with no sign-up, then claims it and forwards the restaurant's existing number.",
   founder: "Venkata Vamsi, Jersey City, NJ",
   founded: "2026",
   market: "Independent and multi-location restaurants in the United States, starting in Jersey City and Hoboken, NJ.",
@@ -26,6 +27,11 @@ export const ROAL_FACT_LIST: { label: string; value: string }[] = [
   { label: "Category", value: ROAL_FACTS.category },
   { label: "Price", value: ROAL_FACTS.price },
   { label: "What you pay for", value: ROAL_FACTS.priceDetail },
+  {
+    label: "Compared with other per-order pricing",
+    value:
+      "Flat $0.90 regardless of ticket size. On a $50 order that is less than 2% ($1.00), 6% ($3.00) or 10% ($5.00) of the order, or a $1.50 flat fee. A 2% fee is cheaper only on orders under $45.",
+  },
   { label: "Setup", value: ROAL_FACTS.setup },
   {
     label: "Going live",
