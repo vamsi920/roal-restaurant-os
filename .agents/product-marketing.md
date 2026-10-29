@@ -59,6 +59,8 @@ Internal only: never name these companies in public copy.
 
 **Direct:** Loman, Slang.ai, PolyAI, heytruffle, Goodcall, Maple, Kea. They charge self-reported prices of about $79–$599 per location per month. They fall short because of fixed monthly fees, sales-led onboarding and long setup.
 
+**Per-order competitors (found 2026-10-29 via ChatGPT search):** several now charge per order with $0/month: two at $1.50 per completed order, one at 2% per order, one at 5.99% of subtotal, one at $3/order or 10%, one at 2% capped at 29¢. ROAL's flat $0.90 is cheapest for tickets above ~$45; a 2% fee wins on small tickets. Do not say "most competitors charge monthly" without qualification.
+
 **Secondary:** Answering services and call centers. They are expensive per minute, don't know the menu and don't write kitchen tickets.
 
 **Indirect:** Hiring another person for the phone, voicemail, or pushing everyone to online ordering and delivery apps. These carry high fixed cost or commission, and callers who want to call still call.
