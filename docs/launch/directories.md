@@ -19,7 +19,8 @@ Copy: docs/launch/LAUNCH_KIT.md. Images: docs/launch/images/. Footer "Featured o
 | Fazier | Skipped: free tier needs 3 public comments on other products in your name plus their badge ($29 skips it) |
 
 ## Launch day (Oct 29) — needs you
-- **Show HN** (signed in on your Chrome): post 8–10 AM ET. Title: "Show HN: ROAL – AI phone host for restaurants that builds itself from your website". URL https://tryroal.com. Text: the PH first comment.
+- **Show HN**: posted Oct 29 with first comment: https://news.ycombinator.com/item?id=50289318 (title shortened to "...builds itself from your site" to fit HN's 80-character limit).
+- **Product Hunt**: live Oct 29: https://www.producthunt.com/posts/roal
 - **X / LinkedIn**: posts in LAUNCH_KIT.md with roal-launch-1200x630.png. Add the PH link once live.
 - **Reddit** (agents are blocked): r/restaurateur, r/smallbusiness, r/SaaS, r/startups. Value-first, no links in titles.
 

@@ -41,8 +41,8 @@ It speaks the caller's language, skips sold-out items, and hands catering, compl
 If you know a restaurant owner, I'd love for you to send them the link. And I'd love your honest feedback: what would make you trust a phone host with your Friday rush?
 
 ## Short posts
-- **X:** Your restaurant's phone rings. ROAL picks up. AI phone host that takes orders from your real menu and sends them to the kitchen. $0.90 per order, no monthly fee. Live on Product Hunt today: <PH link>
-- **LinkedIn:** Today I'm launching ROAL on Product Hunt. It's an AI phone host for restaurants: paste your website, call your own host in about a minute, forward your number, and orders land on your kitchen screen. $0.90 per completed order, no monthly fee. Built in Jersey City. <PH link>
+- **X:** Your restaurant's phone rings. ROAL picks up. AI phone host that takes orders from your real menu and sends them to the kitchen. $0.90 per order, no monthly fee. Live on Product Hunt today: https://www.producthunt.com/posts/roal
+- **LinkedIn:** Today I'm launching ROAL on Product Hunt. It's an AI phone host for restaurants: paste your website, call your own host in about a minute, forward your number, and orders land on your kitchen screen. $0.90 per completed order, no monthly fee. Built in Jersey City. https://www.producthunt.com/posts/roal
 - **Show HN:** Show HN: ROAL – AI phone host for restaurants that builds itself from your website
 - **Reddit (r/restaurateur, r/smallbusiness, value first):** "I built a phone host that answers when you can't. Paste your site, test it free in the browser. Would love owners' honest takes on what would make them trust it." Post yourself; no links in titles.
 
