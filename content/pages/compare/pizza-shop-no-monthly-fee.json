@@ -1,0 +1,66 @@
+{
+  "slug": "pizza-shop-no-monthly-fee",
+  "label": "Cheapest AI phone answering for a pizza shop with no monthly fee",
+  "h1": "The cheapest AI phone answering for a pizza shop with no monthly fee",
+  "seoTitle": "Cheapest AI phone answering for pizza shops, no monthly fee",
+  "description": "What a pizza shop pays for AI phone answering with no monthly fee: flat $0.90 per order vs 2%, about 6% and $1.50 per order at $20 to $60 tickets.",
+  "lead": "Pizza shops live on the phone, and most of the calls are quick pickup orders. If you want AI to answer them without a monthly bill, the cheapest option depends on one number: your average phone ticket.",
+  "question": "What is the cheapest AI receptionist for a pizza shop with no monthly fee?",
+  "answer": "No-monthly-fee AI phone services for pizza shops charge per order, either a flat fee (commonly $0.90 to $1.50) or a percentage of the order (commonly 2% to about 6%). ROAL charges a flat $0.90 per completed order with no monthly fee, setup fee or contract. On a $30 pizza order that is $0.90, versus $0.60 at 2%, about $1.80 at 6% and $1.50 at a $1.50 flat fee. A 2% fee is the cheapest when your average ticket is under $45; above that, a flat $0.90 costs less.",
+  "pains": [
+    { "title": "Friday night rings over the oven", "body": "The phone rings while the pies are coming out and the counter is full. Every unanswered call is a pickup order that may go somewhere else." },
+    { "title": "Monthly plans charge on slow weeks", "body": "A fixed monthly fee is due in a slow January the same as in football season." },
+    { "title": "Headline prices skip the fine print", "body": "Free months end, percentages grow with big family orders, and some plans add card processing or minimums. Compare the all-in cost per order." }
+  ],
+  "howItHelps": [
+    { "title": "$0.90 per completed order", "body": "One flat fee whether the order is a single slice special or three large pies for a party. No monthly fee, no setup fee, no contract." },
+    { "title": "Calls that aren't orders are free", "body": "Hours questions, \"do you deliver to\" calls, hang-ups and test calls cost nothing. You only pay when a confirmed ticket reaches your kitchen screen." },
+    { "title": "Built for pizza orders", "body": "Sizes, half-and-half toppings, crust choices, wings and sides, with the order read back before the ticket goes to the kitchen." },
+    { "title": "Try it on your own menu first", "body": "Paste your website or Google Maps link and call your own phone host in the browser in about two minutes. No sign-up, no card." }
+  ],
+  "sampleCall": [
+    { "who": "caller", "line": "Hi, can I get two large pies for pickup? One plain, one half sausage half mushroom." },
+    { "who": "host", "line": "Sure. One large plain, and one large half sausage, half mushroom. Anything else?" },
+    { "who": "caller", "line": "An order of garlic knots too." },
+    { "who": "host", "line": "Got it, garlic knots. Can I get a name and phone number for the order?" },
+    { "who": "caller", "line": "Marco, 201-555-0142." },
+    { "who": "host", "line": "Thanks, Marco. That's ready in about 20 minutes." }
+  ],
+  "sampleTicket": {
+    "title": "Pickup · 7:20 PM",
+    "lines": ["1× Large plain", "1× Large, half sausage / half mushroom", "1× Garlic knots", "Marco · (201) 555-0142"],
+    "note": "Order total about $45. ROAL fee: $0.90."
+  },
+  "table": {
+    "otherName": "Other no-monthly-fee pricing",
+    "rows": [
+      { "label": "How the fee is set", "roal": "Flat $0.90 per completed order", "other": "A percentage of the order (commonly 2% to about 6%) or a flat fee (commonly about $1.50)" },
+      { "label": "Fee on a $20 order", "roal": "$0.90", "other": "2%: $0.40 · 6%: $1.20 · $1.50 flat: $1.50" },
+      { "label": "Fee on a $30 order", "roal": "$0.90", "other": "2%: $0.60 · 6%: $1.80 · $1.50 flat: $1.50" },
+      { "label": "Fee on a $45 order", "roal": "$0.90", "other": "2%: $0.90 · 6%: $2.70 · $1.50 flat: $1.50" },
+      { "label": "Fee on a $60 party order", "roal": "$0.90", "other": "2%: $1.20 · 6%: $3.60 · $1.50 flat: $1.50" },
+      { "label": "200 orders a month at $30", "roal": "$180", "other": "2%: $120 · 6%: $360 · $1.50 flat: $300" },
+      { "label": "Free trial", "roal": "Build and call your own host free, no sign-up; pay only for completed orders after you go live", "other": "Some offer free months; check the price after the trial ends" },
+      { "label": "Card payments on the phone", "roal": "No. Guests pay at pickup, so no phone processing fees from ROAL", "other": "Varies; some take cards and add processing fees" },
+      { "label": "Best for", "roal": "Shops with average phone tickets around $45 or more, or anyone who wants one predictable number per order", "other": "A 2% fee can cost a little less if most phone orders are under about $45" }
+    ]
+  },
+  "verdict": "For a pizza shop with no appetite for a monthly bill, per-order pricing is the low-risk choice. A 2% fee is the cheapest when most phone orders are small. A flat $0.90 costs less than a $1.50 flat fee or a 6% fee on any order, and less than 2% once your average ticket passes $45. Run your own numbers with last month's phone orders before you choose.",
+  "sections": [
+    {
+      "h2": "Work out what your shop would pay",
+      "body": "Take two numbers from last month: phone orders and your average phone ticket. Then:\n\n1. **Flat $0.90:** orders × $0.90. 200 orders = **$180**.\n2. **Percentage:** orders × average ticket × rate. 200 × $30 × 2% = **$120**; at 6% = **$360**.\n3. **Flat $1.50:** 200 × $1.50 = **$300**.\n\nPizza tickets swing a lot between a lunch slice and a Friday family order, so use your real average. The [AI phone host cost calculator](/tools/phone-host-cost-calculator) does the math, and the [missed call calculator](/tools/missed-call-calculator) shows what unanswered calls are worth before you pay anyone."
+    },
+    {
+      "h2": "What matters besides the price",
+      "body": "- **Half-and-half and toppings.** Call a test host and order a half-and-half pie with a crust change. If it gets that wrong, the price doesn't matter.\n- **Where the ticket lands.** ROAL sends each order to a kitchen screen with the items, name and phone, ready to make.\n- **Delivery areas and hours.** The host should know your hours, specials and delivery rules, and hand off to staff for anything it can't answer.\n- **Your number stays yours.** You forward your existing number, all the time or only when the line is busy. See the [call forwarding codes](/tools/call-forwarding-codes).\n\nMore on pizza calls in [AI phone answering for pizza shops](/for/pizza) and the full per-order comparison in [flat fee vs percentage](/compare/per-order-pricing)."
+    }
+  ],
+  "faq": [
+    { "q": "Is there an AI receptionist for pizza shops with no monthly fee?", "a": "Yes. Several charge per order instead of monthly. ROAL charges a flat $0.90 per completed order with no monthly fee, setup fee or contract." },
+    { "q": "Which is cheaper for a pizza shop, 2% per order or $0.90 per order?", "a": "2% is cheaper when your average phone ticket is under $45, and $0.90 is cheaper above that. At exactly $45 they cost the same." },
+    { "q": "Does ROAL charge for calls that aren't orders?", "a": "No. Questions about hours or delivery, hang-ups, wrong numbers and test calls are free. ROAL only bills a confirmed order whose ticket reached your kitchen screen." },
+    { "q": "Can ROAL take half-and-half pizza orders?", "a": "Yes. It takes sizes, half-and-half toppings, crust choices, wings and sides from your menu and reads the order back before sending the ticket." },
+    { "q": "How do I test it on my own pizza menu?", "a": "Paste your shop's website or Google Maps link at tryroal.com/try. ROAL builds a phone host from your menu in about two minutes and you can call it from your browser with no sign-up." }
+  ]
+}
