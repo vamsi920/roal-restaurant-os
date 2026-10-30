@@ -90,9 +90,9 @@ export const costUnansweredRestaurantPhoneCallsContent: BlogArticleContent = {
       id: "what-counts-successful",
       title: "What counts as a successful order (for comparing vendors)",
       paragraphs: [
-        "For ROAL pilots, a successful order means the caller gave a real name and phone on the line and the ticket finalized on your KDS—not an abandoned cart, a prank, or a test call while you wire voice.",
-        "That definition is how you compare a per-minute quote to a per-success quote apples-to-apples. Production rates after pilot depend on volume, locations, and menu complexity—confirmed in writing before live guest traffic.",
-        "Pilot list pricing is published at [pricing](/pricing) ($0.90 per successful order for many pilots—your terms may differ after volume review).",
+        "For ROAL, a completed order means the caller confirmed the order on the line and the ticket reached your kitchen screen—not an abandoned cart, a prank, or a test call while you set up.",
+        "That definition is how you compare a per-minute quote to a per-order quote apples-to-apples.",
+        "ROAL's price is published at [pricing](/pricing): $0.90 per completed order, with no monthly fee, setup fee, per-minute fee or contract.",
       ],
     },
     {
@@ -100,8 +100,8 @@ export const costUnansweredRestaurantPhoneCallsContent: BlogArticleContent = {
       title: "If the worksheet says the channel is leaking",
       paragraphs: [
         "The fix is coverage that answers with your live menu and tickets the pass—not a longer voicemail greeting.",
-        "ROAL's loop: answer → cart from live items → confirm guest → KDS ticket. You pay around successful pickups aligned with the revenue you are trying to recover.",
-        "Next steps: run your worksheet for two peak nights, listen to a demo call, and compare to pilot terms on [pricing](/pricing) or [contact](/contact) with your call volume and menu—no inflated industry stat required.",
+        "ROAL's loop: answer → cart from live items → confirm guest → KDS ticket. You pay $0.90 per completed order, so the cost follows the revenue you are trying to recover.",
+        "Next steps: run your worksheet for two peak nights, listen to a demo call, and compare the result to [pricing](/pricing), or [build a free test host](/try) from your restaurant link and call it—no inflated industry stat required.",
       ],
     },
   ],
@@ -129,7 +129,7 @@ export const costUnansweredRestaurantPhoneCallsContent: BlogArticleContent = {
     {
       question: "How much does ROAL cost per recovered phone order?",
       answer:
-        "Many pilots use success-based pricing around $0.90 per successful pickup on the KDS—guest confirmed on the call, ticket finalized—not per ring or per minute. Confirm your terms on the pricing page before live traffic.",
+        "$0.90 per completed order: the guest confirmed on the call and the ticket reached the kitchen screen. Not per ring or per minute, and no monthly fee.",
     },
   ],
   relatedSlugs: [

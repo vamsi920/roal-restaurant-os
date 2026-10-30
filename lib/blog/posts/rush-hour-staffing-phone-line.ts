@@ -70,7 +70,7 @@ export const rushHourStaffingPhoneLineContent: BlogArticleContent = {
     {
       question: "Can I use ROAL only on Friday and Saturday nights?",
       answer:
-        "Yes—forward the line when you want coverage. Lots of pilots start with peak nights only, then expand when tickets on the pass look consistent.",
+        "Yes—forward the line when you want coverage. Many owners start with peak nights only, then expand when tickets on the pass look consistent.",
     },
   ],
   relatedSlugs: [

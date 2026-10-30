@@ -47,7 +47,7 @@ export const restaurantAiVoiceAgentSoundsHumanContent: BlogArticleContent = {
       paragraphs: [
         "Guests appreciate honesty. A simple early line works: \"I'm the automated assistant for [your restaurant]—I can take your pickup order, or get a team member if you prefer.\"",
         "Disclosure is not permission to sound cold. It sets expectations: callers know they can ask for a person, and they know why the voice may not match your host exactly.",
-        "Agree on wording during pilot so shift leads hear the same intro every night. Transparency beats a voice that mimics a specific employee without telling anyone.",
+        "Agree on the greeting wording before you forward calls so shift leads hear the same intro every night. Transparency beats a voice that mimics a specific employee without telling anyone.",
       ],
     },
     {

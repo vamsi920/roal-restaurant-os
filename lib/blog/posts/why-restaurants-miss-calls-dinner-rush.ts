@@ -65,7 +65,7 @@ export const whyRestaurantsMissCallsContent: BlogArticleContent = {
         "Coverage means more forwarded rings get answered—not eventually, when someone is free. That can be a [dedicated phone block](/blog/rush-hour-staffing-phone-line), hybrid AI plus a manager for escalations, or an agent trained on how your kitchen actually runs.",
         "[AI phone ordering for small restaurants](/blog/ai-phone-ordering-small-restaurants) is built for that flow: natural conversation, live menu lookup, modifier checks, name and phone confirmation, then a ticket on your KDS before hang-up.",
         "The agent must read the same menu your line cooks—86'd items, real modifiers, honest prices—not a PDF from last season. See [why your phone agent needs a live menu](/blog/phone-agent-must-know-live-menu).",
-        "ROAL aligns cost with outcomes: you pay around successful pickups on the pass, not every wrong number or hang-up—see [pricing](/pricing) for how pilots define a successful order.",
+        "ROAL aligns cost with outcomes: you pay $0.90 per completed order, not for every wrong number or hang-up—see [pricing](/pricing) for what counts as a completed order.",
       ],
     },
     {

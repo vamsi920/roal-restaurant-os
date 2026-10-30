@@ -84,9 +84,9 @@ const HANDWRITTEN_POSTS: BlogPost[] = [
   },
   {
     slug: "setup-roal-20-minutes",
-    title: "Go live with AI phone orders in ~20 minutes",
+    title: "How to go live with AI phone orders",
     excerpt:
-      "Scan your menu, test a pickup call, and watch a ticket hit the pass—about twenty minutes for most shops.",
+      "Paste your restaurant link, get a phone host in about two minutes, test-call it, then forward your number.",
     primaryCategorySlug: "operations",
     categorySlugs: ["operations"],
     readTimeMinutes: 4,

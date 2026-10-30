@@ -85,7 +85,7 @@ export const phoneAgentMustKnowLiveMenuContent: BlogArticleContent = {
       paragraphs: [
         "Start from your real menu: scan or import, edit items and modifier groups in one place, feed both the voice agent and KDS.",
         "When you 86 or change a price, the next call sees it. When the guest confirms, the ticket reflects the same cart—not a spreadsheet maintained for phone only.",
-        "Most teams go live in about [twenty minutes](/blog/setup-roal-20-minutes) of setup plus test calls on top sellers—not a multi-week IT project.",
+        "ROAL builds the host from your restaurant link in about two minutes; then [test calls on your top sellers and forwarding your number](/blog/setup-roal-20-minutes) get you live—not a multi-week IT project.",
       ],
     },
     {

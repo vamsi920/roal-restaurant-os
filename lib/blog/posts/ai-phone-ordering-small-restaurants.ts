@@ -64,7 +64,7 @@ export const aiPhoneOrderingSmallRestaurantsContent: BlogArticleContent = {
       paragraphs: [
         "Before the kitchen fires, the guest confirms who they are and how to reach them—on the line, not guessed from caller ID later.",
         "A short read-back closes the loop: items, modifiers, pickup timing if you quote it. Guests catch mistakes while they still care.",
-        "That step also defines a successful order for billing: real guest, finalized ticket on the KDS—not hang-ups, wrong numbers, or test calls. See [paying only for successful orders](/blog/pay-only-successful-orders) and [pricing](/pricing) for how pilots spell that out.",
+        "That step also defines a successful order for billing: real guest, finalized ticket on the KDS—not hang-ups, wrong numbers, or test calls. See [paying only for successful orders](/blog/pay-only-successful-orders) and [pricing](/pricing) for the $0.90 per completed order price.",
       ],
     },
     {
@@ -73,7 +73,7 @@ export const aiPhoneOrderingSmallRestaurantsContent: BlogArticleContent = {
       paragraphs: [
         "Chains win drive-thru consistency. You win flavor, memory, and flexibility. AI removes \"I called twice and nobody answered\" so more loyalty turns into tickets on your screen.",
         "You keep more margin than many [delivery app orders](/blog/phone-orders-vs-delivery-apps), and you keep the relationship—who orders every Thursday, who always wants extra peppers.",
-        "Most owners start with peak nights only, then expand when the pass shows steady phone volume. Setup is often about twenty minutes—menu scan, test call, ticket on the pass—see [go live in about 20 minutes](/blog/setup-roal-20-minutes).",
+        "Most owners start with peak nights only, then expand when the pass shows steady phone volume. ROAL builds your phone host from your restaurant link in about two minutes; then you test-call it and forward your number—see [how to go live](/blog/setup-roal-20-minutes).",
       ],
     },
     {

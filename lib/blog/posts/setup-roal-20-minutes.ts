@@ -3,46 +3,46 @@ import type { BlogArticleContent } from "../types";
 
 export const setupRoal20MinutesContent: BlogArticleContent = {
   summary:
-    "Scan your menu, run a test call, and watch a ticket hit the pass—about twenty minutes for most single locations, not a multi-week IT project.",
+    "Paste your restaurant link, let ROAL build your phone host in about two minutes, test-call it in your browser, then forward your number when the order read-back sounds right.",
   answerShort:
-    "Going live with ROAL phone ordering usually takes about twenty minutes: add your restaurant, scan or import your menu, fix modifiers on your top sellers, connect voice, and place a test call so a ticket hits your kitchen display before you forward live pickup traffic.",
+    "Going live with ROAL takes three steps: paste your restaurant's website, Google Maps link, or name and city at tryroal.com/try and ROAL builds a phone host from your menu, prices and hours in about two minutes; test-call it in your browser with no sign-up; then claim it and forward your existing restaurant number. Most of your time goes into checking your top sellers and modifiers, not into setup.",
   author: "ROAL Team",
   seo: {
-    title: "Go Live with AI Phone Orders in About 20 Minutes | ROAL Journal",
+    title: "How to Go Live with ROAL AI Phone Orders | ROAL Journal",
     description:
-      "Quick setup: menu scan, test call, and a kitchen ticket—what you need before forwarding live pickup calls to ROAL.",
+      "Paste your restaurant link, get a phone host in about two minutes, test-call it in the browser, then forward your number. What to check before live calls.",
   },
   sections: [
     {
       id: "before-you-start",
-      title: "Before you start (five minutes of prep)",
+      title: "Before you start",
       paragraphs: [
-        "Have a printed menu or PDF, your pickup hours, and one person who knows modifier quirks (\"combo includes soup OR salad\"). You will not need a developer.",
-        "Pick a quiet ten-minute window—not mid-service—to run the first test call so you can hear the agent clearly.",
+        "Have your website, Google Maps listing, or a menu file handy, plus your pickup hours. You will not need a developer or new phone hardware.",
+        "Pick a quiet window—not mid-service—for the first test call so you can hear the read-back clearly.",
       ],
     },
     {
-      id: "scan-and-review",
-      title: "Scan the menu, fix the top sellers",
+      id: "build-the-host",
+      title: "Paste your link, get a phone host",
       paragraphs: [
-        "ROAL extracts items, prices, and categories from your menu scan. Spend most of your time on the twenty dishes that drive phone volume and any required modifier groups.",
-        "You do not need perfection on day one; you need accuracy on what callers actually order. Refine the long tail after the first week of test calls.",
+        "At [tryroal.com/try](/try), paste your website, Google Maps link, or restaurant name and city. ROAL reads your menu, prices, hours and address and builds your phone host in about two minutes.",
+        "No sign-up is needed to try it. If the menu came from an old PDF, upload your current menu file in any format and edits reach the next caller.",
       ],
     },
     {
       id: "test-call",
-      title: "Place a test call, watch the pass",
+      title: "Test-call it, fix the top sellers",
       paragraphs: [
-        "Call your test line, order like a guest (with one modifier change mid-call), and confirm name and phone. The ticket should appear on your kitchen display while you are still on the line.",
-        "If something is wrong, fix the menu item—not the guest experience. Re-test until the read-back matches what expo expects.",
+        "Call the host from your browser and order like a guest, with one change mid-call. Listen for the read-back, the ready time, and how it asks about required choices.",
+        "Spend your time on the dishes that drive phone volume and any required modifier groups. If something is wrong, fix the menu item and call again until the read-back matches what the kitchen expects.",
       ],
     },
     {
       id: "go-live",
-      title: "Forward traffic when the ticket is boring",
+      title: "Claim it and forward your number",
       paragraphs: [
-        "Go live when test calls feel routine: right items, honest 86 behavior, and a handoff path your shift lead knows. Start with one service period if you want a soft launch—Friday pickup only, for example.",
-        "Keep success-based pilot terms in writing so you know what counts as a billable order before the first live guest ring.",
+        "When test calls feel routine, claim the host. Each location gets its own phone line, and you forward your existing number to it—all calls, or only when the line is busy or unanswered. Use the [call forwarding codes](/tools/call-forwarding-codes) for your carrier.",
+        "You keep your number and can turn forwarding off any time. Many owners start with one busy service, such as Friday dinner, then widen coverage once tickets look right.",
       ],
     },
   ],
@@ -50,26 +50,27 @@ export const setupRoal20MinutesContent: BlogArticleContent = {
     {
       question: "How long does ROAL setup take?",
       answer:
-        "Many single-location restaurants scan a menu, configure voice, and complete a successful test call in about twenty minutes, plus time to polish top items and modifiers.",
+        "ROAL builds a phone host from your restaurant link in about two minutes. Testing your top items and forwarding your number takes a little longer, depending on how much of the menu you want to check first.",
     },
     {
       question: "What do I need before my first test call?",
-      answer: "A menu file or photo, accurate pickup hours, and clarity on required modifiers for your most-ordered items.",
+      answer:
+        "Your website, Google Maps link, or a menu file, plus accurate pickup hours. Know which modifiers are required on your most-ordered items.",
     },
     {
-      question: "Can I go live the same day I sign up?",
+      question: "Can I go live the same day?",
       answer:
-        "Yes, if test tickets match your kitchen expectations and your team knows when to take escalations from the agent.",
+        "Yes. Once test calls sound right and your team knows which calls come to them (catering, complaints, allergy questions), you can forward your number.",
     },
     {
       question: "Do I need a new phone number for AI phone orders?",
       answer:
-        "Usually you forward your existing pickup line or use the number your pilot provides. Guests should dial the same number they already trust.",
+        "No. You keep your number and forward it to the phone line ROAL gives your location. Guests dial the same number they already trust.",
     },
     {
-      question: "What if the menu scan misses an item?",
+      question: "What does it cost to go live?",
       answer:
-        "Edit items in the menu editor, fix modifiers on your top sellers, and place another test call. Full menu polish can wait; accuracy on what callers actually order cannot.",
+        "Nothing up front. ROAL charges $0.90 per completed order, with no monthly fee, setup fee or contract. Test calls are free.",
     },
   ],
   relatedSlugs: [
@@ -80,6 +81,6 @@ export const setupRoal20MinutesContent: BlogArticleContent = {
   cta: {
     ...BLOG_CTA_MENU,
     description:
-      "When you have ten quiet minutes: scan your menu, place one test call, and see the ticket land before you forward a single live guest.",
+      "Paste your restaurant link, hear your own phone host in about two minutes, and place a test call before you forward a single live call.",
   },
 };
