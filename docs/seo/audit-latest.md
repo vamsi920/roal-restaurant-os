@@ -1,6 +1,6 @@
-# SEO audit (2026-10-29)
+# SEO audit (2026-10-30)
 
-Base https://tryroal.com, 269 sitemap URLs, 415 internal link targets.
+Base https://tryroal.com, 279 sitemap URLs, 435 internal link targets.
 
 ## Page issues (0)
 

@@ -9,15 +9,15 @@ New posts go live at 10 a day until 2026-11-17: run `npm run seo:indexnow -- --o
 - [x] https://tryroal.com/pricing (requested 2026-10-28)
 - [x] https://tryroal.com/how-it-works (requested 2026-10-28)
 - [x] https://tryroal.com/facts (requested 2026-10-28)
-- [ ] https://tryroal.com/faq
+- [x] https://tryroal.com/faq (indexed, seen 2026-10-30)
 - [x] https://tryroal.com/blog (requested 2026-10-28)
 - [x] https://tryroal.com/for/pizza (requested 2026-10-28)
-- [ ] https://tryroal.com/for/chinese
-- [ ] https://tryroal.com/locations/jersey-city
+- [x] https://tryroal.com/for/chinese (indexed, seen 2026-10-30)
+- [x] https://tryroal.com/locations/jersey-city (indexed, seen 2026-10-30)
 - [ ] https://tryroal.com/locations/hoboken
 - [ ] https://tryroal.com/compare/answering-service
 - [ ] https://tryroal.com/compare/monthly-ai-phone-plans
-- [ ] https://tryroal.com/tools/missed-call-calculator
+- [x] https://tryroal.com/tools/missed-call-calculator (indexed, seen 2026-10-30)
 - [ ] https://tryroal.com/tools/call-forwarding-codes
 - [ ] https://tryroal.com/blog/what-is-ai-phone-answering-restaurants
 - [ ] https://tryroal.com/blog/ai-receptionist-for-restaurants
