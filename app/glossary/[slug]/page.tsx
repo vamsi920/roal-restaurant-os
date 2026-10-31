@@ -24,8 +24,10 @@ export function generateMetadata({ params }: Props) {
   const t = getGlossaryEntry(params.slug);
   if (!t) return {};
   return buildPublicPageMetadata({
-    title: `What is ${t.term}? Restaurant glossary | ROAL`,
-    description: t.short.length > 150 ? `${t.short.slice(0, 147)}...` : `${t.short} Plain-English restaurant glossary.`.slice(0, 160),
+    title: t.seoTitle ?? `What is ${t.term}? Restaurant glossary | ROAL`,
+    description:
+      t.seoDescription ??
+      (t.short.length > 150 ? `${t.short.slice(0, 147)}...` : `${t.short} Plain-English restaurant glossary.`.slice(0, 160)),
     canonicalPath: `/glossary/${t.slug}`,
   });
 }

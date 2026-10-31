@@ -18,4 +18,12 @@ export type LandingPageJson = {
   verdict?: string;
 };
 
-export type GlossaryEntryJson = { slug: string; term: string; short: string; body: string };
+export type GlossaryEntryJson = {
+  slug: string;
+  term: string;
+  short: string;
+  body: string;
+  /** Optional search title/description when a term gets real search demand. */
+  seoTitle?: string;
+  seoDescription?: string;
+};
