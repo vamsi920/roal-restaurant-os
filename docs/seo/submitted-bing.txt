@@ -87,3 +87,15 @@
 2026-10-30 https://tryroal.com/glossary/voice-ordering
 2026-10-30 https://tryroal.com/glossary/voip
 2026-10-30 https://tryroal.com/glossary/warm-handoff
+2026-10-31 https://tryroal.com/blog/ai-phone-answering-delis
+2026-10-31 https://tryroal.com/blog/ai-phone-host-test-call
+2026-10-31 https://tryroal.com/blog/forward-calls-verizon-business
+2026-10-31 https://tryroal.com/blog/menu-engineering-small-restaurant
+2026-10-31 https://tryroal.com/blog/missed-calls-google-reviews
+2026-10-31 https://tryroal.com/blog/nj-sales-tax-restaurant-takeout
+2026-10-31 https://tryroal.com/blog/order-ready-text-pickup
+2026-10-31 https://tryroal.com/blog/restaurant-customer-retention
+2026-10-31 https://tryroal.com/blog/restaurant-customer-service-phone
+2026-10-31 https://tryroal.com/blog/restaurant-staff-meeting-ai-host
+2026-10-31 https://tryroal.com/compare/answering-service
+2026-10-31 https://tryroal.com/glossary/answering-service
