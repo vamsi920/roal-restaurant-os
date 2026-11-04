@@ -1,3 +1,4 @@
+import { GLOSSARY_TERMS } from "@/lib/seo/glossary-terms";
 import { SEO_LINKS } from "@/lib/seo/site-pages";
 import { BLOG_POSTS } from "./posts";
 import type { BlogArticleContent, BlogPost } from "./types";
@@ -15,6 +16,7 @@ const ALLOWED_INLINE_PATHS = new Set<string>([
   "/blog",
   ...BLOG_ALLOWED_CTA_HREFS,
   ...SEO_LINKS.map((l) => l.path),
+  ...GLOSSARY_TERMS.map((t) => `/glossary/${t.slug}`),
 ]);
 
 function collectInlinePaths(content: BlogArticleContent): string[] {
