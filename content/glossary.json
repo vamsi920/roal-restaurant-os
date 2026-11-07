@@ -195,7 +195,9 @@
     "slug": "catering-inquiry",
     "term": "Catering inquiry",
     "short": "A catering inquiry is a call about a larger food order for a group, office, event, or party.",
-    "body": "A **catering inquiry** is when someone calls about a big order for a meeting, birthday, school event, office lunch, or family gathering. It is not a small walk-in meal. The caller may ask about trays, platter sizes, lead time, delivery, setup, and whether you can handle special requests.\n\nFor example, someone might ask for 10 trays of chicken parm, salad, rolls, and utensils for 40 people on Friday at noon. A phone host can collect the basics and hand the details to staff with a summary.\n\nPhone orders matter here because catering calls often need extra attention. If the line is busy, the caller may move on quickly. See [Catering inquiries](/use-cases/catering) for more on this call type."
+    "body": "A **catering inquiry** is when someone calls about a big order for a meeting, birthday, school event, office lunch, or family gathering. It is not a small walk-in meal. The caller may ask about trays, platter sizes, lead time, delivery, setup, and whether you can handle special requests.\n\nFor example, someone might ask for 10 trays of chicken parm, salad, rolls, and utensils for 40 people on Friday at noon. A phone host can collect the basics and hand the details to staff with a summary.\n\nPhone orders matter here because catering calls often need extra attention. If the line is busy, the caller may move on quickly. See [Catering inquiries](/use-cases/catering) for more on this call type.",
+    "seoTitle": "Catering Inquiry Meaning and What Callers Ask | ROAL",
+    "seoDescription": "What a catering inquiry is, the questions callers usually ask about trays, lead time and delivery, and how to pass the details to staff with a summary."
   },
   {
     "slug": "rush-hour",
@@ -239,7 +241,9 @@
     "slug": "completed-order",
     "term": "Completed order",
     "short": "A completed order is a confirmed phone order that is sent to the kitchen for prep.",
-    "body": "A **completed order** is a phone order that has been fully taken, confirmed with the caller, and sent to the kitchen screen. It is not just a caller asking about food. It becomes a real ticket the staff can make.\n\nFor example, a caller orders two pizzas, one salad, and a soda. The phone host confirms the items, name, ready time, and notes, then sends the ticket to the kitchen. At that point, the order is complete enough for the team to start preparing it.\n\nThis matters because restaurant owners want the phone to turn into actual business, not just conversation. Completed orders are also the basis for [Pricing](/pricing), since ROAL bills per completed phone order, not per call."
+    "body": "A **completed order** is a phone order that has been fully taken, confirmed with the caller, and sent to the kitchen screen. It is not just a caller asking about food. It becomes a real ticket the staff can make.\n\nFor example, a caller orders two pizzas, one salad, and a soda. The phone host confirms the items, name, ready time, and notes, then sends the ticket to the kitchen. At that point, the order is complete enough for the team to start preparing it.\n\nThis matters because restaurant owners want the phone to turn into actual business, not just conversation. Completed orders are also the basis for [Pricing](/pricing), since ROAL bills per completed phone order, not per call.",
+    "seoTitle": "Completed Order Meaning for Phone Orders | ROAL",
+    "seoDescription": "What counts as a completed phone order: items, name and ready time confirmed with the caller, then sent to the kitchen screen as a ticket staff can make."
   },
   {
     "slug": "pay-per-order-pricing",

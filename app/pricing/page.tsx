@@ -22,7 +22,7 @@ export const metadata = buildPricingPageMetadata();
 
 const INCLUDED = [
   "AI phone host, 24/7",
-  "Unlimited simultaneous calls",
+  "Several callers answered at once",
   "Pickup & delivery orders",
   "Live menu sync",
   "Kitchen display",
