@@ -17,8 +17,20 @@ const linkStatus = new Map<string, number>();
 const local = (u: string) => u.replace(ORIGIN, BASE);
 const pathOf = (u: string) => new URL(u, ORIGIN).pathname.replace(/\/$/, "") || "/";
 
+// Live-site crawls hit the odd network timeout; retry a few times instead of crashing the whole audit.
+async function fetchRetry(url: string, tries = 3): Promise<Response> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await fetch(url, { redirect: "manual", signal: AbortSignal.timeout(30_000) });
+    } catch (err) {
+      if (attempt >= tries) throw err;
+      await new Promise((r) => setTimeout(r, 1000 * attempt));
+    }
+  }
+}
+
 async function get(url: string) {
-  const r = await fetch(url, { redirect: "manual" });
+  const r = await fetchRetry(url);
   return { status: r.status, text: r.status === 200 ? await r.text() : "", type: r.headers.get("content-type") ?? "" };
 }
 
@@ -76,7 +88,7 @@ async function main() {
   // Check every internal link target once.
   const targets = [...inbound.keys()].filter((l) => !l.startsWith("/dashboard") && !l.startsWith("/api"));
   await pool(targets, 12, async (l) => {
-    const r = await fetch(`${BASE}${l}`, { redirect: "manual" });
+    const r = await fetchRetry(`${BASE}${l}`);
     linkStatus.set(l, r.status);
   });
   const broken = [...linkStatus].filter(([, s]) => s >= 400);
