@@ -1,4 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { resolveTrialPersona } from "@/lib/trial/voices";
+import { TRY_START_LIMIT } from "@/lib/trial/limits";
 import { POST } from "@/app/api/try/route";
 import { EnvValidationError } from "@/lib/env.shared";
 import type { TrialRecord } from "@/lib/trial/types";
@@ -90,7 +92,8 @@ describe("POST /api/try", () => {
       sourceKind: "website",
       sourceInput: "https://joespizza.com/",
       // Nothing is known about the restaurant yet, so the default voice names the host.
-      persona: { agentName: "Hope" },
+      // Before the restaurant is known, the host gets the default (American) voice and its name.
+      persona: { agentName: resolveTrialPersona({}, null).agentName },
     });
     expect(body.trial).not.toHaveProperty("prompt");
     expect(body.trial).not.toHaveProperty("token_hash");
@@ -142,17 +145,17 @@ describe("POST /api/try", () => {
     expect(errorSpy).toHaveBeenCalled();
   });
 
-  it("returns 429 after 8 attempts from the same IP within the window", async () => {
+  it(`returns 429 after ${TRY_START_LIMIT} attempts from the same IP within the window`, async () => {
     vi.mocked(insertTrial).mockResolvedValue(trialRecord());
     const ip = "203.0.113.77";
-    for (let i = 0; i < 8; i += 1) {
+    for (let i = 0; i < TRY_START_LIMIT; i += 1) {
       const res = await post({ input: "https://joespizza.com" }, ip);
       expect(res.status).toBe(200);
     }
     const blocked = await post({ input: "https://joespizza.com" }, ip);
     expect(blocked.status).toBe(429);
     expect((await blocked.json()).error).toMatch(/too many attempts/i);
-    expect(insertTrial).toHaveBeenCalledTimes(8);
+    expect(insertTrial).toHaveBeenCalledTimes(TRY_START_LIMIT);
 
     // A different IP is not affected.
     const other = await post({ input: "https://joespizza.com" }, "203.0.113.78");

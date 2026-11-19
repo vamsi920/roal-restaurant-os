@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["tests/**/*.test.ts"],
+    setupFiles: ["tests/setup/isolate-env.ts"],
     exclude: ["node_modules", ".next", "supabase/functions"],
     clearMocks: true,
     restoreMocks: true,

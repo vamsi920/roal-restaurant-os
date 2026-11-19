@@ -4,6 +4,7 @@ import {
   clientIpFromRequest,
   SlidingWindowRateLimiter,
 } from "@/lib/restaurant-lookup/rate-limit";
+import { TRY_START_LIMIT } from "@/lib/trial/limits";
 import { parseTrialInput } from "@/lib/trial/input";
 import { insertTrial, toPublicView, TrialStoreUnavailableError } from "@/lib/trial/store";
 import {
@@ -17,7 +18,7 @@ import {
 export const runtime = "nodejs";
 
 // Generous: an owner may retry with a few different links, and a whole restaurant can share one IP.
-const startLimiter = new SlidingWindowRateLimiter(40, 10 * 60 * 1000);
+const startLimiter = new SlidingWindowRateLimiter(TRY_START_LIMIT, 10 * 60 * 1000);
 
 /** Start a try-a-call trial from a website / Google Maps link / "name, city". */
 export async function POST(req: Request) {

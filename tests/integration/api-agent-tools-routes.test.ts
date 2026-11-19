@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { DEFAULT_RESTAURANT_TIMEZONE } from "@/lib/restaurant-profile/timezone";
 import { getDb, type Db } from "@/lib/db";
 import { resetMemoryStore } from "@/lib/db/store";
 import { mintAgentToolToken } from "@/lib/agent-tools/token";
@@ -84,7 +85,7 @@ async function seedRestaurant(): Promise<{ burgerId: string; friesId: string }> 
 }
 
 beforeEach(() => {
-  // Noon in America/Chicago on a weekday: inside the default 11:00–21:00 weekly hours.
+  // 1 PM in the default time zone (America/New_York) on a weekday: inside the default 11:00–21:00 weekly hours.
   vi.useFakeTimers({ toFake: ["Date"] });
   vi.setSystemTime(new Date("2026-10-27T17:00:00.000Z"));
   process.env.AGENT_TOOL_SIGNING_SECRET = SECRET;
@@ -190,7 +191,8 @@ describe("agent tool routes: order flow against the in-memory db", () => {
     expect(menu.restaurant).toMatchObject({ id: RESTAURANT_ID, name: "Egg Mania" });
     expect(menu.restaurant_name_hint).toBe("Egg Mania");
     expect(menu.service_modes).toEqual({ pickup: true, delivery: false });
-    expect(menu.operations).toMatchObject({ ordering_allowed: true, status: "open", timezone: "America/Chicago" });
+    // No state on the fixture restaurant, so it uses the default time zone.
+    expect(menu.operations).toMatchObject({ ordering_allowed: true, status: "open", timezone: DEFAULT_RESTAURANT_TIMEZONE });
     expect(menu.operations.weekly_hours).toHaveLength(7);
     expect(menu.categories).toHaveLength(1);
     expect(menu.categories[0].name).toBe("Mains");

@@ -1,5 +1,7 @@
 [build]
-  command = "npm run build"
+  # Tests gate every deploy: if any test fails, the build fails and the live site keeps the
+  # previous good deploy. Tests strip live keys first (tests/setup/isolate-env.ts).
+  command = "npm run test && npm run build"
   publish = ".next"
 
 [build.environment]
