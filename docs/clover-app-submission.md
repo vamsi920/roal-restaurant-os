@@ -10,9 +10,22 @@ Prepared 2026-11-19. Clover pauses app approvals from **Nov 10, 2026 to Jan 3, 2
 | Sandbox app "ROAL" (App ID `RGX3R30AYK1A2`) | Created, tested end-to-end with a sandbox merchant |
 | Integration code | Live on tryroal.com (custom order, line items with default tax, order total, print event) |
 | Privacy policy covers Clover data | Yes: "Connected registers (Clover)" section on /privacy |
-| Production app | Not created yet (production dashboard showed "environment is down" on 2026-11-19) |
+| Production developer account | **Not approved yet.** Required before any production app can be submitted. The approval form (Developer Settings → Developer Info) showed "Unable to load!" on 2026-11-19, likely the freeze |
+| Production app | Not created yet (needs the approved production account) |
 | Use-case video | Not recorded — script below |
 | Submission | Not sent — approvals paused until Jan 3, 2027 |
+
+## Step 0: production developer account approval (owner does this)
+
+In the developer dashboard, switch the top-right toggle to **Production** → "Get Approved" → Developer Settings → Developer Info → **Verify Your Account**. Only the account owner can fill it in and accept the Developer Agreement. Per Clover's docs (docs.clover.com/dev/docs/submit-global-developer-account-for-approval) it asks for:
+
+- Account type: Individual or **Business** (pick Business if ROAL has an LLC/corp)
+- Business: EIN / Tax ID, company legal name, business address, tax residency country (US)
+- Owner identity: name, date of birth, home address (must match a utility bill or bank statement), phone, email
+- Emergency contact email (PR contact optional)
+- Clover runs an OFAC check. If they email asking for documents (ID, proof of address, proof of EIN), reply within **10 business days** or the application can be rejected.
+
+Clover doesn't state a review time. Bank details aren't listed for free apps.
 
 ## Production app settings (copy from sandbox)
 
@@ -87,8 +100,9 @@ Upload unlisted (YouTube or Loom) and paste the URL in the submission form.
 
 ## Checklist on Jan 3, 2027
 
-1. Sign in to the Clover developer dashboard, switch to **Production**, create the app with the settings above.
-2. Fill the Market Listing (copy above, icon, screenshots) and the functional description + video URL.
-3. Complete Clover's Submission Checklist and click **Submit for Approval**.
-4. When approved: set production keys on Netlify, redeploy, connect a real restaurant, run `scripts/qa-clover-order.ts <restaurantId> send` against it during a quiet hour, and confirm the ticket prints.
-5. Then update /facts, /faq and marketing pages to say Clover is live.
+1. Sign in to the Clover developer dashboard and switch to **Production** with the top-right toggle (typing the production URL directly logs you out). If the production account isn't approved yet, do Step 0 first; it can be done as soon as the form loads, before Jan 3.
+2. Create the app with the settings above.
+3. Fill the Market Listing (copy above, icon, screenshots) and the functional description + video URL.
+4. Complete Clover's Submission Checklist and click **Submit for Approval**.
+5. When approved: set production keys on Netlify, redeploy, connect a real restaurant, run `scripts/qa-clover-order.ts <restaurantId> send` against it during a quiet hour, and confirm the ticket prints.
+6. Then update /facts, /faq and marketing pages to say Clover is live.
