@@ -21,6 +21,7 @@ import {
   signInWithEmail,
   signInWithGoogle,
 } from "@/lib/firebase/client";
+import { trackMeta } from "@/lib/meta-pixel";
 
 type AuthMode = "sign_in" | "sign_up";
 
@@ -75,6 +76,7 @@ export function AuthForm({ mode, trial = null, demoMode = CLIENT_DEMO_MODE }: Pr
     setBusy(kind);
     try {
       await action();
+      if (isSignUp && !demo) trackMeta("CompleteRegistration");
       // Keep the spinner while the browser loads the workspace.
       window.location.assign(next);
     } catch (err) {

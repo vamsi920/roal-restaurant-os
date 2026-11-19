@@ -10,6 +10,7 @@ import { TrialCall } from "./trial-call";
 import { TrialScorecardPanel } from "./trial-scorecard";
 import { TrialVoicePicker } from "./trial-voice-picker";
 import "./trial.css";
+import { trackMeta } from "@/lib/meta-pixel";
 
 type BuilderPhase = "input" | "building" | "ready" | "failed";
 
@@ -92,6 +93,7 @@ export function TrialBuilder({
       setTrial(agent.data.trial);
       setAgentNameDraft(agent.data.trial.persona.agentName);
       setPhase("ready");
+      trackMeta("StartTrial");
     },
     []
   );

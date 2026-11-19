@@ -73,6 +73,14 @@ export default function PrivacyPage() {
                 send email. They process data on our behalf under their own
                 terms. We do not share caller data with advertisers.
               </p>
+              <p>
+                On our public website (not inside the restaurant dashboard) we
+                use the Meta Pixel to measure our own ads and show them to
+                people who visited the site. It records page visits and
+                whether someone started a trial or created an account. It
+                does not receive caller data, menus or anything typed into
+                the dashboard.
+              </p>
 
               <h2>Trial hosts built from a link</h2>
               <p>
