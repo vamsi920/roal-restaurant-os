@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Inter, JetBrains_Mono } from "next/font/google";
 import { buildSiteMetadataDefaults } from "@/lib/seo/public-open-graph";
 import { getMetadataBase } from "@/lib/site-url";
 import { MetaPixel } from "@/components/analytics/meta-pixel";
+import { SiteTracker } from "@/components/analytics/site-tracker";
 import "./typography.css";
 import "./globals.css";
 
@@ -70,6 +71,7 @@ export default function RootLayout({
       <body className="min-h-[100dvh] bg-base font-sans text-ink antialiased">
         {children}
         <MetaPixel />
+        <SiteTracker />
       </body>
     </html>
   );

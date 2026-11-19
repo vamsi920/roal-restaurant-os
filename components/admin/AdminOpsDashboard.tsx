@@ -39,6 +39,10 @@ export function AdminOpsDashboard({ snapshot }: Props) {
             No API keys or secrets are shown here. Snapshot {formatWhen(snapshot.generatedAt)} ·{" "}
             <Link href="/api/health" className="org-link font-mono text-ink underline underline-offset-2">
               /api/health
+            </Link>{" "}
+            ·{" "}
+            <Link href="/dashboard/admin/stats" className="org-link text-ink underline underline-offset-2">
+              Growth stats
             </Link>
           </>
         }

@@ -526,9 +526,14 @@ function AccountCard({
               <LifeBuoy size={15} className="text-subtle" aria-hidden /> Support
             </Link>
             {showStaffLink ? (
-              <Link href="/dashboard/admin" onClick={go} className={itemCls}>
-                <Settings size={15} className="text-subtle" aria-hidden /> ROAL staff tools
-              </Link>
+              <>
+                <Link href="/dashboard/admin/stats" onClick={go} className={itemCls}>
+                  <Settings size={15} className="text-subtle" aria-hidden /> ROAL growth stats
+                </Link>
+                <Link href="/dashboard/admin" onClick={go} className={itemCls}>
+                  <Settings size={15} className="text-subtle" aria-hidden /> ROAL staff tools
+                </Link>
+              </>
             ) : null}
             <Link href="/" onClick={go} className={cn("app-shell-marketing-link", itemCls)}>
               <ExternalLink size={15} className="text-subtle" aria-hidden /> ROAL website

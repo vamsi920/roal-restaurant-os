@@ -7,6 +7,7 @@ import type {
   TrialStepLogEntry,
   TrialStepStatus,
 } from "@/lib/trial/types";
+import { recordSiteEvent } from "@/lib/analytics/site-stats";
 import { resolveTrialPersona } from "@/lib/trial/voices";
 
 export class TrialStoreUnavailableError extends Error {
@@ -95,6 +96,7 @@ export async function insertTrial(input: {
     .select("*")
     .single();
   if (error) throw new Error(error.message);
+  void recordSiteEvent("demos");
   return asRecord(data as Record<string, unknown>);
 }
 

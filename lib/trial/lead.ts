@@ -5,6 +5,7 @@ import { ensureTrialAgentId, ensureVoiceReady } from "@/lib/trial/elevenlabs";
 import { pickTrialGreeting } from "@/lib/trial/prompt";
 import { countTrialCallsLast24h, requireTrialDb, trialDailyCallCap, updateTrial } from "@/lib/trial/store";
 import type { TrialRecord } from "@/lib/trial/types";
+import { recordSiteEvent } from "@/lib/analytics/site-stats";
 import { resolveTrialPersona } from "@/lib/trial/voices";
 
 export type LeadAnswers = { missedCalls?: string; ticket?: string };
@@ -97,6 +98,7 @@ export async function saveTrialLead(trial: TrialRecord, lead: ValidLead): Promis
   };
   const { error } = await db.from("trial_leads").upsert(row);
   if (error) throw new Error(error.message);
+  void recordSiteEvent("leads");
 
   const callStatus = trial.status === "ready" ? await placeTrialCall(trial, lead.phone) : "unavailable";
   await db.from("trial_leads").update({ call_status: callStatus, updated_at: nowIso }).eq("trial_id", trial.id);
