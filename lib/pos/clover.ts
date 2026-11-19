@@ -200,6 +200,17 @@ export function buildCloverLineItems(input: CloverOrderInput, defaultTaxRates: C
 }
 
 /**
+ * Clover's REST API does not compute totals for orders built from custom line items, so the
+ * dashboard and register would show $0.00. Total = subtotal + tax, in cents. Clover rates are
+ * percent × 100000 (6.625% = 662500), so tax = subtotal × rate / 10,000,000, rounded per rate.
+ */
+export function cloverOrderTotalCents(lineItems: CloverLineItemBody[], taxRates: CloverTaxRateRef[]): number {
+  const subtotal = lineItems.reduce((sum, li) => sum + li.price, 0);
+  const tax = taxRates.reduce((sum, t) => sum + Math.round((subtotal * t.rate) / 10_000_000), 0);
+  return subtotal + tax;
+}
+
+/**
  * The merchant's default tax rates. Custom (non-inventory) line items are untaxed unless rates are
  * attached, so without this the register would ring up phone orders with no sales tax.
  * Needs the "Read inventory" permission; returns [] when unavailable so the order still goes through.
@@ -247,11 +258,17 @@ export async function sendOrderToClover(
   if (typeof orderId !== "string" || !orderId) {
     throw new CloverApiError("Clover did not return an order id.", 502);
   }
+  const lineItems = buildCloverLineItems(input, taxRates);
   try {
     await cloverFetch(fetchImpl, `${base}/orders/${encodeURIComponent(orderId)}/bulk_line_items`, {
       method: "POST",
       accessToken,
-      body: { items: buildCloverLineItems(input, taxRates) },
+      body: { items: lineItems },
+    });
+    await cloverFetch(fetchImpl, `${base}/orders/${encodeURIComponent(orderId)}`, {
+      method: "POST",
+      accessToken,
+      body: { total: cloverOrderTotalCents(lineItems, taxRates) },
     });
   } catch (e) {
     // Don't leave an empty ticket on their register.

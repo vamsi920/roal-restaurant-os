@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMemoryDb, type Db } from "@/lib/db";
 import { resetMemoryStore } from "@/lib/db/store";
-import { buildCloverLineItems, cloverAuthorizeUrl, cloverOrderNote, cloverOrderTitle, getCloverConfig } from "@/lib/pos/clover";
+import { buildCloverLineItems, cloverAuthorizeUrl, cloverOrderTotalCents, cloverOrderNote, cloverOrderTitle, getCloverConfig } from "@/lib/pos/clover";
 import { freshCloverAccessToken, loadPosConnection, saveCloverConnection } from "@/lib/pos/connections";
 import { posLines, pushOrderToPos, type PushOrderToPosInput } from "@/lib/pos/push-order";
 import { openSecret, sealSecret, signOAuthState, verifyOAuthState } from "@/lib/pos/seal";
@@ -72,6 +72,8 @@ describe("clover order cart", () => {
     expect(buildCloverLineItems(input, [nj])[2]).toMatchObject({ name: "Mango Lassi", price: 400, taxRates: [nj] });
     expect(cloverOrderTitle(input)).toBe("ROAL phone · PICKUP · Priya +12015550123");
     expect(cloverOrderNote(input)).toContain("Pay at pickup");
+    expect(cloverOrderTotalCents(buildCloverLineItems(input), [])).toBe(3150);
+    expect(cloverOrderTotalCents(buildCloverLineItems(input), [{ id: "T", name: "NJ", rate: 662500 }])).toBe(3359);
   });
 
   it("uses the sandbox hosts unless production is set", () => {
@@ -118,17 +120,20 @@ describe("pushOrderToPos", () => {
       "GET /v3/merchants/M1/tax_rates",
       "POST /v3/merchants/M1/orders",
       "POST /v3/merchants/M1/orders/ORD1/bulk_line_items",
+      "POST /v3/merchants/M1/orders/ORD1",
       "POST /v3/merchants/M1/print_event",
     ]);
+    // 2 × 13.75 + 4.00 = 31.50 subtotal; 6.625% tax = 2.09 (rounded) → 33.59
+    expect(clover.calls[3].body).toEqual({ total: 3359 });
     expect(clover.calls[1].auth).toBe("Bearer tok");
     expect(clover.calls[1].body).toMatchObject({ title: "ROAL phone · PICKUP · Priya +12015550123", state: "open" });
     const items = (clover.calls[2].body as { items: Array<{ taxRates?: unknown }> }).items;
     expect(items).toHaveLength(3);
     expect(items.every((i) => JSON.stringify(i.taxRates) === JSON.stringify([{ id: "TAX1", name: "NJ Sales Tax", rate: 662500 }]))).toBe(true);
-    expect(clover.calls[3].body).toEqual({ orderRef: { id: "ORD1" } });
+    expect(clover.calls[4].body).toEqual({ orderRef: { id: "ORD1" } });
 
     expect(await pushOrderToPos(db, order, clover.fetch)).toEqual({ status: "already_sent", posOrderId: "ORD1" });
-    expect(clover.calls).toHaveLength(4);
+    expect(clover.calls).toHaveLength(5);
     expect((await loadPosConnection(db, RID))?.last_sync_error).toBeNull();
   });
 
