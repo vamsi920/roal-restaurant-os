@@ -68,7 +68,8 @@ describe("clover order cart", () => {
     const items = buildCloverLineItems(input);
     expect(items).toHaveLength(3);
     expect(items[0]).not.toHaveProperty("taxRates");
-    expect(buildCloverLineItems(input, ["TAX1"])[2]).toMatchObject({ name: "Mango Lassi", price: 400, taxRates: [{ id: "TAX1" }] });
+    const nj = { id: "TAX1", name: "NJ Sales Tax", rate: 662500 };
+    expect(buildCloverLineItems(input, [nj])[2]).toMatchObject({ name: "Mango Lassi", price: 400, taxRates: [nj] });
     expect(cloverOrderTitle(input)).toBe("ROAL phone · PICKUP · Priya +12015550123");
     expect(cloverOrderNote(input)).toContain("Pay at pickup");
   });
@@ -107,7 +108,7 @@ describe("pushOrderToPos", () => {
       connectedBy: "u1",
     });
     const clover = fakeClover((method, path) => {
-      if (path.endsWith("/tax_rates")) return { json: { elements: [{ id: "TAX1", isDefault: true }, { id: "TAX2", isDefault: false }] } };
+      if (path.endsWith("/tax_rates")) return { json: { elements: [{ id: "TAX1", name: "NJ Sales Tax", rate: 662500, isDefault: true }, { id: "TAX2", name: "Other", rate: 100000, isDefault: false }] } };
       if (method === "POST" && path.endsWith("/orders")) return { json: { id: "ORD1" } };
       return { json: { id: "X" } };
     });
@@ -123,7 +124,7 @@ describe("pushOrderToPos", () => {
     expect(clover.calls[1].body).toMatchObject({ title: "ROAL phone · PICKUP · Priya +12015550123", state: "open" });
     const items = (clover.calls[2].body as { items: Array<{ taxRates?: unknown }> }).items;
     expect(items).toHaveLength(3);
-    expect(items.every((i) => JSON.stringify(i.taxRates) === JSON.stringify([{ id: "TAX1" }]))).toBe(true);
+    expect(items.every((i) => JSON.stringify(i.taxRates) === JSON.stringify([{ id: "TAX1", name: "NJ Sales Tax", rate: 662500 }]))).toBe(true);
     expect(clover.calls[3].body).toEqual({ orderRef: { id: "ORD1" } });
 
     expect(await pushOrderToPos(db, order, clover.fetch)).toEqual({ status: "already_sent", posOrderId: "ORD1" });

@@ -176,11 +176,14 @@ export function cloverOrderNote(input: CloverOrderInput): string {
   return parts.join("\n").slice(0, 2000);
 }
 
-export type CloverLineItemBody = { name: string; price: number; note?: string; taxRates?: Array<{ id: string }> };
+/** A merchant tax rate as Clover expects it on a line item: id, name and rate (rate is percent × 100000). */
+export type CloverTaxRateRef = { id: string; name: string; rate: number };
+
+export type CloverLineItemBody = { name: string; price: number; note?: string; taxRates?: CloverTaxRateRef[] };
 
 /** One Clover line item per unit (Clover line items are single units), with the merchant's default taxes. */
-export function buildCloverLineItems(input: CloverOrderInput, defaultTaxRateIds: string[] = []): CloverLineItemBody[] {
-  const taxRates = defaultTaxRateIds.length ? defaultTaxRateIds.map((id) => ({ id })) : undefined;
+export function buildCloverLineItems(input: CloverOrderInput, defaultTaxRates: CloverTaxRateRef[] = []): CloverLineItemBody[] {
+  const taxRates = defaultTaxRates.length ? defaultTaxRates : undefined;
   const lineItems: CloverLineItemBody[] = [];
   for (const line of input.lines) {
     const units = Math.min(MAX_UNITS_PER_LINE, Math.max(1, Math.round(line.quantity)));
@@ -201,12 +204,12 @@ export function buildCloverLineItems(input: CloverOrderInput, defaultTaxRateIds:
  * attached, so without this the register would ring up phone orders with no sales tax.
  * Needs the "Read inventory" permission; returns [] when unavailable so the order still goes through.
  */
-export async function fetchCloverDefaultTaxRateIds(
+export async function fetchCloverDefaultTaxRates(
   config: CloverConfig,
   merchantId: string,
   accessToken: string,
   fetchImpl: FetchLike = fetch
-): Promise<string[]> {
+): Promise<CloverTaxRateRef[]> {
   try {
     const json = await cloverFetch(
       fetchImpl,
@@ -214,7 +217,9 @@ export async function fetchCloverDefaultTaxRateIds(
       { method: "GET", accessToken }
     );
     const elements = ((json as Record<string, unknown> | null)?.elements ?? []) as Array<Record<string, unknown>>;
-    return elements.filter((t) => t.isDefault === true && typeof t.id === "string").map((t) => t.id as string);
+    return elements
+      .filter((t) => t.isDefault === true && typeof t.id === "string" && typeof t.rate === "number")
+      .map((t) => ({ id: t.id as string, name: typeof t.name === "string" ? t.name : "Tax", rate: t.rate as number }));
   } catch {
     return [];
   }
@@ -232,7 +237,7 @@ export async function sendOrderToClover(
   fetchImpl: FetchLike = fetch
 ): Promise<{ orderId: string; printed: boolean; printError: string | null; taxed: boolean }> {
   const base = `${HOSTS[config.environment].api}/v3/merchants/${encodeURIComponent(merchantId)}`;
-  const taxRateIds = await fetchCloverDefaultTaxRateIds(config, merchantId, accessToken, fetchImpl);
+  const taxRates = await fetchCloverDefaultTaxRates(config, merchantId, accessToken, fetchImpl);
   const created = await cloverFetch(fetchImpl, `${base}/orders`, {
     method: "POST",
     accessToken,
@@ -246,7 +251,7 @@ export async function sendOrderToClover(
     await cloverFetch(fetchImpl, `${base}/orders/${encodeURIComponent(orderId)}/bulk_line_items`, {
       method: "POST",
       accessToken,
-      body: { items: buildCloverLineItems(input, taxRateIds) },
+      body: { items: buildCloverLineItems(input, taxRates) },
     });
   } catch (e) {
     // Don't leave an empty ticket on their register.
@@ -259,14 +264,14 @@ export async function sendOrderToClover(
       accessToken,
       body: { orderRef: { id: orderId } },
     });
-    return { orderId, printed: true, printError: null, taxed: taxRateIds.length > 0 };
+    return { orderId, printed: true, printError: null, taxed: taxRates.length > 0 };
   } catch (e) {
     // The order is on their Clover even if printing failed; staff can print it there.
     return {
       orderId,
       printed: false,
       printError: e instanceof Error ? e.message : "Print failed",
-      taxed: taxRateIds.length > 0,
+      taxed: taxRates.length > 0,
     };
   }
 }
