@@ -17,7 +17,7 @@ export default function PrivacyPage() {
         <div className="wrap">
           <div className="prose-card">
             <div className="prose mx-auto">
-              <p className="prose__updated">Last updated: October 2026</p>
+              <p className="prose__updated">Last updated: November 2026</p>
 
               <h2>Who this covers</h2>
               <p>
@@ -80,6 +80,24 @@ export default function PrivacyPage() {
                 whether someone started a trial or created an account. It
                 does not receive caller data, menus or anything typed into
                 the dashboard.
+              </p>
+
+              <h2>Connected registers (Clover)</h2>
+              <p>
+                If you connect your Clover register, you approve ROAL on
+                Clover&apos;s own sign-in page. ROAL then reads your merchant
+                name and ID and your default tax rates, and creates an order on
+                your Clover for each completed phone order (items, prices,
+                notes, the caller&apos;s name and phone number, and pickup or
+                delivery details), then asks Clover to print it. ROAL does not
+                read your payments, customers, employees or other sales from
+                Clover.
+              </p>
+              <p>
+                The access tokens Clover gives us are encrypted before we store
+                them. Disconnecting Clover in your restaurant settings deletes
+                them; you can also remove ROAL from your Clover App Market
+                account at any time.
               </p>
 
               <h2>Trial hosts built from a link</h2>
