@@ -1,8 +1,9 @@
 /**
- * Clover REST client: OAuth v2 (expiring tokens), atomic order create, and print_event.
+ * Clover REST client: OAuth v2 (expiring tokens), custom order create, and print_event.
  * Orders are created unpaid (the customer pays at pickup on the restaurant's own Clover),
  * then sent to the merchant's default order printer.
  *
+ * App permissions: Read merchant, Read/Write orders, Read inventory (for tax rates).
  * Env: CLOVER_APP_ID, CLOVER_APP_SECRET, CLOVER_ENVIRONMENT ("sandbox" | "production", default sandbox).
  */
 
@@ -78,7 +79,7 @@ export class CloverApiError extends Error {
 async function cloverFetch(
   fetchImpl: FetchLike,
   url: string,
-  init: { method: "GET" | "POST"; body?: unknown; accessToken?: string }
+  init: { method: "GET" | "POST" | "DELETE"; body?: unknown; accessToken?: string }
 ): Promise<unknown> {
   const headers: Record<string, string> = { accept: "application/json" };
   if (init.body !== undefined) headers["content-type"] = "application/json";
@@ -175,8 +176,12 @@ export function cloverOrderNote(input: CloverOrderInput): string {
   return parts.join("\n").slice(0, 2000);
 }
 
-export function buildCloverOrderCart(input: CloverOrderInput) {
-  const lineItems: Array<{ name: string; price: number; note?: string }> = [];
+export type CloverLineItemBody = { name: string; price: number; note?: string; taxRates?: Array<{ id: string }> };
+
+/** One Clover line item per unit (Clover line items are single units), with the merchant's default taxes. */
+export function buildCloverLineItems(input: CloverOrderInput, defaultTaxRateIds: string[] = []): CloverLineItemBody[] {
+  const taxRates = defaultTaxRateIds.length ? defaultTaxRateIds.map((id) => ({ id })) : undefined;
+  const lineItems: CloverLineItemBody[] = [];
   for (const line of input.lines) {
     const units = Math.min(MAX_UNITS_PER_LINE, Math.max(1, Math.round(line.quantity)));
     for (let i = 0; i < units; i += 1) {
@@ -184,35 +189,69 @@ export function buildCloverOrderCart(input: CloverOrderInput) {
         name: line.name.slice(0, 127),
         price: Math.max(0, Math.round(line.unitPriceCents)),
         ...(line.note ? { note: line.note.slice(0, 255) } : {}),
+        ...(taxRates ? { taxRates } : {}),
       });
     }
   }
-  return {
-    orderCart: {
-      title: cloverOrderTitle(input),
-      note: cloverOrderNote(input),
-      lineItems,
-    },
-  };
+  return lineItems;
 }
 
-/** Creates the order on the merchant's Clover and asks it to print. Returns the Clover order id. */
+/**
+ * The merchant's default tax rates. Custom (non-inventory) line items are untaxed unless rates are
+ * attached, so without this the register would ring up phone orders with no sales tax.
+ * Needs the "Read inventory" permission; returns [] when unavailable so the order still goes through.
+ */
+export async function fetchCloverDefaultTaxRateIds(
+  config: CloverConfig,
+  merchantId: string,
+  accessToken: string,
+  fetchImpl: FetchLike = fetch
+): Promise<string[]> {
+  try {
+    const json = await cloverFetch(
+      fetchImpl,
+      `${HOSTS[config.environment].api}/v3/merchants/${encodeURIComponent(merchantId)}/tax_rates`,
+      { method: "GET", accessToken }
+    );
+    const elements = ((json as Record<string, unknown> | null)?.elements ?? []) as Array<Record<string, unknown>>;
+    return elements.filter((t) => t.isDefault === true && typeof t.id === "string").map((t) => t.id as string);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Creates the order on the merchant's Clover (Clover's documented custom-order flow: open order,
+ * then line items), and asks it to print. Returns the Clover order id.
+ */
 export async function sendOrderToClover(
   config: CloverConfig,
   merchantId: string,
   accessToken: string,
   input: CloverOrderInput,
   fetchImpl: FetchLike = fetch
-): Promise<{ orderId: string; printed: boolean; printError: string | null }> {
+): Promise<{ orderId: string; printed: boolean; printError: string | null; taxed: boolean }> {
   const base = `${HOSTS[config.environment].api}/v3/merchants/${encodeURIComponent(merchantId)}`;
-  const created = await cloverFetch(fetchImpl, `${base}/atomic_order/orders`, {
+  const taxRateIds = await fetchCloverDefaultTaxRateIds(config, merchantId, accessToken, fetchImpl);
+  const created = await cloverFetch(fetchImpl, `${base}/orders`, {
     method: "POST",
     accessToken,
-    body: buildCloverOrderCart(input),
+    body: { title: cloverOrderTitle(input), note: cloverOrderNote(input), state: "open" },
   });
   const orderId = (created as Record<string, unknown> | null)?.id;
   if (typeof orderId !== "string" || !orderId) {
     throw new CloverApiError("Clover did not return an order id.", 502);
+  }
+  try {
+    await cloverFetch(fetchImpl, `${base}/orders/${encodeURIComponent(orderId)}/bulk_line_items`, {
+      method: "POST",
+      accessToken,
+      body: { items: buildCloverLineItems(input, taxRateIds) },
+    });
+  } catch (e) {
+    // Don't leave an empty ticket on their register.
+    await cloverFetch(fetchImpl, `${base}/orders/${encodeURIComponent(orderId)}`, { method: "DELETE", accessToken }).catch(() => null);
+    throw e;
   }
   try {
     await cloverFetch(fetchImpl, `${base}/print_event`, {
@@ -220,9 +259,14 @@ export async function sendOrderToClover(
       accessToken,
       body: { orderRef: { id: orderId } },
     });
-    return { orderId, printed: true, printError: null };
+    return { orderId, printed: true, printError: null, taxed: taxRateIds.length > 0 };
   } catch (e) {
     // The order is on their Clover even if printing failed; staff can print it there.
-    return { orderId, printed: false, printError: e instanceof Error ? e.message : "Print failed" };
+    return {
+      orderId,
+      printed: false,
+      printError: e instanceof Error ? e.message : "Print failed",
+      taxed: taxRateIds.length > 0,
+    };
   }
 }

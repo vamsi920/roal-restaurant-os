@@ -12,6 +12,7 @@ import { RestaurantProfileSettings } from "../RestaurantProfileSettings";
 import { RegisterConnectionSettings } from "../RegisterConnectionSettings";
 import { isOrgAdmin } from "@/lib/auth/roles";
 import { getCloverConfig } from "@/lib/pos/clover";
+import { isPlatformAdminSession } from "@/lib/auth/internal-access";
 import { loadPosConnection, summarizePosConnection } from "@/lib/pos/connections";
 
 export const metadata: Metadata = { title: "Settings — ROAL" };
@@ -39,7 +40,12 @@ export default async function RestaurantSettingsPage({ params }: { params: { id:
     loadPosConnection(db, restaurant.id).catch(() => null),
   ]);
   // The register card appears once ROAL's Clover app keys are set (or a connection already exists).
-  const showRegister = Boolean(getCloverConfig()) || Boolean(posConnection);
+  // While the keys are Clover sandbox keys, only platform staff see it, so owners never connect a test app.
+  const clover = getCloverConfig();
+  const showRegister =
+    Boolean(posConnection) ||
+    clover?.environment === "production" ||
+    (clover?.environment === "sandbox" && (await isPlatformAdminSession()));
   const hostName = setup.profile.agent_display_name?.trim() || "your phone host";
 
   return (

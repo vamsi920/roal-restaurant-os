@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMemoryDb, type Db } from "@/lib/db";
 import { resetMemoryStore } from "@/lib/db/store";
-import { buildCloverOrderCart, cloverAuthorizeUrl, getCloverConfig } from "@/lib/pos/clover";
+import { buildCloverLineItems, cloverAuthorizeUrl, cloverOrderNote, cloverOrderTitle, getCloverConfig } from "@/lib/pos/clover";
 import { freshCloverAccessToken, loadPosConnection, saveCloverConnection } from "@/lib/pos/connections";
 import { posLines, pushOrderToPos, type PushOrderToPosInput } from "@/lib/pos/push-order";
 import { openSecret, sealSecret, signOAuthState, verifyOAuthState } from "@/lib/pos/seal";
@@ -64,10 +64,13 @@ describe("clover order cart", () => {
   });
 
   it("repeats single-unit line items per quantity and marks pay at pickup", () => {
-    const cart = buildCloverOrderCart({ ...order, lines: posLines(order.lines, order.modifiers) });
-    expect(cart.orderCart.lineItems).toHaveLength(3);
-    expect(cart.orderCart.title).toBe("ROAL phone · PICKUP · Priya +12015550123");
-    expect(cart.orderCart.note).toContain("Pay at pickup");
+    const input = { ...order, lines: posLines(order.lines, order.modifiers) };
+    const items = buildCloverLineItems(input);
+    expect(items).toHaveLength(3);
+    expect(items[0]).not.toHaveProperty("taxRates");
+    expect(buildCloverLineItems(input, ["TAX1"])[2]).toMatchObject({ name: "Mango Lassi", price: 400, taxRates: [{ id: "TAX1" }] });
+    expect(cloverOrderTitle(input)).toBe("ROAL phone · PICKUP · Priya +12015550123");
+    expect(cloverOrderNote(input)).toContain("Pay at pickup");
   });
 
   it("uses the sandbox hosts unless production is set", () => {
@@ -103,19 +106,49 @@ describe("pushOrderToPos", () => {
       tokens: { accessToken: "tok", accessTokenExpiresAt: null, refreshToken: null, refreshTokenExpiresAt: null },
       connectedBy: "u1",
     });
-    const clover = fakeClover((_m, path) => ({ json: path.endsWith("/atomic_order/orders") ? { id: "ORD1" } : { id: "P1" } }));
+    const clover = fakeClover((method, path) => {
+      if (path.endsWith("/tax_rates")) return { json: { elements: [{ id: "TAX1", isDefault: true }, { id: "TAX2", isDefault: false }] } };
+      if (method === "POST" && path.endsWith("/orders")) return { json: { id: "ORD1" } };
+      return { json: { id: "X" } };
+    });
 
     expect(await pushOrderToPos(db, order, clover.fetch)).toEqual({ status: "sent", posOrderId: "ORD1", printed: true });
-    expect(clover.calls.map((c) => c.path)).toEqual([
-      "/v3/merchants/M1/atomic_order/orders",
-      "/v3/merchants/M1/print_event",
+    expect(clover.calls.map((c) => `${c.method} ${c.path}`)).toEqual([
+      "GET /v3/merchants/M1/tax_rates",
+      "POST /v3/merchants/M1/orders",
+      "POST /v3/merchants/M1/orders/ORD1/bulk_line_items",
+      "POST /v3/merchants/M1/print_event",
     ]);
-    expect(clover.calls[0].auth).toBe("Bearer tok");
-    expect(clover.calls[1].body).toEqual({ orderRef: { id: "ORD1" } });
+    expect(clover.calls[1].auth).toBe("Bearer tok");
+    expect(clover.calls[1].body).toMatchObject({ title: "ROAL phone · PICKUP · Priya +12015550123", state: "open" });
+    const items = (clover.calls[2].body as { items: Array<{ taxRates?: unknown }> }).items;
+    expect(items).toHaveLength(3);
+    expect(items.every((i) => JSON.stringify(i.taxRates) === JSON.stringify([{ id: "TAX1" }]))).toBe(true);
+    expect(clover.calls[3].body).toEqual({ orderRef: { id: "ORD1" } });
 
     expect(await pushOrderToPos(db, order, clover.fetch)).toEqual({ status: "already_sent", posOrderId: "ORD1" });
-    expect(clover.calls).toHaveLength(2);
+    expect(clover.calls).toHaveLength(4);
     expect((await loadPosConnection(db, RID))?.last_sync_error).toBeNull();
+  });
+
+  it("still sends the order untaxed when tax rates can't be read, and deletes an order whose items failed", async () => {
+    await saveCloverConnection(db, {
+      restaurantId: RID,
+      merchantId: "M1",
+      merchantName: null,
+      environment: "sandbox",
+      tokens: { accessToken: "tok", accessTokenExpiresAt: null, refreshToken: null, refreshTokenExpiresAt: null },
+      connectedBy: "u1",
+    });
+    const clover = fakeClover((method, path) => {
+      if (path.endsWith("/tax_rates")) return { status: 403, json: { message: "Forbidden" } };
+      if (method === "POST" && path.endsWith("/orders")) return { json: { id: "ORD1" } };
+      if (path.endsWith("/bulk_line_items")) return { status: 400, json: { message: "bad item" } };
+      return { json: {} };
+    });
+    const res = await pushOrderToPos(db, order, clover.fetch);
+    expect(res.status).toBe("failed");
+    expect(clover.calls.map((c) => `${c.method} ${c.path}`)).toContain("DELETE /v3/merchants/M1/orders/ORD1");
   });
 
   it("records a failure without throwing", async () => {
@@ -149,5 +182,25 @@ describe("pushOrderToPos", () => {
     expect(fresh.accessToken).toBe("new");
     expect(clover.calls[0]).toMatchObject({ path: "/oauth/v2/refresh", body: { client_id: "app", refresh_token: "ref" } });
     expect(openSecret((await loadPosConnection(db, RID))!.access_token_sealed)).toBe("new");
+  });
+
+  it("uses the token another request already refreshed when the single-use refresh token was spent", async () => {
+    const now = 2_000_000_000;
+    await saveCloverConnection(db, {
+      restaurantId: RID,
+      merchantId: "M1",
+      merchantName: null,
+      environment: "sandbox",
+      tokens: { accessToken: "old", accessTokenExpiresAt: now + 60, refreshToken: "ref", refreshTokenExpiresAt: now + 9e6 },
+      connectedBy: "u1",
+    });
+    const stale = (await loadPosConnection(db, RID))!;
+    await db
+      .from("pos_connections")
+      .update({ access_token_sealed: sealSecret("won"), access_token_expires_at: now + 1800 })
+      .eq("restaurant_id", RID);
+    const clover = fakeClover(() => ({ status: 401, json: { message: "refresh token already used" } }));
+    const fresh = await freshCloverAccessToken(db, stale, getCloverConfig(), clover.fetch, now);
+    expect(fresh.accessToken).toBe("won");
   });
 });

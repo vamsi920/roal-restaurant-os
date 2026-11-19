@@ -119,7 +119,22 @@ export async function freshCloverAccessToken(
   if (stillGood || !row.refresh_token_sealed) {
     return { config, accessToken: openSecret(row.access_token_sealed) };
   }
-  const tokens = await refreshCloverTokens(config, openSecret(row.refresh_token_sealed), fetchImpl);
+  let tokens: CloverTokens;
+  try {
+    tokens = await refreshCloverTokens(config, openSecret(row.refresh_token_sealed), fetchImpl);
+  } catch (e) {
+    // Clover refresh tokens are single-use. If another order refreshed first, use its saved token.
+    const latest = await loadPosConnection(db, row.restaurant_id);
+    if (latest && latest.access_token_sealed !== row.access_token_sealed) {
+      const latestExpiry = latest.access_token_expires_at;
+      if (latestExpiry == null || latestExpiry > nowSec) {
+        return { config, accessToken: openSecret(latest.access_token_sealed) };
+      }
+    }
+    // The old access token still works until it actually expires.
+    if (expiresAt != null && expiresAt > nowSec) return { config, accessToken: openSecret(row.access_token_sealed) };
+    throw e;
+  }
   await db
     .from("pos_connections")
     .update({ ...tokenFields(tokens), updated_at: new Date().toISOString() })

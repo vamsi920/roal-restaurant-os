@@ -3,6 +3,7 @@ import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { cloverAuthorizeUrl, getCloverConfig } from "@/lib/pos/clover";
 import { signOAuthState } from "@/lib/pos/seal";
 import { absoluteUrl } from "@/lib/site-url";
+import { isPlatformAdminSession } from "@/lib/auth/internal-access";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,6 +19,11 @@ export async function GET(req: Request): Promise<Response> {
   const config = getCloverConfig();
   const redirectUri = absoluteUrl("/api/integrations/clover/callback");
   if (!config || !redirectUri) {
+    return NextResponse.json({ error: "Clover connection is not available yet." }, { status: 503 });
+  }
+
+  // Sandbox keys are for ROAL staff testing only; owners connect once the production app is approved.
+  if (config.environment === "sandbox" && !(await isPlatformAdminSession())) {
     return NextResponse.json({ error: "Clover connection is not available yet." }, { status: 503 });
   }
 
