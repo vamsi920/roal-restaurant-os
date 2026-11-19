@@ -18,6 +18,8 @@ export type PosConnectionRow = {
   connected_by: string | null;
   last_sync_at: string | null;
   last_sync_error: string | null;
+  /** Combined default tax on the register, as a percent, last time we read it (null = unknown). */
+  register_tax_percent?: number | null;
   created_at?: string;
   updated_at?: string;
 };
@@ -28,6 +30,7 @@ export type PosConnectionSummary = {
   merchantName: string | null;
   lastSyncAt: string | null;
   lastSyncError: string | null;
+  registerTaxPercent: number | null;
 };
 
 /** Refresh when the access token has less than this many seconds left. */
@@ -50,6 +53,7 @@ export function summarizePosConnection(row: PosConnectionRow | null): PosConnect
     merchantName: row.merchant_name,
     lastSyncAt: row.last_sync_at,
     lastSyncError: row.last_sync_error,
+    registerTaxPercent: typeof row.register_tax_percent === "number" ? row.register_tax_percent : null,
   };
 }
 
@@ -71,6 +75,7 @@ export async function saveCloverConnection(
     environment: string;
     tokens: CloverTokens;
     connectedBy: string;
+    registerTaxPercent?: number | null;
   }
 ): Promise<void> {
   const now = new Date().toISOString();
@@ -85,6 +90,7 @@ export async function saveCloverConnection(
       connected_by: input.connectedBy,
       last_sync_at: null,
       last_sync_error: null,
+      register_tax_percent: input.registerTaxPercent ?? null,
       updated_at: now,
     },
     { onConflict: "restaurant_id" }
@@ -97,11 +103,21 @@ export async function deletePosConnection(db: Db, restaurantId: string): Promise
   if (error) throw new Error(error.message);
 }
 
-export async function recordPosSync(db: Db, restaurantId: string, syncError: string | null): Promise<void> {
+export async function recordPosSync(
+  db: Db,
+  restaurantId: string,
+  syncError: string | null,
+  registerTaxPercent?: number
+): Promise<void> {
   const now = new Date().toISOString();
   await db
     .from("pos_connections")
-    .update({ last_sync_at: now, last_sync_error: syncError, updated_at: now })
+    .update({
+      last_sync_at: now,
+      last_sync_error: syncError,
+      ...(registerTaxPercent === undefined ? {} : { register_tax_percent: registerTaxPercent }),
+      updated_at: now,
+    })
     .eq("restaurant_id", restaurantId);
 }
 

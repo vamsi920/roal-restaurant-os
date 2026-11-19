@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import { requireRestaurantAccess } from "@/lib/auth/context-server";
 import { getDb } from "@/lib/db";
-import { exchangeCloverCode, fetchCloverMerchantName, getCloverConfig } from "@/lib/pos/clover";
+import {
+  cloverTaxPercent,
+  exchangeCloverCode,
+  fetchCloverDefaultTaxRates,
+  fetchCloverMerchantName,
+  getCloverConfig,
+} from "@/lib/pos/clover";
 import { saveCloverConnection } from "@/lib/pos/connections";
 import { verifyOAuthState } from "@/lib/pos/seal";
 
@@ -34,7 +40,10 @@ export async function GET(req: Request): Promise<Response> {
 
   try {
     const tokens = await exchangeCloverCode(config, code);
-    const merchantName = await fetchCloverMerchantName(config, merchantId, tokens.accessToken).catch(() => null);
+    const [merchantName, taxRates] = await Promise.all([
+      fetchCloverMerchantName(config, merchantId, tokens.accessToken).catch(() => null),
+      fetchCloverDefaultTaxRates(config, merchantId, tokens.accessToken),
+    ]);
     await saveCloverConnection(getDb(), {
       restaurantId: state.restaurantId,
       merchantId,
@@ -42,6 +51,7 @@ export async function GET(req: Request): Promise<Response> {
       environment: config.environment,
       tokens,
       connectedBy: state.userId,
+      registerTaxPercent: taxRates ? cloverTaxPercent(taxRates) : null,
     });
     return backToSettings(req, state.restaurantId, "connected");
   } catch (e) {

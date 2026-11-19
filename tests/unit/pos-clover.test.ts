@@ -135,6 +135,7 @@ describe("pushOrderToPos", () => {
     expect(await pushOrderToPos(db, order, clover.fetch)).toEqual({ status: "already_sent", posOrderId: "ORD1" });
     expect(clover.calls).toHaveLength(5);
     expect((await loadPosConnection(db, RID))?.last_sync_error).toBeNull();
+    expect((await loadPosConnection(db, RID))?.register_tax_percent).toBe(6.625);
   });
 
   it("still sends the order untaxed when tax rates can't be read, and deletes an order whose items failed", async () => {
@@ -155,6 +156,8 @@ describe("pushOrderToPos", () => {
     const res = await pushOrderToPos(db, order, clover.fetch);
     expect(res.status).toBe("failed");
     expect(clover.calls.map((c) => `${c.method} ${c.path}`)).toContain("DELETE /v3/merchants/M1/orders/ORD1");
+    // Unreadable tax rates stay unknown instead of looking like 0% (no false mismatch warning).
+    expect((await loadPosConnection(db, RID))?.register_tax_percent ?? null).toBeNull();
   });
 
   it("records a failure without throwing", async () => {

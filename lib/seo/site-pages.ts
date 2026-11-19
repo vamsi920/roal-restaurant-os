@@ -85,6 +85,7 @@ export const CORE_PAGES: { path: string; label: string }[] = [
   { path: "/pricing", label: "Pricing" },
   { path: "/about", label: "About ROAL" },
   { path: "/security", label: "Security" },
+  { path: "/integrations/clover", label: "Clover integration (early access)" },
   { path: "/facts", label: "ROAL facts" },
   { path: "/faq", label: "Questions owners ask" },
   { path: "/how-it-works", label: "How it works" },

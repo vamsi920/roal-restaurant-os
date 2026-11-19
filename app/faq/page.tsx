@@ -42,7 +42,7 @@ const EXTRA: LaunchFaqItem[] = [
     pages: [],
     question: "Do I need a POS connection?",
     answer:
-      "No. Orders go to the ROAL kitchen screen, which runs on any tablet or computer browser. Your POS stays as it is.",
+      "No. Orders go to the ROAL kitchen screen, which runs on any tablet or computer browser. Your POS stays as it is. A Clover connection, which sends phone orders to your Clover and prints them, is in early access and opens to restaurants in early 2027.",
   },
   {
     id: "faq-busy",

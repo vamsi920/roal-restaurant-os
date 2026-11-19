@@ -25,6 +25,7 @@ export const SITE_FOOTER_COLUMNS = [
       { href: "/how-it-works", label: "How it works (guide)" },
       { href: "/try", label: "Try it free" },
       { href: "/security", label: "Security" },
+      { href: "/integrations/clover", label: "Clover (early access)" },
       { href: "/faq", label: "FAQ" },
       { href: "/facts", label: "Facts" },
     ],

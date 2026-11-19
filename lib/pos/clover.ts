@@ -204,6 +204,11 @@ export function buildCloverLineItems(input: CloverOrderInput, defaultTaxRates: C
  * dashboard and register would show $0.00. Total = subtotal + tax, in cents. Clover rates are
  * percent × 100000 (6.625% = 662500), so tax = subtotal × rate / 10,000,000, rounded per rate.
  */
+/** Combined default tax as a percent (Clover rate 662500 → 6.625). */
+export function cloverTaxPercent(taxRates: CloverTaxRateRef[]): number {
+  return taxRates.reduce((sum, t) => sum + t.rate, 0) / 100_000;
+}
+
 export function cloverOrderTotalCents(lineItems: CloverLineItemBody[], taxRates: CloverTaxRateRef[]): number {
   const subtotal = lineItems.reduce((sum, li) => sum + li.price, 0);
   const tax = taxRates.reduce((sum, t) => sum + Math.round((subtotal * t.rate) / 10_000_000), 0);
@@ -213,14 +218,14 @@ export function cloverOrderTotalCents(lineItems: CloverLineItemBody[], taxRates:
 /**
  * The merchant's default tax rates. Custom (non-inventory) line items are untaxed unless rates are
  * attached, so without this the register would ring up phone orders with no sales tax.
- * Needs the "Read inventory" permission; returns [] when unavailable so the order still goes through.
+ * Needs the "Read inventory" permission; returns null when unreadable so the order still goes through untaxed.
  */
 export async function fetchCloverDefaultTaxRates(
   config: CloverConfig,
   merchantId: string,
   accessToken: string,
   fetchImpl: FetchLike = fetch
-): Promise<CloverTaxRateRef[]> {
+): Promise<CloverTaxRateRef[] | null> {
   try {
     const json = await cloverFetch(
       fetchImpl,
@@ -232,7 +237,7 @@ export async function fetchCloverDefaultTaxRates(
       .filter((t) => t.isDefault === true && typeof t.id === "string" && typeof t.rate === "number")
       .map((t) => ({ id: t.id as string, name: typeof t.name === "string" ? t.name : "Tax", rate: t.rate as number }));
   } catch {
-    return [];
+    return null;
   }
 }
 
@@ -246,9 +251,11 @@ export async function sendOrderToClover(
   accessToken: string,
   input: CloverOrderInput,
   fetchImpl: FetchLike = fetch
-): Promise<{ orderId: string; printed: boolean; printError: string | null; taxed: boolean }> {
+): Promise<{ orderId: string; printed: boolean; printError: string | null; taxPercent: number | null }> {
   const base = `${HOSTS[config.environment].api}/v3/merchants/${encodeURIComponent(merchantId)}`;
-  const taxRates = await fetchCloverDefaultTaxRates(config, merchantId, accessToken, fetchImpl);
+  const fetchedTaxRates = await fetchCloverDefaultTaxRates(config, merchantId, accessToken, fetchImpl);
+  const taxRates = fetchedTaxRates ?? [];
+  const taxPercent = fetchedTaxRates ? cloverTaxPercent(fetchedTaxRates) : null;
   const created = await cloverFetch(fetchImpl, `${base}/orders`, {
     method: "POST",
     accessToken,
@@ -281,14 +288,14 @@ export async function sendOrderToClover(
       accessToken,
       body: { orderRef: { id: orderId } },
     });
-    return { orderId, printed: true, printError: null, taxed: taxRates.length > 0 };
+    return { orderId, printed: true, printError: null, taxPercent };
   } catch (e) {
     // The order is on their Clover even if printing failed; staff can print it there.
     return {
       orderId,
       printed: false,
       printError: e instanceof Error ? e.message : "Print failed",
-      taxed: taxRates.length > 0,
+      taxPercent,
     };
   }
 }

@@ -47,6 +47,11 @@ export const ROAL_FACT_LIST: { label: string; value: string }[] = [
     label: "Hands to staff",
     value: "Catering, complaints, allergy-sensitive questions and manager requests go to a person with a summary.",
   },
+  {
+    label: "POS",
+    value:
+      "No POS connection is needed: orders go to the ROAL kitchen screen. A Clover connection (orders land on the restaurant's Clover with items, add-ons, sales tax and total, and print on its order printer) is built and in early access; it opens to restaurants in early 2027 after Clover approves the ROAL app. Toast and Square are not connected.",
+  },
   { label: "Payments", value: "Never takes card numbers over the phone. Callers pay at pickup or however the restaurant already takes payment." },
   {
     label: "Menu",
@@ -64,7 +69,7 @@ export const ROAL_FACT_LIST: { label: string; value: string }[] = [
   { label: "Who it is for", value: ROAL_FACTS.market },
   {
     label: "Not a fit",
-    value: "Reservation-only fine dining with few phone orders, chains that require a POS connection, and restaurants that want card payments taken over the phone.",
+    value: "Reservation-only fine dining with few phone orders, chains that require a Toast or Square connection, and restaurants that want card payments taken over the phone.",
   },
   { label: "Founder", value: ROAL_FACTS.founder },
   { label: "Contact", value: ROAL_FACTS.contact },

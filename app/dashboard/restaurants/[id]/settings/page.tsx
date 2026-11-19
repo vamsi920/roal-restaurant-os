@@ -76,6 +76,7 @@ export default async function RestaurantSettingsPage({ params }: { params: { id:
             restaurantId={restaurant.id}
             connection={summarizePosConnection(posConnection)}
             canManage={isOrgAdmin(role)}
+            roalTaxPercent={Number(setup.profile.tax_rate_percent) || 0}
           />
         ) : null}
       </div>

@@ -14,11 +14,16 @@ export function RegisterConnectionSettings({
   restaurantId,
   connection,
   canManage,
+  roalTaxPercent,
 }: {
   restaurantId: string;
   connection: PosConnectionSummary | null;
   canManage: boolean;
+  /** Sales tax ROAL quotes callers (Business info → Taxes & fees). */
+  roalTaxPercent: number;
 }) {
+  const registerTax = connection?.registerTaxPercent ?? null;
+  const taxMismatch = registerTax != null && Math.abs(registerTax - roalTaxPercent) > 0.0005;
   const router = useRouter();
   const result = useSearchParams().get("clover");
   const [error, setError] = useState<string | null>(null);
@@ -55,6 +60,13 @@ export function RegisterConnectionSettings({
               Sending orders to <strong>{connection.merchantName ?? "your Clover"}</strong>.
               {connection.lastSyncAt ? ` Last order sent ${formatRelative(connection.lastSyncAt)}.` : " No orders sent yet."}
             </p>
+            {taxMismatch ? (
+              <Notice tone="warn">
+                Your Clover adds {formatPercent(registerTax)} sales tax, but ROAL quotes callers{" "}
+                {formatPercent(roalTaxPercent)}. Set the same rate under Business info → Taxes &amp; fees so the total
+                callers hear matches what they pay at pickup.
+              </Notice>
+            ) : null}
             {connection.lastSyncError ? (
               <Notice tone="warn">
                 The last order didn&apos;t reach your Clover or didn&apos;t print. It is still on the ROAL kitchen screen.
@@ -76,4 +88,8 @@ export function RegisterConnectionSettings({
       </div>
     </SettingsPanel>
   );
+}
+
+function formatPercent(value: number): string {
+  return `${Number(value.toFixed(3))}%`;
 }

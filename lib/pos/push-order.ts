@@ -101,7 +101,7 @@ export async function pushOrderToPos(
       })
       .eq("restaurant_id", input.restaurantId)
       .eq("session_id", input.sessionId);
-    await recordPosSync(db, restaurantId, sent.printError);
+    await recordPosSync(db, restaurantId, sent.printError, sent.taxPercent ?? undefined);
     return { status: "sent", posOrderId: sent.orderId, printed: sent.printed };
   } catch (e) {
     const message = e instanceof Error ? e.message : "Could not reach the register.";
