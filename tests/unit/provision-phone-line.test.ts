@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createMemoryDb } from "@/lib/db";
 import { resetServerEnvCache } from "@/lib/env.server";
-import { areaCodeOf, provisionRestaurantPhoneLine } from "@/lib/telephony/provision-phone-line";
+import { areaCodeOf, provisionRestaurantPhoneLine, retryMissingPhoneLines } from "@/lib/telephony/provision-phone-line";
 
 async function restaurant(profile: Record<string, unknown>) {
   const db = createMemoryDb();
@@ -84,6 +84,8 @@ describe("provisionRestaurantPhoneLine", () => {
     });
     const first = await provisionRestaurantPhoneLine(db, id, { fetchImpl: fn as never, importNumber: failingImport });
     expect(first).toMatchObject({ ok: false, reason: "failed" });
+    const { data: failed } = await db.from("restaurant_profiles").select("roal_phone_number_error").eq("restaurant_id", id).single();
+    expect(failed?.roal_phone_number_error).toContain("ElevenLabs down");
     expect(calls.filter((c) => c.includes("IncomingPhoneNumbers")).length).toBe(1);
 
     const importNumber = vi.fn(async () => ({ phone_number_id: "phnum_2" }));
@@ -98,6 +100,8 @@ describe("provisionRestaurantPhoneLine", () => {
       .eq("restaurant_id", id)
       .single();
     expect(data).toMatchObject({ roal_phone_number: "+15125550100", roal_phone_number_pending: null, roal_phone_number_sid: "PN123" });
+    const { data: cleared } = await db.from("restaurant_profiles").select("roal_phone_number_error").eq("restaurant_id", id).single();
+    expect(cleared?.roal_phone_number_error ?? null).toBeNull();
   });
 
   it("waits for the host before buying", async () => {
@@ -115,5 +119,16 @@ describe("provisionRestaurantPhoneLine", () => {
     const { db, id } = await restaurant({ elevenlabs_agent_id: "agent_joe" });
     const out = await provisionRestaurantPhoneLine(db, id);
     expect(out).toMatchObject({ ok: false, reason: "not_configured" });
+  });
+
+  it("hourly retry only touches active plans and reports what is still missing", async () => {
+    vi.stubEnv("TWILIO_ACCOUNT_SID", "AC123");
+    vi.stubEnv("TWILIO_AUTH_TOKEN", "tok");
+    resetServerEnvCache();
+    const { db, id } = await restaurant({ phone: "(512) 555-0199" }); // no host yet → host_not_ready
+    const { data: r } = await db.from("restaurants").select("organization_id").eq("id", id).single();
+    expect(await retryMissingPhoneLines(db)).toEqual([]); // plan not active
+    await db.from("organizations").update({ subscription_status: "active" }).eq("id", r!.organization_id);
+    expect(await retryMissingPhoneLines(db)).toEqual([{ restaurantId: id, ok: false, reason: "host_not_ready" }]);
   });
 });

@@ -6,7 +6,8 @@ export type OpsErrorSource =
   | "audit"
   | "menu_import"
   | "notification"
-  | "voice_sync";
+  | "voice_sync"
+  | "phone_line";
 
 export type OpsErrorRow = {
   id: string;

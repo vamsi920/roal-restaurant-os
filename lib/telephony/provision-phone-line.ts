@@ -126,6 +126,7 @@ export async function provisionRestaurantPhoneLine(
       .update({
         roal_phone_number: number,
         roal_phone_number_pending: null,
+        roal_phone_number_error: null,
         roal_phone_number_sid: numberSid,
         roal_phone_number_id: phone_number_id,
         roal_phone_number_at: new Date().toISOString(),
@@ -134,9 +135,35 @@ export async function provisionRestaurantPhoneLine(
 
     return { ok: true, phoneNumber: number, alreadyHad: false };
   } catch (e) {
-    console.error("[phone line]", restaurantId, e instanceof Error ? e.message : e);
+    const detail = e instanceof Error ? e.message : String(e);
+    console.error("[phone line]", restaurantId, detail);
+    // Shown to ROAL staff on the Admin page; the hourly retry clears it once a line is set up.
+    await db
+      .from("restaurant_profiles")
+      .update({ roal_phone_number_error: detail.slice(0, 300), roal_phone_number_error_at: new Date().toISOString() })
+      .eq("restaurant_id", restaurantId)
+      .then(
+        () => undefined,
+        () => undefined
+      );
     return { ok: false, reason: "failed", message: "We couldn't set up the phone line yet. We'll retry." };
   }
+}
+
+/**
+ * Hourly safety net: every location of an organization on an active plan that still has no
+ * phone line gets another attempt (a failed purchase, a host that wasn't ready yet, Twilio down).
+ */
+export async function retryMissingPhoneLines(db: Db) {
+  const { data: orgs } = await db.from("organizations").select("id").eq("subscription_status", "active");
+  const out: Array<{ restaurantId: string; ok: boolean; reason?: string }> = [];
+  for (const org of orgs ?? []) {
+    for (const line of await provisionPhoneLinesForOrganization(db, org.id as string)) {
+      if (line.result.ok && line.result.alreadyHad) continue;
+      out.push({ restaurantId: line.restaurantId, ok: line.result.ok, reason: line.result.ok ? undefined : line.result.reason });
+    }
+  }
+  return out;
 }
 
 /**

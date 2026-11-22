@@ -172,13 +172,16 @@ async function loadOrganizationOps(
     elevenlabs_agent_id: string | null;
     elevenlabs_last_sync_at: string | null;
     elevenlabs_last_sync_error: string | null;
+    roal_phone_number?: string | null;
+    roal_phone_number_error?: string | null;
+    roal_phone_number_error_at?: string | null;
   }> = [];
 
   if (restaurantIds.length > 0) {
     const { data, error } = await supabase
       .from("restaurant_profiles")
       .select(
-        "restaurant_id, elevenlabs_agent_id, elevenlabs_last_sync_at, elevenlabs_last_sync_error"
+        "restaurant_id, elevenlabs_agent_id, elevenlabs_last_sync_at, elevenlabs_last_sync_error, roal_phone_number, roal_phone_number_error, roal_phone_number_error_at"
       )
       .in("restaurant_id", restaurantIds);
     if (error) throw new Error(error.message);
@@ -231,6 +234,20 @@ async function loadOrganizationOps(
         });
       }
     }
+  }
+
+  // A paid location without a phone line can't take calls: always surface it.
+  for (const p of profiles) {
+    if (p.roal_phone_number || !p.roal_phone_number_error) continue;
+    recentErrors.unshift({
+      id: `phone-line:${p.restaurant_id}`,
+      source: "phone_line",
+      occurredAt: p.roal_phone_number_error_at ?? new Date().toISOString(),
+      title: "Phone line not set up (retrying hourly)",
+      detail: sanitizeOpsErrorDetail(p.roal_phone_number_error, 200),
+      restaurantId: p.restaurant_id,
+      restaurantName: restaurantNames.get(p.restaurant_id) ?? null,
+    });
   }
 
   recentErrors.sort(
