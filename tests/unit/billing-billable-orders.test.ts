@@ -32,6 +32,13 @@ function receipt(
 }
 
 describe("billable phone orders", () => {
+  it("never bills ROAL's own QA and test-harness sessions", () => {
+    expect(isTestHarnessBillingSession("qa-clover-1795116244302")).toBe(true);
+    expect(isTestHarnessBillingSession("qa-p19-123-flow")).toBe(true);
+    expect(isTestHarnessBillingSession("roal-harness-abc")).toBe(true);
+    expect(isTestHarnessBillingSession("conv_01jx2y3z")).toBe(false);
+  });
+
   it("counts receipt-backed successful phone orders", () => {
     const rows = [receipt("conv-live-1"), receipt("conv-live-2")];
     expect(countBillablePhoneOrders(rows)).toBe(2);

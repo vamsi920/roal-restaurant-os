@@ -73,6 +73,33 @@ describe("provisionRestaurantPhoneLine", () => {
     expect(fn).not.toHaveBeenCalled();
   });
 
+  it("reuses a number bought on a failed earlier attempt instead of buying another", async () => {
+    vi.stubEnv("TWILIO_ACCOUNT_SID", "AC123");
+    vi.stubEnv("TWILIO_AUTH_TOKEN", "tok");
+    resetServerEnvCache();
+    const { db, id } = await restaurant({ phone: "(512) 555-0199", elevenlabs_agent_id: "agent_joe" });
+    const { fn, calls } = twilioFetch(["+15125550100"]);
+    const failingImport = vi.fn(async () => {
+      throw new Error("ElevenLabs down");
+    });
+    const first = await provisionRestaurantPhoneLine(db, id, { fetchImpl: fn as never, importNumber: failingImport });
+    expect(first).toMatchObject({ ok: false, reason: "failed" });
+    expect(calls.filter((c) => c.includes("IncomingPhoneNumbers")).length).toBe(1);
+
+    const importNumber = vi.fn(async () => ({ phone_number_id: "phnum_2" }));
+    const assignNumber = vi.fn(async () => ({}));
+    const second = await provisionRestaurantPhoneLine(db, id, { fetchImpl: fn as never, importNumber, assignNumber });
+    expect(second).toEqual({ ok: true, phoneNumber: "+15125550100", alreadyHad: false });
+    // Still only one purchase across both attempts.
+    expect(calls.filter((c) => c.includes("IncomingPhoneNumbers")).length).toBe(1);
+    const { data } = await db
+      .from("restaurant_profiles")
+      .select("roal_phone_number, roal_phone_number_pending, roal_phone_number_sid")
+      .eq("restaurant_id", id)
+      .single();
+    expect(data).toMatchObject({ roal_phone_number: "+15125550100", roal_phone_number_pending: null, roal_phone_number_sid: "PN123" });
+  });
+
   it("waits for the host before buying", async () => {
     vi.stubEnv("TWILIO_ACCOUNT_SID", "AC123");
     vi.stubEnv("TWILIO_AUTH_TOKEN", "tok");

@@ -54,6 +54,7 @@ void (async () => {
   console.log(`items: ${items.map((i) => `${i.name} $${i.price}`).join(", ")}`);
   if (!SEND || items.length < 2) return;
 
+  // "qa-" sessions are never billed and never notify (lib/billing/billable-orders.ts).
   const session = `qa-clover-${Date.now()}`;
   const sync = await fetch(`${BASE}/sync-draft-order`, {
     method: "POST",

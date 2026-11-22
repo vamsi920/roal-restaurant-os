@@ -6,6 +6,12 @@ export const BILLABLE_PHONE_ORDER_RATE_USD = 0.90;
 /** Voice-agent test harness sessions are never billable. */
 export const TEST_HARNESS_SESSION_PREFIX = "roal-harness-";
 
+/**
+ * Every session prefix ROAL's own QA scripts use (scripts/qa-*.ts). Real phone sessions are
+ * ElevenLabs conversation ids, which never start with these.
+ */
+export const TEST_SESSION_PREFIXES = [TEST_HARNESS_SESSION_PREFIX, "qa-"] as const;
+
 export type BillableReceiptRow = {
   restaurant_id: string;
   session_id: string;
@@ -18,7 +24,7 @@ export function isTestHarnessBillingSession(
 ): boolean {
   const trimmed = sessionId?.trim();
   if (!trimmed) return false;
-  return trimmed.startsWith(TEST_HARNESS_SESSION_PREFIX);
+  return TEST_SESSION_PREFIXES.some((prefix) => trimmed.startsWith(prefix));
 }
 
 export function billableReceiptSessionKey(

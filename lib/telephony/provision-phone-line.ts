@@ -72,9 +72,16 @@ export async function provisionRestaurantPhoneLine(
   const { data: restaurant } = await db.from("restaurants").select("id, name").eq("id", restaurantId).maybeSingle();
   const { data: profile } = await db
     .from("restaurant_profiles")
-    .select("phone, elevenlabs_agent_id, roal_phone_number")
+    .select("phone, elevenlabs_agent_id, roal_phone_number, roal_phone_number_pending, roal_phone_number_sid")
     .eq("restaurant_id", restaurantId)
-    .maybeSingle<{ phone: string | null; elevenlabs_agent_id: string | null; roal_phone_number?: string | null }>();
+    .maybeSingle<{
+      phone: string | null;
+      elevenlabs_agent_id: string | null;
+      roal_phone_number?: string | null;
+      /** Bought from Twilio but not yet connected to the host (a retry reuses it). */
+      roal_phone_number_pending?: string | null;
+      roal_phone_number_sid?: string | null;
+    }>();
 
   if (profile?.roal_phone_number) return { ok: true, phoneNumber: profile.roal_phone_number, alreadyHad: true };
 
@@ -84,16 +91,27 @@ export async function provisionRestaurantPhoneLine(
   if (!agentId) return { ok: false, reason: "host_not_ready", message: "The phone host isn't set up yet; we'll add the line after." };
 
   try {
-    const number = await findLocalNumber(fetchImpl, cfg, areaCodeOf(profile?.phone));
-    if (!number) return { ok: false, reason: "no_numbers", message: "No phone numbers available right now." };
+    // A number bought on an earlier attempt that failed later is reused, never bought twice.
+    let number = profile?.roal_phone_number_pending?.trim() || null;
+    let numberSid = number ? profile?.roal_phone_number_sid ?? null : null;
+    if (!number) {
+      number = await findLocalNumber(fetchImpl, cfg, areaCodeOf(profile?.phone));
+      if (!number) return { ok: false, reason: "no_numbers", message: "No phone numbers available right now." };
 
-    const bought = await twilio(fetchImpl, cfg, "/IncomingPhoneNumbers.json", {
-      method: "POST",
-      body: new URLSearchParams({
-        PhoneNumber: number,
-        FriendlyName: `ROAL · ${String(restaurant?.name ?? restaurantId).slice(0, 40)}`,
-      }).toString(),
-    });
+      const bought = await twilio(fetchImpl, cfg, "/IncomingPhoneNumbers.json", {
+        method: "POST",
+        body: new URLSearchParams({
+          PhoneNumber: number,
+          FriendlyName: `ROAL · ${String(restaurant?.name ?? restaurantId).slice(0, 40)}`,
+        }).toString(),
+      });
+      numberSid = typeof bought.sid === "string" ? bought.sid : null;
+      // Save right away: if connecting it below fails, the next attempt picks this number up.
+      await db
+        .from("restaurant_profiles")
+        .update({ roal_phone_number_pending: number, roal_phone_number_sid: numberSid })
+        .eq("restaurant_id", restaurantId);
+    }
 
     const { phone_number_id } = await importNumber({
       phoneNumber: number,
@@ -107,7 +125,8 @@ export async function provisionRestaurantPhoneLine(
       .from("restaurant_profiles")
       .update({
         roal_phone_number: number,
-        roal_phone_number_sid: typeof bought.sid === "string" ? bought.sid : null,
+        roal_phone_number_pending: null,
+        roal_phone_number_sid: numberSid,
         roal_phone_number_id: phone_number_id,
         roal_phone_number_at: new Date().toISOString(),
       })
